@@ -1,0 +1,1737 @@
+﻿using System;
+using System.Collections;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.Services.Protocols;
+using System.Xml.Linq;
+using KdsLibrary.BL;
+using System.Data;
+using System.Collections.Generic;
+using KdsLibrary;
+using KdsBatch;
+using System.Text;
+using KdsWorkFlow.Approvals;
+using System.Xml;
+using System.Xml.Xsl;
+using System.Xml.XPath;
+using System.IO;
+using KdsLibrary.Security;
+using System.Collections.Specialized;
+
+//using System.Web.UI;
+//using System.IO;
+/// <summary>
+/// Summary description for wsGeneral
+/// </summary>
+[WebService(Namespace = "http://tempuri.org/")]
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+[System.Web.Script.Services.ScriptService]
+public class wsGeneral : System.Web.Services.WebService
+{
+    private const string COL_TRIP_EMPTY = "ריקה";
+    private const string COL_TRIP_NAMAK = "נמ'ק";
+    private const string COL_TRIP_ELEMENT = "אלמנט";
+    private const string COL_TRIP_VISUT = "ויסות";
+    private const string MAKAT_KNISA = "לפי-צורך";
+    public wsGeneral()
+    {
+        //Uncomment the following line if using designed components 
+        //InitializeComponent(); 
+    }
+    [WebMethod]
+    public string IsCardExists(int iMisparIshi, string sWorkCard)
+    {
+        clWorkCard _WorkCard = new clWorkCard();
+        DateTime dWorkCard;
+        int iCardCount;
+        try
+        {
+            dWorkCard = DateTime.Parse(sWorkCard);
+            iCardCount = _WorkCard.GetIsCardExistsInYemeyAvodaOvdim(iMisparIshi, dWorkCard);
+            return iCardCount.ToString() + "|" + clGeneral.arrDays[dWorkCard.DayOfWeek.GetHashCode()];
+        }
+        catch (System.FormatException ex)
+        {
+            return "0";
+        }
+        catch (System.InvalidCastException ex)
+        {
+            return "0";
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+    }
+    [WebMethod]
+    public string GetOvedMisparIshi(string sName)
+    {
+        string sMisparIshi = "";
+
+        clOvdim oOvdim = new clOvdim();
+        try
+        {
+            if (sName != string.Empty)
+            {
+                sMisparIshi = oOvdim.GetOvedMisparIshi(sName);
+            }
+            return sMisparIshi;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string GetOvedSnifAndUnit(int iMisparIshi)
+    {
+        try
+        {
+            string sSnif = "";
+            string sUnit = "";
+            clOvdim oOvdim = new clOvdim();
+            if (iMisparIshi > 0)
+            {
+                oOvdim.GetOvedSnifAndUnit(iMisparIshi, ref sSnif, ref sUnit);
+            }
+            return string.Concat(sSnif, "/", sUnit);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string GetOvedAllDetails(int iMisparIshi, string sCardDate)
+    {
+        String sXMLResult = "";
+        clOvdim oOvdim = new clOvdim();
+        DataTable dt;
+        DateTime dCardDate = DateTime.Parse(sCardDate);
+
+        try
+        {
+            if (iMisparIshi > 0)
+            {
+                //נתוני עובד                
+                dt = oOvdim.GetOvedDetails(iMisparIshi, dCardDate);
+                sXMLResult = BuildOvedDetailsXml(dt, iMisparIshi, dCardDate);
+                //נתוני כרטיס     
+
+            }
+            return sXMLResult;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, long lNewMakat, long lOldMakat)
+    {
+        StringBuilder sXML = new StringBuilder();
+        DateTime dActivityDate = DateTime.Parse(sTravelDate + " " + sShatYetiza).AddDays(int.Parse(sDayToAdd));
+        clKavim _Kavim = new clKavim();
+        DataTable dtElement=new DataTable();
+        clKavim.enMakatType oMakatType;
+        DataRow[] dr;
+        try
+        {
+            sXML.Append("<MAKAT>");
+            if (dtMakat.Rows.Count > 0)
+            {
+                oMakatType = (clKavim.enMakatType)GetMakatType(lNewMakat);
+
+                if (oMakatType == clKavim.enMakatType.mElement)
+                {
+                    long lElementValue;
+                    dtElement = _Kavim.GetMeafyeneyElementByKod(lNewMakat, DateTime.Parse(sTravelDate));
+                    if (dtElement.Rows.Count > 0)
+                    {
+                        //ד.	אם שינו לאלמנט עם מאפיין 13 (דיווח בסידור מיוחד) וערך 2 (לא רשאי לדיווח בסידור מיוחד) והסידור הוא סידור מיוחד,  יש להציג הודעה: "אסור לדווח אלמנט זה בסידור מיוחד". 
+                        //dr = dtElement.Select("kod_meafyen=" + 13);
+                        //if (dr.Length > 0)
+                        //    if ((dtElement.Rows[0]["erech"].Equals("2")))
+                        //        sXML.Append(string.Concat("<LO_DIVUCH>", "1", "</LO_DIVUCH>"));
+                        //ה.	אם שינו לאלמנט עם מאפיין 12 (דיווח בסידור ויזה) עם ערך 2 (לא רשאי לדיווח בסידור  ויזה), והסידור הוא סידור ויזה (לפי מאפיין 45 בטבלת סידורים מיוחדים), 
+                        //dr = dtElement.Select("kod_meafyen=" + 12);
+                        //if (dr.Length > 0)
+                        //    if ((dtElement.Rows[0]["erech"].Equals("2")))
+                        //        sXML.Append(string.Concat("<NO_DIVUCH_VISA>", "1", "</NO_DIVUCH_VISA>"));
+
+
+                        //ב.	שינוי לאלמנט שאסור לדווח בו מספר רכב (אלמנט ללא מאפיין 11 (חובה מספר רכב) ולפני שינוי המק"ט היה ערך בשדה מספר רכב, יש למחוק את מספר הרכב
+                        dr = dtElement.Select("kod_meafyen=" + 11);
+                        if (dr.Length == 0)
+                        {
+                            //if (!(dtElement.Rows[0]["erech"].Equals("1")))
+                            //{
+                            sXML.Append(string.Concat("<OTO_NO>", "", "</OTO_NO>"));
+                            sXML.Append(string.Concat("<OTO_NO_ENABLED>", "0", "</OTO_NO_ENABLED>"));
+                            sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));
+                            // }
+                        }
+                        dr = dtElement.Select("kod_meafyen=" + 40);
+                        if (dr.Length > 0)
+                        {
+                            sXML.Append(string.Concat("<MAKAT_NOT_EXIST>", "1", "</MAKAT_NOT_EXIST>"));
+                        }
+                        ////ג.	אם שינוי לאלמנט לידיעה (אלמנט עם מאפיין 3 (פעולה/ידיעה בלבד) וערך 2 (ידיעה בלבד), ולפני שינוי המק"ט היה ערך בשדה שעת יציאה, יש למחוק את שעת היציאה
+                        //dr = dtElement.Select("kod_meafyen=" + 3);
+                        //if (dr.Length > 0)
+                        //    if ((dtElement.Rows[0]["erech"].Equals("2")))
+                        //    {
+                        //        sXML.Append(string.Concat("<SHAT_YETIZA>", "", "</SHAT_YETIZA>"));
+                        //        sXML.Append(string.Concat("<SHAT_YETIZA_ENABLED>", "0", "</SHAT_YETIZA_ENABLED>"));
+                        //    }
+
+                        //. אם שינו למק"ט מסוג אלמנט או ששינו לאמנט את הערך, ראה המקרים הבאים:
+                        // א.	עבור אלמנט מסוג דקות/כמות/קוד  (ערך 1 (דקות)/2 (כמות)/3 (קוד) במאפיין 4 (ערך האלמנט) בטבלת מאפייני אלמנטים, ניתן להגדיר דקות/כמות/קוד שנע בין הערך המינימלי לאלמנט לפי מאפיין 6 (זמן / כמות קוד מינימלי) למאפיין 7 (זמן / כמות / קוד מכסימלי) בטבלת מאפייני אלמנטים. אם לאלמנט אין מאפיין 6 ו/או 7 אז אין הגבלה בערך (יכול להיות שיש את אחד מהמאפיינים). אם הקלידו ערך לא בהתאם למאפיינים, יש להציג הודעה: "יש להקליד ערך בתחום:"ערך מאפיין  
+                        // 6"/"0" (אם לא קיים מאפיין 6) עד 
+                        //ערך בתחום +"ערך מאפיין 7"/"999"      
+                        //(אם לא קיים מאפיין 7).
+
+                        lElementValue = ((lNewMakat % 100000) / 100);
+                        dr = dtElement.Select("kod_meafyen=" + 6);
+                        if (dr.Length > 0)
+                            if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
+                                if (lElementValue < long.Parse(dr[0]["erech"].ToString()))
+                                    sXML.Append(string.Concat("<MEAFYEN6ERR>", lElementValue.ToString(), "</MEAFYEN6ERR>"));
+
+                        dr = dtElement.Select("kod_meafyen=" + 7);
+                        if (dr.Length > 0)
+                            if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
+                                if (lElementValue > long.Parse(dr[0]["erech"].ToString()))
+                                    sXML.Append(string.Concat("<MEAFYEN7ERR>", lElementValue.ToString(), "</MEAFYEN7ERR>"));
+
+                    }
+                    else
+                    {   //אין מאפיינים
+                        sXML.Append(string.Concat("<MAKAT_NOT_EXIST>", "1", "</MAKAT_NOT_EXIST>"));
+                    }
+                }
+                
+                switch (oMakatType)
+                {
+                    case clKavim.enMakatType.mKavShirut:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "1", "</HYPER_LINK>"));
+                        sXML.Append(string.Concat("<SHILUT>", dtMakat.Rows[0]["shilut"].ToString(), "</SHILUT>"));
+                        sXML.Append(string.Concat("<SHILUT_NAME>", dtMakat.Rows[0]["sugshirutname"].ToString(), "</SHILUT_NAME>"));
+                        sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                       
+                        sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));                        
+                        sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                        //sXML.Append(string.Concat("<HYPER_LINK>", "a onclick='AddHosafatKnisot(0,lstSidurim_000_ctl03);' style='text-decoration:underline;cursor:pointer;'>" + dtMakat.Rows[0]["description"].ToString(), "</HYPER_LINK>"));
+                       
+
+                        dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
+                        if (dActivityDate.ToShortTimeString().Equals(sShatYetiza)){
+                            sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                            sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                            }
+                        else
+                        {
+                            sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
+                            sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "1", "</KISUY_TOR_ENABLED>"));
+                        }
+
+                        sXML.Append(string.Concat("<KISUY_TOR_MAP>", dtMakat.Rows[0]["kisuitor"].ToString(), "</KISUY_TOR_MAP>"));
+                        
+                        break;
+                    case clKavim.enMakatType.mNamak:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
+                        dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
+                        if (dtMakat.Rows[0]["kisuitor"].ToString().Equals("0")){
+                             sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                             sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                        }
+                        else{
+                             sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
+                             sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "1", "</KISUY_TOR_ENABLED>"));
+                        }
+                        sXML.Append(string.Concat("<KISUY_TOR_MAP>", dtMakat.Rows[0]["kisuitor"].ToString(), "</KISUY_TOR_MAP>"));
+                        sXML.Append(string.Concat("<SHILUT>", dtMakat.Rows[0]["shilut"].ToString(), "</SHILUT>"));
+                        sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_NAMAK, "</SHILUT_NAME>"));
+                        sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
+                       
+                        sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ","</DAKOT_DEF_TITLE>")) ;
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
+                        break;
+                    case clKavim.enMakatType.mElement:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
+                        sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                        sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
+                        if (dtElement.Rows.Count > 0)
+                            sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["teur_element"].ToString(), "</DESC>"));
+                       
+
+                        sXML.Append(string.Concat("<SHILUT_NAME>", "", "</SHILUT_NAME>"));
+                        sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "0", "</DAKOT_BAFOAL_ENABLED>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>","", "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "", "</DAKOT_DEF_TITLE>"));
+                        break;
+                    case clKavim.enMakatType.mEmpty:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
+                        sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                        sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
+                        sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_EMPTY, "</SHILUT_NAME>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                        sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
+                        sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
+                        sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        break;
+                    case clKavim.enMakatType.mVisa:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
+                        sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                        sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
+                        sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["teur_visut"].ToString(), "</DESC>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</DAKOT_BAFOAL>"));
+                        sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
+                        //sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_VISUT, "</SHILUT_NAME>"));
+                        break;
+                    case clKavim.enMakatType.mVisut:
+                        sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
+                        sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                        sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
+                        sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_VISUT, "</SHILUT_NAME>"));
+                        sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
+                        sXML.Append(string.Concat("<DAKOT_DEF>", "0", "</DAKOT_DEF>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "0", "</DAKOT_BAFOAL>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "0", "</DAKOT_BAFOAL_ENABLED>"));
+                        sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                        break;
+                }
+            }
+            sXML.Append("</MAKAT>");
+            return sXML.ToString();
+        }
+        catch (Exception ex)
+        {
+
+
+            throw ex;
+        }
+    }
+
+    private string BuildOvedDetailsXml(DataTable dtOvedDetails, int iMisparIshi, DateTime dCardDate)
+    {
+        StringBuilder sXML = new StringBuilder();
+        clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dCardDate);
+        try
+        {
+            sXML.Append("<OVED>");
+            if (dtOvedDetails.Rows.Count > 0)
+            {
+                sXML.Append(string.Concat("<COMPANY>", dtOvedDetails.Rows[0]["teur_hevra"].ToString(), "</COMPANY>"));
+                sXML.Append(string.Concat("<EZOR>", dtOvedDetails.Rows[0]["teur_ezor"].ToString(), "</EZOR>"));
+                sXML.Append(string.Concat("<SNIF>", dtOvedDetails.Rows[0]["teur_snif_av"].ToString(), "</SNIF>"));
+                sXML.Append(string.Concat("<MAAMAD>", dtOvedDetails.Rows[0]["teur_maamad_hr"].ToString(), "</MAAMAD>"));
+                sXML.Append(string.Concat("<ISUK>", dtOvedDetails.Rows[0]["teur_isuk"].ToString(), "</ISUK>"));
+                sXML.Append(string.Concat("<NAME>", dtOvedDetails.Rows[0]["full_name"].ToString(), "</NAME>"));
+
+            }
+            if (oOvedYomAvodaDetails.OvedDetailsExists)
+            {
+                sXML.Append(string.Concat("<TACHOGRAPH>", oOvedYomAvodaDetails.sTachograf, "</TACHOGRAPH>"));
+                sXML.Append(string.Concat("<HALBASHA>", oOvedYomAvodaDetails.sHalbasha, "</HALBASHA>"));
+                sXML.Append(string.Concat("<LINA>", oOvedYomAvodaDetails.sLina, "</LINA>"));
+                sXML.Append(string.Concat("<BITUL_ZMAN_NESIOT>", oOvedYomAvodaDetails.sBitulZmanNesiot, "</BITUL_ZMAN_NESIOT>"));
+            }
+
+            sXML.Append("</OVED>");
+            return sXML.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string GetOvedName(int iMisparIshi)
+    {
+        try
+        {
+            clOvdim oOvdim = new clOvdim();
+            string sName = "";
+
+            if (iMisparIshi > 0)
+            {
+                sName = oOvdim.GetOvedFullName(iMisparIshi);
+            }
+            return sName;
+        }
+
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string[] GetOvdimByName(string prefixText, int count, string contextKey)
+    {   //
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+        string sOvdimNumber = "";
+        DataRow[] drOvdimNumber;
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+
+            if (contextKey == "1")
+            {
+                dt = (DataTable)Session["MisparimIshi"];
+                drOvdimNumber = dt.Select("full_name like '" + prefixText.Replace("'", "''") + "'", " full_name asc");
+                foreach (DataRow dr in drOvdimNumber)
+                {
+                    sOvdimNumber += dr["mispar_ishi"] + ",";
+                }
+
+                if (sOvdimNumber.Length > 0)
+                {
+                    sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
+
+                }
+            }
+
+            dt = oOvdim.GetOvdimByName(prefixText, sOvdimNumber);
+
+            //string[] items = new string[dt.Rows.Count];
+            List<string> items = new List<string>(count);
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["Oved_Name"].ToString());
+                //items.SetValue(dr["Oved_Name"].ToString(), i);
+                i++;
+            }
+
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetOvdimForPremiot(string prefixText, int count, string contextKey)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(',');
+            dt = oUtils.GetOvdimForPremiotType(prefixText, (string)Params[0], (string)Params[1]);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, "MISPAR_ISHI");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string[] GetOvdimForPresence(string prefixText, int count, string contextKey)
+    {
+        clOvdim oOvdim = clOvdim.GetInstance();
+        DataTable dt = new DataTable();
+        clGeneral.enProfile SecurityLevel;
+        try
+        {
+            string[] Params = contextKey.Split(',');
+            SecurityLevel = (clGeneral.enProfile)Enum.Parse(typeof(clGeneral.enProfile), Params[0]);
+            switch (SecurityLevel)
+            {
+                case clGeneral.enProfile.enRashemetAll : 
+                case clGeneral.enProfile.enSystemAdmin : 
+                case clGeneral.enProfile.enVaadatPikuah :
+                    dt = oOvdim.GetActiveWorkers(prefixText, DateTime.Parse(Params[2]), DateTime.Parse(Params[3]));
+                    break;
+                case clGeneral.enProfile.enMenahelImKfufim : 
+                    dt = oOvdim.GetOvdimToUser(prefixText + "%", clGeneral.GetIntegerValue(Params[1]));
+                    break;
+                default:
+                    break;
+            }
+
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, "MISPAR_ISHI");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string[] GetIdOfYameyAvoda(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oReport.GetIdOfYameyAvoda(DateTime.Parse(Params[0]), DateTime.Parse(Params[1]), prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, "mispar_ishi");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string[] GetOvdimById(string prefixText, int count, string contextKey)
+    {   //מביא את כל המספרים האישיים שבתחום
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+        string sOvdimNumber = "";
+        string sSelect, ezor, snif, maamad;
+        string[] pirteySinun;
+        DataRow[] drOvdimNumber;
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            if (contextKey == "1")
+            {
+                sSelect="mispar_ishi_char  like '" + prefixText + "'";
+                if (Session["PirteySinun"] != null)
+                {
+                    pirteySinun = Session["PirteySinun"].ToString().Split(';');
+                    if (pirteySinun[0].ToString() != "-1" && pirteySinun[0].ToString() != "")
+                        sSelect += " and TEUR_EZOR='" + pirteySinun[0].ToString() + "'";
+                    if (pirteySinun[1].ToString() != "-1" && pirteySinun[1].ToString() != "")
+                        sSelect += " and SNIF_AV='" + pirteySinun[1].ToString() + "'";
+                    if (pirteySinun[2].ToString() != "-1" && pirteySinun[2].ToString() != "")
+                        sSelect += " and TEUR_MAAMAD_HR='" + pirteySinun[2].ToString() + "'";
+                }
+                dt = (DataTable)Session["MisparimIshi"];
+                drOvdimNumber = dt.Select(sSelect, "mispar_ishi asc");
+                //drOvdimNumber = dt.Select("mispar_ishi_char  like '" + prefixText + "'", "mispar_ishi asc");
+                foreach (DataRow dr in drOvdimNumber)
+                {
+                    sOvdimNumber += dr["mispar_ishi"] + ",";
+                }
+
+                if (sOvdimNumber.Length > 0)
+                {
+                    sOvdimNumber = sOvdimNumber.Substring(0, sOvdimNumber.Length - 1);
+                    dt = oOvdim.GetOvdimMisparIshi(prefixText, sOvdimNumber);
+                }
+                else dt = new DataTable();
+            }
+            else
+                dt = oOvdim.GetOvdimMisparIshi(prefixText, sOvdimNumber);
+            
+                //string[] items = new string[dt.Rows.Count];
+                count = dt.Rows.Count;
+                List<string> items = new List<string>(count);
+                int i = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (i > count) { break; }
+                    //items.SetValue(dr["mispar_ishi"].ToString(), i);
+                    items.Add(dr["mispar_ishi"].ToString());
+                    i++;
+                }
+                return items.ToArray();
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetSnifim(string prefixText, int count, string contextKey)
+    {
+        DataTable dt;
+        DataRow[] drSelect;
+        clUtils oUtils = new clUtils();
+        string sSQL = "";
+
+        try
+        {
+            dt = oUtils.GetSnifAv(int.Parse(contextKey));
+            sSQL = string.Concat("Description like '", prefixText, "%'");
+            drSelect = dt.Select(sSQL);
+            string[] items = new string[drSelect.Length];
+            int i = 0;
+            foreach (DataRow dr in drSelect)
+            {
+                items.SetValue(dr["Description"].ToString(), i);
+                i++;
+            }
+            return items;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+        }
+    }
+
+    [WebMethod]
+    public string[] GetOvdimToUser(string prefixText, int count, string contextKey)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            if (contextKey.Length > 0)
+            {
+                dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
+            }
+            else
+            {
+                dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
+            }
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["mispar_ishi"].ToString());
+                i++;
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetOvdimToUserByName(string prefixText, int count, string contextKey)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            if (contextKey.Length > 0)
+            {
+                dt = oOvdim.GetOvdimToUserByName(prefixText, int.Parse(contextKey));
+            }
+            else
+            {
+                dt = oOvdim.GetOvdimByName(prefixText, contextKey);
+            }
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["Oved_Name"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod(EnableSession = true)]
+    public string[] GetAdminEmployeeById(string prefixText, int count, string contextKey)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+
+        try
+        {
+            KdsSecurityLevel _SecurityLevel = (KdsSecurityLevel)(Session["SecurityLevel"]);
+
+            if (_SecurityLevel == KdsSecurityLevel.ViewAll)
+            {
+                contextKey = "";
+            }
+            prefixText = string.Concat(prefixText, "%");
+            if (contextKey.Length > 0)
+            {
+                dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
+            }
+            else
+            {
+                dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
+            }
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["mispar_ishi"].ToString());
+                i++;
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod(EnableSession = true)]
+    public string[] GetAdminEmployeeByName(string prefixText, int count, string contextKey)
+    {   //מביא את כל המספרים האישיים  של העובדים הכפופים
+        DataTable dt;
+        clOvdim oOvdim = new clOvdim();
+
+        try
+        {
+            KdsSecurityLevel _SecurityLevel = (KdsSecurityLevel)(Session["SecurityLevel"]);
+
+            if (_SecurityLevel == KdsSecurityLevel.ViewAll)
+            {
+                contextKey = "";
+            }
+            prefixText = string.Concat(prefixText, "%");
+            if (contextKey.Length > 0)
+            {
+                dt = oOvdim.GetOvdimToUserByName(prefixText, int.Parse(contextKey));
+            }
+            else
+            {
+                dt = oOvdim.GetOvdimByName(prefixText, contextKey);
+            }
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["Oved_Name"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string[] GetMeafyenyeBitzuaCode(string prefixText, int count)
+    {   //מביא מאפייני ביצוע
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+        DataRow[] drMeafyenim;
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            dt = oUtils.GetCombo(clGeneral.cProGetMeafyeneyBitsua, "");
+
+            drMeafyenim = dt.Select("KOD_MEAFYEN_BITZUA like '" + prefixText + "'", "KOD_MEAFYEN_BITZUA asc");
+
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in drMeafyenim)
+            {
+                if (i > count) { break; }
+                items.Add(dr["KOD_MEAFYEN_BITZUA"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetMeafyenyeBitzuaTeur(string prefixText, int count)
+    {   //מביא מאפייני ביצוע
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+        DataRow[] drMeafyenim;
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            dt = oUtils.GetCombo(clGeneral.cProGetMeafyeneyBitsua, "");
+
+            drMeafyenim = dt.Select("TEUR_MEAFYEN_BITZUA like '" + prefixText + "'", "TEUR_MEAFYEN_BITZUA asc");
+
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in drMeafyenim)
+            {
+                if (i > count) { break; }
+                items.Add(dr["TEUR_MEAFYEN_BITZUA"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetTeurByKod(string prefixText, int count)
+    {   //מביא קודי נתון
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+        DataRow[] drNatun;
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            dt = oUtils.GetCombo(clGeneral.cProGetKodNatun, "");
+
+            drNatun = dt.Select("KOD_NATUN like '" + prefixText + "'", "KOD_NATUN asc");
+
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in drNatun)
+            {
+                if (i > count) { break; }
+                items.Add(dr["KOD_NATUN"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetNatunByTeur(string prefixText, int count)
+    {   //מביא קודי נתון
+        DataTable dt;
+        clUtils oUtils = new clUtils();
+        DataRow[] drNetunim;
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+            dt = oUtils.GetCombo(clGeneral.cProGetKodNatun, "");
+
+            drNetunim = dt.Select("TEUR_NATUN like '" + prefixText + "'", "TEUR_NATUN asc");
+
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in drNetunim)
+            {
+                if (i > count) { break; }
+                items.Add(dr["TEUR_NATUN"].ToString());
+                i++;
+
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    /// <summary>
+    /// get the matching worker details (name/Id) for the autocomplete process 
+    /// </summary>
+    /// <param name="prefixText">the matching prefix</param>
+    /// <param name="count"></param>
+    /// <param name="contextKey">contain 6 sub parameters separeted by a ","</param>
+    /// <returns></returns>
+    [WebMethod]
+    public string[] GetWorkersDetailsOfHoursApproval(string prefixText, int count, string contextKey)
+    {
+        clOvdim oOvdim = clOvdim.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(',');
+            string Filter = " AND " + Params[0] + " LIKE '" + prefixText.ToString() + "%'";
+            dt = oOvdim.GetIshurim((clGeneral.enDemandType)(Int32.Parse(Params[1])),
+                                                           Int32.Parse(Params[2]),
+                                                           Params[3],
+                                   (clGeneral.enMonthlyQuotaForm)(Int32.Parse(Params[4])),
+                                   Filter);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, Params[0]);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+    }
+
+    [WebMethod]
+    public string[] GetRequestList(string prefixText, int count, string contextKey)
+    {   //מבירא רשימת בקשות
+        DataTable dt;
+        clRequest oRequest = new clRequest();
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+
+            dt = oRequest.GetRequestList(prefixText, contextKey);
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["BAKASHA_ID"].ToString());
+                i++;
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetOvdimFromLogBakashot(string prefixText, int count, string contextKey)
+    {   //מביא רשימת עובדים מטבלת log bakashot
+        //רק עובדים שיש להם רשומה בטבלה יופיעו ברשימה 
+        DataTable dt;
+        clRequest oRequest = new clRequest();
+
+        try
+        {
+            prefixText = string.Concat(prefixText, "%");
+
+            if (contextKey == null) { contextKey = "|0"; }
+            dt = oRequest.GetListOvdimFromLogBakashot(prefixText, contextKey.Split('|')[0], int.Parse(contextKey.Split('|')[1]));
+
+            List<string> items = new List<string>(count);
+
+            int i = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (i > count) { break; }
+                items.Add(dr["mispar_ishi"].ToString());
+                i++;
+            }
+            return items.ToArray();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string GetOvedCardDetails()
+    {
+
+        try
+        {
+            return "";
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string CheckOtoNo(long lOtoNo)
+    {
+        clKavim oKavim = new clKavim();
+        long lLicenseNumber = 0;
+
+        try
+        {
+            if (lOtoNo > 0)
+            {
+                //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
+                oKavim.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
+            }
+            return lLicenseNumber.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string CheckMakat(long lNewMakat, long lOldMakat, string sTravelDate, string sShatYetiza, string sDayToAdd)
+    {
+        clKavim oKavim = new clKavim();
+        string sResult = "0";
+        DataTable dt;
+
+        try
+        {
+            if (lNewMakat > 0)
+            {
+                //בדיקה אם קיים מקט בתנועה
+                dt = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sTravelDate));               
+                sResult = BuildMakatDetails(dt, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat);
+            }
+            return sResult;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public int GetMakatType(long lMakat)
+    {
+        clKavim oKavim = new clKavim();
+        try
+        {
+            return oKavim.GetMakatType(lMakat);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string[] GetOvdimLeRitza(string prefixText, int count, string contextKey)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oUtils.GetOvdimLeRitza(clGeneral.GetIntegerValue(Params[0]), (string)Params[1], (string)Params[2], prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetMakatOfActivity(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oReport.GetMakatOfActivity(DateTime.Parse(Params[0]), DateTime.Parse(Params[1]), prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string[] GetWorkStation(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            dt = oReport.GetWorkStation(prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] GetLicenceNumber(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            dt = oReport.GetLicenceNumber(prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetSidurimOvdim(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oReport.GetSidurimOvdim(DateTime.Parse(Params[0]), DateTime.Parse(Params[1]), prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public int CheckRashamPail(string prefixText, string contextKey)
+    {
+        string[] rasham;
+        try
+        {
+            rasham = getMispareiRashamot(prefixText, 1, contextKey);
+            return rasham.Length;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+
+    [WebMethod]
+    public string[] getMispareiRashamot(string prefixText, int count, string contextKey)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(',');
+            dt = oUtils.getMispareiRashamot(clGeneral.GetIntegerValue(Params[0]), (string)Params[1], DateTime.Parse(Params[2]), prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string CheckKodElement(string kod, string Sidur, string taarichCA)
+    {
+        DataTable dt;
+        DataTable dtSidur;
+        DataRow[] drSelect;
+        clUtils oUtils = new clUtils();
+        string sSQL = "";
+        string pratim = "";
+        string teur;
+        try
+        {
+            dt = oUtils.GetElementsVeMeafyenim(taarichCA);
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length == 0)
+                return "1";
+            teur = drSelect[0]["TEUR_ELEMENT"].ToString();
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "' AND KOD_MEAFYEN='12' AND ERECH='2'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length == 0)
+            {
+                dtSidur = oUtils.GetMeafyenSidurByKodSidur(int.Parse(Sidur), taarichCA);
+
+                sSQL = string.Concat("KOD_MEAFYEN='45'");
+                drSelect = dtSidur.Select(sSQL);
+
+                if (drSelect.Length > 0)
+                    return "2";
+            }
+           
+
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "' AND KOD_MEAFYEN='13' AND ERECH='1'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length > 0)
+                if (Sidur.Substring(0, 1) == "9")
+                    return "3";
+
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "' AND KOD_MEAFYEN='4'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length > 0)
+                pratim = drSelect[0]["TEUR_ELEMENT"].ToString() + ";" + drSelect[0]["ERECH"].ToString();
+            else
+                pratim = teur+";";
+            //בדיקה אם חובה רכב
+            sSQL = "KOD_ELEMENT='" + kod + "'  AND KOD_MEAFYEN='11'";
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length > 0)
+                pratim = pratim + ";1";
+            else pratim = pratim + ";0";
+
+            return pratim;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetTeurElements(string prefixText, int count)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            dt = oUtils.GetTeurElements(prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public int GetKodElementByTeur(string teurElemnt)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        int kod;
+
+        try
+        {
+            kod = oUtils.GetKodElementByTeur(teurElemnt);
+            return kod;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string getMigbalaLeErechElement(string kod, string taarichCA)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt;
+        DataRow[] drSelect;
+        string sSQL = "";
+        string pratim = "";
+        try
+        {
+            dt = oUtils.GetElementsVeMeafyenim(taarichCA);
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "' AND KOD_MEAFYEN='6'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length > 0)
+                pratim = drSelect[0]["ERECH"].ToString() + "-";
+            else
+                pratim = "0-";
+
+            sSQL = string.Concat("KOD_ELEMENT='" + kod + "' AND KOD_MEAFYEN='7'");
+            drSelect = dt.Select(sSQL);
+            if (drSelect.Length > 0)
+                pratim = pratim + drSelect[0]["ERECH"].ToString();
+            else
+                pratim = pratim + "999";
+            return pratim;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] getTeureySidurimWhithOutList(string prefixText, int count, string contextKey)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oUtils.getTeureySidurimWhithOutList(prefixText, Params[0], Params[1]);
+            //   dt = oUtils.getTeureySidurimWhithOutList(prefixText, contextKey);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public int getKodSidurByTeur(string teur)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        int kod;
+
+        try
+        {
+            kod = oUtils.getKodSidurByTeur(teur);
+            return kod;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string[] getKodSidurimWhithOutList(string prefixText, int count, string contextKey)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1]);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+            //  return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[1].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    [WebMethod]
+    public string getTeurSidurByKod(int kod)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        string teur;
+
+        try
+        {
+            teur = oUtils.getTeurSidurByKod(kod);
+            return teur;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string GetSidurDetailsFromTnua(int sidur, string date)
+    {
+        clKavim oKavim = new clKavim(); //.GetInstance();
+        DataTable PirteySidur;
+        int result;
+
+        try
+        {
+            PirteySidur = oKavim.GetSidurDetailsFromTnua(sidur, DateTime.Parse(date), out result);
+            if (result == 1)
+                return "-1";
+            return "0";
+            //return teur;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string CancelError(int iMisparIshi, string sCardDate, string sErrorKey, string sGoremMeasher)
+    {
+        clWorkCard oWorkCard = new clWorkCard();
+        int iResult = 0;
+
+        try
+        {
+            iResult = oWorkCard.InsertToShgiotMeusharot(iMisparIshi, DateTime.Parse(sCardDate), sErrorKey, sGoremMeasher);
+            return iResult.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string ApproveError(int iMisparIshi, string sCardDate, string sErrorKey, string sGoremMeasher)
+    {
+        WorkCard _WorkCard = new WorkCard();
+        int iResult;
+
+        try
+        {
+            iResult = _WorkCard.ApproveError(iMisparIshi, DateTime.Parse(sCardDate), sErrorKey, sGoremMeasher);
+            return iResult.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    //[WebMethod]
+    //public string GetRSSReader()
+    //{
+    //    // Create a new Page and add the control to it.
+    //    Page page = new Page();
+    //    UserControl ctl =
+    //      (UserControl)page.LoadControl("~/Modules/UserControl/ucPeiluyot.ascx");
+    //    page.Controls.Add(ctl);
+
+    //    // Render the page and capture the resulting HTML.
+    //    StringWriter writer = new StringWriter();
+    //    HttpContext.Current.Server.Execute(page, writer, false);
+
+    //    // Return that HTML, as a string.
+    //    return writer.ToString();
+    //}
+    [WebMethod(EnableSession = true)]
+    public string GetFieldErrors(int iLevel, int iMisparIshi, string sCardDate, int iSidurNumber,
+                                 string sSidurStartHour, string sPeilutShatYetiza, int iMisparKnisa, string sFieldName)
+    {
+        DataSet ds = new DataSet();
+        string sWriter = "";
+        DateTime dSidurStartHour, dActiveStartHour;
+        bool bProfileRashemet = (bool)Session["ProfileRashemet"];
+        DataTable dt = (DataTable)Session["Errors"];
+        switch (iLevel)
+        {
+            case 1:
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), sFieldName);
+                break;
+            case 2:
+                dSidurStartHour = DateTime.Parse(sSidurStartHour);
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), iSidurNumber, dSidurStartHour, sFieldName);
+                break;
+            case 3:
+                dSidurStartHour = DateTime.Parse(sSidurStartHour);
+                dActiveStartHour = DateTime.Parse(sPeilutShatYetiza);
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), iSidurNumber, dSidurStartHour, dActiveStartHour, iMisparKnisa, sFieldName);
+                break;
+        }
+
+        if (ds.Tables.Count > 0)
+        {
+            sWriter = TransformXsl(ds);
+        }
+        return sWriter;
+    }
+    private string TransformXsl(DataSet ds)
+    {
+        XmlDataDocument xmlDoc = new XmlDataDocument(ds);
+        XPathNavigator nav = xmlDoc.CreateNavigator();
+        XsltArgumentList xslArg = new XsltArgumentList();
+        //xslArg.AddParam("SugHaskala", "", cboSugHaskala.SelectedValue)
+
+        XslTransform xslTran = new XslTransform();
+        xslTran.Load(Server.MapPath("..\\Xslt\\XSLErrors.xslt"));
+
+        StringWriter writer = new StringWriter();
+        xslTran.Transform(nav, xslArg, writer, null);
+        return writer.ToString();
+    }
+
+
+    [WebMethod]
+    public string[] GetOvdim(string prefixText, int count, string contextKey)
+    {
+        clReport oReport = clReport.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            string[] Params = contextKey.Split(';');
+            dt = oReport.GetOvdim(DateTime.Parse(Params[0]), DateTime.Parse(Params[1]), prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, "mispar_ishi");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string GetDakotPremiya(int misIshi, string taarich, int sugPremia)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            dt = oUtils.GetPremiaYadanitForOved(misIshi, DateTime.Parse(taarich), sugPremia);
+
+            if (dt.Rows.Count > 0)
+                return dt.Rows[0]["DAKOT_PREMYA"].ToString();
+            else
+                return "";
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    [WebMethod]
+    public string[] GetElements(string prefixText, int count)
+    {
+        clUtils oUtils = clUtils.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+
+            dt = oUtils.getAllElements(prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string SetMeasherOMistayeg(int iMisaprIshi, string sCardDate, int iStatus)
+    {
+        clOvdim _Ovdim = clOvdim.GetInstance();
+        string sResult = "0";
+        try
+        {
+            _Ovdim.SetMeasherOMistayeg(iMisaprIshi, DateTime.Parse(sCardDate), iStatus);
+            sResult = "1";
+            return sResult;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod]
+    public string GetLoLetashlumRemark(int iMisaprIshi, string sCardDate, int iMisparSidur, string sSidurStartHour)
+    {
+        clOvdim _Ovdim = clOvdim.GetInstance();
+        string sResult = "";
+        try
+        {
+
+            sResult = _Ovdim.GetSibaLoLetashlum(iMisaprIshi, DateTime.Parse(sCardDate), iMisparSidur, DateTime.Parse(sSidurStartHour));
+
+            return sResult;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    [WebMethod(EnableSession = true)]
+    public string AddNesiaReka(int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala, long lMakatStart, long lMakatEnd, string sShatYetiza,
+                               string sPeilutDate, int iMazanTichnun, long lCarNum, string sPeilutShatYetiza)
+    {       
+        DataTable _NesiaDetails;
+        DataTable _Peiluyot;
+        DataRow[] dr;
+        long xPosStart=0;
+        long xPosEnd = 0;
+        clKavim _Kavim = new clKavim();
+        int iResult = 0;
+        long lMakat=0;
+        long lRepresentMakat8=0;
+        DateTime dPeilutShatYetiza = DateTime.Parse(sPeilutDate + " " + sShatYetiza);
+        
+        try
+        {
+            dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
+            
+            _Peiluyot = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + sCardDate);
+            dr = _Peiluyot.Select("makat8=" + lMakatStart);
+            if (dr.Length > 0)
+                xPosStart = String.IsNullOrEmpty(dr[0]["xy_moked_siyum"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_siyum"].ToString());
+            dr = _Peiluyot.Select("makat8=" + lMakatEnd);
+            if (dr.Length > 0)
+                xPosEnd = String.IsNullOrEmpty(dr[0]["xy_moked_tchila"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_tchila"].ToString());
+
+
+            _NesiaDetails = _Kavim.GetRekaDetailsByXY(DateTime.Parse(sCardDate), xPosStart, xPosEnd, out iResult);
+
+            //נמצאה ריקה מתאימה
+            if (_NesiaDetails.Rows.Count > 0)
+            {
+                if (iResult == 0)
+                {
+                    lMakat = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["makat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["makat8"].ToString()));
+                    lRepresentMakat8 = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["representmakat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["representmakat8"].ToString()));
+                    if ((lMakat == 0) && (lRepresentMakat8 > 0))
+                        lMakat = lRepresentMakat8;
+
+                    InsertNesiaRekaToDB(int.Parse(Session["LoginUserEmp"].ToString()), iMisparIshi, sCardDate, iMisparSidur, sSidurShatHatchala, lMakat, lCarNum, dPeilutShatYetiza, sPeilutShatYetiza);
+                    HttpRuntime.Cache.Remove(iMisparIshi.ToString() + DateTime.Parse(sCardDate).ToShortDateString());
+                }
+            }
+            else
+            {
+                iResult = 1;
+            }
+            return iResult.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public void InsertNesiaRekaToDB(int iLoginUser, int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala, long lMakat, long lCarNum, DateTime dPeilutShatYetiza, string sPeilutShatYetiza)
+    {
+        clWorkCard _workCard = new clWorkCard();
+
+        _workCard.InsertNesiaReka(iLoginUser, iMisparIshi, sCardDate, iMisparSidur, sSidurShatHatchala, lMakat, lCarNum, dPeilutShatYetiza, sPeilutShatYetiza);        
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string SidurStartHourChanged(int iSidurKey, string sStartHour)
+    {
+        string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+        DateTime dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sStartHour.Substring(0, 2)), int.Parse(sStartHour.Substring(3, 2)),0);
+        DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0,0,0);
+        DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3,2)), 0);
+        
+        DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+        DataRow[] dr;
+        
+        //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
+        if ((dSidurStartHour >= dStartHour) && (dSidurStartHour<=dEndHour))
+        {
+            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_start_hour='" + sStartHour + "'");
+            if (dr.Length > 0)
+            {
+                if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                    return "1";
+                else
+                    return "0";
+            }
+            else
+                return "0";
+        }            
+        else
+            return "0";
+       
+    }
+    [WebMethod(EnableSession = true)]
+    public void UpdateSidurDate(string sCardDate, int iSidurKey, string sOldStartHour, string sNewStartHour, int iAddDay)
+    {        
+        DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+        DataRow[] dr;
+        DateTime dtOrgDate, dtCardDate;
+        dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
+        if (dr.Length > 0)
+        {
+            dr[0]["sidur_number"] = iSidurKey;
+            dr[0]["sidur_start_hour"] = sNewStartHour;
+            dtOrgDate = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString());
+            dtCardDate =DateTime.Parse(sCardDate);
+            if (dtOrgDate==dtCardDate)
+                dr[0]["sidur_date"] = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
+            else
+                if (dtOrgDate>dtCardDate)
+                    if (iAddDay==0)
+                        dr[0]["sidur_date"] = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour).AddDays(-1);
+        }
+    }
+    //[WebMethod(EnableSession = true)]
+    //public string ChkIfSidurNahagut(int iSidurIndex, string sCardDate)
+    //{
+    //    string sReturn = "0";
+    //    OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
+    //    clSidur _Sidur = (clSidur)htSidurim[iSidurIndex];
+    //    DataTable dtSugeySidur = clDefinitions.GetSugeySidur();
+    //    DataRow[] drSugSidur;
+    //    bool bSidurDriver=false;
+    //    try
+    //    {
+    //        //נשלוף את מאפייני סוג הסידור ( סידורים רגילים(
+    //        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugeySidur);
+    //        if (drSugSidur.Length > 0)
+    //            bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+    //        //אם הסידור הראשון הוא סידור נהגות, נבדוק את הסידור הבא
+    //        if (bSidurDriver)
+    //        {
+    //            _Sidur = (clSidur)htSidurim[iSidurIndex+1];
+    //            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugeySidur);
+    //            if (drSugSidur.Length > 0)
+    //            {
+    //                bSidurDriver = String.IsNullOrEmpty(drSugSidur[0]["sector_avoda"].ToString()) ? false : (int.Parse(drSugSidur[0]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+    //                if (bSidurDriver)                    
+    //                    sReturn = "1"; //שני הסידורים הם מסוג נהגות                    
+    //            }
+    //        }
+    //        return sReturn;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw ex;
+    //    }
+    //}
+    //[WebMethod]
+    //public string GetWorkCardErrors(string sXML)
+    //{
+    //    string sResult = "";
+    //    //XmlDataDocument xmlDoc = new XmlDataDocument();
+    //    //XmlNode _DayDetails;
+    //    //xmlDoc.LoadXml(sXML);
+    //    //_DayDetails = xmlDoc.FirstChild.FirstChild;
+    //    //for (int i = 0; i < _DayDetails.ChildNodes.Count; i++)
+    //    //{
+    //    //    switch (_DayDetails.ChildNodes.Name)
+    //    //    {
+    //    //        case "hashlama":
+    //    //            if ((_DayDetails.ChildNodes[i].Attributes[0] == -1) && (_DayDetails.ChildNodes[i].Attributes[1] == 1))
+    //    //            {
+    //    //                sResult = "סומנה השלמה ליום, יש לדווח סיבה";
+    //    //            }
+    //    //            break;
+    //    //        case "part1": //התייצבות ראשונה
+    //    //            if ((_DayDetails.ChildNodes[i].Attributes[0] == -1) && (_DayDetails.ChildNodes[i].Attributes[1].indexOf(":") > -1))
+    //    //            {
+    //    //                sResult = sResult.concat("\n דווחה שעת התייצבות ראשונה, יש לדווח סיבה");
+    //    //            }
+    //    //            break;
+    //    //        case "part2"://התייצבות שנייה
+    //    //            if ((_DayDetails.ChildNodes[i].Attributes[0] == -1) && (_DayDetails.ChildNodes[i].Attributes[1].indexOf(":") > -1))
+    //    //            {
+    //    //                sResult = "1";
+    //    //            }
+    //    //            break;
+    //    //    }
+    //    //}
+
+    //    return sResult;
+    //}
+}
+

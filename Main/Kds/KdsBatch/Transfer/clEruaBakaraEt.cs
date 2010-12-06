@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using KdsLibrary;
+using System.Data;
+
+namespace KdsBatch
+{
+  public  class clEruaBakaraEt:clErua
+    {
+      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
+      {
+          _sBody = SetBody();
+          PrepareLines();
+      }
+
+      protected override void SetHeader()
+      {
+          StringBuilder sHeader = new StringBuilder();
+          sHeader.Append("162;");
+          sHeader.Append(_dMonth.Year.ToString().Substring(2, 2) + _dMonth.Month.ToString().PadLeft(2, char.Parse("0")) + ";");
+          sHeader.Append(_iMisparIshi.ToString().PadLeft(9, char.Parse("0")) + ";");
+          sHeader.Append(_drPirteyOved["TEUDAT_ZEHUT"].ToString().PadLeft(9, char.Parse("0")) + ";");
+          _sHeader = sHeader.ToString();
+      }
+
+      protected override void SetFooter()
+      {
+          _sFooter = "";
+      }
+      protected override List<string> SetBody()
+      { 
+          List<string> ListErua=new List<string>();
+          StringBuilder sBakaraEt = new StringBuilder();
+          float fErech;
+          try
+          {
+               sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.YemeyAvoda.GetHashCode()), 3, 0) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode()), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode()), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode()), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode()), 6, 2) + ";");
+              sBakaraEt.Append("000.00;");
+              sBakaraEt.Append("000.00;");
+              sBakaraEt.Append("000.00;");
+              sBakaraEt.Append("000.00;");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.PremyaRegila.GetHashCode()), 11, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode()), 7, 2) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()), 2, 0) + ";");
+              fErech = GetErechRechiv( clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
+              fErech += GetErechRechiv( clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
+              sBakaraEt.Append(FormatNumber(fErech, 4, 0) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode()), 2, 0) + ";");
+
+              ListErua.Add(sBakaraEt.ToString());
+           return ListErua;
+           }
+           catch (Exception ex)
+           {
+               WriteError("clEruaBakaraEt: " + ex.Message);
+               throw ex;
+           }
+      }
+    }
+}

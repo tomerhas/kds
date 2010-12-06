@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using KdsLibrary;
+using System.Data;
+
+namespace KdsBatch
+{
+  public  class clErua415:clErua
+    {
+      public clErua415(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,415)
+      {
+          _sBody = SetBody();
+          PrepareLines();
+      }
+
+      protected override List<string> SetBody()
+      {
+          List<string> ListErua = new List<string>();
+          StringBuilder sErua415;
+          float fErech;
+          sErua415 = new StringBuilder();
+          try
+          {
+              if (_iDirug != 61)
+              {
+                  if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                  {
+                      sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 1));
+                  }
+                  else { sErua415.Append(GetBlank(4)); }
+
+                  sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotRegilot.GetHashCode()) / 60), 4, 1));
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ShaotHeadrut.GetHashCode()), 4, 1));
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode()), 4, 1));
+              }
+              else { sErua415.Append(GetBlank(16)); }
+
+              sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode()), 4, 1));
+              sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode()), 4, 1));
+              sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode()), 4, 1));
+
+              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+              {
+                  fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
+                  sErua415.Append(FormatNumber(fErech, 4, 1));
+              }
+              else { sErua415.Append(GetBlank(4)); }
+
+              if (_iDirug != 61)
+              {
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode()), 4, 1));
+
+                  sErua415.Append(GetBlank(4));
+
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode()), 4, 1));
+                  sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNehigaChol.GetHashCode()) / 60), 4, 1));
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot25.GetHashCode()), 4, 1));
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot50.GetHashCode()), 4, 1));
+                  sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode()) / 60), 4, 1));
+
+                  fErech = GetErechRechiv(clGeneral.enRechivim.SachLina.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.SachLinaKfula.GetHashCode()) * 6;
+                  sErua415.Append(FormatNumber(fErech, 4, 1));
+
+                  if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
+                  {
+                      sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()) / 60), 4, 2));
+                  }
+                  else { sErua415.Append(GetBlank(4)); }
+              }
+              else { sErua415.Append(GetBlank(36)); }
+
+              sErua415.Append(GetBlank(5));
+              
+              ListErua.Add(sErua415.ToString());
+              return ListErua;
+          }
+           catch (Exception ex)
+           {
+               WriteError("CreateErua415: " + ex.Message);
+               throw ex;
+           }
+      }
+    }
+}

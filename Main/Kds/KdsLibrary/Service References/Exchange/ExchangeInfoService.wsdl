@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="getEmpFullName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEmpFullNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEmpFullNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEmpNumByUserName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEmpNumByUserNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEmpNumByUserNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserPropertyByUserName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="propertyName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserPropertyByUserNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserPropertyByUserNameResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getEmpFullNameSoapIn">
+    <wsdl:part name="parameters" element="tns:getEmpFullName" />
+  </wsdl:message>
+  <wsdl:message name="getEmpFullNameSoapOut">
+    <wsdl:part name="parameters" element="tns:getEmpFullNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEmpNumByUserNameSoapIn">
+    <wsdl:part name="parameters" element="tns:getEmpNumByUserName" />
+  </wsdl:message>
+  <wsdl:message name="getEmpNumByUserNameSoapOut">
+    <wsdl:part name="parameters" element="tns:getEmpNumByUserNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUserPropertyByUserNameSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserPropertyByUserName" />
+  </wsdl:message>
+  <wsdl:message name="getUserPropertyByUserNameSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserPropertyByUserNameResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ExchangeInfoServiceSoap">
+    <wsdl:operation name="getEmpFullName">
+      <wsdl:input message="tns:getEmpFullNameSoapIn" />
+      <wsdl:output message="tns:getEmpFullNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEmpNumByUserName">
+      <wsdl:input message="tns:getEmpNumByUserNameSoapIn" />
+      <wsdl:output message="tns:getEmpNumByUserNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUserPropertyByUserName">
+      <wsdl:input message="tns:getUserPropertyByUserNameSoapIn" />
+      <wsdl:output message="tns:getUserPropertyByUserNameSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExchangeInfoServiceSoap" type="tns:ExchangeInfoServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getEmpFullName">
+      <soap:operation soapAction="http://tempuri.org/getEmpFullName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEmpNumByUserName">
+      <soap:operation soapAction="http://tempuri.org/getEmpNumByUserName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserPropertyByUserName">
+      <soap:operation soapAction="http://tempuri.org/getUserPropertyByUserName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExchangeInfoServiceSoap12" type="tns:ExchangeInfoServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getEmpFullName">
+      <soap12:operation soapAction="http://tempuri.org/getEmpFullName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEmpNumByUserName">
+      <soap12:operation soapAction="http://tempuri.org/getEmpNumByUserName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUserPropertyByUserName">
+      <soap12:operation soapAction="http://tempuri.org/getUserPropertyByUserName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExchangeInfoService">
+    <wsdl:port name="ExchangeInfoServiceSoap" binding="tns:ExchangeInfoServiceSoap">
+      <soap:address location="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExchangeInfoServiceSoap12" binding="tns:ExchangeInfoServiceSoap12">
+      <soap12:address location="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

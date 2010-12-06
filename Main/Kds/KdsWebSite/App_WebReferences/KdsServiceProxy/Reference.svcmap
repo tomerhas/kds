@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="dd98e262-f5b6-4552-b960-216460801a67" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8731/KdsService/BatchService/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="f29057d1-df59-44f9-aa40-f0e9e6cd147e" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a8b4a6d1-4d2b-4e26-a6c8-b0e795f8f7b4" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="c05eee0e-a3ac-4fb5-9877-d765e8899b46" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

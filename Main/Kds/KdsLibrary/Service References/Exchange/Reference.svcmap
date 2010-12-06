@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="71e2f06c-6f89-44d6-8fe5-51f3859f8f81" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ExchangeInfoService.wsdl" MetadataType="Wsdl" ID="3db73b75-6465-4e99-9f2b-341eb9b1c204" SourceId="1" SourceUrl="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx?wsdl" />
+    <MetadataFile FileName="ExchangeInfoService.disco" MetadataType="Disco" ID="0978bedb-c7f7-4b9c-b486-deb8ec0f3972" SourceId="1" SourceUrl="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
