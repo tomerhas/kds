@@ -563,8 +563,11 @@ var MKT_ELEMENT = 5;
        }
   }
   function changeStartHour(iIndex) {
-      var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
-      wsGeneral.SidurStartHourChanged(iIndex, sShatHatchala, callBackStartHour);
+      var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
+      var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+      var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
+      var sNewSH = _ShatHatchala.value;
+      wsGeneral.SidurStartHourChanged(iSidur,sNewSH,sOrgSH,callBackStartHour);
   }
   function callBackStartHour(result){
      if (result=='1')
@@ -684,7 +687,7 @@ var MKT_ELEMENT = 5;
          var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
          var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
 
-         if ((IsShatGmarInNextDay(sShatGmar.value)) || (sShatGmar.value = '00:00'))
+         if ((IsShatGmarInNextDay(sShatGmar.value)) || (sShatGmar.value == '00:00'))
              document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "1";
          else
              document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
@@ -1282,24 +1285,22 @@ var MKT_ELEMENT = 5;
      
       if (arrItems[0] == '1') {//שעת גמר
           sEndHour = document.getElementById("lstSidurim_txtSG" + arrItems[1]).value;
-          sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;
-          if (sEndHour == "00:00"){
-              var sCardDate = document.getElementById("clnDate").value;
-              var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-              var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
-              var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
-              var utcSidurDate = Date.UTC(dSidurTime.getFullYear(), dSidurTime.getMonth() + 1, dSidurTime.getDate(), 0, 0, 0);
-              var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1]).value);
-              if (_Add == 1) {
-                  if (utcCardDate == utcSidurDate)
-                      dSidurTime.setDate(dSidurTime.getDate() + 1);
-              }
-              else {//add=0
-                   if (utcCardDate > utcSidurDate)
-                       dSidurTime.setDate(dSidurTime.getDate() - 1);
-              }
-          }
-          document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);
+          sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;         
+            var sCardDate = document.getElementById("clnDate").value;
+            var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+            var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
+            var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
+            var utcSidurDate = Date.UTC(dSidurTime.getFullYear(), dSidurTime.getMonth() + 1, dSidurTime.getDate(), 0, 0, 0);
+            var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
+            if (_Add == '1') {
+                if (utcCardDate == utcSidurDate)
+                    dSidurTime.setDate(dSidurTime.getDate() + 1);
+            }
+            else {//add=0
+                if (utcCardDate > utcSidurDate)
+                    dSidurTime.setDate(dSidurTime.getDate() - 1);
+            }
+            document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
       }
       else {//שעת יציאה
           sEndHour = document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;

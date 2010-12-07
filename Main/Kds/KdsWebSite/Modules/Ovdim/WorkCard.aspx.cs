@@ -2210,9 +2210,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     else
                     {
-
-
-
                         string sScript = "alert('קיימים סידורים עם אותו מספר סידור ואותה שעת התחלה, לא ניתן לשמור נתונים' )";
                         ScriptManager.RegisterStartupScript(btnUpdateCard, this.GetType(), "Save", sScript, true);
                     }

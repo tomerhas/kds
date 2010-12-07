@@ -1615,10 +1615,10 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string SidurStartHourChanged(int iSidurKey, string sStartHour)
+    public string SidurStartHourChanged(int iSidurKey, string sNewStartHour, string sOrgStartHour)
     {
         string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
-        DateTime dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sStartHour.Substring(0, 2)), int.Parse(sStartHour.Substring(3, 2)),0);
+        DateTime dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
         DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0,0,0);
         DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3,2)), 0);
         
@@ -1628,7 +1628,7 @@ public class wsGeneral : System.Web.Services.WebService
         //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
         if ((dSidurStartHour >= dStartHour) && (dSidurStartHour<=dEndHour))
         {
-            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_start_hour='" + sStartHour + "'");
+            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
             if (dr.Length > 0)
             {
                 if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
