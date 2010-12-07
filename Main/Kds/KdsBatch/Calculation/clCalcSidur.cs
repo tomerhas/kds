@@ -256,7 +256,7 @@ namespace KdsBatch
                     // הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126) ).
                     fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
                 }
-                else if (iMisparSidur == 99207 || iMisparSidur == 99011 | iMisparSidur == 99007)
+                else if (iMisparSidur == 99207 || iMisparSidur == 99011 || iMisparSidur == 99007)
                 {
                     //•	99207 (8512) – קורס, 99011 (8513) – קורס
                     if (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || clCalcData.CheckErevChag(iSugYom))
