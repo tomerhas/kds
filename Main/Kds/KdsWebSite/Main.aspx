@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">   
-    <table width="95%" cellspacing="8px" border="0">
+    <table width="99%" cellspacing="6px" border="0">
         <tr>
            <td colspan="2" class="SubTitleLabel"><asp:Label id="lblHellowUser" runat="server"></asp:Label></td>
         </tr>
@@ -22,41 +22,42 @@
                     <tr >
                     <td style="color:White;font-size:17px;">תפריט ניווט מהיר</td></tr>
                      <tr>
-                        <td>
+                        <td align="center">
                             <table cellspacing="4px" border="0" cellpadding="1">
                                  <tr><td colspan="6" style="height:6px;"></td></tr>
                                 <tr>
-                                     <td style="width:85px;"></td>
-                                    <td> <asp:Button  Text=" עדכון &#10; כרטיס&#10;עבודה  " ID="btnUpdWorkCard"  runat="server" CssClass="opening-btn"  /></td>
+                                     <td> <asp:Button Text=" כרטיסי&#10; עבודה&#10;לעובד " ID="btnUpdWorkCard" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeeCards.aspx" /></td>
                                      <td style="width:9px;"></td>
-                                    <td> <asp:Button Text="סיכום&#10; חודשי&#10;לעובד   " ID="btnMonthlySum" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeTotalMonthly.aspx" /></td>
+                                    <td> <asp:Button Text="סיכום&#10; חודשי   " ID="btnMonthlySum" runat="server" CssClass="opening-btn" PostBackUrl="~/Modules/Ovdim/EmployeTotalMonthly.aspx" /></td>
                                     <td style="width:9px;"></td>
-                                    <td> <asp:Button Text=" תחקור&#10; חישוב&#10; לעובד  " ID="btnInquiryCalc" runat="server" CssClass="opening-btn"  PostBackUrl="~/Modules/Ovdim/TickurChishuvLeOved.aspx"/></td>
+                                    <td> <asp:Button Text="  דו''ח&#10; נוכחות  " ID="btnInquiryCalc" runat="server" CssClass="opening-btn"  PostBackUrl="~/Modules/Reports/ReportFilters.aspx?RdlName=Presence"/></td>
                                </tr>
                                 <tr><td colspan="6" style="height:6px;"></td></tr>
                              </table>
                         </td>
                      </tr>
                      </table>
-                   <table class="opening-quickmenu" style="margin-top:8px" runat="server" id="tblLogTahalichim">
+                     
+                     <div class="opening-quickmenu" style="margin-top:8px">
+                   <table  runat="server" id="tblLogTahalichim">
                      <tr><td style="color:White;font-size:17px;">לוג תהליכים</td></tr>
                      <tr>
                         <td>
                             <table cellspacing="4px" border="0" cellpadding="1"  width="100%">
                                  <tr><td colspan="2" style="height:5px;"></td></tr>
                                 <tr>
-                                     <td style="width:5px;" rowspan="2"></td>
+                                     <td style="width:2px;" rowspan="2"></td>
                                     <td align="right" valign="top">
-                                        <asp:Panel ID="pnlProcessLog"  height="130px" width="637px" dir="ltr"  runat="server" ScrollBars="Auto">   
+                                        <asp:Panel ID="pnlProcessLog"  height="125px" Width="697px" dir="ltr"  runat="server" ScrollBars="Auto">   
                                         <asp:GridView ID="grdProcessLog" runat="server"  GridLines="none" CssClass="Grid"   
-                                                AllowPaging="false" AutoGenerateColumns="false"  Width="620px" 
+                                                AllowPaging="false" AutoGenerateColumns="false" Width="680px"
                                                 onrowdatabound="grdProcessLog_RowDataBound"  >
                                             <Columns>
-                                                <asp:BoundField DataField="Teur_Tahalich" HeaderText="תהליך"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                                                <asp:BoundField DataField="Teur_Peilut_Be_Tahalich" HeaderText="פעילות בתהליך" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-Width="75px"/>
-                                                <asp:BoundField DataField="Taarich" HeaderText="תאריך תקלה" HtmlEncodeFormatString="true" ItemStyle-CssClass="ItemRow" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-CssClass="GridHeader" />
-                                                <asp:BoundField DataField="Teur_Takala" HeaderText="תיאור תקלה" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
-                                                <asp:BoundField DataField="Teur_Tech" HeaderText="תיאור טכני" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
+                                                <asp:BoundField DataField="Teur_Tahalich" HeaderText="תהליך"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-Font-Size="Smaller"/>
+                                                <asp:BoundField DataField="Teur_Peilut_Be_Tahalich" HeaderText="פעילות בתהליך" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-Font-Size="Smaller"/>
+                                                <asp:BoundField DataField="Taarich" HeaderText="תאריך תקלה" HtmlEncodeFormatString="true" ItemStyle-CssClass="ItemRow" DataFormatString="{0:dd/MM/yyyy HH:mm:ss}" HeaderStyle-CssClass="GridHeader" ItemStyle-Font-Size="Smaller"/>
+                                                <asp:BoundField DataField="Teur_Takala" HeaderText="תיאור תקלה" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-Width="200px" ItemStyle-Font-Size="Smaller"/>
+                                                <asp:BoundField DataField="Teur_Tech" HeaderText="תיאור טכני" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-Font-Size="Smaller" />
                                              </Columns> 
                                             <AlternatingRowStyle CssClass="GridAltRow"  />
                                             <RowStyle CssClass="GridRow"   />
@@ -67,7 +68,7 @@
                             </table>
                         </td>
                      </tr>
-                </table>
+                </table></div>
             </td>
         </tr>
         <tr>
@@ -83,4 +84,14 @@
             </td>
         </tr>
     </table>
+    
+<script language="javascript" type="text/javascript">
+    function OpenEmpWorkCard() {
+        var EmpId = <%=sUserId%>;
+         var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + document.getElementById("ctl00_KdsContent_lblDate").innerHTML + "&dt=" + Date();
+        var ReturnWin = window.showModalDialog('Modules/Ovdim/WorkCard.aspx' + sQuryString, window, "dialogHeight: 900px; dialogWidth: 1010px;");
+        if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
+        return ReturnWin;
+    }  
+</script>
 </asp:Content>

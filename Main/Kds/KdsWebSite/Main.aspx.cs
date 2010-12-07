@@ -15,20 +15,31 @@ using KdsLibrary.Security;
 public partial class _Main : KdsPage
 {
     public const int COL_TEUR_TECHNI = 4;
-
+    public  string sUserId;
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
 
             lblHellowUser.Text = "  ωμεν  " + LoginUser.UserInfo.EmployeeFullName;
+            sUserId = LoginUser.UserInfo.EmployeeNumber;
             DisplayDivMessages = false;
             lblDate.Text = DateTime.Now.ToShortDateString();
             LoadProcessLog();
             LoadMessages(lstMessages);
             MasterPage mp = (MasterPage)Page.Master;
-            SetFixedHeaderGrid("ctl00_KdsContent_pnlProcessLogr", mp.HeadPage);
-            
+            SetFixedHeaderGrid(pnlProcessLog.ClientID, mp.HeadPage);
+            KdsSecurityLevel iSecurity = LoginUser.GetControlSecurityLevel("tblLogTahalichim");
+            if (iSecurity == KdsSecurityLevel.ViewAll)
+            {
+                tblLogTahalichim.Style["display"] = "block";
+
+            }
+            else
+            {
+                tblLogTahalichim.Style["display"] = "none";
+
+            }
         }
         catch (Exception ex)
         {
