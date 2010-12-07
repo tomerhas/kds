@@ -26,9 +26,9 @@ namespace KdsBatch
               
               fErech = clCalcData.GetSumErechRechiv(_dtDetailsChishuv.Compute("count(MISPAR_ISHI)", "MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')"));
 
-              sErua462.Append(FormatNumber(fErech, 4, 0));
+              sErua462.Append(FormatNumber(fErech, 4, 2));
 
-              sErua462.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode()), 4, 0));
+              sErua462.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode()), 4, 1));
               sErua462.Append(FormatNumber((GetErechRechiv( clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 0));
 
               sErua462.Append(GetBlank(60));

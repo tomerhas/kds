@@ -35,21 +35,21 @@ namespace KdsBatch
                {
                    fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
                    fErech += GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
-               sErua417.Append(FormatNumber((fErech/60),4,2));
+                   sErua417.Append(FormatNumber((fErech),4,2));
                }
                else { sErua417.Append(GetBlank(4)); }
 
-               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,1));
-              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,1));
-              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,1));
-              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode()),4,1));
-              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErev.GetHashCode()),4,1));
-              sErua417.Append(FormatNumber((GetErechRechiv( clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode())/60),4,1));
+               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,0));
+              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,0));
+              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,0));
+              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode()),4,0));
+              sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErev.GetHashCode()),4,0));
+              sErua417.Append(FormatNumber((GetErechRechiv( clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode())/60),4,0));
 
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  sErua417.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()) / 60), 4, 1));
+                  sErua417.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()) / 60), 4, 0));
               }
               else
               {
