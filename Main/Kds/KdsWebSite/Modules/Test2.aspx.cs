@@ -37,6 +37,9 @@ public partial class Modules_Test2 : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        int num;
+        KdsLibrary.BL.clBatch x = new KdsLibrary.BL.clBatch();
+        num = x.GetNumChangesHrToShguim();
     //    clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
        // oBatchManager.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
        // oBatchManager.MainOvedErrors(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));

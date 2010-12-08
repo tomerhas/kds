@@ -43,6 +43,7 @@ namespace KdsLibrary
         public const string cProGetShinuyBrerotMechdal = "pkg_batch.pro_get_shinuy_brerot_mechdal";
         public const string cProInsOvdimImShinuyHR = "pkg_batch.pro_ins_ovdim_im_shinuy_hr";
         public const string cProInsDefaultsHR = "pkg_batch.pro_ins_defaults_hr";
+        public const string cFunGetNumChangesHrToShguim = "pkg_batch.fun_get_num_changes_to_shguim";
 
         public const string cProMoveNewMatzavOvdimToOld = "pkg_batch.MoveNewMatzavOvdimToOld";
         public const string cProMoveNewPirteyOvedToOld = "pkg_batch.MoveNewPirteyOvedToOld";

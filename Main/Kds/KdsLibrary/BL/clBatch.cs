@@ -439,6 +439,26 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public int GetNumChangesHrToShguim()
+        {
+            clDal oDal = new clDal();
+            int iNum = 0;
+            try
+            {
+                //מחזיר את סטטוס קוד האישור ברמה הגבוהה ביותר
+                oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.ExecuteSP(clGeneral.cFunGetNumChangesHrToShguim);
+
+                iNum = Int32.Parse(oDal.GetValParam("p_return_value"));
+
+                return iNum;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
 }

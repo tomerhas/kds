@@ -2905,6 +2905,7 @@ Public Class ClKds
     Public Sub RunThreadHrChainges() 'todo: 20101003(ByVal In_TAARICH As String)
 
         Dim oDal As KdsLibrary.DAL.clDal
+        Dim oBatch As KdsLibrary.BL.clBatch
         Dim dt As DataTable = New DataTable()
         Dim dt2 As DataTable = New DataTable()
         Dim dt3 As DataTable = New DataTable()
@@ -2917,9 +2918,10 @@ Public Class ClKds
         Dim p_date_str As String
         Dim p_date As Date
         Dim p_date_str_now As String
+        Dim num As Integer
 
         Try
-
+            oBatch = New KdsLibrary.BL.clBatch()
             'the sadran run on yesterday
             p_date = Now.AddDays(-1)
             p_date_str = getFullDateString(p_date)
@@ -2983,13 +2985,18 @@ Public Class ClKds
                                     Select Case (st1 & st2)
                                         Case "00"
                                             '(0,0)=no record at all ->run
-                                            Dim lRequestNum As Integer
-                                            KdsWriteProcessLog(8, 3, 1, "before OpenBatchRequest")
-                                            lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12)
-                                            dTaarich = New DateTime(Mid(p_date_str, 1, 4), Mid(p_date_str, 5, 2), Mid(p_date_str, 7, 2))
-                                            KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
-                                            KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
-                                            KdsWriteProcessLog(8, 3, 2, "after shguyim from hr")
+                                            num = oBatch.GetNumChangesHrToShguim()
+                                            If (num < 50000) Then
+                                                Dim lRequestNum As Integer
+                                                KdsWriteProcessLog(8, 3, 1, "before OpenBatchRequest")
+                                                lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12)
+                                                dTaarich = New DateTime(Mid(p_date_str, 1, 4), Mid(p_date_str, 5, 2), Mid(p_date_str, 7, 2))
+                                                KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
+                                                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
+                                                KdsWriteProcessLog(8, 3, 2, "after shguyim from hr")
+                                            Else
+                                                KdsWriteProcessLog(8, 3, 4, "ThreadHrChainges did not run.a lot of mispar_ishi: " & num.ToString())
+                                            End If
                                         Case "10"
                                             '(1,0)=started but not finished, aborted? ->mail
                                             KdsWriteProcessLog(8, 3, 3, "thread after shinuy, GRun only started ", "7")
