@@ -106,12 +106,16 @@
             }
         }
         function IsAlowedPeriod(sender, args) {
-        //debugger
+     //   debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me =  document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
-            var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]), Number(chodesh_me[0]), '00', '00', '00');
-            var today = new Date(); 
+            var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]-1), Number(chodesh_me[0]), '00', '00', '00');
+            var today = new Date();
             today.setMonth(today.getMonth() - 14);
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+          
            // args.IsValid = (today.getTime() < FromDate.getTime());
             if (FromDate.getTime()<today.getTime())
                 args.IsValid =false ;
