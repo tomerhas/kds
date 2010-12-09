@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AutoEventWireup="true" CodeFile="TickurChishuvLeOved.aspx.cs" Inherits="Modules_Ovdim_TickurChishuvLeOved" Title="תחקור חישוב לעובד" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AsyncTimeout="600"  AutoEventWireup="true" CodeFile="TickurChishuvLeOved.aspx.cs" Inherits="Modules_Ovdim_TickurChishuvLeOved" Title="תחקור חישוב לעובד" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -21,7 +21,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" AutoPostBack="true" 
-                                Width="65px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" ></asp:TextBox>                            
+                                Width="55px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
@@ -43,7 +43,7 @@
             <td style="width:120px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:130px" EnableViewState="true" AutoPostBack="true"  ontextchanged="txtName_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:110px" EnableViewState="true" AutoPostBack="true"  ontextchanged="txtName_TextChanged"></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -78,9 +78,10 @@
             </td>
             <td style="width:10px"></td>
             <td> 
-                <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline"  >
+                <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline">
                   <ContentTemplate> 
                         <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"  onclick="btnShow_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
+                        <asp:button ID="btnInputData" runat="server" text="הרצה" CssClass ="ImgButtonSearch"  onclick="btnInputData_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
                  </ContentTemplate>
               </asp:UpdatePanel> 
             </td>

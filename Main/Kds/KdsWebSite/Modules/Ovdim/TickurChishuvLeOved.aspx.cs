@@ -45,7 +45,9 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                 SetFixedHeaderGrid(pnlTotalMonthly.ClientID, mp.HeadPage);
                 SetFixedHeaderGrid(pnlMonthlyComponents.ClientID, mp.HeadPage);
 
-               
+               if (ConfigurationManager.AppSettings["ShowRunError"]=="false")
+                   btnInputData.Visible=false;
+
                 rdoId.Attributes.Add("onclick", "SetTextBox();");
                 rdoName.Attributes.Add("onclick", "SetTextBox();");
 
@@ -229,6 +231,41 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          }
     }
 
+    protected void btnInputData_Click(object sender, EventArgs e)
+    {
+        clBatchManager btchMan = new clBatchManager(0);
+        string sError = "";
+        DateTime dTaarich, dTarAd;
+            bool nextStep = false;
+            try
+            {
+                dTaarich = clGeneral.GetDateTimeFromStringMonthYear(1, ddlMonth.SelectedValue);
+                dTarAd = dTaarich.AddMonths(1).AddDays(-1);
+
+                while (dTaarich <= dTarAd)
+                {
+                    nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
+
+                    if (nextStep)
+                        nextStep = btchMan.MainOvedErrors(int.Parse(txtEmpId.Text), dTaarich);
+                    else {
+                        if (sError.Length > 0) sError += ", ";
+                        sError += dTaarich.ToString("dd/MM/yyyy");
+                    }
+                    dTaarich = dTaarich.AddDays(1);
+                }
+
+                if (sError.Length > 0)
+                    ScriptManager.RegisterStartupScript(btnInputData, btnInputData.GetType(), "Err", "alert('ישנם תאריכם שגויים בחודש: " + sError + "');", true);
+                else ScriptManager.RegisterStartupScript(btnInputData, btnInputData.GetType(), "Err", "alert('הרצת שינויי קלט ושגויים הסתיימה בהצלחה');", true);
+               
+            }
+            catch (Exception ex)
+            {
+                clGeneral.BuildError(Page, ex.Message);
+            }
+            finally { btchMan.Dispose(); }
+    }
    
     protected void btnShow_Click(object sender, EventArgs e)
     {

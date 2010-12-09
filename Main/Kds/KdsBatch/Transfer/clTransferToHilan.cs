@@ -45,7 +45,7 @@ namespace KdsBatch
            DataSet dsNetunim;
            int iStatus = 0;
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
-           string sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakara;
+           string sChodeshIbud,sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakara;
            
            DateTime dChodesh;
            int iDirug, iDarga;
@@ -63,9 +63,7 @@ namespace KdsBatch
                sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.UTF8);
                sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim, false, Encoding.UTF8);
                sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.UTF8);
-               sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum, false, Encoding.UTF8);
-               sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara, false, Encoding.UTF8);
-
+               
 
                try
                {
@@ -89,10 +87,16 @@ namespace KdsBatch
                            iMaamadRashi = int.Parse(dtOvdim.Rows[i]["maamad_rashi"].ToString());
                            iDirug = int.Parse(dtOvdim.Rows[i]["dirug"].ToString());
                            iDarga = int.Parse(dtOvdim.Rows[i]["darga"].ToString());
-
+                           sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString(); 
                         
                                if (iDirug == 85 && iDarga == 30)
                                {
+                                   if (sFileStrEt==null)
+                                   {
+                                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.UTF8);
+                                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.UTF8);
+                                    }
+
                                    oDataEt = new clEruaDataEt(lBakashaId, dtOvdim.Rows[i], dtRechivim);
 
                                    oBakaraEt = new clEruaBakaraEt(lBakashaId, dtOvdim.Rows[i], dtRechivim);
