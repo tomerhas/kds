@@ -59,7 +59,7 @@ namespace KdsLibrary.BL
                 oTnua.AddParameter("KavDetailsCrs", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oTnua.AddParameter("EntryCrs", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oTnua.AddParameter("VisutimCrs", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oTnua.AddParameter("p_KnisaVisut", ParameterType.ntOracleInteger, reciveVisut, ParameterDir.pdOutput);
+                oTnua.AddParameter("p_KnisaVisut", ParameterType.ntOracleInteger, reciveVisut, ParameterDir.pdInput );
                 oTnua.ExecuteSP(clGeneral.cGetKavDetails, ref ds);
                 //(קוד החזרה : 0 – תקין, 1 – שגיאה)
                 iResult = int.Parse(oTnua.GetValParam("rc").ToString());
