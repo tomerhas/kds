@@ -317,7 +317,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         txtId.Focus();
         txtName.Attributes.Add("onchange", "isUserNameValid();");
         btnRefreshOvedDetails.Attributes.Add("onfocus", "onButtonFocusIn(" + btnRefreshOvedDetails.ID + ")");
-        btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");   
+        btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");  
+        
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
         ErrorImage(imgLinaErr, false);
@@ -1386,6 +1387,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.Param102 = oBatchManager.oParam.iHashlamaShisi;
         lstSidurim.Param103 = oBatchManager.oParam.iHashlamaShabat;
         lstSidurim.Param242 = oBatchManager.oParam.dShatGmarNextDay;
+        lstSidurim.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         ////lstSidurim.Param108 = oBatchManager.oParam.iHashlamaMaxYomRagil;//parameter 108
         ////lstSidurim.Param109 = oBatchManager.oParam.iHashlamaMaxShisi;  //parameter 109
         ////lstSidurim.Param110 = oBatchManager.oParam.iHashlamaMaxShabat;//parameter 110
@@ -1921,6 +1923,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //SetLookUpDDL();
 
             ViewState["LoadNewCard"] = true;
+            lstSidurim.RefreshBtn = 0;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
             //string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";

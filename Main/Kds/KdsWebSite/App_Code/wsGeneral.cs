@@ -1615,7 +1615,7 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string SidurStartHourChanged(int iSidurKey, string sNewStartHour, string sOrgStartHour)
+    public string SidurStartHourChanged(string sCardDate, int iSidurKey, string sNewStartHour, string sOrgStartHour)
     {
         string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
         DateTime dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
@@ -1624,7 +1624,7 @@ public class wsGeneral : System.Web.Services.WebService
         
         DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         DataRow[] dr;
-        
+        string sResult = "0";
         //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
         if ((dSidurStartHour >= dStartHour) && (dSidurStartHour<=dEndHour))
         {
@@ -1632,16 +1632,14 @@ public class wsGeneral : System.Web.Services.WebService
             if (dr.Length > 0)
             {
                 if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
-                    return "1";
-                else
-                    return "0";
-            }
-            else
-                return "0";
-        }            
-        else
-            return "0";
-       
+                    sResult = "1";              
+            }            
+        }
+
+        if (sResult.Equals("0"))
+            UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0);
+
+        return sResult;       
     }
     [WebMethod(EnableSession = true)]
     public void UpdateSidurDate(string sCardDate, int iSidurKey, string sOldStartHour, string sNewStartHour, int iAddDay)
@@ -1654,10 +1652,15 @@ public class wsGeneral : System.Web.Services.WebService
         {
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
-            dtOrgDate = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString());
+            if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year<clGeneral.cYearNull)
+                //אם שעת ההתחלה ריקה, שנה 0001, נכניס את תאריך הכרטיס
+                dtOrgDate = DateTime.Parse(sCardDate);
+            else
+                dtOrgDate = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString());
+
             dtCardDate =DateTime.Parse(sCardDate);
             if (dtOrgDate==dtCardDate)
-                dr[0]["sidur_date"] = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
+                dr[0]["sidur_date"] = DateTime.Parse(dtOrgDate.ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
             else
                 if (dtOrgDate>dtCardDate)
                     if (iAddDay==0)

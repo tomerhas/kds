@@ -226,6 +226,7 @@
         document.getElementById("btnPlus1").value = '+';
         document.getElementById("btnPlus2").value = '+';
         document.getElementById("btnPlus3").value = '+';
+        document.getElementById("hidRefresh").value = "1";
         EnabledAllFrames(true);
         return true;
     }

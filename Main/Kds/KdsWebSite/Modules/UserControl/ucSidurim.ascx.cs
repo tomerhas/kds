@@ -71,6 +71,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _LoginUserId;
     private int _MisparSidur;
     private int _SidurIndex;
+    private int _RefreshBtn;
     private string _ShatHatchala;
     private clGeneral.enCardStatus _StatusCard;
     private UpdatePanel _UpEmpDetails;
@@ -455,7 +456,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //יצירת כותרת הסידור
             CreateSidurHeader();
             //נבנה את הטבלה שתכיל את הנתוני הסידור העדכניים
-            if (!Page.IsPostBack)
+            if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                 BuildUpdatedSidurimColumns(ref dtUpdatedSidurim);
             if (htEmployeeDetails != null)
             {
@@ -463,7 +464,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 {
                     BuildSidurAndPeiluyot(ref htEmployeeDetails, iIndex);
                 }
-                if (!Page.IsPostBack)
+                if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                     Session["SidurimUpdated"]=dtUpdatedSidurim;
             }                           
         }
@@ -2146,7 +2147,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //מבנה שיכיל בסוף את התאריך המועדכן של הסידור
         drSidur = dtUpdatedSidurim.NewRow();
         drSidur["sidur_number"] = oSidur.iMisparSidur;
-        drSidur["sidur_start_hour"] = oSidur.sShatHatchala;
+        drSidur["sidur_start_hour"] = oSidur.dFullShatHatchala.ToShortTimeString();
         drSidur["sidur_date"] = oSidur.dFullShatHatchala;
         drSidur["sidur_nahagut"] = IsSidurNahagut(ref oSidur, drSugSidur).GetHashCode();
         drSidur["sidur_nihul_tnua"] = IsSidurNihul(ref oSidur, drSugSidur).GetHashCode();
@@ -2194,10 +2195,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bool bSidurActive = ((oSidur.iBitulOHosafa != clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) && (oSidur.iBitulOHosafa != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()));
             
             //נמלא את הDATATABLE שתכיל בסוף את הנתונים העדכניים
-            if (!Page.IsPostBack)
+            if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                 FillUpdateSidurimTable(ref oSidur, drSugSidur);
             
             //הוספת פעילות
+            
             CreateAddPeilutCell(oSidur, ref hCell, iIndex);
             hTable.Rows[0].Cells.Add(hCell);
 
@@ -2805,7 +2807,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
-            oTextBox.Attributes.Add("onblur", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
+            oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             
 
@@ -4870,7 +4872,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _SidurIndex;
         }
     }
-      
+    public int RefreshBtn
+    {
+        set
+        {
+            _RefreshBtn = value;
+        }
+        get
+        {
+            return _RefreshBtn;
+        }
+    }  
     public DateTime FullShatHatchala
     {
         set { _FullShatHatchala = value; }

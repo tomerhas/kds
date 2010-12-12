@@ -563,11 +563,13 @@ var MKT_ELEMENT = 5;
        }
   }
   function changeStartHour(iIndex) {
+      document.getElementById("lstSidurim_hidCurrIndx").value = "2|" + iIndex;
       var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
       var sNewSH = _ShatHatchala.value;
-      wsGeneral.SidurStartHourChanged(iSidur,sNewSH,sOrgSH,callBackStartHour);
+      var sCardDate = document.getElementById("clnDate").value; 
+      wsGeneral.SidurStartHourChanged(sCardDate,iSidur, sNewSH, sOrgSH, callBackStartHour);
   }
   function callBackStartHour(result){
      if (result=='1')
