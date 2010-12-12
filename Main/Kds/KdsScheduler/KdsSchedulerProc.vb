@@ -147,7 +147,7 @@ Module KdsSchedulerProc
             If Now.Hour > CInt(SdrnStrtHour) And Now.Hour < 13 Then
                 oKDs.RunSdrn(p_date_str) 'yyyymmdd
             End If
-            oKDs.KdsWriteProcessLog(98, 0, 1, "check PremiaCalc: " + Now.Hour.ToString())
+            ''  oKDs.KdsWriteProcessLog(98, 0, 1, "check PremiaCalc: " + Now.Hour.ToString())
             If Now.Hour = 21 Then
                 lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12)
                 oKDs.KdsWriteProcessLog(98, 0, 1, "before PremiaCalc")
