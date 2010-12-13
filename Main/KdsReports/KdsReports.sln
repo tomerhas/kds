@@ -4,12 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "KdsReports", "KdsReports\KdsReports.rptproj", "{BB1C05B1-32B7-44CC-ABB1-A01B840AC64D}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
+	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = KdsReports\\KdsReports.rptproj
-		SccLocalPath1 = .
-		SccProjectFilePathRelativizedFromConnection1 = KdsReports\\
+		SccProjectName1 = KdsReports
+		SccLocalPath1 = KdsReports
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Default = Debug|Default
