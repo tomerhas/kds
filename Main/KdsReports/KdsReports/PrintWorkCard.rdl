@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <Body>
+    <ReportItems>
+      <Subreport Name="Subreport2">
+        <ReportName>WorkCard</ReportName>
+        <Parameters>
+          <Parameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </Parameter>
+          <Parameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </Parameter>
+          <Parameter Name="P_EMDA">
+            <Value>=Parameters!P_EMDA.Value</Value>
+          </Parameter>
+          <Parameter Name="P_DT">
+            <Value>=Parameters!P_DT.Value</Value>
+          </Parameter>
+          <Parameter Name="P_TIKUN">
+            <Value>=Parameters!P_TIKUN.Value</Value>
+          </Parameter>
+        </Parameters>
+        <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+        <Height>0.6cm</Height>
+        <Width>20.14075cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
+      <Rectangle Name="Rectangle2">
+        <ReportItems>
+          <Subreport Name="Subreport3">
+            <ReportName>WorkCardVisa</ReportName>
+            <Parameters>
+              <Parameter Name="P_MISPAR_ISHI">
+                <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+              </Parameter>
+              <Parameter Name="P_TAARICH">
+                <Value>=Parameters!P_TAARICH.Value</Value>
+              </Parameter>
+              <Parameter Name="P_EMDA">
+                <Value>=Parameters!P_EMDA.Value</Value>
+              </Parameter>
+              <Parameter Name="P_DT">
+                <Value>=Parameters!P_DT.Value</Value>
+              </Parameter>
+              <Parameter Name="P_TIKUN">
+                <Value>=Parameters!P_TIKUN.Value</Value>
+              </Parameter>
+            </Parameters>
+            <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+            <Height>0.6cm</Height>
+            <Width>20.14075cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+        </ReportItems>
+        <PageBreak>
+          <BreakLocation>Start</BreakLocation>
+        </PageBreak>
+        <Top>0.74538cm</Top>
+        <Left>0.06614cm</Left>
+        <Height>0.73229cm</Height>
+        <Width>20.14075cm</Width>
+        <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(Parameters!P_SIDUR_VISA.Value=1 ,false,true)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+    </ReportItems>
+    <Height>0.59397in</Height>
+    <Style />
+  </Body>
+  <ReportParameters>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>65099</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_MISPAR_ISHI</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TAARICH">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>03/08/2010 00:00:00</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_TAARICH</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_EMDA">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_EMDA</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_DT</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_SIDUR_VISA">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_SIDUR_VISA</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TIKUN">
+      <DataType>String</DataType>
+      <Prompt>P_TIKUN</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Width>7.98151in</Width>
+  <Page>
+    <PageFooter>
+      <Height>0.82902cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox34">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=" דף  " &amp; Globals!PageNumber &amp; "  מתוך  " &amp; Globals!TotalPages</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <LeftIndent>0cm</LeftIndent>
+              <HangingIndent>0cm</HangingIndent>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox12</rd:DefaultName>
+          <Left>13.40233cm</Left>
+          <Height>0.56444cm</Height>
+          <Width>5.6801cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox36">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>_______________חתימת הנהג </Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <LeftIndent>0cm</LeftIndent>
+              <HangingIndent>0cm</HangingIndent>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox12</rd:DefaultName>
+          <Left>0.41487cm</Left>
+          <Height>0.56444cm</Height>
+          <Width>5.6801cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.4cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.2cm</TopMargin>
+    <BottomMargin>0.2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <rd:ReportID>6ccd084c-c504-47fe-896d-a57b506a4276</rd:ReportID>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+</Report>
