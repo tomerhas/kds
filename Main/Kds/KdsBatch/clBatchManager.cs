@@ -2110,7 +2110,8 @@ namespace KdsBatch
             DateTime dStartLimitHour, dEndLimitHour;
             DateTime dSidurStartHour;
              bool isValid = true;
-          
+             bool bSidurNahagut = false;
+             bool bSidurNihulTnua = false;
             try
             { 
                 //    כל הסידורים (מפה או מיוחד)
@@ -2129,14 +2130,28 @@ namespace KdsBatch
                 dEndLimitHour = oParam.dSidurEndLimitShatHatchala; 
                
                 dSidurStartHour = oSidur.dFullShatHatchala;
+
+                DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
+
+                bSidurNahagut = IsSidurNahagut(drSugSidur, oSidur);
+                bSidurNihulTnua=IsSidurNihulTnua(drSugSidur, oSidur);
+                
+                if (bSidurNahagut || bSidurNihulTnua)
+                {
+                    dStartLimitHour = oParam.dSidurStartLimitHourParam1;
+                    dEndLimitHour = oParam.dShatHatchalaNahagutNihulTnua;
+                 }
+                
+               
                 if (oSidur.bSidurMyuhad)
                 {
-                    if((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatHatchalaMuteret))) //קיים מאפיין
+
+                    if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatHatchalaMuteret))) //קיים מאפיין
                     {
                         dStartLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatHatchalaMuteret).ToString("HH:mm"), dCardDate);
                     }
 
-                    if((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
+                    if ((oSidur.bShatHatchalaMuteretExists) && (!String.IsNullOrEmpty(oSidur.sShatGmarMuteret))) //קיים מאפיין
                     {
                         dEndLimitHour = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(oSidur.sShatGmarMuteret).ToString("HH:mm"), dCardDate.AddDays(1));
                     }
@@ -2434,7 +2449,7 @@ namespace KdsBatch
              {
                  if (oSidur.htPeilut.Count > 0)
                  {
-                     if (bSidurNahagut)
+                     if (bSidurNahagut && !oSidur.bSidurVisaKodExists)
                      {
 
                          oPeilutAchrona = GetLastPeilutNoElementLeyedia(oSidur);
