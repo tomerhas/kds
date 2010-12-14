@@ -1373,7 +1373,10 @@ var MKT_ELEMENT = 5;
                 ChangeKnisotHour(document.getElementById(arrItems[1]), iDayToAdd, dSdDate);
             }
         }
+        
         ValidatorEnable(document.getElementById('lstSidurim_vldSG'.concat(arrItems[1]), true));
+        ValidatorEnable(document.getElementById('lstSidurim_vldSHatchala'.concat(arrItems[1]), true));
+        
     }
 //    function callBackUpdateSidur(result, _SHNew) {
 //        var dSdDate;
