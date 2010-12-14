@@ -92,25 +92,28 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.07907in</Width>
+              <Width>0.68798in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8281in</Width>
+              <Width>0.53125in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.86496in</Width>
+              <Width>0.61212in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.22725in</Width>
+              <Width>0.90096in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.29595in</Width>
+              <Width>1.26325in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80485in</Width>
+              <Width>1.33195in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66132in</Width>
+              <Width>0.84085in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.69732in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -145,6 +148,49 @@
                         <BottomBorder>
                           <Style>Double</Style>
                         </BottomBorder>
+                        <LeftBorder>
+                          <Style>None</Style>
+                        </LeftBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox6">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Style>Double</Style>
+                        </BottomBorder>
+                        <RightBorder>
+                          <Style>None</Style>
+                        </RightBorder>
                         <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -436,10 +482,8 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ,"",
- Fields!TEUR_YOM.Value &amp;" - " &amp; Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" &amp; Year(Fields!TAARICH.Value)    )</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+  Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" &amp; Year(Fields!TAARICH.Value) )</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -451,12 +495,44 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
-                        <LeftBorder>
-                          <Style>Solid</Style>
-                        </LeftBorder>
                         <RightBorder>
                           <Style>Solid</Style>
                         </RightBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_YOM">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ,"",
+  Fields!TEUR_YOM.Value )</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_YOM</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <LeftBorder>
+                          <Style>Solid</Style>
+                        </LeftBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -697,6 +773,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -719,8 +796,11 @@
         <Top>2.13114cm</Top>
         <Left>0.23396in</Left>
         <Height>1.53208cm</Height>
-        <Width>17.17421cm</Width>
+        <Width>17.43881cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,false ,true)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -739,6 +819,7 @@
                   <FontSize>14pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <TextDecoration>Underline</TextDecoration>
+                  <Language>he-IL</Language>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -853,7 +934,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>1.62321cm</Top>
-        <Left>4.15083cm</Left>
+        <Left>2.21937cm</Left>
         <Height>0.6cm</Height>
         <Width>9.74748cm</Width>
         <ZIndex>5</ZIndex>
@@ -923,7 +1004,7 @@
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.10596in</Width>
+  <Width>7.2009in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
