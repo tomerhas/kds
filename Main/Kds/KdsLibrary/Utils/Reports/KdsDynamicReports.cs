@@ -537,7 +537,8 @@ namespace KdsLibrary.Utils.Reports
         HityazvutBePundakimTlunot,
         HityazvutBePundakimKalkalit,
         PrintWorkCard,
-        DriverWithPlaints
+        DriverWithPlaints,
+        ChafifotSidureyNihulTnua
     }
     public enum Orientation
     {

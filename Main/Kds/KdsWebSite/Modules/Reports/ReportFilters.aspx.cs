@@ -43,6 +43,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             FillEnabledFilter();
             BtControlChanged.Style.Add("Display", "none");
             SetSecurityLevel();
+            InitializeEvents();
 
         }
         catch (Exception ex)
@@ -79,6 +80,28 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
         }
     }
+
+    private void InitializeEvents()
+    {
+        try
+        {
+            switch (Report.NameReport)
+            {
+                
+                case ReportName.HashvaatRizotChishuv:
+                case ReportName.HashvaatChodsheyRizotChishuv:
+                    Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
+                    break;
+                case ReportName.ChafifotSidureyNihulTnua: 
+                    Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
+        }
+    }
     private void InitializeByReport()
     {
         clUtils oUtils = clUtils.GetInstance();
@@ -105,10 +128,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.FindWorkerCard:
                     CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                     break;
-                case ReportName.HashvaatRizotChishuv:
-                case ReportName.HashvaatChodsheyRizotChishuv:
-                    Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
-                    break;
+                //case ReportName.HashvaatRizotChishuv:
+                //case ReportName.HashvaatChodsheyRizotChishuv:
+                //    Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
+                //    break;
                 case ReportName.IdkuneyRashemet:
                     Auto_P_MIS_RASHEMET.ContextKey = "6,0133,"+CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
                     Shaa.Items[0].Text = "00:01";
@@ -136,6 +159,15 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
                         CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
                     }
+                    break;
+                case ReportName.ChafifotSidureyNihulTnua:
+                    if (!Page.IsPostBack)
+                    {
+                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                        CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+                    }
+                        //Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
+                    
                     break;
             }
             SetAutoCompleteExtender();
@@ -183,6 +215,21 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             }
         }
     }
+
+    private void ddlEzor_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable dt = new DataTable();
+        clReport oReport = clReport.GetInstance();
+        int p_ezor = int.Parse(clGeneral.GetControlValue(Region).ToString());
+
+        dt = oReport.GetSnifimByEzor(p_ezor);
+
+        Snif.Items.Clear();
+        Snif.DataSource = dt;
+        Snif.DataBind();
+
+    }
+
     protected void btnDisplay_Click(object sender, EventArgs e)
     {
         string sScript;
@@ -488,7 +535,14 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (CheckBoxList)TdFilter.FindControl("P_EZOR"); }
     }
-
+    private DropDownList Snif
+    {
+        get { return (DropDownList)TdFilter.FindControl("P_SNIF"); }
+    }
+    private DropDownList Region
+    {
+        get { return (DropDownList)TdFilter.FindControl("P_EZOR"); }
+    }
     private DropDownList CompanyId
     {
         get { return (DropDownList)TdFilter.FindControl("P_COMPANYID"); }

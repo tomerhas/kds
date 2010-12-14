@@ -72,7 +72,7 @@
       <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
     </Filter>
   </Report>
-  <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות">
+  <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" IsParent="false" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
     </Filter>
@@ -370,5 +370,19 @@
   <Resources>
     <Text Key="ButtonCssClass" Value="ImgButtonSearch" />
   </Resources>
-
+                      
+  <Report  RdlName="ChafifotSidureyNihulTnua" Roles="kds_administrators" FilterByLine="3" PageHeader="חפיפות בסידורי ניהול תנועה" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
+      <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
+      <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+    </Filter>
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>
+    <Filter   ParameterName="P_SNIF" Caption="סניף תנועה" BoxeType="DropDown" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select -1 KOD_SNIF_TNUAA,'הכל' teur from dual union select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />
+    </Filter>
+  </Report>
 </DynamicReport>
