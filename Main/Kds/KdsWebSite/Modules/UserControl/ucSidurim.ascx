@@ -27,10 +27,6 @@
 
 <input type="hidden" runat="server" id="hidCurrIndx"/>
 <input type="hidden" runat="server" id="hidParam29"/>
-<input type="hidden" runat="server" id="hidParam30"/>
-<input type="hidden" runat="server" id="hidParam101"/>
-<input type="hidden" runat="server" id="hidParam102"/>
-<input type="hidden" runat="server" id="hidParam103"/>
 <input type="hidden" runat="server" id="hidNumOfHashlama"/>
 <input type="hidden" runat="server" id="hidDayType"/>
 <input type="hidden" runat="server" id="hidParam41"/>

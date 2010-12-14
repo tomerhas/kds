@@ -568,12 +568,22 @@ var MKT_ELEMENT = 5;
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
       var sNewSH = _ShatHatchala.value;
-      var sCardDate = document.getElementById("clnDate").value; 
-      wsGeneral.SidurStartHourChanged(sCardDate,iSidur, sNewSH, sOrgSH, callBackStartHour);
+      var sCardDate = document.getElementById("clnDate").value;
+      wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH, callBackStartHour, null, iIndex);
   }
-  function callBackStartHour(result){
+  function callBackStartHour(result, iIndex) {
      if (result=='1')
          document.getElementById("lstSidurim_btnShowMessage").click();
+
+     var dSdDate = new Date();
+     var sSdDate = document.getElementById("lstSidurim_lblDate".concat(iIndex));
+     var sYear = sSdDate.innerHTML.substr(sSdDate.innerHTML.length-4,4);
+     var sMonth = Number(sSdDate.innerHTML.substr(3, 2)) - 1;
+     var sDay = sSdDate.innerHTML.substr(0, 2);
+     SetDate(dSdDate, Number(sYear), Number(sMonth), Number(sDay), 0, 0);
+    
+     var _SHNew = document.getElementById("lstSidurim_txtSH".concat(iIndex));
+     _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
   }
   function ChkStartHour(val, args){
         SetBtnChanges();
@@ -689,32 +699,14 @@ var MKT_ELEMENT = 5;
          var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
          var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
 
-         if ((IsShatGmarInNextDay(sShatGmar.value)) || (sShatGmar.value == '00:00'))
-             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "1";
-         else
-             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
+//         if ((IsShatGmarInNextDay(sShatGmar.value)) || (sShatGmar.value == '00:00'))
+//             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "1";
+//         else
+//             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
 
         // var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);
         
-         if (IsValidTime(sShatGmar.value)) {
-//             if (AddDay == 1) {
-//                 if (utcSidurDate == utcCardDate) {
-//                     //add a day to the date
-//                     SidurTime.setDate(SidurTime.getDate() + 1);
-//                    
-//                    // document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(SidurTime);
-//                     //ParamStartTime.setDate(ParamStartTime.getDate() + 1);           
-//                 }
-////                 else
-////                     document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(SidurTime);
-//             }
-//             else {//addDay=0
-//                 if (utcSidurDate > utcCardDate){
-//                     SidurTime.setDate(SidurTime.getDate() - 1);
-//                 }
-//             }
-//             document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(SidurTime);
-//             document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(SidurTime);
+         if (IsValidTime(sShatGmar.value)) {//             
              if (!IsSHBigSG(val, args)) {
                  if (args.IsValid == false) {
                      val.errormessage.concat("\n");
@@ -914,8 +906,9 @@ var MKT_ELEMENT = 5;
        SetBtnChanges();
        var iIndex = String(val.id).substr(String(val.id).length-1,1);  
        var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)); 
-       var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex)); 
-       var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex));      
+       var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
+       var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)); 
+       var dCardDate = document.getElementById("clnDate").value;     
        var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);      
        var ShatGmar = new Date();     
        var ShatHatchala = new Date();    
@@ -926,7 +919,10 @@ var MKT_ELEMENT = 5;
        ShatHatchala.setMonth(sMonth);
        ShatHatchala.setDate(sDay);
        ShatHatchala.setHours(sShatHatchala.value.substr(0,2));
-       ShatHatchala.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length-2,2));        
+       ShatHatchala.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length - 2, 2));
+       sYear = dCardDate.substr(dCardDate.length - 4, 4);
+       sMonth = Number(dCardDate.substr(3, 2)) - 1;
+       sDay = dCardDate.substr(0, 2);        
        ShatGmar.setFullYear(sYear);
        ShatGmar.setMonth(sMonth);
        ShatGmar.setDate(sDay);
@@ -1357,7 +1353,6 @@ var MKT_ELEMENT = 5;
                 dSdDate.setDate(dSdDate.getDate() -1);  
         }    
          
-          
         if (arrItems[0]=='1'){
             document.getElementById("lstSidurim_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            
             document.getElementById("lstSidurim_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
@@ -1378,6 +1373,7 @@ var MKT_ELEMENT = 5;
                 ChangeKnisotHour(document.getElementById(arrItems[1]), iDayToAdd, dSdDate);
             }
         }
+        ValidatorEnable(document.getElementById('lstSidurim_vldSG'.concat(arrItems[1]), true));
     }
 //    function callBackUpdateSidur(result, _SHNew) {
 //        var dSdDate;

@@ -295,10 +295,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //hidParam80.Value = Param80.ToShortTimeString();
         //hidParam3.Value = Param3.ToShortTimeString();
         hidParam29.Value = Param29.ToShortTimeString();
-        hidParam30.Value = Param30.ToShortTimeString();
-        hidParam101.Value = Param101.ToString();
-        hidParam102.Value = Param102.ToString();
-        hidParam103.Value = Param103.ToString();
+        //hidParam30.Value = Param30.ToShortTimeString();
+       //hidParam101.Value = Param101.ToString();
+        //hidParam102.Value = Param102.ToString();
+        //hidParam103.Value = Param103.ToString();
         hidParam41.Value = Param41.ToString();
         hidParam98.Value = Param98.ToString();
         hidParam242.Value = Param242.ToShortTimeString();       
@@ -823,6 +823,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcSidur = new DataColumn();
         dcSidur.ColumnName = "sidur_number";
         dcSidur.DataType = System.Type.GetType("System.Int32");
+        dtUpdatedSidurim.Columns.Add(dcSidur);
+
+        dcSidur = new DataColumn();
+        dcSidur.ColumnName = "sidur_org_start_hour";
+        dcSidur.DataType = System.Type.GetType("System.String");
         dtUpdatedSidurim.Columns.Add(dcSidur);
 
         dcSidur = new DataColumn();
@@ -2147,6 +2152,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //מבנה שיכיל בסוף את התאריך המועדכן של הסידור
         drSidur = dtUpdatedSidurim.NewRow();
         drSidur["sidur_number"] = oSidur.iMisparSidur;
+        drSidur["sidur_org_start_hour"] = oSidur.dFullShatHatchala.ToShortTimeString();
         drSidur["sidur_start_hour"] = oSidur.dFullShatHatchala.ToShortTimeString();
         drSidur["sidur_date"] = oSidur.dFullShatHatchala;
         drSidur["sidur_nahagut"] = IsSidurNahagut(ref oSidur, drSugSidur).GetHashCode();
@@ -2809,7 +2815,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
             oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
-            
+            oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
 
             AddAttribute(oTextBox,"OldV",oTextBox.Text);
             hCell.Controls.Add(oTextBox);
@@ -3206,7 +3212,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onChange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2); SetDayToAdd(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2); ");
             
             AddAttribute(oTextBox, "OrgDate", oSidur.dFullShatGmar.ToString());           
             AddAttribute(oTextBox, "OldV", oTextBox.Text);

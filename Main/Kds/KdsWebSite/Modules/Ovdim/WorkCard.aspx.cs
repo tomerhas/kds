@@ -2356,7 +2356,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
     }
 
-    private void FillIdkunRashemetSidurim(ref COLL_IDKUN_RASHEMET oCollIdkunRashemet)
+    private void 
+        FillIdkunRashemetSidurim(ref COLL_IDKUN_RASHEMET oCollIdkunRashemet)
     {
         GridView oGridView;
         TextBox _Txt;
@@ -2389,17 +2390,28 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                 //שעת התחלה             
                 _Txt = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSH" + iIndex)));
+
+                _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Attributes["OrgShatHatchala"]);
                 if (_Txt.Text == string.Empty)
-                {
-                    dShatHatchala = DateTime.Parse(String.Concat(dDateCard.ToShortDateString(), " ", _Txt.Text));
-                    dNewShatHatchala = dShatHatchala;
-                }
+                    _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse(String.Concat(dDateCard.ToShortDateString(), " ", "00:00:00"));
                 else
-                {
-                    sHour = string.Concat(_Txt.Text, ":", DateTime.Parse((_Txt.Attributes["OrgShatHatchala"])).Second.ToString().PadLeft(2, (char)48));
-                    dNewShatHatchala = clGeneral.GetDateTimeFromStringHour(sHour, dDateCard);
-                    dShatHatchala = DateTime.Parse((_Txt.Attributes["OrgShatHatchala"]));
+                {//נבדוק אם השתנה התאריך
+                    _objIdkunRashemet.NEW_SHAT_HATCHALA = GetSidurNewDate(iMisarSidur, _Txt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                    _objIdkunRashemet.NEW_SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(_objIdkunRashemet.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));                    
                 }
+                dNewShatHatchala = _objIdkunRashemet.NEW_SHAT_HATCHALA;
+                dShatHatchala = _objIdkunRashemet.SHAT_HATCHALA;
+                //if (_Txt.Text == string.Empty)
+                //{
+                //    dShatHatchala = DateTime.Parse(String.Concat(dDateCard.ToShortDateString(), " ", _Txt.Text));
+                //    dNewShatHatchala = dShatHatchala;
+                //}
+                //else
+                //{
+                //    sHour = string.Concat(_Txt.Text, ":", DateTime.Parse((_Txt.Attributes["OrgShatHatchala"])).Second.ToString().PadLeft(2, (char)48));
+                //    dNewShatHatchala = clGeneral.GetDateTimeFromStringHour(sHour, dDateCard);
+                //    dShatHatchala = DateTime.Parse((_Txt.Attributes["OrgShatHatchala"]));
+                //}
 
 
                 if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), iMisarSidur, dShatHatchala, DateTime.MinValue, 0, ref _objIdkunRashemet))
