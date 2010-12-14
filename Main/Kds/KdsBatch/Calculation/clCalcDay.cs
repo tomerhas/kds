@@ -1316,7 +1316,7 @@ namespace KdsBatch
 
          private void CalcRechiv28()
          {
-             float fSumDakotRechiv, fMichsaMechushevet, fSachKmVisa;
+             float fSumDakotRechiv, fSachKmVisa, fErechSidur;
              try
              {
                  if (_dtYemeyAvodaOved.Select("Lo_letashlum=0  and TACHOGRAF=1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC").Length == 0)
@@ -1325,13 +1325,15 @@ namespace KdsBatch
                      {
                          if (_oGeneralData.objPirteyOved.iDirug != 85 || _oGeneralData.objPirteyOved.iDarga != 30)
                          {
-                             fMichsaMechushevet = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                             if (!clCalcData.CheckErevChag(clCalcData.iSugYom) && !clCalcData.CheckYomShishi(clCalcData.iSugYom) && !clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich))
+                            {
+                                 oSidur.CalcRechiv28();
 
-                             if (fMichsaMechushevet > 0)
-                             {
+                                 fErechSidur = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaVisa.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+
                                  fSachKmVisa = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                                 fSumDakotRechiv = float.Parse(((fSachKmVisa / 50) * 60 * 0.33).ToString());
+                                 fSumDakotRechiv = float.Parse(((((fErechSidur / 1.2) +fSachKmVisa)/50)*60  * 0.33).ToString());
 
                                  addRowToTable(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), fSumDakotRechiv);
                              }
@@ -1348,21 +1350,26 @@ namespace KdsBatch
 
          private void CalcRechiv29()
          {
-             float fSumDakotRechiv, fSachKmVisa;
+             float fSumDakotRechiv, fSachKmVisa, fErechSidur;
              try
              {
                  if (_dtYemeyAvodaOved.Select("Lo_letashlum=0  and TACHOGRAF=1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC").Length == 0)
                  {
-                     if (clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich))
+                     if (clCalcData.CheckErevChag(clCalcData.iSugYom) && clCalcData.CheckYomShishi(clCalcData.iSugYom) && clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich))
                      {
                          if (_oGeneralData.objPirteyOved.iMutamut != 4 && _oGeneralData.objPirteyOved.iMutamut != 5)
                          {
                              if (_oGeneralData.objPirteyOved.iDirug != 85 || _oGeneralData.objPirteyOved.iDarga != 30)
                              {
 
+                                 oSidur.CalcRechiv29();
+
+                                 fErechSidur = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+
                                  fSachKmVisa = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                                 fSumDakotRechiv = float.Parse(((fSachKmVisa / 50) * 60 * 0.33).ToString());
+                                 fSumDakotRechiv = float.Parse(((((fErechSidur / 1.2) + fSachKmVisa) / 50) *60* 0.33).ToString());
+
 
                                  addRowToTable(clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), fSumDakotRechiv);
                              }
@@ -4989,23 +4996,24 @@ namespace KdsBatch
 
           private void CalcRechiv203()
           {
-              float fSumDakotRechiv, fMichsaYomit, fSachKmVisa;
+              float fSumDakotRechiv, fSachKmVisa, fErechSidur;
               try
               {
                   if (_dtYemeyAvodaOved.Select("Lo_letashlum=0  and TACHOGRAF=1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC").Length == 0)
                   {
-                      if (clCalcData.iSugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+                      if (clCalcData.CheckErevChag(clCalcData.iSugYom) && clCalcData.CheckYomShishi(clCalcData.iSugYom) )
                       {
-                          fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                          if (fMichsaYomit == 0)
-                          {
-                              fSachKmVisa = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                           oSidur.CalcRechiv203();
 
-                              fSumDakotRechiv = float.Parse(((fSachKmVisa / 50) * 60 * 0.33).ToString());
+                           fErechSidur = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                              addRowToTable(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), fSumDakotRechiv);
+                           fSachKmVisa = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                          }
+                            fSumDakotRechiv = float.Parse(((((fErechSidur / 1.2) + fSachKmVisa) / 50)*60 * 0.33).ToString());
+
+
+                           addRowToTable(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), fSumDakotRechiv);
+
                       }
                   }
               }

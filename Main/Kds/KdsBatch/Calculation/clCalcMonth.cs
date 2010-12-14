@@ -178,8 +178,8 @@ namespace KdsBatch
                         {
                             fMichsaYomit = (float)(drMichsaYomit[0]["ERECH_RECHIV"]);
                             fShaot100Letashlum = (float)(drShaot100[0]["ERECH_RECHIV"]) / 60;
-                            iOutMichsa = (int)(drSidurimToChange[I]["out_michsa"]);
-                            iMisparSidur = (int)(drSidurimToChange[I]["mispar_sidur"]);
+                            iOutMichsa = int.Parse(drSidurimToChange[I]["out_michsa"].ToString());
+                            iMisparSidur = int.Parse(drSidurimToChange[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = (DateTime)(drSidurimToChange[I]["shat_hatchala_sidur"]);
 
                             if (fMichsaYomit <= fShaot100Letashlum && (clCalcData.CheckOutMichsa(_iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, iOutMichsa) || iSachSidurimKuzezu < _oGeneralData.objParameters.iMaxYamimHamaratShaotNosafot))

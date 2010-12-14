@@ -147,6 +147,35 @@ namespace KdsBatch
            
          }
 
+         public int CalcElementReka(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             //משך אלמנטים מסוג ריקה
+             DataTable dtPeiluyot;
+             DataRow[] drPeiluyot;
+             int iMakat;
+             int iErech=0;
+            
+             try
+             {
+                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+
+                 drPeiluyot = dtPeiluyot.Select("nesia_reika is not null");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 {
+                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                     iErech += int.Parse(iMakat.ToString().Substring(3, 3));
+                    
+                 }
+
+                 return iErech;
+             }
+             catch (Exception ex)
+             {
+                  throw (ex);
+             }
+
+         }
 
          public float CalcRechiv213(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
@@ -307,6 +336,46 @@ namespace KdsBatch
              }
             
           }
+
+
+         public void CalcRechiv216(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             DataTable dtPeiluyot;
+             int iMisparKnisa, iMakat1;
+             float fKm;
+             DateTime dShatHatchla, dShatYetzia;
+             iMisparKnisa = 0;
+             dShatHatchla = DateTime.MinValue;
+             dShatYetzia = DateTime.MinValue;
+             try
+             {
+                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 fKm = 0;
+                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                 {
+                     iMakat1 = int.Parse(dtPeiluyot.Rows[J]["makat_nesia"].ToString().Substring(0, 1));
+                     //ב.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia = 5 (זוהי ויזה) אזי: ק"מ = TB_peilut_Ovdim.Km_visa.
+                     fKm = 0;
+                     if (iMakat1 == 5)
+                     {
+                         fKm = float.Parse(dtPeiluyot.Rows[J]["km_visa"].ToString());
+                     }
+                     
+                     if (fKm > 0)
+                     {
+                         dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
+                         dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
+                         iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
+                         addRowToTable(clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fKm);
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 clLogBakashot.SetError(_lBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), _iMisparIshi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 throw (ex);
+             }
+         }
 
          public void CalcRechiv217(int iMisparSidur, DateTime dShatHatchalaSidur, bool bFirstSidur)
          {

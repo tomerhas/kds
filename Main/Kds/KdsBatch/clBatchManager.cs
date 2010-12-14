@@ -11506,7 +11506,7 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
                 }
-                else if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                else if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
                 {
                     if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                     {
