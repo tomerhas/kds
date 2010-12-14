@@ -23,11 +23,11 @@
         </Field>
         <Field Name="SHAT_HATCHALA">
           <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SHAT_GMAR">
           <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
@@ -41,17 +41,25 @@
           <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_TNUAA">
+          <DataField>TEUR_SNIF_TNUAA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>DsKds</DataSourceName>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_CHAFIFOTBESIDUREYNIHULTNUA</CommandText>
         <QueryParameters>
-          <QueryParameter Name="P_TAARICH_ME">
-            <Value>=Parameters!P_TAARICH_ME.Value</Value>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="P_TAARICH_AD">
-            <Value>=Parameters!P_TAARICH_AD.Value</Value>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
           </QueryParameter>
           <QueryParameter Name="P_EZOR">
             <Value>=Parameters!P_EZOR.Value</Value>
@@ -70,7 +78,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>0.05264cm</Top>
+        <Top>0.31722cm</Top>
         <Left>16.26849cm</Left>
         <Height>1.5cm</Height>
         <Width>1.5cm</Width>
@@ -84,25 +92,25 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.78278in</Width>
+              <Width>1.07907in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83714in</Width>
+              <Width>0.8281in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77121in</Width>
+              <Width>0.86496in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80017in</Width>
+              <Width>1.22725in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.2022in</Width>
+              <Width>1.29595in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81527in</Width>
+              <Width>0.80485in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79674in</Width>
+              <Width>0.66132in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -428,7 +436,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value and Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ,"",
-Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" &amp; Year(Fields!TAARICH.Value)  )</Value>
+ Fields!TEUR_YOM.Value &amp;" - " &amp; Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" &amp; Year(Fields!TAARICH.Value)    )</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -455,7 +463,6 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -709,15 +716,10 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
         </TablixRowHierarchy>
         <LayoutDirection>RTL</LayoutDirection>
         <DataSetName>DsChafifotSidurim</DataSetName>
-        <SortExpressions>
-          <SortExpression>
-            <Value>=Fields!SHAT_HATCHALA.Value</Value>
-          </SortExpression>
-        </SortExpressions>
         <Top>2.13114cm</Top>
         <Left>0.23396in</Left>
-        <Height>1.5321cm</Height>
-        <Width>15.25398cm</Width>
+        <Height>1.53208cm</Height>
+        <Width>17.17421cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -732,7 +734,7 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>= "   חפיפה בסידורי ניהול תנועה מ-   " &amp;  Parameters!P_TAARICH_ME.Value &amp; "   עד   " &amp; Parameters!P_TAARICH_AD.Value</Value>
+                <Value>= "   חפיפה בסידורי ניהול תנועה מ-   " &amp;  Parameters!P_STARTDATE.Value &amp; "   עד   " &amp; Parameters!P_ENDDATE.Value</Value>
                 <Style>
                   <FontSize>14pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -767,11 +769,10 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>= "   אזור:   " &amp;  Parameters!P_EZOR.Value &amp; "   סניף:   " &amp; Parameters!P_SNIF.Value</Value>
+                <Value>=iif(Parameters!P_SNIF.Value=-1, "  סניף: הכל   ","  סניף:  " &amp; First(Fields!TEUR_SNIF_TNUAA.Value, "DsChafifotSidurim"))</Value>
                 <Style>
                   <FontSize>14pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -782,10 +783,83 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
         </Paragraphs>
         <rd:DefaultName>Textbox33</rd:DefaultName>
         <Top>0.36128in</Top>
-        <Left>1.01674in</Left>
+        <Left>1.76886in</Left>
         <Height>0.25in</Height>
-        <Width>4.28201in</Width>
+        <Width>1.74034in</Width>
         <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox34">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(Parameters!P_EZOR.Value=-1, "  אזור: הכל   ","  אזור:  " &amp; First(Fields!TEUR_EZOR.Value, "DsChafifotSidurim"))</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox33</rd:DefaultName>
+        <Top>0.36128in</Top>
+        <Left>3.53698in</Left>
+        <Height>0.25in</Height>
+        <Width>1.74034in</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>1.62321cm</Top>
+        <Left>4.15083cm</Left>
+        <Height>0.6cm</Height>
+        <Width>9.74748cm</Width>
+        <ZIndex>5</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,true ,false)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -801,24 +875,6 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
     <Style />
   </Body>
   <ReportParameters>
-    <ReportParameter Name="P_TAARICH_ME">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("01/10/2009")</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_TAARICH_ME</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_TAARICH_AD">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("10/10/2009")</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_TAARICH_AD</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
       <DefaultValue>
@@ -829,20 +885,42 @@ Day(Fields!TAARICH.Value) &amp; "/" &amp; Month(Fields!TAARICH.Value) &amp; "/" 
       <Prompt>P_DT</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_EZOR">
-      <DataType>String</DataType>
+      <DataType>Integer</DataType>
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" />
+          <Value>-1</Value>
         </Values>
       </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>P_EZOR</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
-      <DataType>String</DataType>
+      <DataType>Integer</DataType>
       <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>-1</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>P_SNIF</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_STARTDATE">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=CDate("01/10/2009")</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P STARTDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_ENDDATE">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=CDate("10/10/2009")</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Width>7.10596in</Width>
