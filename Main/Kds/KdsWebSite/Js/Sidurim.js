@@ -699,8 +699,8 @@ var MKT_ELEMENT = 5;
          var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
          var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
 
-//         if ((IsShatGmarInNextDay(sShatGmar.value)) || (sShatGmar.value == '00:00'))
-//             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "1";
+         if ((!IsShatGmarInNextDay(sShatGmar.value)) && (sShatGmar.value != '00:00'))
+            document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
 //         else
 //             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
 

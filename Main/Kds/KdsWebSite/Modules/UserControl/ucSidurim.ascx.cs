@@ -4154,27 +4154,33 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
 
             oTxt.CausesValidation = true;
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, 
+                                           clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), MisparSidur,
+                                           FullShatHatchala, dShatYetiza, iMisparKnisa);
+
             bool bEnabled = ((!bIdkunRashemet) && (!bElementHachanatMechona) && (iMisparKnisa==0));
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             //oTxt.Enabled = ((bSidurActive) && (bPeilutActive) && (!bIdkunRashemet));
             oTxt.ID = e.Row.ClientID + "ShatYetiza";
             //oTxt.Attributes.Add("onblur", "SetDay('" + oTxt.ClientID + "');");
             sTargetControlId = oTxt.ID;
-            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza", 
+                                                AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
             e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(oMaskEx);
 
             //Add CustomeValidator
             sMessage = "";//"הוקלד ערך שגוי. יש להקליד שעת יציאה בין " + Param29 + " עד " + Param30 ;
             sID = "vldPeilutShatYetiza";
             sClientScriptFunction = "ChkExitHour";
-            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID, 
+                                                    sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
             e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldCustomValidator);
 
             //Add Ajax CallOutCustomeValidator
             sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[2])).ID;
             sID = "vldExShatYetiza";
-            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Left);
+            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID,
+                                                      AjaxControlToolkit.ValidatorCalloutPosition.Left);
             e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldExtenderCallOut);
             string sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
 

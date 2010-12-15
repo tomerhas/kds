@@ -2356,8 +2356,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
     }
 
-    private void 
-        FillIdkunRashemetSidurim(ref COLL_IDKUN_RASHEMET oCollIdkunRashemet)
+    private void FillIdkunRashemetSidurim(ref COLL_IDKUN_RASHEMET oCollIdkunRashemet)
     {
         GridView oGridView;
         TextBox _Txt;
@@ -2368,10 +2367,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         int iMisarSidur;
         DateTime dShatHatchala, dNewShatHatchala;
         OBJ_IDKUN_RASHEMET _objIdkunRashemet = new OBJ_IDKUN_RASHEMET();
-        //OBJ_IDKUN_RASHEMET _ObjSidurimOvdimIns;
-        //OBJ_IDKUN_RASHEMET _ObjSidurimOvdimDel;
-        string sHour;
-        //bool bInsert;
+        
         for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
         {
             try
@@ -2386,6 +2382,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             if ((_Lbl != null) || (_HypLnk != null))
             {
+                _objIdkunRashemet = new OBJ_IDKUN_RASHEMET();
                 iMisarSidur = (_Lbl == null) ? int.Parse(_HypLnk.Text) : int.Parse(_Lbl.Text);
 
                 //שעת התחלה             
@@ -2905,9 +2902,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.TAARICH = dDateCard;
                         oObjSidurimOvdimUpd.MISPAR_SIDUR = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
                         oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
-
+                        oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = oSidur.iShayahLeyomKodem;
                         oTxt = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSH" + iIndex)));
                         oObjSidurimOvdimUpd.SHAT_HATCHALA = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
+
                         if (oTxt.Text == string.Empty)
                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
                         else
@@ -3212,6 +3210,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.SUG_HAZMANAT_VISA = oObjSidurimOvdimUpd.SUG_HAZMANAT_VISA;
             oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
             oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
+            oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
 
             oObjSidurimOvdimIns.UPDATE_OBJECT = 1;
         }
