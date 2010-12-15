@@ -491,7 +491,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oSidur = (clSidur)htEmployeeDetails[iIndex];
             MisparSidur = oSidur.iMisparSidur;
             ShatHatchala = oSidur.sShatHatchala;
-
+            FullShatHatchala = oSidur.dFullShatHatchala;
             //Create Sidur
             hTable = BuildOneSidur(ref htEmployeeDetails, oSidur, iIndex);
 
@@ -3113,7 +3113,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         return bErrorExists;
     }  
     protected bool SetOneError(Control oObj,HtmlTableCell hCell, int iMisparIshi,DateTime dCardDate, 
-                               int iMisparSidur,string sShatHatchala , DateTime dPeilutShatYetiza,
+                               int iMisparSidur,DateTime dFullShatHatchala , DateTime dPeilutShatYetiza,
                                int iMisparKnisa,string sPeilutKey, string sFieldName)
     {
         DataSet dsFieldsErrors;
@@ -3121,7 +3121,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         String _ContolType = oObj.GetType().ToString();
         bool bError = false;
 
-        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet, ErrorsList, iMisparIshi, dCardDate, iMisparSidur, DateTime.Parse(String.Concat(dCardDate.ToShortDateString()," ", sShatHatchala)), dPeilutShatYetiza, iMisparKnisa, sFieldName);
+        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet, ErrorsList, iMisparIshi, dCardDate, iMisparSidur, dFullShatHatchala, dPeilutShatYetiza, iMisparKnisa, sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
         dvFieldsErrors.RowFilter = "SHOW_ERROR=1";
 
@@ -3990,7 +3990,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, ShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Makat_nesia"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Makat_nesia"))
                     {
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }
@@ -4082,7 +4082,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:                    
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, ShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))
                     {
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }
@@ -4185,7 +4185,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, ShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     else
                     {
@@ -4266,7 +4266,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, ShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "KISUY_TOR"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "KISUY_TOR"))
                     {                    
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }
@@ -4892,7 +4892,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public DateTime FullShatHatchala
     {
         set { _FullShatHatchala = value; }
-        get { return DateTime.Parse(_CardDate.ToShortDateString()+ " "+ _ShatHatchala); }
+        get { return _FullShatHatchala; }
         
     }
 

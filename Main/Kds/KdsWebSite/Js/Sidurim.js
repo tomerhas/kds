@@ -1279,12 +1279,11 @@ var MKT_ELEMENT = 5;
       var sParamNxtDay;
       var dParamDate = new Date();
       var dItemDate = new Date();
-      var arrItems = iInx.split("|");      
-     
+      var arrItems = iInx.split("|");
+      var sCardDate = document.getElementById("clnDate").value;
       if (arrItems[0] == '1') {//שעת גמר
           sEndHour = document.getElementById("lstSidurim_txtSG" + arrItems[1]).value;
-          sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;         
-            var sCardDate = document.getElementById("clnDate").value;
+          sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;                     
             var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
             var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
             var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
@@ -1668,19 +1667,21 @@ var MKT_ELEMENT = 5;
        var _CurrCarNum = _CarNum.value;
        var _OrgCarNum = _CarNum.getAttribute("OldV");
        var _MustCarNum = _CarNum.getAttribute("MustOtoNum");
-       var _NextPeilut = document.getElementById(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
-       var _NextCarNum = _NextPeilut.value;
-       if (_NextCarNum!=undefined){
-       var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
-           if (_NextCarNum==''){_NextCarNum='0';}
-           if (_CurrCarNum!=''){
-               if ((_MustCarNum=='1') && (((_NextCarNum==_OrgCarNum) || (Number(_NextCarNum)==0))) && (_NextMustCarNum)){
-                   document.getElementById("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum)); 
-                   document.getElementById("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
-                   document.getElementById("btnCopy").click();   
-              }
-          }
-      }
+       if (document.getElementById(oId).nextSibling != null) {
+           var _NextPeilut = document.getElementById(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
+           var _NextCarNum = _NextPeilut.value;
+           if (_NextCarNum != undefined) {
+               var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
+               if (_NextCarNum == '') { _NextCarNum = '0'; }
+               if (_CurrCarNum != '') {
+                   if ((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum)) {
+                       document.getElementById("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
+                       document.getElementById("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
+                       document.getElementById("btnCopy").click();
+                   }
+               }
+           }
+       }
    }
    function disableUpdateBtn() {
         document.getElementById("btnUpdateCard").disabled = true;
