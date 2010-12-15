@@ -210,7 +210,7 @@ Module KdsSchedulerProc
         Dim oKDsData As KdsDataImport.ClKds
         Try
             oKDs = New KdsLibrary.BL.clBatch
-            oKDs.MoveRecordsToHistory(Now.AddMonths(-10))
+            oKDs.MoveRecordsToHistory(Now.AddMonths(-11))
         Catch ex As Exception
             oKDsData = New KdsDataImport.ClKds
             oKDsData.KdsWriteProcessLog(99, 0, 3, "MoveRecordsToHistory faild: " + ex.Message, 9)
