@@ -248,7 +248,6 @@
   <Report  RdlName="IdkuneyRashemet" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח עדכוני רשמת">
     <Filter ParameterName="P_MIS_RASHEMET" Caption="מ.א רשם" BoxeType="TextBox" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidMisRashemet1" ErrorMessageValidator="לא ניתן להוציא דוח כל עוד לא נבחר מספר אישי של רשמת" ValidationFunction="IsValidRashemet1"/>
-      <FilterValidator ValidatorName="ValidMisRashemet2" ErrorMessageValidator="מספר אישי של רשמת לא קיים או לא פעיל לתאריך הנבחר" ValidationFunction="IsValidRashemet2"/>
       <DropDownList QueryType="AjaxAutoComplete"  Select="getMispareiRashamot" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
     <Filter ParameterName="P_TAARICH_CA" Caption="תאריך" BoxeType="Calendar" DataType="System.String" RunAtServer="true" Required="true">
