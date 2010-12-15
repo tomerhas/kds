@@ -111,21 +111,21 @@
             var chodesh_me =  document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]-1), Number(chodesh_me[0]), '00', '00', '00');
             var today = new Date();
+            var mis = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
             today.setMonth(today.getMonth() - 14);
             today.setHours(0);
             today.setMinutes(0);
             today.setSeconds(0);
             today.setMilliseconds(0);
-          
-           // args.IsValid = (today.getTime() < FromDate.getTime());
-            if (FromDate.getTime()<today.getTime())
-                args.IsValid =false ;
-            else args.IsValid = true;
-////            if ( args.IsValid ){
-////                var mis_rasham = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
-////                var contextKey = "6,0133," + document.getElementById(CurrentObj).value;
-////                wsGeneral.CheckRashamPail(mis_rasham, contextKey, CheckRashamSucceded, null, args);
-////            }
+
+            if (FromDate.getTime() < today.getTime())
+                args.IsValid = false;
+            else {
+                args.IsValid = true;
+                if (mis !="")
+                    checkRashemet(mis, args);
+            }
+
         }
         function CheckRashamSucceded(result, args) {
   //      debugger
@@ -134,19 +134,21 @@
          else args.IsValid = false;
         }
         function IsValidRashemet1(sender, args) {
+       //  debugger
             var CurrentObj = sender.controltovalidate;
             var mis = document.getElementById(CurrentObj).value;
             if (mis == "") {
                 args.IsValid = false;
             }
+            else checkRashemet(mis, args);
+            
         }
-        function IsValidRashemet2(sender, args) {
-        
-            var CurrentObj = sender.controltovalidate;
-            var mis = document.getElementById(CurrentObj).value;
-            if (mis != "")
-                if (document.getElementById("ctl00_KdsContent_MisRashamot").value.indexOf("," + mis + ",") == -1) {
-                    args.IsValid = false;
+        function checkRashemet(mis, args) {
+            if (document.getElementById("ctl00_KdsContent_MisRashamot").value.indexOf("," + mis + ",") == -1) 
+            {
+                        alert("מספר אישי של רשמת לא קיים או לא פעיל לתאריך הנבחר");
+                        document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value = "";
+                        args.IsValid = false;
             }
         }
         function CblMaamadValidation(val, args) {
