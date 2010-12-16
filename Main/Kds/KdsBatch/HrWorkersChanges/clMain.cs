@@ -47,7 +47,7 @@ namespace KdsBatch.HrWorkersChanges
                 flag = true;
                 obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.State, ref flag);
                 obClManager.InsertPeriod();
-                obClManager.SaveShinuyimHR(ref flag, "matzav_ovdim");
+                obClManager.SaveShinuyimHR(ref flag);
                 obatch.KdsWriteProcessLog(3, 31, 1, "end bdika shinuyim hr matzav ovdim");
                 if (flag)
                 {
@@ -75,7 +75,7 @@ namespace KdsBatch.HrWorkersChanges
                 flag = true;
                 obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Details, ref flag);
                 obClManager.InsertPeriod();
-                obClManager.SaveShinuyimHR(ref flag, "pirtey_oved");
+                obClManager.SaveShinuyimHR(ref flag);
                 obatch.KdsWriteProcessLog(3, 32, 1, "end bdika shinuyim hr pirtey oved");
                 if (flag)
                 {
@@ -106,7 +106,7 @@ namespace KdsBatch.HrWorkersChanges
               //  obatch.KdsWriteProcessLog(3, 33, 1, "before InsertPeriod meafyenim");
                 obClManager.InsertPeriod();
                // obatch.KdsWriteProcessLog(3, 33, 1, "before SaveShinuyimHR meafyenim");
-                obClManager.SaveShinuyimHR(ref flag, "meafyenim");
+                obClManager.SaveShinuyimHR(ref flag);
                 obatch.KdsWriteProcessLog(3, 33, 1, "end bdika shinuyim hr meafyenim");
                 if (flag)
                 {

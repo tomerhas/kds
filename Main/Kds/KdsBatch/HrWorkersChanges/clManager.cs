@@ -83,7 +83,7 @@ namespace KdsBatch.HrWorkersChanges
                         oObjOvdimImShinuyHR = new OBJ_OVDIM_IM_SHINUY_HR();
                         oObjOvdimImShinuyHR.MISPAR_ISHI = Period.IdNumber;
                         oObjOvdimImShinuyHR.TAARICH = TaarichShinuy;
-                        
+                        oObjOvdimImShinuyHR.TAVLA = getNameTavla();
                         _oArrCollOvdimImShinuyHR[indexArr].Add(oObjOvdimImShinuyHR);
                         TaarichShinuy = TaarichShinuy.AddDays(1);
                         j++; 
@@ -114,12 +114,12 @@ namespace KdsBatch.HrWorkersChanges
                 throw ex;
             }
         }
-        public void SaveShinuyimHR(ref bool flag, string sTable)
+        public void SaveShinuyimHR(ref bool flag)
         {
             clBatch obatch = new clBatch();
             try
             {    
-               obatch.SaveShinuyimHR(_oArrCollOvdimImShinuyHR, sTable);
+               obatch.SaveShinuyimHR(_oArrCollOvdimImShinuyHR);
             }
             catch (Exception ex)
             {
@@ -160,6 +160,19 @@ namespace KdsBatch.HrWorkersChanges
                 flag = false;
                 throw ex;
             }
+        }
+        public string getNameTavla()
+        {
+            switch (_Type)
+            {
+                case TableType.State:
+                    return  "matzav_ovdim";
+                case TableType.Properties:
+                    return "meafyenim";
+                case TableType.Details:
+                    return "pirtey_ovdim";
+            }
+            return "";
         }
     }
 }

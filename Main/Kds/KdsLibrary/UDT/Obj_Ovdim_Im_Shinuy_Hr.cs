@@ -33,11 +33,16 @@ namespace KdsLibrary.UDT
         
         private bool m_MISPAR_ISHIIsNull;
         
+        private string m_TAVLA;
+
+        private bool m_TAVLAIsNull;
+
         public OBJ_OVDIM_IM_SHINUY_HR() {
             // TODO : Add code to initialise the object
             this.m_TAARICH_IDKUN_HRIsNull = true;
             this.m_TAARICHIsNull = true;
             this.m_MISPAR_ISHIIsNull = true;
+            this.m_TAVLAIsNull = true;
         }
         
         public OBJ_OVDIM_IM_SHINUY_HR(string str) {
@@ -117,7 +122,32 @@ namespace KdsLibrary.UDT
                 this.m_MISPAR_ISHIIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("TAVLA")]
+        public string TAVLA
+        {
+            get
+            {
+                return this.m_TAVLA;
+            }
+            set
+            {
+                this.m_TAVLA = value;
+                this.m_TAVLAIsNull = false;
+            }
+        }
+
+        public bool TAVLAIsNull
+        {
+            get
+            {
+                return this.m_TAVLAIsNull;
+            }
+            set
+            {
+                this.m_TAVLAIsNull = value;
+            }
+        }
         public virtual void FromCustomObject(Oracle.DataAccess.Client.OracleConnection con, System.IntPtr pUdt) {
             if ((TAARICH_IDKUN_HRIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TAARICH_IDKUN_HR", this.TAARICH_IDKUN_HR);
@@ -127,6 +157,10 @@ namespace KdsLibrary.UDT
             }
             if ((MISPAR_ISHIIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MISPAR_ISHI", this.MISPAR_ISHI);
+            }
+            if ((TAVLAIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TAVLA", this.TAVLA);
             }
         }
         
@@ -142,6 +176,11 @@ namespace KdsLibrary.UDT
             this.MISPAR_ISHIIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MISPAR_ISHI");
             if ((MISPAR_ISHIIsNull == false)) {
                 this.MISPAR_ISHI = ((decimal)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MISPAR_ISHI")));
+            }
+            this.TAVLAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "TAVLA");
+            if ((TAVLAIsNull == false))
+            {
+                this.TAVLA = ((string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "TAVLA")));
             }
         }
         

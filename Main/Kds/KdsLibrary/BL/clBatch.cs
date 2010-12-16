@@ -296,7 +296,7 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
-        public void SaveShinuyimHR(List<COLL_OVDIM_IM_SHINUY_HR> ArrCollShinuyim, string sTable)
+        public void SaveShinuyimHR(List<COLL_OVDIM_IM_SHINUY_HR> ArrCollShinuyim)
         {
             clTxDal objDal = new clTxDal();
             int i = 0;
@@ -308,7 +308,6 @@ namespace KdsLibrary.BL
                 {
                     i++;
                     objDal.AddParameter("p_coll_obj_ovdim_im_shinuy_hr", ParameterType.ntOracleArray, oCollOvdimImShinuyHR, ParameterDir.pdInput, "COLL_OVDIM_IM_SHINUY_HR");
-                    objDal.AddParameter("p_tavla", ParameterType.ntOracleVarchar, sTable, ParameterDir.pdInput, 100);
                     objDal.ExecuteSP(clGeneral.cProInsOvdimImShinuyHR);
                     objDal.ClearCommand();
                 }
