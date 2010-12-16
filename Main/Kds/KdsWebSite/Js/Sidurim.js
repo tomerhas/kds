@@ -829,16 +829,15 @@ var MKT_ELEMENT = 5;
                 __doPostBack('btnConfirm', '');                    
             }
             var id = document.getElementById("txtId").value;
-            var date =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+            var CardDate = document.getElementById("clnDate").value;
+            var SidurDate =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
             var SidurHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
             var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
             if (SidurHour == '')
-                SidurDate = '01/01/0001';
-            else
-                SidurDate = date;
+                SidurDate = '01/01/0001';            
 
             document.getElementById("divHourglass").style.display = 'block';
-            var sQuryString = "?EmpID=" + id + "&CardDate=" + date + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
+            var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
             var res = window.showModalDialog('HosafatPeiluyot.aspx' + sQuryString, window, "dialogwidth:900px;dialogheight:680px;dialogtop:130px;dialogleft:170px;status:no;resizable:yes;scroll:0;");
             document.getElementById("divHourglass").style.display = 'none';
             if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
@@ -858,24 +857,23 @@ var MKT_ELEMENT = 5;
             var ReturnWin;
             var id = $("#txtId").val();
             var SidurId = $("#lstSidurim_lblSidur".concat(iSidurIndx)).html();
-            var date = $("#lstSidurim_lblDate".concat(iSidurIndx)).html();
+            var CardDate = document.getElementById("clnDate").value;
+            var SidurDate = $("#lstSidurim_lblDate".concat(iSidurIndx)).html();
             var iAddDay = document.getElementById(iPeilutIndx.id).cells[_COL_DAY_TO_ADD].childNodes[0].value;
             var SidurHour = $("#lstSidurim_txtSH".concat(iSidurIndx)).val();
             if (SidurHour == '')
                 SidurDate = '01/01/0001';
-            else
-                SidurDate = date;
-
+           
             var dPeilutDate = new Date();
-            dPeilutDate.setFullYear(date.substr(6, 4));
-            dPeilutDate.setMonth((Number(date.substr(3, 2)) - 1).toString());
-            dPeilutDate.setDate(date.substr(0, 2));
+            dPeilutDate.setFullYear(CardDate.substr(6, 4));
+            dPeilutDate.setMonth((Number(CardDate.substr(3, 2)) - 1).toString());
+            dPeilutDate.setDate(CardDate.substr(0, 2));
             dPeilutDate.setDate(dPeilutDate.getDate() + Number(iAddDay));
 
             var ShatYetzia = document.getElementById(iPeilutIndx.id).cells[_COL_SHAT_YETIZA].childNodes[0].value;
             var MakatNesia = document.getElementById(iPeilutIndx.id).cells[_COL_MAKAT].childNodes[0].value;
             var OtoNo = document.getElementById(iPeilutIndx.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
-            var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + date + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo + "&dt=" + Date();
+            var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + CardDate + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo + "&dt=" + Date();
             res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:500px;dialogheight:380px;dialogtop:280px;dialogleft:340px;status:no;resizable:yes;');
             if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
                 document.getElementById("hidExecInputChg").value = "1";
@@ -892,20 +890,19 @@ var MKT_ELEMENT = 5;
     }
     var dPeilutDate = new Date();
     var id = document.getElementById("txtId").value;
-    var date =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;         
+    var CardDate = document.getElementById("clnDate").value;
+    var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
     var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
     var SidurEHour = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value; 
     var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;         
-    var SidurDate;        
-    SetDate(dPeilutDate,Number(date.substr(6,4)),Number(date.substr(3,2))-1, Number(date.substr(0,2)), "0","0");                        
+    var SidurDate;
+    SetDate(dPeilutDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");                        
     dPeilutDate.setDate(dPeilutDate.getDate() + Number(iSDayToAdd));                 
     var SidurId= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;       
     if (SidurSHour=='')
         SidurDate='01/01/0001';
-      else
-        SidurDate=date;
-           
-    var sQuryString="?EmpID=" + id + "&CardDate=" + date + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();        
+      
+    var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();        
     var res=window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString , window , "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
     if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
         document.getElementById("hidExecInputChg").value = "1";
