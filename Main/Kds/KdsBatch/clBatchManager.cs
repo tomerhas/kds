@@ -630,6 +630,7 @@ namespace KdsBatch
                     //dtParameters = GetKdsParametrs();
                     dtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
                     _dtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
+                    _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
 
                     //Get Meafyeny Ovdim
                     GetMeafyeneyOvdim(iMisparIshi, dCardDate);
