@@ -563,7 +563,7 @@ var MKT_ELEMENT = 5;
        }
   }
   function changeStartHour(iIndex) {
-      document.getElementById("lstSidurim_hidCurrIndx").value = "2|" + iIndex;
+      document.getElementById("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
       var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
@@ -588,7 +588,7 @@ var MKT_ELEMENT = 5;
   function ChkStartHour(val, args){
         SetBtnChanges();
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
-        document.getElementById("lstSidurim_hidCurrIndx").value ="2|" + iIndex;
+        document.getElementById("lstSidurim_hidCurrIndx").value ="3|" + iIndex;
         var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
         if (IsValidTime(sShatHatchala.value)){                            
             if (!IsSHBigSG(val, args)) {
@@ -615,81 +615,6 @@ var MKT_ELEMENT = 5;
             val.errormessage = "שעה לא חוקית";
         }
     }    
-
-    function ChkStartHourOld(val,args){          
-      SetBtnChanges();
-      var iIndex = String(val.id).substr(String(val.id).length-1,1);      
-      var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)); 
-      var sMisparSidur= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;  
-      if(IsValidTime(sShatHatchala.value)){                
-          var sParam1 = document.getElementById("lstSidurim_hidParam1");
-          var sParam93 = document.getElementById("lstSidurim_hidParam93");
-          //התאריך של שעת ההתחלה חייב להיות תאריך כרטיס העבודה
-          var sSidurDay = document.getElementById("clnDate").value.substr(0,2);
-          var sSidurMonth =  document.getElementById("clnDate").value.substr(3,2);
-          var sSidurFullYear = document.getElementById("clnDate").value.substr(6,4);   
-          var  SidurTime = new Date(Number(sSidurFullYear), Number(sSidurMonth)-1,Number(sSidurDay),Number(sShatHatchala.value.substr(0,2)),Number(sShatHatchala.value.substr(sShatHatchala.value.length-2,2)));  
-          var  Param1Time = new Date(Number(sSidurFullYear), Number(sSidurMonth)-1,Number(sSidurDay),Number(sParam1.value.substr(0,2)),Number(sParam1.value.substr(sParam1.value.length-2,2)));  
-          var  Param93Time = new Date(Number(sSidurFullYear), Number(sSidurMonth)-1,Number(sSidurDay),Number(sParam93.value.substr(0,2)),Number(sParam93.value.substr(sParam93.value.length-2,2)));       
-          var  ShatGmarMutert = new Date(Number(sSidurFullYear), Number(sSidurMonth)-1,Number(sSidurDay));          
-          if (IsSidurMyuhad(sMisparSidur)){      
-            var sSidurShatHatchalaMuteret = document.getElementById("lstSidurim_lblShatHatchalaMuteret".concat(iIndex)).innerHTML;
-            if (String(sSidurShatHatchalaMuteret).length>0){        
-                Param1Time.setHours(sSidurShatHatchalaMuteret.substr(0,2)); 
-                Param1Time.setMinutes(sSidurShatHatchalaMuteret.substr(sSidurShatHatchalaMuteret.length-2,2));
-            }
-            var sSidurShatGmarMuteret = document.getElementById("lstSidurim_lblShatGmarMuteret".concat(iIndex)).innerHTML;
-            if (String(sSidurShatGmarMuteret.length)>0){  
-                ShatGmarMutert.setHours=(sSidurShatGmarMuteret.substr(0,2)); 
-                ShatGmarMutert.setMinutes(sSidurShatGmarMuteret.substr(sSidurShatGmarMuteret.length-2,2));
-                if (IsShatGmarInNextDay(sSidurShatGmarMuteret))
-                {
-                  ShatGmarMutert = new Date(ShatGmarMutert.setDate(ShatGmarMutert.getDate() + 1));                 
-                }
-                if (ShatGmarMutert<=Param93Time)
-                {      
-                    Param93Time.setHours(sSidurShatGmarMuteret.substr(0,2)); 
-                    Param93Time.setMinutes(sSidurShatGmarMuteret.substr(sSidurShatGmarMuteret.length-2,2));
-                }
-            }}      
-          val.errormessage = "יש להקליד שעת התחלה תקינה: " + Param1Time.toLocaleTimeString().substr(0,5) + " " + "עד" + " " + Param93Time.toLocaleTimeString().substr(0,5);
-          var dSidurTime = Date.UTC(SidurTime.getFullYear(), SidurTime.getMonth()+1, SidurTime.getDate(),SidurTime.getHours(),SidurTime.getMinutes(),0);
-          var dParam1Time = Date.UTC(Param1Time.getFullYear(), Param1Time.getMonth()+1, Param1Time.getDate(),Param1Time.getHours(),Param1Time.getMinutes(),0);
-          if (Param93Time.getHours()>=0 && Param93Time.getHours()<=4){      
-           dParam93Time = Date.UTC(Param93Time.getFullYear(), Param93Time.getMonth()+1, Param93Time.getDate()+1,Param93Time.getHours(),Param93Time.getMinutes(),0); 
-          }
-          else{     
-             dParam93Time = Date.UTC(Param93Time.getFullYear(), Param93Time.getMonth()+1, Param93Time.getDate(),Param93Time.getHours(),Param93Time.getMinutes(),0); 
-          }
-          args.IsValid =((dSidurTime>=dParam1Time) && (dSidurTime<=dParam93Time));
-          if (!IsSHBigSG(val,args))
-          {
-           if (args.IsValid == false)          
-            val.errormessage = val.errormessage + "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר "  + "\n";           
-           else
-           {
-            val.errormessage = "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר \n";
-            args.IsValid=false;
-           }          
-          }
-           if (iIndex>0){
-           if (!IsSHGreaterPrvSG(val,args))
-           {
-              if (args.IsValid == false)             
-                val.errormessage =  val.errormessage + "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם " + "\n";              
-              else
-              {
-                val.errormessage = "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
-                args.IsValid=false;
-              }
-           }}
-         }
-         else
-         {
-             args.IsValid = false;
-             val.errormessage = "שעה לא חוקית";
-         }
-     }
 
      function ISSGValid(val, args) {
          SetBtnChanges();
@@ -732,123 +657,7 @@ var MKT_ELEMENT = 5;
              args.IsValid = false;
          }     
      }                     
-    function ISSGValidOld(val,args)
-    {SetBtnChanges();
-    //נבדוק אם שעת ההתחלה נמצאת בין פרמטרים כללים או פרמטרים של סידור
-      var SidurTime = new Date();     
-      var ParamStartTime = new Date();     
-      var ParamEndTime = new Date(); 
-      var EndTime = new Date();         
-      var iIndex = String(val.id).substr(String(val.id).length-1,1);      
-      var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex)); 
-      var sMisparSidur= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;            
-      var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex));
-      if (IsShatGmarInNextDay(sShatGmar.value)) 
-           document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value="1";
-         else
-            document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value="0";
-               
-      var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);      
-      var sParamStart = document.getElementById("lstSidurim_hidParam1");
-      var sParamEnd, sHour, sMinutes;
-      var sSidurNahagut = document.getElementById("lstSidurim_lblSidurNahagut".concat(iIndex)).innerHTML;       
-      if (sSidurNahagut=='1')
-       //סידור נהגות - פרמטר כללי 80-
-       sParamEnd  =  document.getElementById("lstSidurim_hidParam80");                      
-      else
-        //סידור רגיל פרמטר כללי 3
-        sParamEnd  =  document.getElementById("lstSidurim_hidParam3");           
-              
-      if(IsValidTime(sShatGmar.value)){            
-          var sYear=sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length-4,4);
-          var sMonth=Number(sSidurDate.innerHTML.substr(3,2))-1;
-          var sDay = sSidurDate.innerHTML.substr(0, 2);
-          var bMyuchadSGNotValid = false;
-          sHour = sShatGmar.value.substr(0,2);
-          sMinutes = sShatGmar.value.substr(sShatGmar.value.length-2,2);
-          SetDate(SidurTime,sYear,sMonth,sDay,sHour,sMinutes);
-          sHour = sParamStart.value.substr(0,2);
-          sMinutes = sParamStart.value.substr(sParamStart.value.length-2,2);
-          SetDate(ParamStartTime,sYear,sMonth,sDay,sHour,sMinutes);
-              
-          sHour = sParamEnd.value.substr(0,2);
-          sMinutes = sParamEnd.value.substr(sParamEnd.value.length-2,2);   
-          SetDate(ParamEndTime,sYear,sMonth,sDay,sHour,sMinutes);
-          ParamEndTime.setDate(ParamEndTime.getDate() + 1);   
-          
-          if (IsSidurMyuhad(sMisparSidur))
-          {//סידור מיוחד
-            var sSidurShatHatchalaMutert = document.getElementById("lstSidurim_lblShatHatchalaMuteret".concat(iIndex)).innerHTML; 
-            if (String(sSidurShatHatchalaMutert.length)>0)
-            {//יש ערך התחלה לסידור            
-                ParamStartTime.setHours(sSidurShatHatchalaMutert.substr(0,2)); 
-                ParamStartTime.setMinutes(sSidurShatHatchalaMutert.substr(sSidurShatHatchalaMutert.length-2,2));           
-            }    
-            var sSidurShatGmarMuteret = document.getElementById("lstSidurim_lblShatGmarMuteret".concat(iIndex)).innerHTML;               
-            if (String(sSidurShatGmarMuteret.length)>0)
-            {//יש ערך סיום לסידור            
-                ParamEndTime.setHours(sSidurShatGmarMuteret.substr(0,2));
-                ParamEndTime.setMinutes(sSidurShatGmarMuteret.substr(sSidurShatGmarMuteret.length - 2, 2));
-                SetDate(EndTime, sYear, sMonth, sDay, "00", "01");
-                EndTime.setDate(EndTime.getDate() + 1);
-                if (!(IsShatGmarInNextDay(sSidurShatGmarMuteret)))
-                    ParamEndTime.setDate(ParamEndTime.getDate() - 1);   
-                if (ParamEndTime < EndTime)
-                    bMyuchadSGNotValid = true;                
-             }         
-          }      
-          if (IsShatGmarInNextDay(ParamEndTime.getHours().toString() + ":" + ParamEndTime.getMinutes().toString()))
-            SetDate(ParamStartTime,sYear,sMonth,sDay,"00","00");
-          if ((sShatGmar.value=="00:00") && (!bMyuchadSGNotValid)){
-             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value="1";             
-             AddDay="1";
-          }
-          if (AddDay == 1){          
-            //add a day to the date
-            SidurTime.setDate(SidurTime.getDate() + 1);
-            document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(SidurTime);
-            //ParamStartTime.setDate(ParamStartTime.getDate() + 1);           
-          }else
-            document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(SidurTime);
-
-          val.errormessage = " יש להקליד שעת התחלה תקינה: מ" + ParamStartTime.toLocaleTimeString().substr(0,5) + " " + "עד" + " " + ParamEndTime.toLocaleTimeString().substr(0,5) ;
-          var dSidurTime = Date.UTC(SidurTime.getFullYear(), SidurTime.getMonth()+1, SidurTime.getDate(),SidurTime.getHours(),SidurTime.getMinutes(),0);
-          var dParamStartTime = Date.UTC(ParamStartTime.getFullYear(), ParamStartTime.getMonth()+1, ParamStartTime.getDate(),ParamStartTime.getHours(),ParamStartTime.getMinutes(),0);     
-          var dParamEndTime = Date.UTC(ParamEndTime.getFullYear(), ParamEndTime.getMonth()+1, ParamEndTime.getDate(),ParamEndTime.getHours(),ParamEndTime.getMinutes(),0);     
-          args.IsValid =((dSidurTime>=dParamStartTime) && (dSidurTime<=dParamEndTime));          
-          
-          if (!IsSHBigSG(val,args))
-          {
-           if (args.IsValid == false)
-           {
-            val.errormessage.concat("\n");
-            val.errormessage = val.errormessage.concat("\n שעת הגמר אינה יכולה להיות קטנה או שווה לשעת ההתחלה") ;
-           }
-           else
-           {
-            val.errormessage = "\n שעת הגמר אינה יכולה להיות קטנה או שווה לשעת ההתחלה";
-            args.IsValid=false;
-           }
-         }
-          if (!IsEHourBigSHour(val,args))
-           {
-                if (args.IsValid == false)
-               {
-                val.errormessage = val.errormessage + " שעת הגמר שהוקלדה גורמת לחפיפת זמנים עם הסידור הבא";
-               }
-               else
-               {
-                val.errormessage = "שעת הגמר שהוקלדה גורמת לחפיפת זמנים עם הסידור הבא";
-                args.IsValid=false;
-               }
-           }  
-      }
-      else
-      {
-       val.errormessage = "שעה לא חוקית";
-       args.IsValid = false;
-      }     
-    }
+   
     function ISSHLValid(val,args)
     {
        args.IsValid = true;
@@ -1330,7 +1139,7 @@ var MKT_ELEMENT = 5;
         var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
         var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
          
-        if ((arrItems[0]=='1') || (arrItems[0]=='2')){                   
+        if ((arrItems[0]=='1') || (arrItems[0]=='3')){ //שעת התחלה וגמר                  
             sSdDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])); 
         }
         else{
@@ -1357,7 +1166,7 @@ var MKT_ELEMENT = 5;
             document.getElementById("lstSidurim_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
         }
         else {
-            if (arrItems[0] == '2') {//שעת התחלה סידור
+            if (arrItems[0] == '3') {//שעת התחלה סידור
                 var _SHNew = document.getElementById("lstSidurim_txtSH".concat(arrItems[1]));
                 var sCardDate = document.getElementById("clnDate").value;
                 var iSidurKey = document.getElementById("lstSidurim_lblSidur".concat(arrItems[1])).innerHTML;
@@ -1365,17 +1174,18 @@ var MKT_ELEMENT = 5;
                 document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML = GetDateDDMMYYYY(dSdDate);            
                 wsGeneral.UpdateSidurDate(sCardDate, iSidurKey, _SHNew.getAttribute('OrgShatHatchala'), _SHNew.value, Number(iDayToAdd));
             }
-            else {
+            else {//2
                 document.getElementById(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);
                 document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dSdDate);
                 //נשנה גם לכל הכניסות
                 ChangeKnisotHour(document.getElementById(arrItems[1]), iDayToAdd, dSdDate);
             }
         }
-        
-        ValidatorEnable(document.getElementById('lstSidurim_vldSG'.concat(arrItems[1]), true));
-        ValidatorEnable(document.getElementById('lstSidurim_vldSHatchala'.concat(arrItems[1]), true));
-        
+
+        if ((arrItems[0] == '1') || (arrItems[0] == '3')){//שעת התחלה וגמר           
+            ValidatorEnable(document.getElementById('lstSidurim_vldSG'.concat(arrItems[1]), true));
+            ValidatorEnable(document.getElementById('lstSidurim_vldSHatchala'.concat(arrItems[1]), true));
+        }        
     }
 //    function callBackUpdateSidur(result, _SHNew) {
 //        var dSdDate;

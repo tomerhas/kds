@@ -2568,9 +2568,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             iDayToAdd = int.Parse(_Txt.Text);
             dNewShatYetiza = DateTime.Parse(String.Concat(_TxtShatYetiza.Attributes["OrgDate"], " ", _TxtShatYetiza.Text));
             //אם שעת היציאה היא של כרטיס העבודה ובמקור זה היה היום הבא, נוריד יום
-            if ((DateTime.Parse(String.Concat(_TxtShatYetiza.Attributes["OrgDate"])).AddDays(-1)==dDateCard)
-                && (iDayToAdd==0))
-                dNewShatYetiza=dNewShatYetiza.AddDays(-1);
+
+            dShatYetiza = DateTime.Parse(_TxtShatYetiza.Attributes["OrgDate"]);
+            if (dShatYetiza.Year > clGeneral.cYearNull)
+            {
+                if ((dShatYetiza.AddDays(-1) == dDateCard)
+                    && (iDayToAdd == 0))
+                    dNewShatYetiza = dNewShatYetiza.AddDays(-1);
+            }
             //אם שעת היציאה היא של כרטיס העבודה נבדוק אם צריך להוסיף יום
             if (DateTime.Parse(String.Concat(_TxtShatYetiza.Attributes["OrgDate"])) == dDateCard)
                 dNewShatYetiza=dNewShatYetiza.AddDays(iDayToAdd);
@@ -2919,7 +2924,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
                         //כמו כן נעדכן את שעת התחלת הסידור לפעילויות שמקושרות לסידור
-                        bInsert = (oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString()));
+                        bInsert = ((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
+                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))));
 
                         oShatGmar = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSG" + iIndex)));
                         //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
