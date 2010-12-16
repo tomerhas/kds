@@ -412,12 +412,6 @@ namespace KdsBatch
                 //נוכחות שבת ( רכיב 196): 
                 CalcRechiv196();
 
-                //שעות 50% (רכיב 92
-                CalcRechiv92();
-
-                //שעות 25% (רכיב 91
-                CalcRechiv91();
-
                 //שבת/שעות 100% (רכיב 131): 
                 CalcRechiv131();
 
@@ -434,6 +428,12 @@ namespace KdsBatch
                 CalcRechiv90();
 
                 UpdateRechiv1();
+
+                //שעות 25% (רכיב 91
+                CalcRechiv91();
+
+                //שעות 50% (רכיב 92
+                CalcRechiv92();
 
                 //יום חופש  (רכיב 67) 
                 CalcRechiv67();
