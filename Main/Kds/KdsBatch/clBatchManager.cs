@@ -1322,7 +1322,8 @@ namespace KdsBatch
                     CheckPrepareMechineForSidurValidity86(ref oSidur, iTotalTimePrepareMechineForSidur, ref dtErrors);
                    
                 }
-                IsAvodatNahagutValid165(iMisparIshi, dCardDate,bHaveSidurNahagut, ref dtErrors);
+                if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                   IsAvodatNahagutValid165(iMisparIshi, dCardDate,bHaveSidurNahagut, ref dtErrors);
                 ////שגיאה 37 - נבדוק אם לכל הסידורים לא מגיע הלבשה
                 //if (iCount == htEmployeeDetails.Count)
                 //{
@@ -6191,7 +6192,7 @@ namespace KdsBatch
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
-                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
                             oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
@@ -6847,6 +6848,7 @@ namespace KdsBatch
             double dMinutsPitzul;
             DateTime dShatKnisatShabat;
             bool bSidurTafkid,bNextSidurTafkid;
+            bool bSidurNahagut, bNextSidurNahagut;
             try
             {
                
@@ -6908,6 +6910,16 @@ namespace KdsBatch
 
                                     if (dMinutsPitzul >= iMinPaar)
                                     {
+                                         DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
+               
+                                        if (IsSidurNahagut(drSugSidur,oSidur))
+                                            bSidurNahagut=true;
+                                        else bSidurNahagut = false;
+                                        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oNextSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
+
+                                        if (IsSidurNahagut(drSugSidur, oNextSidur))
+                                            bNextSidurNahagut=true;
+                                        else bNextSidurNahagut = false;
 
                                         if (oSidur.bSidurTafkid || IsSugAvodaKupai(ref oSidur, _dCardDate))
                                         { bSidurTafkid = true; }
@@ -6917,7 +6929,7 @@ namespace KdsBatch
                                         { bNextSidurTafkid = true; }
                                         else { bNextSidurTafkid = false; }
 
-                                        if (!bSidurTafkid || !bNextSidurTafkid)
+                                        if (bSidurNahagut &&  bNextSidurNahagut)
                                         {
                                             oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 1;
                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
