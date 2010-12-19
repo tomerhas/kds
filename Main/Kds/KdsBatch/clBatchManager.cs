@@ -12140,8 +12140,8 @@ namespace KdsBatch
                                 oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
                                 oObjSidurimOvdimIns.TAARICH = _dCardDate;
                                 oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99500;
-                                oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, dCardDate);
-                                oObjSidurimOvdimIns.SHAT_GMAR = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala, dCardDate);
+                                oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, oSidurPrev.dFullShatGmar);
+                                oObjSidurimOvdimIns.SHAT_GMAR = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala, oSidur.dFullShatHatchala);
                                 oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;
                                 oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
                                 oObjSidurimOvdimIns.OUT_MICHSA = 0;

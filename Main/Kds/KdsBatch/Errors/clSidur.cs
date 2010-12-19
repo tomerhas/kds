@@ -381,10 +381,10 @@ namespace KdsBatch
             DataTable dsSidurim = new DataTable();
             clKavim oKavim = new clKavim();
             DateTime dSidurDate = dCardDate;
-            if (iShayahLeyomKodem == 1)
-            {   //אם הסידור שייך מבחינת תכנון ליום הקודם (בודקת האם בשדה Shayah_LeYom_Kodem בטבלת "סידורים עובדים" קיים ערך 1) . אם כן, יש לפנות  לממשק עם תאריך של יום קודם.
-                dSidurDate = dSidurDate.AddDays(-1);
-            }
+            //if (iShayahLeyomKodem == 1)
+            //{   //אם הסידור שייך מבחינת תכנון ליום הקודם (בודקת האם בשדה Shayah_LeYom_Kodem בטבלת "סידורים עובדים" קיים ערך 1) . אם כן, יש לפנות  לממשק עם תאריך של יום קודם.
+            //    dSidurDate = dSidurDate.AddDays(-1);
+            //}
             dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, dSidurDate, out iResult);
             return dsSidurim;
         }
