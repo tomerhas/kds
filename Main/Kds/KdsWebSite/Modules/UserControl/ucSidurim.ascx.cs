@@ -1469,7 +1469,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Style.Add("Display", "none");
         Label lbl = new Label();
         lbl.ID = "lblDate" + iIndex;
-        lbl.Text = oSidur.dSidurDate.ToShortDateString();
+        lbl.Text = oSidur.dFullShatHatchala.ToShortDateString();
         hCell.Controls.Add(lbl);
     }
     protected void CreateShatHatchalaMutereHiddentCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
