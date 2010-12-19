@@ -2912,7 +2912,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.SHAT_HATCHALA = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
 
                         if (oTxt.Text == string.Empty)
+                        {
                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
+                            oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 0;
+                        }
                         else
                         {//נבדוק אם השתנה התאריך
                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = GetSidurNewDate(oObjSidurimOvdimUpd.MISPAR_SIDUR, oTxt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
@@ -2920,6 +2923,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             //אם תאריך הסידור גדול מתאריך כרטיס העבודה נסמן בסידור, שייך ליום קודם
                             if ((!oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.ToShortDateString().Equals(dDateCard.ToShortDateString())))
                                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 1;
+                            else
+                                oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 0;
                         }
 
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
