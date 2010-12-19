@@ -4073,10 +4073,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //אם לא קיים מאפיין 11
             //לא דרוש מספר רכב, נחסום ונמחוק את השדהS
             //רק לאלמנטים
-            if ((!bBusMustOtoNumber) && (oMakatType== clKavim.enMakatType.mElement))           
+            if ((!bBusMustOtoNumber) && (oMakatType== clKavim.enMakatType.mElement)){
                 ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Text = "";
-                       
-            
+                ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
+            }
+                
             long lMakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
             oTxt.Attributes.Add("MustOtoNum", IsPeilutMustOtoNumber(lMakat, bBusMustOtoNumber).GetHashCode().ToString()); 
             switch (_StatusCard)
