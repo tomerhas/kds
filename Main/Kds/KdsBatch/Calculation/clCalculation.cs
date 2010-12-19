@@ -171,7 +171,9 @@ namespace KdsBatch
            private DateTime GetEndOfMonth(DateTime date)
            {
                int year = date.Month == 12 ? date.Year + 1 : date.Year;
-               return new DateTime(year, (date.Month + 1) % 12, 1).AddDays(-1);
+               int month = date.Month == 12 ? 1 : date.Month+1;
+               return new DateTime(year, month, 1).AddDays(-1);
+             // return new DateTime(year, (date.Month + 1) % 12, 1).AddDays(-1);
            }
            private void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
            {
