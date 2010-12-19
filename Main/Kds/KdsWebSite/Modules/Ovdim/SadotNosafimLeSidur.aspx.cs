@@ -73,7 +73,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     listMeafyenim = getMeafyenimSadotNosafimLesidurMeyuchad(clnDate.Value, int.Parse(MisSidur.Value));
                     if (listMeafyenim.IndexOf(",45,", 0) > -1)
                     {
-                        if ((DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value) < DateTime.Parse(clnDate.Value + " 23:59:00")) &&
+                        if ((DateTime.Parse(ShatHatchala.Value) < DateTime.Parse(clnDate.Value + " 23:59:00")) &&
                             (DateTime.Parse(ShatGmar.Value) > DateTime.Parse(clnDate.Value + " 06:00:00").AddDays(1)))
                             lblPizulSidur.Visible = true;
                     }
@@ -96,7 +96,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 }
                
                 dtSadotNosafimLePeilut = oUtils.GetSadotNosafimLePeilut();
-                dtPeiluyotLesidur = oOvdim.GetPeiluyotLeOved(int.Parse(txtId.Value), int.Parse(MisSidur.Value),DateTime.Parse(clnDate.Value), DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value));
+                dtPeiluyotLesidur = oOvdim.GetPeiluyotLeOved(int.Parse(txtId.Value), int.Parse(MisSidur.Value),DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
                 Session["dtMakatimCatalog"] = oKavim.GetKatalogKavim(int.Parse(txtId.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(clnDate.Value));
            //     cheackEilatTrip(ref dtSadotNosafimLesidur, dtPeiluyotLesidur);
                 Session["dtPeiluyot"] = dtPeiluyotLesidur;
@@ -318,7 +318,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             else
             {
                 dtSadotKayamim = oUtils.GetSadotNosafimKayamim(int.Parse(txtId.Value),
-                         int.Parse(MisSidur.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value));
+                         int.Parse(MisSidur.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
                 Session["dtSadotKayamim"] = dtSadotKayamim;
                 for (int i = 0; i < dtSadotNosafimLesidur.Rows.Count; i++)
                 {
@@ -960,7 +960,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     shatYezia = drPeilutKayemet["SHAT_YETZIA"].ToString();
                     mispar_knisa = drPeilutKayemet["MISPAR_KNISA"].ToString();
                     bErrorExists = SetOneError(cmb, oCell, int.Parse(txtId.Value), DateTime.Parse(clnDate.Value),
-                                              int.Parse(MisSidur.Value), DateTime.Parse(txtSidurDate.Value  + " " + ShatHatchala.Value),
+                                              int.Parse(MisSidur.Value), DateTime.Parse(ShatHatchala.Value),
                                               DateTime.Parse(shatYezia), int.Parse(mispar_knisa),
                                               DateTime.Parse(shatYezia).ToShortTimeString() + "|" + mispar_knisa, "Kod_shinuy_premia");
                     ErrorImage(imgErr, bErrorExists);
@@ -979,7 +979,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     shatYezia = drPeilutKayemet["SHAT_YETZIA"].ToString();
                     mispar_knisa = drPeilutKayemet["MISPAR_KNISA"].ToString();
                     bErrorExists = SetOneError(txt, oCell, int.Parse(txtId.Value), DateTime.Parse(clnDate.Value),
-                                             int.Parse(MisSidur.Value), DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value),
+                                             int.Parse(MisSidur.Value), DateTime.Parse(ShatHatchala.Value),
                                              DateTime.Parse(shatYezia), int.Parse(mispar_knisa),
                                              DateTime.Parse(shatYezia).ToShortTimeString() + "|" + mispar_knisa, "Mispar_Siduri_Oto");
                   
@@ -1227,9 +1227,9 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             oObjSidurimOvdimUpd.TAARICH = DateTime.Parse(clnDate.Value);
             oObjSidurimOvdimUpd.MISPAR_SIDUR = int.Parse(MisSidur.Value);
             oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = int.Parse(MisSidur.Value);
-            oObjSidurimOvdimUpd.SHAT_HATCHALA = DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value);
+            oObjSidurimOvdimUpd.SHAT_HATCHALA = DateTime.Parse(ShatHatchala.Value);
             oObjSidurimOvdimUpd.SHAT_GMAR = DateTime.Parse(ShatGmar.Value);
-            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value);
+            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse(ShatHatchala.Value);
             oObjSidurimOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
             if (dtSadotKayamim != null)
@@ -1412,8 +1412,8 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 oObjPeiluyotOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
                 oObjPeiluyotOvdimUpd.SHAT_YETZIA =DateTime.Parse( drPeilut["SHAT_YETZIA"].ToString());
                 oObjPeiluyotOvdimUpd.NEW_SHAT_YETZIA = DateTime.Parse(drPeilut["SHAT_YETZIA"].ToString());
-                oObjPeiluyotOvdimUpd.SHAT_HATCHALA_SIDUR = DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value);
-                oObjPeiluyotOvdimUpd.NEW_SHAT_HATCHALA_SIDUR = DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value);
+                oObjPeiluyotOvdimUpd.SHAT_HATCHALA_SIDUR = DateTime.Parse(ShatHatchala.Value);
+                oObjPeiluyotOvdimUpd.NEW_SHAT_HATCHALA_SIDUR = DateTime.Parse(ShatHatchala.Value);
                // oObjPeiluyotOvdimUpd.MISPAR_KNISA = 0;
                 oObjPeiluyotOvdimUpd.UPDATE_OBJECT = 1;
                 if (!string.IsNullOrEmpty(drPeilut["KM_VISA"].ToString()))
@@ -1558,7 +1558,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         String _ContolType = oObj.GetType().ToString();
         bool IsRasehmet = LoginUser.IsRashemetProfile(LoginUser.GetLoginUser()); // == true ? 1:0;
         dsFieldsErrors = clDefinitions.GetErrorsForFields(IsRasehmet, ErrorsList, int.Parse(txtId.Value), DateTime.Parse(clnDate.Value),
-            int.Parse(MisSidur.Value), DateTime.Parse(txtSidurDate.Value + " " + ShatHatchala.Value), sFieldName);
+            int.Parse(MisSidur.Value), DateTime.Parse(ShatHatchala.Value), sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
         dvFieldsErrors.RowFilter = "SHOW_ERROR=1";
 

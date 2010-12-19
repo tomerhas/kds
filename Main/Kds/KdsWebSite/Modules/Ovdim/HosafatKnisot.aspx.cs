@@ -67,7 +67,7 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
                 ViewState["Makat"] = lMakat;
                 tdHeader.InnerHtml = "  כניסות למק''ט " + lMakat;
 
-                dtMakat = oKavim.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(ViewState["DateCard"].ToString()), out iResult,1);
+                dtMakat = oKavim.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(ViewState["SidurDate"].ToString()), out iResult, 1);
                 if (dtMakat.Tables[1].Rows.Count > 0)
                 {
                     sTeur = dtMakat.Tables[0].Rows[0]["Description"].ToString();

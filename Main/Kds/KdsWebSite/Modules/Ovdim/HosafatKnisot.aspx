@@ -125,9 +125,9 @@
            var dakotBafoal = document.getElementById(row.id + "_txtDakotBafoal").value;
             var Param98 = document.getElementById("Params").attributes("Param98").value;
             //כניסה (mispar_knisa>0) -  יש לאפשר להקליד ערך רק עבור כניסות מסוג לפי צורך (SugKnisa= 3), ערך בין 0  ולא גדול מהערך בפרמטר 98 (מכסימום זמן כניסה לישוב).
-           
+            if (trim(dakotBafoal) == "")
+                dakotBafoal = 0;
             if (IsNumeric(dakotBafoal)) {
-               
                 if (Number(dakotBafoal) > Number(Param98)) {
                     if (Number(row.childNodes.item(col_Mispar_Knisa).innerText) > 0)
                         vld.errormessage = "ערך דקות בפועל לא יכול לחרוג ממקסימום " + Param98 + "  דקות ";
