@@ -460,7 +460,8 @@ public class wsGeneral : System.Web.Services.WebService
             SecurityLevel = (clGeneral.enProfile)Enum.Parse(typeof(clGeneral.enProfile), Params[0]);
             switch (SecurityLevel)
             {
-                case clGeneral.enProfile.enRashemetAll : 
+                case clGeneral.enProfile.enRashemet:
+                case clGeneral.enProfile.enRashemetAll: 
                 case clGeneral.enProfile.enSystemAdmin : 
                 case clGeneral.enProfile.enVaadatPikuah :
                     dt = oOvdim.GetActiveWorkers(prefixText, DateTime.Parse(Params[2]), DateTime.Parse(Params[3]));
