@@ -150,28 +150,28 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.7655in</Width>
+              <Width>0.70513in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85364in</Width>
+              <Width>0.72651in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.06759in</Width>
+              <Width>0.92176in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.38009in</Width>
+              <Width>3.15945in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.76897in</Width>
+              <Width>0.70513in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.11272in</Width>
+              <Width>0.84001in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.51898in</Width>
+              <Width>0.41163in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.46342in</Width>
+              <Width>0.40092in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -189,6 +189,7 @@
                             <TextRun>
                               <Value>תאריך עדכון אחרון</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -228,6 +229,7 @@
                             <TextRun>
                               <Value>סטטוס אישור</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -267,6 +269,7 @@
                             <TextRun>
                               <Value>גורם מאשר</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -306,6 +309,7 @@
                             <TextRun>
                               <Value>מקרה לאישור</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -345,6 +349,7 @@
                             <TextRun>
                               <Value>תאריך</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -384,6 +389,7 @@
                             <TextRun>
                               <Value>שם העובד</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -423,6 +429,7 @@
                             <TextRun>
                               <Value>מספר אישי</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -462,6 +469,7 @@
                             <TextRun>
                               <Value>מספר שורה</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -503,7 +511,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=FormatDateTime(Fields!TAARICH_IDKUN_ACHARON.Value,2)</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -534,7 +544,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!TEUR_STATUS_ISHUR.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -565,7 +577,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!FACTOR_CONFIRM.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -596,7 +610,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!TEUR_ISHUR.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -628,6 +644,7 @@
                             <TextRun>
                               <Value>=FormatDateTime(Fields!TAARICH.Value,2)</Value>
                               <Style>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>=iif(Parameters!P_PAGE_ADDRESS.Value &lt;&gt; "" ,"Underline","None")</TextDecoration>
                                 <Color>=iif(Parameters!P_PAGE_ADDRESS.Value &lt;&gt; "" ,"Blue","Black")</Color>
                               </Style>
@@ -668,7 +685,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!FULL_NAME.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -699,7 +718,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!MISPAR_ISHI.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -730,7 +751,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=RowNumber("DsIshurimLerashemet")</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <LeftIndent>0cm</LeftIndent>
@@ -783,7 +806,7 @@
         <Top>1.83472cm</Top>
         <Left>0.21644cm</Left>
         <Height>1.70271cm</Height>
-        <Width>20.14451cm</Width>
+        <Width>19.99118cm</Width>
         <ZIndex>2</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsIshurimLerashemet")&gt;0 ,false,true)</Hidden>
@@ -792,6 +815,7 @@
           <Border>
             <Style>Solid</Style>
           </Border>
+          <FontSize>8pt</FontSize>
         </Style>
       </Tablix>
       <Image Name="Logo">
@@ -888,7 +912,7 @@
       <Prompt>P_WORKERID</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>20.57738cm</Width>
+  <Width>20.4803cm</Width>
   <Page>
     <PageFooter>
       <Height>0.71438cm</Height>
