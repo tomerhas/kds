@@ -257,7 +257,7 @@ namespace KdsBatch
                          if (!string.IsNullOrEmpty(drDetailsPeilut["sug_auto"].ToString()))
                                 iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
 
-                         if ((iSugAuto == 4 || iSugAuto == 5 ) && dtMashar.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(22,31,37,38,48)").Length > 0)
+                         if ((iSugAuto == 4 || iSugAuto == 5 ) && dtMashar.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                          {
                              fHistaglutMifraki = (_oGeneralData.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                          }
