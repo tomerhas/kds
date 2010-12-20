@@ -132,9 +132,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Left>0.21643cm</Left>
         <Height>1.02333cm</Height>
-        <Width>18.49119cm</Width>
+        <Width>18.0061cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -156,7 +155,7 @@
               <Width>0.72651in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92176in</Width>
+              <Width>0.84001in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.15945in</Width>
@@ -804,9 +803,8 @@
         </TablixRowHierarchy>
         <DataSetName>DsIshurimLerashemet</DataSetName>
         <Top>1.83472cm</Top>
-        <Left>0.21644cm</Left>
         <Height>1.70271cm</Height>
-        <Width>19.99118cm</Width>
+        <Width>19.78353cm</Width>
         <ZIndex>2</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsIshurimLerashemet")&gt;0 ,false,true)</Hidden>
@@ -822,7 +820,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>18.70762cm</Left>
+        <Left>18.28353cm</Left>
         <Height>1.5cm</Height>
         <Width>1.5cm</Width>
         <ZIndex>3</ZIndex>
@@ -912,7 +910,7 @@
       <Prompt>P_WORKERID</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>20.4803cm</Width>
+  <Width>20.08343cm</Width>
   <Page>
     <PageFooter>
       <Height>0.71438cm</Height>
