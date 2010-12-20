@@ -60,9 +60,9 @@ namespace KdsBatch
 
            try
            {
-               sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.ASCII);
-               sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim, false, Encoding.ASCII);
-               sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.ASCII);
+               sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.Default);
+               sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim,false, Encoding.Default);
+               sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.Default);
                
 
                try
@@ -93,8 +93,8 @@ namespace KdsBatch
                                {
                                    if (sFileStrEt==null)
                                    {
-                                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.ASCII);
-                                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.ASCII);
+                                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                                     }
 
                                    oDataEt = new clEruaDataEt(lBakashaId, dtOvdim.Rows[i], dtRechivim);
