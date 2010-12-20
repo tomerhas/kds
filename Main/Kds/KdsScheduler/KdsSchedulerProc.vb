@@ -59,6 +59,7 @@ Module KdsSchedulerProc
         Dim ToMail As String
         Dim runRefresh As Boolean
         Dim SdrnStrtHour As String
+        Dim numFailed, numSucceed As Integer
 
         oDal = New KdsLibrary.DAL.clDal
        
@@ -149,10 +150,12 @@ Module KdsSchedulerProc
             End If
             ''  oKDs.KdsWriteProcessLog(98, 0, 1, "check PremiaCalc: " + Now.Hour.ToString())
             If Now.Hour = 21 Then
+                numFailed = 0
+                numSucceed = 0
                 lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12)
                 oKDs.KdsWriteProcessLog(98, 0, 1, "before PremiaCalc")
-                oCalc.PremiaCalc(lRequestNum)
-                oKDs.KdsWriteProcessLog(98, 0, 1, "after PremiaCalc")
+                oCalc.PremiaCalc(lRequestNum, numFailed, numSucceed)
+                oKDs.KdsWriteProcessLog(98, 0, 1, "after PremiaCalc NumRowsFailed=" & numFailed & " NumRowsSucceed=" & numSucceed)
             End If
             ''רענון טבלאות של התנועה
             If Now.Hour > 21 Then

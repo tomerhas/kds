@@ -8,6 +8,7 @@ using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
 
+
 namespace KdsBatch
 {
     public class clCalculation 
@@ -124,8 +125,9 @@ namespace KdsBatch
                }
            }
 
-           public void PremiaCalc(long lBakashaId)
+           public void PremiaCalc(long lBakashaId, ref int numFailed,ref int numSucceed)
            {
+
                DataTable dtPremia = GetPremiaCalcPopulation(lBakashaId);
                DateTime startMonth = DateTime.MinValue, tmpMonth, endMonth = DateTime.MinValue;
                int iMisparIshi = 0;
@@ -153,9 +155,11 @@ namespace KdsBatch
                            }
                            CalcOved(iMisparIshi, lBakashaId, startMonth, endMonth);
                            UpdatePremiaBakashaID(iMisparIshi, lBakashaId, startMonth);
+                           numSucceed += 1;
                        }
                        catch (Exception ex)
                        {
+                           numFailed += 1;
                            clLogBakashot.SetError(lBakashaId, iMisparIshi, "E",
                                (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
                                startMonth, ex.Message);
