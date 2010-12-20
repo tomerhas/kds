@@ -62,6 +62,7 @@ namespace KdsBatch
         public string sZakayLezamanNesia;
         public bool bZakayLezamanNesiaExists;
         public string sHashlamaKod;
+        public bool bHashlamaKodExists;
         public string sShaonNochachut;
         public bool bShaonNochachutExists;
         public string sLoLetashlumAutomati;
@@ -204,6 +205,7 @@ namespace KdsBatch
             iZakayLepizul = (System.Convert.IsDBNull(dr["zakay_lepizul"]) ? 0 : int.Parse(dr["zakay_lepizul"].ToString()));
             sOutMichsa = dr["out_michsa"].ToString();
             sHashlama = dr["hashlama"].ToString();//(System.Convert.IsDBNull(dr["hashlama"]) ? 0 : int.Parse(dr["Hashlama"].ToString()));
+            bHashlamaKodExists = !(String.IsNullOrEmpty(dr["hashlama"].ToString()));
             iSugHashlama = (System.Convert.IsDBNull(dr["sug_hashlama"]) ? 0 : int.Parse(dr["sug_hashlama"].ToString()));
             bHashlamaExists = !(String.IsNullOrEmpty(dr["Hashlama"].ToString()));
             //iKmVisaLepremia = (System.Convert.IsDBNull(dr["Km_Visa_Lepremia"]) ? 0 : int.Parse(dr["Km_Visa_Lepremia"].ToString()));

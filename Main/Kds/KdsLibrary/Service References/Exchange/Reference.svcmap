@@ -17,11 +17,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://tlv7-new/ExchangeInfo2008/ExchangeInfoService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ExchangeInfoService.wsdl" MetadataType="Wsdl" ID="3db73b75-6465-4e99-9f2b-341eb9b1c204" SourceId="1" SourceUrl="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx?wsdl" />
-    <MetadataFile FileName="ExchangeInfoService.disco" MetadataType="Disco" ID="0978bedb-c7f7-4b9c-b486-deb8ec0f3972" SourceId="1" SourceUrl="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx?disco" />
+    <MetadataFile FileName="ExchangeInfoService.wsdl" MetadataType="Wsdl" ID="3db73b75-6465-4e99-9f2b-341eb9b1c204" SourceId="1" SourceUrl="http://tlv7-new/ExchangeInfo2008/ExchangeInfoService.asmx?wsdl" />
+    <MetadataFile FileName="ExchangeInfoService.disco" MetadataType="Disco" ID="0978bedb-c7f7-4b9c-b486-deb8ec0f3972" SourceId="1" SourceUrl="http://tlv7-new/ExchangeInfo2008/ExchangeInfoService.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />

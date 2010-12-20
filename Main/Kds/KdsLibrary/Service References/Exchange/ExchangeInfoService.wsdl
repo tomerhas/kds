@@ -141,10 +141,10 @@
   </wsdl:binding>
   <wsdl:service name="ExchangeInfoService">
     <wsdl:port name="ExchangeInfoServiceSoap" binding="tns:ExchangeInfoServiceSoap">
-      <soap:address location="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" />
+      <soap:address location="http://tlv7-new/ExchangeInfo2008/ExchangeInfoService.asmx" />
     </wsdl:port>
     <wsdl:port name="ExchangeInfoServiceSoap12" binding="tns:ExchangeInfoServiceSoap12">
-      <soap12:address location="http://tlv5/ExchangeInfo2008/ExchangeInfoService.asmx" />
+      <soap12:address location="http://tlv7-new/ExchangeInfo2008/ExchangeInfoService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

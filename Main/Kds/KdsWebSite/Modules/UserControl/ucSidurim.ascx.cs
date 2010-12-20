@@ -2424,7 +2424,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //סידור מיוחד - לסידור מאפיין 40        
         if (oSidur.bSidurMyuhad)
         {
-            if (!oSidur.bHalbashKodExists)
+            if (!oSidur.bHashlamaKodExists)
             {
                 bHashlamaAllowed = false;
             }

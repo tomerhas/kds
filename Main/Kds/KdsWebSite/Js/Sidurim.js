@@ -753,7 +753,7 @@ var MKT_ELEMENT = 5;
            var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
            var sPrevShatGmar = document.getElementById("lstSidurim_txtSG".concat(iPrvIndex));
            var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex));
-           var sPrevSidurDate = document.getElementById("lstSidurim_lblDate".concat(iPrvIndex));
+           var sPrevSidurDate = document.getElementById("clnDate").value;           
            if (sPrevSidurDate != null) {
                var prvShGmar = new Date();
                var ShStart = new Date();
@@ -762,11 +762,13 @@ var MKT_ELEMENT = 5;
                ShStart.setDate(sSidurDate.innerHTML.substr(0, 2));
                ShStart.setHours(sShatHatchala.value.substr(0, 2));
                ShStart.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length - 2, 2));
-               prvShGmar.setFullYear(sPrevSidurDate.innerHTML.substr(sPrevSidurDate.innerHTML.length - 4, 4));
-               prvShGmar.setMonth(Number(sPrevSidurDate.innerHTML.substr(3, 2)) - 1);
-               prvShGmar.setDate(sPrevSidurDate.innerHTML.substr(0, 2));
+               prvShGmar.setFullYear(sPrevSidurDate.substr(sPrevSidurDate.length - 4, 4));
+               prvShGmar.setMonth(Number(sPrevSidurDate.substr(3, 2)) - 1);
+               prvShGmar.setDate(sPrevSidurDate.substr(0, 2));
                prvShGmar.setHours(sPrevShatGmar.value.substr(0, 2));
                prvShGmar.setMinutes(sPrevShatGmar.value.substr(sPrevShatGmar.value.length - 2, 2));
+               if (document.getElementById("lstSidurim_txtDayAdd".concat(iPrvIndex)).value == "1")
+                   prvShGmar.setDate(prvShGmar.getDate() + 1);
                var dShatHatchala = Date.UTC(ShStart.getFullYear(), ShStart.getMonth() + 1, ShStart.getDate(), ShStart.getHours(), ShStart.getMinutes(), 0);
                var dPrevShatGmar = Date.UTC(prvShGmar.getFullYear(), prvShGmar.getMonth() + 1, prvShGmar.getDate(), prvShGmar.getHours(), prvShGmar.getMinutes(), 0);
                return (dShatHatchala >= dPrevShatGmar);
