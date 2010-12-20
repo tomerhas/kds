@@ -128,10 +128,7 @@
 
         }
         function CheckRashamSucceded(result, args) {
-  //      debugger
-         if (result > 0 )
-             args.IsValid = true;
-         else args.IsValid = false;
+         args.IsValid  = (result > 0 );
         }
         function IsValidRashemet1(sender, args) {
        //  debugger
@@ -182,7 +179,7 @@
                 AdDate.setMonth(AdDate.getMonth() + 1);
                 AdDate.setDate(AdDate.getDate() - 1);
             }
-            args.IsValid = (AdDate > MeDate);
+            args.IsValid = (AdDate >= MeDate);
         }
 
     </script>
