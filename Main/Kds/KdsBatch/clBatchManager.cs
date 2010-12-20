@@ -3409,7 +3409,7 @@ namespace KdsBatch
                     clKavim.enMakatType oMakatType = (clKavim.enMakatType) oPeilut.iMakatType;
                     //שגיאה 69
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
-                    if (((oMakatType==clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mEmpty) || (oMakatType==clKavim.enMakatType.mNamak)) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists)))
+                    if (((oMakatType==clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mEmpty) || (oMakatType==clKavim.enMakatType.mNamak)  || (oMakatType==clKavim.enMakatType.mVisut))|| ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="701" ) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="712" ) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="711" )))
                     {
                         drNew = dtErrors.NewRow();
                         InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
