@@ -2699,6 +2699,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 {
                     dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
                     dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
+                    if (dblKisuyTor < 0)
+                        dblKisuyTor = 1440 + dblKisuyTor;
                 }
                 else                
                     dblKisuyTor = 0;
