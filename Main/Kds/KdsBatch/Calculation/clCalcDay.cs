@@ -3423,6 +3423,8 @@ namespace KdsBatch
                                     }
                                 }
                             }
+                            else fNesiotTchilatYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Haloch"].ToString());
+                                   
                         }
                         //ג.	חישוב [ סוף יום]:
                         rowBitulZmanNesiot = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and (Bitul_Zman_nesiot =2 or Bitul_Zman_nesiot =3) and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc"); ;
@@ -3470,7 +3472,9 @@ namespace KdsBatch
                                     }
                                 }
                             }
+                            else fNesiotSofYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Hazor"].ToString());
                         }
+
                         fDakotRechiv = fNesiotTchilatYom + fNesiotSofYom;
 
                         addRowToTable(clGeneral.enRechivim.ZmanNesia.GetHashCode(), fDakotRechiv);

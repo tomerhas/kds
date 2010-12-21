@@ -9441,7 +9441,7 @@ namespace KdsBatch
                     oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                     oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
                     oPeilutNew.iBitulOHosafa = 4;
-                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, 5 * oSidur.htPeilut.Count + 2, oPeilutNew);
+                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, 5 * oSidur.htPeilut.Count + 7, oPeilutNew);
                     iIndexElement = iPeilutNesiaIndex;
                     iPeilutNesiaIndex += 1;
 
@@ -11553,6 +11553,15 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
+
+                    if (oMeafyeneyOved.Meafyen51Exists)
+                    {
+                        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                        if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                            oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                        if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                            oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                    }
                 }
                 else
                 {
@@ -12161,7 +12170,7 @@ namespace KdsBatch
                                 oSidurNew.sChariga = "0";
                                 oSidurNew.sOutMichsa = "0";
                                 oSidurNew.iBitulOHosafa = 4;
-                                htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
+                                htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("ddMM"),oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
 
                             }
                             //אין לפתוח רציפות אם הסידור שאינו נהגות הינו סידור היעדרות = ערך כלשהו במאפיין 53 בטבלת מאפייני סידורים מיוחדים
