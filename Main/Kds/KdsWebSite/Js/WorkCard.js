@@ -402,6 +402,7 @@
         document.getElementById("divHourglass").style.display = 'none'; 
         if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
+            document.getElementById("hidRefresh").value = "1";
             __doPostBack('btnAddHeadrut', '');
             bScreenChanged = false;
         }
@@ -423,6 +424,7 @@
         document.getElementById("divHourglass").style.display = 'none'; 
         if ((bScreenChanged) || ((res != undefined) && (!bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
+            document.getElementById("hidRefresh").value = "1";
             __doPostBack('btnFindSidur', '');
             bScreenChanged = false;
         }
@@ -509,9 +511,10 @@
               bValid = false;
             }
             if ((sSG.value!='') && (sSG.value!="__:__") && (sSH.value!='') && (sSH.value!="__:__")){
-                 sSidurDate = document.getElementById("lstSidurim_lblDate".concat(i)).innerHTML;          
+                 sSidurDate = document.getElementById("lstSidurim_lblDate".concat(i)).innerHTML;
+                 sCardDate = document.getElementById("clnDate").value;          
                  dStartHour = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)),Number(sSH.value.substr(0,2)),Number(sSH.value.substr(3,2)));
-                 dEndHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(sSG.value.substr(0, 2)), Number(sSG.value.substr(3, 2)));
+                 dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(sSG.value.substr(0, 2)), Number(sSG.value.substr(3, 2)));
                  if (document.getElementById("lstSidurim_txtDayAdd".concat(i)).value == "1")                   
                     dEndHour.setDate(dEndHour.getDate() + 1);
                  oDDL = document.getElementById("lstSidurim_ddlHashlama".concat(i));

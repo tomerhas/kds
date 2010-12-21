@@ -1937,6 +1937,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         hidExecInputChg.Value = "0";
         RunBatchFunctions();
         ViewState["LoadNewCard"] = true;
+        lstSidurim.RefreshBtn = 0;
         SetImageForButtonMeasherOMistayeg();
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
@@ -1947,6 +1948,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         hidExecInputChg.Value="0";
         RunBatchFunctions();
         ViewState["LoadNewCard"] = true;
+        lstSidurim.RefreshBtn = 0;
         SetImageForButtonMeasherOMistayeg();
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();

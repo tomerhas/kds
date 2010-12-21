@@ -185,10 +185,11 @@ var MKT_ELEMENT = 5;
     function chkHashlama(val,args){
         var id = val.getAttribute("index");   
         var oTxt1 = document.getElementById("lstSidurim_txtSH".concat(id)).value;
-        var oTxt2 = document.getElementById("lstSidurim_txtSG".concat(id)).value;   
-        var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(id)).innerHTML;          
-        var dStartHour = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)),Number(oTxt1.substr(0,2)),Number(oTxt1.substr(3,2))); 
-        var dEndHour = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)),Number(oTxt2.substr(0,2)),Number(oTxt2.substr(3,2))); 
+        var oTxt2 = document.getElementById("lstSidurim_txtSG".concat(id)).value;
+        var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(id)).innerHTML;
+        var sCardDate = document.getElementById("clnDate").value;      
+        var dStartHour = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)),Number(oTxt1.substr(0,2)),Number(oTxt1.substr(3,2)));
+        var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oTxt2.substr(0, 2)), Number(oTxt2.substr(3, 2))); 
         var oDDL= document.getElementById("lstSidurim_ddlHashlama".concat(id));
         var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(id)).value;
         if ((Number(_Add)==1))        
@@ -918,7 +919,7 @@ var MKT_ELEMENT = 5;
         var iMisparIshi = document.getElementById("txtId").value;
         var dDate = document.getElementById("clnDate").value;
         var sMakatStart = document.getElementById(iPeilutIndex.id).cells[_COL_MAKAT].childNodes[0].value;
-        //var lCarNum = document.getElementById(iPeilutIndex.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
+        var lCarNum = document.getElementById(iPeilutIndex.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
         var sMakatDetails = GetMakatEnd(iPeilutIndex.id, lCarNum, iSidurIndex, iLastPeilut);
         var sMakatEnd = sMakatDetails.split(",")[0];
         var lCarNum = sMakatDetails.split(",")[1];
