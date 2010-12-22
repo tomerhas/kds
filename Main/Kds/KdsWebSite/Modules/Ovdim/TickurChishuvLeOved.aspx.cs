@@ -233,7 +233,6 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
     protected void btnInputData_Click(object sender, EventArgs e)
     {
-        clBatchManager btchMan = new clBatchManager(0);
         string sError = "";
         DateTime dTaarich, dTarAd;
             bool nextStep = false;
@@ -244,6 +243,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                 while (dTaarich <= dTarAd)
                 {
+                    clBatchManager btchMan = new clBatchManager(0);
                     nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
 
                     if (nextStep)
@@ -253,6 +253,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                         sError += dTaarich.ToString("dd/MM/yyyy");
                     }
                     dTaarich = dTaarich.AddDays(1);
+                    btchMan.Dispose();
                 }
 
                 if (sError.Length > 0)
@@ -264,7 +265,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             {
                 clGeneral.BuildError(Page, ex.Message);
             }
-            finally { btchMan.Dispose(); }
+           
     }
    
     protected void btnShow_Click(object sender, EventArgs e)

@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
-<div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
+<div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" /><br /> 
 </div>  
     <fieldset class="FilterFieldSet"> 
