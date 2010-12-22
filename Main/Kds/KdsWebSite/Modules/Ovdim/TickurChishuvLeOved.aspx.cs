@@ -244,16 +244,28 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                 while (dTaarich <= dTarAd)
                 {
                     clBatchManager btchMan = new clBatchManager(0);
-                    nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
 
-                    if (nextStep)
-                        nextStep = btchMan.MainOvedErrors(int.Parse(txtEmpId.Text), dTaarich);
-                    else {
-                        if (sError.Length > 0) sError += ", ";
-                        sError += dTaarich.ToString("dd/MM/yyyy");
+                    try
+                    {
+                        nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
+
+                        if (nextStep)
+                            nextStep = btchMan.MainOvedErrors(int.Parse(txtEmpId.Text), dTaarich);
+                        else
+                        {
+                            if (sError.Length > 0) sError += ", ";
+                            sError += dTaarich.ToString("dd/MM/yyyy");
+                        }
+                        dTaarich = dTaarich.AddDays(1);
                     }
-                    dTaarich = dTaarich.AddDays(1);
-                    btchMan.Dispose();
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        btchMan.Dispose();
+                    }
                 }
 
                 if (sError.Length > 0)
