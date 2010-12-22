@@ -324,7 +324,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                         Session["dtRikuz11To20"] = null;
                         Session["dtRikuz21To31"] = null;
 
-                        ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "RunCalc", "document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('divProgress').style.display='none';document.getElementById('DivCalc').style.display='block';document.getElementById('ctl00_KdsContent_btnCalc').click();", true);
+                        ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "RunCalc", "document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('divProgress').style.display='none';document.getElementById('DivCalc').style.display='block';document.getElementById('ctl00_KdsContent_btnCalc').click();document.getElementById('divProgress').style.display='block';", true);
                         
                         grdTotalMonthly.DataSource = Session["dtRikuz1to10"];
                         grdTotalMonthly.DataBind();
