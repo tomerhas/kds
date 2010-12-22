@@ -576,14 +576,16 @@ var MKT_ELEMENT = 5;
      if (result=='1')
          document.getElementById("lstSidurim_btnShowMessage").click();
 
-     var dSdDate = new Date();
-     var sSdDate = document.getElementById("lstSidurim_lblDate".concat(iIndex));
-     var sYear = sSdDate.innerHTML.substr(sSdDate.innerHTML.length-4,4);
-     var sMonth = Number(sSdDate.innerHTML.substr(3, 2)) - 1;
-     var sDay = sSdDate.innerHTML.substr(0, 2);
-     SetDate(dSdDate, Number(sYear), Number(sMonth), Number(sDay), 0, 0);
-    
+     var dSdDate = new Date();     
      var _SHNew = document.getElementById("lstSidurim_txtSH".concat(iIndex));
+     if (!IsShatGmarInNextDay(_SHNew.value)) {//שעת התחלה
+         document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = document.getElementById("clnDate").value;
+     }
+     var sSdDate=document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML; 
+     var sYear = sSdDate.substr(sSdDate.length-4,4);
+     var sMonth = Number(sSdDate.substr(3, 2)) - 1;
+     var sDay = sSdDate.substr(0, 2);
+     SetDate(dSdDate, Number(sYear), Number(sMonth), Number(sDay), 0, 0);        
      _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
   }
   function ChkStartHour(val, args){

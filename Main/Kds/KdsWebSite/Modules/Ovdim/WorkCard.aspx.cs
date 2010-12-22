@@ -1924,6 +1924,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             ViewState["LoadNewCard"] = true;
             lstSidurim.RefreshBtn = 0;
+            hidRefresh.Value = "0";
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
             //string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
@@ -1938,6 +1939,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         RunBatchFunctions();
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
+        hidRefresh.Value = "0";
         SetImageForButtonMeasherOMistayeg();
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
@@ -1949,6 +1951,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         RunBatchFunctions();
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
+        hidRefresh.Value = "0";
         SetImageForButtonMeasherOMistayeg();
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
