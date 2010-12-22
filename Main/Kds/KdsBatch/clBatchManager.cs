@@ -11358,7 +11358,7 @@ namespace KdsBatch
                     {
                         bKnisaValid = true;
                     }
-                    else if (oMeafyeneyOved.Meafyen51Exists)
+                    else if ((sBitulTypeField == "SIBA_LE_DIVUCH_YADANI_NESIAA" && oMeafyeneyOved.Meafyen51Exists) || (sBitulTypeField != "SIBA_LE_DIVUCH_YADANI_NESIAA"))
                     {
 
                         if ((!String.IsNullOrEmpty(oSidur.sShatHatchala)) && (String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) || oSidur.sMikumShaonKnisa == "0"))
@@ -11368,16 +11368,16 @@ namespace KdsBatch
                         if (bSidurShaonNotValid)
                         {
                             //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
-                            if (sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA)
+                            if (sBitulTypeField == "SIBA_LE_DIVUCH_YADANI_NESIAA")
                             {
-                                if (!bSidurHaveNahagut && CheckApprovalStatus("111,1,3,101", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                                if (!bSidurHaveNahagut && CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                                     bKnisaValid = true;
                             }
-                            else if (CheckApprovalStatus("111,1,3,101", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                            else if (CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                                 bKnisaValid = true;
                         }
-                        
-                     }
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -11400,7 +11400,7 @@ namespace KdsBatch
                     {
                         bYetizaValid = true;
                     }
-                    else if (oMeafyeneyOved.Meafyen51Exists)
+                    else if ((sBitulTypeField=="SIBA_LE_DIVUCH_YADANI_NESIAA" && oMeafyeneyOved.Meafyen51Exists) ||(sBitulTypeField!="SIBA_LE_DIVUCH_YADANI_NESIAA"))
                     {
                        if ((!String.IsNullOrEmpty(oSidur.sShatGmar)) && (String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) || oSidur.sMikumShaonYetzia == "0"))
                                 {  //אם הוחתם שעון וגם אין ערך במיקום יציאה - החתמת שעון ידנית                                                 
@@ -11411,12 +11411,12 @@ namespace KdsBatch
                        if (bSidurShaonNotValid)
                        {
                            //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
-                           if (sBitulTypeField==SIBA_LE_DIVUCH_YADANI_NESIAA)
+                           if (sBitulTypeField=="SIBA_LE_DIVUCH_YADANI_NESIAA")
                             {
-                                if (!bSidurHaveNahagut &&(CheckApprovalStatus("111,1,3,102", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1))
+                                if (!bSidurHaveNahagut &&(CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1))
                                         bYetizaValid = true;
                            }
-                          else if (CheckApprovalStatus("111,1,3,102", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                          else if (CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                           bYetizaValid = true;
                           
                        }   
