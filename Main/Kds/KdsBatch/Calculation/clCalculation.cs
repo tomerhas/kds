@@ -154,6 +154,12 @@ namespace KdsBatch
                                    oUtils.InitDtMeafyeneySugSidur(startMonth, endMonth);
                            }
                            CalcOved(iMisparIshi, lBakashaId, startMonth, endMonth);
+                           
+                           SaveSidurim(iMisparIshi, clCalcData.DtYemeyAvoda);
+                         
+                           //שמירת נתוני החישוב לעובד
+                           SaveChishuv(lBakashaId, iMisparIshi);
+
                            UpdatePremiaBakashaID(iMisparIshi, lBakashaId, startMonth);
                            numSucceed += 1;
                        }
