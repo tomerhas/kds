@@ -208,28 +208,39 @@ namespace KdsBatch
             bool nextStep = false;
             successCount = false;
             clBatchManager btchMan = new clBatchManager(this._btchRequest);
-            if (_executionType == BatchExecutionType.InputData ||
-                _executionType == BatchExecutionType.All)
+            try
             {
-                nextStep = btchMan.MainInputData(employeeID, date, out successCount);
-                //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
-                //   String.Format("{0}: InputData result:{1}",
-                //   employeeID, nextStep));
-                //clLogBakashot.InsertErrorToLog();
-            }
+                if (_executionType == BatchExecutionType.InputData ||
+                    _executionType == BatchExecutionType.All)
+                {
+                    nextStep = btchMan.MainInputData(employeeID, date, out successCount);
+                    //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
+                    //   String.Format("{0}: InputData result:{1}",
+                    //   employeeID, nextStep));
+                    //clLogBakashot.InsertErrorToLog();
+                }
 
-            if (_executionType == BatchExecutionType.ErrorIdentification ||
-                (_executionType == BatchExecutionType.All && nextStep))
-            {
-                nextStep = btchMan.MainOvedErrors(employeeID, date);
-                //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
-                //   String.Format("{0}: OvedErrors result:{1}",
-                //   employeeID, nextStep));
-                //clLogBakashot.InsertErrorToLog();
+                if (_executionType == BatchExecutionType.ErrorIdentification ||
+                    (_executionType == BatchExecutionType.All && nextStep))
+                {
+                    nextStep = btchMan.MainOvedErrors(employeeID, date);
+                    //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
+                    //   String.Format("{0}: OvedErrors result:{1}",
+                    //   employeeID, nextStep));
+                    //clLogBakashot.InsertErrorToLog();
+                }
+
             }
-            btchMan.Dispose();
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                btchMan.Dispose();
+                
+            }
             return nextStep;
-            
         }
         #endregion
 
