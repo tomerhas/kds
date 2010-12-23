@@ -139,6 +139,7 @@ namespace KdsBatch
                if (dtPremia != null)
                {
                    clUtils oUtils = new clUtils();
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Mispar Ovdim Lechishuv Premiyot:" + dtPremia.Rows.Count);
                    foreach (DataRow dr in dtPremia.Rows)
                    {
                        try
