@@ -79,21 +79,11 @@
                     </div>
                 </td></tr>
                 <tr><td colspan="5" height="15px">
-                        <asp:CustomValidator ID="CmpValidAavaratToVaadP_1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן לאשר ערך הגדול מהערך המבוקש" ControlToValidate="TxtAavaratToVaadP" ClientValidationFunction="CmpValidApprovedInUnit"></asp:CustomValidator>
-                        <asp:CompareValidator ID="CmpValidAavaratToVaadP_2" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="יש להקליד ערך מספרי בלבד" Type="Integer" Operator="DataTypeCheck" ControlToValidate="TxtAavaratToVaadP"></asp:CompareValidator>
-                        <asp:CompareValidator ID="CmpValidAavaratToVaadP_3" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן להגדיר ערך שלילי"  Operator="GreaterThanEqual"  ValueToCompare="0"  ControlToValidate="TxtAavaratToVaadP"></asp:CompareValidator>
-                        <asp:CustomValidator ID="CmpValidAavaratToVaadP_4" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="הערך המאושר + הערך לאישור ועדת פנים גדול מהערך המבוקש"  ControlToValidate="TxtAavaratToVaadP" ClientValidationFunction="CmpValidTxtAavaratToVaadP" ></asp:CustomValidator>
-
-                        <asp:CompareValidator ID="CmpValidApprovedInUnit_1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן להגדיר ערך שלילי"  Operator="GreaterThanEqual"  ValueToCompare="0"  ControlToValidate="TxtApprovedInUnit"></asp:CompareValidator>
-                        <asp:CustomValidator ID="CmpValidApprovedInUnit_2" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="אין לאשר את הבקשה, סגור חלון זה וציין &quot;לא מאשר&quot;"  ControlToValidate="TxtApprovedInUnit" ClientValidationFunction="IsOriginValueChanged"></asp:CustomValidator>
-                        <asp:CompareValidator ID="CmpValidApprovedInUnit_3" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="יש להקליד ערך מספרי בלבד" Type="Integer" Operator="DataTypeCheck" ControlToValidate="TxtApprovedInUnit"></asp:CompareValidator>
-                        <asp:CustomValidator ID="CmpValidApprovedInUnit_4" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן לאשר ערך הגדול מהערך המבוקש" ControlToValidate="TxtApprovedInUnit" ClientValidationFunction="CmpValidApprovedInUnit"></asp:CustomValidator>
-
-                        <asp:CompareValidator ID="CmpValidApprovedInVaadatP_1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן להגדיר ערך שלילי"  Operator="GreaterThanEqual"  ValueToCompare="0"  ControlToValidate="TxtApprovedInVaadatP"></asp:CompareValidator>
-                        <asp:CompareValidator ID="CmpValidApprovedInVaadatP_2" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="יש להקליד ערך מספרי בלבד" Type="Integer" Operator="DataTypeCheck" ControlToValidate="TxtApprovedInVaadatP"></asp:CompareValidator>
-                        <asp:CustomValidator ID="CmpValidApprovedInVaadatP_3" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="הערך המאושר + הערך לאישור ועדת פנים גדול מהערך המבוקש"  ControlToValidate="TxtApprovedInVaadatP" ClientValidationFunction="CmpValidTxtAavaratToVaadP" ></asp:CustomValidator>
-                        <%--<asp:CompareValidator ID="CmpValidApprovedInVaadatP_4" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן לאשר ערך הגדול מהערך המבוקש"  Operator="GreaterThanEqual" ControlToCompare="TxtUavarLevaadatPnim"    ControlToValidate="TxtApprovedInVaadatP" Type="Integer"></asp:CompareValidator>--%>
-
+                        <asp:RequiredFieldValidator ID="RequiredValidApprovedInUnit" runat="server" Display="Dynamic" ControlToValidate="TxtApprovedInUnit"/>
+                        <asp:RequiredFieldValidator ID="RequiredApprovedInVaadatP" runat="server" Display="Dynamic" ControlToValidate="TxtApprovedInVaadatP"/>
+                        
+                        <asp:CustomValidator ID="CmpValidApprovedInUnit" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="coucou"  ControlToValidate="TxtApprovedInUnit" EnableViewState="true" ClientValidationFunction="CompareAllValid" ></asp:CustomValidator>
+                        <asp:CustomValidator ID="CmpValidApprovedInVaadatP" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="coucou"  ControlToValidate="TxtApprovedInVaadatP" EnableViewState="true" ClientValidationFunction="CompareAllValid" ></asp:CustomValidator>
                 </td></tr>
                 <tr>
                     <td align="center" colspan="2" height="30px">
@@ -112,16 +102,40 @@
 <script type="text/javascript">
 
     var ReturnValue;
+    function CompareAllValid(oSrc, args) {
+        var CurrentObj = document.getElementById(oSrc.controltovalidate);
+        if (!IsNumber(CurrentObj.value)) {
+            oSrc.innerText = "יש להקליד ערך מספרי בלבד";
+            args.IsValid = false;
+        }
+        else {
+            if (parseInt(CurrentObj.value) < 0) {
+                oSrc.innerText = "לא ניתן להגדיר ערך שלילי";
+                args.IsValid = false;
+            }
+            else {
+                var OriginValue = CurrentObj.OriginalValue;
+                if (parseInt(CurrentObj.value) > OriginValue) {
+                    oSrc.innerText = "לא ניתן לאשר ערך הגדול מהערך המבוקש";
+                    args.IsValid = false;
+                }
+                else if (parseInt(CurrentObj.value) == OriginValue) {
+                    oSrc.innerText = "אין לאשר את הבקשה, סגור חלון זה וציין " + "\"\"לא מאשר";
+                    args.IsValid = false;
+                }
+            }
+        }
+    }
     function IsOriginValueChanged(oSrc, args) {
-    debugger
         var CurrentObj = document.getElementById(oSrc.controltovalidate);
         var OriginValue = CurrentObj.OriginalValue;
         args.IsValid = (OriginValue != CurrentObj.value);
         EnableBtnSend();        
     }
 
+
+
     function CmpValidApprovedInUnit(oSrc, args) {
-    debugger
         var Mevukach = parseInt(document.getElementById("TxtMevukach").childNodes[0].nodeValue);
         var UavarLevaadatPnim = parseInt(document.getElementById("TxtUavarLevaadatPnim").childNodes[0].nodeValue);
         var FormType = parseInt(document.getElementById("TxtFormType").value);
@@ -144,7 +158,6 @@
         EnableBtnSend();
     }
 function CheckApprovedInUnit() {
-
     var Mevukach = parseInt(document.getElementById("TxtMevukach").childNodes[0].nodeValue);
     var Balance = parseInt(document.getElementById("TxtBalance").childNodes[0].nodeValue);
     var ApprovedInUnit = document.getElementById("TxtApprovedInUnit");

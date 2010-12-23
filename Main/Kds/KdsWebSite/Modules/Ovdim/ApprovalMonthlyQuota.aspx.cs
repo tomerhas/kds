@@ -46,19 +46,11 @@ public partial class Modules_Ovdim_BakashatTashlum : System.Web.UI.Page
             case clGeneral.enMonthlyQuotaForm.Agafit:
                 DivDetailsForVaadatPnim.Style.Add("Display", "none");
                 DivDetailsForAgaf.Style.Add("Display", "block");
-                CmpValidApprovedInVaadatP_1.Visible = false;
-                CmpValidApprovedInVaadatP_2.Visible = false;
-                CmpValidApprovedInVaadatP_3.Visible = false;
+                RequiredApprovedInVaadatP.Visible = false;
                 break;
             case clGeneral.enMonthlyQuotaForm.VaadatPnim:
-                CmpValidAavaratToVaadP_1.Visible = false;
-                CmpValidAavaratToVaadP_2.Visible = false;
-                CmpValidAavaratToVaadP_3.Visible = false;
-                CmpValidAavaratToVaadP_4.Visible = false;
-                CmpValidApprovedInUnit_1.Visible = false;
-                CmpValidApprovedInUnit_2.Visible = false;
-                CmpValidApprovedInUnit_3.Visible = false;
-                CmpValidApprovedInUnit_4.Visible = false;
+                CmpValidApprovedInUnit.Visible = false;
+                RequiredValidApprovedInUnit.Visible = false; 
                 DivDetailsForVaadatPnim.Style.Add("Display", "block");
                 DivDetailsForAgaf.Style.Add("Display", "none");
                 TxtApprovedInVaadatP.Text = _ConfirmedValueVaad.ToString();
