@@ -414,15 +414,15 @@ var MKT_ELEMENT = 5;
               dSExitHour.setMinutes(sParam29.substr(3,2));    
               dCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth()+1, dCardDate.getDate(),0,0,0);
               dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth()+1, dSidurDate.getDate(),0,0,0);
-              if (dCardDate==dSidurDate){          
-                 dEExitHour.setHours(sEndValidHour.substr(0,2));    
-                 dEExitHour.setMinutes(sEndValidHour.substr(3,2));                  
-              }
-              else{          
-                 dEExitHour.setHours(7); 
-                 dEExitHour.setMinutes(59);   
-                 sEndValidHour = '07:59';                
-              }
+             // if (dCardDate==dSidurDate){          
+             dEExitHour.setHours(sEndValidHour.substr(0,2));    
+             dEExitHour.setMinutes(sEndValidHour.substr(3,2));                  
+//              }
+//              else{          
+//                 dEExitHour.setHours(7); 
+//                 dEExitHour.setMinutes(59);   
+//                 sEndValidHour = '07:59';                
+//              }
              val.errormessage = "  הוקלד ערך שגוי. יש להקליד שעת יציאה בטווח " + sParam29.toString() + " -  " + sEndValidHour.toString();
              var utcSExitHour = Date.UTC(dSExitHour.getFullYear(), dSExitHour.getMonth() + 1, dSExitHour.getDate(), dSExitHour.getHours(), dSExitHour.getMinutes(), 0);
              var utcEExitHour = Date.UTC(dEExitHour.getFullYear(), dEExitHour.getMonth() + 1, dEExitHour.getDate(), dEExitHour.getHours(), dEExitHour.getMinutes(), 0);
@@ -1134,15 +1134,20 @@ var MKT_ELEMENT = 5;
           SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
           SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), Number(sSidurSG.substr(0, 2)), Number(sSidurSG.substr(3, 2)));
          }
-
-       if (IsShatGmarInNextDay(sEndHour)){
-           document.getElementById("lstSidurim_hidCurrIndx").value = iInx;           
-           if (arrItems[0] == '1')
-                   document.getElementById("lstSidurim_btnShowMessage").click();
-               else
-                   if ((document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
-                       document.getElementById("lstSidurim_btnShowMessage").click();           
-      }
+         if (IsShatGmarInNextDay(sEndHour)){
+             document.getElementById("lstSidurim_hidCurrIndx").value = iInx;
+             if (arrItems[0] == '1')//גמר
+                 document.getElementById("lstSidurim_btnShowMessage").click();
+             else
+                 if ((document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
+                     document.getElementById("lstSidurim_btnShowMessage").click();
+         }
+         else
+             if (arrItems[0] == '2')//יציאה    
+             {                 
+                document.getElementById(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = '0';
+                document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
+             }     
    }
    
     function btnDay_click(iDayToAdd){     
@@ -1174,7 +1179,7 @@ var MKT_ELEMENT = 5;
         }
         else {//addday=0
             if (utcSidurDate > utcCardDate)
-                dSdDate.setDate(dSdDate.getDate() -1);  
+                dSdDate.setDate(dSdDate.getDate()-1);  
         }    
          
         if (arrItems[0]=='1'){
@@ -1182,7 +1187,7 @@ var MKT_ELEMENT = 5;
             document.getElementById("lstSidurim_txtSG" + arrItems[1]).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
         }
         else {
-            if (arrItems[0] == '3') {//שעת התחלה סידור
+            if (arrItems[0] == '3'){//שעת התחלה סידור
                 var _SHNew = document.getElementById("lstSidurim_txtSH".concat(arrItems[1]));
                 var sCardDate = document.getElementById("clnDate").value;
                 var iSidurKey = document.getElementById("lstSidurim_lblSidur".concat(arrItems[1])).innerHTML;
