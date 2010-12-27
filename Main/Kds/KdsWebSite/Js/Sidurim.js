@@ -406,13 +406,13 @@ var MKT_ELEMENT = 5;
           if(IsValidTime(sActualShatYetiza)){                     
               dShatYetiza.setHours(sActualShatYetiza.substr(0,2)); 
               dShatYetiza.setMinutes(sActualShatYetiza.substr(sActualShatYetiza.length-2,2));             
-              var dCardDate = new Date(Number(sCardDate.substr(6,4)), Number(sCardDate.substr(3,2))-1,Number(sCardDate.substr(0,2)),0,0 );            
+              var dCardDate = new Date(Number(sCardDate.substr(6,4)), Number(sCardDate.substr(3,2))-1,Number(sCardDate.substr(0,2)),0,0);            
               var iCollpaseHeaderIndex = Number(String(val.id).substr(String('lstSidurim_').length,3)); 
               var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iCollpaseHeaderIndex)).innerHTML;          
               var dSidurDate = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)), 0,0);           
               dSExitHour.setHours(sParam29.substr(0,2));   
               dSExitHour.setMinutes(sParam29.substr(3,2));    
-              dCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth()+1, dCardDate.getDate(),0,0,0);
+              utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth()+1, dCardDate.getDate(),0,0,0);
               dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth()+1, dSidurDate.getDate(),0,0,0);                
               dEExitHour.setHours(sEndValidHour.substr(0,2));    
               dEExitHour.setMinutes(sEndValidHour.substr(3,2));                  
@@ -426,9 +426,27 @@ var MKT_ELEMENT = 5;
                   iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iCollpaseHeaderIndex)).value;
                   var sSG = document.getElementById("lstSidurim_txtSG".concat(iCollpaseHeaderIndex)).value;
                   dSidurDate = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sSG.substr(0, 2), sSG.substr(3, 2));
-                  dSidurDate.setDate(dSidurDate.getDate() + Number(iSDayToAdd));
+                  var utcSidurSG = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth() + 1, dSidurDate.getDate(), 0, 0, 0);
+                  if (utcSidurSG == utcCardDate)
+                      dSidurDate.setDate(dSidurDate.getDate() + Number(iSDayToAdd));
+                  else
+                      if (Number(iSDayToAdd) == 0)
+                          dSidurDate.setDate(dSidurDate.getDate() - 1);
+
                   dShatYetiza = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sActualShatYetiza.substr(0, 2), sActualShatYetiza.substr(sActualShatYetiza.length - 2, 2));
-                  if (((IsShatGmarInNextDay(sActualShatYetiza) || (sActualShatYetiza == '00:00')))) {
+
+                  sParamNxtDay = document.getElementById("lstSidurim_hidParam242").value;                 
+                  var sYear = sCardDate.substr(sCardDate.length - 4, 4);
+                  var sMonth = Number(sCardDate.substr(3, 2)) - 1;
+                  var sDay = sCardDate.substr(0, 2);
+                  var dParamDate = new Date();var dItemDate = new Date();
+                  SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
+                  SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), sSG.substr(0, 2), sSG.substr(3, 2));
+                  var utcItemDate = Date.UTC(dItemDate.getFullYear(), dItemDate.getMonth() + 1, dItemDate.getDate(), 0, 0, 0);
+                  if (((document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value == "1")) && (utcItemDate == utcCardDate)) {                      
+                      dItemDate.setDate(dItemDate.getDate() + 1);
+                  }                                
+                  if (((IsShatGmarInNextDay(sActualShatYetiza)) || (sActualShatYetiza == '00:00')) && (dItemDate >= dParamDate)) {
                       iPDayToAdd = "1";
                       document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "1";
                   }
@@ -436,19 +454,27 @@ var MKT_ELEMENT = 5;
                       iPDayToAdd = "0";
                       document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
                   }
-                  dShatYetiza.setDate(dShatYetiza.getDate() + Number(iPDayToAdd));
+                  var utcShatYetiza = Date.UTC(dShatYetiza.getFullYear(), dShatYetiza.getMonth() + 1, dShatYetiza.getDate(), 0, 0, 0);
+                  if (utcShatYetiza == utcCardDate) {
+                      if (iPDayToAdd == 1)
+                          dShatYetiza.setDate(dShatYetiza.getDate() + 1);
+                  }
+                  else {
+                    if (iPDayToAdd == 0)
+                        dShatYetiza.setDate(dShatYetiza.getDate() - 1);
+                  }
+                  
                   val.errormessage = "שעת היציאה לא יכולה להיות גדולה משעת גמר הסידור";
                   args.IsValid = (dShatYetiza <= dSidurDate);
                                   
                   document.getElementById(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dShatYetiza);
-                  var sRes = ChkShatYetizaKisuyT(val.getAttribute("index"));
-                  if (args.IsValid){
-                      //אם פעילות מסוג שירות נשנה לכל הכניסות את שעת היציאה בהתאם
-                      var lMkt = document.getElementById(sGridRowID).cells[_COL_MAKAT].childNodes[0].value;
-                      var arrKnisa = document.getElementById(sGridRowID).cells[_COL_KNISA].childNodes[0].toString().split(",");                      
-                      if ((GetMakatType(lMkt) == MKT_SHERUT) && (arrKnisa[0] == 0)){
-                          ChangeKnisotHour(document.getElementById(sGridRowID), iPDayToAdd, dShatYetiza);
-                      }
+                  var sRes = ChkShatYetizaKisuyT(val.getAttribute("index"));                
+                  //אם פעילות מסוג שירות נשנה לכל הכניסות את שעת היציאה בהתאם
+                  var lMkt = document.getElementById(sGridRowID).cells[_COL_MAKAT].childNodes[0].value;
+                  var arrKnisa = document.getElementById(sGridRowID).cells[_COL_KNISA].childNodes[0].toString().split(",");                      
+                  if ((GetMakatType(lMkt) == MKT_SHERUT) && (arrKnisa[0] == 0)){
+                        ChangeKnisotHour(document.getElementById(sGridRowID), iPDayToAdd, dShatYetiza);
+                   
                   }
                }         
             }
@@ -1175,7 +1201,7 @@ var MKT_ELEMENT = 5;
         var utcSidurDate = Date.UTC(dSdDate.getFullYear(), dSdDate.getMonth() + 1, dSdDate.getDate(), 0, 0, 0);
         if (iDayToAdd == 1) {
             if (utcSidurDate==utcCardDate)
-                dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));  
+                dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));             
         }
         else {//addday=0
             if (utcSidurDate > utcCardDate)

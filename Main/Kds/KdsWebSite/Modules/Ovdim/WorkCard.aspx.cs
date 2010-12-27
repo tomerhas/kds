@@ -257,6 +257,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
     }
+
     protected void SetDDLToolTip(){
         clUtils.SetDDLToolTip(ddlLina);
         clUtils.SetDDLToolTip(ddlTravleTime);
