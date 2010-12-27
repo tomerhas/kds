@@ -754,6 +754,23 @@ public partial class Modules_Test :Page
     {
 
     }
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        clKavim oKavim = new clKavim();
+        DataSet dsSidur=new DataSet();
+        int iResult;
+        double dTotalTime;
+        DateTime dTime = DateTime.Now;
+       
+        //5095, DateTime.Parse("03/10/2010")
+        dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), null, out iResult);
+         dTotalTime = (DateTime.Now - dTime).TotalSeconds;
+        lblTimeNoVisut.Text = dTotalTime.ToString();
+        dTime = DateTime.Now;
+         dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(67409, DateTime.Parse("14/12/2010"), 1, out iResult);
+        dTotalTime = (DateTime.Now - dTime).TotalSeconds;
+        lblTimeWithVisut.Text = dTotalTime.ToString();       
+    }
 }
 
 

@@ -108,16 +108,19 @@
                     <asp:Button ID="btnInputAndErrorsBatch" runat="server"
                         Text="שגיאות ונתוני קלט מתהליך לילה" OnClick="btnInputAndErrorsBatch_click" />
                  </td> 
-                 <td>
-                  <asp:Button ID="Button5" runat="server"
-                        Text="חן" OnClientClick="test();"  />
-                 </td>         
+                         
             </tr>     
             <tr>
                 <td>
                 <asp:Button ID="btnImportCompare" runat="server"
                     Text="קליטת קבצים להשוואה" OnClick="btnImportCompare_Click" />
                 </td>
+                <td>
+                  <asp:Button ID="Button5" runat="server"
+                        Text="טסט תנועה" onclick="Button5_Click"  /><br />
+                        <asp:Label id="lblTimeNoVisut" runat="server" ></asp:Label> ללא ויסות<br />
+                         <asp:Label id="lblTimeWithVisut" runat="server"></asp:Label> כולל ויסות
+                 </td> 
             </tr> 
             </table> 
             <table>   
