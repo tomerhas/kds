@@ -29,6 +29,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             MasterPage mp = (MasterPage)Page.Master;
             mp.ImageExcelClick.Click += new ImageClickEventHandler(ImageExcelClick_Click);
             mp.ImagePrintClick.Click += new ImageClickEventHandler(ImagePrintClick_Click);
+            ((ScriptManager)mp.FindControl("ScriptManagerKds")).AsyncPostBackTimeout = 360;
 
             if (!Page.IsPostBack)
             {

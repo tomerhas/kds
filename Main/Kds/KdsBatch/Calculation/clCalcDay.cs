@@ -2743,7 +2743,7 @@ namespace KdsBatch
 
         private float CalcDayRechiv77(float fMichsaYomit,DateTime dTaarich)
         {
-            float  fDakotNochehut, fErech, fNochehutBeshishi, fNosafot125;
+            float  fDakotNochehut, fErech, fNosafot125;
             fErech = 0;
             Boolean bMafilimSchirim = false;
             DataRow[] dr;
@@ -2763,8 +2763,7 @@ namespace KdsBatch
                
 
                     fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                    fNochehutBeshishi = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutBeshishi.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-
+                   
                     if (fMichsaYomit > 0 && fDakotNochehut > 0 && _objMefyeneyOved.sMeafyen32 != "1")
                     {
                         if (fDakotNochehut > (fMichsaYomit + 120))
@@ -2780,14 +2779,14 @@ namespace KdsBatch
                             fErech = fDakotNochehut - fMichsaYomit;
                         }
                     }
-                    if (fMichsaYomit == 0 && fNochehutBeshishi > 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode() && _objMefyeneyOved.sMeafyen32 != "1")
+                    if (fMichsaYomit == 0 && fDakotNochehut > 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode() && _objMefyeneyOved.sMeafyen32 != "1")
                     {
-                        fErech = fNochehutBeshishi - 240;
+                        fErech = fDakotNochehut - 240;
                         fErech = Math.Max(0, fErech);
                     }
-                    else if (fMichsaYomit == 0 && fNochehutBeshishi > 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode() && _objMefyeneyOved.sMeafyen32 == "1")
+                    else if (fMichsaYomit == 0 && fDakotNochehut > 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode() && _objMefyeneyOved.sMeafyen32 == "1")
                     {
-                        fErech = fNochehutBeshishi;
+                        fErech = fDakotNochehut;
                     }
 
                     if (bMafilimSchirim)
