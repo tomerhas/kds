@@ -413,16 +413,10 @@ var MKT_ELEMENT = 5;
               dSExitHour.setHours(sParam29.substr(0,2));   
               dSExitHour.setMinutes(sParam29.substr(3,2));    
               dCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth()+1, dCardDate.getDate(),0,0,0);
-              dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth()+1, dSidurDate.getDate(),0,0,0);
-             // if (dCardDate==dSidurDate){          
-             dEExitHour.setHours(sEndValidHour.substr(0,2));    
-             dEExitHour.setMinutes(sEndValidHour.substr(3,2));                  
-//              }
-//              else{          
-//                 dEExitHour.setHours(7); 
-//                 dEExitHour.setMinutes(59);   
-//                 sEndValidHour = '07:59';                
-//              }
+              dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth()+1, dSidurDate.getDate(),0,0,0);                
+              dEExitHour.setHours(sEndValidHour.substr(0,2));    
+              dEExitHour.setMinutes(sEndValidHour.substr(3,2));                  
+          
              val.errormessage = "  הוקלד ערך שגוי. יש להקליד שעת יציאה בטווח " + sParam29.toString() + " -  " + sEndValidHour.toString();
              var utcSExitHour = Date.UTC(dSExitHour.getFullYear(), dSExitHour.getMonth() + 1, dSExitHour.getDate(), dSExitHour.getHours(), dSExitHour.getMinutes(), 0);
              var utcEExitHour = Date.UTC(dEExitHour.getFullYear(), dEExitHour.getMonth() + 1, dEExitHour.getDate(), dEExitHour.getHours(), dEExitHour.getMinutes(), 0);
@@ -434,7 +428,7 @@ var MKT_ELEMENT = 5;
                   dSidurDate = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sSG.substr(0, 2), sSG.substr(3, 2));
                   dSidurDate.setDate(dSidurDate.getDate() + Number(iSDayToAdd));
                   dShatYetiza = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sActualShatYetiza.substr(0, 2), sActualShatYetiza.substr(sActualShatYetiza.length - 2, 2));
-                  if (((IsShatGmarInNextDay(sActualShatYetiza) || (sActualShatYetiza == '00:00'))) && (document.getElementById("lstSidurim_txtDayAdd".concat(iCollpaseHeaderIndex)).value=="1")){
+                  if (((IsShatGmarInNextDay(sActualShatYetiza) || (sActualShatYetiza == '00:00')))) {
                       iPDayToAdd = "1";
                       document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "1";
                   }
@@ -1118,9 +1112,8 @@ var MKT_ELEMENT = 5;
                 if (utcCardDate == utcSidurDate)
                     dSidurTime.setDate(dSidurTime.getDate() + 1);
             }
-            else {//add=0
-                if (utcCardDate > utcSidurDate)
-                    dSidurTime.setDate(dSidurTime.getDate() - 1);
+            else {//add=0                
+                    dSidurTime = dCardDate;
             }
             document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
       }
@@ -1144,8 +1137,15 @@ var MKT_ELEMENT = 5;
          }
          else
              if (arrItems[0] == '2')//יציאה    
-             {                 
-                document.getElementById(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = '0';
+             {
+                 var iAdd;
+                 if (sEndHour == '00:00')
+                     iAdd = 1;
+                 else
+                     iAdd = 0;
+
+                dItemDate.setDate(dItemDate.getDate() + iAdd);
+                document.getElementById(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = iAdd;
                 document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
              }     
    }
