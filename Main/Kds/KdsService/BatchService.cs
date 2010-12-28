@@ -11,6 +11,7 @@ using KdsBatch.Reports;
 using KdsBatch.Premia;
 using KdsDataImport;
 using KdsLibrary.DAL;
+using KdsLibrary.BL;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -166,23 +167,28 @@ namespace KdsService
 
         private void RunRefreshPirteyOvdim(object param)
         {           
-            ClKds oKDs = new ClKds();
+          //  ClKds oKDs = new ClKds();
             clDal oDal = new clDal();
-            try
-            {
+            clBatch obatch = new clBatch();
+            int iSeqNum; 
+            try{
                 // refresh table pirtey_ovdim
-                oKDs.KdsWriteProcessLog(3, 5, 1, "start refresh New_Pirtey_Ovdim", "");
+                iSeqNum = obatch.InsertProcessLog(3, 5, RecordStatus.Wait, "start refresh New_Pirtey_Ovdim", 0);
+                //**oKDs.KdsWriteProcessLog(3, 5, 1, "start refresh New_Pirtey_Ovdim", "");
                 oDal.ClearCommand();
                 oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "New_Pirtey_Ovdim", KdsLibrary.DAL.ParameterDir.pdInput);
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv");
-                oKDs.KdsWriteProcessLog(3, 5, 2, "end ok refresh New_Pirtey_Ovdim", "");
+                obatch.UpdateProcessLog(iSeqNum, RecordStatus.Finish, "end ok refresh New_Pirtey_Ovdim", 0);
+                //**oKDs.KdsWriteProcessLog(3, 5, 2, "end ok refresh New_Pirtey_Ovdim", "");
 
                 // refresh pivot_pirtey_ovdim
                 oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
-                oKDs.KdsWriteProcessLog(3, 8, 1, "start refresh tmp_pirtey_ovdim", "");
+                iSeqNum = obatch.InsertProcessLog(3, 8, RecordStatus.Wait, "start refresh tmp_pirtey_ovdim", 0);
+                //**oKDs.KdsWriteProcessLog(3, 8, 1, "start refresh tmp_pirtey_ovdim", "");
                 oDal.ClearCommand();
                 oDal.ExecuteSP("Create_Cursor_Pirtey_Ovdim");
-                oKDs.KdsWriteProcessLog(3, 8, 2, "end ok refresh tmp_pirtey_ovdim", "");
+                obatch.UpdateProcessLog(iSeqNum, RecordStatus.Finish, "end ok refresh tmp_pirtey_ovdim", 0);
+                //**oKDs.KdsWriteProcessLog(3, 8, 2, "end ok refresh tmp_pirtey_ovdim", "");
             }
             catch (Exception ex)
             {

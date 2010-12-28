@@ -35,6 +35,7 @@ Partial Class test_vb_test_vb
         Dim p_date_str As String
         Dim p_date As Date
         Dim nd As Double
+        Dim iseq As Integer
         'Dim FromMail As String
         'Dim ToMail As String
         'Dim SubjMail As String
@@ -50,7 +51,7 @@ Partial Class test_vb_test_vb
 
 
         oKDs = New KdsDataImport.ClKds
-
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
             oKDs.TryKdsFile()
@@ -59,7 +60,8 @@ Partial Class test_vb_test_vb
             'p_status = oKDs.ChkStatusSdrn(p_date_str)
             'oKDs.RunSdrn(p_date_str)
 
-            oKDs.KdsWriteProcessLog(28, 1, 1, "start")
+            iseq = oBatch.InsertProcessLog(28, 1, KdsLibrary.BL.RecordStatus.Wait, "start", 0)
+            ''**oKDs.KdsWriteProcessLog(28, 1, 1, "start")
             oDal = New KdsLibrary.DAL.clDal
 
 
@@ -188,11 +190,13 @@ Partial Class test_vb_test_vb
 
 
             oKDs.TryKdsFile()
-            oKDs.KdsWriteProcessLog(28, 1, 9, "end ")
+            oBatch.UpdateProcessLog(iseq, KdsLibrary.BL.RecordStatus.Finish, "end", 0)
+            ''**oKDs.KdsWriteProcessLog(28, 1, 9, "end ")
 
         Catch ex As Exception
             'todo...
-            oKDs.KdsWriteProcessLog(tahalich, sub_tahalich, 0, "test aborted " & ex.Message)
+            oBatch.UpdateProcessLog(iseq, KdsLibrary.BL.RecordStatus.Faild, "test aborted " & ex.Message, 0)
+            ''**oKDs.KdsWriteProcessLog(tahalich, sub_tahalich, 0, "test aborted " & ex.Message)
             'oKDs.KdsWriteProcessLog(28, 5, 6, "test aborted " & ex.Message)
 
         End Try

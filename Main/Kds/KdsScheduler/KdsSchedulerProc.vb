@@ -9,12 +9,15 @@ Imports KdsLibrary
 Module KdsSchedulerProc
 
     Sub Main()
+        Dim oBatch As KdsLibrary.BL.clBatch
         Dim oKDs As KdsDataImport.ClKds
         oKDs = New KdsDataImport.ClKds
-
+        oBatch = New KdsLibrary.BL.clBatch
+        Dim KdsSchedulerNumber As Integer
         Try
-            oKDs.KdsWriteProcessLog(1, 1, 1, "start KdsSchedulerProc")
 
+            ''** oKDs.KdsWriteProcessLog(1, 1, 1, "start KdsSchedulerProc")
+            KdsSchedulerNumber = oBatch.InsertProcessLog(1, 1, KdsLibrary.BL.RecordStatus.Wait, "KdsSchedulerProc", 0)
             Refresh_N_Sdrn()
 
             oKDs.Chk_ThreadHrChainges()
@@ -28,15 +31,17 @@ Module KdsSchedulerProc
             End If
             ''כל ראשון בחודש מעבירים לטבלאות הסטוריה נתונים ישנים
             If Now.Day = 1 And Now.Hour = 23 Then
-                oKDs.KdsWriteProcessLog(99, 0, 3, "before MoveRecordsToHistory", 9)
+                ''**oKDs.KdsWriteProcessLog(99, 0, 3, "before MoveRecordsToHistory", 9)
                 Call MoveRecordsToHistory()
-                oKDs.KdsWriteProcessLog(99, 0, 3, "after MoveRecordsToHistory", 9)
+                ''**oKDs.KdsWriteProcessLog(99, 0, 3, "after MoveRecordsToHistory", 9)
             End If
 
-            oKDs.KdsWriteProcessLog(1, 1, 2, "end KdsSchedulerProc")
+            oBatch.UpdateProcessLog(KdsSchedulerNumber, KdsLibrary.BL.RecordStatus.Finish, "KdsSchedulerProc", 0)
+            ''** oKDs.KdsWriteProcessLog(1, 1, 2, "end KdsSchedulerProc")
         Catch ex As Exception
             clGeneral.LogMessage(ex.Message, EventLogEntryType.Error)
-            oKDs.KdsWriteProcessLog(1, 1, 3, "KdsSchedulerProc abort", 1)
+            oBatch.UpdateProcessLog(KdsSchedulerNumber, KdsLibrary.BL.RecordStatus.Faild, "KdsSchedulerProc abort", 1)
+            ''**oKDs.KdsWriteProcessLog(1, 1, 3, "KdsSchedulerProc abort", 1)
         End Try
 
     End Sub
@@ -60,16 +65,17 @@ Module KdsSchedulerProc
         Dim runRefresh As Boolean
         Dim SdrnStrtHour As String
         Dim numFailed, numSucceed As Integer
-
+        Dim iProcessRefreshSdrn, iProcessPremiyot, iRefreshMvAndInsYemey As Integer
         oDal = New KdsLibrary.DAL.clDal
-       
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             SdrnStrtHour = ConfigurationSettings.AppSettings("SdrnStrtHour") '4
             If SdrnStrtHour = "" Then
                 SdrnStrtHour = "4"
             End If
-     
-            oKDs.KdsWriteProcessLog(1, 1, 1, "check Refresh_N_Sdrn")
+
+            iProcessRefreshSdrn = oBatch.InsertProcessLog(1, 1, KdsLibrary.BL.RecordStatus.Wait, "check Refresh_N_Sdrn", 0)
+            ''**oKDs.KdsWriteProcessLog(1, 1, 1, "check Refresh_N_Sdrn")
 
             p_TAARICH = oKDs.getFullDateString(Now)
             
@@ -80,30 +86,36 @@ Module KdsSchedulerProc
 
             dt = oKDs.GetRowKds("dual", "", "to_char(sysdate,'hh24:mi') kuku", RetSql)
             If dt.Rows.Count = 0 Then
-                oKDs.KdsWriteProcessLog(1, 1, 3, "database not responding", 13)
+                oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.Faild, "database not responding", 13)
+                ''**oKDs.KdsWriteProcessLog(1, 1, 3, "database not responding", 13)
                 'data base not responding
                 ToMail = ConfigurationSettings.AppSettings("miri")
                 ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                 BodyMail = "database not responding"
                 oKDs.SendMail(ToMail, "no peace 4 the wicked", BodyMail)
-                oKDs.KdsWriteProcessLog(1, 1, 6, "mail db")
+                oBatch.InsertProcessLog(1, 1, KdsLibrary.BL.RecordStatus.SendMail, "mail db", 0)
+                ''**  oKDs.KdsWriteProcessLog(1, 1, 6, "mail db")
             Else
                 If Now.Hour < 1 Then
                     If Not Now.Hour = CInt(Mid(dt.Rows(0).Item("kuku").ToString, 1, 2)) Then
                         'data base not synchronized
                         'todo: sleep 1 minute
-                        oKDs.KdsWriteProcessLog(1, 1, 4, "sleep 2 synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
+                        oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.PartialFinish, "sleep 2 synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString, 0)
+                        ''** oKDs.KdsWriteProcessLog(1, 1, 4, "sleep 2 synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
                         Thread.Sleep(60000) '= 60 seconds =1 minute
                         dt = oKDs.GetRowKds("dual", "", "to_char(sysdate,'hh24:mi') kuku", RetSql)
-                        oKDs.KdsWriteProcessLog(1, 1, 4, "after sleep " & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
+                        oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.PartialFinish, "after sleep " & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString, 0)
+                        ''**oKDs.KdsWriteProcessLog(1, 1, 4, "after sleep " & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
                         If dt.Rows.Count > 0 Then
                             If Not Now.Hour = CInt(Mid(dt.Rows(0).Item("kuku").ToString, 1, 2)) Then
-                                oKDs.KdsWriteProcessLog(1, 1, 3, "database not synchronized", 13)
+                                oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.Faild, "database not synchronized", 13)
+                                ''**  oKDs.KdsWriteProcessLog(1, 1, 3, "database not synchronized", 13)
                                 ToMail = ConfigurationSettings.AppSettings("miri")
                                 ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                                 BodyMail = "database not synchronized sysdate=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString
                                 oKDs.SendMail(ToMail, "no peace 4 the wicked", BodyMail)
-                                oKDs.KdsWriteProcessLog(1, 1, 6, "mail synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
+                                oBatch.InsertProcessLog(1, 1, KdsLibrary.BL.RecordStatus.SendMail, "mail synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString, 0)
+                                ''**oKDs.KdsWriteProcessLog(1, 1, 6, "mail synchronized=" & Mid(dt.Rows(0).Item("kuku").ToString, 1, 2) & " now=" & Now.Hour.ToString)
                             End If
                         Else
                             'todo: rais db problems
@@ -125,15 +137,18 @@ Module KdsSchedulerProc
                 If runRefresh = True Then
                     'no need 4 date parameter since refresh has no date,
                     'and PKG_BATCH.pro_ins_yamey_avoda_ovdim is of no importance "backwards"
+                    ''iRefreshMvAndInsYemey = oBatch.InsertProcessLog(3, 1, KdsLibrary.BL.RecordStatus.Wait, "RunRefresh", 0)
                     oKDs.RunRefresh()
                 Else
-                    oKDs.KdsWriteProcessLog(3, sub_tahalich, 3, "RefreshMv & ins_yamey did not run", 8)
+                    oBatch.UpdateProcessLog(iRefreshMvAndInsYemey, KdsLibrary.BL.RecordStatus.Faild, "RefreshMv & ins_yamey did not run", 8)
+                    ''**oKDs.KdsWriteProcessLog(3, sub_tahalich, 3, "RefreshMv & ins_yamey did not run", 8)
                     'write mail that RefreshMv & ins_yamey did not run, or try again?
                     ToMail = ConfigurationSettings.AppSettings("miri")
                     ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                     BodyMail = "RefreshMv & ins_yamey did not run"
                     oKDs.SendMail(ToMail, "no peace 4 the wicked", BodyMail)
-                    oKDs.KdsWriteProcessLog(3, sub_tahalich, 6, "mail ovdim")
+                    oBatch.InsertProcessLog(3, 1, KdsLibrary.BL.RecordStatus.SendMail, "mail ovdim", 0)
+                    ''**oKDs.KdsWriteProcessLog(3, sub_tahalich, 6, "mail ovdim")
                     'todo: if/when need retro refresh will do matzav & ins_yom only
                     'If Now.Hour < 14 Then
                     '    oKDs.RunRefreshRetro()
@@ -153,9 +168,11 @@ Module KdsSchedulerProc
                 numFailed = 0
                 numSucceed = 0
                 lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12)
-                oKDs.KdsWriteProcessLog(98, 0, 1, "before PremiaCalc")
+                iProcessPremiyot = oBatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0)
+                ''**oKDs.KdsWriteProcessLog(98, 0, 1, "before PremiaCalc")
                 oCalc.PremiaCalc(lRequestNum, numFailed, numSucceed)
-                oKDs.KdsWriteProcessLog(98, 0, 1, "after PremiaCalc NumRowsFailed=" & numFailed & " NumRowsSucceed=" & numSucceed)
+                oBatch.UpdateProcessLog(iProcessPremiyot, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" & numFailed & " NumRowsSucceed=" & numSucceed, 0)
+                ''**oKDs.KdsWriteProcessLog(98, 0, 1, "after PremiaCalc NumRowsFailed=" & numFailed & " NumRowsSucceed=" & numSucceed)
             End If
             ''רענון טבלאות של התנועה
             If Now.Hour > 21 Then
@@ -167,13 +184,15 @@ Module KdsSchedulerProc
 
             oKDs.RunSdrnRetro("RunBatch")
 
-            oKDs.KdsWriteProcessLog(1, 1, 2, "end  Refresh_N_Sdrn")
+            oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.Finish, "Refresh_N_Sdrn", 0)
+            '' oKDs.KdsWriteProcessLog(1, 1, 2, "end  Refresh_N_Sdrn")
 
         Catch ex As Exception
             'todo: get public from clgeneral EventLog.WriteEntry(KdsLibrary.clgeneral.
             clGeneral.LogMessage(ex.Message, EventLogEntryType.Error)
             'todo: is 9=abort?
-            oKDs.KdsWriteProcessLog(tahalich, sub_tahalich, 3, "end " & ex.Message)
+            oBatch.UpdateProcessLog(iProcessRefreshSdrn, KdsLibrary.BL.RecordStatus.Faild, "Refresh_N_Sdrn abort: " & ex.Message, 0)
+            ''**oKDs.KdsWriteProcessLog(tahalich, sub_tahalich, 3, "end " & ex.Message)
             ToMail = ConfigurationSettings.AppSettings("miri")
             ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
             BodyMail = "scheduler aborted"
@@ -185,11 +204,12 @@ Module KdsSchedulerProc
     Sub DeleteHeavyReport()
         Dim dt As DataTable
         Dim oKDs As KdsLibrary.BL.clReport
-        Dim oKDsData As KdsDataImport.ClKds
+        ' Dim oKDsData As KdsDataImport.ClKds
         Dim path, startPath As String
-        Dim i As Integer
-
+        Dim i, iDeleteHeavyReport As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
+            iDeleteHeavyReport = oBatch.InsertProcessLog(20, 1, KdsLibrary.BL.RecordStatus.Wait, "DeleteHeavyReport", 0)
             startPath = ConfigurationSettings.AppSettings("HeavyReportsPath")
             oKDs = New KdsLibrary.BL.clReport
 
@@ -202,21 +222,27 @@ Module KdsSchedulerProc
                     End If
                 Next
             End If
+            oBatch.UpdateProcessLog(iDeleteHeavyReport, KdsLibrary.BL.RecordStatus.Finish, "DeleteHeavyReport", 0)
         Catch ex As Exception
-            oKDsData = New KdsDataImport.ClKds
-
-            oKDsData.KdsWriteProcessLog(20, 1, 3, "DeleteHeavyReport faild: " + ex.Message, 9)
+            'oKDsData = New KdsDataImport.ClKds
+            oBatch.UpdateProcessLog(iDeleteHeavyReport, KdsLibrary.BL.RecordStatus.Faild, "DeleteHeavyReport faild: " + ex.Message, 9)
+            ''**oKDsData.KdsWriteProcessLog(20, 1, 3, "DeleteHeavyReport faild: " + ex.Message, 9)
         End Try
     End Sub
     Sub MoveRecordsToHistory()
         Dim oKDs As KdsLibrary.BL.clBatch
         Dim oKDsData As KdsDataImport.ClKds
+        Dim iMoveRecordsToHistory As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
+            iMoveRecordsToHistory = oBatch.InsertProcessLog(99, 0, KdsLibrary.BL.RecordStatus.Wait, "MoveRecordsToHistory", 0)
             oKDs = New KdsLibrary.BL.clBatch
             oKDs.MoveRecordsToHistory(Now.AddMonths(-11))
+            oBatch.UpdateProcessLog(iMoveRecordsToHistory, KdsLibrary.BL.RecordStatus.Finish, "MoveRecordsToHistory", 0)
         Catch ex As Exception
-            oKDsData = New KdsDataImport.ClKds
-            oKDsData.KdsWriteProcessLog(99, 0, 3, "MoveRecordsToHistory faild: " + ex.Message, 9)
+            ''**oKDsData = New KdsDataImport.ClKds
+            oBatch.UpdateProcessLog(iMoveRecordsToHistory, KdsLibrary.BL.RecordStatus.Faild, "MoveRecordsToHistory faild: " + ex.Message, 14)
+            ''**oKDsData.KdsWriteProcessLog(99, 0, 3, "MoveRecordsToHistory faild: " + ex.Message, 9)
         End Try
     End Sub
 

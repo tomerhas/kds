@@ -6,6 +6,8 @@ using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 
+
+
 namespace KdsLibrary.BL
 {
     public class clBatch
@@ -18,15 +20,15 @@ namespace KdsLibrary.BL
             try
             {
                 objDal.TxBegin();
-                iRequestId = InsertBakasha(ref objDal,iTypeRequest, sDescription, iStatus, iUserId);
+                iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
                 objDal.ClearCommand();
-                InsertBakashaParam(ref objDal, iRequestId,1,sMaamad);
+                InsertBakashaParam(ref objDal, iRequestId, 1, sMaamad);
                 objDal.ClearCommand();
-                InsertBakashaParam(ref objDal, iRequestId,2,sMonth);
+                InsertBakashaParam(ref objDal, iRequestId, 2, sMonth);
                 objDal.ClearCommand();
-                InsertBakashaParam(ref objDal, iRequestId,3,iRunAll.ToString());
+                InsertBakashaParam(ref objDal, iRequestId, 3, iRunAll.ToString());
                 objDal.ClearCommand();
-                InsertBakashaParam(ref objDal, iRequestId,5, iRunTest.ToString());
+                InsertBakashaParam(ref objDal, iRequestId, 5, iRunTest.ToString());
                 objDal.TxCommit();
             }
             catch (Exception ex)
@@ -42,7 +44,8 @@ namespace KdsLibrary.BL
         {
             long iRequestId;
 
-            try {
+            try
+            {
                 objTx.AddParameter("p_sug_bakasha", ParameterType.ntOracleInteger, iTypeRequest.GetHashCode(), ParameterDir.pdInput);
                 objTx.AddParameter("p_teur", ParameterType.ntOracleVarchar, sDescription, ParameterDir.pdInput, 100);
                 objTx.AddParameter("p_status", ParameterType.ntOracleInteger, iStatus.GetHashCode(), ParameterDir.pdInput);
@@ -53,8 +56,8 @@ namespace KdsLibrary.BL
 
                 iRequestId = long.Parse(objTx.GetValParam("p_bakasha_id"));
 
-               
-             } 
+
+            }
 
             catch (Exception ex)
             {
@@ -62,13 +65,13 @@ namespace KdsLibrary.BL
             }
 
             return iRequestId;
-        
-    }
+
+        }
 
 
         private void InsertBakashaParam(ref clTxDal objTx, long iRequestId, int iParam, string sErech)
         {
-           
+
             try
             {
                 objTx.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, iRequestId, ParameterDir.pdInput);
@@ -84,7 +87,7 @@ namespace KdsLibrary.BL
                 throw ex;
             }
 
-         
+
         }
 
 
@@ -97,7 +100,7 @@ namespace KdsLibrary.BL
             {
                 objDal.TxBegin();
                 iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
-               
+
                 objDal.TxCommit();
             }
             catch (Exception ex)
@@ -118,10 +121,10 @@ namespace KdsLibrary.BL
             {
                 objDal.TxBegin();
                 iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
-                
+
                 objDal.ClearCommand();
                 InsertBakashaParam(ref objDal, iRequestId, 4, iRequestToSachar.ToString());
-                
+
                 objDal.TxCommit();
             }
             catch (Exception ex)
@@ -133,7 +136,7 @@ namespace KdsLibrary.BL
             return iRequestId;
         }
 
-        public DataTable GetPirteyRitzotChishuv(DateTime dTaarichMe, DateTime dTaarichAd,Boolean bGetAll )
+        public DataTable GetPirteyRitzotChishuv(DateTime dTaarichMe, DateTime dTaarichAd, Boolean bGetAll)
         {
             clDal oDal = new clDal();
             DataTable dt = new DataTable();
@@ -231,7 +234,7 @@ namespace KdsLibrary.BL
             DataTable dt = new DataTable();
             try
             {
-             //   oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
+                //   oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetShinuyMatsavOvdim, ref dt);
 
@@ -249,7 +252,7 @@ namespace KdsLibrary.BL
             DataTable dt = new DataTable();
             try
             {
-              //  oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
+                //  oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetShinuyMeafyeneyBizua, ref dt);
 
@@ -285,7 +288,7 @@ namespace KdsLibrary.BL
             DataTable dt = new DataTable();
             try
             {
-               // oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
+                // oDal.AddParameter("p_direction", ParameterType.ntOracleInteger, Direction, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetShinuyBrerotMechdal, ref dt);
 
@@ -337,26 +340,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public void KdsWriteProcessLog(int KodTahalich, int KodPeilut,int KodStatus,string TeurTech)
-        {
-            clDal oDal = new clDal();
-             try
-            {
-               oDal.AddParameter("p_KodTahalich", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodTahalich, KdsLibrary.DAL.ParameterDir.pdInput);
-               oDal.AddParameter("p_KodPeilut", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodPeilut, KdsLibrary.DAL.ParameterDir.pdInput);
-               oDal.AddParameter("p_KodStatus", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodStatus, KdsLibrary.DAL.ParameterDir.pdInput);
-               if (TeurTech.Length  > 100 )
-                    TeurTech = TeurTech.Substring(0,100);
-               oDal.AddParameter("p_TeurTech", KdsLibrary.DAL.ParameterType.ntOracleVarchar, TeurTech, KdsLibrary.DAL.ParameterDir.pdInput);
-               oDal.ExecuteSP("PKG_BATCH.pro_ins_log_tahalich");
-      
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+       
         public void MoveNewMatzavOvdimToOld()
         {
             clDal oDal = new clDal();
@@ -409,7 +393,8 @@ namespace KdsLibrary.BL
 
         public void MoveRecordsToHistory(DateTime date)
         {
-            clDal oDal = new clDal();file:///C:\Documents and Settings\meravn\My Documents\Visual Studio 2008\Projects\kds\KdsWebSite\Bin\
+            clDal oDal = new clDal();
+        file:///C:\Documents and Settings\meravn\My Documents\Visual Studio 2008\Projects\kds\KdsWebSite\Bin\
             try
             {
                 oDal.AddParameter("p_taarich", KdsLibrary.DAL.ParameterType.ntOracleDate, date, KdsLibrary.DAL.ParameterDir.pdInput);
@@ -458,6 +443,76 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
-    }
 
+        public int InsertProcessLog(int KodTahalich, int KodPeilut,KdsLibrary.BL.RecordStatus KodStatus,
+                                    string TeurTech, int KodTakala)
+        {
+            clDal oDal = new clDal();
+            int iNum;
+            try
+            {
+                oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_KodTahalich", ParameterType.ntOracleInt64, KodTahalich, ParameterDir.pdInput);
+                oDal.AddParameter("p_KodPeilut", ParameterType.ntOracleInt64, KodPeilut, ParameterDir.pdInput);
+                oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
+                if (TeurTech.Trim().Length > 100)
+                    TeurTech = TeurTech.Trim().Substring(1, 100);
+                else
+                    TeurTech = TeurTech.Trim();
+                oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
+
+                if (KodTakala != 0)
+                    oDal.AddParameter("p_KodTakala", ParameterType.ntOracleInt64, KodTakala, ParameterDir.pdInput);
+                else
+                    oDal.AddParameter("p_KodTakala", ParameterType.ntOracleInt64, DBNull.Value, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(clGeneral.cFunInsertLogTahalichRecord);
+                iNum = Int32.Parse(oDal.GetValParam("p_return_value"));
+                return iNum;
+            }
+            catch (Exception ex)
+            {
+                // clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                throw ex;
+            }
+        }
+
+        public void UpdateProcessLog(int seqTahalich, KdsLibrary.BL.RecordStatus KodStatus, string TeurTech, int KodTakala)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_seqTahalich", KdsLibrary.DAL.ParameterType.ntOracleInt64, seqTahalich, ParameterDir.pdInput);
+                oDal.AddParameter("p_KodStatus", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
+                if (TeurTech.Trim().Length > 100)
+                    TeurTech = TeurTech.Trim().Substring(1, 100);
+                else
+                    TeurTech = TeurTech.Trim();
+                oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
+                
+                if (KodTakala != 0)
+                    oDal.AddParameter("p_KodTakala", ParameterType.ntOracleInt64, KodTakala, ParameterDir.pdInput);
+                else
+                    oDal.AddParameter("p_KodTakala", ParameterType.ntOracleInt64, DBNull.Value, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(clGeneral.cProUpdateLogTahalichRecord);
+                
+            }
+            catch (Exception ex)
+            {
+                // clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                throw ex;
+            }
+        }
+        
+    }
+    public enum RecordStatus
+    {
+        Wait = 1,
+        Finish = 2,
+        Faild = 3,
+        PartialFinish = 4,
+        NewRun = 5,
+        SendMail = 6
+    }
 }

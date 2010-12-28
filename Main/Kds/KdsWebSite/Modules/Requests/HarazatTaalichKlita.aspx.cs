@@ -122,9 +122,11 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
     }
     protected void btnRianunTavlaotHR_Click(object sender, EventArgs e)
     {
-        ClKds oKDs = new ClKds();
+       // ClKds oKDs = new ClKds();
+        clBatch obatch = new clBatch();
         clDal oDal = new clDal();
         int sub_tahalich=0;
+        int seqNum=0;
         string nameTable="";
         string sProPivotName = "";
         try
@@ -135,11 +137,13 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
                 TipulMeyuchadRefreshPirteyOvdim();
             else if (sub_tahalich != 28 && sub_tahalich != 29 && sub_tahalich != 30) //not pivot
             {
-                oKDs.KdsWriteProcessLog(3, sub_tahalich, 1, "start refresh " + nameTable, "");
+                seqNum = obatch.InsertProcessLog(3, sub_tahalich, RecordStatus.Wait, "start refresh " + nameTable, 0);
+                //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 1, "start refresh " + nameTable, "");
                 oDal.ClearCommand();
                 oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, nameTable, KdsLibrary.DAL.ParameterDir.pdInput);
                 oDal.ExecuteSP("PKG_BATCH.pro_RefreshMv");
-                oKDs.KdsWriteProcessLog(3, sub_tahalich, 2, "end ok refresh " + nameTable, "");
+                obatch.UpdateProcessLog(seqNum, RecordStatus.Finish, "end ok refresh " + nameTable, 0);
+                //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 2, "end ok refresh " + nameTable, "");
             }
             else
             {
@@ -154,16 +158,18 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
                     case 30: sProPivotName = "PKG_SIDURIM.calling_Pivot_Sidurim_M";
                         break;
                 }
-
-                oKDs.KdsWriteProcessLog(3, sub_tahalich, 1, "start refresh " + nameTable, "");
+                seqNum = obatch.InsertProcessLog(3, sub_tahalich, RecordStatus.Wait, "start refresh " + nameTable, 0);
+               //** oKDs.KdsWriteProcessLog(3, sub_tahalich, 1, "start refresh " + nameTable, "");
                 oDal.ClearCommand();
                 oDal.ExecuteSP(sProPivotName);
-                oKDs.KdsWriteProcessLog(3, sub_tahalich, 2, "end ok refresh " + nameTable, "");
+                obatch.UpdateProcessLog(seqNum, RecordStatus.Finish, "end ok refresh " + nameTable, 0);
+               //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 2, "end ok refresh " + nameTable, "");
             }
         }
         catch (Exception ex)
         {
-            oKDs.KdsWriteProcessLog(3, sub_tahalich, 3, "Rfresh " + nameTable + " aborted " + ex.Message, "");
+            obatch.UpdateProcessLog(seqNum,RecordStatus.Faild, "Rfresh " + nameTable + " aborted " + ex.Message, 0);   
+            //**oKDs.KdsWriteProcessLog(3, sub_tahalich, 3, "Rfresh " + nameTable + " aborted " + ex.Message, "");
             lblErrorPage.Text = ex.Message;
             throw ex;
             

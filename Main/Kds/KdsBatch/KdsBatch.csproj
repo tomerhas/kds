@@ -60,6 +60,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.Excel, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="KdsLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KdsLibrary\bin\Release\KdsLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.111.6.20, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KdsWebSite\ExternalDlls\Oracle.DataAccess.dll</HintPath>
@@ -163,10 +167,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
-      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
-      <Name>KdsLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
       <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
       <Name>KdsWorkFlow</Name>
