@@ -125,54 +125,31 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             btnApprove.Disabled = true;
             btnNotApprove.Disabled = true;
         }
-        else{        
-            //if ((oBatchManager.htEmployeeDetailsWithCancled == null) && (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber))){
-            //    btnApprove.Disabled = false;
-            //    btnNotApprove.Disabled = false;
-            //}
-            //else{            
-                if (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)){                
-                    //if (oBatchManager.htEmployeeDetailsWithCancled == null){
-                    //    btnApprove.Disabled = false;
-                    //    btnNotApprove.Disabled = false;
-                    //}
-                    //else{
-                        //if (oBatchManager.htEmployeeDetailsWithCancled.Count == 0)
-                        //{
-                        //    btnApprove.Disabled = false;
-                        //    btnNotApprove.Disabled = false;
-                        //}
-                        //else
-                        //{
-                            //if (LoginUser.IsLimitedUser)
-                            //{
-                                //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
-                                //רק במידה ולא נעשה שינוי בכרטיס
-                                btnApprove.Disabled = bWorkCardWasUpdate;
-                                btnNotApprove.Disabled = bWorkCardWasUpdate;
-                           // }
-                            //else
-                            //{                               
-                            //    btnApprove.Disabled = (!((bParticipationAllowed) && (!bWorkCardWasUpdate) && (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber))));
-                            //    btnNotApprove.Disabled = (!((bParticipationAllowed) && (!bWorkCardWasUpdate) && (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber))));
-                            //}        
-                       // }
-                   // }                    
+        else{                  
+                if (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)){                                   
+                    //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
+                    //רק במידה ולא נעשה שינוי בכרטיס
+                    btnApprove.Disabled = bWorkCardWasUpdate;
+                    btnNotApprove.Disabled = bWorkCardWasUpdate;                                    
                 }
-                else{                                                        
-                   // if (LoginUser.IsLimitedUser){                    
+                else{                                                                          
                         //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                         //רק במידה ולא נעשה שינוי בכרטיס
                         btnApprove.Disabled = true;
-                        btnNotApprove.Disabled = true;
-                   // }
-                   // else{
-                   //     btnApprove.Disabled = (!((bParticipationAllowed) && (!bWorkCardWasUpdate) && (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber))));
-                   //     btnNotApprove.Disabled = (!((bParticipationAllowed) && (!bWorkCardWasUpdate) && (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber))));
-                   // }                    
-                }
-           // }
+                        btnNotApprove.Disabled = true;                    
+                }           
         }
+        //if (btnApprove.Disabled)
+        //    btnApprove.Attributes.Add("class", "ImgButtonApprovalDisabled");
+        //else
+        //    btnApprove.Attributes.Add("class", "ImgButtonApprovalEnabled");
+
+
+        //if (btnNotApprove.Disabled)
+        //    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalDisabled");
+        //else
+        //    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalEnabled");
+
         clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         switch (oMasherOMistayeg)
         {
@@ -358,11 +335,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bool bResult = true;
         clDefinitions _Defintion = new clDefinitions();
-       
+        bool bLoadNewCard=false;
+
         try
         {
             clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
-            if ((oOvedYomAvodaDetails.iStatus==clGeneral.enCardStatus.Calculate.GetHashCode()) && (ViewState["LoadNewCard"]==null) && (!Page.IsPostBack))
+            if (ViewState["LoadNewCard"] != null)
+                bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
+            if (
+                ((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
+                || ((Request.QueryString["WCardUpdate"]==null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()))
+                )     
+                       
             {       
                 oBatchManager.InitGeneralData();
                 oBatchManager.CardStatus = clGeneral.enCardStatus.Calculate;
@@ -2126,8 +2110,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         //mpeUpd.Hide();
        
-        if (SaveCard()){           
-            Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString());
+        if (SaveCard()){         
+            Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
         }
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
         //lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;      

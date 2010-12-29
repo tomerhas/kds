@@ -162,14 +162,14 @@
                                            <label runat="server" id="lblCardStatus" class="ImgButtonCardStatus"></label>                                            
                                         </td>
                                     </tr>                                    
-                                    <tr>
+                                    <%--<tr>
                                         <td rowspan="2">                                            
-                                            <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="25px"  onclick="SetMeasher(1)" />
+                                            <input type="button"  value="מאשר" ID="btnApprove1" runat="server" width="70px" height="25px"  onclick="SetMeasher(1)" />
                                         </td>
                                         <td>
-                                            <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="25px"  onclick="SetMeasher(0)" />                                          
+                                            <input type="button"  value="מסתייג" ID="btnNotApprove1" runat="server" width="70px" height="25px"  onclick="SetMeasher(0)" />                                          
                                         </td>
-                                    </tr>
+                                    </tr>--%>
                                 </table>
                             </ContentTemplate>
                             <Triggers>
@@ -356,12 +356,16 @@
                                             
                     <table width="100%" border="1">
                         <tr>
-                             <td style="width: 10%">
+                            <td style="width: 10%">
                                 <asp:Button Text="דיווח היעדרות" ID="btnAddHeadrut" runat="server"  Style="width: 160px; height: 25px" OnClick="btnAddHeadrut_Click"
                                  CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidurHeadrut();' />
-                             </td>  
+                            </td>  
                             <td align="right"><asp:Button Text="הוסף/חפש סידור" ID="btnFindSidur" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
-                        </tr>
+                            <td  style="width: 80%" align="left">                                            
+                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="SetMeasher(1)" />
+                                <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="SetMeasher(0)" />   
+                            </td>                            
+                       </tr>
                     </table>
             </ContentTemplate>                                                                                                        
           </asp:UpdatePanel>    
