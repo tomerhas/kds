@@ -2131,16 +2131,14 @@ namespace KdsBatch
         {
             float fSumDakotRechiv, fZchutChofesh;
             try{
-            if (_oGeneralData.objMeafyeneyOved.iMeafyen31>0 )
-            {
+            
                 fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode().ToString()));
                 fZchutChofesh = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.KizuzZchutChofesh.GetHashCode().ToString()));
 
                 fSumDakotRechiv = (fSumDakotRechiv - fZchutChofesh) / 60;
 
                 addRowToTable(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), fSumDakotRechiv);
-            }
-            }
+           }
             catch (Exception ex)
             {
                  clLogBakashot.SetError(_lBakashaId,_iMisparIshi, "E", clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.Message);

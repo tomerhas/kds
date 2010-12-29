@@ -33,7 +33,7 @@ namespace KdsBatch
         public string sMeafyen27 = "";
         public string sMeafyen28 = "";
         public int iMeafyen30 = -1;
-        public int iMeafyen31 = -1;
+        //public int iMeafyen31 = -1;
         public string sMeafyen32 = "";
         public int iMeafyen33 =-1;
         public string sMeafyen41 = "";
@@ -92,7 +92,7 @@ namespace KdsBatch
        private bool _bMeafyen27Exists = false;
        private bool _bMeafyen28Exists = false;
         private bool _bMeafyen30Exists = false;
-        private bool _bMeafyen31Exists = false;
+        //private bool _bMeafyen31Exists = false;
         private bool _bMeafyen32Exists = false;
         private bool _bMeafyen33Exists = false;
         private bool _bMeafyen41Exists = false;
@@ -227,10 +227,10 @@ namespace KdsBatch
             get { return _bMeafyen30Exists; }
         }
 
-        public bool Meafyen31Exists
-        {
-            get { return _bMeafyen31Exists; }
-        }
+        //public bool Meafyen31Exists
+        //{
+        //    get { return _bMeafyen31Exists; }
+        //}
         public bool Meafyen32Exists
         {
             get { return _bMeafyen32Exists; }
@@ -453,7 +453,7 @@ namespace KdsBatch
                 SetOneMeafyen("27", ref _bMeafyen27Exists, ref  sMeafyen27);
                 SetOneMeafyen("28", ref _bMeafyen28Exists, ref  sMeafyen28);
                 SetOneMeafyen("30", ref _bMeafyen30Exists, ref  iMeafyen30);
-                SetOneMeafyen("31", ref _bMeafyen31Exists, ref iMeafyen31);
+                //SetOneMeafyen("31", ref _bMeafyen31Exists, ref iMeafyen31);
                 SetOneMeafyen("32", ref _bMeafyen32Exists, ref  sMeafyen32);
                 SetOneMeafyen("33", ref _bMeafyen33Exists, ref  iMeafyen33);
                 SetOneMeafyen("41", ref _bMeafyen41Exists, ref  sMeafyen41);
