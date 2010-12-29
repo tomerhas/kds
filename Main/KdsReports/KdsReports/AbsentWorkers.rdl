@@ -596,6 +596,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -783,16 +784,16 @@
         <DataSetName>DsAbsentWorkers</DataSetName>
         <SortExpressions>
           <SortExpression>
-            <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+            <Value>=Fields!MISPAR_ISHI_FULL.Value</Value>
           </SortExpression>
           <SortExpression>
-            <Value>=Fields!MISPAR_ISHI_FULL.Value</Value>
+            <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
         <Top>0.17639cm</Top>
         <Left>0.26345cm</Left>
         <Height>1.62334cm</Height>
-        <Width>19.39668cm</Width>
+        <Width>19.39671cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsAbsentWorkers")&gt;0 ,false,true)</Hidden>
         </Visibility>
