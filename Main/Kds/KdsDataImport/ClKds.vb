@@ -1821,15 +1821,17 @@ Public Class ClKds
         Dim lRequestNum As Integer
         Dim dTaarich As Date
         Dim dDatestr As String
-        Dim SdrnStatTimes As String
+        Dim SdrnStatTimes, teur As String
         Dim iNumSeq, iSdrnNumSeq As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
+            iNumSeq = 0
             iSdrnNumSeq = oBatch.InsertProcessLog(4, 1, KdsLibrary.BL.RecordStatus.Wait, "sdrn", 0)
             oDal = New KdsLibrary.DAL.clDal
 
             tahalich = 4
             sub_tahalich = 3
+            teur = "yamim"
             iNumSeq = oBatch.InsertProcessLog(4, 3, KdsLibrary.BL.RecordStatus.Wait, "yamim", 0)
             ''** KdsWriteProcessLog(4, 3, 1, "start yamim")
             oDal.ClearCommand()
@@ -1838,6 +1840,7 @@ Public Class ClKds
             ''**oDal.ExecuteSP("PKG_sdrn.pro_ins_yamim_4_sidurim")
 
             sub_tahalich = 4
+            teur = "sidurim"
             iNumSeq = oBatch.InsertProcessLog(4, 4, KdsLibrary.BL.RecordStatus.Wait, "sidurim", 0)
             ''**KdsWriteProcessLog(4, 4, 1, "after yamim, before sidurim")
             oDal.ClearCommand()
@@ -1848,6 +1851,7 @@ Public Class ClKds
             ''**KdsWriteProcessLog(4, 5, 1, "after sidurim, before peilut")
 
             sub_tahalich = 5
+            teur = "peilut_4_sidurim"
             oDal.ClearCommand()
             iNumSeq = oBatch.InsertProcessLog(4, 5, KdsLibrary.BL.RecordStatus.Wait, "peilut_4_sidurim", 0)
             oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_date_str, KdsLibrary.DAL.ParameterDir.pdInput)
@@ -1855,6 +1859,7 @@ Public Class ClKds
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "peilut_4_sidurim", 0)
 
             sub_tahalich = 6
+            teur = "min-max"
             iNumSeq = oBatch.InsertProcessLog(4, 6, KdsLibrary.BL.RecordStatus.Wait, "min-max", 0)
             ''** KdsWriteProcessLog(4, 6, 1, "after peilut, before min-max")
             oDal.ClearCommand()
@@ -1863,6 +1868,7 @@ Public Class ClKds
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "min-max", 0)
 
             sub_tahalich = 7
+            teur = "upd_control"
             iNumSeq = oBatch.InsertProcessLog(4, 7, KdsLibrary.BL.RecordStatus.Wait, "upd_control", 0)
             ''**KdsWriteProcessLog(4, 7, 1, "after min-max,before upd_control")
             'todo: shmulik will add an index column and its value will come from web-config
@@ -1873,6 +1879,7 @@ Public Class ClKds
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "upd control", 0)
             ''**KdsWriteProcessLog(4, 7, 1, "after upd control")
             If UserBatch = "RunBatch" Then
+                teur = "OpenBatchRequest"
                 iNumSeq = oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.Wait, "OpenBatchRequest", 0)
                 ''** KdsWriteProcessLog(8, 1, 1, "before OpenBatchRequest")
                 'todo: batchDescription= "KdsScheduler",iUserId= 77690 or -12 ?
@@ -1885,6 +1892,7 @@ Public Class ClKds
                 oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "OpenBatchRequest", 0)
                 ''**KdsWriteProcessLog(8, 1, 1, "after OpenBatchRequest before shguyim")
                 'todo: when after sdrn should 
+                teur = "shguyim"
                 iNumSeq = oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.Wait, "shguyim", 0)
                 KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
                 'todo: when after rfrsh should 
@@ -1893,6 +1901,7 @@ Public Class ClKds
                 oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "shguyim", 0)
                 ''** KdsWriteProcessLog(8, 1, 2, "after shguyim")
                 ' 2010/07/27               no mail ishurim at all
+                teur = "ishurim"
                 iNumSeq = oBatch.InsertProcessLog(6, 1, KdsLibrary.BL.RecordStatus.Wait, "ishurim", 0)
                 ''**KdsWriteProcessLog(8, 1, 2, "after shguyim before ishurim")
                 SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '2=test, 3=prod since 2010/07/08
@@ -1908,10 +1917,11 @@ Public Class ClKds
                 oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim not run UserBatch=" & UserBatch, 0)
                 ''**KdsWriteProcessLog(8, 1, 4, "shguyim not run UserBatch=" & UserBatch)
             End If
-            oBatch.UpdateProcessLog(iSdrnNumSeq, KdsLibrary.BL.RecordStatus.Finish, "sadran", 0)
-            ''**KdsWriteProcessLog(4, 1, 2, "end ok sadran")
+                oBatch.UpdateProcessLog(iSdrnNumSeq, KdsLibrary.BL.RecordStatus.Finish, "sadran", 0)
+                ''**KdsWriteProcessLog(4, 1, 2, "end ok sadran")
 
         Catch ex As Exception
+            oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Faild, teur & " abort: " & ex.Message, 10)
             oBatch.UpdateProcessLog(iSdrnNumSeq, KdsLibrary.BL.RecordStatus.Faild, "sadran " & ex.Message, 10)
             ''**KdsWriteProcessLog(4, 1, 3, "sadran " & ex.Message, "10")
             Throw ex
@@ -2181,7 +2191,7 @@ Public Class ClKds
                         End If
                     Case 9
                         'check if run in prod and tst:
-                        WhrStr = "taarich>trunc(sysdate) and kod_tahalich = 4 And kod_peilut_tahalich > 1"
+                        WhrStr = "taarich>trunc(sysdate) and kod_tahalich = 4 And kod_peilut_tahalich > 1 And kod_peilut_tahalich < 8"
                         dt2 = GetRowKds("tb_log_tahalich", WhrStr, "count(*) ct", RetSql)
                         If dt2.Rows.Count = 0 Then
                             'no access to db
@@ -2204,7 +2214,7 @@ Public Class ClKds
                         ''**KdsWriteProcessLog(tahalich, sub_tahalich, 6, "mail sdrn")
                 End Select
             Loop
-
+            oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Finish, "end check sdrn/RunSdrn", 0)
         Catch ex As Exception
             oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Faild, "RunSdrn " & ex.Message, 10)
             ''**KdsWriteProcessLog(4, 1, 3, "RunSdrn " & ex.Message, "10")
@@ -2362,9 +2372,9 @@ Public Class ClKds
                                 oBatch.InsertProcessLog(8, 2, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim retro not run UserBatch=" & UserBatch, 0)
                                 ''** KdsWriteProcessLog(8, 2, 4, "shguyim retro not run UserBatch=" & UserBatch)
                             End If
-                            oBatch.InsertProcessLog(tahalich, 19, KdsLibrary.BL.RecordStatus.Finish, "end ok rerun sadran", 0)
-                            ''**KdsWriteProcessLog(4, 19, 2, "end ok rerun sadran")
-                        End If
+                                oBatch.InsertProcessLog(tahalich, 19, KdsLibrary.BL.RecordStatus.Finish, "end ok rerun sadran", 0)
+                                ''**KdsWriteProcessLog(4, 19, 2, "end ok rerun sadran")
+                            End If
                         'Else
                         '?
                     End If

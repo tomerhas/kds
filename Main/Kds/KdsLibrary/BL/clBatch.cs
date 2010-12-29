@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary.UDT;
+using System.Diagnostics;
 
 
 
@@ -456,7 +457,7 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_KodPeilut", ParameterType.ntOracleInt64, KodPeilut, ParameterDir.pdInput);
                 oDal.AddParameter("p_KodStatus", ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
                 if (TeurTech.Trim().Length > 100)
-                    TeurTech = TeurTech.Trim().Substring(1, 100);
+                    TeurTech = TeurTech.Trim().Substring(0, 100);
                 else
                     TeurTech = TeurTech.Trim();
                 oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
@@ -472,7 +473,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                // clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                 clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
                 throw ex;
             }
         }
@@ -485,7 +486,7 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_seqTahalich", KdsLibrary.DAL.ParameterType.ntOracleInt64, seqTahalich, ParameterDir.pdInput);
                 oDal.AddParameter("p_KodStatus", KdsLibrary.DAL.ParameterType.ntOracleInt64, KodStatus, ParameterDir.pdInput);
                 if (TeurTech.Trim().Length > 100)
-                    TeurTech = TeurTech.Trim().Substring(1, 100);
+                    TeurTech = TeurTech.Trim().Substring(0, 100);
                 else
                     TeurTech = TeurTech.Trim();
                 oDal.AddParameter("p_TeurTech", ParameterType.ntOracleVarchar, TeurTech, ParameterDir.pdInput);
@@ -500,7 +501,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                // clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
                 throw ex;
             }
         }
