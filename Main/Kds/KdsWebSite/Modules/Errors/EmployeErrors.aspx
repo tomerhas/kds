@@ -36,7 +36,7 @@ function ChangeKeyCode()
                 <td style="width:160px">
                     <asp:UpdatePanel ID="upSite" runat="server" RenderMode="Inline" >
                         <ContentTemplate> 
-                            <asp:DropDownList ID="ddlSite" runat="server"  style="width:110px" TabIndex="1"
+                            <asp:DropDownList ID="ddlSite" runat="server"  style="width:110px" 
                                 AutoPostBack="true" onselectedindexchanged="ddlSite_SelectedIndexChanged" ></asp:DropDownList>
                         </ContentTemplate>  
                       <%--    <Triggers>
@@ -51,7 +51,7 @@ function ChangeKeyCode()
                 <td style="width:320px">
                     <asp:UpdatePanel ID="upSnif" runat="server" RenderMode="Inline" UpdateMode="Conditional"   >
                         <ContentTemplate>                         
-                            <asp:TextBox ID="txtSnif" runat="server" AutoComplete="Off" TabIndex="2" dir="rtl" style="width:300px" onblur="CheckSnif();"></asp:TextBox>
+                            <asp:TextBox ID="txtSnif" runat="server" AutoComplete="Off"  dir="rtl" style="width:300px" onblur="CheckSnif();"></asp:TextBox>
                             
                             <cc1:AutoCompleteExtender id="AutoCompleteSnif"  runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  DelimiterCharacters=";" 
                                 TargetControlID="txtSnif" MinimumPrefixLength="1" ServiceMethod="GetSnifim" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -74,7 +74,7 @@ function ChangeKeyCode()
                 <td>
                    <asp:UpdatePanel ID="upMaamad" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                         <ContentTemplate> 
-                            <asp:DropDownList ID="ddlMaamad" runat="server" TabIndex="3" OnSelectedIndexChanged="ddlMaamad_SelectedIndexChanged" style="width:250px" AutoPostBack="true" ></asp:DropDownList>
+                            <asp:DropDownList ID="ddlMaamad" runat="server"  OnSelectedIndexChanged="ddlMaamad_SelectedIndexChanged" style="width:250px" AutoPostBack="true" ></asp:DropDownList>
                         </ContentTemplate>
                         <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="btnMaamad" />                                                                    
@@ -91,21 +91,21 @@ function ChangeKeyCode()
                 <td class="InternalLabel" style="width:40px">
                     מיום:
                 </td>
-                <td align="right" dir="ltr" style="width:160px">  
-                  <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  TabIndex="4" AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
+                <td align="right" dir="ltr"  style="width:160px">  
+                  <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
                   <%--<wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                      
                 </td>  
                 <td class="InternalLabel" style="width:40px">
                     עד יום:
                 </td> 
                 <td align="right" dir="ltr" style="width:150px">  
-                    <KdsCalendar:KdsCalendar runat="server"  ID="clnToDate"  TabIndex="5" AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                             
+                    <KdsCalendar:KdsCalendar runat="server"  ID="clnToDate"   AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                             
                     <%--<wccEgged:wccCalendar runat="server" ID="clnToDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                                                                      
                 </td>               
                 <td>
                     <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                          <ContentTemplate>
-                            <asp:Button Text="הצג" ID="btnExecute" runat="server" TabIndex="6" CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" 
+                            <asp:Button Text="הצג" ID="btnExecute" runat="server"  CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" 
                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                            
                             <input type="hidden" id="hidMisparIshi" runat="server" />                                                            
                        </ContentTemplate>                                              
@@ -123,12 +123,12 @@ function ChangeKeyCode()
         <table class="FilterTable">
             <tr>
                 <td class="InternalLabel" style="width:80px">
-                    <asp:RadioButton runat="server" Checked="true" ID="rdoId" TabIndex="7" GroupName="grpSearch" Text="מספר אישי"  > </asp:RadioButton>
+                    <asp:RadioButton runat="server" Checked="true" ID="rdoId"  GroupName="grpSearch" Text="מספר אישי"  > </asp:RadioButton>
                 </td>
                 <td style="width:200px;">
                 <asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" TabIndex="8" ></asp:TextBox>                            
+                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl"  ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0"  UseContextKey="true"  
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  CompletionSetCount="25"
@@ -143,12 +143,12 @@ function ChangeKeyCode()
                  </asp:UpdatePanel>           
                 </td>                
                 <td class="style1">
-                     <asp:RadioButton runat="server" ID="rdoName" GroupName="grpSearch" Text="שם" TabIndex="9" > </asp:RadioButton>
+                     <asp:RadioButton runat="server" ID="rdoName" GroupName="grpSearch" Text="שם"  > </asp:RadioButton>
                 </td>               
                 <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" TabIndex="10" style="width:200px" onblur="GetOvedMisparIshiByName();" ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  style="width:200px" onblur="GetOvedMisparIshiByName();" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
@@ -165,7 +165,7 @@ function ChangeKeyCode()
                 <td colspan="5">
                     <asp:UpdatePanel ID="upSearch" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                         <ContentTemplate> 
-                            <asp:button ID="btnSearch" runat="server" text="חפש"   TabIndex="11"
+                            <asp:button ID="btnSearch" runat="server" text="חפש"   
                                 CssClass ="ImgButtonSearch" onclick="btnSearch_Click"
                                 onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
                         </ContentTemplate>
