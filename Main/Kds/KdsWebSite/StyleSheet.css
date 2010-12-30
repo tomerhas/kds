@@ -518,9 +518,18 @@
 	height:30px; 
 	color: White;		
 }
+
 .ImgButtonApprovalChecked
 {
-	background-image: url(Images/pressed.jpg);	
+	background-image: url(Images/btn-approval-checked.jpg);	
+	width:80px; 
+	height:30px; 	
+	color: white;
+	font-weight:bold;		
+}
+.ImgButtonApprovalCheckedNew
+{
+	background-image: url(Images/btn-approval-checked.jpg);	
 	width:80px; 
 	height:30px; 		
 	color: gray;
@@ -531,7 +540,14 @@
 }
 .ImgButtonApprovalRegular
 {
-	background-image: url(Images/unpressed.jpg);	
+	background-image: url(Images/btn-approval-regular.jpg);	
+	width:80px; 
+	height:30px; 
+	color: White;		
+}
+.ImgButtonApprovalRegularNew
+{
+	background-image: url(Images/btn-approval-regular.jpg);	
 	width:80px; 
 	height:30px; 
 	color: gray;	

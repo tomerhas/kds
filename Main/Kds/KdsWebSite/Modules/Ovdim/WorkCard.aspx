@@ -543,7 +543,7 @@
           var KeyID = event.keyCode;                           
            switch(KeyID){            
               case 13: //Enter           
-                 if (document.activeElement.id!='btnRefreshOvedDetails'){                  
+                 if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){                  
                      event.returnValue=false;
                      event.cancel = true;
                  }
@@ -551,7 +551,12 @@
               case 107:
                  event.keyCode=9;
                  break;
-                 }                            
+              case 123: //f12
+              if (document.getElementById("btnUpdateCard").disabled==false)              
+                    document.getElementById("btnUpdateCard").focus();
+              
+                 break;
+             }                
          }           
     </script>
 </body>
