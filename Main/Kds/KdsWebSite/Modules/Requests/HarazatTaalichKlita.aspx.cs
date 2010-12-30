@@ -220,10 +220,14 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
     {
         ClKds oKDs = new ClKds();
         long lRequestNum;
+        clBatch obatch = new clBatch();
+        int seqNum=0;
         try
         {
+            seqNum = obatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "start Chk_ThreadHrChainges", 0);
             lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12);
-            oKDs.RunThreadHrChainges();
+            oKDs.RunThreadHrChainges(seqNum);
+            obatch.UpdateProcessLog(seqNum, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0);
         }
         catch (Exception ex)
         {
