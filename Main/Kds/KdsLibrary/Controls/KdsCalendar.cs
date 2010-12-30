@@ -139,6 +139,7 @@ namespace KdsLibrary.Controls
 
 
             setOnClickImg();
+            setFocusImg();
             SetMaskedEditExtender();
             SetRegularExpressionValidator();
             SetValidatorCalloutExtender();
@@ -155,6 +156,11 @@ namespace KdsLibrary.Controls
             imgCal.Attributes.Add("onclick", "OnClick_ImgCalendar();");
         }
 
+        private void setFocusImg()
+        {
+            imgCal.Attributes.Add("onfocusin", "this.style.border ='1px solid black';");
+            imgCal.Attributes.Add("onfocusout", "this.style.border ='none';");
+        }
         private void SetRegularExpressionValidator()
         {
             _RegularExpressionValidator.ControlToValidate = _calendar.ID;
