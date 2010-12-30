@@ -6193,8 +6193,7 @@ namespace KdsBatch
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
-                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                        {
+                      
                             oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
                             dShatHatchalaNew = oSidur.dFullShatHatchala;
@@ -6217,12 +6216,15 @@ namespace KdsBatch
                                 while (j < iCountPeiluyot);
                             }
 
-                            if (bUpdateShatHatchala)
+                            if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                             {
-                                FixedShatHatchalaLefiShatHachtamatItyatzvut12(ref oSidur, i, dShatHatchalaNew, ref oObjSidurimOvdimUpd);
+                                if (bUpdateShatHatchala)
+                                {
+                                    FixedShatHatchalaLefiShatHachtamatItyatzvut12(ref oSidur, i, dShatHatchalaNew, ref oObjSidurimOvdimUpd);
+                                }
                             }
                             htEmployeeDetails[i] = oSidur;
-                        }
+                        
                     }
 
 
