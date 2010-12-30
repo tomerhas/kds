@@ -8222,16 +8222,16 @@ namespace KdsBatch
         {
             int iMeshech = 0;
             DataRow[] drSugSidur;
-            bool bSidurNahagutNext;
+            bool bSidurNahagutPrev;
 
             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
             bool bSidurNahagut = IsSidurNahagut(drSugSidur, oSidur);
-            if (htEmployeeDetails.Count > iIndexSidur + 1)
+            if (iIndexSidur > 0)
             {
-                drSugSidur = clDefinitions.GetOneSugSidurMeafyen(((clSidur)htEmployeeDetails[iIndexSidur + 1]).iSugSidurRagil, _dCardDate, _dtSugSidur);
-                bSidurNahagutNext = IsSidurNahagut(drSugSidur, ((clSidur)htEmployeeDetails[iIndexSidur + 1]));
+                drSugSidur = clDefinitions.GetOneSugSidurMeafyen(((clSidur)htEmployeeDetails[iIndexSidur - 1]).iSugSidurRagil, _dCardDate, _dtSugSidur);
+                bSidurNahagutPrev = IsSidurNahagut(drSugSidur, ((clSidur)htEmployeeDetails[iIndexSidur - 1]));
             }
-            else bSidurNahagutNext = false;
+            else bSidurNahagutPrev = false;
 
             //אם הערך בשדה 0<Dakot_bafoal אז יש לקחת את הערך משדה זה  
             if (oPeilut.iDakotBafoal > 0 || (oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && oPeilut.iMisparKnisa > 0))
@@ -8249,7 +8249,7 @@ namespace KdsBatch
                 { //סידור שהוא יחיד או ראשון ביום
                     //סידור ראשון צריך להיגמר לפי הגדרה לתכנון.
 
-                    if ((iIndexSidur == 0) || htEmployeeDetails.Values.Count == 1 || (bSidurNahagut && !bSidurNahagutNext))
+                    if ((iIndexSidur == 0) || htEmployeeDetails.Values.Count == 1 || (bSidurNahagut && !bSidurNahagutPrev))
                     {
                         //אלמנט ריקה  (מאפיין 23): מז"ן תשלום (גמר) - הערך שהוקלד במק"ט. מז"ן תכנון  - מז"ן תשלום * פרמטר 43.
                         if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && !string.IsNullOrEmpty(oPeilut.sElementNesiaReka))
@@ -8257,7 +8257,7 @@ namespace KdsBatch
                         else
                             iMeshech = oPeilut.iMazanTichnun;
                     }
-                    else if (bSidurNahagut && bSidurNahagutNext)
+                    else if (bSidurNahagut && bSidurNahagutPrev)
                     {
                         //סידור שאינו יחיד או ראשון ביום צריך להיגמר לפי זמן לגמר או לתכנון, בהתאם למקרה:
                         clSidur oPrevSidur = (clSidur)htEmployeeDetails[iIndexSidur - 1];
