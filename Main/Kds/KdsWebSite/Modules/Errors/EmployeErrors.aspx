@@ -105,7 +105,8 @@ function ChangeKeyCode()
                 <td>
                     <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                          <ContentTemplate>
-                            <asp:Button Text="הצג" ID="btnExecute" runat="server" TabIndex="6" CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" />                            
+                            <asp:Button Text="הצג" ID="btnExecute" runat="server" TabIndex="6" CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" 
+                            onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                            
                             <input type="hidden" id="hidMisparIshi" runat="server" />                                                            
                        </ContentTemplate>                                              
                     </asp:UpdatePanel >          
@@ -165,7 +166,8 @@ function ChangeKeyCode()
                     <asp:UpdatePanel ID="upSearch" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                         <ContentTemplate> 
                             <asp:button ID="btnSearch" runat="server" text="חפש"   TabIndex="11"
-                                CssClass ="ImgButtonSearch" onclick="btnSearch_Click" />
+                                CssClass ="ImgButtonSearch" onclick="btnSearch_Click"
+                                onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
                         </ContentTemplate>
                          <Triggers>
                            <asp:AsyncPostBackTrigger ControlID="ddlSite" />    
@@ -238,8 +240,8 @@ function ChangeKeyCode()
     {
        SetTextBox();
     }
-    function SetTextBox()
-    {
+    function SetTextBox() {
+
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked)
         {           
@@ -250,6 +252,7 @@ function ChangeKeyCode()
             document.getElementById("ctl00_KdsContent_txtName").disabled=false;           
             document.getElementById("ctl00_KdsContent_txtId").disabled=true;
         }
+        document.getElementById("ctl00_KdsContent_txtSnif").focus();
     }
     function CheckSnif()
     {

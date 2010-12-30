@@ -256,9 +256,11 @@ function CheckDateGreaterStart(val, args) {
                      <%--           <cc1:ValidatorCalloutExtender runat="server" ID="exReqEndDateHeadrut" TargetControlID="vldReqEndDateHeadrut"  Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                                                                     
                     --%> <br /><br /><br /></td></tr>
                        <tr>
-                                <td colspan="4" align="right"> &nbsp; &nbsp; <input type="button" class="ImgButtonSearch" causesvalidation="false" value="סגור" tabindex="12" style="width:80px" onclick="window.close();" /></td>
-                                <td colspan="2" align="left"> <asp:Button ID="btnUpdate" runat="server" Width="190px"  CausesValidation="true" CssClass="ImgButtonSearch"  TabIndex="11"
-                                            Text="עדכון סידור בכרטיס עבודה" onclick="btnUpdate_Click"  /> 
+                                <td colspan="4" align="right"> &nbsp; &nbsp; <input type="button" class="ImgButtonSearch" causesvalidation="false" value="סגור" tabindex="12" style="width:80px" onclick="window.close();" 
+                                 onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />    </td>
+                                <td colspan="2" align="left"> <asp:Button ID="btnUpdate" runat="server" Width="190px" 
+                                    CausesValidation="true" CssClass="ImgButtonSearch"  TabIndex="11" Text="עדכון סידור בכרטיס עבודה" onclick="btnUpdate_Click"  
+                                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />    
                                      
                                          </td>
                         </tr>

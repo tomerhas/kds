@@ -112,7 +112,7 @@
                        <ContentTemplate>
                             <asp:Button Text="הצג" ID="btnExecute" runat="server" TabIndex="5" 
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" 
-                                Width="62px" />                                                                                                               
+                                Width="62px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                                                                                                               
                        </ContentTemplate>                                              
                     </asp:UpdatePanel>    
                 </td>
@@ -121,7 +121,7 @@
                        <ContentTemplate>
                             <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6"
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnShowApproval_Click" 
-                                Width="112px" /> 
+                                Width="112px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
                                                                                                                                             
                        </ContentTemplate>                                              
                     </asp:UpdatePanel>    
