@@ -3389,28 +3389,31 @@ namespace KdsBatch
             //בדיקה ברמת פעילות
             try
             {
-                //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
-                //בדיקת מספר רכב מול מש"ר
-                if (oPeilut.lOtoNo > 0)
+                clKavim.enMakatType oMakatType = (clKavim.enMakatType)oPeilut.iMakatType;
+                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mVisut)) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
                 {
-                    if (!(oKavim.IsBusNumberValid(oPeilut.lOtoNo, dCardDate)))
-                    {
-                        drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
-                        InsertPeilutErrorRow(oPeilut, ref drNew);
-                        //drNew["oto_no"] = oPeilut.lOtoNo;
-                        //drNew["makat_nesia"] = oPeilut.lMakatNesia;
-                        dtErrors.Rows.Add(drNew);
-                        isValid = false;
-                    }
-                }
-                else //חסר מספר רכב
-                {
-                    clKavim.enMakatType oMakatType = (clKavim.enMakatType) oPeilut.iMakatType;
-                    //שגיאה 69
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
-                    if (((oMakatType==clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mEmpty) || (oMakatType==clKavim.enMakatType.mNamak)  || (oMakatType==clKavim.enMakatType.mVisut))|| ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="701" ) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="712" ) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)!="711" )))
+                    //בדיקת מספר רכב מול מש"ר
+
+                    if (oPeilut.lOtoNo > 0)
                     {
+                        if (!(oKavim.IsBusNumberValid(oPeilut.lOtoNo, dCardDate)))
+                        {
+                            drNew = dtErrors.NewRow();
+                            InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
+                            InsertPeilutErrorRow(oPeilut, ref drNew);
+                            //drNew["oto_no"] = oPeilut.lOtoNo;
+                            //drNew["makat_nesia"] = oPeilut.lMakatNesia;
+                            dtErrors.Rows.Add(drNew);
+                            isValid = false;
+                        }
+                    }
+                    else //חסר מספר רכב
+                    {
+
+                        //שגיאה 69
+                        //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
+
                         drNew = dtErrors.NewRow();
                         InsertErrorRow(oSidur, ref drNew, "מספר רכב לא תקין/חסר מספר רכב", enErrors.errOtoNoNotExists.GetHashCode());
                         InsertPeilutErrorRow(oPeilut, ref drNew);
