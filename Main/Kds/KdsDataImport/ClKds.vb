@@ -3025,7 +3025,7 @@ Public Class ClKds
         ''4: run until sdrn is finished - should be checked online each loop
 
         Try
-            iThreadHrSeq = oBatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "start Chk_ThreadHrChainges", 0)
+
             oDal = New KdsLibrary.DAL.clDal
             SdrnStrtHour = ConfigurationSettings.AppSettings("SdrnStrtHour") '4
             If SdrnStrtHour = "" Then
@@ -3063,6 +3063,7 @@ Public Class ClKds
             non_stop_loop = check_non_stop_loop()
 
             If if_while And non_stop_loop Then
+                iThreadHrSeq = oBatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "start Chk_ThreadHrChainges", 0)
                 '1st thread: RunThreadHrChainges
                 Dim threadHrChainges As New System.Threading.Thread(AddressOf RunThreadHrChainges)
                 threadHrChainges.Start(New Object() {iThreadHrSeq})
@@ -3074,8 +3075,8 @@ Public Class ClKds
                     Thread.Sleep(300000) '=5 minutes
                     non_stop_loop = check_non_stop_loop()
                 End While
+                oBatch.UpdateProcessLog(iThreadHrSeq, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0)
             End If
-            oBatch.UpdateProcessLog(iThreadHrSeq, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0)
         Catch ex As Exception
             clGeneral.LogMessage(ex.Message, EventLogEntryType.Error)
             'todo: is 9=abort?
@@ -3224,11 +3225,11 @@ Public Class ClKds
                                             num = oBatch.GetNumChangesHrToShguim()
                                             If (num < 50000) Then
                                                 Dim lRequestNum As Integer
-                                                iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before OpenBatchRequest", 0)
+                                                iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before OpenBatchRequest hr", 0)
                                                 ''**KdsWriteProcessLog(8, 3, 1, "before OpenBatchRequest")
                                                 lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12)
                                                 dTaarich = New DateTime(Mid(p_date_str, 1, 4), Mid(p_date_str, 5, 2), Mid(p_date_str, 7, 2))
-                                                oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after OpenBatchRequest", 0)
+                                                oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after OpenBatchRequest hr", 0)
                                                 ''** KdsWriteProcessLog(8, 3, 1, "after OpenBatchRequest before shguyim")
                                                 iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before shguyim hr", 0)
                                                 KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)

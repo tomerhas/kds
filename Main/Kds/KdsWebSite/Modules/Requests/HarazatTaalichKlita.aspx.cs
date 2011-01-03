@@ -17,6 +17,9 @@ using KdsLibrary.DAL;
 using KdsWorkFlow.Approvals;
 using System.Threading;
 using System.Web.UI;
+using System.Globalization;
+
+
 
 
 public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
@@ -85,13 +88,13 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
         //clDal oDal = new clDal();
         ClKds oKDs = new ClKds();
         string taarich;
-       // DateTime taarich = new DateTime();
+      //  DateTime taarichh = new DateTime();
         try
         {
             if (clnYomAvoda.Text != "")
             {
                 lblYomAvoda.Visible = false;
-                taarich = string.Format(DateTime.Parse(clnYomAvoda.Text).ToShortDateString(), "yyyymmdd");
+                taarich = DateTime.Parse(clnYomAvoda.Text).ToString("yyyyMMdd");
                 oKDs.RunRefreshRetroYamim(taarich);
                 //oKDs.KdsWriteProcessLog(7, 1, 1, "start ins_yamey", "");
                 //oDal.ClearCommand();
@@ -224,10 +227,10 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
         int seqNum=0;
         try
         {
-            seqNum = obatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "start Chk_ThreadHrChainges", 0);
+            seqNum = obatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "Chk_ThreadHrChainges", 0);
             lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12);
             oKDs.RunThreadHrChainges(seqNum);
-            obatch.UpdateProcessLog(seqNum, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0);
+            obatch.UpdateProcessLog(seqNum, KdsLibrary.BL.RecordStatus.Finish, "Chk_ThreadHrChainges", 0);
         }
         catch (Exception ex)
         {
