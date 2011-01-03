@@ -69,7 +69,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         
            dFrom = DateTime.Parse(Request.QueryString["FromDate"]);
            dTo = DateTime.Parse(Request.QueryString["ToDate"]);
-           dt = oOvdim.GetOvedDetails(iMisparIshi, dFrom);
+           //dt = oOvdim.GetOvedDetails(iMisparIshi, dFrom);
            dt = oOvdim.GetOvedDetailsByTkufa(iMisparIshi, dFrom, dTo);
 
            if (dt.Rows.Count > 0)
