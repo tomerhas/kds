@@ -9240,7 +9240,27 @@ namespace KdsBatch
                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
                             
                         }
-                    
+                    else if (dShatYetziaFirst < oSidur.dFullShatHatchala && (CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala)))
+                    {
+                        int iMinuts;
+                        for (j = 0; j < oSidur.htPeilut.Count; j++)
+                        {
+                            oPeilut = (clPeilut)oSidur.htPeilut[j];
+
+                            if (oPeilut.dFullShatYetzia == dShatYetziaFirst)
+                            {
+                                oObjPeilutUpd = GetUpdPeilutObject(i, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
+
+                                oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala;
+                                iMinuts = int.Parse((oSidur.dFullShatHatchala - dShatYetziaFirst).TotalMinutes.ToString());
+                                oPeilut.dFullShatYetzia = oObjPeilutUpd.SHAT_YETZIA;
+                                oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
+                                iMinuts= int.Parse(oPeilut.lMakatNesia.ToString().Substring(3,3))-iMinuts;
+                                oObjPeilutUpd.MAKAT_NESIA = long.Parse(string.Concat(oPeilut.lMakatNesia.ToString().Substring(0, 3), iMinuts.ToString().PadLeft(3, (char)48), oPeilut.lMakatNesia.ToString().Substring(6, 2)));
+                                break;
+                            }
+                        }
+                    }
                     htEmployeeDetails[i] = oSidur;
 
                 }
