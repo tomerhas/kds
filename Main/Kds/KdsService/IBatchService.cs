@@ -43,7 +43,7 @@ namespace KdsService
         void RefreshMatzavOvdim();
 
         [OperationContract]
-        void TahalichSadran(DateTime taarich);
+        void TahalichSadran(string taarich);
       
         [OperationContract]
         void RefreshMeafyenim();

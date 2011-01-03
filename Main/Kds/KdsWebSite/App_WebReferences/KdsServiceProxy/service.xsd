@@ -133,7 +133,7 @@
   <xs:element name="TahalichSadran">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="taarich" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="taarich" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -138,7 +138,8 @@ namespace KdsService
         private void RunTahalichSadran(object param)
         {
             object[] args = param as object[];
-            DateTime taarich = DateTime.Parse(args[0].ToString());
+            //DateTime taarich = DateTime.Parse(args[0].ToString());
+            string taarich = args[0].ToString();
             ClKds oKDs = new ClKds();
             try
             {
@@ -306,7 +307,7 @@ namespace KdsService
             runThread.Start(new object[]{});
         }
 
-        public void TahalichSadran(DateTime taarich)
+        public void TahalichSadran(string taarich)
         {
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunTahalichSadran));

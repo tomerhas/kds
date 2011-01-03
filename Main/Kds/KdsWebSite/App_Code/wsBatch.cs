@@ -144,7 +144,7 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public void RunTahalichSadran(DateTime taarich )
+    public void RunTahalichSadran(string taarich )
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.TahalichSadran(taarich);

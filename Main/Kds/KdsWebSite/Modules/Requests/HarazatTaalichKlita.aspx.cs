@@ -240,16 +240,15 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
         }
     }
     protected void btnKlitatNetuneySadran_Click(object sender, EventArgs e)
-    {
-        // ClKds oKDs = new ClKds();
-         DateTime taarich = new DateTime();
+    { 
+         string taarich;
          wsBatch oWsBatch = new wsBatch();
          try
          {
              if (clnSadran.Text != "")
              {
                  lblSadran.Visible = false;
-                 taarich = DateTime.Parse(clnSadran.Text);
+                 taarich = DateTime.Parse(clnSadran.Text).ToString("yyyyMMdd");// DateTime.Parse(clnSadran.Text).ToString("dd/MM/yyyy");
                  oWsBatch.RunTahalichSadran(taarich);
                  ScriptManager.RegisterStartupScript(ddlTavlaot, this.GetType(), "errName", "alert('תהליך הסדרן עשוי להימשך זמן ארוך,כדי להתעדכן יש להסתכל במסך לוג תהליך');", true);
                 // oKDs.RunSdrn(taarich);

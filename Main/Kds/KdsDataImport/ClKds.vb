@@ -3419,7 +3419,7 @@ Public Class ClKds
         Catch ex As Exception
         End Try
     End Sub
-    Function getFullDateString(ByVal sDate As Date)
+    Function getFullDateString(ByVal sDate As Date) As String
         Dim taarich As String
 
         taarich = sDate.Year.ToString
