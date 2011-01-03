@@ -3390,7 +3390,7 @@ namespace KdsBatch
             try
             {
                 clKavim.enMakatType oMakatType = (clKavim.enMakatType)oPeilut.iMakatType;
-                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mVisut)) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
+                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mElement && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700"  && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
                 {
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
                     //בדיקת מספר רכב מול מש"ר
