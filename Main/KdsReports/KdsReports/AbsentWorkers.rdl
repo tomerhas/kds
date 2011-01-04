@@ -82,6 +82,23 @@
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
     </DataSet>
+    <DataSet Name="DsEzor">
+      <Fields>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_EZOR">
+          <DataField>KOD_EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsConnection</DataSourceName>
+        <CommandText>select distinct kod_ezor ,teur_ezor from ctb_ezor</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
   </DataSets>
   <Body>
     <ReportItems>
@@ -101,7 +118,7 @@
               <Width>0.41134in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.43217in</Width>
+              <Width>1.12206in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.46342in</Width>
@@ -596,7 +613,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -790,10 +806,10 @@
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>0.17639cm</Top>
+        <Top>1.12889cm</Top>
         <Left>0.26345cm</Left>
         <Height>1.62334cm</Height>
-        <Width>19.39671cm</Width>
+        <Width>21.14903cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsAbsentWorkers")&gt;0 ,false,true)</Hidden>
         </Visibility>
@@ -823,6 +839,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>1.27cm</Top>
         <Left>2.11829cm</Left>
         <Height>0.89104cm</Height>
         <Width>16.36229cm</Width>
@@ -840,6 +857,129 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Tablix Name="Tablix2">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>0.98425in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.98425in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.23622in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_EZOR">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TEUR_EZOR.Value</Value>
+                              <Style>
+                                <FontSize>20pt</FontSize>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>איזור :</Value>
+                              <Style>
+                                <FontSize>20pt</FontSize>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>White</Color>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <Direction>RTL</Direction>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details1" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DsEzor</DataSetName>
+        <Filters>
+          <Filter>
+            <FilterExpression>=Fields!KOD_EZOR.Value</FilterExpression>
+            <Operator>Equal</Operator>
+            <FilterValues>
+              <FilterValue>= CInt( Parameters!P_EZOR.Value)</FilterValue>
+            </FilterValues>
+          </Filter>
+        </Filters>
+        <Left>6.0674cm</Left>
+        <Height>0.6cm</Height>
+        <Width>4.99999cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Color>White</Color>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
     </ReportItems>
     <Height>1.181in</Height>
     <Style />
@@ -901,10 +1041,10 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.81271in</Width>
+  <Width>8.6048in</Width>
   <Page>
     <PageHeader>
-      <Height>3.27334cm</Height>
+      <Height>1.89751cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -945,7 +1085,7 @@
           <Value>logo1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.25949cm</Top>
-          <Left>17.93216cm</Left>
+          <Left>19.68451cm</Left>
           <Height>1.44708cm</Height>
           <Width>1.72797cm</Width>
           <ZIndex>1</ZIndex>
@@ -955,6 +1095,73 @@
             </Border>
           </Style>
         </Image>
+        <Textbox Name="Textbox6">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=  FormatDateTime(Globals!ExecutionTime,2)</Value>
+                  <Style>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox4</rd:DefaultName>
+          <Top>0.17198cm</Top>
+          <Height>0.6cm</Height>
+          <Width>2.5cm</Width>
+          <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox7">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="תאריך הפקה :"</Value>
+                  <Style>
+                    <FontSize>12pt</FontSize>
+                    <Language>he-IL</Language>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox6</rd:DefaultName>
+          <Top>0.16288cm</Top>
+          <Left>2.5cm</Left>
+          <Height>0.6cm</Height>
+          <Width>2.59702cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+            <Direction>RTL</Direction>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
