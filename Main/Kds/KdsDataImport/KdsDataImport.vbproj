@@ -65,9 +65,6 @@
     <Reference Include="KdsBatch">
       <HintPath>..\KdsBatch\bin\Release\KdsBatch.dll</HintPath>
     </Reference>
-    <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\Release\KdsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="KdsWorkFlow">
       <HintPath>..\KdsWorkFlow\bin\Release\KdsWorkFlow.dll</HintPath>
     </Reference>
@@ -147,6 +144,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
+      <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
+      <Name>KdsLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
