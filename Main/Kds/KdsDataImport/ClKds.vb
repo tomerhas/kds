@@ -3207,13 +3207,13 @@ Public Class ClKds
                             ElseIf CInt(dt2.Rows(0).Item("ct").ToString) < 2 Then
                                 'this is the first run of schedulaer today, finish
                             Else
-                                iSeqThreadHr = oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.Wait, "start RunThreadHrChainges", 0)
+
                                 '3) check if this process did not run yet: pro_if_GalreadyRun
                                 oDal.ClearCommand()
                                 oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
                                 oDal.ExecuteSP("PKG_BATCH.pro_if_GalreadyRun", dt3)
                                 If dt3.Rows.Count = 0 Then
-                                    oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun no db ", 13)
+                                    oBatch.UpdateProcessLog(iSekChk, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun no db ", 13)
                                     ''** KdsWriteProcessLog(8, 3, 3, "thread after shinuy, GRun no db ", "13")
                                     'the record does not exist, something is wrong
                                 Else
@@ -3221,6 +3221,7 @@ Public Class ClKds
                                     st2 = dt3.Rows(0).Item("stat2").ToString
                                     Select Case (st2)  '(st1 & st2)
                                         Case "0"
+                                            iSeqThreadHr = oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.Wait, "start RunThreadHrChainges", 0)
                                             '(0,0)=no record at all ->run
                                             num = oBatch.GetNumChangesHrToShguim()
                                             If (num < 50000) Then
@@ -3242,13 +3243,13 @@ Public Class ClKds
                                             End If
                                         Case "1"
                                             '(1,0)=started but not finished, aborted? ->mail
-                                            oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun only started ", 7)
+                                            oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun only started ", 7)
                                             ''**KdsWriteProcessLog(8, 3, 3, "thread after shinuy, GRun only started ", "7")
                                             ToMail = ConfigurationSettings.AppSettings("miri")
                                             ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                                             BodyMail = "thread after shinuy, GRun started"
                                             SendMail(ToMail, "no peace 4 the wicked", BodyMail)
-                                            oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.SendMail, "mail db", 0)
+                                            oBatch.InsertProcessLog(3, 8, KdsLibrary.BL.RecordStatus.SendMail, "mail db", 0)
                                             ''**KdsWriteProcessLog(3, 8, 6, "mail db")
                                         Case "2"
                                             '(1,2)=started and finished
@@ -3284,13 +3285,13 @@ Public Class ClKds
                                             ''    ''** KdsWriteProcessLog(3, 8, 6, "mail db")
                                         Case Else
                                             'weired? ->mail
-                                            oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun weired ", 7)
+                                            oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy, GRun weired ", 7)
                                             ''** KdsWriteProcessLog(8, 3, 3, "thread after shinuy, GRun weired ", "7")
                                             ToMail = ConfigurationSettings.AppSettings("miri")
                                             ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                                             BodyMail = "thread after shinuy, GRun weired"
                                             SendMail(ToMail, "no peace 4 the wicked", BodyMail)
-                                            oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.SendMail, "mail db", 0)
+                                            oBatch.InsertProcessLog(3, 8, KdsLibrary.BL.RecordStatus.SendMail, "mail db", 0)
                                             ''** KdsWriteProcessLog(3, 8, 6, "mail db")
                                     End Select
                                 End If
