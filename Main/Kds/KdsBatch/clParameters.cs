@@ -86,7 +86,9 @@ namespace KdsBatch
         public int iMaxZmanRekaAchreyShmone; //89- מקסימום זמן ריקה הנכללת בהכנה ראשונה אחרי 8:00
         public int iRadyusMerchakMeshaonLehityazvut; //90 - רדיוס מרחק משעון לבדיקת התייצבות
         public int iPaarBeinSidurimMechayevHityazvut; // 91 - פער בין סידורי נהגות המחייב התייצבות
-        public DateTime dSidurEndLimitShatHatchala; //גבול עליון של שעת התחלה - 93
+        public DateTime dSidurEndLimitShatHatchala; // - 93 גבול עליון שעת התחלה מותרת
+        public DateTime dTchilatTosLilaTaavura; //-  95 אגד תעבורה תחילת תוספת לילה   
+        public DateTime dSiyumTosLilaTaavura; //אגד תעבור סיום תוספת לילה  - 96
         public float fChelkiyutAchuzMiluim; //97 חלקיות אחוז מילואים
         public int iMaxMinutsForKnisot; //98 מקסימום דקות בפועל לכניסות לפי הצורך
         public int iHashlamaYomRagil; //parameter 101
@@ -459,6 +461,14 @@ namespace KdsBatch
                 //גבול עליון של שעת התחלה - 93
                 sTmp = GetOneParam(93, dCardDate);                                                
                 dSidurEndLimitShatHatchala = GetParamHour(sTmp, dCardDate);
+
+                 //-  95 אגד תעבורה תחילת תוספת לילה   
+                sTmp = GetOneParam(95, dCardDate);                                                
+                 dTchilatTosLilaTaavura= GetParamHour(sTmp, dCardDate);
+
+                //אגד תעבור סיום תוספת לילה  - 96
+                sTmp = GetOneParam(96, dCardDate);
+                dSiyumTosLilaTaavura = GetParamHour(sTmp, dCardDate);
 
                 //97 חלקיות אחוז מילואים
                 sTmp = GetOneParam(97, dCardDate);

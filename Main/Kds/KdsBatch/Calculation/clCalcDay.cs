@@ -3727,116 +3727,159 @@ namespace KdsBatch
 
                     if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                     {
-                    //יוצאים מהכלל/הנחות ברמת יום עבודה
-                    if ((int.Parse(_objMefyeneyOved.sMeafyen1) == 23 || int.Parse(_objMefyeneyOved.sMeafyen1) == 22))
-                    { 
-                        if(_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
-                            fErechRechiv = 444;
-                        else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
-                         fErechRechiv = 462;
-                        else if ((iSugYom >= 13 && iSugYom <= 18) || iSugYom == 11)
-                         fErechRechiv = 300; 
-                        else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode())
-                         fErechRechiv = 270; 
-                    }
-
-                    if (int.Parse(_objMefyeneyOved.sMeafyen1) != 22 && int.Parse(_objMefyeneyOved.sMeafyen1) != 23)
-                    {
-                        if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
-                            fErechRechiv = fErechRechiv - 72; 
-                        else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
-                            fErechRechiv = fErechRechiv - 36;
-                    }
-
-                    if (_objMefyeneyOved.sMeafyen47 == "1")
-                    { fErechRechiv = fErechRechiv - 60; }
-
-                    rowSidurim = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and mispar_sidur in(99707, 99706, 99708 , 99702, 99703, 99704,99701 ,99705)  and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur desc");
-                    if (rowSidurim.Length > 0 && iSugYom == clGeneral.enSugYom.Shishi.GetHashCode() && fErechRechiv==0)
-                    {
-                        if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
-                        { fErechRechiv = 330; }
-                        else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
-                        { fErechRechiv = 360; }
-                        else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode())
-                        { fErechRechiv = 390; }
-                    }
-
-                    if (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)
-                    {
-                        if (_oGeneralData.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
+                        //יוצאים מהכלל/הנחות ברמת יום עבודה
+                        if ((int.Parse(_objMefyeneyOved.sMeafyen1) == 23 || int.Parse(_objMefyeneyOved.sMeafyen1) == 22))
                         {
+                            if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                                fErechRechiv = 444;
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                                fErechRechiv = 462;
+                            else if ((iSugYom >= 13 && iSugYom <= 18) || iSugYom == 11)
+                                fErechRechiv = 300;
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode())
+                                fErechRechiv = 270;
+                        }
 
-                            iSugMishmeret = CheckSugMishmeret();
-                            if (iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
-                            {
-                                if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColBoker;
-                                }
-                                else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColTzaharim;
-                                }
-                                else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColLiyla;
-                                }
-                            }
-                            else if (iSugYom > 10 && iSugYom < 19)
-                            {
-                                if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagBoker;
-                                }
-                                else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagTzaharim;
-                                }
-                            }
-                            else if (iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode())
-                            {
-                                if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode() || iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagBoker;
-                                }
-                                else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagLiyla;
-                                }
-                            }
-                            addRowToTable(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), fErechRechiv, fErechRechiv);
+                        if (int.Parse(_objMefyeneyOved.sMeafyen1) != 22 && int.Parse(_objMefyeneyOved.sMeafyen1) != 23)
+                        {
+                            if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                                fErechRechiv = fErechRechiv - 72;
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && ((_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && iSugYom > clGeneral.enSugYom.Shishi.GetHashCode() && iSugYom < clGeneral.enSugYom.LagBaomerOrPurim.GetHashCode()) || (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()))
+                                fErechRechiv = fErechRechiv - 60;
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                                fErechRechiv = fErechRechiv - 36;
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && ((_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && iSugYom > clGeneral.enSugYom.Shishi.GetHashCode() && iSugYom < clGeneral.enSugYom.LagBaomerOrPurim.GetHashCode()) || (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode()))
+                                fErechRechiv = fErechRechiv - 30;
+                        }
 
-                          
+                        if (_objMefyeneyOved.sMeafyen47 == "1")
+                        { fErechRechiv = fErechRechiv - 60; }
+
+                        rowSidurim = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and mispar_sidur in(99707, 99706, 99708 , 99702, 99703, 99704,99701 ,99705)  and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur desc");
+                        if (rowSidurim.Length > 0 && iSugYom == clGeneral.enSugYom.Shishi.GetHashCode() && fErechRechiv == 0)
+                        {
+                            if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                            { fErechRechiv = 330; }
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                            { fErechRechiv = 360; }
+                            else if (_oGeneralData.objPirteyOved.iGil == clGeneral.enKodGil.enTzair.GetHashCode())
+                            { fErechRechiv = 390; }
+                        }
+
+                        if (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)
+                        {
+                            if (_oGeneralData.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
+                            {
+
+                                iSugMishmeret = CheckSugMishmeret();
+                                if (iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                                {
+                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColBoker;
+                                    }
+                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColTzaharim;
+                                    }
+                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevColLiyla;
+                                    }
+                                }
+                                else if (iSugYom > clGeneral.enSugYom.Shishi.GetHashCode() && iSugYom < clGeneral.enSugYom.LagBaomerOrPurim.GetHashCode())
+                                {
+                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagBoker;
+                                    }
+                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMachshevErevChagTzaharim;
+                                    }
+                                }
+                                else if (iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode())
+                                {
+                                    if (iSugMishmeret == clGeneral.enSugMishmeret.Boker.GetHashCode() || iSugMishmeret == clGeneral.enSugMishmeret.Tzaharim.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagBoker;
+                                    }
+                                    else if (iSugMishmeret == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    {
+                                        fErechRechiv = _oGeneralData.objParameters.iDakotMafileyMacshevChagLiyla;
+                                    }
+                                }
+                                addRowToTable(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), fErechRechiv, fErechRechiv);
+
+
+                            }
+                        }
+
+
+                        if ((_oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && _oGeneralData.objPirteyOved.iZmanMutamut > 0)
+                        {
+                            fErechRechiv = Math.Min(fErechRechiv, _oGeneralData.objPirteyOved.iZmanMutamut);
+                        }
+
+                        if ((_oGeneralData.objPirteyOved.iMutamBitachon == 4 || _oGeneralData.objPirteyOved.iMutamBitachon == 5 || _oGeneralData.objPirteyOved.iMutamBitachon == 6 || _oGeneralData.objPirteyOved.iMutamBitachon == 8) && !clCalcData.CheckErevChag(iSugYom)
+                                && (_oGeneralData.objPirteyOved.iZmanMutamut > 0))
+                        {
+                            fErechRechiv = Math.Min(fErechRechiv, _oGeneralData.objPirteyOved.iZmanMutamut);
+                        }
+
+                        if (_objMefyeneyOved.sMeafyen91.Length > 0)
+                        {
+                            if (int.Parse(_objMefyeneyOved.sMeafyen91) > 0)
+                            {
+                                fErechRechiv = Math.Min(fErechRechiv, int.Parse(_objMefyeneyOved.sMeafyen91));
+                            }
+                        }
+
+                        if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
+                        { fErechRechiv = 0; }
+                        else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !CheckShishiMuchlaf(iSugYom, dTaarich) && (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                        { fErechRechiv = 0; }
+
+                    }
+                    else if (_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30 && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                    {
+                        if (fErechRechiv > 420)
+                        {
+                            int iMinuts = 0;
+                            DateTime dShatHatchala;
+                            DateTime dShatGmar=DateTime.Parse(_Taarich.AddDays(1).ToShortDateString() + " 06:00");
+                            
+                            if (_oGeneralData.objPirteyOved.iMikumYechida == 141)
+                                 dShatHatchala = DateTime.Parse(_Taarich.ToShortDateString() + " 21:00");
+                            else
+                                 dShatHatchala = DateTime.Parse(_Taarich.ToShortDateString() + " 22:00");
+
+                            rowSidurim = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime') and Shat_gmar_Letashlum>=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')", "");
+                            for (int i = 0; i < rowSidurim.Length; i++)
+                            {
+                                if (DateTime.Parse(rowSidurim[i]["Shat_hatchala_Letashlum"].ToString()) >= dShatHatchala && DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) <= dShatGmar)
+                                {
+                                    iMinuts += int.Parse((DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) - DateTime.Parse(rowSidurim[i]["Shat_hatchala_Letashlum"].ToString())).TotalMinutes.ToString());
+                                }
+                                else if (DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) < dShatGmar && DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) > dShatHatchala)
+                                {
+                                    iMinuts += int.Parse((DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) - dShatHatchala).TotalMinutes.ToString());
+                                }
+                                else if (DateTime.Parse(rowSidurim[i]["Shat_hatchala_Letashlum"].ToString()) > dShatHatchala && DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) > dShatGmar)
+                                {
+                                    iMinuts += int.Parse((dShatGmar - DateTime.Parse(rowSidurim[i]["Shat_hatchala_Letashlum"].ToString())).TotalMinutes.ToString());
+                                }
+                                else if (DateTime.Parse(rowSidurim[i]["Shat_hatchala_Letashlum"].ToString()) < dShatHatchala && DateTime.Parse(rowSidurim[i]["Shat_gmar_Letashlum"].ToString()) > dShatGmar)
+                                {
+                                    iMinuts += int.Parse((dShatGmar - dShatHatchala).TotalMinutes.ToString());
+                                }
+                            }
+
+                            if (iMinuts > 120)
+                                fErechRechiv = 420;
                         }
                     }
 
-                   
-                    if ((_oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || _oGeneralData.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && _oGeneralData.objPirteyOved.iZmanMutamut > 0)
-                    {
-                        fErechRechiv = Math.Min(fErechRechiv, _oGeneralData.objPirteyOved.iZmanMutamut);
-                    }
-
-                    if ((_oGeneralData.objPirteyOved.iMutamBitachon == 4 || _oGeneralData.objPirteyOved.iMutamBitachon == 5 || _oGeneralData.objPirteyOved.iMutamBitachon == 6 || _oGeneralData.objPirteyOved.iMutamBitachon == 8) && !clCalcData.CheckErevChag(iSugYom)
-                            && (_oGeneralData.objPirteyOved.iZmanMutamut > 0))
-                    {
-                        fErechRechiv = Math.Min(fErechRechiv, _oGeneralData.objPirteyOved.iZmanMutamut);
-                    }
-
-                    if (_objMefyeneyOved.sMeafyen91.Length > 0)
-                    {
-                        if (int.Parse(_objMefyeneyOved.sMeafyen91) > 0)
-                        {
-                            fErechRechiv = Math.Min(fErechRechiv, int.Parse(_objMefyeneyOved.sMeafyen91));
-                        }
-                    }
-
-                    if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-                    { fErechRechiv = 0; }
-                    else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !CheckShishiMuchlaf(iSugYom,dTaarich) && (_objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || _objMefyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                    { fErechRechiv = 0; }
-
-                }
                 addRowToTable(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), fErechRechiv);
 
             }

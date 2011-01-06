@@ -825,6 +825,7 @@ namespace KdsLibrary
             Shishi = 10,
             ErevYomKipur=12,
             ErevYomHatsmaut = 17,
+            LagBaomerOrPurim=19,
             Shabat=20,
             Bchirot = 29,
             Rishon=30

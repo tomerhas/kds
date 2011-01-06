@@ -2183,7 +2183,7 @@ namespace KdsBatch
         {
             DataRow[] drSidurim;
             int iMisparSidur,iIsuk;
-            DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum,dZmanSiyuomTosLila;
+            DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, dZmanSiyuomTosLila, dZmatTchilatTosLila;
             float fErech, fZmanLilaSidureyBoker;
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
@@ -2209,45 +2209,69 @@ namespace KdsBatch
                             {
                                 fHalbashaTchilatYom = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
                                 fHalbashaSofYom = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaSofYom.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
-
+                               
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()).AddMinutes(-fHalbashaTchilatYom);
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
-                  
-                                fErech = 0;
+                                dZmatTchilatTosLila = _oGeneralData.objParameters.dTchilatTosefetLailaChok;
+                                dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
 
-                                //אם סידור הינו סידור ויזה צבאית - סידור מיוחד בעל שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1 זהו יום אחרון של הוויזה - TB_Sidurim_Ovedim.Yom_Visa= 3 אזי יש לבצע את בדיקת זמן הסידור מול שעות לילה חוק לפי שעת התחלה של סידור TB_Sidurim_Ovedim. Shat_hatchala  ולא שעת התחלה לתשלום של סידור.
-                                if (drSidurim[I]["sidur_namlak_visa"].ToString() == "1" && drSidurim[I]["yom_visa"].ToString() == "3")
+                                fErech = 0;
+                                if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                                 {
-                                    dShatHatchalaLetashlum = dShatHatchalaSidur;
+                                    
+                                    
+                                    //אם סידור הינו סידור ויזה צבאית - סידור מיוחד בעל שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1 זהו יום אחרון של הוויזה - TB_Sidurim_Ovedim.Yom_Visa= 3 אזי יש לבצע את בדיקת זמן הסידור מול שעות לילה חוק לפי שעת התחלה של סידור TB_Sidurim_Ovedim. Shat_hatchala  ולא שעת התחלה לתשלום של סידור.
+                                    if (drSidurim[I]["sidur_namlak_visa"].ToString() == "1" && drSidurim[I]["yom_visa"].ToString() == "3")
+                                    {
+                                        dShatHatchalaLetashlum = dShatHatchalaSidur;
+                                    }
+
+                                    iIsuk = _oGeneralData.objPirteyOved.iIsuk;
+                                    iIsuk = _oGeneralData.objPirteyOved.iIsuk;
+                                    if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001 && clDefinitions.GetSugMishmeret(_iMisparIshi, dTaarich, clCalcData.iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters) == clGeneral.enSugMishmeret.Liyla.GetHashCode())
+                                    {
+                                         dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumMishmeretLilaMafilim;
+                                    }
+                                    else
+                                    {
+                                        dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
+                                    }
+
+                                }
+                                else if (clCalcData.iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
+                                {
+                                    dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                                    dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+
+                                    if (_oGeneralData.objPirteyOved.iMikumYechida == 141)
+                                    {
+                                        dZmatTchilatTosLila = DateTime.Parse(dTaarich.ToShortDateString() + " 21:00");
+                                        dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosLilaTaavura;
+                                    }
+                                    else
+                                    {
+                                        dZmatTchilatTosLila = _oGeneralData.objParameters.dTchilatTosLilaTaavura;
+                                        dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosLilaTaavura;
+                                    }
                                 }
 
-                                 iIsuk=_oGeneralData.objPirteyOved.iIsuk;
-                                 iIsuk = _oGeneralData.objPirteyOved.iIsuk;
-                                 if ((iIsuk == 122 || iIsuk == 123 || iIsuk == 124 || iIsuk == 127) && iMisparSidur == 99001)
-                                 {
-                                     dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumMishmeretLilaMafilim;
-                                 }
-                                 else
-                                 {
-                                     dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
-                                 }
-
-                                 if (dShatHatchalaLetashlum >= _oGeneralData.objParameters.dTchilatTosefetLailaChok && dShatGmarLetashlum <= dZmanSiyuomTosLila)
+                                if (dShatHatchalaLetashlum >= dZmatTchilatTosLila && dShatGmarLetashlum <= dZmanSiyuomTosLila)
                                 {
                                     fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
                                 }
-                                else if (dShatHatchalaLetashlum <= _oGeneralData.objParameters.dTchilatTosefetLailaChok && dShatGmarLetashlum <= dZmanSiyuomTosLila && dShatGmarLetashlum >= _oGeneralData.objParameters.dTchilatTosefetLailaChok)
+                                else if (dShatHatchalaLetashlum <= dZmatTchilatTosLila && dShatGmarLetashlum <= dZmanSiyuomTosLila && dShatGmarLetashlum >= dZmatTchilatTosLila)
                                 {
-                                    fErech = float.Parse((dShatGmarLetashlum - _oGeneralData.objParameters.dTchilatTosefetLailaChok).TotalMinutes.ToString());
+                                    fErech = float.Parse((dShatGmarLetashlum - dZmatTchilatTosLila).TotalMinutes.ToString());
                                 }
-                                 else if (dShatHatchalaLetashlum >= _oGeneralData.objParameters.dTchilatTosefetLailaChok && dShatGmarLetashlum >= dZmanSiyuomTosLila && dShatHatchalaLetashlum < dZmanSiyuomTosLila)
+                                else if (dShatHatchalaLetashlum >= dZmatTchilatTosLila && dShatGmarLetashlum >= dZmanSiyuomTosLila && dShatHatchalaLetashlum < dZmanSiyuomTosLila)
                                 {
                                     fErech = float.Parse((dZmanSiyuomTosLila - dShatHatchalaLetashlum).TotalMinutes.ToString());
                                 }
-                                else if (dShatHatchalaLetashlum <= _oGeneralData.objParameters.dTchilatTosefetLailaChok && dShatGmarLetashlum >= _oGeneralData.objParameters.dTchilatTosefetLailaChok)
+                                else if (dShatHatchalaLetashlum <= dZmatTchilatTosLila && dShatGmarLetashlum >= dZmatTchilatTosLila)
                                 {
-                                    fErech = float.Parse((dZmanSiyuomTosLila - _oGeneralData.objParameters.dTchilatTosefetLailaChok).TotalMinutes.ToString());
+                                    fErech = float.Parse((dZmanSiyuomTosLila - dZmatTchilatTosLila).TotalMinutes.ToString());
                                 }
+
 
 
                                 addRowToTable(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);

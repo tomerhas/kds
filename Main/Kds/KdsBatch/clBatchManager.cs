@@ -6759,12 +6759,13 @@ namespace KdsBatch
                         oNewSidurim.SidurIndex = iSidurIndex;
                         oNewSidurim.SidurOld = oSidur.iMisparSidur;
 
+                        ///ויזת צה"ל 
                         if (oSidur.iSectorVisa == 1)
                         {
                             oNewSidurim.SidurNew = 99110;
                         }
                         else
-                        {
+                        {//ויזת פנים 
                             oNewSidurim.SidurNew = 99101;
                         }
 
@@ -6777,6 +6778,11 @@ namespace KdsBatch
                         drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
                         oSidur = new clSidur(oSidur, _dCardDate, iNewMisparSidur, drSidurMeyuchad[0]);
                         oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
+
+                        if (oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR == 99101)
+                        {
+                            oObjSidurimOvdimUpd.MIVTZA_VISA = 1;
+                        }
 
                         if (oSidur.htPeilut.Count == 0)
                         {
@@ -12590,7 +12596,7 @@ namespace KdsBatch
                         else
                         {
                             //יום שישי או ערב חג
-                            if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || (oSidur.sErevShishiChag == "1"))
+                            if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
                             {
                                 if (oMeafyeneyOved.Meafyen5Exists)
                                 {

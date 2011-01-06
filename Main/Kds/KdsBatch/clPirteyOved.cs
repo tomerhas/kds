@@ -19,6 +19,7 @@ namespace KdsBatch
         public int iKodMaamdMishni;
         public int iKodSectorIsuk;
         public int iYechidaIrgunit;
+        public int iMikumYechida;
         public int iDirug;
         public int iDarga;
         public int iAchsana;
@@ -60,6 +61,8 @@ namespace KdsBatch
                 iAchsana = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["achsana"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["achsana"].ToString());
                 iSnifAv = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["snif_av"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["snif_av"].ToString());
                 bIsInShlila = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["SHLILAT_RISHAYON"]) ? false : true;
+                iMikumYechida = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["MIKUM_YECHIDA"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["MIKUM_YECHIDA"].ToString());
+                
             }
             catch (Exception ex)
             {
