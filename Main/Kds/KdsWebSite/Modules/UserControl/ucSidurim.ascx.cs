@@ -152,7 +152,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         try
         {              
-            if ((_DataSource != null) || (_CancledSidurim != null))                                    
+            if (_DataSource != null)                                     
                 BuildPage();            
         }
         catch (Exception ex)

@@ -465,11 +465,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetIdkuneyRashemet();
                     RefreshEmployeeData(iMisparIshi, dDateCard);
                     //רק אם יש סידורים 
-                    if (oBatchManager.htEmployeeDetailsWithCancled != null)
+                    if (oBatchManager.htEmployeeDetails != null)
                     {
-                        lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;
-                        Session["Sidurim"] = oBatchManager.htEmployeeDetailsWithCancled;
-                        dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetailsWithCancled);
+                        lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+                        Session["Sidurim"] = oBatchManager.htEmployeeDetails;
+                        dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
                         Session["Mashar"] = dtLicenseNumbers;
                         lstSidurim.Mashar = dtLicenseNumbers;
                     }
@@ -478,7 +478,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                 {
                     lstSidurim.DataSource = (OrderedDictionary)Session["Sidurim"];
-                    lstSidurim.CancledSidurim = (OrderedDictionary)Session["CancledSidurm"];
+                   // lstSidurim.CancledSidurim = (OrderedDictionary)Session["CancledSidurm"];
                     lstSidurim.CardDate = dDateCard;
                     lstSidurim.Mashar = (DataTable)Session["Mashar"];
                     oBatchManager.dtErrors = (DataTable)Session["Errors"];
@@ -604,11 +604,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clPeilut _Peilut;
         //1. סידור מפה
         //2. סידור מיוחד שמקורו במטלה (מזהים סידור מיוחד שמקורו במטלה לפי שבאחת הרשומות של הפעילויות של הסידור קיים ערך גדול מ- 0 
-        if (oBatchManager.htEmployeeDetailsWithCancled != null)
+        if (oBatchManager.htEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetailsWithCancled.Count; i++)
+            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
             {
-                _Sidur = (clSidur)(oBatchManager.htEmployeeDetailsWithCancled[i]);
+                _Sidur = (clSidur)(oBatchManager.htEmployeeDetails[i]);
                 if (!(_Sidur.bSidurMyuhad))
                 {
                     _Allowed = true;
@@ -1218,11 +1218,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bool bHasPeiluyot = false;
         //מחזיר TRUE אם יש פעילויות בכרטיס
-        if (oBatchManager.htEmployeeDetailsWithCancled != null)
+        if (oBatchManager.htEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetailsWithCancled.Count; i++)
+            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
             {
-               if (((KdsBatch.clSidur)(oBatchManager.htEmployeeDetailsWithCancled[0])).htPeilut.Count > 0){
+               if (((KdsBatch.clSidur)(oBatchManager.htEmployeeDetails[0])).htPeilut.Count > 0){
                     bHasPeiluyot=true;
                     break;
                }
@@ -1254,7 +1254,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //4  (נהגות) 5 (ניהול תנועה
 
             //
-            bHamaraAllowed = ((oBatchManager.htEmployeeDetailsWithCancled!=null) && 
+            bHamaraAllowed = ((oBatchManager.htEmployeeDetails!=null) && 
                 (oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode())
                 //&& (oBatchManager.oMeafyeneyOved.Meafyen31Exists)
                 && (
@@ -1355,11 +1355,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         clSidur _FirstSidur = new clSidur();
 
-        if (oBatchManager.htEmployeeDetailsWithCancled != null)
+        if (oBatchManager.htEmployeeDetails != null)
         {
-            if (oBatchManager.htEmployeeDetailsWithCancled.Count > 0)
+            if (oBatchManager.htEmployeeDetails.Count > 0)
             {
-                _FirstSidur = ((clSidur)oBatchManager.htEmployeeDetailsWithCancled[0]);
+                _FirstSidur = ((clSidur)oBatchManager.htEmployeeDetails[0]);
             }
         }
         lstSidurim.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;     
@@ -1383,9 +1383,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
             lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxYomRagil; //108
 
-        if (oBatchManager.htEmployeeDetailsWithCancled != null)
+        if (oBatchManager.htEmployeeDetails != null)
         {
-            if (oBatchManager.htEmployeeDetailsWithCancled.Count > 0)
+            if (oBatchManager.htEmployeeDetails.Count > 0)
             {
                 if (_FirstSidur.sErevShishiChag.Equals("1"))
                     lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxShisi; //109
@@ -1987,7 +1987,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         if (SaveCard())
         {
             RunBatchFunctions();  
-            lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;        
+            lstSidurim.DataSource = oBatchManager.htEmployeeDetails;        
             lstSidurim.ErrorsList = oBatchManager.dtErrors;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();          
@@ -2069,7 +2069,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //   // ScriptManager.RegisterStartupScript(Page, this.GetType(), "AddSidur", sAddSidur, true);
             //   //// btnFindSidur_Click(sender, e);
             //   // RunBatchFunctions();
-            //   // lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;
+            //   // lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
             //   // lstSidurim.ErrorsList = oBatchManager.dtErrors;
             //   // lstSidurim.ClearControl();
             //   // lstSidurim.BuildPage();
@@ -2101,7 +2101,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //שינויי קלט
         //oBatchManager.MainInputData(iMisparIshi, dDateCard);
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-        //lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;        
+        //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;        
         //lstSidurim.ErrorsList = oBatchManager.dtErrors;
         //lstSidurim.ClearControl();
         //lstSidurim.BuildPage();  
@@ -2114,7 +2114,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
         }
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-        //lstSidurim.DataSource = oBatchManager.htEmployeeDetailsWithCancled;      
+        //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;      
         //lstSidurim.ErrorsList = oBatchManager.dtErrors;
         //lstSidurim.ClearControl();
         //lstSidurim.BuildPage();  
@@ -2170,6 +2170,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd = new COLL_SIDURIM_OVDIM();
             COLL_SIDURIM_OVDIM oCollSidurimOvdimDel = new COLL_SIDURIM_OVDIM();
+            COLL_OBJ_PEILUT_OVDIM oCollPeluyotOvdimDel = new COLL_OBJ_PEILUT_OVDIM();
             COLL_SIDURIM_OVDIM oCollSidurimOvdimIns = new COLL_SIDURIM_OVDIM();
             COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd = new COLL_OBJ_PEILUT_OVDIM();
             COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns = new COLL_OBJ_PEILUT_OVDIM();
@@ -2184,7 +2185,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             if (this.lstSidurim.DataSource != null)
             {
                 //נכניס את השינויים של סידורים ופעילויות
-                if (!FillSidurimChanges(ref oCollSidurimOvdimUpd, ref oCollPeilutOvdimUpd, ref oCollSidurimOvdimIns, ref oCollSidurimOvdimDel))
+                if (!FillSidurimChanges(ref oCollSidurimOvdimUpd, ref oCollPeilutOvdimUpd, 
+                                        ref oCollSidurimOvdimIns, ref oCollSidurimOvdimDel,
+                                        ref oCollPeluyotOvdimDel))
                 {
                     //נמצאו פעילויות זהות
                     string sScript = "alert('קיימים פעילויות זהות, לא ניתן לשמור נתונים' )";
@@ -2198,7 +2201,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         FillIdkunRashemet(ref oCollIdkunRashemet);
                         //FillIdkunRashemet(ref oCollIdkunRashemet, ref oCollIdkunRashemetIns, ref oCollIdkunRashemetDel);
                         _WorkCard.SaveEmployeeCard(oCollYameyAvodaUpd, oCollSidurimOvdimUpd, oCollPeilutOvdimUpd,
-                                                   oCollSidurimOvdimIns, oCollSidurimOvdimDel, oCollIdkunRashemet);
+                                                   oCollSidurimOvdimIns, oCollSidurimOvdimDel,oCollPeluyotOvdimDel, oCollIdkunRashemet);
                         bResult = true;
                     }
                     else
@@ -2627,7 +2630,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             }
         }
     }
-    private bool FillPeiluyotChanges(int iSidurIndex, int iCancelSidur, DateTime dOldSidurShatHatchala, DateTime dNewSidurShatHatchala, ref COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, ref GridView oGridView, ref clSidur oSidur)
+    private bool FillPeiluyotChanges(int iSidurIndex, int iCancelSidur, DateTime dOldSidurShatHatchala,
+                                     DateTime dNewSidurShatHatchala, ref COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd,
+                                     ref COLL_OBJ_PEILUT_OVDIM oCollPeluyotOvdimDel,
+                                     ref GridView oGridView, ref clSidur oSidur)
     {
         bool bValid = true;
         GridViewRow oGridRow;
@@ -2642,11 +2648,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clPeilut _Peilut;
         string[] arrKnisaVal;
         string sShatYetiza = "";
+        OBJ_PEILUT_OVDIM oObjPeilyutOvdimDel;
         try
         {
             //פעילויות
             for (int iRowIndex = 0; iRowIndex < oGridView.Rows.Count; iRowIndex++)
-            {
+            {                
                 _Peilut = (clPeilut)oSidur.htPeilut[iRowIndex];                
                 oGridRow = oGridView.Rows[iRowIndex];
 
@@ -2716,11 +2723,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 oObjPeiluyotOvdimUpd.UPDATE_OBJECT = 1;
                 iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
                 //אם הפעילות הייתה מבוטלת וכרגע רוצים להפעיל אותה מחדש, ניתן ערך 2
-                if (((_Peilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (_Peilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (iCancelPeilut == 0))               
-                    oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();                
-                else                
-                    oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : _Peilut.iBitulOHosafa);
-                
+                //if (((_Peilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (_Peilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (iCancelPeilut == 0))               
+                //    oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();                
+                //else                
+                oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : _Peilut.iBitulOHosafa);
+                //אם פעילות בוטלה או סידור של הפעילות בוטל, נמחוק את הפעילות מטבלת פעילויות
+                if (oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA == 1)
+                {
+                    oObjPeilyutOvdimDel = new OBJ_PEILUT_OVDIM();
+                    FillPeiluyotForDelete(ref  oObjPeilyutOvdimDel, ref  oObjPeiluyotOvdimUpd);
+                    oCollPeluyotOvdimDel.Add(oObjPeilyutOvdimDel);
+                }
+
                 //נבדוק אם מפתח כבר קיים
                 //אם קיים, נחזיר שגיאה ולא נאפשר שמירת נתונים
                 if (!HasMultiPeiluyot(ref oCollPeilutOvdimUpd, ref oObjPeiluyotOvdimUpd))                
@@ -2855,7 +2869,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private bool FillSidurimChanges(ref COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd,
                                     ref COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd,
                                     ref COLL_SIDURIM_OVDIM oCollSidurimOvdimIns,
-                                    ref COLL_SIDURIM_OVDIM oCollSidurimOvdimDel)
+                                    ref COLL_SIDURIM_OVDIM oCollSidurimOvdimDel,
+                                    ref COLL_OBJ_PEILUT_OVDIM oCollPeluyotOvdimDel)
     {
         OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
         OBJ_SIDURIM_OVDIM oObjSidurimOvdimIns;
@@ -2881,7 +2896,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             
                 for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
                 {
-
+                    oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
                     try
                     {
                         oLbl = (Label)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
@@ -2893,7 +2908,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     if ((oLbl != null) || (oHypLnk != null))
                     {
-                        oSidur = (clSidur)(oBatchManager.htEmployeeDetailsWithCancled[iIndex]);                      
+                        oSidur = (clSidur)(oBatchManager.htEmployeeDetails[iIndex]);                      
                         oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
                         oObjSidurimOvdimUpd.MISPAR_ISHI = iMisparIshi;
                         oObjSidurimOvdimUpd.TAARICH = dDateCard;
@@ -2974,11 +2989,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                             iCancelSidur = int.Parse(((TextBox)this.FindControl("lstSidurim").FindControl("lblSidurCanceled" + iIndex)).Text);
                             //אם סידור היה מבוטל והמשתמש מחזיר לפעיל, נזין ערך 2
-                            if (((oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (iCancelSidur == 0))                       
-                                oObjSidurimOvdimUpd.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();                       
-                            else                        
-                                oObjSidurimOvdimUpd.BITUL_O_HOSAFA = iCancelSidur;
-                        
+                            //if (((oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (iCancelSidur == 0))                       
+                            //    oObjSidurimOvdimUpd.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();                       
+                            //else                        
+                            oObjSidurimOvdimUpd.BITUL_O_HOSAFA = iCancelSidur;
+                          
                             //לא לתשלום - במידה וסידור בוטל נעדכן בערך המקורי - ישאר ללא שינוי
                             oChk = (HtmlInputCheckBox)this.FindControl("lstSidurim").FindControl("chkLoLetashlum" + iIndex);
                             int iLoLetashlumOrgVal = int.Parse(oChk.Attributes["OrgVal"].ToString());
@@ -3054,14 +3069,25 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
 
-                        if (bInsert){                    
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
-                            oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
-                            oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
-                            FillSidurimForInsert(ref oObjSidurimOvdimIns, ref oObjSidurimOvdimUpd, ref oSidur);
+                        if (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
+                        {
+                            //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim                               
                             FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
-                            oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
-                            oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
+                            oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
+                        }
+                        else
+                        {
+                            if ((bInsert))
+                            {
+                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
+                                oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
+
+                                FillSidurimForInsert(ref oObjSidurimOvdimIns, ref oObjSidurimOvdimUpd, ref oSidur);
+                                FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
+                                oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+                                oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+                            }
                         }
                         if (((oObjSidurimOvdimUpd.PITZUL_HAFSAKA == clGeneral.enShowPitzul.enOvedHafsaka.GetHashCode()) && (iPitzulHafsakaOldValue!=clGeneral.enShowPitzul.enOvedHafsaka.GetHashCode()) && (oSidur.bSidurMyuhad)) && (oSidur.bShaonNochachutExists))
                         {
@@ -3072,7 +3098,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oGridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                         if (oGridView != null)
                         {
-                            if (!(FillPeiluyotChanges(iIndex, iCancelSidur, oObjSidurimOvdimUpd.SHAT_HATCHALA, oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA, ref oCollPeilutOvdimUpd, ref oGridView, ref oSidur)))
+                            if (!(FillPeiluyotChanges(iIndex, iCancelSidur, oObjSidurimOvdimUpd.SHAT_HATCHALA, 
+                                  oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA, ref oCollPeilutOvdimUpd, ref  oCollPeluyotOvdimDel, ref oGridView, ref oSidur)))
                             {
                                 bValid = false;
                                 break;
@@ -3164,7 +3191,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //        throw ex;
     //    }
     //}
-
+    private void FillPeiluyotForDelete(ref OBJ_PEILUT_OVDIM oObjPeilyutOvdimDel, ref OBJ_PEILUT_OVDIM oObjPeiluyotOvdimUpd)
+    {
+        try
+        {
+            oObjPeilyutOvdimDel.MISPAR_ISHI = oObjPeiluyotOvdimUpd.MISPAR_ISHI;
+            oObjPeilyutOvdimDel.TAARICH = oObjPeiluyotOvdimUpd.TAARICH;
+            oObjPeilyutOvdimDel.SHAT_HATCHALA_SIDUR = oObjPeiluyotOvdimUpd.SHAT_HATCHALA_SIDUR;
+            oObjPeilyutOvdimDel.MISPAR_SIDUR = oObjPeiluyotOvdimUpd.MISPAR_SIDUR;
+            oObjPeilyutOvdimDel.SHAT_YETZIA = oObjPeiluyotOvdimUpd.SHAT_YETZIA;
+            oObjPeilyutOvdimDel.MISPAR_KNISA = oObjPeiluyotOvdimUpd.MISPAR_KNISA;
+            oObjPeilyutOvdimDel.MAKAT_NESIA = oObjPeiluyotOvdimUpd.MAKAT_NESIA;
+            oObjPeilyutOvdimDel.UPDATE_OBJECT = 1;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     private void FillSidurimForDelete(ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
     {
         try
@@ -3376,11 +3420,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         clSidur _Sidur;
         bool bExists = false;
-        if (oBatchManager.htEmployeeDetailsWithCancled != null)
+        if (oBatchManager.htEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetailsWithCancled.Count; i++)
+            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
             {
-                _Sidur = (clSidur)(oBatchManager.htEmployeeDetailsWithCancled[i]);
+                _Sidur = (clSidur)(oBatchManager.htEmployeeDetails[i]);
                 if ((_Sidur.bSidurMyuhad) && (_Sidur.bSidurVisaKodExists))
                 {
                     bExists = true;

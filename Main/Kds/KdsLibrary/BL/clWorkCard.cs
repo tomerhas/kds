@@ -255,7 +255,9 @@ namespace KdsLibrary.BL
         
         public void SaveEmployeeCard(COLL_YAMEY_AVODA_OVDIM oCollYameyAvodaUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd,
                                      COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd, COLL_SIDURIM_OVDIM oCollSidurimOvdimIns,
-                                     COLL_SIDURIM_OVDIM oCollSidurimOvdimDel, COLL_IDKUN_RASHEMET oCollIdkunRashemet)
+                                     COLL_SIDURIM_OVDIM oCollSidurimOvdimDel, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimDel,
+                                     COLL_IDKUN_RASHEMET oCollIdkunRashemet)
+                                     
         {
             clDal _Dal = new clDal();
             try
@@ -265,6 +267,7 @@ namespace KdsLibrary.BL
                 _Dal.AddParameter("p_coll_obj_peilut_ovdim", ParameterType.ntOracleArray, oCollPeilutOvdimUpd, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
                 _Dal.AddParameter("p_coll_sidurim_ovdim_ins", ParameterType.ntOracleArray, oCollSidurimOvdimIns, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
                 _Dal.AddParameter("p_coll_sidurim_ovdim_del", ParameterType.ntOracleArray, oCollSidurimOvdimDel, ParameterDir.pdInput, "COLL_SIDURIM_OVDIM");
+                _Dal.AddParameter("p_coll_peilut_ovdim_del", ParameterType.ntOracleArray, oCollPeilutOvdimDel, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
                 _Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemet, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
                 _Dal.ExecuteSP(clGeneral.cProSaveEmployeeCard);
             }
