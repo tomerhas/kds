@@ -1957,14 +1957,17 @@ namespace KdsBatch
         {
             float fSumDakotRechiv;
             try{
-            if ((_oGeneralData.objPirteyOved.iKodMaamdMishni!=clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
-                 (_oGeneralData.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() &&
-                 (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)))
-            {
-            oSidur.CalcRechiv54();
-            fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLailaEgged.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-            addRowToTable(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), fSumDakotRechiv);
-            }
+                if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
+                {
+                    if ((_oGeneralData.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
+                         (_oGeneralData.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() &&
+                         (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)))
+                    {
+                        oSidur.CalcRechiv54();
+                        fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLailaEgged.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        addRowToTable(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), fSumDakotRechiv);
+                    }
+                }
              }
             catch (Exception ex)
             {
@@ -6209,22 +6212,25 @@ namespace KdsBatch
               float fSumDakotRechiv;
               try
               {
-                  if ((_oGeneralData.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
-                       (_oGeneralData.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() &&
-                       (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)))
+                  if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                   {
-                      //fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot125.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                      //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot25.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                      //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot150.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                      //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot50.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                      if ((_oGeneralData.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
+                           (_oGeneralData.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() &&
+                           (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)))
+                      {
+                          //fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot125.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                          //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot25.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                          //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot150.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                          //fTempX = fTempX + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot50.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                      //if (fTempX > 0)
-                      //{
+                          //if (fTempX > 0)
+                          //{
                           oSidur.CalcRechiv271();
                           fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                      
+
                           addRowToTable(clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), fSumDakotRechiv);
-                      //}
+                          //}
+                      }
                   }
               }
               catch (Exception ex)
