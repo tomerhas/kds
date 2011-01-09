@@ -1875,15 +1875,13 @@ namespace KdsBatch
                 //אם קיים לפחות סידור אחד ביום עבורו TB_Sidurim_Ovedim.Pitzul_hafsaka = 1
                 //וגם לא קיימת רשומה ליום עבור סה"כ פיצול כפול (רכיב 50) אזי
                 //ערך הרכיב = 1
-                if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
-                {
-                    rowPitzul = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and Pitzul_hafsaka = 1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')");
-                    rowPitzulKaful = _dsChishuv.Tables["CHISHUV_YOM"].Select("taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime') and KOD_RECHIV=" + clGeneral.enRechivim.SachPitzulKaful.GetHashCode().ToString());
 
-                    if ((rowPitzul.Length > 0) && (rowPitzulKaful.Length == 0))
-                    {
-                        addRowToTable(clGeneral.enRechivim.SachPitzul.GetHashCode(), 1);
-                    }
+                rowPitzul = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and Pitzul_hafsaka = 1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')");
+                rowPitzulKaful = _dsChishuv.Tables["CHISHUV_YOM"].Select("taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime') and KOD_RECHIV=" + clGeneral.enRechivim.SachPitzulKaful.GetHashCode().ToString());
+
+                if ((rowPitzul.Length > 0) && (rowPitzulKaful.Length == 0))
+                {
+                    addRowToTable(clGeneral.enRechivim.SachPitzul.GetHashCode(), 1);
                 }
             }
             catch (Exception ex)
