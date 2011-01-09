@@ -139,7 +139,7 @@
                    <ContentTemplate> 
                      <div id="divNetunim" runat="server"  style="text-align:right;width:950px">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
-                                 AllowPaging="true" PageSize="9" AutoGenerateColumns="false" CssClass="Grid"  
+                                 AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            

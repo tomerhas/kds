@@ -61,6 +61,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         txtShatYeziaDate
     }
 
+    public const int SHAT_YETZIA = 3;
     public const int TEUR = 4;
     public const int MISPAR_RECHEV = 8;
     public const int MISPAR_RISHUY = 10;
@@ -68,8 +69,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
     public const int HOSEF_PEILUT = 17;
     public const int PEILUT_CHOVA = 18;
     public const int PRATIM = 23;
+    public const int TXT_SHAT_YETZIA = 25;
     public const int MISPAR_KNISA = 26;
-
+    
 
     
     protected void Page_Load(object sender, EventArgs e)
@@ -99,7 +101,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
           //  txtShatGmar.Attributes.Add("Date","");
 
             //שליפת פרמטרים חיצוניים ושמירתם
-            dtParametrim = oUtils.getErechParamByKod("1,3,4,29,30,80,93,98", TaarichCA.Value);
+            dtParametrim = oUtils.getErechParamByKod("1,3,4,29,30,80,93,98,244", TaarichCA.Value);
             if (dtParametrim.Rows.Count > 0)
             {
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
@@ -137,6 +139,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             type = int.Parse(sugSidur.Value);
            
                 txtShatHatchala.Text = "";
+                txtShatHatchala.ToolTip = "";
                 txtShatGmar.Text = "";
                 txtShatGmar.ToolTip = "";
                 YeziratDTSource(ref dtSource);
@@ -233,7 +236,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     drSource["SHAT_YETZIA"] = shatYezia.ToShortTimeString();
                     drSource["SHAT_YEZIA_DATE"] = shatYezia;
                     drSource["KAV"] = dr["SHILUT"];
-                    drSource["HOSEF_PEILUT"] = "1";
+                    drSource["HOSEF_PEILUT"] = "0";
                     drSource["MUST_DAKOT"] = true;
                     drSource["DAKOT_HAGDARA"] = dr["MAZANTICHNUN"];
                     drSource["HAGDARA_LEGMAR"] = dr["MazanTashlum"];
@@ -288,7 +291,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     drSource["MAKAT"] = dr["MAKAT8"];
                     
                     
-                    drSource["HOSEF_PEILUT"] = "1";
+                    drSource["HOSEF_PEILUT"] = "0";
 
                     drSource["PRATIM"] = getPratimLeMakat(int.Parse(dr["MAKAT8"].ToString()), ref drSource, ref type);
 
@@ -710,6 +713,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             }
 
             txtShatGmar.ToolTip = TaarichGmar.Value;
+            txtShatHatchala.ToolTip = TaarichHatchala.Value;
 
         }
         catch (Exception ex)
@@ -974,7 +978,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DateTime HourSidur = new DateTime();
         try
         {
-            if (txtShatHatchala.Attributes["NEXT"].ToString() == "true")
+            if (txtShatHatchala.Attributes["NEXT"].ToString() == "true" || DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value))
                 HourSidur = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
             else
                 HourSidur = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00");
@@ -1034,13 +1038,16 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
                 oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = 1;
             }
-            else
-            {
+            else if (DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value)){
+                oObjSidurimOvdimIns.TAARICH = DateTime.Parse(TaarichCA.Value);
+                oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
+                oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = 1;
+            }
+            else{
                 oObjSidurimOvdimIns.TAARICH = DateTime.Parse(TaarichCA.Value);
                 oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00");
             }
-            
-            
+
             if (txtShatGmar.Text != "")
                 oObjSidurimOvdimIns.SHAT_GMAR = DateTime.Parse(TaarichGmar.Value.Split(' ')[1] + " " + txtShatGmar.Text + ":00");        
             oObjSidurimOvdimIns.CHARIGA = 0;
@@ -1082,7 +1089,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     oObjPeiluyotOvdimIns.MISPAR_SIDUR = int.Parse(lblMisSidur.Text);
                     oObjPeiluyotOvdimIns.TAARICH = DateTime.Parse(taarich);
                     oObjPeiluyotOvdimIns.SHAT_YETZIA = DateTime.Parse(drPeilut["SHAT_YEZIA_DATE"].ToString());
-                    oObjPeiluyotOvdimIns.SHAT_HATCHALA_SIDUR = DateTime.Parse(taarich + " " + txtShatHatchala.Text + ":00");
+                    if (DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value))
+                        oObjPeiluyotOvdimIns.SHAT_HATCHALA_SIDUR = DateTime.Parse(taarich + " " + txtShatHatchala.Text + ":00").AddDays(1);
+                    else oObjPeiluyotOvdimIns.SHAT_HATCHALA_SIDUR = DateTime.Parse(taarich + " " + txtShatHatchala.Text + ":00");
                     oObjPeiluyotOvdimIns.MAKAT_NESIA = int.Parse(drPeilut["MAKAT"].ToString());
                     oObjPeiluyotOvdimIns.MISPAR_KNISA = int.Parse(drPeilut["MISPAR_KNISA"].ToString());
                     if (oObjPeiluyotOvdimIns.MISPAR_KNISA >0)

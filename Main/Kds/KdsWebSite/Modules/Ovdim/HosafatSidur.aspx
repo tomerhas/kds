@@ -25,6 +25,7 @@
 <body dir="rtl" onload="return window_onload()" onkeydown=" if (event.keyCode==107) {event.keyCode=9; return event.keyCode }" >
  <script type="text/javascript">
      var iRowIndexNochehi = 0;
+     var col_ShatYetzia = "<%=SHAT_YETZIA %>";
      var col_Teur = "<%=TEUR %>";
      var col_MisRechev = "<%=MISPAR_RECHEV %>";
      var col_hosefPeilut = "<%=HOSEF_PEILUT %>";
@@ -32,7 +33,8 @@
      var col_Mispar_Knisa = "<%=MISPAR_KNISA %>";
      var col_Makat = "<%=MAKAT %>";
      var col_Pratim = "<%=PRATIM %>";
-     var Col_PeilutChova="<%=PEILUT_CHOVA %>"
+     var Col_PeilutChova = "<%=PEILUT_CHOVA %>"
+     var Col_txt_shat_yetzia = "<%=TXT_SHAT_YETZIA %>"
      
      function btnMapa_Click() {
          document.getElementById("txtMisSiduri").style.display = "none";
@@ -241,8 +243,8 @@
          var vldArr;
          var Rechev;
          var checked;
-
-         is_valid = onchange_txtShatHatchala();
+        // debugger;
+         is_valid = onchange_txtShatHatchala(false, "");
            if (is_valid) {
                is_valid = onchange_txtShatGmar(false, "");
                 if (is_valid && document.getElementById("tsEmpty") == null) {
@@ -368,7 +370,7 @@
       }
 
       /**************** שעת התחלה *******************/
-       function onchange_txtShatHatchala() {
+      function onchange_txtShatHatchala(ask, choice) {
            var shaa = document.getElementById("txtShatHatchala").value;   
            var taarich = document.getElementById("TaarichCA").value.split('/');
            var StaratDate;
@@ -378,80 +380,127 @@
            var shatGmar = document.getElementById("txtShatGmar").value;
            var flag = true;
            var message;
+           var stop = false;
+         
+           var sugGmar =document.getElementById("txtShatGmar").attributes("SugGmar").value ;
+      //   debugger
            if (shaa != "") {
-              
-               if (IsValidTime(shaa)) {  
+               if (IsValidTime(shaa)) {
+                   
                    var Param1 = document.getElementById("Params").attributes("Param1").value;
                    var Param93 = document.getElementById("Params").attributes("Param93").value;
-                   shatHatchalaDate = new Date(taarich[2], taarich[1]-1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                   StaratDate = new Date(taarich[2], taarich[1]-1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
-                   EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param93.split(':')[0], Param93.split(':')[1], '00');
-                   if (IsShatGmarInNextDay(Param93)) {
-                       EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                   }
-                   if (shatHatchalaDate < StaratDate || shatHatchalaDate > EndDate) {
-                       document.getElementById("vldShatHatchala").errormessage = "הוקלד ערך שגוי. יש להקליד שעת התחלה בין " + Param1 + " עד " + Param93;
-                       ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                       flag = false;
-                   }
-                   if (document.getElementById("sugSidur").value == "2") {
-                   if (document.getElementById("MustMeafyenim").value == "1") {
-                       var Meafyen7;
-                       var Meafyen8;
-                       //var endTime, startTime;
-                       if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
-                           Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
-                       else Meafyen7 = Param1;
-                       if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
-                           Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                           if (IsShatGmarInNextDay(Meafyen8))
-                               Meafyen8 = Param93; 
-                       }
-                       else Meafyen8 = Param93; 
-                      
-                      if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7")>-1) {
-                       //    alert("7");
-                        //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
-                           StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen7.split(':')[0], Meafyen7.split(':')[1], '00');
-                           if (shatHatchalaDate < StaratDate) {
-                               message = "";
-                               message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
-                               document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ " + Meafyen7 + " עד " + endTime;
-                               ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                               flag = false;
-                           }
-                       }
-                       if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8")>-1) {
-                         //  alert("8");
-                         //  Meafyen8 = endTime;  //document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                           EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen8.split(':')[0], Meafyen8.split(':')[1], '00');
-                           if (IsShatGmarInNextDay(Meafyen8))
+                   shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                   if (ask) {
+                       if (sugGmar == "5" || sugGmar == "4" || document.getElementById("sugSidur").value == "1") {
+                           if (IsShatGmarInNextDay(shaa)) {
+                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], '00', '00', '00');
+                               StaratDate = new Date(StaratDate.setDate(StaratDate.getDate() + 1));
+                               var Param244 = document.getElementById("Params").attributes("Param244").value;
+                               EndDate =new Date(taarich[2], taarich[1] - 1, taarich[0], Param244.split(':')[0], Param244.split(':')[1], '00');
                                EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                           if (shatHatchalaDate > EndDate) {
-                               message = "";
-                               message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
-                               document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה עד " + Meafyen8 + " עד " + endTime;
+
+                               shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() + 1)); 
+                               if (shatHatchalaDate >= StaratDate && shatHatchalaDate <= EndDate) {
+                                   if (choice == "") {
+                                       stop = true;
+                                       document.getElementById("DestTime").value = "start";
+                                       document.getElementById("btnShowMessage").click();
+                                       }
+                                   else if (choice == "1") {
+                                       shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() - 1));
+                                   }
+                               }
+                               else
+                                   shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() - 1));
+                           } 
+                       } else {
+                           //shatHatchalaDate = new Date(taarich[2], taarich[1]-1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                           StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
+                           EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param93.split(':')[0], Param93.split(':')[1], '00');
+                           if (IsShatGmarInNextDay(Param93)) {
+                               EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                           }
+                           if (shatHatchalaDate < StaratDate || shatHatchalaDate > EndDate) {
+                               document.getElementById("vldShatHatchala").errormessage = "הוקלד ערך שגוי. יש להקליד שעת התחלה בין " + Param1 + " עד " + Param93;
                                ShowValidatorCalloutExtender("vldExvldShatHatchala");
                                flag = false;
-                           }    
-                         }  
-                       }
-                   }
-                   if (flag) {
-                       if (shatGmar != "") {
-                          //taarich = document.getElementById("txtShatGmar").title.split(' ')[1].split('/');
-                           // taarich = document.getElementById("txtShatGmar").attributes("Date").value.split(' ')[1].split('/');
-                           taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
-                           
-                           shatGmarDate = new Date(taarich[2], taarich[1]-1, taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
-                           if (shatHatchalaDate >= shatGmarDate) {
-                               document.getElementById("vldShatHatchala").errormessage = " שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר ";
-                               ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                               return false;
                            }
                        }
+                       document.getElementById("txtShatHatchala").title = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
+                       document.getElementById("TaarichHatchala").value = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
                    }
-                   else return false;
+
+                   if (!stop){
+                       if (document.getElementById("sugSidur").value == "2") {
+                       if (document.getElementById("MustMeafyenim").value == "1") {
+                           var Meafyen7;
+                           var Meafyen8;
+                           //var endTime, startTime;
+                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
+                               Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                           else Meafyen7 = Param1;
+                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
+                               Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                               if (IsShatGmarInNextDay(Meafyen8))
+                                   Meafyen8 = Param93; 
+                           }
+                           else Meafyen8 = Param93; 
+                      
+                          if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7")>-1) {
+                           //    alert("7");
+                            //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen7.split(':')[0], Meafyen7.split(':')[1], '00');
+                               if (shatHatchalaDate < StaratDate) {
+                                   message = "";
+                                   message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
+                                   document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ " + Meafyen7 + " עד " + endTime;
+                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                   flag = false;
+                               }
+                           }
+                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8")>-1) {
+                             //  alert("8");
+                             //  Meafyen8 = endTime;  //document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen8.split(':')[0], Meafyen8.split(':')[1], '00');
+                               if (IsShatGmarInNextDay(Meafyen8))
+                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                               if (shatHatchalaDate > EndDate) {
+                                   message = "";
+                                   message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
+                                   document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה עד " + Meafyen8 + " עד " + endTime;
+                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                   flag = false;
+                               }    
+                             }  
+                           }
+                        }
+
+                   if (flag) {
+                       //debugger;
+          
+                       if (document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length > 0)
+                           var row = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(1).childNodes;
+                       if (row.item(col_ShatYetzia).childNodes.item(0).value == "") {
+                           row.item(col_ShatYetzia).childNodes.item(0).value = shaa;
+                           row.item(Col_txt_shat_yetzia).childNodes.item(0).value = shatHatchalaDate.format("dd/MM/yyyy HH:mm:ss");
+                           row.item(col_ShatYetzia).childNodes.item(0).title = " תאריך שעת היציאה הוא " + shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
+                       }
+
+
+                           if (shatGmar != "") {
+                              taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
+                               shatGmarDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
+                               taarich = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
+                               shatHatchalaDate =  new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                               if (shatHatchalaDate >= shatGmarDate) {
+                                   document.getElementById("vldShatHatchala").errormessage = " שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר ";
+                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                   return false;
+                               }
+                           }
+                       }
+                       else return false;
+                  }
                }
                else {
                    document.getElementById("vldShatHatchala").errormessage = " שעה לא תקינה ";
@@ -464,6 +513,8 @@
                ShowValidatorCalloutExtender("vldExvldShatHatchala");
                return false;
            }
+          
+         
            return true;   
        }
        /**************** שעת גמר *******************/
@@ -638,8 +689,8 @@
            if (next) 
              if (document.getElementById("tsEmpty") == null)
                if( document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length > 0)
-                   alert(" .סידור מסתיים בתאריך " + shatGmarDate.format("dd/MM/yyyy") +","+ " כדאי לבדוק את תאריכי שעות היציאה של הפעילויות בסידור ");
-           return true;   
+                       alert(" .סידור מסתיים בתאריך " + shatGmarDate.format("dd/MM/yyyy") + "," + " כדאי לבדוק את תאריכי שעות היציאה של הפעילויות בסידור ");
+            return true;   
        }
        /*****/
        function IsChovaShatGmar() {
@@ -1004,7 +1055,9 @@
                       
                        if (!stop) {
                            if (shatHatcahla != "") {
-                               shatHatchalaDate = new Date(taarich[2], taarich[1]-1, taarich[0], shatHatcahla.split(':')[0], shatHatcahla.split(':')[1], '00');
+                             //  debugger;
+                               var startHour = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
+                               shatHatchalaDate = new Date(startHour[2], startHour[1] - 1, startHour[0], shatHatcahla.split(':')[0], shatHatcahla.split(':')[1], '00');
                                if (shatYeziaDate < shatHatchalaDate) {
                                    vld.errormessage = " לא ניתן להקליד שעת יציאה הקטנה משעת התחלה של הסידור ";
                                    ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
@@ -1111,11 +1164,14 @@
             if (document.getElementById("DestTime").value == "gmar") {
                 onchange_txtShatGmar(true, "1");
             }
+            if (document.getElementById("DestTime").value.split(';')[0] == "start") {
+                onchange_txtShatHatchala(true, "1")
+            }
            /* else if (document.getElementById("DestTime").value == "peilut") {
             document.getElementById("DestTime").value = document.getElementById("TaarichCA").value;
             document.getElementById("btnIdkunGridHidden").click();
             }*/
-            else {
+            if (document.getElementById("DestTime").value.split(';')[0] == "yezia") {
                 obj = document.getElementById(document.getElementById("DestTime").value.split(';')[1]);
                 onchange_txtShatYezia(obj, true, "1");
             }
@@ -1132,13 +1188,16 @@
            if (document.getElementById("DestTime").value.split(';')[0] == "gmar") {
                onchange_txtShatGmar(true, "2")
            }
+           if (document.getElementById("DestTime").value.split(';')[0] == "start") {
+               onchange_txtShatHatchala(true, "2")
+           }
          /*  else if (document.getElementById("DestTime").value == "peilut") {
                taarich=document.getElementById("TaarichCA").value.split('/');
                shatYeziaDate = new Date(taarich[2], taarich[1] -1, taarich[0]);
                document.getElementById("DestTime").value = ( new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1))).format("dd/MM/yyyy");
                document.getElementById("btnIdkunGridHidden").click();
            }*/
-           else {
+           if (document.getElementById("DestTime").value.split(';')[0] == "yezia") {
                obj = document.getElementById(document.getElementById("DestTime").value.split(';')[1]);
                onchange_txtShatYezia(obj, true, "2");
            }
@@ -1335,7 +1394,7 @@
                     <tr>
                         <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"  ></asp:Label></td>
                         <td  valign="top" align="center">
-                              <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5"  onchange="onchange_txtShatHatchala()" ></asp:TextBox>
+                              <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5"  onchange="onchange_txtShatHatchala(true,'')" ></asp:TextBox>
                                     <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                                     <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                                     <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
@@ -1495,6 +1554,7 @@
                    </tr>
                 </table>
             </div>
+        <input type="hidden" id="TaarichHatchala" name="TaarichHatchala"  runat="server" />
         <input type="hidden" id="TaarichGmar" name="TaarichGmar"  runat="server" />
         <input type="hidden" id="DestTime" name="DestTime"  runat="server" />
         <input type="hidden" id="sugSidur" name="sugSidur"  runat="server" />
