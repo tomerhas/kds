@@ -63,7 +63,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 {
                     ListBoxExtended CurrentControl = (ListBoxExtended)TdFilter.FindControl(Filter.ParameterName);
                     CurrentControl.AddAttributes();
-                    if ((!Page.IsPostBack) && (( Report.NameReport == ReportName.Presence) || 
+                    if ((!Page.IsPostBack) && ((Report.NameReport == ReportName.Presence) ||
                                                (Report.NameReport == ReportName.IshurimLerashemet)))
                         CurrentControl.SetDefaultValue(LoginUser.UserInfo.EmployeeNumber.ToString());
                     if (CurrentControl.ListOfValues != "")
@@ -122,7 +122,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     SetWorkerViewLevel();
                     break;
                 case ReportName.IshurimLerashemet:
-                    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
+                    if (!Page.IsPostBack)
+                        CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                     SetWorkerViewLevel();
                     break;
                 case ReportName.FindWorkerCard:
@@ -133,10 +134,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 //    Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
                 //    break;
                 case ReportName.IdkuneyRashemet:
-                    Auto_P_MIS_RASHEMET.ContextKey = "6,0133,"+CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
+                    Auto_P_MIS_RASHEMET.ContextKey = "6,0133," + CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
                     Shaa.Items[0].Text = "00:01";
                     Shaa.Items[0].Value = "00:01";
-                    dtMisRashemet = oUtils.getMispareiRashamot(6, "0133",CtrlTaarichCa, "");
+                    dtMisRashemet = oUtils.getMispareiRashamot(6, "0133", CtrlTaarichCa, "");
                     if (dtMisRashemet.Rows.Count > 0)
                     {
                         MisRashamot.Value = ",";
@@ -166,8 +167,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                         CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
                         CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
                     }
-                        //Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
-                    
+                    //Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
+
                     break;
             }
             SetAutoCompleteExtender();
