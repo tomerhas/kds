@@ -6263,25 +6263,25 @@ namespace KdsBatch
 
 
                     //שינוי 14
-                    iCountSidurim = htEmployeeDetails.Count;
-                    if (iCountSidurim > 1)
-                    {
-                        i = 1;
-                        do
-                        {
-                            oSidur = (clSidur)htEmployeeDetails[i];
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                    //iCountSidurim = htEmployeeDetails.Count;
+                    //if (iCountSidurim > 1)
+                    //{
+                    //    i = 1;
+                    //    do
+                    //    {
+                    //        oSidur = (clSidur)htEmployeeDetails[i];
+                    //        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
+                    //        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
-                            InsertSidurRetzifut14(dCardDate, i - 1, drSugSidur, ref oSidur, ref oObjSidurimOvdimUpd);
+                    //        InsertSidurRetzifut14(dCardDate, i - 1, drSugSidur, ref oSidur, ref oObjSidurimOvdimUpd);
 
-                            iCountSidurim = htEmployeeDetails.Count;
-                            i += 1;
+                    //        iCountSidurim = htEmployeeDetails.Count;
+                    //        i += 1;
 
-                        }
-                        while (i < iCountSidurim);
-                    }
+                    //    }
+                    //    while (i < iCountSidurim);
+                    //}
 
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
@@ -12074,176 +12074,176 @@ namespace KdsBatch
             return fDakotInTafkid;
         }
 
-        private void InsertSidurRetzifut14(DateTime dCardDate, int iCurrSidurIndex, DataRow[] drSugSidur,
-                                           ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
-        {
-            clSidur oSidurPrev;
-            clSidur oSidurNew;
-           float fDiffTimeBetweenSidurim = 0;
-           clPeilut oElement;
-            try
-            {
-                //הוספת סידור - שינוי ברמת סידור
-                //בין 2 סידורים מגיעה לנהג רציפות עפ"י אלגוריתם המורכב מיום בשבוע , סוג הסידור , מרווח בין סידורים ועוד.
-                //במקרים בהם יש פער זמנים בין שני סידורי עבודה המזכה את העובד בתוספת זמן עבודה עבור פער זה (ומאחד למעשה את 2 הסידורים), יש לפתוח סידור רציפות. ישנם שני סוגים של סידורי רציפות: רציפות נהגות  ורציפות שאינה נהגות. פתיחת סידור רציפות נהגות, 99500:
-                //מזהים פער זמנים בין  שני סידורי נהגות (מזהים סידור נהגות לפי ערך 5 בטבלת סידורים מיוחדים/מאפייני סוג סידור) הגדול מהערך בפרמטר 0104 (פער הזמן).
-                //פתיחת סידור רציפות שאינה נהגות, 99501:
-                //מזהים בין  שני סידורים שלפחות אחד מהם אינו נהגות  פער זמנים הגדול מהערך בפרמטר 0104 (פער הזמן).
-                //את שני הסידורים פותחים עם השעות הבאות:
-                //א. שעת התחלה סידור רציפות - שעת גמר של הסידור הקודם לסידור הרציפות + דקה).
-                //ב.  שעת גמר סידור רציפות - שעת התחלה של הסידור העוקב לרציפות פחות דקה).
+        //private void InsertSidurRetzifut14(DateTime dCardDate, int iCurrSidurIndex, DataRow[] drSugSidur,
+        //                                   ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        //{
+        //    clSidur oSidurPrev;
+        //    clSidur oSidurNew;
+        //   float fDiffTimeBetweenSidurim = 0;
+        //   clPeilut oElement;
+        //    try
+        //    {
+        //        //הוספת סידור - שינוי ברמת סידור
+        //        //בין 2 סידורים מגיעה לנהג רציפות עפ"י אלגוריתם המורכב מיום בשבוע , סוג הסידור , מרווח בין סידורים ועוד.
+        //        //במקרים בהם יש פער זמנים בין שני סידורי עבודה המזכה את העובד בתוספת זמן עבודה עבור פער זה (ומאחד למעשה את 2 הסידורים), יש לפתוח סידור רציפות. ישנם שני סוגים של סידורי רציפות: רציפות נהגות  ורציפות שאינה נהגות. פתיחת סידור רציפות נהגות, 99500:
+        //        //מזהים פער זמנים בין  שני סידורי נהגות (מזהים סידור נהגות לפי ערך 5 בטבלת סידורים מיוחדים/מאפייני סוג סידור) הגדול מהערך בפרמטר 0104 (פער הזמן).
+        //        //פתיחת סידור רציפות שאינה נהגות, 99501:
+        //        //מזהים בין  שני סידורים שלפחות אחד מהם אינו נהגות  פער זמנים הגדול מהערך בפרמטר 0104 (פער הזמן).
+        //        //את שני הסידורים פותחים עם השעות הבאות:
+        //        //א. שעת התחלה סידור רציפות - שעת גמר של הסידור הקודם לסידור הרציפות + דקה).
+        //        //ב.  שעת גמר סידור רציפות - שעת התחלה של הסידור העוקב לרציפות פחות דקה).
 
 
-                oSidurPrev = (clSidur)htEmployeeDetails[iCurrSidurIndex];
-               DataRow[] drPrevSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidurPrev.iSugSidurRagil, dCardDate,  _dtSugSidur);
-                bool bSidurNahagut = false;
-                bool bSidurPrevNahagut = false;
-                bool bSidurTafkidDoreshRetzifut = false;
+        //        oSidurPrev = (clSidur)htEmployeeDetails[iCurrSidurIndex];
+        //       DataRow[] drPrevSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidurPrev.iSugSidurRagil, dCardDate,  _dtSugSidur);
+        //        bool bSidurNahagut = false;
+        //        bool bSidurPrevNahagut = false;
+        //        bool bSidurTafkidDoreshRetzifut = false;
 
-                // אם בסידור הראשון יש אלמנט המתנה 724xxx00 , עוצרים.
-                oElement = oSidurPrev.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(oPeilut => (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "724"));
-                if (oElement==null)
-                {
-                    if (oSidur.dFullShatHatchala > oSidurPrev.dFullShatGmar)
-                    { //אם שני סידורי נהגות וגם פער הזמנים בין הסידורים גדול מפרמטר 104, נכניס סידור רציפות
+        //        // אם בסידור הראשון יש אלמנט המתנה 724xxx00 , עוצרים.
+        //        oElement = oSidurPrev.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(oPeilut => (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "724"));
+        //        if (oElement==null)
+        //        {
+        //            if (oSidur.dFullShatHatchala > oSidurPrev.dFullShatGmar)
+        //            { //אם שני סידורי נהגות וגם פער הזמנים בין הסידורים גדול מפרמטר 104, נכניס סידור רציפות
 
-                        if (oSidur.bSidurMyuhad && oSidur.bSidurNahagut)
-                        {
-                            bSidurNahagut = true;
+        //                if (oSidur.bSidurMyuhad && oSidur.bSidurNahagut)
+        //                {
+        //                    bSidurNahagut = true;
 
-                        }
-                        else if (drSugSidur.Length > 0)
-                        {
-                            if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-                            {
-                                bSidurNahagut = true;
-                            }
-                        }
-
-
-                        if (oSidurPrev.bSidurMyuhad && oSidurPrev.bSidurNahagut)
-                        {
-                            bSidurPrevNahagut = true;
-                        }
-                        else if (drPrevSugSidur.Length > 0)
-                        {
-                            if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-                            {
-                                bSidurPrevNahagut = true;
-
-                            }
-                        }
-
-                        //מזהים פער זמנים בין סידור נהגות (מזהים סידור נהגות לפי ערך 5 בטבלת סידורים מיוחדים/מאפייני סוג סידור) לסידור תפקיד שמזכה ברציפות (לפי מאפיין 26 עם ערך 1). 
-                        if ((!bSidurPrevNahagut && bSidurNahagut) || (bSidurPrevNahagut && !bSidurNahagut))
-                        {
-                            if (!bSidurPrevNahagut)
-                            {
-                                if (oSidurPrev.bSidurMyuhad && oSidurPrev.bSidurTafkid && oSidurPrev.iZakayLepizul == 1)
-                                {
-                                    bSidurTafkidDoreshRetzifut = true;
-                                }
-                                else if (drPrevSugSidur.Length > 0)
-                                {
-                                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drPrevSugSidur[0]["zakay_lepizul"].ToString() == "1")
-                                    {
-                                        bSidurTafkidDoreshRetzifut = true;
-                                    }
-                                }
-                            }
-                            else if (!bSidurNahagut)
-                            {
-                                if (oSidur.bSidurMyuhad && oSidur.bSidurTafkid && oSidur.iZakayLepizul == 1)
-                                {
-                                    bSidurTafkidDoreshRetzifut = true;
-                                }
-                                else if (drSugSidur.Length > 0)
-                                {
-                                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drSugSidur[0]["zakay_lepizul"].ToString() == "1")
-                                    {
-                                        bSidurTafkidDoreshRetzifut = true;
-                                    }
-                                }
-                            }
-                        }
+        //                }
+        //                else if (drSugSidur.Length > 0)
+        //                {
+        //                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+        //                    {
+        //                        bSidurNahagut = true;
+        //                    }
+        //                }
 
 
-                        //אם לא היה מצב של שני סידורי נהגות ברציפות, נחשב את הפרש הזמן בין שני הסידורים 
-                        //ונשווה מול פרמטר 104
-                        fDiffTimeBetweenSidurim = clDefinitions.GetTimeBetweenTwoSidurimInMinuts(oSidurPrev, oSidur);
-                        if (fDiffTimeBetweenSidurim >= 1 && fDiffTimeBetweenSidurim <= oParam.iMinTimeBetweenSidurim)
-                        {
-                            if ((bSidurNahagut && bSidurPrevNahagut) || (bSidurTafkidDoreshRetzifut && (bSidurNahagut || bSidurPrevNahagut)))
-                            {
+        //                if (oSidurPrev.bSidurMyuhad && oSidurPrev.bSidurNahagut)
+        //                {
+        //                    bSidurPrevNahagut = true;
+        //                }
+        //                else if (drPrevSugSidur.Length > 0)
+        //                {
+        //                    if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+        //                    {
+        //                        bSidurPrevNahagut = true;
 
-                                oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
-                                oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
-                                oObjSidurimOvdimIns.TAARICH = _dCardDate;
-                                oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99500;
-                                oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, oSidurPrev.dFullShatGmar);
-                                oObjSidurimOvdimIns.SHAT_GMAR = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala, oSidur.dFullShatHatchala);
-                                oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;
-                                oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
-                                oObjSidurimOvdimIns.OUT_MICHSA = 0;
-                                oObjSidurimOvdimIns.HASHLAMA = 0;
-                                oObjSidurimOvdimIns.CHARIGA = 0;
-                                oObjSidurimOvdimIns.BITUL_O_HOSAFA = 4;
-                                oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+        //                    }
+        //                }
 
-                                DataRow[] drSidurMeyuchad;
-                                drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + oObjSidurimOvdimIns.MISPAR_SIDUR);
-                                oSidurNew = new clSidur(_iMisparIshi, _dCardDate, oObjSidurimOvdimIns.MISPAR_SIDUR, drSidurMeyuchad[0]);
-                                oSidurNew.dFullShatHatchala = oObjSidurimOvdimIns.SHAT_HATCHALA;
-                                oSidurNew.sShatHatchala = oSidurNew.dFullShatHatchala.ToString("HH:mm");
-                                oSidurNew.dFullShatGmar = oObjSidurimOvdimIns.SHAT_GMAR;
-                                oSidurNew.sShatGmar = oSidurNew.dFullShatGmar.ToString("HH:mm");
-                                oSidurNew.sHashlama = "0";
-                                oSidurNew.sChariga = "0";
-                                oSidurNew.sOutMichsa = "0";
-                                oSidurNew.iBitulOHosafa = 4;
-                                htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("ddMM"),oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
+        //                //מזהים פער זמנים בין סידור נהגות (מזהים סידור נהגות לפי ערך 5 בטבלת סידורים מיוחדים/מאפייני סוג סידור) לסידור תפקיד שמזכה ברציפות (לפי מאפיין 26 עם ערך 1). 
+        //                if ((!bSidurPrevNahagut && bSidurNahagut) || (bSidurPrevNahagut && !bSidurNahagut))
+        //                {
+        //                    if (!bSidurPrevNahagut)
+        //                    {
+        //                        if (oSidurPrev.bSidurMyuhad && oSidurPrev.bSidurTafkid && oSidurPrev.iZakayLepizul == 1)
+        //                        {
+        //                            bSidurTafkidDoreshRetzifut = true;
+        //                        }
+        //                        else if (drPrevSugSidur.Length > 0)
+        //                        {
+        //                            if (drPrevSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drPrevSugSidur[0]["zakay_lepizul"].ToString() == "1")
+        //                            {
+        //                                bSidurTafkidDoreshRetzifut = true;
+        //                            }
+        //                        }
+        //                    }
+        //                    else if (!bSidurNahagut)
+        //                    {
+        //                        if (oSidur.bSidurMyuhad && oSidur.bSidurTafkid && oSidur.iZakayLepizul == 1)
+        //                        {
+        //                            bSidurTafkidDoreshRetzifut = true;
+        //                        }
+        //                        else if (drSugSidur.Length > 0)
+        //                        {
+        //                            if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString() && drSugSidur[0]["zakay_lepizul"].ToString() == "1")
+        //                            {
+        //                                bSidurTafkidDoreshRetzifut = true;
+        //                            }
+        //                        }
+        //                    }
+        //                }
 
-                            }
-                            //אין לפתוח רציפות אם הסידור שאינו נהגות הינו סידור היעדרות = ערך כלשהו במאפיין 53 בטבלת מאפייני סידורים מיוחדים
-                            //else if ((!bSidurNahagut && oSidur.sHeadrutTypeKod == "" && bSidurPrevNahagut) || (!bSidurPrevNahagut && oSidurPrev.sHeadrutTypeKod == "" && bSidurNahagut) ||
-                            //    !bSidurNahagut && oSidur.sHeadrutTypeKod == "" && !bSidurPrevNahagut && oSidurPrev.sHeadrutTypeKod == "")
-                            //{
-                            //    oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
-                            //    oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
-                            //    oObjSidurimOvdimIns.TAARICH = _dCardDate;
-                            //    oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99501;
-                            //    oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar,dCardDate).AddMinutes(1);
-                            //    oObjSidurimOvdimIns.SHAT_GMAR =clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate).AddMinutes(-1);
-                            //    oObjSidurimOvdimIns.OUT_MICHSA = 0;
-                            //    oObjSidurimOvdimIns.HASHLAMA = 0;
-                            //    oObjSidurimOvdimIns.CHARIGA = 0;
-                            //    oObjSidurimOvdimIns.BITUL_O_HOSAFA = 4;
-                            //    oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
 
-                            //    DataRow[] drSidurMeyuchad;
-                            //    drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + oObjSidurimOvdimIns.MISPAR_SIDUR);
-                            //    oSidurNew = new clSidur(_iMisparIshi, _dCardDate, oObjSidurimOvdimIns.MISPAR_SIDUR, drSidurMeyuchad[0]);
-                            //    oSidurNew.dFullShatHatchala = oObjSidurimOvdimIns.SHAT_HATCHALA;
-                            //    oSidurNew.sShatHatchala = oSidurNew.dFullShatHatchala.ToLongTimeString();
-                            //    oSidurNew.dFullShatGmar = oObjSidurimOvdimIns.SHAT_GMAR;
-                            //    oSidurNew.sShatGmar = oSidurNew.dFullShatGmar.ToString("HH:mm");
-                            //    oSidurNew.sHashlama = "0";
-                            //    oSidurNew.sChariga = "0";
-                            //    oSidurNew.sOutMichsa = "0";
-                            //    oSidurNew.iBitulOHosafa = 4;
-                            //    htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
-                            //}
+        //                //אם לא היה מצב של שני סידורי נהגות ברציפות, נחשב את הפרש הזמן בין שני הסידורים 
+        //                //ונשווה מול פרמטר 104
+        //                fDiffTimeBetweenSidurim = clDefinitions.GetTimeBetweenTwoSidurimInMinuts(oSidurPrev, oSidur);
+        //                if (fDiffTimeBetweenSidurim >= 1 && fDiffTimeBetweenSidurim <= oParam.iMinTimeBetweenSidurim)
+        //                {
+        //                    if ((bSidurNahagut && bSidurPrevNahagut) || (bSidurTafkidDoreshRetzifut && (bSidurNahagut || bSidurPrevNahagut)))
+        //                    {
 
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 14, oSidur.iMisparIshi,oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "InsertSidurRetzifut14: " + ex.Message, null);
-                _bSuccsess = false;
-            }
-        }
+        //                        oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
+        //                        oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
+        //                        oObjSidurimOvdimIns.TAARICH = _dCardDate;
+        //                        oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99500;
+        //                        oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar, oSidurPrev.dFullShatGmar);
+        //                        oObjSidurimOvdimIns.SHAT_GMAR = clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala, oSidur.dFullShatHatchala);
+        //                        oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimIns.SHAT_HATCHALA;
+        //                        oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimIns.SHAT_GMAR;
+        //                        oObjSidurimOvdimIns.OUT_MICHSA = 0;
+        //                        oObjSidurimOvdimIns.HASHLAMA = 0;
+        //                        oObjSidurimOvdimIns.CHARIGA = 0;
+        //                        oObjSidurimOvdimIns.BITUL_O_HOSAFA = 4;
+        //                        oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+
+        //                        DataRow[] drSidurMeyuchad;
+        //                        drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + oObjSidurimOvdimIns.MISPAR_SIDUR);
+        //                        oSidurNew = new clSidur(_iMisparIshi, _dCardDate, oObjSidurimOvdimIns.MISPAR_SIDUR, drSidurMeyuchad[0]);
+        //                        oSidurNew.dFullShatHatchala = oObjSidurimOvdimIns.SHAT_HATCHALA;
+        //                        oSidurNew.sShatHatchala = oSidurNew.dFullShatHatchala.ToString("HH:mm");
+        //                        oSidurNew.dFullShatGmar = oObjSidurimOvdimIns.SHAT_GMAR;
+        //                        oSidurNew.sShatGmar = oSidurNew.dFullShatGmar.ToString("HH:mm");
+        //                        oSidurNew.sHashlama = "0";
+        //                        oSidurNew.sChariga = "0";
+        //                        oSidurNew.sOutMichsa = "0";
+        //                        oSidurNew.iBitulOHosafa = 4;
+        //                        htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("ddMM"),oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
+
+        //                    }
+        //                    //אין לפתוח רציפות אם הסידור שאינו נהגות הינו סידור היעדרות = ערך כלשהו במאפיין 53 בטבלת מאפייני סידורים מיוחדים
+        //                    //else if ((!bSidurNahagut && oSidur.sHeadrutTypeKod == "" && bSidurPrevNahagut) || (!bSidurPrevNahagut && oSidurPrev.sHeadrutTypeKod == "" && bSidurNahagut) ||
+        //                    //    !bSidurNahagut && oSidur.sHeadrutTypeKod == "" && !bSidurPrevNahagut && oSidurPrev.sHeadrutTypeKod == "")
+        //                    //{
+        //                    //    oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
+        //                    //    oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
+        //                    //    oObjSidurimOvdimIns.TAARICH = _dCardDate;
+        //                    //    oObjSidurimOvdimIns.MISPAR_SIDUR = SIDUR_RETIZVUT99501;
+        //                    //    oObjSidurimOvdimIns.SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oSidurPrev.sShatGmar,dCardDate).AddMinutes(1);
+        //                    //    oObjSidurimOvdimIns.SHAT_GMAR =clGeneral.GetDateTimeFromStringHour(oSidur.sShatHatchala,dCardDate).AddMinutes(-1);
+        //                    //    oObjSidurimOvdimIns.OUT_MICHSA = 0;
+        //                    //    oObjSidurimOvdimIns.HASHLAMA = 0;
+        //                    //    oObjSidurimOvdimIns.CHARIGA = 0;
+        //                    //    oObjSidurimOvdimIns.BITUL_O_HOSAFA = 4;
+        //                    //    oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+
+        //                    //    DataRow[] drSidurMeyuchad;
+        //                    //    drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + oObjSidurimOvdimIns.MISPAR_SIDUR);
+        //                    //    oSidurNew = new clSidur(_iMisparIshi, _dCardDate, oObjSidurimOvdimIns.MISPAR_SIDUR, drSidurMeyuchad[0]);
+        //                    //    oSidurNew.dFullShatHatchala = oObjSidurimOvdimIns.SHAT_HATCHALA;
+        //                    //    oSidurNew.sShatHatchala = oSidurNew.dFullShatHatchala.ToLongTimeString();
+        //                    //    oSidurNew.dFullShatGmar = oObjSidurimOvdimIns.SHAT_GMAR;
+        //                    //    oSidurNew.sShatGmar = oSidurNew.dFullShatGmar.ToString("HH:mm");
+        //                    //    oSidurNew.sHashlama = "0";
+        //                    //    oSidurNew.sChariga = "0";
+        //                    //    oSidurNew.sOutMichsa = "0";
+        //                    //    oSidurNew.iBitulOHosafa = 4;
+        //                    //    htEmployeeDetails.Insert(iCurrSidurIndex + 1, long.Parse(string.Concat(oObjSidurimOvdimIns.SHAT_HATCHALA.ToString("HH:mm").Replace(":", ""), oObjSidurimOvdimIns.MISPAR_SIDUR)), oSidurNew);
+        //                    //}
+
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 14, oSidur.iMisparIshi,oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "InsertSidurRetzifut14: " + ex.Message, null);
+        //        _bSuccsess = false;
+        //    }
+        //}
 
         private void SetHourToSidur19(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,bool bIdkunRashShatHatchala,bool bIdkunRashShatGmar)
         {

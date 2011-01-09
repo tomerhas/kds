@@ -72,8 +72,8 @@ namespace KdsBatch
                 if (!bChishuvYom)
                 {
                     SimunSidurimLoLetashlum();
-                    //סימון "לא לתשלום" עבור סידורי רציפות
-                    SimunLoLetashlumRetzifut();
+                    ////סימון "לא לתשלום" עבור סידורי רציפות
+                    //SimunLoLetashlumRetzifut();
                 }
 
                 dTaarich = dTarMe;
@@ -313,69 +313,69 @@ namespace KdsBatch
             }
         }
 
-        private void SimunLoLetashlumRetzifut()
-        {
-            DataRow[] drSidurim, drSidur;
-            int I, iMisparSidur, J, iSugYom;
-            float fSumDakotNichehut = 0, fSumDakotNichehutChodshi = 0;
-            clCalcSidur oSidur;
-            clCalcPeilut oPeilut;
-            DateTime dTaarich, dTaarichNext;
-            dTaarichNext = DateTime.MinValue;
-            try
-            {
-                oSidur = new clCalcSidur(_iMisparIshi, _lBakashaId,_oGeneralData);
-                oPeilut = new clCalcPeilut(_iMisparIshi, _lBakashaId, _oGeneralData);
+        //private void SimunLoLetashlumRetzifut()
+        //{
+        //    DataRow[] drSidurim, drSidur;
+        //    int I, iMisparSidur, J, iSugYom;
+        //    float fSumDakotNichehut = 0, fSumDakotNichehutChodshi = 0;
+        //    clCalcSidur oSidur;
+        //    clCalcPeilut oPeilut;
+        //    DateTime dTaarich, dTaarichNext;
+        //    dTaarichNext = DateTime.MinValue;
+        //    try
+        //    {
+        //        oSidur = new clCalcSidur(_iMisparIshi, _lBakashaId,_oGeneralData);
+        //        oPeilut = new clCalcPeilut(_iMisparIshi, _lBakashaId, _oGeneralData);
 
-                drSidurim = clCalcData.DtYemeyAvoda.Select("mispar_sidur in(99500, 99501) and Lo_letashlum =0", "TAARICH ASC,MISPAR_SIDUR ASC");
-                for (I = 0; I < drSidurim.Length; I++)
-                {
-                    if (int.Parse(drSidurim[I]["Lo_letashlum"].ToString()) == 0)
-                    {
-                        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                        dTaarich = (DateTime)drSidurim[I]["taarich"];
-                        _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(_iMisparIshi, dTaarich);
+        //        drSidurim = clCalcData.DtYemeyAvoda.Select("mispar_sidur in(99500, 99501) and Lo_letashlum =0", "TAARICH ASC,MISPAR_SIDUR ASC");
+        //        for (I = 0; I < drSidurim.Length; I++)
+        //        {
+        //            if (int.Parse(drSidurim[I]["Lo_letashlum"].ToString()) == 0)
+        //            {
+        //                iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+        //                dTaarich = (DateTime)drSidurim[I]["taarich"];
+        //                _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(_iMisparIshi, dTaarich);
                     
-                        iSugYom = clDefinitions.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim, _oGeneralData.objMeafyeneyOved.iMeafyen56);
-                        clCalcData.iSugYom = iSugYom;
-                        _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom);
-                        if (fSumDakotNichehutChodshi >= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum)
-                        {
-                            drSidurim[I]["Lo_letashlum"] = 1;
-                        }
+        //                iSugYom = clDefinitions.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim, _oGeneralData.objMeafyeneyOved.iMeafyen56);
+        //                clCalcData.iSugYom = iSugYom;
+        //                _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom);
+        //                if (fSumDakotNichehutChodshi >= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum)
+        //                {
+        //                    drSidurim[I]["Lo_letashlum"] = 1;
+        //                }
 
-                        if (!(dTaarich == dTaarichNext))
-                        {
+        //                if (!(dTaarich == dTaarichNext))
+        //                {
 
-                            drSidur = clCalcData.DtYemeyAvoda.Select("mispar_sidur in(99500, 99501) and Lo_letashlum =0 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "TAARICH ASC");
-                            for (J = 0; J < drSidur.Length; J++)
-                            {
-                                if (fSumDakotNichehut >= _oGeneralData.objParameters.iMaxRetzifutYomiLetashlum)
-                                {
-                                    drSidur[J]["Lo_letashlum"] = 1;
-                                }
-                                oSidur.dTaarich = (DateTime)drSidur[J]["taarich"];
-                                oPeilut.dTaarich =oSidur.dTaarich;
-                                fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
-                            }
-                            fSumDakotNichehut = 0;
-                        }
-                        oSidur.dTaarich = dTaarich;
-                        oPeilut.dTaarich=oSidur.dTaarich;
-                        fSumDakotNichehutChodshi += oSidur.CalcRechiv1BySidur(drSidurim[I], 0, oPeilut);
-                        if ((I + 1) < drSidurim.Length)
-                        {
-                            dTaarichNext = (DateTime)drSidurim[I]["taarich"];
-                        }
-                    }
-                }
+        //                    drSidur = clCalcData.DtYemeyAvoda.Select("mispar_sidur in(99500, 99501) and Lo_letashlum =0 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "TAARICH ASC");
+        //                    for (J = 0; J < drSidur.Length; J++)
+        //                    {
+        //                        if (fSumDakotNichehut >= _oGeneralData.objParameters.iMaxRetzifutYomiLetashlum)
+        //                        {
+        //                            drSidur[J]["Lo_letashlum"] = 1;
+        //                        }
+        //                        oSidur.dTaarich = (DateTime)drSidur[J]["taarich"];
+        //                        oPeilut.dTaarich =oSidur.dTaarich;
+        //                        fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
+        //                    }
+        //                    fSumDakotNichehut = 0;
+        //                }
+        //                oSidur.dTaarich = dTaarich;
+        //                oPeilut.dTaarich=oSidur.dTaarich;
+        //                fSumDakotNichehutChodshi += oSidur.CalcRechiv1BySidur(drSidurim[I], 0, oPeilut);
+        //                if ((I + 1) < drSidurim.Length)
+        //                {
+        //                    dTaarichNext = (DateTime)drSidurim[I]["taarich"];
+        //                }
+        //            }
+        //        }
               
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw (ex);
+        //    }
+        //}
 
         private void SimunSidurimLoLetashlum()
         {
@@ -2760,14 +2760,17 @@ namespace KdsBatch
 
         private void CalcRechiv96()
         {
-            float fSumDakotRechiv;
-            try{
-            fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
-            addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), fSumDakotRechiv);
+            float fSumDakotRechiv=0;
+            try
+            {
+                
+                fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
+            
+                addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {
-                 clLogBakashot.SetError(_lBakashaId,_iMisparIshi, "E", clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(),_dTaarichChishuv ,"CalcMonth: " + ex.Message);
+                clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.Message);
                 throw (ex);
             }
         }
