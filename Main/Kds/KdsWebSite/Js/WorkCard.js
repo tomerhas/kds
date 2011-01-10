@@ -554,7 +554,7 @@
           
                if (level == 2) {          
                    iSidurNum = document.getElementById("MisSidur").value;
-                   sStartH = document.getElementById("txtSidurDate").value + " " + document.getElementById("ShatHatchala").value;
+                   sStartH =  document.getElementById("ShatHatchala").value;
                    wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
                }
                else {
@@ -563,7 +563,7 @@
                    iMKnisa = arrKey[1];
                    
                    iSidurNum = document.getElementById("MisSidur").value;
-                   sStartH = document.getElementById("txtSidurDate").value + " " + document.getElementById("ShatHatchala").value; 
+                   sStartH =  document.getElementById("ShatHatchala").value; 
                    wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
                }
            }
