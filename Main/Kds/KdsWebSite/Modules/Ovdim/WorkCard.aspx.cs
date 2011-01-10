@@ -2733,6 +2733,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     oObjPeilyutOvdimDel = new OBJ_PEILUT_OVDIM();
                     FillPeiluyotForDelete(ref  oObjPeilyutOvdimDel, ref  oObjPeiluyotOvdimUpd);
                     oCollPeluyotOvdimDel.Add(oObjPeilyutOvdimDel);
+                    oObjPeiluyotOvdimUpd.UPDATE_OBJECT = 0;
                 }
 
                 //נבדוק אם מפתח כבר קיים
@@ -3071,10 +3072,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                         if (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
                         {
-                            //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim                               
-                            FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
+                            //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim   
                             oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
+                            FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;                            
+                            oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
                         }
                         else
                         {
@@ -3202,6 +3204,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjPeilyutOvdimDel.SHAT_YETZIA = oObjPeiluyotOvdimUpd.SHAT_YETZIA;
             oObjPeilyutOvdimDel.MISPAR_KNISA = oObjPeiluyotOvdimUpd.MISPAR_KNISA;
             oObjPeilyutOvdimDel.MAKAT_NESIA = oObjPeiluyotOvdimUpd.MAKAT_NESIA;
+            oObjPeilyutOvdimDel.BITUL_O_HOSAFA = 1;
             oObjPeilyutOvdimDel.UPDATE_OBJECT = 1;
         }
         catch (Exception ex)
@@ -3217,6 +3220,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimDel.TAARICH = oObjSidurimOvdimUpd.TAARICH;
             oObjSidurimOvdimDel.SHAT_HATCHALA = oObjSidurimOvdimUpd.SHAT_HATCHALA;
             oObjSidurimOvdimDel.MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
+            oObjSidurimOvdimDel.BITUL_O_HOSAFA = 1;
             oObjSidurimOvdimDel.UPDATE_OBJECT = 1;
         }
         catch (Exception ex)
