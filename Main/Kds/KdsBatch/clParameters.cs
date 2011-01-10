@@ -468,7 +468,7 @@ namespace KdsBatch
 
                 //אגד תעבור סיום תוספת לילה  - 96
                 sTmp = GetOneParam(96, dCardDate);
-                dSiyumTosLilaTaavura = GetParamHour(sTmp, dCardDate);
+                dSiyumTosLilaTaavura = GetParamHour(sTmp, dCardDate.AddDays(1));
 
                 //97 חלקיות אחוז מילואים
                 sTmp = GetOneParam(97, dCardDate);

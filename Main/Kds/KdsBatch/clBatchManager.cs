@@ -11859,7 +11859,7 @@ namespace KdsBatch
                     { //קיים מאפיין 44 לעובד, זכאות להלבשה
                         if (htEmployeeDetails != null)
                         {
-                         for (int i = 0; i < htEmployeeDetails.Count; i++)
+                            for (int i = 0; i < htEmployeeDetails.Count; i++)
                             {
                                 oSidur = (clSidur)htEmployeeDetails[i];
 
@@ -11868,10 +11868,10 @@ namespace KdsBatch
                                 //אם נמצא סידור שזכאי להלבשה, נשמור את האינדקס של הסידור
                                 if (bSidurZakaiLHalbash)
                                 {
-                                    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA,false);
+                                    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1)
                                         iSidurZakaiLehalbashaKnisa = i;
-                                    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA,false);
+                                    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bYetizaValid)
                                         iSidurZakaiLehalbashaYetzia = i;
                                     else iSidurZakaiLehalbashaYetzia = -1;
@@ -11920,42 +11920,42 @@ namespace KdsBatch
 
                                 //if (bStatusChishuv)
                                 //{
-                                    //fDakotInTafkid = CalcOvedDakotInYafkid(dCardDate);
-                                    //if (fDakotInTafkid < oParam.iMinYomAvodaForHalbasha)
-                                    //{
-                                    //    if (!CheckIdkunRashemet("HALBASHA"))
-                                    //    {
-                                    //        oObjYameyAvodaUpd.HALBASHA = 4;
-                                    //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                                    //    }
-                                    //}
-                                    if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                                //fDakotInTafkid = CalcOvedDakotInYafkid(dCardDate);
+                                //if (fDakotInTafkid < oParam.iMinYomAvodaForHalbasha)
+                                //{
+                                //    if (!CheckIdkunRashemet("HALBASHA"))
+                                //    {
+                                //        oObjYameyAvodaUpd.HALBASHA = 4;
+                                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                                //    }
+                                //}
+                                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                                {
+                                    //4. עובד מאגד תעבורה 
+                                    if (!CheckIdkunRashemet("HALBASHA"))
                                     {
-                                        //4. עובד מאגד תעבורה 
-                                        if (!CheckIdkunRashemet("HALBASHA"))
-                                        {
-                                            oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
-                                            oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //3. עובד אשר ענה על תנאי זכאות (אחד מהערכים 1-3), אולם הוא מותאם ליום קצר (יודעים שעובד הוא מותאם ליום עבודה קצר לפי שני פרמטרים – העובד מותאם (לפי קיום ערך בפרמטר 8 (קוד עובד מותאם) בטבלת פרטי עובדים ולפי קיום ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים) וזמן המותאמות שלו (לפי ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים קטן מהערך בפרמטר 0167 (כרגע 300).
-                                        if ((!CheckIdkunRashemet("HALBASHA")) && (oOvedYomAvodaDetails.bMutamutExists) && (oOvedYomAvodaDetails.iZmanMutamut < oParam.iMinDakotLemutamLeHalbasha) && (oOvedYomAvodaDetails.iZmanMutamut > 0))
-                                        {
-                                            oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
-                                            oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                                        }
-                                    }
-
-
-                                    if (bSidurLoZakaiLHalbash && (!CheckIdkunRashemet("HALBASHA")))
-                                    {   //1.
-                                        //לעובד מאפיין הלבשה (44) + ) ולפחות לסידור אחד יש מאפיין זכאי לזמן הלבשה (ערך 1 במאפיין 15 זכאי לזמן הלבשה במאפייני סידורים מיוחדים, לא רלוונטי לסידורים רגילים) ולא ענה על תנאים 0-3.
                                         oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
                                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                                     }
-                                    bHaveHalbasha = true;
+                                }
+                                else
+                                {
+                                    //3. עובד אשר ענה על תנאי זכאות (אחד מהערכים 1-3), אולם הוא מותאם ליום קצר (יודעים שעובד הוא מותאם ליום עבודה קצר לפי שני פרמטרים – העובד מותאם (לפי קיום ערך בפרמטר 8 (קוד עובד מותאם) בטבלת פרטי עובדים ולפי קיום ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים) וזמן המותאמות שלו (לפי ערך בפרמטר 20 (זמן מותאמות) בטבלת פרטי עובדים קטן מהערך בפרמטר 0167 (כרגע 300).
+                                    if ((!CheckIdkunRashemet("HALBASHA")) && (oOvedYomAvodaDetails.bMutamutExists) && (oOvedYomAvodaDetails.iZmanMutamut < oParam.iMinDakotLemutamLeHalbasha) && (oOvedYomAvodaDetails.iZmanMutamut > 0))
+                                    {
+                                        oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
+                                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                                    }
+                                }
+
+
+                                if (bSidurLoZakaiLHalbash && (!CheckIdkunRashemet("HALBASHA")))
+                                {   //1.
+                                    //לעובד מאפיין הלבשה (44) + ) ולפחות לסידור אחד יש מאפיין זכאי לזמן הלבשה (ערך 1 במאפיין 15 זכאי לזמן הלבשה במאפייני סידורים מיוחדים, לא רלוונטי לסידורים רגילים) ולא ענה על תנאים 0-3.
+                                    oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
+                                    oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                                }
+                                bHaveHalbasha = true;
                                 //}
                                 //else
                                 //{
@@ -11975,7 +11975,7 @@ namespace KdsBatch
                                 {
                                     oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLehalbashaKnisa];
                                     oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
-                          
+
                                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiKnisa.GetHashCode(); ;
                                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                 }
@@ -11984,7 +11984,7 @@ namespace KdsBatch
                                 {
                                     oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLehalbashaYetzia];
                                     oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
-                          
+
                                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiYetiza.GetHashCode(); ;
                                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                 }
@@ -11993,9 +11993,9 @@ namespace KdsBatch
                                 {
                                     oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLehalbashaYetzia];
                                     oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
-                                           
+
                                     oObjSidurimOvdimUpd.MEZAKE_HALBASHA = ZmanHalbashaType.ZakaiKnisaYetiza.GetHashCode(); ;
-                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;        
+                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                 }
                             }
 
@@ -12004,6 +12004,11 @@ namespace KdsBatch
                                 oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
                                 oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                             }
+                        }
+                        else
+                        {
+                            oObjYameyAvodaUpd.HALBASHA = ZmanHalbashaType.LoZakai.GetHashCode();
+                            oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                         }
                     }
                 }
