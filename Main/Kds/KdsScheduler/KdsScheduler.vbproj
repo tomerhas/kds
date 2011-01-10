@@ -63,11 +63,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KdsBatch">
-      <HintPath>..\KdsBatch\bin\Release\KdsBatch.dll</HintPath>
+    <Reference Include="KdsBatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KdsBatch\bin\Debug\KdsBatch.dll</HintPath>
     </Reference>
-    <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\Release\KdsLibrary.dll</HintPath>
+    <Reference Include="KdsLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KdsLibrary\bin\Debug\KdsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="KdsWorkFlow">
       <HintPath>..\KdsWorkFlow\bin\Release\KdsWorkFlow.dll</HintPath>
