@@ -295,8 +295,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         txtId.Focus();
         txtName.Attributes.Add("onchange", "isUserNameValid();");
         btnRefreshOvedDetails.Attributes.Add("onfocus", "onButtonFocusIn(" + btnRefreshOvedDetails.ID + ")");
-        btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");  
-        
+        btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");
+        btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
+        btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");  
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
         ErrorImage(imgLinaErr, false);

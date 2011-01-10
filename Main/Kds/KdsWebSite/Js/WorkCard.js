@@ -117,8 +117,7 @@
     }
     function GetOvedALLDetails(iKodOved){
        var sCardDate;
-       if (document.getElementById("clnDate").value!=''){             
-         //dCardDate = new Date(document.getElementById("clnDate").value);        
+       if (document.getElementById("clnDate").value!=''){                      
          sCardDate=document.getElementById("clnDate").value;
        }
        else{       

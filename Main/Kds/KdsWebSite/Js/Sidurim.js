@@ -546,21 +546,16 @@ var MKT_ELEMENT = 5;
            var AddDay =Number(document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value);
 
            SetDate(OrgPTime, sCardDate.substr(6, 4), Number(sCardDate.substr(3, 2))-1, sCardDate.substr(0, 2), sShatYetiza.substr(0, 2), sShatYetiza.substr(sShatYetiza.length - 2, 2)); 
-//           OrgPTime.setHours(sShatYetiza.substr(0,2)); 
-//           OrgPTime.setMinutes(sShatYetiza.substr(sShatYetiza.length-2,2));  
            OrgPTime.setMinutes(OrgPTime.getMinutes() - Number(sValidHour));
            OrgPTime.setDate(OrgPTime.getDate() + AddDay);
 
            SetDate(NewPTime, sCardDate.substr(6, 4), Number(sCardDate.substr(3, 2))-1, sCardDate.substr(0, 2), sActualHour.substr(0, 2), sActualHour.substr(sActualHour.length - 2, 2));
-//           NewPTime.setHours(sActualHour.substr(0, 2));
-//           NewPTime.setMinutes(sActualHour.substr(sActualHour.length - 2, 2));
            if ((IsShatGmarInNextDay(sActualHour)) && (AddDay=='1')){
                NewPTime.setDate(NewPTime.getDate() + AddDay);
            }
            SetDate(PTime, sCardDate.substr(6, 4), Number(sCardDate.substr(3, 2))-1, sCardDate.substr(0, 2), sShatYetiza.substr(0, 2), sShatYetiza.substr(sShatYetiza.length - 2, 2));
            PTime.setDate(PTime.getDate() + AddDay);
-//           PTime.setHours(sShatYetiza.substr(0,2)); 
-//           PTime.setMinutes(sShatYetiza.substr(sShatYetiza.length-2,2)); 
+
            var dOrgPTime = Date.UTC(OrgPTime.getFullYear(), OrgPTime.getMonth()+1, OrgPTime.getDate(),OrgPTime.getHours(),OrgPTime.getMinutes(),0);
            var dNewPTime = Date.UTC(NewPTime.getFullYear(), NewPTime.getMonth()+1, NewPTime.getDate(),NewPTime.getHours(),NewPTime.getMinutes(),0);       
            var dPTime =  Date.UTC(PTime.getFullYear(), PTime.getMonth()+1, PTime.getDate(),PTime.getHours(),PTime.getMinutes(),0); 
