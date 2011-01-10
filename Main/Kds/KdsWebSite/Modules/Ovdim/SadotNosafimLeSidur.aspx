@@ -56,7 +56,7 @@
      <ContentTemplate>                   
       <table id="tblMeafyenim" runat="server" width="100%">
             <tr  class="GridHeader" width="100%"><td colspan="3"> שדות נוספים לסידור</td></tr>
-            <tr><td colspan="3"><asp:Label ID="lblPizulSidur" runat="server" Visible="false"  Text="זהו סידור ויזה. שעת גמר הסידור היא אחרי 06:00, שקול לפצל את הסידור. *"></asp:Label></td></tr>
+            <tr><td colspan="3"><asp:Label ID="lblPizulSidur" runat="server" Font-Bold="true" Visible="false"  Text="זהו סידור ויזה. שעת גמר הסידור היא אחרי 06:00, שקול לפצל את הסידור."></asp:Label></td></tr>
             <tr>       
                 <td rowspan="2" width="10px"></td>   
                 <td  id="tdPirteySidur" runat="server">

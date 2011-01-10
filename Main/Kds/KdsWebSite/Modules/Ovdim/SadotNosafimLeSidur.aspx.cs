@@ -71,7 +71,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 if (MisSidur.Value.Substring(0, 1) == "9")
                 {
                     listMeafyenim = getMeafyenimSadotNosafimLesidurMeyuchad(clnDate.Value, int.Parse(MisSidur.Value));
-                    if (listMeafyenim.IndexOf(",45,", 0) > -1)
+                    if (listMeafyenim.IndexOf("45") > -1)
                     {
                         if ((DateTime.Parse(ShatHatchala.Value) < DateTime.Parse(clnDate.Value + " 23:59:00")) &&
                             (DateTime.Parse(ShatGmar.Value) > DateTime.Parse(clnDate.Value + " 06:00:00").AddDays(1)))
@@ -1116,7 +1116,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     {
                         id = "txt_" + id + "_" + i;
                         txt = (TextBox)oTbl.FindControl(id);
-                        if (cmb != null)
+                        if (txt != null)
                         {
                             vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                             if (!checkValidTxt(txt,ref vld,  dr))
