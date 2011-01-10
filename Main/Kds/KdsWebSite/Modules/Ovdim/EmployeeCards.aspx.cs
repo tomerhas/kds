@@ -27,6 +27,12 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     {
         if (!Page.IsPostBack && Request.QueryString["EmpId"] == null)
             Session["arrParams"] = null;
+        if (!Page.IsPostBack)
+        {
+            txtId.Focus();
+            txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
+            txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
+        }
         if (Request.QueryString["Key"] != null && Session["arrParams"] == null)
         {
             DriverStation.WSkds wsDriverStation = new DriverStation.WSkds();
@@ -37,7 +43,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 arrParams = wsDriverStation.getZihuiUser(Request.QueryString["Key"].ToString());
                 Session["arrParams"] = arrParams;
                 SetUserKiosk(int.Parse(arrParams[0].ToString()));
-
+                
             }
             catch (Exception ex)
             {

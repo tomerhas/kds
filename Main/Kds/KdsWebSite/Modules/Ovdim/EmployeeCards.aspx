@@ -47,13 +47,13 @@
                         <table>
                             <tr>                                
                                 <td class="InternalLabel" style="width:90px">                                       
-                                  <asp:RadioButton runat="server" Checked="true" ID="rdoId"  EnableViewState="true" GroupName="grpSearch" Text="מספר אישי:"   > </asp:RadioButton>                                        
+                                  <asp:RadioButton runat="server" Checked="true" ID="rdoId"   EnableViewState="true" GroupName="grpSearch" Text="מספר אישי:"    > </asp:RadioButton>                                        
                                 </td>
                                                          
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ontextchanged="txtId_TextChanged" MaxLength="5" style="width:100px;" TabIndex="1" autopostback="true"></asp:TextBox>                            
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ontextchanged="txtId_TextChanged"  MaxLength="5" style="width:100px;" TabIndex="1" autopostback="true"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
@@ -101,7 +101,8 @@
            <table border="0"> 
             <tr>
                 <td class="style3"><asp:RadioButton runat="server" ID="rdoMonth" GroupName="grpCardType" Text="חודש" > </asp:RadioButton></td>
-                <td class="style2"><asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value='-1';" TabIndex="3" 
+                <td class="style2"> 
+                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '-1';"  TabIndex="3" 
                         style="width:103px; margin-right: 15px;"></asp:DropDownList></td>
               
             
@@ -113,7 +114,7 @@
                             <asp:Button Text="הצג" ID="btnExecute" runat="server" TabIndex="5" 
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnExecute_Click" 
                                 Width="62px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />                                                                                                               
-                       </ContentTemplate>                                              
+                       </ContentTemplate>                                   
                     </asp:UpdatePanel>    
                 </td>
               <td style="width:60px;">
@@ -303,10 +304,12 @@
         if (rdo.checked) {
             document.getElementById("ctl00_KdsContent_txtId").disabled = false;
             document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+            document.getElementById("ctl00_KdsContent_txtId").select();
         }
         else {
             document.getElementById("ctl00_KdsContent_txtName").disabled = false;
             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
+                document.getElementById("ctl00_KdsContent_txtName").select();
         }
     }
     
@@ -336,7 +339,9 @@
         document.getElementById("divHourglass").style.display = 'none';
         document.getElementById("ctl00_KdsContent_btnExecute").click();
         return ReturnWin;
-     }       
+     }
+
+   
    </script>
 </asp:Content>
 
