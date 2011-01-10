@@ -856,9 +856,9 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                             oTblP.Rows.Add(oTrP);
                             flagNewRow = false;
                         }
-                    }
-                    i++;     
-                }    
+                    }  
+                }
+                i++;   
             }
 
             if (oTblP.Rows.Count == 0)
