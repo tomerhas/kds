@@ -2188,6 +2188,8 @@ namespace KdsBatch
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
             float fHalbashaTchilatYom, fHalbashaSofYom;
+            dZmatTchilatTosLila = DateTime.MaxValue;
+            dZmanSiyuomTosLila = DateTime.MaxValue;
             try
             {
 
@@ -2212,13 +2214,12 @@ namespace KdsBatch
                                
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()).AddMinutes(-fHalbashaTchilatYom);
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
-                                dZmatTchilatTosLila = _oGeneralData.objParameters.dTchilatTosefetLailaChok;
-                                dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
-
+                                
                                 fErech = 0;
                                 if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                                 {
-                                    
+                                    dZmatTchilatTosLila = _oGeneralData.objParameters.dTchilatTosefetLailaChok;
+                                    dZmanSiyuomTosLila = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
                                     
                                     //אם סידור הינו סידור ויזה צבאית - סידור מיוחד בעל שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1 זהו יום אחרון של הוויזה - TB_Sidurim_Ovedim.Yom_Visa= 3 אזי יש לבצע את בדיקת זמן הסידור מול שעות לילה חוק לפי שעת התחלה של סידור TB_Sidurim_Ovedim. Shat_hatchala  ולא שעת התחלה לתשלום של סידור.
                                     if (drSidurim[I]["sidur_namlak_visa"].ToString() == "1" && drSidurim[I]["yom_visa"].ToString() == "3")
