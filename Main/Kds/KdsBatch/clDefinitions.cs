@@ -299,21 +299,24 @@ namespace KdsBatch
 
             return _Peiluyot;
         }
-        public OrderedDictionary BuildSidurimPeiluyot(int _iMisparIshi, DateTime _dCardDate,ref int iLastMisaprSidur, out  OrderedDictionary _htSpecialEmployeeDetails, out  OrderedDictionary _htEmployeeDetailsWithCancled) {
+
+        public OrderedDictionary BuildSidurimPeiluyot(int _iMisparIshi, DateTime _dCardDate,ref int iLastMisaprSidur, out  OrderedDictionary _htSpecialEmployeeDetails) //, out  OrderedDictionary _htEmployeeDetailsWithCancled
+        {
             DataTable dtDetails;
             OrderedDictionary htEmployeeDetails= new OrderedDictionary();
             _htSpecialEmployeeDetails = new OrderedDictionary();
-            _htEmployeeDetailsWithCancled = new OrderedDictionary();
+            //_htEmployeeDetailsWithCancled = new OrderedDictionary();
             //Get Oved Details
             dtDetails = GetOvedDetails(_iMisparIshi, _dCardDate);
             if (dtDetails.Rows.Count > 0)
             {
                 //Insert Oved Details to Class
-                htEmployeeDetails = InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, out  _htEmployeeDetailsWithCancled);
+                htEmployeeDetails = InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
             }
             return htEmployeeDetails;
         }
-        public OrderedDictionary InsertEmployeeDetails(bool bInsertToShguim,DataTable dtDetails, DateTime dCardDate, ref int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails,  out OrderedDictionary htEmployeeDetailsWithCancled)
+
+        public OrderedDictionary InsertEmployeeDetails(bool bInsertToShguim, DataTable dtDetails, DateTime dCardDate, ref int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails)//,  out OrderedDictionary htEmployeeDetailsWithCancled
         {
             int iMisparSidur, iPeilutMisparSidur;
             int iKey = 0;
@@ -322,11 +325,11 @@ namespace KdsBatch
             DateTime dShatHatchala=DateTime.MinValue;
             DateTime dShatHatchalaPrev = new DateTime();
             clSidur oSidur = new clSidur();
-            clSidur oSidurWithCanceld = new clSidur();
+            //clSidur oSidurWithCanceld = new clSidur();
             clPeilut oPeilut = new clPeilut();
             OrderedDictionary htEmployeeDetails = new OrderedDictionary();
             htSpecialEmployeeDetails = new OrderedDictionary();
-            htEmployeeDetailsWithCancled = new OrderedDictionary();
+            //htEmployeeDetailsWithCancled = new OrderedDictionary();
             string sLastShilut="";
             DataTable dtPeiluyot;
             clKavim _Kavim = new clKavim();
@@ -352,25 +355,26 @@ namespace KdsBatch
                     oSidur = new clSidur();
                     oSidur.AddEmployeeSidurim(dr,true);
                    
-                    oSidurWithCanceld = new clSidur();
-                    oSidurWithCanceld.AddEmployeeSidurim(dr,false);
-                    oSidurWithCanceld.iSugSidurRagil = oSidur.iSugSidurRagil;
-                    oSidurWithCanceld.bSidurRagilExists = oSidur.bSidurRagilExists;
+                    //oSidurWithCanceld = new clSidur();
+                    //oSidurWithCanceld.AddEmployeeSidurim(dr,false);
+                    //oSidurWithCanceld.iSugSidurRagil = oSidur.iSugSidurRagil;
+                    //oSidurWithCanceld.bSidurRagilExists = oSidur.bSidurRagilExists;
                   
                     if (SpecialSidurim.Contains(iMisparSidur))
                     {
                         //htSpecialEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
                         htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidur);
                     }
-                    else if (oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3)
-                    {
-                        htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
-                    }
-                    else if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
+                    //else if (oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3)
+                    //{
+                    //    htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
+                    //}
+                    //else 
+                    if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
                     {
                         //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
                         htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidur);
-                        htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
+                        //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
                     }
                     iMisparSidurPrev = iMisparSidur;
                     dShatHatchalaPrev = dShatHatchala;
@@ -391,15 +395,15 @@ namespace KdsBatch
                             sLastShilut = oPeilut.sShilut;
                         else if (_MakatType == clKavim.enMakatType.mVisut)
                             oPeilut.sShilut= sLastShilut;
-                        if (!(oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3) && !(oPeilut.iBitulOHosafa == 1 || oPeilut.iBitulOHosafa == 3))
-                        {
+                        //if (!(oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3) && !(oPeilut.iBitulOHosafa == 1 || oPeilut.iBitulOHosafa == 3))
+                        //{
                             oSidur.htPeilut.Add(iKey, oPeilut);
-                            oSidurWithCanceld.htPeilut.Add(iKey, oPeilut);
-                        }
-                        else
-                        {
-                            oSidurWithCanceld.htPeilut.Add(iKey, oPeilut);
-                        }
+                            //oSidurWithCanceld.htPeilut.Add(iKey, oPeilut);
+                        //}
+                        //else
+                        //{
+                        //    oSidurWithCanceld.htPeilut.Add(iKey, oPeilut);
+                        //}
 
                         //אם לפחות אחד מהפעילויות היא פעילות אילת, נסמן את הסידור כסידור אילת
                         if (oPeilut.bPeilutEilat)                       
