@@ -2756,7 +2756,7 @@ namespace KdsBatch
             bool bYeshSidur = false;
             try
             {
-                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC");
                 fErech=0;
                 for (int I = 0; I < drSidurim.Length;I++)
                 {
@@ -2799,7 +2799,6 @@ namespace KdsBatch
                             dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                             fErechSidur = float.Parse((dShatHatchalaLetashlum-dShatGmarLetashlum).TotalMinutes.ToString());
-                            I += 1;
                             if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
                                 fErech += fErechSidur;
                         }

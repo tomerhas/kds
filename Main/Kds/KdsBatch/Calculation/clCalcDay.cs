@@ -2718,7 +2718,7 @@ namespace KdsBatch
                 if (fMichsaYomit == 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     if ((_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 120)
-                        fErech = Math.Min(120, fNochehutBeshishi);
+                        fErech = Math.Min(120, fNochehutBeshishi-120);
                     else if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
                         fErech = Math.Min(240, fNochehutBeshishi);
                 }
@@ -3867,10 +3867,7 @@ namespace KdsBatch
                             DateTime dShatHatchala;
                             DateTime dShatGmar=DateTime.Parse(_Taarich.AddDays(1).ToShortDateString() + " 06:00");
                             
-                            if (_oGeneralData.objPirteyOved.iMikumYechida == 141)
-                                 dShatHatchala = DateTime.Parse(_Taarich.ToShortDateString() + " 21:00");
-                            else
-                                 dShatHatchala = DateTime.Parse(_Taarich.ToShortDateString() + " 22:00");
+                            dShatHatchala = DateTime.Parse(_Taarich.ToShortDateString() + " 22:00");
 
                             rowSidurim = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime') and Shat_gmar_Letashlum>=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')", "");
                             for (int i = 0; i < rowSidurim.Length; i++)
