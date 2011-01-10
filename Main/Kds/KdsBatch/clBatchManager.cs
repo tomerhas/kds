@@ -9258,12 +9258,14 @@ namespace KdsBatch
                             {
                                 oObjPeilutUpd = GetUpdPeilutObject(i, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
 
+                                FindDuplicatPeiluyot(j, oSidur.dFullShatHatchala, i, ref oSidur, ref oObjSidurimOvdimUpd);
                                 oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala;
                                 iMinuts = int.Parse((oSidur.dFullShatHatchala - dShatYetziaFirst).TotalMinutes.ToString());
                                 oPeilut.dFullShatYetzia = oObjPeilutUpd.SHAT_YETZIA;
                                 oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
                                 iMinuts= int.Parse(oPeilut.lMakatNesia.ToString().Substring(3,3))-iMinuts;
                                 oObjPeilutUpd.MAKAT_NESIA = long.Parse(string.Concat(oPeilut.lMakatNesia.ToString().Substring(0, 3), iMinuts.ToString().PadLeft(3, (char)48), oPeilut.lMakatNesia.ToString().Substring(6, 2)));
+                                
                                 break;
                             }
                         }
@@ -9287,8 +9289,7 @@ namespace KdsBatch
             clPeilut oPeilut;
             SourceObj SourceObject;
             OBJ_PEILUT_OVDIM oObjPeilutUpd;
-            clSidur oSidurWithCancled;
-               
+              
             try
             {
                 
