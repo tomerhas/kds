@@ -204,16 +204,19 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     shatHatchala = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[0]["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value)); 
                     shaa = shatHatchala.ToShortTimeString();
                     txtShatHatchala.Text = shaa;
+                        TaarichHatchala.Value = shaa + " ";
                     if (shatHatchala.Date > DateTime.Parse(TaarichCA.Value))
                     {
                         txtShatHatchala.Attributes.Add("NEXT", "true");
                         lblYomHaba.Text = lblYomHaba.Text + DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString();
                         trMsgNextDay.Style["display"] = "inline";
+                        TaarichHatchala.Value = TaarichHatchala.Value + DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString();
                     }
                     else
                     {
                         txtShatHatchala.Attributes.Add("NEXT", "false");                     
                         trMsgNextDay.Style["display"] = "none";
+                        TaarichHatchala.Value = TaarichHatchala.Value + DateTime.Parse(TaarichCA.Value).ToShortDateString();
                     }
 
                     if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["MAZANTASHLUM"].ToString()))
@@ -226,6 +229,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                         txtShatGmar.ToolTip = TaarichGmar.Value;
                     }
                     else TaarichGmar.Value = "";
+                    
                 }
 
                 foreach (DataRow dr in dsSidur.Tables[1].Rows)

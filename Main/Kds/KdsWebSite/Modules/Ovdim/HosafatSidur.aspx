@@ -243,7 +243,7 @@
          var vldArr;
          var Rechev;
          var checked;
-        // debugger;
+         debugger;
          is_valid = onchange_txtShatHatchala(false, "");
            if (is_valid) {
                is_valid = onchange_txtShatGmar(false, "");
