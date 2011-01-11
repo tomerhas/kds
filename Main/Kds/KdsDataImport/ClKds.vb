@@ -3015,7 +3015,8 @@ Public Class ClKds
         Dim p_date As Date
         Dim BodyMail As String
         Dim ToMail As String
-        Dim iThreadHrSeq As Integer
+        Dim iThreadHrSeq, iloopSeq As Integer
+
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         ''if_while is due to 2 parameters:
         ''1: run only between 2 and 6
@@ -3069,11 +3070,13 @@ Public Class ClKds
                 threadHrChainges.Start(New Object() {iThreadHrSeq})
                 '2nd thread: loop 2 check if already 5 - 6 oclock to run sdrn
                 While non_stop_loop
+                    iloopSeq = oBatch.InsertProcessLog(8, 88, KdsLibrary.BL.RecordStatus.Wait, "inside loop hr", 0)
                     If Now.Hour > CInt(SdrnStrtHour) And Now.Hour < 13 Then
                         RunSdrn(p_date_str) 'yyyymmdd
                     End If
-                    Thread.Sleep(300000) '=5 minutes
+                    Thread.Sleep(900000) '=15 minutes
                     non_stop_loop = check_non_stop_loop()
+                    oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Finish, "inside loop hr", 0)
                 End While
                 oBatch.UpdateProcessLog(iThreadHrSeq, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0)
             End If
@@ -3146,9 +3149,11 @@ Public Class ClKds
         Dim p_date_str As String
         Dim p_date As Date
         Dim p_date_str_now As String
-        Dim num, iSeqThreadHr, iSeqNum As Integer
+        Dim num, iSeqThreadHr, iSeqNum, iloopSeq As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
+            iloopSeq = oBatch.InsertProcessLog(8, 89, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr", 0)
+
             iSeqThreadHr = -1
             oBatch = New KdsLibrary.BL.clBatch()
             'the sadran run on yesterday
@@ -3179,6 +3184,8 @@ Public Class ClKds
                     'the record exists but something is wrong
                 Else
                     ct = CInt(dt.Rows(0).Item("ct").ToString)
+                    oBatch.InsertProcessLog(8, 87, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr ct=" & ct, 0)
+
                     If ct = 0 Then
                         'should not run since the refresh is not ok
                         'todo: send email refresh not refreshed only once
@@ -3219,6 +3226,8 @@ Public Class ClKds
                                 Else
                                     ' st1 = dt3.Rows(0).Item("stat1").ToString
                                     st2 = dt3.Rows(0).Item("stat2").ToString
+                                    oBatch.InsertProcessLog(8, 86, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr st2=" & st2, 0)
+
                                     Select Case (st2)  '(st1 & st2)
                                         Case "0"
                                             iSeqThreadHr = oBatch.InsertProcessLog(8, 3, KdsLibrary.BL.RecordStatus.Wait, "start RunThreadHrChainges", 0)
@@ -3300,10 +3309,14 @@ Public Class ClKds
                     End If
                 End If
             End If
+            oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Finish, "bdika RunThreadHr", 0)
+
         Catch ex As Exception
             If (iSeqThreadHr <> -1) Then
                 oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy hr aborted " & ex.Message, 13)
             End If
+            oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Faild, "bdika RunThreadHr Exception: " & ex.Message, 0)
+
             ''** KdsWriteProcessLog(3, 37, 3, "thread after shinuy hr aborted " & ex.Message, "7")
             Throw ex
             'Finally

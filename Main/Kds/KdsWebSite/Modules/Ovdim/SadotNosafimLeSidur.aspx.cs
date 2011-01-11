@@ -314,7 +314,10 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         {
             dtSadotNosafimLesidur = (DataTable)Session["dtSadotNosafimLesidur"];
             if (dtSadotNosafimLesidur.Rows.Count == 0)
+            {
                 lblEinSadotLesidur.Visible = true;
+                Session["dtSadotKayamim"] = null;
+            }
             else
             {
                 dtSadotKayamim = oUtils.GetSadotNosafimKayamim(int.Parse(txtId.Value),
