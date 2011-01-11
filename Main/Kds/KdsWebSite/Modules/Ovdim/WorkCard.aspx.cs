@@ -2657,7 +2657,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {                
                 _Peilut = (clPeilut)oSidur.htPeilut[iRowIndex];                
                 oGridRow = oGridView.Rows[iRowIndex];
-
+                
                 oShatYetiza = ((TextBox)oGridRow.Cells[lstSidurim.COL_SHAT_YETIZA].Controls[0]);
                 sDayToAdd = ((TextBox)oGridRow.Cells[lstSidurim.COL_DAY_TO_ADD].Controls[0]).Text;
                 iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
@@ -2713,6 +2713,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 oObjPeiluyotOvdimUpd.MISPAR_KNISA = iMisparKnisa;//String.IsNullOrEmpty(oGridRow.Cells[lstSidurim.COL_KNISA].Text) ? 0 : int.Parse(oGridRow.Cells[lstSidurim.COL_KNISA].Text);
                 //if ((((System.Web.UI.HtmlControls.HtmlInputHidden)(this.FindControl("hidLvl3Chg"))).Value.ToString().Equals("1")))
                 //נבדוק אם נעשה שינוי באחת משדות הפעילות
+                oObjPeiluyotOvdimUpd.TAARICH_IDKUN_ACHARON = _Peilut.dCardLastUpdate;
                 if (PeilutHasChanged(_Peilut, oGridRow))//נבדוק אם נעשה שינוי באחת משדות הפעילות                  
                 {
                     oObjPeiluyotOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
@@ -3205,6 +3206,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjPeilyutOvdimDel.SHAT_YETZIA = oObjPeiluyotOvdimUpd.SHAT_YETZIA;
             oObjPeilyutOvdimDel.MISPAR_KNISA = oObjPeiluyotOvdimUpd.MISPAR_KNISA;
             oObjPeilyutOvdimDel.MAKAT_NESIA = oObjPeiluyotOvdimUpd.MAKAT_NESIA;
+            oObjPeilyutOvdimDel.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjPeilyutOvdimDel.BITUL_O_HOSAFA = 1;
             oObjPeilyutOvdimDel.UPDATE_OBJECT = 1;
         }
@@ -3221,6 +3223,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimDel.TAARICH = oObjSidurimOvdimUpd.TAARICH;
             oObjSidurimOvdimDel.SHAT_HATCHALA = oObjSidurimOvdimUpd.SHAT_HATCHALA;
             oObjSidurimOvdimDel.MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
+            oObjSidurimOvdimDel.MEADKEN_ACHARON =long.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjSidurimOvdimDel.BITUL_O_HOSAFA = 1;
             oObjSidurimOvdimDel.UPDATE_OBJECT = 1;
         }

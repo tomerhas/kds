@@ -1625,19 +1625,21 @@ public class wsGeneral : System.Web.Services.WebService
         
         DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         DataRow[] dr;
-        string sResult = "0";
+        string sResult = "0,0";
         //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
         if ((dSidurStartHour >= dStartHour) && (dSidurStartHour<=dEndHour))
         {
+            sResult = "0,1";   
             dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
             if (dr.Length > 0)
             {
                 if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
-                    sResult = "1";              
-            }            
+                    sResult = "1,1";              
+            }
+           
         }
 
-        if (sResult.Equals("0"))
+        if (sResult.Substring(0,1).Equals("0"))
             UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0);
 
         return sResult;       

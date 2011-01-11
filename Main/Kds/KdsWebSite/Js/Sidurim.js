@@ -600,12 +600,13 @@ var MKT_ELEMENT = 5;
       wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH, callBackStartHour, null, iIndex);
   }
   function callBackStartHour(result, iIndex) {
-     if (result=='1')
+     result = result.split(",");
+     if (result[0]=='1')
          document.getElementById("lstSidurim_btnShowMessage").click();
 
      var dSdDate = new Date();     
      var _SHNew = document.getElementById("lstSidurim_txtSH".concat(iIndex));
-     if (!IsShatGmarInNextDay(_SHNew.value)) {//שעת התחלה
+     if (result[1] == '0') {//שעת התחלה
          document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = document.getElementById("clnDate").value;
      }
      var sSdDate=document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML; 
@@ -870,9 +871,10 @@ var MKT_ELEMENT = 5;
             var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
             var res = window.showModalDialog('HosafatPeiluyot.aspx' + sQuryString, window, "dialogwidth:900px;dialogheight:680px;dialogtop:130px;dialogleft:170px;status:no;resizable:yes;scroll:0;");
             document.getElementById("divHourglass").style.display = 'none';
-            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
+            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {                
                 document.getElementById("hidExecInputChg").value = "1";
                 bScreenChanged = false;
+                RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
             }
         }        
