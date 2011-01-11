@@ -307,7 +307,7 @@ namespace KdsBatch
             iBitulOHosafa = System.Convert.IsDBNull(dr["peilut_bitul_o_hosafa"]) ? 0 : int.Parse(dr["peilut_bitul_o_hosafa"].ToString());
             iDakotBafoal = System.Convert.IsDBNull(dr["DAKOT_BAFOAL"]) ? 0 : int.Parse(dr["DAKOT_BAFOAL"].ToString());
             iKmVisa = System.Convert.IsDBNull(dr["KM_VISA"]) ? 0 : int.Parse(dr["KM_VISA"].ToString());
-            dCardLastUpdate = System.Convert.IsDBNull(dr["taarich_idkun_acharon"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon"].ToString());
+            dCardLastUpdate = System.Convert.IsDBNull(dr["taarich_idkun_acharon_peilut"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon_peilut"].ToString());
             sSnifTnua = dr["snif_tnua"].ToString();
             sHeara = dr["heara_peilut"].ToString();
              sShilutNetzer = dr["shilut_netzer"].ToString();
