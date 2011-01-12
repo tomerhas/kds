@@ -145,6 +145,11 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             {
                 txtSidurDate.Value = Request.QueryString["SidurDate"].ToString(); //"08/03/2010";//"26/05/2009"; //
             }
+
+            Session["dtMakatimCatalog"] = null;
+            Session["dtPeiluyot"] = null;
+            Session["dtSadotNosafimLesidur"] = null;
+            Session["dtSadotNosafimLePeilut"] = null;
         }
         catch (Exception ex)
         {
@@ -313,15 +318,12 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         try
         {
             dtSadotNosafimLesidur = (DataTable)Session["dtSadotNosafimLesidur"];
-            if (dtSadotNosafimLesidur.Rows.Count == 0)
-            {
+            dtSadotKayamim = oUtils.GetSadotNosafimKayamim(int.Parse(txtId.Value),
+                         int.Parse(MisSidur.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
+            if (dtSadotNosafimLesidur.Rows.Count == 0 || dtSadotKayamim.Rows.Count == 0)
                 lblEinSadotLesidur.Visible = true;
-                Session["dtSadotKayamim"] = null;
-            }
             else
             {
-                dtSadotKayamim = oUtils.GetSadotNosafimKayamim(int.Parse(txtId.Value),
-                         int.Parse(MisSidur.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
                 Session["dtSadotKayamim"] = dtSadotKayamim;
                 for (int i = 0; i < dtSadotNosafimLesidur.Rows.Count; i++)
                 {
