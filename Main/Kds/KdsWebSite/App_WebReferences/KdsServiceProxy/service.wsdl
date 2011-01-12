@@ -448,6 +448,44 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TahalichHrChanges_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TahalichHrChanges_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TahalichSadran_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -622,6 +660,12 @@
   <wsdl:message name="IBatchService_RefreshMatzavOvdim_OutputMessage">
     <wsdl:part name="parameters" element="tns:RefreshMatzavOvdimResponse" />
   </wsdl:message>
+  <wsdl:message name="IBatchService_TahalichHrChanges_InputMessage">
+    <wsdl:part name="parameters" element="tns:TahalichHrChanges" />
+  </wsdl:message>
+  <wsdl:message name="IBatchService_TahalichHrChanges_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TahalichHrChangesResponse" />
+  </wsdl:message>
   <wsdl:message name="IBatchService_TahalichSadran_InputMessage">
     <wsdl:part name="parameters" element="tns:TahalichSadran" />
   </wsdl:message>
@@ -676,6 +720,10 @@
     <wsdl:operation name="RefreshMatzavOvdim">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/RefreshMatzavOvdim" message="tns:IBatchService_RefreshMatzavOvdim_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/RefreshMatzavOvdimResponse" message="tns:IBatchService_RefreshMatzavOvdim_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TahalichHrChanges">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/TahalichHrChanges" message="tns:IBatchService_TahalichHrChanges_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/TahalichHrChangesResponse" message="tns:IBatchService_TahalichHrChanges_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="TahalichSadran">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/TahalichSadran" message="tns:IBatchService_TahalichSadran_InputMessage" />
@@ -789,6 +837,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_RefreshMatzavOvdim_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TahalichHrChanges">
+      <soap12:operation soapAction="http://tempuri.org/IBatchService/TahalichHrChanges" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_TahalichHrChanges_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_TahalichHrChanges_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

@@ -43,6 +43,9 @@ namespace KdsService
         void RefreshMatzavOvdim();
 
         [OperationContract]
+        void TahalichHrChanges(int iseq);
+
+        [OperationContract]
         void TahalichSadran(string taarich);
       
         [OperationContract]

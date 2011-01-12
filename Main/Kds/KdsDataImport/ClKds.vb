@@ -3066,17 +3066,17 @@ Public Class ClKds
             If if_while And non_stop_loop Then
                 iThreadHrSeq = oBatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "start Chk_ThreadHrChainges", 0)
                 '1st thread: RunThreadHrChainges
-                Dim threadHrChainges As New System.Threading.Thread(AddressOf RunThreadHrChainges)
+                Dim threadHrChainges As New Thread(New ParameterizedThreadStart(AddressOf RunThreadHrChainges))
                 threadHrChainges.Start(New Object() {iThreadHrSeq})
                 '2nd thread: loop 2 check if already 5 - 6 oclock to run sdrn
                 While non_stop_loop
-                    iloopSeq = oBatch.InsertProcessLog(8, 88, KdsLibrary.BL.RecordStatus.Wait, "inside loop hr", 0)
+                    '*'  iloopSeq = oBatch.InsertProcessLog(8, 88, KdsLibrary.BL.RecordStatus.Wait, "inside loop hr", 0)
                     If Now.Hour > CInt(SdrnStrtHour) And Now.Hour < 13 Then
                         RunSdrn(p_date_str) 'yyyymmdd
                     End If
                     Thread.Sleep(900000) '=15 minutes
                     non_stop_loop = check_non_stop_loop()
-                    oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Finish, "inside loop hr", 0)
+                    '*' oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Finish, "inside loop hr", 0)
                 End While
                 oBatch.UpdateProcessLog(iThreadHrSeq, KdsLibrary.BL.RecordStatus.Finish, "end Chk_ThreadHrChainges", 0)
             End If
@@ -3134,7 +3134,7 @@ Public Class ClKds
         End Try
 
     End Function
-    Public Sub RunThreadHrChainges(ByVal iSekChk As Integer) 'todo: 20101003(ByVal In_TAARICH As String)
+    Public Sub RunThreadHrChainges(ByVal objSekChk As Object) 'todo: 20101003(ByVal In_TAARICH As String)
 
         Dim oDal As KdsLibrary.DAL.clDal
         Dim dt As DataTable = New DataTable()
@@ -3151,7 +3151,12 @@ Public Class ClKds
         Dim p_date_str_now As String
         Dim num, iSeqThreadHr, iSeqNum, iloopSeq As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim iSekChk As Integer
         Try
+
+            iSekChk = CType(objSekChk(0), Integer)
+
+            ' iSekChk = CInt(objSekChk)
             iloopSeq = oBatch.InsertProcessLog(8, 89, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr", 0)
 
             iSeqThreadHr = -1
@@ -3184,7 +3189,7 @@ Public Class ClKds
                     'the record exists but something is wrong
                 Else
                     ct = CInt(dt.Rows(0).Item("ct").ToString)
-                    oBatch.InsertProcessLog(8, 87, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr ct=" & ct, 0)
+                    '*'  oBatch.InsertProcessLog(8, 87, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr ct=" & ct, 0)
 
                     If ct = 0 Then
                         'should not run since the refresh is not ok
@@ -3226,7 +3231,7 @@ Public Class ClKds
                                 Else
                                     ' st1 = dt3.Rows(0).Item("stat1").ToString
                                     st2 = dt3.Rows(0).Item("stat2").ToString
-                                    oBatch.InsertProcessLog(8, 86, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr st2=" & st2, 0)
+                                    '*'   oBatch.InsertProcessLog(8, 86, KdsLibrary.BL.RecordStatus.Wait, "bdika RunThreadHr st2=" & st2, 0)
 
                                     Select Case (st2)  '(st1 & st2)
                                         Case "0"
@@ -3315,8 +3320,9 @@ Public Class ClKds
             If (iSeqThreadHr <> -1) Then
                 oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Faild, "thread after shinuy hr aborted " & ex.Message, 13)
             End If
-            oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Faild, "bdika RunThreadHr Exception: " & ex.Message, 0)
-
+            If (iloopSeq > 0) Then
+                oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Faild, "bdika RunThreadHr Exception: " & ex.Message, 0)
+            End If
             ''** KdsWriteProcessLog(3, 37, 3, "thread after shinuy hr aborted " & ex.Message, "7")
             Throw ex
             'Finally

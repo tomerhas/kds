@@ -135,6 +135,21 @@ namespace KdsService
             }
         }
 
+
+        private void RunTahalichHrChanges(object param)
+        {
+          //  object[] args = param as object[];
+          //  int iSeq = int.Parse(args[0].ToString());
+            ClKds oKDs = new ClKds();
+            try
+            {
+                oKDs.RunThreadHrChainges(param);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+        }
         private void RunTahalichSadran(object param)
         {
             object[] args = param as object[];
@@ -305,6 +320,14 @@ namespace KdsService
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunRefreshMatzavOvdim));
             runThread.Start(new object[]{});
+        }
+
+        public void TahalichHrChanges(int iSeq)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunTahalichHrChanges));
+            // LogThreadStart("CreateHeavyReports", lRequestNum);
+            runThread.Start(new object[] { iSeq });
         }
 
         public void TahalichSadran(string taarich)

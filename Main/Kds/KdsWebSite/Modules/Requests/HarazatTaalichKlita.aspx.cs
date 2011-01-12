@@ -221,7 +221,8 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
     }
     protected void btnHashlamatNetunimVeShguimHR_Click(object sender, EventArgs e)
     {
-        ClKds oKDs = new ClKds();
+      //  ClKds oKDs = new ClKds();
+        wsBatch oWsBatch = new wsBatch();
         long lRequestNum;
         clBatch obatch = new clBatch();
         int seqNum=0;
@@ -229,8 +230,9 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
         {
             seqNum = obatch.InsertProcessLog(3, 37, KdsLibrary.BL.RecordStatus.Wait, "Chk_ThreadHrChainges", 0);
             lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12);
-            oKDs.RunThreadHrChainges(seqNum);
-            obatch.UpdateProcessLog(seqNum, KdsLibrary.BL.RecordStatus.Finish, "Chk_ThreadHrChainges", 0);
+            oWsBatch.RunTahalichHrChanges(seqNum);
+            ScriptManager.RegisterStartupScript(ddlTavlaot, this.GetType(), "errName", "alert('תהליך הסדרן עשוי להימשך זמן ארוך,כדי להתעדכן יש להסתכל במסך לוג תהליך');", true);
+           // obatch.UpdateProcessLog(seqNum, KdsLibrary.BL.RecordStatus.Finish, "Chk_ThreadHrChainges", 0);
         }
         catch (Exception ex)
         {

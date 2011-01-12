@@ -130,6 +130,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="TahalichHrChanges">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="iseq" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichHrChangesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="TahalichSadran">
     <xs:complexType>
       <xs:sequence>
