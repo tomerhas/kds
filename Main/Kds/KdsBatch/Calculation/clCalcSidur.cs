@@ -957,7 +957,7 @@ namespace KdsBatch
                                    
                                     dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                                     dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
-                                    fErech = float.Parse((dShatGmarLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                                    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
 
                                     addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fErech);
                                 }
@@ -2764,7 +2764,7 @@ namespace KdsBatch
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
                             
                     iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                    if (iMisparSidur.ToString().Substring(1, 2) == "99" && int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
                         bSidurNehiga = true;
                     else 
                     {
@@ -2781,11 +2781,11 @@ namespace KdsBatch
                         J = I + 1;
                         if (J < drSidurim.Length)
                         {
-                            
+                            bSidurNehiga = false;
                             iMisparSidurNext = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
-                            if (iMisparSidurNext.ToString().Substring(1, 2) == "99" && int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                            if (iMisparSidurNext.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
                                 bSidurNehiga = true;
-                            else 
+                            else
                             {
                                 SetSugSidur(ref drSidurim[J], dTaarich, iMisparSidurNext);
                                 iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
@@ -2795,12 +2795,15 @@ namespace KdsBatch
                                     bSidurNehiga = true;
                             }
 
-                            dShatHatchalaLetashlum = DateTime.Parse(drSidurim[J]["shat_hatchala_letashlum"].ToString());
-                            dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+                            if (bSidurNehiga)
+                            {
+                                dShatHatchalaLetashlum = DateTime.Parse(drSidurim[J]["shat_hatchala_letashlum"].ToString());
+                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                            fErechSidur = float.Parse((dShatHatchalaLetashlum-dShatGmarLetashlum).TotalMinutes.ToString());
-                            if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
-                                fErech += fErechSidur;
+                                fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                                if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                    fErech += fErechSidur;
+                            }
                         }
                     }
                 }
@@ -2813,31 +2816,91 @@ namespace KdsBatch
             }
         }
 
-        public void CalcRechiv97()
+        public float CalcRechiv97()
         {
             DataRow[] drSidurim;
-            int iMisparSidur;
+            int iMisparSidur, J, iMisparSidurNext;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
-            float fErech;
+            float fErech, fErechSidur;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
-            //יש לבצע חישוב רכיב זה לאחר "סימון "לא לתשלום" עבור סידורי רציפות".
-            //אם מס' סידור = 99501 ערך הרכיב = דקות נוכחות לתשלום (רכיב 1) אחרת, אין לפתוח רשומה לרכיב.
+            bool bSidurNehiga = false;
+            bool bSidurNihulOrTafkid = false;
+            bool bSidurMezake = false;
+            int iSugSidur;
+            bool bYeshSidur = false;
             try
             {
-                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur=99501  and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC");
+                fErech = 0;
                 for (int I = 0; I < drSidurim.Length; I++)
                 {
-                    iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                    bSidurNehiga = false;
+                    bSidurNihulOrTafkid = false;
+                    bSidurMezake = false;
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-                    dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                    dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                
-                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                    iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                        bSidurNehiga = true;
+                    else if (iMisparSidur.ToString().Substring(0, 2) == "99" && (int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nihul.GetHashCode() || int.Parse(drSidurim[I]["zakay_lepizul"].ToString()) == 1))
+                        bSidurNihulOrTafkid = true;
+                    else
+                    {
+                        SetSugSidur(ref drSidurim[I], dTaarich, iMisparSidur);
+                        iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
+                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), dTaarich, iSugSidur);
+                        if (bYeshSidur)
+                            bSidurNehiga = true;
+                        else
+                        {
+                            bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), dTaarich, iSugSidur);
+                            if (bYeshSidur)
+                                bSidurNihulOrTafkid = true;
+                        }
+                    }
+
+                    if (bSidurNehiga || bSidurNihulOrTafkid)
+                    {
+                        J = I + 1;
+                        if (J < drSidurim.Length)
+                        {
+
+                            iMisparSidurNext = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
+                            if (bSidurNihulOrTafkid && iMisparSidurNext.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                                bSidurMezake = true;
+                            else if (bSidurNehiga && iMisparSidurNext.ToString().Substring(0, 2) == "99" && (int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nihul.GetHashCode() || int.Parse(drSidurim[J]["zakay_lepizul"].ToString()) == 1))
+                                bSidurMezake = true;
+                            else
+                            {
+                                SetSugSidur(ref drSidurim[J], dTaarich, iMisparSidurNext);
+                                iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
+
+                                bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), dTaarich, iSugSidur);
+                                if (bSidurNehiga && bYeshSidur)
+                                    bSidurMezake = true;
+                                else if (bSidurNihulOrTafkid)
+                                {
+                                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), dTaarich, iSugSidur);
+                                    if (bYeshSidur)
+                                        bSidurMezake = true;
+                                }
+                            }
+
+                            if (bSidurMezake)
+                            {
+                                dShatHatchalaLetashlum = DateTime.Parse(drSidurim[J]["shat_hatchala_letashlum"].ToString());
+                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+
+                                fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                                if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                    fErech += fErechSidur;
+                            }
+                        }
+                    }
                 }
+                return fErech;
             }
             catch (Exception ex)
             {
