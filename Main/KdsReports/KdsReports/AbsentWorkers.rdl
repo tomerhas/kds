@@ -13,33 +13,29 @@
           <DataField>MISPAR_ISHI_FULL</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SUG_HEADRUT">
-          <DataField>SUG_HEADRUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="SNIF_AV">
+          <DataField>SNIF_AV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="SUM_RECHIV">
+          <DataField>SUM_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="DATES_LIST">
           <DataField>DATES_LIST</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TEUR_HEADRUT">
-          <DataField>TEUR_HEADRUT</DataField>
+        <Field Name="TEUR_CLALI">
+          <DataField>TEUR_CLALI</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="MAAMAD">
           <DataField>MAAMAD</DataField>
           <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DAYS">
-          <DataField>DAYS</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="KOD_RECHIV">
           <DataField>KOD_RECHIV</DataField>
@@ -106,13 +102,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.16106in</Width>
+              <Width>2.36939in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.58842in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.51979in</Width>
+              <Width>0.88437in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.41134in</Width>
@@ -124,13 +120,13 @@
               <Width>0.46342in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.24467in</Width>
+              <Width>0.97384in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.66134in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.15429in</Width>
+              <Width>0.67512in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -428,7 +424,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>סניף</Value>
+                              <Value>מס' סניף</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -487,6 +483,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -498,7 +495,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DAYS.Value</Value>
+                              <Value>=Fields!SUM_RECHIV.Value</Value>
                               <Style>
                                 <Format>0.00;(0.00)</Format>
                               </Style>
@@ -531,7 +528,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SUG_HEADRUT.Value</Value>
+                              <Value>=Fields!TEUR_CLALI.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -719,7 +716,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                              <Value>=Fields!SNIF_AV.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -770,17 +767,16 @@
                     <TablixMember>
                       <TablixMembers>
                         <TablixMember>
-                          <Group Name="Group1">
-                            <GroupExpressions>
-                              <GroupExpression>=Fields!MISPAR_ISHI_FULL.Value</GroupExpression>
-                            </GroupExpressions>
-                          </Group>
+                          <Group Name="Group1" />
                           <TablixMembers>
                             <TablixMember>
-                              <Group Name="Details" />
                               <TablixMembers>
                                 <TablixMember>
-                                  <KeepTogether>true</KeepTogether>
+                                  <TablixMembers>
+                                    <TablixMember>
+                                      <KeepTogether>true</KeepTogether>
+                                    </TablixMember>
+                                  </TablixMembers>
                                 </TablixMember>
                               </TablixMembers>
                             </TablixMember>
@@ -803,13 +799,13 @@
             <Value>=Fields!MISPAR_ISHI_FULL.Value</Value>
           </SortExpression>
           <SortExpression>
-            <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+            <Value>=Fields!SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
         <Top>1.12889cm</Top>
         <Left>0.26345cm</Left>
         <Height>1.62334cm</Height>
-        <Width>21.14903cm</Width>
+        <Width>20.69922cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsAbsentWorkers")&gt;0 ,false,true)</Hidden>
         </Visibility>
@@ -981,7 +977,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.181in</Height>
+    <Height>1.31978in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -989,7 +985,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>11/2009</Value>
+          <Value>06/2010</Value>
         </Values>
       </DefaultValue>
       <Prompt>P PERIOD</Prompt>
@@ -999,7 +995,7 @@
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>2</Value>
+          <Value>1</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
@@ -1010,7 +1006,7 @@
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>1</Value>
+          <Value>-1</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
@@ -1020,7 +1016,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>5</Value>
+          <Value>-1</Value>
         </Values>
       </DefaultValue>
       <Prompt>P WORKDAYS</Prompt>
@@ -1028,6 +1024,11 @@
     <ReportParameter Name="P_MAMAD">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>-1</Value>
+        </Values>
+      </DefaultValue>
       <AllowBlank>true</AllowBlank>
       <Prompt>P MAMAD</Prompt>
     </ReportParameter>
@@ -1041,7 +1042,7 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>8.6048in</Width>
+  <Width>8.40394in</Width>
   <Page>
     <PageHeader>
       <Height>1.89751cm</Height>
@@ -1085,9 +1086,9 @@
           <Value>logo1</Value>
           <Sizing>Fit</Sizing>
           <Top>0.25949cm</Top>
-          <Left>19.68451cm</Left>
+          <Left>19.24785cm</Left>
           <Height>1.44708cm</Height>
-          <Width>1.72797cm</Width>
+          <Width>1.71481cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
