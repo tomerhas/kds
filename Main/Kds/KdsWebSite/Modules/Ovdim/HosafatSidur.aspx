@@ -41,7 +41,9 @@
          document.getElementById("txtMisSidurMapa").style.display = "inline";
          document.getElementById("btnMapa").disabled = "disabled";
          document.getElementById("btnMeyuchad").disabled = "";
-         
+       //  document.getElementById("btnMapa").style.border = '1px solid black';
+       //  document.getElementById("btnMeyuchad").style.border = 'none';
+
          document.getElementById("cbMisSidur").checked = true;
          document.getElementById("cbTeurSidur").checked = false;
 
@@ -65,10 +67,13 @@
      function btnMeyuchad_Click() {
          document.getElementById("txtMisSiduri").style.display = "inline";
          document.getElementById("txtMisSidurMapa").style.display = "none";
+       
 
          document.getElementById("btnMeyuchad").disabled = "disabled";
          document.getElementById("btnMapa").disabled = "";
-         
+      //   document.getElementById("btnMeyuchad").style.border = '1px solid black';
+      //   document.getElementById("btnMapa").style.border = 'none';
+
          document.getElementById("cbMisSidur").checked = true;
          document.getElementById("cbTeurSidur").checked = false;
 
@@ -1211,7 +1216,8 @@
            document.getElementById("btnMapa").disabled = "disabled";
            document.getElementById("cbMisSidur").disabled = false;
            document.getElementById("cbTeurSidur").disabled = "disabled";
-           
+           document.getElementById("btnMapa").style.border = '1px solid black';
+        
              setBorderBtns();
              load();
        }
@@ -1228,7 +1234,7 @@
          var aButton=document.getElementsByTagName('input');
            for(var i=0; i< aButton.length; i++) {
                 if (aButton[i].type =="button" || aButton[i].type =="submit"){
-                    if (aButton[i].id == obj.id && obj.id != "btnMapa" && obj.id != "btnMeyuchad")
+                    if (aButton[i].id == obj.id)// && obj.id != "btnMapa" && obj.id != "btnMeyuchad")
                           aButton[i].style.border ="1px solid black";
                    else aButton[i].style.border ="none";
             }
@@ -1311,9 +1317,9 @@
                                      <table>
                                         <tr>
                                             <td>&nbsp;&nbsp;</td>
-                                            <td><input id="btnMapa" type="button" runat="server" value="מפה" class="ImgButtonSearch"  onclick="btnMapa_Click()" style="width:auto;"  tabindex="1"   /></td>
+                                            <td><input id="btnMapa" type="button" runat="server" value="מפה" class="ImgButtonSearch"  onclick="btnMapa_Click()" style="width:auto;"  tabindex="1" onfocusout="this.style.border ='none';"  /></td>
                                               <td>&nbsp;&nbsp;</td>        
-                                            <td><input id="btnMeyuchad"  type="button"  runat="server" value="מיוחד" class="ImgButtonSearch"  onclick="btnMeyuchad_Click()" style="width:auto;"   tabindex="2"    /></td>
+                                            <td><input id="btnMeyuchad"  type="button"  runat="server" value="מיוחד" class="ImgButtonSearch"  onclick="btnMeyuchad_Click()" style="width:auto;"   tabindex="2"   onfocusout="this.style.border ='none';" /></td>
                                            
                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>               
                                             <td >
