@@ -158,6 +158,7 @@ namespace KdsLibrary.Controls
 
         private void setFocusImg()
         {
+           // _calendar.Attributes.Add("onfocusin","document.getElementById('" + _calendar.ClientID + "').select();" );
             imgCal.Attributes.Add("onfocusin", "this.style.border ='1px solid black';");
             imgCal.Attributes.Add("onfocusout", "this.style.border ='none';");
         }
