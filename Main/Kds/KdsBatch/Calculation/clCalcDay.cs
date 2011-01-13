@@ -2943,30 +2943,35 @@ namespace KdsBatch
 
          private void CalcRechiv88()
          {
-             float fSumDakotRechiv;
+             float fSumDakotRechiv, fMichsaYomit;
              try
              {
                  //א.	יום העבודה הינו א–ה וגם היום אינו שבתון סוג יום שליפת סוג יום (תאריך) = 01 
-                 if (clCalcData.iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                 if (clCalcData.iSugYom <clGeneral.enSugYom.Shabat.GetHashCode())
                  {
-                     if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
+                     fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                    
+                     if (fMichsaYomit>0)
                      {
-                         //ב.	עיסוק ראשי של העובד (התו הראשון בקוד העיסוק [שליפת פרטי עובד (קוד נתון HR=6, מ.א., תאריך)]) <> 5
-                         if ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
+                         if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                          {
-
-                             if (_oGeneralData.objMeafyeneyOved.iMeafyen30 == 1)
+                             //ב.	עיסוק ראשי של העובד (התו הראשון בקוד העיסוק [שליפת פרטי עובד (קוד נתון HR=6, מ.א., תאריך)]) <> 5
+                             if ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
                              {
-                                 oSidur.CalcRechiv88();
 
-                                 fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                 if (_oGeneralData.objMeafyeneyOved.iMeafyen30 == 1)
+                                 {
+                                     oSidur.CalcRechiv88();
 
-                                 if (fSumDakotRechiv > 18)
-                                 { fSumDakotRechiv = 18; }
+                                     fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                                 addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), fSumDakotRechiv);
+                                     if (fSumDakotRechiv > 18)
+                                     { fSumDakotRechiv = 18; }
+
+                                     addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), fSumDakotRechiv);
+                                 }
+
                              }
-
                          }
                      }
                  }
@@ -3152,7 +3157,6 @@ namespace KdsBatch
             DataRow[] rowZmanHalbash, rowMezakeHalbash, rowSidurim;
             float fDakotRechiv,fMichsaYomit, fHalbashaTchilatYom, fHalbashaSofYom, fSachDakotTafkid, fDakotTafkidChol, fDakotTafkidShabat, fDakotTafkidShishi;
             DataRow RowKodem, RowNext;
-            int iHaveZakautRetzifut = 0;
             int iSugYom;
             try{
             //תוספת זמן הלבשה (רכיב 93
@@ -3185,19 +3189,9 @@ namespace KdsBatch
                                 I -= 1;
                                 RowKodem = rowSidurim[I];
                             }
+                            break;
 
-                            if (RowKodem["mispar_sidur"].ToString() != "99500" && RowKodem["mispar_sidur"].ToString() != "99501")
-                                break;
-                            else
-                            {
-                                iHaveZakautRetzifut = int.Parse(RowKodem["mispar_sidur"].ToString());
-                                if (I > 0)
-                                {
-                                    I -= 1;
-                                    RowKodem = rowSidurim[I];
-                                }
-                                break;
-                            }
+
                         }
                     }
 
@@ -3205,27 +3199,14 @@ namespace KdsBatch
                     {
                         if ((rowMezakeHalbash[0]["mispar_sidur"].ToString() == RowKodem["mispar_sidur"].ToString()) && (rowMezakeHalbash[0]["shat_hatchala_sidur"].ToString() == RowKodem["shat_hatchala_sidur"].ToString()))
                             fHalbashaTchilatYom = _objParameters.iZmanHalbash;
-                        else if(RowKodem["mispar_sidur"].ToString()!="99500" &&  RowKodem["mispar_sidur"].ToString()!="99501")
-                          fHalbashaTchilatYom = Math.Min(float.Parse((DateTime.Parse(rowMezakeHalbash[0]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()), _objParameters.iZmanHalbash);
+                        else  fHalbashaTchilatYom = Math.Min(float.Parse((DateTime.Parse(rowMezakeHalbash[0]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()), _objParameters.iZmanHalbash);
                        
                          
                     }
                 }
-                if (iHaveZakautRetzifut > 0)
-                {
-                    if (iHaveZakautRetzifut == 99500)
-                    {
-                        fDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                        addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), (fDakotRechiv - fHalbashaTchilatYom));
-                    }
-                    else
-                    {
-                        fDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                        addRowToTable(clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), (fDakotRechiv - fHalbashaTchilatYom));
-                    }
-                }
+               
 
-                iHaveZakautRetzifut = 0;
+                
                 //ג.	חישוב [הלבשה סוף יום]:
                 //אם TB_Yamey_Avoda_Ovdim.Halbasha = 2 או 3 אזי יש לזהות את הסידור האחרון ביום שמזכה להלבשה TB_Sidurim_Ovedim.Mezake_Halbasha= 1. אם אין אחריו סידור אחר אזי [הלבשה סוף יום] = 10 דקות [שליפת פרמטר (קוד פרמטר = 143)]
                 //אחרת, [הלבשה סוף יום] = הנמוך מבין (10 דקות [שליפת פרמטר (קוד פרמטר = 143)], שעת התחלה לתשלום של הסידור שאחרי הסידור המזכה הלבשה פחות שעת גמר לתשלום של הסידור המזכה הלבשה)
@@ -3243,18 +3224,8 @@ namespace KdsBatch
                                 I+=1;
                                 RowNext = rowSidurim[I];
                             }
-                            if (RowNext["mispar_sidur"].ToString() != "99500" && RowNext["mispar_sidur"].ToString() != "99501")
-                                break;
-                            else
-                            {
-                                iHaveZakautRetzifut = int.Parse(RowNext["mispar_sidur"].ToString());
-                                if (I < rowSidurim.Length-1)
-                                {
-                                    I += 1;
-                                    RowNext = rowSidurim[I];
-                                }
-                                break;
-                            }
+                            break;
+                           
                         }
                     }
 
@@ -3262,24 +3233,11 @@ namespace KdsBatch
                     {
                         if ((rowMezakeHalbash[0]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeHalbash[0]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
                           fHalbashaSofYom = _objParameters.iZmanHalbash;
-                        else if (RowNext["mispar_sidur"].ToString() != "99500" && RowNext["mispar_sidur"].ToString() != "99501")
-                            fHalbashaSofYom = Math.Min(float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeHalbash[0]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()), _objParameters.iZmanHalbash);
+                        else fHalbashaSofYom = Math.Min(float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeHalbash[0]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()), _objParameters.iZmanHalbash);
                         
                     }
                 }
-                if (iHaveZakautRetzifut > 0)
-                {
-                    if (iHaveZakautRetzifut == 99500)
-                    {
-                        fDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                        addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), (fDakotRechiv - fHalbashaSofYom));
-                    }
-                    else
-                    {
-                        fDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                        addRowToTable(clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), (fDakotRechiv - fHalbashaSofYom));
-                    }
-                }
+               
 
                 fDakotRechiv = fHalbashaTchilatYom + fHalbashaSofYom;
 

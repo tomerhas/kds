@@ -2802,7 +2802,15 @@ namespace KdsBatch
 
                                 fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
                                 if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                {
+                                    if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
+                                    {
+                                        if (fErechSidur > 10)
+                                            fErechSidur = fErechSidur - 10;
+                                        else fErechSidur = 0;
+                                    }
                                     fErech += fErechSidur;
+                                }
                             }
                         }
                     }
@@ -2895,7 +2903,16 @@ namespace KdsBatch
 
                                 fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
                                 if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                {
+                                    if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
+                                    {
+                                        if (fErechSidur > 10)
+                                            fErechSidur = fErechSidur - 10;
+                                        else fErechSidur = 0;
+                                    }
+
                                     fErech += fErechSidur;
+                                }
                             }
                         }
                     }
