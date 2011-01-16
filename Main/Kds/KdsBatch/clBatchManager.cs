@@ -8609,7 +8609,8 @@ namespace KdsBatch
                         oObjSidurimOvdimIns.SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
                         oObjSidurimOvdimIns.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
                         oObjSidurimOvdimIns.TAARICH = _dCardDate;
-                        oObjSidurimOvdimIns.VISA = oObjSidurimOvdimUpd.VISA;
+                        oObjSidurimOvdimIns.YOM_VISA = oObjSidurimOvdimUpd.YOM_VISA;
+                        oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
                         oObjSidurimOvdimIns.MEZAKE_NESIOT = oObjSidurimOvdimUpd.MEZAKE_NESIOT;
                         oObjSidurimOvdimIns.MEZAKE_HALBASHA = oObjSidurimOvdimUpd.MEZAKE_HALBASHA;
                         oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
@@ -8697,7 +8698,8 @@ namespace KdsBatch
                 oObjSidurimOvdimIns.SHAT_GMAR = oSidur.dFullShatGmar;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatGmar));
                 oObjSidurimOvdimIns.SHAT_HATCHALA = oSidur.dFullShatHatchala;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchala));
                 oObjSidurimOvdimIns.TAARICH = oSidur.dSidurDate;
-                oObjSidurimOvdimIns.VISA = string.IsNullOrEmpty(oSidur.sVisa) ? 0 : int.Parse(oSidur.sVisa);
+                oObjSidurimOvdimIns.MIVTZA_VISA = oSidur.iMivtzaVisa;
+                oObjSidurimOvdimIns.YOM_VISA = string.IsNullOrEmpty(oSidur.sVisa) ? 0 : int.Parse(oSidur.sVisa);
                 oObjSidurimOvdimIns.MEZAKE_NESIOT = oSidur.iMezakeNesiot;
                 oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oSidur.dFullShatHatchalaLetashlum; //DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchalaLetashlum));
                 oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oSidur.dFullShatGmarLetashlum;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatGmarLetashlum));                
@@ -8749,8 +8751,11 @@ namespace KdsBatch
                 oObjSidurimOvdimUpd.TAARICH =oSidur.dSidurDate;
                 if (!String.IsNullOrEmpty(oSidur.sVisa))
                 {
-                    oObjSidurimOvdimUpd.VISA = int.Parse(oSidur.sVisa);
+                    oObjSidurimOvdimUpd.YOM_VISA = int.Parse(oSidur.sVisa);
                 }
+
+                oObjSidurimOvdimUpd.MIVTZA_VISA = oSidur.iMivtzaVisa;
+               
                 oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = oSidur.dFullShatHatchalaLetashlum; //DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchalaLetashlum));
                 oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = oSidur.dFullShatGmarLetashlum;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatGmarLetashlum));
                 oObjSidurimOvdimUpd.MEZAKE_NESIOT = oSidur.iMezakeNesiot;
