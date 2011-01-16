@@ -2764,9 +2764,9 @@ namespace KdsBatch
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
                             
                     iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && drSidurim[I]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
                         bSidurNehiga = true;
-                    else 
+                    else if (iMisparSidur.ToString().Substring(0, 2) != "99") 
                     {
                         SetSugSidur(ref drSidurim[I], dTaarich, iMisparSidur);
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
@@ -2783,9 +2783,9 @@ namespace KdsBatch
                         {
                             bSidurNehiga = false;
                             iMisparSidurNext = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
-                            if (iMisparSidurNext.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                            if (iMisparSidurNext.ToString().Substring(0, 2) == "99" && drSidurim[J]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
                                 bSidurNehiga = true;
-                            else
+                            else if (iMisparSidurNext.ToString().Substring(0, 2) != "99")
                             {
                                 SetSugSidur(ref drSidurim[J], dTaarich, iMisparSidurNext);
                                 iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
@@ -2849,11 +2849,11 @@ namespace KdsBatch
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
                     iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && drSidurim[I]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
                         bSidurNehiga = true;
-                    else if (iMisparSidur.ToString().Substring(0, 2) == "99" && (int.Parse(drSidurim[I]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nihul.GetHashCode() || int.Parse(drSidurim[I]["zakay_lepizul"].ToString()) == 1))
+                    else if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim[I]["sector_avoda"].ToString()== clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim[I]["zakay_lepizul"].ToString()) == 1))
                         bSidurNihulOrTafkid = true;
-                    else
+                    else if (iMisparSidur.ToString().Substring(0, 2) != "99" )
                     {
                         SetSugSidur(ref drSidurim[I], dTaarich, iMisparSidur);
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
@@ -2876,11 +2876,11 @@ namespace KdsBatch
                         {
 
                             iMisparSidurNext = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
-                            if (bSidurNihulOrTafkid && iMisparSidurNext.ToString().Substring(0, 2) == "99" && int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
+                            if (bSidurNihulOrTafkid && iMisparSidurNext.ToString().Substring(0, 2) == "99" && drSidurim[J]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
                                 bSidurMezake = true;
-                            else if (bSidurNehiga && iMisparSidurNext.ToString().Substring(0, 2) == "99" && (int.Parse(drSidurim[J]["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nihul.GetHashCode() || int.Parse(drSidurim[J]["zakay_lepizul"].ToString()) == 1))
+                            else if (bSidurNehiga && iMisparSidurNext.ToString().Substring(0, 2) == "99" && (drSidurim[J]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim[J]["zakay_lepizul"].ToString()) == 1))
                                 bSidurMezake = true;
-                            else
+                            else if (iMisparSidurNext.ToString().Substring(0, 2) != "99")
                             {
                                 SetSugSidur(ref drSidurim[J], dTaarich, iMisparSidurNext);
                                 iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
