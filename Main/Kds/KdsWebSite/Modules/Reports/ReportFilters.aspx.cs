@@ -127,7 +127,8 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     SetWorkerViewLevel();
                     break;
                 case ReportName.FindWorkerCard:
-                    CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
+                    if (!Page.IsPostBack)
+                        CtrlStartDate = DateTime.Now.AddMonths(-14).ToString("dd/MM/yyyy");
                     break;
                 //case ReportName.HashvaatRizotChishuv:
                 //case ReportName.HashvaatChodsheyRizotChishuv:
