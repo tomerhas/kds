@@ -680,7 +680,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DataTable dtSource = new DataTable();
         String sXMLResult = "";
         string sScript = "";
-      
+        string sCacheKey;
         try
         {
 
@@ -692,6 +692,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 //    sXMLResult = BuildSidurAndPeiluyotXml();
                 if (IdkunNetunim())
                 {
+                    sCacheKey = MisparIshi.Value + TaarichCA.Value;
+                    HttpRuntime.Cache.Remove(sCacheKey);
                     sScript = "window.returnValue=1;";
                     sScript += "window.close();";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "HosafatSidur", sScript, true);
