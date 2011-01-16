@@ -248,7 +248,7 @@
          var vldArr;
          var Rechev;
          var checked;
-         debugger;
+        // debugger;
          is_valid = onchange_txtShatHatchala(false, "");
            if (is_valid) {
                is_valid = onchange_txtShatGmar(false, "");
@@ -397,7 +397,7 @@
                    shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
                    if (ask) {
                        if (sugGmar == "5" || sugGmar == "4" || document.getElementById("sugSidur").value == "1") {
-                           if (IsShatGmarInNextDay(shaa)) {
+                           if (IsShatGmarInNextDay(shaa) || shaa=="00:00") {
                                StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], '00', '00', '00');
                                StaratDate = new Date(StaratDate.setDate(StaratDate.getDate() + 1));
                                var Param244 = document.getElementById("Params").attributes("Param244").value;

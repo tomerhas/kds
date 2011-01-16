@@ -165,8 +165,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 txtShatHatchala.Focus();
                 btnMapa.Style["disabled"]="";
                 btnMeyuchad.Style["disabled"] = "";
-                if (txtShatHatchala.Attributes["NEXT"].ToString() =="true")
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "msg", "alert('" + lblYomHaba.Text + "');", true);
+                //if (txtShatHatchala.Attributes["NEXT"].ToString() =="true")
+                //    ScriptManager.RegisterStartupScript(this, this.GetType(), "msg", "alert('" + lblYomHaba.Text + "');", true);
             
         }
         catch (Exception ex)
@@ -204,21 +204,21 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     shatHatchala = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[0]["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value)); 
                     shaa = shatHatchala.ToShortTimeString();
                     txtShatHatchala.Text = shaa;
-                        TaarichHatchala.Value = shaa + " ";
+                    TaarichHatchala.Value = shaa + " ";
                     if (shatHatchala.Date > DateTime.Parse(TaarichCA.Value))
                     {
-                        txtShatHatchala.Attributes.Add("NEXT", "true");
-                        lblYomHaba.Text = lblYomHaba.Text + DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString();
-                        trMsgNextDay.Style["display"] = "inline";
+                    //    txtShatHatchala.Attributes.Add("NEXT", "true");
+                    //    lblYomHaba.Text = lblYomHaba.Text + DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString();
+                    //    trMsgNextDay.Style["display"] = "inline";
                         TaarichHatchala.Value = TaarichHatchala.Value + DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString();
                     }
                     else
                     {
-                        txtShatHatchala.Attributes.Add("NEXT", "false");                     
-                        trMsgNextDay.Style["display"] = "none";
+                    //    txtShatHatchala.Attributes.Add("NEXT", "false");                     
+                    //    trMsgNextDay.Style["display"] = "none";
                         TaarichHatchala.Value = TaarichHatchala.Value + DateTime.Parse(TaarichCA.Value).ToShortDateString();
                     }
-
+                    txtShatHatchala.ToolTip = TaarichHatchala.Value;
                     if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["MAZANTASHLUM"].ToString()))
                     {
                         shatGmar = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[dsSidur.Tables[1].Rows.Count - 1]["SHAA"].ToString(), DateTime.Parse(TaarichCA.Value));
@@ -308,10 +308,10 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 Session["DataSource"] = dtSource;
                
                 //הוצאת סוג גמר
-                if ( txtShatHatchala.Attributes["NEXT"].ToString() =="true")
-                    dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(TaarichCA.Value), DateTime.Parse(TaarichCA.Value).AddDays(1));
-                else
-                    dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(TaarichCA.Value), DateTime.Parse(TaarichCA.Value));
+                //if ( txtShatHatchala.Attributes["NEXT"].ToString() =="true")
+                //    dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(TaarichCA.Value), DateTime.Parse(TaarichCA.Value).AddDays(1));
+                //else
+                dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(TaarichCA.Value), DateTime.Parse(TaarichCA.Value));
                 sSQL = "SUG_SIDUR ='" + dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString() + "' AND KOD_MEAFYEN='3'";
                 drSelect = dtMeafyeneySidur.Select(sSQL);
                 txtShatGmar.Attributes.Add("SugGmar", drSelect[0]["ERECH"].ToString());
@@ -387,7 +387,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
 
         try
         {
-            txtShatHatchala.Attributes.Add("NEXT", "false");
+           // txtShatHatchala.Attributes.Add("NEXT", "false");
             KodSidur = int.Parse(lblMisSidur.Text);
             dtMustElemnts = oUtils.GetMeafyenSidurByKodSidur(KodSidur, TaarichCA.Value);
             sSQL = "KOD_MEAFYEN =46";
@@ -764,9 +764,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     newRow["PRATIM"] += ";ENABLE_MAKAT=True";
                 else newRow["PRATIM"] += ";ENABLE_MAKAT=False";
                 newRow["SHAT_YEZIA_DATE"] =  drPeiluyot[i]["SHAT_YEZIA_DATE"];
-                if (txtShatHatchala.Attributes["NEXT"].ToString() =="true" &&
-                    DateTime.Parse(drPeiluyot[i]["SHAT_YEZIA_DATE"].ToString().Split(' ')[0]) != DateTime.Parse(TaarichCA.Value).AddDays(1))
-                    newRow["SHAT_YEZIA_DATE"] =  DateTime.Parse(drPeiluyot[i]["SHAT_YEZIA_DATE"].ToString()).AddDays(1).ToString();
+                //if (txtShatHatchala.Attributes["NEXT"].ToString() =="true" &&
+                //    DateTime.Parse(drPeiluyot[i]["SHAT_YEZIA_DATE"].ToString().Split(' ')[0]) != DateTime.Parse(TaarichCA.Value).AddDays(1))
+                //      newRow["SHAT_YEZIA_DATE"] =  DateTime.Parse(drPeiluyot[i]["SHAT_YEZIA_DATE"].ToString()).AddDays(1).ToString();
                 newRow["MUST_DAKOT"] = drPeiluyot[i]["MUST_DAKOT"];
                 newRow["MISPAR_KNISA"] = drPeiluyot[i]["MISPAR_KNISA"];
                 newRow["SUG_KNISA"] = drPeiluyot[i]["SUG_KNISA"];
@@ -982,7 +982,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DateTime HourSidur = new DateTime();
         try
         {
-            if (txtShatHatchala.Attributes["NEXT"].ToString() == "true" || DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value))
+           // if (txtShatHatchala.Attributes["NEXT"].ToString() == "true" || DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value))
+            if ( DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value))
                 HourSidur = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
             else
                 HourSidur = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00");
@@ -1036,13 +1037,14 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             oObjSidurimOvdimIns.MISPAR_ISHI = int.Parse(MisparIshi.Value);
             oObjSidurimOvdimIns.MISPAR_SIDUR = int.Parse(lblMisSidur.Text);
 
-            if (txtShatHatchala.Attributes["NEXT"].ToString() == "true")
-            {
-                oObjSidurimOvdimIns.TAARICH = DateTime.Parse(TaarichCA.Value).AddDays(1);
-                oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
-                oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = 1;
-            }
-            else if (DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value)){
+            //if (txtShatHatchala.Attributes["NEXT"].ToString() == "true")
+            //{
+            //    oObjSidurimOvdimIns.TAARICH = DateTime.Parse(TaarichCA.Value).AddDays(1);
+            //    oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
+            //    oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = 1;
+            //}
+            //else 
+            if (DateTime.Parse(TaarichHatchala.Value).Date > DateTime.Parse(TaarichCA.Value)){
                 oObjSidurimOvdimIns.TAARICH = DateTime.Parse(TaarichCA.Value);
                 oObjSidurimOvdimIns.SHAT_HATCHALA = DateTime.Parse(TaarichCA.Value + " " + txtShatHatchala.Text + ":00").AddDays(1);
                 oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = 1;
@@ -1079,9 +1081,10 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         try
         {
              dt = (DataTable)Session["DataSource"];
-             if (txtShatHatchala.Attributes["NEXT"].ToString() == "true")
-                 taarich = DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString().Split(' ')[0];
-             else taarich = TaarichCA.Value;
+             //if (txtShatHatchala.Attributes["NEXT"].ToString() == "true")
+             //    taarich = DateTime.Parse(TaarichCA.Value).AddDays(1).ToShortDateString().Split(' ')[0];
+             //else 
+             taarich = TaarichCA.Value;
              for (int i = 0; i < dt.Rows.Count; i++)
             {
                 oObjPeiluyotOvdimIns = new OBJ_PEILUT_OVDIM();
