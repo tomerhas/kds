@@ -6892,8 +6892,8 @@ namespace KdsBatch
                                     return;
                                 }
 
-                                //אם שני הסידורים מסומנים "לא לתשלום" - לא מגיע פיצול.
-                                if (!(oSidur.iLoLetashlum == 1 && oSidur.iKodSibaLoLetashlum!=1 && oNextSidur.iLoLetashlum == 1 && oNextSidur.iKodSibaLoLetashlum!=1))
+                                //אם שני הסידורים מסומנים " לתשלום" - לא מגיע פיצול.
+                                if (oSidur.iLoLetashlum == 0 && oNextSidur.iLoLetashlum == 0)
                                 {
                                     // אם 2 הסידורים הם סידורי מפה (לא סידורי ***99) ו-2 מספרי הסידור זהים - לא מגיע פיצול .
                                     if (!oSidur.bSidurMyuhad && !oNextSidur.bSidurMyuhad && oSidur.iMisparSidur == oNextSidur.iMisparSidur)
