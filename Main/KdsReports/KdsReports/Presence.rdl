@@ -90,7 +90,12 @@
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DIFFERENCE_HOUR">
-          <Value>=CDbl(iif(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)&gt; 0 , DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value),0))</Value>
+          <Value>=
+iif(
+	(Fields!SHAT_HATCHALA.Value = nothing) or 	(Fields!SHAT_GMAR.Value = nothing) ,
+	nothing,
+	CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value))
+   )</Value>
         </Field>
       </Fields>
       <Query>
@@ -124,12 +129,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.02819in</Width>
+              <Width>7.89278in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.95171in</Height>
+              <Height>2.78504in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -637,7 +642,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=  iif(((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing)),"",
+                                                    <Value>=  iif(((Fields!SHAT_HATCHALA.Value = nothing)or (Fields!SHAT_GMAR.Value = nothing) ),nothing,
  Code.GetFormatedTime(
 CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
 				      )
@@ -938,7 +943,7 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox67">
+                                          <Textbox Name="Textbox113">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -956,55 +961,27 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox67</rd:DefaultName>
+                                            <rd:DefaultName>Textbox113</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Style>None</Style>
+                                                <Style>Solid</Style>
                                               </Border>
+                                              <BottomBorder>
+                                                <Width>2pt</Width>
+                                              </BottomBorder>
                                               <PaddingLeft>1pt</PaddingLeft>
                                               <PaddingRight>1pt</PaddingRight>
                                               <PaddingTop>1pt</PaddingTop>
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>2</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox68">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Center</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox68</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <PaddingLeft>1pt</PaddingLeft>
-                                              <PaddingRight>1pt</PaddingRight>
-                                              <PaddingTop>1pt</PaddingTop>
-                                              <PaddingBottom>1pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox69">
+                                          <Textbox Name="Textbox115">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -1012,10 +989,11 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=Code.GetFormatedTime(
-CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
+CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
 				      ))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1024,11 +1002,14 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox69</rd:DefaultName>
+                                            <rd:DefaultName>Textbox115</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Style>None</Style>
+                                                <Style>Solid</Style>
                                               </Border>
+                                              <BottomBorder>
+                                                <Width>2pt</Width>
+                                              </BottomBorder>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
                                               <PaddingTop>1pt</PaddingTop>
@@ -1039,14 +1020,15 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox71">
+                                          <Textbox Name="Textbox116">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value> :סה"כ ברוטו לצורך נוכחות</Value>
+                                                    <Value>= "סה''כ ברוטו לחודש " +  Format(Fields!TAARICH.Value,"MM/yyyy") +
+" לצורך נוכחות:"</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1054,124 +1036,19 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
-                                                <LeftIndent>0cm</LeftIndent>
-                                                <HangingIndent>0cm</HangingIndent>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox71</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>1pt</PaddingTop>
-                                              <PaddingBottom>1pt</PaddingBottom>
-                                              <Direction>LTR</Direction>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>5</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell />
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox76">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <LeftIndent>0cm</LeftIndent>
-                                                <HangingIndent>0cm</HangingIndent>
                                                 <Style>
-                                                  <TextAlign>Center</TextAlign>
+                                                  <TextAlign>Left</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox76</rd:DefaultName>
+                                            <rd:DefaultName>Textbox116</rd:DefaultName>
                                             <Style>
                                               <Border>
-                                                <Style>None</Style>
+                                                <Style>Solid</Style>
                                               </Border>
-                                              <PaddingLeft>1pt</PaddingLeft>
-                                              <PaddingRight>1pt</PaddingRight>
-                                              <PaddingTop>1pt</PaddingTop>
-                                              <PaddingBottom>1pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox77">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Center</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox77</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <PaddingLeft>2pt</PaddingLeft>
-                                              <PaddingRight>2pt</PaddingRight>
-                                              <PaddingTop>1pt</PaddingTop>
-                                              <PaddingBottom>1pt</PaddingBottom>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox78">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value />
-                                                    <Style>
-                                                      <FontSize>8pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Center</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox78</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
+                                              <BottomBorder>
+                                                <Width>2pt</Width>
+                                              </BottomBorder>
                                               <PaddingLeft>2pt</PaddingLeft>
                                               <PaddingRight>2pt</PaddingRight>
                                               <PaddingTop>1pt</PaddingTop>
@@ -1179,8 +1056,16 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                               <Direction>RTL</Direction>
                                             </Style>
                                           </Textbox>
+                                          <ColSpan>8</ColSpan>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
+                                      <TablixCell />
                                     </TablixCells>
                                   </TablixRow>
                                 </TablixRows>
@@ -1206,20 +1091,44 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                   <TablixMember>
                                     <TablixMembers>
                                       <TablixMember>
-                                        <Group Name="Details2" />
+                                        <Group Name="Group2">
+                                          <GroupExpressions>
+                                            <GroupExpression>=Format(Fields!TAARICH.Value,"MM/yyyy")</GroupExpression>
+                                          </GroupExpressions>
+                                        </Group>
+                                        <SortExpressions>
+                                          <SortExpression>
+                                            <Value>=Format(Fields!TAARICH.Value,"MM/yyyy")</Value>
+                                          </SortExpression>
+                                        </SortExpressions>
                                         <TablixMembers>
-                                          <TablixMember />
+                                          <TablixMember>
+                                            <Group Name="Details2" />
+                                            <TablixMembers>
+                                              <TablixMember />
+                                            </TablixMembers>
+                                          </TablixMember>
+                                          <TablixMember>
+                                            <KeepWithGroup>Before</KeepWithGroup>
+                                          </TablixMember>
                                         </TablixMembers>
                                       </TablixMember>
                                     </TablixMembers>
                                   </TablixMember>
-                                  <TablixMember />
                                 </TablixMembers>
                               </TablixRowHierarchy>
                               <DataSetName>DsPresence</DataSetName>
+                              <SortExpressions>
+                                <SortExpression>
+                                  <Value>=Fields!TAARICH.Value</Value>
+                                </SortExpression>
+                                <SortExpression>
+                                  <Value>=Fields!SHAT_HATCHALA.Value</Value>
+                                </SortExpression>
+                              </SortExpressions>
                               <Top>2.6723cm</Top>
                               <Height>2.35562cm</Height>
-                              <Width>19.46322cm</Width>
+                              <Width>19.46326cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1299,7 +1208,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>=Code.BuildTime(Fields!START_TIME_ALLOWED.Value)</Value>
+                                          <Value>=iif(Fields!START_TIME_ALLOWED.Value = nothing, "", Code.BuildTime(Fields!START_TIME_ALLOWED.Value))</Value>
                                           <Style>
                                             <Language>he-IL</Language>
                                           </Style>
@@ -1334,7 +1243,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>=Code.BuildTime(Fields!END_TIME_ALLOWED.Value)</Value>
+                                          <Value>=iif( Fields!END_TIME_ALLOWED.Value = nothing , "", Code.BuildTime(Fields!END_TIME_ALLOWED.Value))</Value>
                                           <Style />
                                         </TextRun>
                                       </TextRuns>
@@ -1776,8 +1685,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
                           <KeepTogether>true</KeepTogether>
                           <Top>1.86942cm</Top>
                           <Left>0.254cm</Left>
-                          <Height>5.62792cm</Height>
-                          <Width>19.76718cm</Width>
+                          <Height>5.15167cm</Height>
+                          <Width>19.63492cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1883,8 +1792,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.00001cm</Left>
-        <Height>7.49734cm</Height>
-        <Width>20.3916cm</Width>
+        <Height>7.07401cm</Height>
+        <Width>20.04767cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1933,7 +1842,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.95171in</Height>
+    <Height>2.78504in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1942,7 +1851,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("01/12/2010")</Value>
+          <Value>=CDate("05/12/2010")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -1952,7 +1861,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("31/12/2010")</Value>
+          <Value>=CDate("06/12/2010")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -2009,18 +1918,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value, "DsPresence")
 
     End Function
 </Code>
-  <Width>8.02819in</Width>
+  <Width>7.89279in</Width>
   <Page>
-    <PageFooter>
-      <Height>0.94394cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0cm</LeftMargin>
