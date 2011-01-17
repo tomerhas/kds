@@ -50,7 +50,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             ViewState["DateCard"] = DateTime.Parse(Request.QueryString["DateCard"].ToString());
 
              _MeafyeneyOved = new clMeafyenyOved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
-             _objParameters = new clParameters(DateTime.Parse(ViewState["DateCard"].ToString()), clDefinitions.GetSugYom(clDefinitions.GetYamimMeyuchadim(), DateTime.Parse(ViewState["DateCard"].ToString()), clDefinitions.GetSugeyYamimMeyuchadim(), _MeafyeneyOved.iMeafyen56));
+             _objParameters = new clParameters(DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugYom(clGeneral.GetYamimMeyuchadim(), DateTime.Parse(ViewState["DateCard"].ToString()), clGeneral.GetSugeyYamimMeyuchadim(), _MeafyeneyOved.iMeafyen56));
            
             if (!Page.IsPostBack)
             {
@@ -212,11 +212,11 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
         clWorkCard oWorkCard = new clWorkCard();
         int iCounYemeyAvoda, iSugHeadrut;
         string sMessage;
-        DateTime dShatHatchala, dShatSiyum;
+        DateTime dShatHatchala, dShatSiyum;   
+        
         try
         {
-            iSugHeadrut = ddlHeadrutType.SelectedIndex;
-
+            iSugHeadrut = ddlHeadrutType.SelectedIndex; 
             if (Page.IsValid)
             {
                 InitData();

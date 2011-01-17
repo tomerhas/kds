@@ -263,13 +263,13 @@ namespace KdsBatch
 
                 //Get Parameters Table
                 //dtParameters = GetKdsParametrs();
-                dtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
-                _dtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
+                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
 
                 //Get Meafyeny Ovdim
                 GetMeafyeneyOvdim(_iMisparIshi, _dCardDate);
 
-                iSugYom = clDefinitions.GetSugYom(dtYamimMeyuchadim, _dCardDate, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
+                iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, _dCardDate, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
 
                 //Set global variable with parameters
                 SetParameters(_dCardDate, iSugYom);
@@ -628,14 +628,14 @@ namespace KdsBatch
 
                     //Get Parameters Table
                     //dtParameters = GetKdsParametrs();
-                    dtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
-                    _dtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
+                    dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                    _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                     _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
 
                     //Get Meafyeny Ovdim
                     GetMeafyeneyOvdim(iMisparIshi, dCardDate);
 
-                    iSugYom = clDefinitions.GetSugYom(dtYamimMeyuchadim, dCardDate,_dtSugeyYamimMeyuchadim,_oMeafyeneyOved.iMeafyen56);
+                    iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
 
                     //Set global variable with parameters
                     SetParameters(dCardDate, iSugYom);
@@ -5858,15 +5858,15 @@ namespace KdsBatch
 
                 //Get Parameters Table
                 //dtParameters = GetKdsParametrs();
-                dtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
-                _dtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
+                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
 
                 //Get Meafyeny Ovdim
                 oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
 
                 dtSibotLedivuachYadani = oUtils.GetCtbSibotLedivuchYadani();
 
-                iSugYom = clDefinitions.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim,_oMeafyeneyOved.iMeafyen56);
+                iSugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dCardDate, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
 
                 //Set global variable with parameters
                 oParam = new clParameters(dCardDate, iSugYom);
@@ -12682,7 +12682,7 @@ namespace KdsBatch
                     bFromMeafyenGmar = true;
                 }
 
-                iSugYom = clDefinitions.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
+                iSugYom = clGeneral.GetSugYom(_iMisparIshi, _dCardDate, _dtYamimMeyuchadim, _oOvedYomAvodaDetails.iKodSectorIsuk, _dtSugeyYamimMeyuchadim, _oMeafyeneyOved.iMeafyen56);
                 if (iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     int iSugMishmeret = clDefinitions.GetSugMishmeret(_iMisparIshi, _dCardDate, _iSugYom, firstTafkidSidur.dFullShatHatchala, lastTafkidSidur.dFullShatGmar, _oParameters);

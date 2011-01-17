@@ -55,10 +55,10 @@ namespace KdsBatch
             int iSugYom;
             if (clCalcData.DtYamimMeyuchadim == null)
             {
-                clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
             }
 
-            iSugYom = clDefinitions.GetSugYom(iMisparIshi, dTaarich, clCalcData.DtYamimMeyuchadim, objPirteyOved.iKodSectorIsuk, clCalcData.DtSugeyYamimMeyuchadim,objMeafyeneyOved.iMeafyen56);
+            iSugYom = clGeneral.GetSugYom(iMisparIshi, dTaarich, clCalcData.DtYamimMeyuchadim, objPirteyOved.iKodSectorIsuk, clCalcData.DtSugeyYamimMeyuchadim,objMeafyeneyOved.iMeafyen56);
             return iSugYom;
         }
 

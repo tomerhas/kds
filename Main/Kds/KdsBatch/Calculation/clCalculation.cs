@@ -34,8 +34,8 @@ namespace KdsBatch
                {
                    dTarMe = new DateTime(dCalcMonth.Year, dCalcMonth.Month ,1);
                    dTarAd = dTarMe.AddMonths(1).AddDays(-1);
-                   clCalcData.DtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
-                   clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                   clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                   clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
 
@@ -63,8 +63,8 @@ namespace KdsBatch
                 try
                {
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "START");
-                   clCalcData.DtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
-                   clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                   clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                   clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-13);
                    
                     for (dMeChodesh = dFrom; dMeChodesh <= dAdChodesh; dMeChodesh = dMeChodesh.AddMonths(1))
@@ -133,9 +133,9 @@ namespace KdsBatch
                int iMisparIshi = 0;
                clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
                if (clCalcData.DtSugeyYamimMeyuchadim == null)
-                   clCalcData.DtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
+                   clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                if (clCalcData.DtYamimMeyuchadim == null)
-                clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                   clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                if (dtPremia != null)
                {
                    clUtils oUtils = new clUtils();
@@ -231,8 +231,8 @@ namespace KdsBatch
               clUtils oUtils = new clUtils();
                try
                {
-                   clCalcData.DtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
-                   clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                   clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                   clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
 
                    dTarAd = dTarMe.AddMonths(1).AddDays(-1);
 
@@ -295,8 +295,8 @@ namespace KdsBatch
                    dTarAd = dCalcDay;
                    clCalcData.ResetDataSet();
 
-                   clCalcData.DtSugeyYamimMeyuchadim = clDefinitions.GetSugeyYamimMeyuchadim();
-                   clCalcData.DtYamimMeyuchadim = clDefinitions.GetYamimMeyuchadim();
+                   clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                   clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
 

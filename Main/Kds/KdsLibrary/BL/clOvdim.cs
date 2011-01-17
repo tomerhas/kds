@@ -1646,6 +1646,44 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+       public DataTable GetPirteyOvedLetkufa(int iMisparIshi, DateTime startDate, DateTime endDate)
+       {
+           clDal _Dal = new clDal();
+           DataTable dt = new DataTable();
+           try
+           {
+               _Dal.AddParameter("p_mispar_ishi ", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+               _Dal.AddParameter("p_start", ParameterType.ntOracleDate, startDate, ParameterDir.pdInput);
+               _Dal.AddParameter("p_end", ParameterType.ntOracleDate, endDate, ParameterDir.pdInput);
+               _Dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+               _Dal.ExecuteSP(clGeneral.cProGetPirteyOvedLetkufot, ref dt);
+
+               return dt;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
+       public DataTable GetMeafyenimLeovedLetkufa(int iMisparIshi, DateTime startDate, DateTime endDate)
+       {
+           clDal _Dal = new clDal();
+           DataTable dt = new DataTable();
+           try
+           {
+               _Dal.AddParameter("p_mispar_ishi ", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+               _Dal.AddParameter("p_start", ParameterType.ntOracleDate, startDate, ParameterDir.pdInput);
+               _Dal.AddParameter("p_end", ParameterType.ntOracleDate, endDate, ParameterDir.pdInput);
+               _Dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+               _Dal.ExecuteSP(clGeneral.cProGetMeafyenOvedLetkufot, ref dt);
+
+               return dt;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
     }
 }
 

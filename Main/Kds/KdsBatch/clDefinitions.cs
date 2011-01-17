@@ -26,10 +26,10 @@ namespace KdsBatch
         public const string cFnIsDuplicateShatYetiza = "pkg_errors.fn_is_duplicate_shat_yetiza";
         public const string cProGetSugSidurMeafyenim = "pkg_errors.pro_get_sug_sidur_meafyenim";
         public const string cProGetYemeyAvodaToOved = "pkg_calc.pro_get_yemey_avoda_to_oved";
-        public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
+   //*     public const string cProGetYamimMeyuchadim = "pkg_utils.pro_get_yamim_meyuchadim";
         public const string cProInsChishuv = "pkg_calc.pro_ins_chishuv";
         public const string cProInsChishuvTemp = "pkg_calc.pro_ins_chishuv_tmp";
-        public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
+   //*     public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim_meyuchadim";
         
         public const string cProGetSidurimMeyuchadim = "pkg_sidurim.get_sidurim_meyuchadim_all";
         public const string cProGetTmpSidurimMeyuchadim = "pkg_sidurim.get_tmp_sidurim_meyuchadim";
@@ -89,63 +89,7 @@ namespace KdsBatch
                 throw ex;
             }
         }
-        public static DataTable GetYamimMeyuchadim()
-        {
-            DataTable dt = new DataTable();
-            clDal oDal = new clDal();
-
-            try
-            {
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(cProGetYamimMeyuchadim, ref dt);
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static DataTable GetSugeyYamimMeyuchadim()
-        {
-            DataTable dt = new DataTable();
-            clDal oDal = new clDal();
-
-            try
-            {
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetSugeyYamimMeyuchadim, ref dt);
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim, int iMeafyen56)
-        {
-            int iSugYom;
-            if (dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length > 0)
-            {
-                iSugYom= int.Parse(dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0]["sug_yom"].ToString());
-                if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-                { iSugYom = 20; }
-                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-                { iSugYom = 10; }
-                return iSugYom;
-            }
-            else
-            {
-                switch ((dTaarich.DayOfWeek.GetHashCode() + 1))
-                {
-                    case 7: return 20;
-                    case 6: return 10;
-                    default: return 1;
-                }
-            }
-        }
-
+       
         public static bool CheckShaaton(DataTable dtSugeyYamimMeyuchadim, int iSugYom, DateTime dTaarich)
         {
             if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
@@ -155,62 +99,6 @@ namespace KdsBatch
                 return (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shbaton"].ToString() == "1") ? true : false;
             }
             else return false;
-        }
-
-        public static int GetSugYom(int iMisparIshi, DateTime dTaarich, DataTable dtYamimMeyuchadim, int iSectorOved, DataTable dtSugeyYamimMeyuchadim, int iMeafyen56)
-        {
-            DataRow[] drYaminMeyuchadim;
-            int iSugYom;
-           
-            drYaminMeyuchadim = dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "");
-            if (drYaminMeyuchadim.Length > 0)
-            {
-              if (iSectorOved == clGeneral.enSectorAvoda.Tafkid.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Minhal"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Meshek.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Meshek"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Nihul.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Tnua"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else if (iSectorOved == clGeneral.enSectorAvoda.Nahagut.GetHashCode())
-                {
-                    if (!string.IsNullOrEmpty(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()))
-                    { iSugYom = int.Parse(drYaminMeyuchadim[0]["Sug_Yom_Muchlaf_Nehagut"].ToString()); }
-                    else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString()); }
-                }
-                else { iSugYom = int.Parse(drYaminMeyuchadim[0]["sug_yom"].ToString());   }
-
-              if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
-              { iSugYom = 20; }
-              else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
-              { iSugYom = 10; }
-               
-            }
-            else
-            {
-                switch ((dTaarich.DayOfWeek.GetHashCode() + 1))
-                {
-                    case 7:
-                        { iSugYom = 20; break; }
-                    case 6:
-                        { iSugYom = 10; break; }
-                    default:
-                        { iSugYom = 1; break; }
-                }
-            }
-
-            return iSugYom;
         }
 
         public DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate)
