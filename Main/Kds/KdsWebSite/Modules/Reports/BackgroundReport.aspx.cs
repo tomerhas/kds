@@ -49,7 +49,7 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
 
             _Extension = (rdPdfType.Checked) ? (int)eFormat.PDF : (int)eFormat.EXCEL;
             _SendToMail = CkSendInEmail.Checked;
-            _BakashaId = objBatch.RunReportsBatch(clGeneral.enGeneralBatchType.CreateHeavyReports, TxtDescription.Text, clGeneral.enStatusRequest.InProcess, UserId, ColUdt, ReportName, _Extension, _DestinationFolder, _SendToMail);
+            _BakashaId = objBatch.RunReportsBatch(clGeneral.enGeneralBatchType.CreateHeavyReports, PageHeader + ":" + TxtDescription.Text, clGeneral.enStatusRequest.InProcess, UserId, ColUdt, ReportName, _Extension, _DestinationFolder, _SendToMail);
             sMessage = " בקשתך נשלחה לביצוע ומספרה הוא: " + _BakashaId;
         }
         catch (Exception ex)
@@ -81,6 +81,13 @@ public partial class Modules_Reports_BackgroundReport : System.Web.UI.Page
         }
     }
 
+    private string PageHeader
+    {
+        get
+        {
+            return Server.UrlDecode(Request.QueryString["PageHeader"].ToString());
+        }
+    }
     private int UserId
     {
         get

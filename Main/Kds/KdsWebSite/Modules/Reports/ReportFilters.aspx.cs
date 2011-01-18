@@ -247,7 +247,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 else // ProductionType.Heavy
                 {
                     //Response.Redirect("BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName);
-                    sScript = "window.showModalDialog('BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName + "','','dialogwidth:450px;dialogheight:200px;center:yes;status:no;resizable:no;scroll:no;');";
+                    sScript = "window.showModalDialog('BackgroundReport.aspx?Dt=" + DateTime.Now.ToString() + "&UserId=" + LoginUser.UserInfo.EmployeeNumber + "&ReportName=" + RdlName + "&PageHeader=" + HttpUtility.UrlEncodeUnicode(Report.PageHeader) + "','','dialogwidth:450px;dialogheight:200px;center:yes;status:no;resizable:no;scroll:no;');";
                 }
                 ScriptManager.RegisterStartupScript(btnDisplay, btnDisplay.GetType(), "ReportViewer", sScript, true);
             }
