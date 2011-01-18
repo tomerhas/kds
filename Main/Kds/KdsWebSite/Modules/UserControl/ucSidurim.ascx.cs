@@ -101,7 +101,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public const int _COL_PEILUT_STATUS = 19; //מציין אם ברמת פעילות יש שגיאה או אישור או תקין  ללא אישורים. 
     
     private const int MAX_LEN_LINE_NUMBER = 8;
-    private const int MAX_LEN_CAR_NUMBER = 6;
+    private const int MAX_LEN_CAR_NUMBER = 5;
     private const int MAX_LEN_HOUR = 5;
     private const int MAX_LEN_ACTUAL_MINTUES = 4;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
@@ -1349,6 +1349,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 HyperLink lnkSidur = new HyperLink();                              
                 lnkSidur = AddHyperLink("lblSidur" + iIndex,oSidur.iMisparSidur.ToString(),"AddSadotLsidur(" + iIndex + ");");
+               // lnkSidur.Attributes.Add("OnClick", "RefreshBtn();");
                 lnkSidur.ToolTip = oSidur.sSidurDescription;
                 lnkSidur.Attributes.Add("SidurVisa", IsSidurVisa(ref oSidur) ? "1":"0");
                 lnkSidur.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
@@ -1356,11 +1357,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
                 
                 hCell.Controls.Add(lnkSidur);
-
-                
+                                
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
+
+
                         if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
@@ -4037,8 +4039,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             sTargetControlId = oTxt.ID;
             oTxt.MaxLength = MAX_LEN_CAR_NUMBER;
             oTxt.Width = Unit.Pixel(60);
-            oTxt.Attributes.Add("onclick", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
-            oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            //oTxt.Attributes.Add("onclick", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+
+            oTxt.Attributes.Add("onkeypress", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+           // oTxt.Attributes.Add("onkeyup", "CarKeyUp(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            //oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
             AddAttribute(oTxt, "OldV", oTxt.Text);

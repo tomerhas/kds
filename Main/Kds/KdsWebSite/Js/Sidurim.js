@@ -5,7 +5,7 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
-
+var iCarClick=0;
     function chkMkt(oRow){    
        oRId = String(oRow.id).substr(0,oRow.id.length-6);
        var oMkt = document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0];
@@ -197,26 +197,35 @@ var MKT_ELEMENT = 5;
                        
         SidurTime = GetSidurTime(dStartHour,dEndHour);  
         args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));    
-    }         
-    function Test(val,args){}    
-    function ChkOto(oRow){  
-       oId = String(oRow.id).substr(0,oRow.id.length-6); 
-       var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;  
-       SetBtnChanges();SetLvlChg(3);
-       if (lOtoNo!=''){
-        wsGeneral.CheckOtoNo(lOtoNo, callBackOto,null,oId);  
-      }
-    }    
-    function callBackOto(result,oId){    
+    }
+    function Test(val, args) { }
+    function CarKeyUp() {
+        iCarClick = 0;
+    }
+    function ChkOto(oRow) {
+        iCarClick = iCarClick + 1;
+        if (iCarClick == 5) {
+            iCarClick = 0;
+            oId = String(oRow.id).substr(0, oRow.id.length - 6);
+            var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;
+            SetBtnChanges(); SetLvlChg(3);
+            if (lOtoNo != ''){
+                wsGeneral.CheckOtoNo(lOtoNo, callBackOto, null, oRow);
+            }
+        }    
+    }
+    function callBackOto(result, oRow) {
+        iCarClick = 0;
+        var oId = String(oRow.id).substr(0, oRow.id.length - 6);  
         if (result=='0'){        
             var sBehaviorId='vldCarNumBehv'.concat(oId);
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);
-            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title= "מספר רכב שגוי";
-            //document.getElementById(oId).cells[_COL_CAR_LICESNCE_NUMBER].childNodes[0].nodeValue='0';                 
+            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";                            
         }
         else{
-        document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title=result;
+            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
+            CopyOtoNum(oRow);
         }
         document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].select();
     }
@@ -250,7 +259,7 @@ var MKT_ELEMENT = 5;
             if (((Number(lMkt >= 100000)) && (Number(lMkt < 50000000))) && (String(document.getElementById(Row.id).cells[_COL_KNISA].childNodes[0].nodeValue).split(',')[0] == 0))
                 OrgMktType = 1;                        
         }
-        //אם במקור ביטלנו קו שירות נבטל גם כניסות וויסותים
+        //אם במקור ביטלנו קו שירות נבטל גם כניסות 
         if (((Number(OrgMktType) == 1)) && (SubMkt!=2)){
             if (Row.id != ''){
                 _NextRow = document.getElementById(Row.id).nextSibling;
@@ -258,8 +267,8 @@ var MKT_ELEMENT = 5;
                     if (_NextRow.cells[_COL_KNISA].childNodes[0].nodeValue != '') {
                         arrKnisa = String(_NextRow.cells[_COL_KNISA].childNodes[0].nodeValue).split(',');
                         lNxtMkt = Number(_NextRow.cells[_COL_MAKAT].childNodes[0].value);
-                    } //ויסותים,כניסות ואלמנט הפסקה
-                    if (((Number(arrKnisa[0]) > 0)) || ((lNxtMkt >= 70000000) && (lNxtMkt <= 70099999)) || (((lNxtMkt >= 74300000) && (lNxtMkt <= 74399999))))
+                    } //,כניסות 
+                    if (Number(arrKnisa[0]) > 0) //|| ((lNxtMkt >= 70000000) && (lNxtMkt <= 70099999)) || (((lNxtMkt >= 74300000) && (lNxtMkt <= 74399999))))
                         ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 1);
                     else {
                         lNxtMkt = Number(_NextRow.cells[_COL_MAKAT].childNodes[0].value);
