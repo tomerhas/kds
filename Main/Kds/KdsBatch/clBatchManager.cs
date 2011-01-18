@@ -9479,7 +9479,7 @@ namespace KdsBatch
                     oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                     oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
                     oPeilutNew.iBitulOHosafa = 4;
-                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, 5 * oSidur.htPeilut.Count + 7, oPeilutNew);
+                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "") + "1", oPeilutNew);
                     iIndexElement = iPeilutNesiaIndex;
                     iPeilutNesiaIndex += 1;
 
@@ -9687,7 +9687,7 @@ namespace KdsBatch
                 oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                 oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
                 oPeilutNew.iBitulOHosafa = 4;
-                oSidur.htPeilut.Insert(iPeilutNesiaIndex, 5 * oSidur.htPeilut.Count + 7, oPeilutNew);
+                oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "")+"11", oPeilutNew);
                 iIndexElement = iPeilutNesiaIndex;
                 iPeilutNesiaIndex += 1;
 

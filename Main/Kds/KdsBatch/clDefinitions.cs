@@ -251,7 +251,7 @@ namespace KdsBatch
                     if (SpecialSidurim.Contains(iMisparSidur))
                     {
                         //htSpecialEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
-                        htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidur);
+                        htSpecialEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                     }
                     //else if (oSidur.iBitulOHosafa == 1 || oSidur.iBitulOHosafa == 3)
                     //{
@@ -260,7 +260,7 @@ namespace KdsBatch
                     else if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
                     {
                         //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
-                        htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidur);
+                        htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                         //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
                     }
                     iMisparSidurPrev = iMisparSidur;

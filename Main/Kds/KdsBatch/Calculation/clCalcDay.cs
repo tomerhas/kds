@@ -3858,7 +3858,7 @@ namespace KdsBatch
                                 }
                             }
 
-                            if (iMinuts > 120)
+                            if (iMinuts >= 120)
                                 fErechRechiv = 420;
                         }
                     }

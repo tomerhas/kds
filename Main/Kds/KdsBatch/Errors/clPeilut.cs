@@ -106,7 +106,7 @@ namespace KdsBatch
         }
         public clPeilut(){}
 
-        public clPeilut(int iMisparIshi,DateTime dCardDate,clPeilut oPeilutOld,long lMakatNesiaNew,DataTable dtMeafyeneyElements) 
+        public clPeilut(int iMisparIshi,DateTime dDateCard,clPeilut oPeilutOld,long lMakatNesiaNew,DataTable dtMeafyeneyElements) 
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();
@@ -114,12 +114,12 @@ namespace KdsBatch
             {
                 dtElementim = oUtils.GetCtbElementim();
             lMakatNesia = lMakatNesiaNew;
-
+            dCardDate = dDateCard;
             iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;
             iKisuyTor = oPeilutOld.iKisuyTor;
             dFullShatYetzia =oPeilutOld.dFullShatYetzia;
              sShatYetzia = oPeilutOld.sShatYetzia;
-
+            
             lOtoNo =oPeilutOld.lOtoNo;
 
             lMisparSiduriOto =oPeilutOld.lMisparSiduriOto;
@@ -146,7 +146,7 @@ namespace KdsBatch
             iKodShinuyPremia=oPeilutOld.iKodShinuyPremia;
             sMakatDescription = oPeilutOld.sMakatDescription;
 
-            dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dCardDate);
+            dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dDateCard);
 
             SetKavDetails(dtPeiluyot, lMakatNesia);
 
@@ -197,7 +197,7 @@ namespace KdsBatch
             }
         }
 
-        public clPeilut(int iMisparIshi, DateTime dCardDate, KdsLibrary.UDT.OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, DataTable dtMeafyeneyElements)
+        public clPeilut(int iMisparIshi, DateTime dDateCard, KdsLibrary.UDT.OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, DataTable dtMeafyeneyElements)
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();
@@ -206,7 +206,7 @@ namespace KdsBatch
                 dtElementim = oUtils.GetCtbElementim();
 
                 lMakatNesia = oObjPeilutOvdimIns.MAKAT_NESIA;
-
+                dCardDate = dDateCard;
                 iPeilutMisparSidur = oObjPeilutOvdimIns.MISPAR_SIDUR;
                 dFullShatYetzia = oObjPeilutOvdimIns.SHAT_YETZIA;
                 sShatYetzia = dFullShatYetzia.ToString("HH:mm");
@@ -217,7 +217,7 @@ namespace KdsBatch
                 lMisparMatala = oObjPeilutOvdimIns.MISPAR_MATALA;
                 lOtoNo = oObjPeilutOvdimIns.OTO_NO;
 
-                dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dCardDate);
+                dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dDateCard);
 
                 SetKavDetails(dtPeiluyot, lMakatNesia);
 
