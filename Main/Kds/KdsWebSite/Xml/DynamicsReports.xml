@@ -328,12 +328,14 @@
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
     </Filter>
   </Report>
 
   <Report  RdlName="HityazvutBePundakimTlunot" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - תלונות" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
@@ -346,6 +348,7 @@
   <Report  RdlName="HityazvutBePundakimKalkalit" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - כלכלית" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
