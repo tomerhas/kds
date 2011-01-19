@@ -292,10 +292,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>2.01077cm</Top>
+        <Top>2.64577cm</Top>
         <Left>4.22487cm</Left>
         <Height>1.2cm</Height>
-        <Width>9.07426cm</Width>
+        <Width>9.07425cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true )</Hidden>
         </Visibility>
@@ -306,21 +306,6 @@
           <TextAlign>Right</TextAlign>
         </Style>
       </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Top>0.00678in</Top>
-        <Left>18.85027cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="Textbox2">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -341,11 +326,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.37549cm</Top>
+        <Top>2.01049cm</Top>
         <Left>3.82799cm</Left>
         <Height>0.6cm</Height>
         <Width>9.74748cm</Width>
-        <ZIndex>2</ZIndex>
+        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -359,43 +344,23 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="ERECH_PARAM">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   לתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ERECH_PARAM</rd:DefaultName>
-        <Top>0.30392cm</Top>
-        <Left>1.98754cm</Left>
-        <Height>0.6cm</Height>
-        <Width>13.94103cm</Width>
-        <ZIndex>3</ZIndex>
-        <RepeatWith>Tablix1</RepeatWith>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   לתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
+          </Parameter>
+        </Parameters>
+        <Left>2.3607cm</Left>
+        <Height>1.69369cm</Height>
+        <Width>15.62888cm</Width>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
         </Style>
-      </Textbox>
+      </Subreport>
     </ReportItems>
     <Height>1.66303in</Height>
     <Style />

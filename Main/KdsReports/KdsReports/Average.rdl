@@ -564,7 +564,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Top>0.02715cm</Top>
+        <Top>2.25cm</Top>
         <Height>5.29344cm</Height>
         <Width>17.97754cm</Width>
         <Style>
@@ -573,8 +573,25 @@
           </Border>
         </Style>
       </Tablix>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דו''ח ממוצעי שעות , ימי עבודה והעדרות לעובד" + Chr(10) + 
+" מתאריך " + Parameters!P_STARTDATE.Value + " עד לתאריך " + Parameters!P_ENDDATE.Value</Value>
+          </Parameter>
+        </Parameters>
+        <Height>1.80071cm</Height>
+        <Width>17.86818cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
-    <Height>2.16764in</Height>
+    <Height>2.96986in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -658,109 +675,8 @@
       <Prompt>P SECTORISUK</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.15067in</Width>
+  <Width>7.1493in</Width>
   <Page>
-    <PageHeader>
-      <Height>1.64111cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="Textbox12">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>דו"ח ממוצעי שעות , ימי עבודה והעדרות לעובד</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <TextDecoration>Underline</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <HangingIndent>0cm</HangingIndent>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.02715cm</Top>
-          <Left>0.03525cm</Left>
-          <Height>0.74083cm</Height>
-          <Width>15.74555cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Image Name="Logo">
-          <Source>Embedded</Source>
-          <Value>logo1</Value>
-          <Sizing>FitProportional</Sizing>
-          <Left>16.21226cm</Left>
-          <Height>1.5cm</Height>
-          <Width>1.5cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
-        <Textbox Name="Textbox13">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=" מתאריך " + Parameters!P_STARTDATE.Value + " עד לתאריך " + Parameters!P_ENDDATE.Value</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <TextDecoration>Underline</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <HangingIndent>0cm</HangingIndent>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.82937cm</Top>
-          <Left>0.03525cm</Left>
-          <Height>0.635cm</Height>
-          <Width>15.74555cm</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-      </ReportItems>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>

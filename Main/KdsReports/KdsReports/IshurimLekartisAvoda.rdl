@@ -67,42 +67,6 @@ WHERE        (MISPAR_ISHI = :P_MISPAR_ISHI)</CommandText>
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>="אישור  בטיפול לכרטיס עבודה  "  &amp;  formatdatetime(cdate(Parameters!P_TAARICH.Value),2)&amp; " " &amp; First(Fields!FULLNAME.Value, "WorkerDetails")</Value>
-                <Style>
-                  <FontSize>16pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <Language>he-IL</Language>
-                  <Calendar>Hebrew</Calendar>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.54716cm</Top>
-        <Height>0.84667cm</Height>
-        <Width>15.55679cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-          <Direction>RTL</Direction>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
@@ -493,10 +457,9 @@ WHERE        (MISPAR_ISHI = :P_MISPAR_ISHI)</CommandText>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsIshurim</DataSetName>
-        <Top>1.87008cm</Top>
+        <Top>2.50508cm</Top>
         <Height>1.96639cm</Height>
         <Width>18.26575cm</Width>
-        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsIshurim")&gt;0 ,false,true)</Hidden>
         </Visibility>
@@ -506,20 +469,6 @@ WHERE        (MISPAR_ISHI = :P_MISPAR_ISHI)</CommandText>
           </Border>
         </Style>
       </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>16.76574cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="Textbox5">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -540,11 +489,11 @@ WHERE        (MISPAR_ISHI = :P_MISPAR_ISHI)</CommandText>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.47272cm</Top>
+        <Top>2.74272cm</Top>
         <Left>0.06537cm</Left>
         <Height>0.89104cm</Height>
         <Width>18.135cm</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsIshurim")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -558,8 +507,25 @@ WHERE        (MISPAR_ISHI = :P_MISPAR_ISHI)</CommandText>
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>="אישור  בטיפול לכרטיס עבודה  "  &amp;  formatdatetime(cdate(Parameters!P_TAARICH.Value),2)&amp; " " &amp; First(Fields!FULLNAME.Value, "WorkerDetails")</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0.06537cm</Left>
+        <Height>1.99334cm</Height>
+        <Width>18.135cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
-    <Height>1.51042in</Height>
+    <Height>1.76042in</Height>
     <Style />
   </Body>
   <ReportParameters>

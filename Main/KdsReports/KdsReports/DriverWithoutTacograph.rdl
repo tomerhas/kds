@@ -1722,7 +1722,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>5</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1942,7 +1941,7 @@
             <Value>=Fields!MISPAR_SIDUR.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>1.23507cm</Top>
+        <Top>1.87007cm</Top>
         <Left>0.21264cm</Left>
         <Height>4.20845cm</Height>
         <Width>20.13103cm</Width>
@@ -1952,129 +1951,26 @@
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="ERECH_PARAM">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>= "דוח נהגים שלא צרפו טכוגרף עבור תקופה " + Parameters!P_PERIOD.Value</Value>
-                <Style>
-                  <FontSize>16pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>ERECH_PARAM</rd:DefaultName>
-        <Top>0.1934cm</Top>
-        <Left>4.49828cm</Left>
-        <Height>0.6cm</Height>
-        <Width>13.94103cm</Width>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דוח נהגים שלא צרפו טכוגרף עבור תקופה " + Parameters!P_PERIOD.Value</Value>
+          </Parameter>
+        </Parameters>
+        <Top>0.07516cm</Top>
+        <Left>1.87312cm</Left>
+        <Height>1.80071cm</Height>
+        <Width>16.79555cm</Width>
         <ZIndex>1</ZIndex>
-        <RepeatWith>Tablix1</RepeatWith>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=":תאריך"</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <Language>he-IL</Language>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Left</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.14111cm</Top>
-        <Left>2.53528cm</Left>
-        <Height>0.6cm</Height>
-        <Width>1.9091cm</Width>
-        <ZIndex>2</ZIndex>
-        <RepeatWith>Tablix1</RepeatWith>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>Fit</Sizing>
-        <Top>0.1934cm</Top>
-        <Left>18.6157cm</Left>
-        <Height>1.44708cm</Height>
-        <Width>1.72797cm</Width>
-        <ZIndex>3</ZIndex>
-        <RepeatWith>Tablix1</RepeatWith>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Image>
-      <Textbox Name="Textbox4">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=  FormatDateTime(Globals!ExecutionTime,2)</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>0.17639cm</Top>
-        <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
-        <ZIndex>4</ZIndex>
-        <RepeatWith>Tablix1</RepeatWith>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
+      </Subreport>
     </ReportItems>
-    <Height>2.14312in</Height>
+    <Height>2.46603in</Height>
     <Style />
   </Body>
   <ReportParameters>

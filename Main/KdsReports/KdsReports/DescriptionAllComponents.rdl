@@ -71,43 +71,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox12">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>דוח פירוט כל הרכיבים</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <HangingIndent>0cm</HangingIndent>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.57593cm</Top>
-        <Left>2.2429cm</Left>
-        <Height>0.74083cm</Height>
-        <Width>10.85124cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle2">
         <ReportItems>
           <Textbox Name="Textbox231">
@@ -361,11 +324,10 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>1.59478cm</Top>
-        <Left>0.37295cm</Left>
+        <Top>1.94182cm</Top>
+        <Left>0.62183cm</Left>
         <Height>2.12661cm</Height>
         <Width>16.87142cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -952,9 +914,26 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsNetunim</DataSetName>
-        <Top>3.73528cm</Top>
-        <Left>0.37295cm</Left>
+        <Top>4.08232cm</Top>
+        <Left>0.62183cm</Left>
         <Height>3.8432cm</Height>
+        <Width>16.79555cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>דוח פירוט כל הרכיבים</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0.62183cm</Left>
+        <Height>1.80071cm</Height>
         <Width>16.79555cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
@@ -962,23 +941,9 @@
             <Style>None</Style>
           </Border>
         </Style>
-      </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>15.74436cm</Left>
-        <Height>1.59478cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
+      </Subreport>
     </ReportItems>
-    <Height>3.02883in</Height>
+    <Height>3.12028in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1023,7 +988,7 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.83875in</Width>
+  <Width>7.03472in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

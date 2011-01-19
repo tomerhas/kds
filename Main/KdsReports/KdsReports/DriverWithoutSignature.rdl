@@ -302,7 +302,7 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>0.54663cm</Top>
+        <Top>2.13413cm</Top>
         <Left>1.33896cm</Left>
         <Height>1.27937cm</Height>
         <Width>3.73507cm</Width>
@@ -1685,7 +1685,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsDriverNotSigned</DataSetName>
-        <Top>2.00239cm</Top>
+        <Top>3.58989cm</Top>
         <Left>0.17905cm</Left>
         <Height>4.25379cm</Height>
         <Width>20.47916cm</Width>
@@ -1696,8 +1696,26 @@
           </Border>
         </Style>
       </Tablix>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>="נהגים ללא החתמת התייצבות בשעון נוכחות לתקופה " + Trim(Parameters!P_PERIOD.Value)</Value>
+          </Parameter>
+        </Parameters>
+        <Top>0.05278cm</Top>
+        <Left>2.96372cm</Left>
+        <Height>1.80071cm</Height>
+        <Width>16.79555cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
-    <Height>2.59848in</Height>
+    <Height>3.08806in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1734,114 +1752,9 @@
   <Width>10.68096in</Width>
   <Page>
     <PageHeader>
-      <Height>1.51757cm</Height>
+      <Height>0.02646cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="Textbox5">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=  " תאריך הפקה "+ FormatDateTime(Globals!ExecutionTime,2)</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.01757cm</Top>
-          <Left>2.96372cm</Left>
-          <Height>0.6cm</Height>
-          <Width>7.21403cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <Direction>LTR</Direction>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox33">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="דף " &amp; Globals!PageNumber &amp; " מתוך " &amp; Globals!TotalPages</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox33</rd:DefaultName>
-          <Top>0.01757cm</Top>
-          <Left>20.50214cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.92333cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox2">
-          <CanGrow>true</CanGrow>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="נהגים ללא החתמת התייצבות בשעון נוכחות לתקופה " + Trim(Parameters!P_PERIOD.Value)</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <TextDecoration>Underline</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.82924cm</Top>
-          <Left>1.55222cm</Left>
-          <Height>0.6cm</Height>
-          <Width>21.87325cm</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Textbox>
-        <Image Name="Logo">
-          <Source>Embedded</Source>
-          <Value>logo1</Value>
-          <Sizing>FitProportional</Sizing>
-          <Top>0.01757cm</Top>
-          <Left>23.60186cm</Left>
-          <Height>1.5cm</Height>
-          <Width>1.5cm</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
-      </ReportItems>
       <Style>
         <Border>
           <Style>None</Style>

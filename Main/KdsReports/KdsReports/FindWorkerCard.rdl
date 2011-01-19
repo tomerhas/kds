@@ -181,38 +181,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>="דו""ח איתורים" &amp; " מתאריך " + Parameters!P_STARTDATE.Value + " עד לתאריך " + Parameters!P_ENDDATE.Value</Value>
-                <Style>
-                  <FontSize>20pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.25612cm</Top>
-        <Height>0.87313cm</Height>
-        <Width>23.57757cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
@@ -2068,11 +2036,10 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DsWorker_Card</DataSetName>
-        <Top>1.65841cm</Top>
+        <Top>1.97591cm</Top>
         <Left>0.3175cm</Left>
         <Height>2.90271cm</Height>
         <Width>27.99547cm</Width>
-        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsWorker_Card")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -2098,20 +2065,6 @@
           <TextAlign>Center</TextAlign>
         </Style>
       </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>Fit</Sizing>
-        <Left>25.57959cm</Left>
-        <Height>1.44708cm</Height>
-        <Width>1.72797cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="Textbox5">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -2136,7 +2089,7 @@
         <Left>5.63139cm</Left>
         <Height>0.89104cm</Height>
         <Width>18.135cm</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsWorker_Card")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -2150,8 +2103,25 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>="דו""ח איתורים" &amp; " מתאריך " + Parameters!P_STARTDATE.Value + " עד לתאריך " + Parameters!P_ENDDATE.Value</Value>
+          </Parameter>
+        </Parameters>
+        <Left>4.96497cm</Left>
+        <Height>1.80071cm</Height>
+        <Width>16.79555cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
-    <Height>2.03194in</Height>
+    <Height>2.00405in</Height>
     <Style />
   </Body>
   <ReportParameters>

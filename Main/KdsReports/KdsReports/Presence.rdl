@@ -134,7 +134,7 @@ iif(
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.78504in</Height>
+              <Height>3.05588in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1683,7 +1683,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                             </Rectangle>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
-                          <Top>1.86942cm</Top>
+                          <Top>2.50442cm</Top>
                           <Left>0.254cm</Left>
                           <Height>5.15167cm</Height>
                           <Width>19.63492cm</Width>
@@ -1693,54 +1693,24 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                             </Border>
                           </Style>
                         </Rectangle>
-                        <Textbox Name="Textbox1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>="דו""ח נוכחות מה- " &amp; Parameters!P_STARTDATE.Value &amp; "  עד ל- " &amp; Parameters!P_ENDDATE.Value</Value>
-                                  <Style>
-                                    <FontSize>16pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
-                          <Top>0.22879cm</Top>
-                          <Left>0.18521cm</Left>
-                          <Height>0.87313cm</Height>
-                          <Width>16.0532cm</Width>
+                        <Subreport Name="SubReportHeader">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="דו""ח נוכחות מה- " &amp; Parameters!P_STARTDATE.Value &amp; "  עד ל- " &amp; Parameters!P_ENDDATE.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.38769cm</Top>
+                          <Left>2.20939cm</Left>
+                          <Height>1.80071cm</Height>
+                          <Width>15.62888cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
                           </Style>
-                        </Textbox>
-                        <Image Name="Logo">
-                          <Source>Embedded</Source>
-                          <Value>logo1</Value>
-                          <Sizing>FitProportional</Sizing>
-                          <Left>17.12811cm</Left>
-                          <Height>1.5cm</Height>
-                          <Width>1.5cm</Width>
-                          <ZIndex>2</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Image>
+                        </Subreport>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Visibility>
@@ -1792,8 +1762,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.00001cm</Left>
-        <Height>7.07401cm</Height>
-        <Width>20.04767cm</Width>
+        <Height>7.76192cm</Height>
+        <Width>20.04766cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1842,7 +1812,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.78504in</Height>
+    <Height>3.07671in</Height>
     <Style />
   </Body>
   <ReportParameters>

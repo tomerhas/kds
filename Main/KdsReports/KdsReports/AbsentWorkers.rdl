@@ -483,7 +483,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -802,7 +801,7 @@
             <Value>=Fields!SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>1.12889cm</Top>
+        <Top>3.35139cm</Top>
         <Left>0.26345cm</Left>
         <Height>1.62334cm</Height>
         <Width>20.69922cm</Width>
@@ -835,7 +834,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.27cm</Top>
+        <Top>3.4925cm</Top>
         <Left>2.11829cm</Left>
         <Height>0.89104cm</Height>
         <Width>16.36229cm</Width>
@@ -965,6 +964,7 @@
             </FilterValues>
           </Filter>
         </Filters>
+        <Top>2.2225cm</Top>
         <Left>6.0674cm</Left>
         <Height>0.6cm</Height>
         <Width>4.99999cm</Width>
@@ -976,8 +976,25 @@
           </Border>
         </Style>
       </Tablix>
+      <Subreport Name="Subreport1">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דו""ח העדרויות לחודש "  &amp; Parameters!P_PERIOD.Value</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0.26345cm</Left>
+        <Height>2.22306cm</Height>
+        <Width>20.69922cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
-    <Height>1.31978in</Height>
+    <Height>2.03341in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1044,132 +1061,6 @@
   </ReportParameters>
   <Width>8.40394in</Width>
   <Page>
-    <PageHeader>
-      <Height>1.89751cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="Textbox4">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>= "דו""ח העדרויות לחודש "  &amp; Parameters!P_PERIOD.Value</Value>
-                  <Style>
-                    <FontSize>20pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.83344cm</Top>
-          <Height>0.87313cm</Height>
-          <Width>16.29198cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Image Name="Logo">
-          <Source>Embedded</Source>
-          <Value>logo1</Value>
-          <Sizing>Fit</Sizing>
-          <Top>0.25949cm</Top>
-          <Left>19.24785cm</Left>
-          <Height>1.44708cm</Height>
-          <Width>1.71481cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </Image>
-        <Textbox Name="Textbox6">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=  FormatDateTime(Globals!ExecutionTime,2)</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.17198cm</Top>
-          <Height>0.6cm</Height>
-          <Width>2.5cm</Width>
-          <ZIndex>2</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox7">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>="תאריך הפקה :"</Value>
-                  <Style>
-                    <FontSize>12pt</FontSize>
-                    <Language>he-IL</Language>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox6</rd:DefaultName>
-          <Top>0.16288cm</Top>
-          <Left>2.5cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.59702cm</Width>
-          <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-            <Direction>RTL</Direction>
-          </Style>
-        </Textbox>
-      </ReportItems>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
     <LeftMargin>0.254cm</LeftMargin>

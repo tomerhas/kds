@@ -94,47 +94,13 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.53528cm</Top>
+        <Top>1.85278cm</Top>
         <Left>1.04887cm</Left>
         <Height>0.89104cm</Height>
         <Width>18.135cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsIshurimLerashemet")&gt;0 ,true ,false)</Hidden>
         </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox15">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>בקרת אישורים</Value>
-                <Style>
-                  <FontSize>20pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Height>1.02333cm</Height>
-        <Width>18.0061cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -805,7 +771,7 @@
         <Top>1.83472cm</Top>
         <Height>1.70271cm</Height>
         <Width>19.78353cm</Width>
-        <ZIndex>2</ZIndex>
+        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsIshurimLerashemet")&gt;0 ,false,true)</Hidden>
         </Visibility>
@@ -816,20 +782,23 @@
           <FontSize>8pt</FontSize>
         </Style>
       </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>18.28353cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>3</ZIndex>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>בקרת אישורים</Value>
+          </Parameter>
+        </Parameters>
+        <Left>2.22727cm</Left>
+        <Height>1.80071cm</Height>
+        <Width>15.62888cm</Width>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Image>
+      </Subreport>
     </ReportItems>
     <Height>3.68216cm</Height>
     <Style />
