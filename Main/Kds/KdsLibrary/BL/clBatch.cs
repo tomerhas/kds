@@ -407,6 +407,19 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void DeleteLogTahalichRecords()
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.ExecuteSP(clGeneral.cProDeleteLogTahalichRecords);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public DataTable GetTavlaotToRefresh()
         {
             clDal oDal = new clDal();

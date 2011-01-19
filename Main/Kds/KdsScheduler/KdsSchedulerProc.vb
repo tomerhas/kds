@@ -33,6 +33,7 @@ Module KdsSchedulerProc
             If Now.Day = 1 And Now.Hour = 23 Then
                 ''**oKDs.KdsWriteProcessLog(99, 0, 3, "before MoveRecordsToHistory", 9)
                 Call MoveRecordsToHistory()
+                Call DeleteLogTahalich()
                 ''**oKDs.KdsWriteProcessLog(99, 0, 3, "after MoveRecordsToHistory", 9)
             End If
 
@@ -230,14 +231,14 @@ Module KdsSchedulerProc
         End Try
     End Sub
     Sub MoveRecordsToHistory()
-        Dim oKDs As KdsLibrary.BL.clBatch
-        Dim oKDsData As KdsDataImport.ClKds
+        ' Dim oKDs As KdsLibrary.BL.clBatch
+        'Dim oKDsData As KdsDataImport.ClKds
         Dim iMoveRecordsToHistory As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             iMoveRecordsToHistory = oBatch.InsertProcessLog(99, 0, KdsLibrary.BL.RecordStatus.Wait, "MoveRecordsToHistory", 0)
-            oKDs = New KdsLibrary.BL.clBatch
-            oKDs.MoveRecordsToHistory(Now.AddMonths(-11))
+            '   oKDs = New KdsLibrary.BL.clBatch
+            oBatch.MoveRecordsToHistory(Now.AddMonths(-11))
             oBatch.UpdateProcessLog(iMoveRecordsToHistory, KdsLibrary.BL.RecordStatus.Finish, "MoveRecordsToHistory", 0)
         Catch ex As Exception
             ''**oKDsData = New KdsDataImport.ClKds
@@ -246,7 +247,21 @@ Module KdsSchedulerProc
         End Try
     End Sub
 
-
+    Sub DeleteLogTahalich()
+        '  Dim oKDs As KdsLibrary.BL.clBatch
+        Dim iDeleteSeq As Integer
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Try
+            iDeleteSeq = oBatch.InsertProcessLog(97, 0, KdsLibrary.BL.RecordStatus.Wait, "DeleteLogThalich", 0)
+            '  oKDs = New KdsLibrary.BL.clBatch
+            oBatch.DeleteLogTahalichRecords()
+            oBatch.UpdateProcessLog(iDeleteSeq, KdsLibrary.BL.RecordStatus.Finish, "DeleteLogThalich", 0)
+        Catch ex As Exception
+            ''**oKDsData = New KdsDataImport.ClKds
+            oBatch.UpdateProcessLog(iDeleteSeq, KdsLibrary.BL.RecordStatus.Faild, "MoveRecordsToHistory faild: " + ex.Message, 14)
+            ''**oKDsData.KdsWriteProcessLog(99, 0, 3, "MoveRecordsToHistory faild: " + ex.Message, 9)
+        End Try
+    End Sub
     Sub Test4Tmp()
         'SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '3 in test, 2 in prd
         'If SdrnStatTimes = "" Then
@@ -307,5 +322,5 @@ Module KdsSchedulerProc
         Catch ex As Exception
         End Try
     End Sub
-    
+
 End Module

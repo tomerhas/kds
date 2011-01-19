@@ -3074,7 +3074,7 @@ Public Class ClKds
                     If Now.Hour > CInt(SdrnStrtHour) And Now.Hour < 13 Then
                         RunSdrn(p_date_str) 'yyyymmdd
                     End If
-                    Thread.Sleep(900000) '=15 minutes
+                    Thread.Sleep(300000) '=5 minutes
                     non_stop_loop = check_non_stop_loop()
                     '*' oBatch.UpdateProcessLog(iloopSeq, KdsLibrary.BL.RecordStatus.Finish, "inside loop hr", 0)
                 End While
