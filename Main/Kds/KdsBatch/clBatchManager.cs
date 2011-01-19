@@ -8618,7 +8618,7 @@ namespace KdsBatch
                         oObjSidurimOvdimIns.MISPAR_SIDUR = oNewSidurim.SidurNew;
                         oObjSidurimOvdimIns.NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
                         oObjSidurimOvdimIns.BITUL_O_HOSAFA = oObjSidurimOvdimUpd.BITUL_O_HOSAFA;
-
+                        oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
                         oObjSidurimOvdimIns.TOSEFET_GRIRA = oObjSidurimOvdimUpd.TOSEFET_GRIRA;
                         oObjSidurimOvdimIns.MIKUM_SHAON_KNISA = oObjSidurimOvdimUpd.MIKUM_SHAON_KNISA;
                         oObjSidurimOvdimIns.MIKUM_SHAON_YETZIA = oObjSidurimOvdimUpd.MIKUM_SHAON_YETZIA;
@@ -8699,6 +8699,13 @@ namespace KdsBatch
                 oObjSidurimOvdimIns.SHAT_HATCHALA = oSidur.dFullShatHatchala;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchala));
                 oObjSidurimOvdimIns.TAARICH = oSidur.dSidurDate;
                 oObjSidurimOvdimIns.MIVTZA_VISA = oSidur.iMivtzaVisa;
+                oObjSidurimOvdimIns.TAFKID_VISA = oSidur.iTafkidVisa;
+                oObjSidurimOvdimIns.MISPAR_SHIUREY_NEHIGA = oSidur.iMisparShiureyNehiga;
+                oObjSidurimOvdimIns.SUG_HAZMANAT_VISA = oSidur.iSugHazmanatVisa;
+                oObjSidurimOvdimIns.ACHUZ_VIZA_BESIKUN = oSidur.iAchuzVizaBesikun;
+                oObjSidurimOvdimIns.ACHUZ_KNAS_LEPREMYAT_VISA = oSidur.iAchuzKnasLepremyatVisa;
+                oObjSidurimOvdimIns.MISPAR_MUSACH_O_MACHSAN = oSidur.iMisparMusachOMachsan;
+
                 oObjSidurimOvdimIns.YOM_VISA = string.IsNullOrEmpty(oSidur.sVisa) ? 0 : int.Parse(oSidur.sVisa);
                 oObjSidurimOvdimIns.MEZAKE_NESIOT = oSidur.iMezakeNesiot;
                 oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oSidur.dFullShatHatchalaLetashlum; //DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchalaLetashlum));
@@ -8782,6 +8789,8 @@ namespace KdsBatch
                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = oSidur.iShayahLeyomKodem;
                 oObjSidurimOvdimUpd.MEADKEN_ACHARON = _iUserId;
                 oObjSidurimOvdimUpd.TAARICH_IDKUN_ACHARON = oSidur.dTaarichIdkunAcharon;
+                oObjSidurimOvdimIns.TAFKID_VISA = oSidur.iTafkidVisa;
+                
                 oObjSidurimOvdimUpd.HEARA = oSidur.sHeara;
                 oObjSidurimOvdimUpd.MISPAR_SHIUREY_NEHIGA = oSidur.iMisparShiureyNehiga;
                 //oObjSidurimOvdimUpd.BUTAL = oSidur.iButal;
@@ -8858,7 +8867,7 @@ namespace KdsBatch
                 oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidur.dFullShatHatchala;
                 oObjPeilutOvdimIns.MISPAR_KNISA = 0;
                 oObjPeilutOvdimIns.MEADKEN_ACHARON = _iUserId;
-            }
+             }
             catch (Exception ex)
             {
                 oObjPeilutOvdimIns = OBJ_PEILUT_OVDIM.Null;
@@ -8881,6 +8890,9 @@ namespace KdsBatch
                 oObjPeilutOvdimUpd.MISPAR_MATALA  = oPeilut.lMisparMatala;
                 oObjPeilutOvdimUpd.BITUL_O_HOSAFA = oPeilut.iBitulOHosafa;
                 oObjPeilutOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR;
+                oObjPeilutOvdimUpd.KM_VISA = oPeilut.iKmVisa;
+                oObjPeilutOvdimUpd.KOD_SHINUY_PREMIA = oPeilut.iKodShinuyPremia;
+                oObjPeilutOvdimUpd.MISPAR_SIDURI_OTO = oPeilut.lMisparSiduriOto;
                 oObjPeilutOvdimUpd.MEADKEN_ACHARON = _iUserId;
             }
             catch (Exception ex)
@@ -9261,16 +9273,40 @@ namespace KdsBatch
 
                             if (oPeilut.dFullShatYetzia == dShatYetziaFirst)
                             {
-                                oObjPeilutUpd = GetUpdPeilutObject(i, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
-
-                                FindDuplicatPeiluyot(j, oSidur.dFullShatHatchala, i, ref oSidur, ref oObjSidurimOvdimUpd);
-                                oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala;
                                 iMinuts = int.Parse((oSidur.dFullShatHatchala - dShatYetziaFirst).TotalMinutes.ToString());
-                                oPeilut.dFullShatYetzia = oObjPeilutUpd.SHAT_YETZIA;
-                                oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
-                                iMinuts= int.Parse(oPeilut.lMakatNesia.ToString().Substring(3,3))-iMinuts;
-                                oObjPeilutUpd.MAKAT_NESIA = long.Parse(string.Concat(oPeilut.lMakatNesia.ToString().Substring(0, 3), iMinuts.ToString().PadLeft(3, (char)48), oPeilut.lMakatNesia.ToString().Substring(6, 2)));
-                                
+
+                                if (int.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3)) > iMinuts)
+                                {
+                                    oObjPeilutUpd = GetUpdPeilutObject(i, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
+
+                                    FindDuplicatPeiluyot(j, oSidur.dFullShatHatchala, i, ref oSidur, ref oObjSidurimOvdimUpd);
+                                    oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala;
+
+                                    oPeilut.dFullShatYetzia = oObjPeilutUpd.SHAT_YETZIA;
+                                    oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
+                                    iMinuts = int.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3)) - iMinuts;
+                                    oObjPeilutUpd.MAKAT_NESIA = long.Parse(string.Concat(oPeilut.lMakatNesia.ToString().Substring(0, 3), iMinuts.ToString().PadLeft(3, (char)48), oPeilut.lMakatNesia.ToString().Substring(6, 2)));
+                                }
+                                else
+                                {
+                                    oSidur.htPeilut.RemoveAt(j);
+                                    l = 0;
+                                    iCountPeiluyotIns = oCollPeilutOvdimIns.Count;
+                                    if (l < iCountPeiluyotIns)
+                                    {
+                                        do
+                                        {
+                                            if ((oCollPeilutOvdimIns.Value[l].MISPAR_SIDUR == oSidur.iMisparSidur) && (oCollPeilutOvdimIns.Value[l].SHAT_HATCHALA_SIDUR == oSidur.dFullShatHatchala)
+                                                   && (oCollPeilutOvdimIns.Value[l].SHAT_YETZIA == oPeilut.dFullShatYetzia) && (oCollPeilutOvdimIns.Value[l].MISPAR_KNISA == oPeilut.iMisparKnisa))
+                                            {
+                                                oCollPeilutOvdimIns.RemoveAt(l);
+                                                l -= 1;
+                                            }
+                                            l += 1;
+                                            iCountPeiluyotIns = oCollPeilutOvdimIns.Count;
+                                        } while (l < iCountPeiluyotIns);
+                                    }
+                                }
                                 break;
                             }
                         }

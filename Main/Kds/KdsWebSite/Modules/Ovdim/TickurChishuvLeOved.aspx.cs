@@ -270,7 +270,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                 }
 
                 if (sError.Length > 0)
-                    ScriptManager.RegisterStartupScript(btnInputData, btnInputData.GetType(), "Err", "alert('ישנם תאריכם שגויים בחודש: " + sError + "');", true);
+                    ScriptManager.RegisterStartupScript(btnInputData, btnInputData.GetType(), "Err", "alert('ישנם תאריכים שגויים בחודש: " + sError + "');", true);
                 else ScriptManager.RegisterStartupScript(btnInputData, btnInputData.GetType(), "Err", "alert('הרצת שינויי קלט ושגויים הסתיימה בהצלחה');", true);
                
             }
