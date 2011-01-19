@@ -6923,13 +6923,13 @@ namespace KdsBatch
                                     if (dMinutsPitzul >= iMinPaar)
                                     {
                                          DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
-               
-                                        if (IsSidurNahagut(drSugSidur,oSidur))
+
+                                         if (IsSidurNahagut(drSugSidur, oSidur) || IsSidurNihulTnua(drSugSidur, oSidur))
                                             bSidurNahagut=true;
                                         else bSidurNahagut = false;
                                         drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oNextSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
 
-                                        if (IsSidurNahagut(drSugSidur, oNextSidur))
+                                        if (IsSidurNahagut(drSugSidur, oNextSidur) || IsSidurNihulTnua(drSugSidur, oNextSidur))
                                             bNextSidurNahagut=true;
                                         else bNextSidurNahagut = false;
 
