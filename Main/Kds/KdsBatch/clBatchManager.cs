@@ -8714,7 +8714,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                oObjSidurimOvdimIns = OBJ_SIDURIM_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToObjSidurimOvdimForUpdate(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
@@ -8789,7 +8789,7 @@ namespace KdsBatch
                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = oSidur.iShayahLeyomKodem;
                 oObjSidurimOvdimUpd.MEADKEN_ACHARON = _iUserId;
                 oObjSidurimOvdimUpd.TAARICH_IDKUN_ACHARON = oSidur.dTaarichIdkunAcharon;
-                oObjSidurimOvdimIns.TAFKID_VISA = oSidur.iTafkidVisa;
+                oObjSidurimOvdimUpd.TAFKID_VISA = oSidur.iTafkidVisa;
                 
                 oObjSidurimOvdimUpd.HEARA = oSidur.sHeara;
                 oObjSidurimOvdimUpd.MISPAR_SHIUREY_NEHIGA = oSidur.iMisparShiureyNehiga;
@@ -8819,7 +8819,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                oObjSidurimOvdimUpd = OBJ_SIDURIM_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToObjSidurimOvdimForDelete(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel)
@@ -8854,7 +8854,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                oObjSidurimOvdimDel = OBJ_SIDURIM_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToObjPeilutOvdimForInsert(ref clSidur oSidur, ref OBJ_PEILUT_OVDIM oObjPeilutOvdimIns)
@@ -8870,7 +8870,7 @@ namespace KdsBatch
              }
             catch (Exception ex)
             {
-                oObjPeilutOvdimIns = OBJ_PEILUT_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToObjPeilutOvdimForUpdate(ref clPeilut oPeilut,  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ref OBJ_PEILUT_OVDIM oObjPeilutOvdimUpd)
@@ -8897,7 +8897,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                oObjPeilutOvdimUpd = OBJ_PEILUT_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToObjPeilutOvdimForDelete(ref clPeilut oPeilut, ref clSidur oSidur, ref OBJ_PEILUT_OVDIM oObjPeilutOvdimDel)
@@ -8949,7 +8949,7 @@ namespace KdsBatch
              }
             catch (Exception ex)
             {
-                oObjPeilutOvdimDel = OBJ_PEILUT_OVDIM.Null;
+                throw ex;
             }
         }
         private void InsertToYameyAvodaForUpdate(DateTime dCardDate, ref OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd, ref clOvedYomAvoda oOvedYomAvodaDetails)
@@ -8988,7 +8988,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                oObjYameyAvodaUpd = OBJ_YAMEY_AVODA_OVDIM.Null;
+                throw ex;
             }
         }
 
