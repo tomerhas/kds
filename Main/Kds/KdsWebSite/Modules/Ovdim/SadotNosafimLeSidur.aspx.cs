@@ -321,7 +321,10 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             dtSadotKayamim = oUtils.GetSadotNosafimKayamim(int.Parse(txtId.Value),
                          int.Parse(MisSidur.Value), DateTime.Parse(clnDate.Value), DateTime.Parse(ShatHatchala.Value));
             if (dtSadotNosafimLesidur.Rows.Count == 0 || dtSadotKayamim.Rows.Count == 0)
+            {
                 lblEinSadotLesidur.Visible = true;
+                Session["dtSadotKayamim"] = null;
+            }
             else
             {
                 Session["dtSadotKayamim"] = dtSadotKayamim;
