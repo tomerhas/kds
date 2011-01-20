@@ -6792,7 +6792,7 @@ namespace KdsBatch
                             oObjPeilutOvdimIns.TAARICH = _dCardDate;
                             oObjPeilutOvdimIns.SHAT_YETZIA = oSidur.dFullShatHatchala;
                             oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidur.dFullShatHatchala;
-                            oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("50" + oNewSidurim.SidurOld.ToString());
+                            oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("50000000");
                             oObjPeilutOvdimIns.MISPAR_VISA = oNewSidurim.SidurOld;
                             oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                             oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
@@ -6837,7 +6837,7 @@ namespace KdsBatch
                     oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
 
                 }
-                    oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse("50" + iOldMisparSidur.ToString());
+                    oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse("50000000");
                     oObjPeilutOvdimUpd.MISPAR_VISA = iOldMisparSidur;
                     
                     clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
