@@ -2,6 +2,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%--<%@ Register Namespace="Egged.WebCustomControls" Assembly="Egged.WebCustomControls" TagPrefix="wccEgged" %>--%>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <script src='../../js/jquery.js' type='text/javascript'></script>
@@ -224,6 +225,9 @@ function ChangeKeyCode()
                         <RowStyle CssClass="GridRow"   />
                         <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                         <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>                                                    
+                        <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>  
                     </asp:GridView>
                  </ContentTemplate>
                  <Triggers>

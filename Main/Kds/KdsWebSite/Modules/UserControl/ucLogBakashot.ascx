@@ -1,5 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="ucLogBakashot.ascx.cs" Inherits="Modules_UserControl_ucLogBakashot" %>
  <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
+
    <link href="~/StyleSheet.css" rel="stylesheet" type="text/css" runat="server" id="styleMain" visible="false" />
 
    <fieldset dir="rtl"  style="text-align:right;width:965px" > 
@@ -117,6 +119,9 @@
                         <RowStyle CssClass="GridRow"   />
                         <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                         <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>  
+                        <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>  
                  </asp:GridView>
          
         </div>

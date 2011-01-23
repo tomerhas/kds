@@ -8,7 +8,7 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using KdsLibrary.UI;
 using System.Data;
-
+using KdsLibrary.UI.SystemManager;
 public partial class Modules_Requests_LogTahalich :KdsPage
 {
     private const int COL_TAARICH = 0;
@@ -18,6 +18,11 @@ public partial class Modules_Requests_LogTahalich :KdsPage
     private const int COL_TEUR_TAKALA = 4;
     private const int COL_TEUR_TECH = 5;
 
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+        grdLogTahalich.RowCreated += new GridViewRowEventHandler(grdLogTahalich_RowCreated);
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -215,4 +220,60 @@ public partial class Modules_Requests_LogTahalich :KdsPage
         grdLogTahalich.DataSource = (DataView)Session["LogTahalich"];
         grdLogTahalich.DataBind();
     }
+
+    //*******Pager Functions*********/
+    void grdLogTahalich_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.Pager)
+        {
+            IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
+            as IGridViewPager;
+            if (gridPager != null)
+            {
+                gridPager.PageIndexChanged += delegate(object pagerSender,
+                    GridViewPageEventArgs pagerArgs)
+                {
+                    ChangeGridPage(pagerArgs.NewPageIndex, grdLogTahalich,
+                       (DataView)Session["LogTahalich"], "SortDirection",
+                       "SortExp");
+                };
+            }
+        }
+    }
+    private void ChangeGridPage(int pageIndex, GridView grid, DataView dataView,
+                                string sortDirViewStateKey, string sortExprViewStateKey)
+    {
+        //   SetChangesOfGridInDataview(grid, ref dataView);
+        grid.PageIndex = pageIndex;
+        string sortExpr = String.Empty;
+        SortDirection sortDir = SortDirection.Ascending;
+        if (ViewState[sortExprViewStateKey] != null)
+        {
+            sortExpr = ViewState[sortExprViewStateKey].ToString();
+            if (ViewState[sortDirViewStateKey] != null)
+                sortDir = (SortDirection)ViewState[sortDirViewStateKey];
+            dataView.Sort = String.Format("{0} {1}", sortExpr,
+                ConvertSortDirectionToSql(sortDir));
+        }
+        grid.DataSource = dataView;
+        grid.DataBind();
+    }
+    private string ConvertSortDirectionToSql(SortDirection sortDirection)
+    {
+        string newSortDirection = String.Empty;
+
+        switch (sortDirection)
+        {
+            case SortDirection.Ascending:
+                newSortDirection = "ASC";
+                break;
+
+            case SortDirection.Descending:
+                newSortDirection = "DESC";
+                break;
+        }
+
+        return newSortDirection;
+    }
+    /********************/
 }

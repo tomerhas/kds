@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EmployeeCards.aspx.cs" Inherits="Modules_Ovdim_EmployeeCards" Title="Untitled Page" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
@@ -154,7 +155,10 @@
                                 <AlternatingRowStyle CssClass="GridAltRow" Height="25px" />
                                 <RowStyle CssClass="GridRow" Height="25px" />
                                 <PagerStyle CssClass="GridPagerLarge" HorizontalAlign="Center"  />                          
-                                <EmptyDataRowStyle CssClass="GridEmptyData" height="10px" Wrap="False"/>                                                    
+                                <EmptyDataRowStyle CssClass="GridEmptyData" height="10px" Wrap="False"/> 
+                                <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                                </PagerTemplate>                                                   
                          </asp:GridView>
                         </div> 
                          <input type="hidden" runat="server" id="txtPageIndex" value="-1"/>  

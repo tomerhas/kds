@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="LogTahalich.aspx.cs" Inherits="Modules_Requests_LogTahalich" %>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-  
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
@@ -77,6 +78,9 @@
                         <RowStyle CssClass="GridRow"   />
                         <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                         <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>  
+                         <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>  
                  </asp:GridView>
          
         </div>

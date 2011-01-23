@@ -14,6 +14,7 @@ using KdsLibrary.BL;
 using KdsLibrary.UI;
 using System.Drawing;
 using System.Text;
+using KdsLibrary.UI.SystemManager;
 
 public partial class Modules_Errors_EmployeErrors : KdsPage
 {
@@ -22,6 +23,11 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     const int COL_EZOR = 2;
     const int COL_SNIF = 3;
     const int COL_MAAMAD = 4;
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+        grdEmployee.RowCreated += new GridViewRowEventHandler(grdEmployee_RowCreated);
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -636,4 +642,59 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {
            
     }
+    //*******Pager Functions*********/
+    void grdEmployee_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.Pager)
+        {
+            IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
+            as IGridViewPager;
+            if (gridPager != null)
+            {
+                gridPager.PageIndexChanged += delegate(object pagerSender,
+                    GridViewPageEventArgs pagerArgs)
+                {
+                    ChangeGridPage(pagerArgs.NewPageIndex, grdEmployee,
+                       (DataView)Session["Ovdim_Details"], "SortDirection",
+                       "SortExp");
+                };
+            }
+        }
+    }
+    private void ChangeGridPage(int pageIndex, GridView grid, DataView dataView,
+                                string sortDirViewStateKey, string sortExprViewStateKey)
+    {
+        //   SetChangesOfGridInDataview(grid, ref dataView);
+        grid.PageIndex = pageIndex;
+        string sortExpr = String.Empty;
+        SortDirection sortDir = SortDirection.Ascending;
+        if (ViewState[sortExprViewStateKey] != null)
+        {
+            sortExpr = ViewState[sortExprViewStateKey].ToString();
+            if (ViewState[sortDirViewStateKey] != null)
+                sortDir = (SortDirection)ViewState[sortDirViewStateKey];
+            dataView.Sort = String.Format("{0} {1}", sortExpr,
+                ConvertSortDirectionToSql(sortDir));
+        }
+        grid.DataSource = dataView;
+        grid.DataBind();
+    }
+    private string ConvertSortDirectionToSql(SortDirection sortDirection)
+    {
+        string newSortDirection = String.Empty;
+
+        switch (sortDirection)
+        {
+            case SortDirection.Ascending:
+                newSortDirection = "ASC";
+                break;
+
+            case SortDirection.Descending:
+                newSortDirection = "DESC";
+                break;
+        }
+
+        return newSortDirection;
+    }
+    /********************/
 }

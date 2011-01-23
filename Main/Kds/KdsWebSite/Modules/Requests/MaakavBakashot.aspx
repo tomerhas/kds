@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="MaakavBakashot.aspx.cs" Inherits="Modules_Requests_MaakavBakashot" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
@@ -65,7 +67,7 @@
              <br /> 
              <div runat="server" ID="pnlgrdRequest" style="Height:460px;Width:978px;overflow:auto;direction:ltr;">
                 <asp:GridView ID="grdRequest" runat="server"  GridLines="None"  ShowHeader="true"
-                       CssClass="Grid"   AllowPaging="false" AutoGenerateColumns="false"   AllowSorting="true"
+                       CssClass="Grid"  AllowPaging="true"  PageSize="10"  AutoGenerateColumns="false"   AllowSorting="true"
                        Width="945px"   EmptyDataText="לא נמצאו נתונים!" 
                      EmptyDataRowStyle-CssClass="GridHeader" onsorting="grdRequest_Sorting" 
                      onrowdatabound="grdRequest_RowDataBound">
@@ -83,6 +85,9 @@
                         <RowStyle CssClass="GridRow"   />
                         <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                         <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/>  
+                         <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>
                  </asp:GridView>
              </div>
         </div>
