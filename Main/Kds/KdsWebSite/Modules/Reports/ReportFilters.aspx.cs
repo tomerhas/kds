@@ -93,6 +93,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     Ritza.SelectedIndexChanged += new EventHandler(ddlRitza_SelectedIndexChanged);
                     break;
                 case ReportName.ChafifotSidureyNihulTnua: 
+                case ReportName.ReportNesiotKfulot:
                     Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
                     break;
             }
@@ -163,6 +164,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     break;
                 case ReportName.ChafifotSidureyNihulTnua:
+                case ReportName.ReportNesiotKfulot:
                     if (!Page.IsPostBack)
                     {
                         CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");

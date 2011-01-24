@@ -9,7 +9,7 @@
       <DropDownList QueryType="StoredProcedure"  Select="PKG_SYSMAN.get_sugey_yamim_meyuchadim" ValueField="Sug_Yom" TextField="Teur_Yom">
         <Condition Name="Sug_Yom" ParameterType="ntOracleInteger" ControlReference="Param1"></Condition>
       </DropDownList>
-    </Filter>
+    </Filter> 
     <Filter ParameterName="Param5" Caption="Caption5" BoxeType="TextBox" DataType="System.Int32"></Filter>
     <Filter ParameterName="Param6" Caption="Caption6" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_SYSMAN.get_sugey_yamim_meyuchadim" ValueField="Sug_Yom" TextField="Teur_Yom"/>
@@ -374,6 +374,21 @@
   </Resources>
                       
   <Report  RdlName="ChafifotSidureyNihulTnua" Roles="kds_administrators" FilterByLine="3" PageHeader="חפיפות בסידורי ניהול תנועה" ProductionType="Heavy">
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
+      <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
+    </Filter>
+    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
+      <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+    </Filter>
+    <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select -1 kod_ezor,'הכל' teur_ezor from dual union select distinct kod_ezor,teur_ezor from CTB_EZOR" ValueField="kod_ezor" TextField="teur_ezor" />
+    </Filter>
+    <Filter   ParameterName="P_SNIF" Caption="סניף תנועה" BoxeType="DropDown" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select -1 KOD_SNIF_TNUAA,'הכל' teur from dual union select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />
+    </Filter>
+  </Report>
+
+  <Report  RdlName="ReportNesiotKfulot" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נסיעות כפולות " ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
     </Filter>
