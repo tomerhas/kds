@@ -373,7 +373,7 @@
     <Text Key="ButtonCssClass" Value="ImgButtonSearch" />
   </Resources>
                       
-  <Report  RdlName="ChafifotSidureyNihulTnua" Roles="kds_administrators" FilterByLine="3" PageHeader="חפיפות בסידורי ניהול תנועה" >
+  <Report  RdlName="ChafifotSidureyNihulTnua" Roles="kds_administrators" FilterByLine="3" PageHeader="חפיפות בסידורי ניהול תנועה" ProductionType="Heavy">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
     </Filter>
