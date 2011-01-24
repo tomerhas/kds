@@ -514,8 +514,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             up = AddUpdatePanel();
             pnlContent.Controls.Add(up);
             up.ContentTemplateContainer.Controls.Add(grdPeiluyot);
-
-           
+                       
             grdPeiluyot.DataSource = dvPeiluyot;
             grdPeiluyot.DataBind();
             
@@ -523,7 +522,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if ((grdPeiluyot.Rows.Count > 0) && (htEmployeeDetails.Count-1==iIndex))
                 if (grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.Count > 0)
                 {
-                    grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.RemoveAt(0);
+                    grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.RemoveAt(0);                    
                     grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Attributes.Add("NesiaReka", "1");
                 }
             
