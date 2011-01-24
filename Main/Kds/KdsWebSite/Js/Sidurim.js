@@ -5,7 +5,6 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
-var iCarClick=0;
     function chkMkt(oRow){    
        oRId = String(oRow.id).substr(0,oRow.id.length-6);
        var oMkt = document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0];
@@ -180,8 +179,7 @@ var iCarClick=0;
             $find(sBehaviorId).show(true);
           }
        } 
-     }                                       
- 
+     }                                        
     function chkHashlama(val,args){
         var id = val.getAttribute("index");   
         var oTxt1 = document.getElementById("lstSidurim_txtSH".concat(id)).value;
@@ -198,36 +196,30 @@ var iCarClick=0;
         SidurTime = GetSidurTime(dStartHour,dEndHour);  
         args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));    
     }
-    function Test(val, args) { }
-    function CarKeyUp() {
-        iCarClick = 0;
-    }
+    function Test(val, args) { } 
     function ChkOto(oRow) {
-        iCarClick = iCarClick + 1;
-        if (iCarClick == 5) {
-            iCarClick = 0;
-            oId = String(oRow.id).substr(0, oRow.id.length - 6);
+            oId = String(oRow.id).substr(0, oRow.id.length - 6);        
             var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;
             SetBtnChanges(); SetLvlChg(3);
-            if (lOtoNo != ''){
+            if ((lOtoNo != '') && (trim(String(lOtoNo)).length>=5)) {
                 wsGeneral.CheckOtoNo(lOtoNo, callBackOto, null, oRow);
-            }
-        }    
+            }           
     }
-    function callBackOto(result, oRow) {
-        iCarClick = 0;
+    function callBackOto(result, oRow) {       
         var oId = String(oRow.id).substr(0, oRow.id.length - 6);  
         if (result=='0'){        
             var sBehaviorId='vldCarNumBehv'.concat(oId);
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);
-            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";                            
+            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";
+            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";                                    
         }
         else{
             document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
-            CopyOtoNum(oRow);
-        }
-        document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].select();
+            var OrgDisable = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled;
+            document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = true;
+            CopyOtoNum(oRow);            
+        }    
     }
     function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt)
     {    SetBtnChanges();
@@ -382,7 +374,6 @@ var iCarClick=0;
       } 
      } 
     }
-
     function MovePanel(iIndex) {          
         if ($find("cPanel".concat(iIndex)) != null) {
             if ($find("cPanel".concat(iIndex))._collapsed == false)            
@@ -471,19 +462,16 @@ var iCarClick=0;
                   else {
                     if (iPDayToAdd == 0)
                         dShatYetiza.setDate(dShatYetiza.getDate() - 1);
-                  }
-                  
+                  }                  
                   val.errormessage = "שעת היציאה לא יכולה להיות גדולה משעת גמר הסידור";
-                  args.IsValid = (dShatYetiza <= dSidurDate);
-                                  
+                  args.IsValid = (dShatYetiza <= dSidurDate);                                  
                   document.getElementById(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dShatYetiza);
                   var sRes = ChkShatYetizaKisuyT(val.getAttribute("index"));                
                   //אם פעילות מסוג שירות נשנה לכל הכניסות את שעת היציאה בהתאם
                   var lMkt = document.getElementById(sGridRowID).cells[_COL_MAKAT].childNodes[0].value;
                   var arrKnisa = document.getElementById(sGridRowID).cells[_COL_KNISA].childNodes[0].toString().split(",");                      
                   if ((GetMakatType(lMkt) == MKT_SHERUT) && (arrKnisa[0] == 0)){
-                        ChangeKnisotHour(document.getElementById(sGridRowID), iPDayToAdd, dShatYetiza);
-                   
+                        ChangeKnisotHour(document.getElementById(sGridRowID), iPDayToAdd, dShatYetiza);                   
                   }
                }         
             }
@@ -494,7 +482,6 @@ var iCarClick=0;
             }
          }
        }
-
        function ChangeKnisotHour(oCurrPeilut, iDayToAdd, dSdDate) {
            var NextRow, lMkt, sHour, lKnisaMkt, sknisaHour, arrKnisot, MktType;
 
@@ -518,8 +505,7 @@ var iCarClick=0;
                    }
                }
            }
-       }
-       
+       }       
     function IsAMinValid(val,args){
          SetBtnChanges();SetLvlChg(3);
          var sGridRowID = val.getAttribute("index");   
@@ -655,7 +641,6 @@ var iCarClick=0;
             val.errormessage = "שעה לא חוקית";
         }
     }    
-
      function ISSGValid(val, args){
          SetBtnChanges();
          //נבדוק אם שעת ההתחלה נמצאת בין פרמטרים כללים או פרמטרים של סידור         
@@ -694,24 +679,20 @@ var iCarClick=0;
              val.errormessage = "שעה לא חוקית";
              args.IsValid = false;
          }     
-     }                     
-   
+     }                        
     function ISSHLValid(val,args)
     {
        args.IsValid = true;
        var iIndex = String(val.id).substr(String(val.id).length-1,1);  
-       var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;  
-       
+       var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;         
        var sSHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
        var sSGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value;
        var sSHLetashlum = document.getElementById("lstSidurim_txtSHL".concat(iIndex)).value; 
-       var sSGLetashlum = document.getElementById("lstSidurim_txtSGL".concat(iIndex)).value;
-       
+       var sSGLetashlum = document.getElementById("lstSidurim_txtSGL".concat(iIndex)).value;       
        var ShatHatchala = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSHatchala.substr(0,2),sSHatchala.substr(sSHatchala.length-2,2));             
        var ShatGmar = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSGmar.substr(0,2),sSGmar.substr(sSGmar.length-2,2));             
        var SHLetashlum = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSHLetashlum.substr(0,2),sSHLetashlum.substr(sSHLetashlum.length-2,2));      
-       var SGLetashlum = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSGLetashlum.substr(0,2),sSGLetashlum.substr(sSGLetashlum.length-2,2));      
-       
+       var SGLetashlum = new Date(Number(sSidurDate.substr(6,4)), Number(sSidurDate.substr(3,2))-1,Number(sSidurDate.substr(0,2)),sSGLetashlum.substr(0,2),sSGLetashlum.substr(sSGLetashlum.length-2,2));             
        var dSHatchala = Date.UTC(ShatHatchala.getFullYear(), ShatHatchala.getMonth()+1, ShatHatchala.getDate(),ShatHatchala.getHours(),ShatHatchala.getMinutes(),0);
        var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth()+1, ShatGmar.getDate(),ShatGmar.getHours(),ShatGmar.getMinutes(),0);
        var dSHLetashlum = Date.UTC(SHLetashlum.getFullYear(), SHLetashlum.getMonth()+1, SHLetashlum.getDate(),SHLetashlum.getHours(),SHLetashlum.getMinutes(),0);
@@ -919,6 +900,7 @@ var iCarClick=0;
             if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
                 document.getElementById("hidExecInputChg").value = "1";
                 bScreenChanged = false;
+                RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
             }
             return res;    
@@ -948,6 +930,7 @@ var iCarClick=0;
     if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
         document.getElementById("hidExecInputChg").value = "1";
         bScreenChanged = false;
+        RefreshBtn();
         __doPostBack('btnRefreshOvedDetails', '');
     }              
     return res;
@@ -978,10 +961,10 @@ var iCarClick=0;
              alert('לא נמצאה ריקה מתאימה');
          else {
              document.getElementById("hidExecInputChg").value = "1";
+             RefreshBtn();
              __doPostBack('btnRefreshOvedDetails', '');
          }
-     }
-     
+     }     
      function GetMakatEnd(iPeilutIndex, lCarNum, iSidurIndex, iLastPeilut) {
         var CanAddReka;
         var bExists=false;
@@ -1018,7 +1001,12 @@ var iCarClick=0;
                 CanAddReka = NextRow.cells[_COL_ADD_NESIA_REKA].childNodes[0].getAttribute("NesiaReka");
             }
             catch (err) {
-                CanAddReka == 0;
+                try {
+                    CanAddReka = NextRow.cells[_COL_ADD_NESIA_REKA].getAttribute("NesiaReka");
+                }
+                catch (err) {
+                    CanAddReka = 0;
+                }
             }
 
             if (CanAddReka == "1") {
@@ -1057,14 +1045,14 @@ var iCarClick=0;
                 }
             }
         }
-            //נמלא את שעת היציאה של כל שאר הפעילויות
-            while (NextRow != null) {
-                if (NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value != undefined) {
-                    sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
-                }
-                NextRow = NextRow.nextSibling;
+        //נמלא את שעת היציאה של כל שאר הפעילויות
+        while (NextRow != null) {
+            if (NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value != undefined) {
+                sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
             }
-            return sMakatEnd.concat(",").concat(lCarNum).concat(",").concat(sPeilutShatYetiza);
+            NextRow = NextRow.nextSibling;
+        }
+        return sMakatEnd.concat(",").concat(lCarNum).concat(",").concat(sPeilutShatYetiza);
         }           
     function FixSidurHeadrut(iIndex){         
         var sQueryString;
@@ -1180,8 +1168,7 @@ var iCarClick=0;
                 document.getElementById(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = iAdd;
                 document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
              }     
-   }
-   
+     }   
     function btnDay_click(iDayToAdd){     
         $find("pBehvDate").hide();
         var iIndx = document.getElementById("lstSidurim_hidCurrIndx").value;   
@@ -1452,8 +1439,7 @@ var iCarClick=0;
                if (_imgCancelPeilut.firstChild.disabled!=undefined)
                {
                if (!_imgCancelPeilut.firstChild.disabled){
-                   _imgCancelPeilut.firstChild.disabled = bDisabled;
-                  // _imgAddNesiaReka.disabled = bDisabled;
+                   _imgCancelPeilut.firstChild.disabled = bDisabled;                  
                   }  
                
                if (_imgCancelPeilut.firstChild.disabled){
@@ -1475,9 +1461,7 @@ var iCarClick=0;
      var iPitzulHafsaka=document.getElementById("lstSidurim_ddlPHfsaka".concat(iIndex)).value;           
      var iSidur=document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;        
      var iSidurNahagut = document.getElementById("lstSidurim_lblSidurNahagut".concat(iIndex)).innerHTML; 
-     var bValid=false;   
-     
-     //var sSdDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;            
+     var bValid=false;             
      if (iPitzulHafsaka==2){
         if (iSidurNahagut=='1'){
             iIndex=iIndex+1;           
@@ -1507,8 +1491,7 @@ var iCarClick=0;
             else{
               return sMsg;
             }
-        }        
-       // wsGeneral.ChkIfSidurNahagut(iIndex,sSdDate, onSuccessSidurNahagut);
+        }            
      }
    }
    function ChkCharigaVal(id)
@@ -1520,9 +1503,10 @@ var iCarClick=0;
         alert('אין חריגה משעת התחלה או משעת גמר ');
      }
    }
-   function CopyOtoNum(oRow){
-       oId = String(oRow.id).substr(0,oRow.id.length-6); 
-       var _CarNum = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0];  
+   function CopyOtoNum(oRow) {
+       oId = String(oRow.id).substr(0,oRow.id.length-6);
+       var _CarNum = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0];
+                
        var _CurrCarNum = _CarNum.value;
        var _OrgCarNum = _CarNum.getAttribute("OldV");
        var _MustCarNum = _CarNum.getAttribute("MustOtoNum");
@@ -1540,7 +1524,8 @@ var iCarClick=0;
                    }
                }
            }
-       }
+       }      
+       _CarNum.disabled = false;
    }
    function disableUpdateBtn() {
         document.getElementById("btnUpdateCard").disabled = true;
@@ -1562,13 +1547,11 @@ var iCarClick=0;
             else if ((lTmpMakat >= 80000000) && (lTmpMakat <= 99999999))
                 iMakatType = MKT_NAMAK; //3-Namak
             else if ((lTmpMakat >= 70000000) && (lTmpMakat <= 70099999))
-                iMakatType = MKT_VISUT; //4-ויסות  
-            // iMakatType = enMakatType.mElement.GetHashCode();
+                iMakatType = MKT_VISUT; //4-ויסות             
             else if ((lTmpMakat >= 70100000) && (lTmpMakat <= 79900000))
                 iMakatType = MKT_ELEMENT;   //5-Element          
             return iMakatType;
-    }
-   
+    }   
     function isElementMechona(lMakat)
     {      
       return ((Number(String(lMakat).substr(0,3))==711) || (Number(String(lMakat).substr(0,3))==712) || (Number(String(lMakat).substr(0,3))==701));

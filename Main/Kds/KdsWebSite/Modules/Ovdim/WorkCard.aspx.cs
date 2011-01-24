@@ -2110,15 +2110,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnPopUpd_click(object sender, EventArgs e)
     {
         //mpeUpd.Hide();
-       
-        if (SaveCard()){         
+
+        if (SaveCard())
+        {
             Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
+            //hidExecInputChg.Value = "1";
+            ////נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
+            
+            //RunBatchFunctions();
+            //Session["Errors"] = oBatchManager.dtErrors;
+            //Session["Parameters"] = oBatchManager.oParam;
+             
+            ////oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+            //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+            //lstSidurim.ErrorsList = oBatchManager.dtErrors;
+            //lstSidurim.ClearControl();
+            //lstSidurim.BuildPage();  
         }
-        //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-        //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;      
-        //lstSidurim.ErrorsList = oBatchManager.dtErrors;
-        //lstSidurim.ClearControl();
-        //lstSidurim.BuildPage();  
+       
     }
     protected void btnShowMessage_Click(object sender, EventArgs e)
     {

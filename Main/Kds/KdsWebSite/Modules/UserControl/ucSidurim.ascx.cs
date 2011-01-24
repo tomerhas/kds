@@ -520,9 +520,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.DataBind();
             
             //נוריד הוספת נסיעה ריקה, בפעילות אחרונה
-            if ((grdPeiluyot.Rows.Count > 0) && (htEmployeeDetails.Count-1==iIndex))         
+            if ((grdPeiluyot.Rows.Count > 0) && (htEmployeeDetails.Count-1==iIndex))
                 if (grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.Count > 0)
+                {
                     grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.RemoveAt(0);
+                    grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Attributes.Add("NesiaReka", "1");
+                }
             
             // If Peilyot exists for sidur add collapsible panel                   
             if (oSidur.htPeilut.Count > 0)
@@ -1024,7 +1027,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //נבנה DataView עם הנתונים
             dvPeiluyot = ConvertHashPeilutToDataView(htPeilut);
 
-            //grdPeiluyot.EnableViewState = true;
             grdPeiluyot.GridLines = GridLines.None;
             grdPeiluyot.ID = iIndex.ToString().PadLeft(3, char.Parse("0"));
             grdPeiluyot.ShowHeader = true;
@@ -1035,11 +1037,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_AltItemRow";
             grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"WCard_GridRow";//"GridRow";
             grdPeiluyot.ShowFooter = false;
-
-            //grdPeiluyot.Attributes.Add("width", "750px");
-            //grdPeiluyot.EmptyDataRowStyle - CssClass = "GridHeader";
-
-         
             
             //רווח
             tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "");
@@ -1169,18 +1166,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.ItemStyle.Width = Unit.Pixel(60);
             grdPeiluyot.Columns.Add(tGridField);
 
-
-            ////מספר רישוי
-            //boundGridField = new BoundField();
-            //boundGridField.HeaderText = "מספר רישוי";
-            //boundGridField.DataField = "license_number";
-            //boundGridField.HeaderStyle.CssClass = "wcard_header";
-            //boundGridField.FooterStyle.CssClass = "wcard_footer";
-            //boundGridField.ItemStyle.Width = Unit.Pixel(40);
-            //grdPeiluyot.Columns.Add(boundGridField);
-
-
-            
             //נצר
             boundGridField = new BoundField();
             boundGridField.HeaderText = "נצ" + (char)34 + "ר";
@@ -1197,37 +1182,33 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "פעיל");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
-            // tGridField.ItemStyle.Width = Unit.Pixel(30);
+           
             grdPeiluyot.Columns.Add(tGridField);
             grdPeiluyot.RowDataBound += new GridViewRowEventHandler(grdPeiluyot_RowDataBound);
 
 
             //עמודה נסתרת
             boundGridField = new BoundField();
-            boundGridField.DataField = "last_update";
-            //  boundGridField.ItemStyle.Width = Unit.Pixel(0);
+            boundGridField.DataField = "last_update";           
             boundGridField.ReadOnly = true;
             grdPeiluyot.Columns.Add(boundGridField);
 
             //הגדרה לגמר
             boundGridField = new BoundField();
             boundGridField.HeaderText = "";
-            boundGridField.DataField = "mazan_tashlum";
-            //boundGridField.ItemStyle.Width = Unit.Pixel(0);
+            boundGridField.DataField = "mazan_tashlum";           
             grdPeiluyot.Columns.Add(boundGridField);
 
             //מציין אם פעילות בוטלה
             boundGridField = new BoundField();
             boundGridField.HeaderText = "";
-            boundGridField.DataField = "bitul_o_hosafa";
-            // boundGridField.ItemStyle.Width = Unit.Pixel(0);
+            boundGridField.DataField = "bitul_o_hosafa";           
             grdPeiluyot.Columns.Add(boundGridField);
 
             //מספר כניסה
             boundGridField = new BoundField();
             boundGridField.HeaderText = "";
-            boundGridField.DataField = "knisa";
-            // boundGridField.ItemStyle.Width = Unit.Pixel(0);
+            boundGridField.DataField = "knisa";            
             grdPeiluyot.Columns.Add(boundGridField);
 
             //מספר ימים להוסיף - שעת גמר           
@@ -1280,13 +1261,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 Image imgCollapse = new Image();
                 imgCollapse.ID = "imgAddPeilut" + iIndex;
                 imgCollapse.ImageUrl = "~/images/plus.jpg";
-                imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
-                //imgCollapse.CausesValidation = false;
-                //imgCollapse.Attributes.Add("onclick", "closePanel(" + iIndex + ");");            
-                //if ((HasNoPremmisionToAddPeilut(oSidur)))
-                //{
-                //   // hCell.Disabled = true ;
-                //}
+                imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");               
                 hCell = CreateTableCell("43px", "", "");
                 hCell.Controls.Add(imgCollapse);
             }
@@ -2177,11 +2152,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //התייצבות
             SetSidurParticipate(ref oSidur);
             //יצירת טבלת סידורים
-            hTable.ID = "tblSidurim" + iIndex;            
-            //hTable.Border = 0;    
+            hTable.ID = "tblSidurim" + iIndex;                        
             hTable.CellPadding = 1;
-            hTable.CellSpacing = 0;    
-            //hTable.Style.Add("padding", "0px");
+            hTable.CellSpacing = 0;               
             hTable.Style.Add("height", "20px");
             bSidurContinue = ((oSidur.iMisparSidur == SIDUR_CONTINUE_NAHAGUT) || (oSidur.iMisparSidur == SIDUR_CONTINUE_NOT_NAHAGUT));
                                                       
@@ -2254,10 +2227,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //פיצול הפסקה
                 CreateDDLPitzulHafsakaCell(oSidur, ref hCell, iIndex, bSidurActive, ref htEmployeeDetails);               
                 hTable.Rows[0].Cells.Add(hCell);
-
-                ////המרה
-                //CreateHamaraCell(oSidur, ref hCell, iIndex, bSidurActive, drSugSidur);              
-                //hTable.Rows[0].Cells.Add(hCell);
 
                 //קומבו השלמה
                 CreateHashlamaCell(oSidur, ref hCell, iIndex, bSidurActive, drSugSidur);                
@@ -4041,9 +4010,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(60);
             //oTxt.Attributes.Add("onclick", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
 
-            oTxt.Attributes.Add("onkeypress", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            //oTxt.Attributes.Add("onkeypress", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
            // oTxt.Attributes.Add("onkeyup", "CarKeyUp(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             //oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+          //  oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
             AddAttribute(oTxt, "OldV", oTxt.Text);

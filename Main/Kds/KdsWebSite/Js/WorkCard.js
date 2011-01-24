@@ -29,9 +29,7 @@
         else{        
             oDiv.style.display='none';  
             document.getElementById(btnId.toString()).value ='+';                     
-        }
-        
-       
+        }       
     }
     function onClientItemSelected_getID(sender, eventArgs) {
         document.getElementById("clnDate").select();
@@ -49,8 +47,7 @@
         else{
             document.getElementById("txtName").value=result;  
             document.getElementById("btnRefreshOvedDetails").disabled = false;         
-        }
-       // SetBtnChanges();
+        }     
     }
     function GetOvedDetailsSucceeded(result){            
         var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -105,8 +102,7 @@
         document.getElementById("btnFindSidur").disabled = (!bEnable);
         document.getElementById("btnAddHeadrut").disabled = (!bEnable);        
         document.getElementById("btnClock").disabled = (!bEnable);
-        document.getElementById("btnApprovalReport").disabled = (!bEnable); 
-      //  document.getElementById("ddlTravleTime").disabled = (!bEnable); 
+        document.getElementById("btnApprovalReport").disabled = (!bEnable);     
         document.getElementById("ddlTachograph").disabled = (!bEnable);
         document.getElementById("ddlHalbasha").disabled = (!bEnable);
         document.getElementById("ddlLina").disabled = (!bEnable);
@@ -211,8 +207,7 @@
         document.getElementById("btnHidClose").click();
         return false;
         }        
-       else{
-        //$find("MPClose").hide();
+       else{     
         CloseWindow();return false;}      
     }
     function CheckChangesBeforePrint(){    
@@ -238,12 +233,10 @@
       var sFullYear = document.getElementById("clnDate").value.substr(6,4);         
       id = document.getElementById("txtId").value;
       date = document.getElementById("clnDate").value;
-      if (date!=''){
-      //if (isUserIdValid()){
+      if (date!=''){    
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
-      }
-      // else{document.getElementById("btnRefreshOvedDetails").disabled = true;}}
+      }      
     }
     function callBackCheckCardExists(result)
     {   var arrReturnValue = result.split("|"); 
@@ -317,8 +310,7 @@
       }
      }     
     }
-   }
-    
+   }    
     function onGetdErrSucc(result){    
         document.getElementById("tbErr").innerHTML = result;
         document.getElementById("btnErrors").click(); 
@@ -488,8 +480,7 @@
         }
         if (oDDL!=null){
             if ((sSH.value!='') && (sSH.value!="__:__")  && (oDDL.value==-1) && (oDDL.disabled == false))
-            {
-               //sMsg = sMsg.concat('\n דווחה שעת התחלה, יש לדווח סיבה בסידור ' + iSidurNum );           
+            {                
                sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת התחלה, יש לדווח סיבה \n");  
                bValid = false; 
             }
@@ -549,24 +540,22 @@
            var dCardDate = document.getElementById("clnDate").value;
            var sFName = oObj.getAttribute("FName");
            var iSidurNum = 0; var sStartH = ''; var sPShatY = ''; var iMKnisa = 0;
-           document.getElementById("hErrKey").value = oId;
-         //  alert(document.getElementById("hErrKey").value);
-          
-               if (level == 2) {          
-                   iSidurNum = document.getElementById("MisSidur").value;
-                   sStartH =  document.getElementById("ShatHatchala").value;
-                   wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
-               }
-               else {
-                   var arrKey = pKey.toString().split("|");
-                   sPShatY = dCardDate + " " + arrKey[0];
-                   iMKnisa = arrKey[1];
+           document.getElementById("hErrKey").value = oId;     
+            if (level == 2) {          
+                iSidurNum = document.getElementById("MisSidur").value;
+                sStartH =  document.getElementById("ShatHatchala").value;
+                wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
+            }
+            else {
+                var arrKey = pKey.toString().split("|");
+                sPShatY = dCardDate + " " + arrKey[0];
+                iMKnisa = arrKey[1];
                    
-                   iSidurNum = document.getElementById("MisSidur").value;
-                   sStartH =  document.getElementById("ShatHatchala").value; 
-                   wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
-               }
-           }
+                iSidurNum = document.getElementById("MisSidur").value;
+                sStartH =  document.getElementById("ShatHatchala").value; 
+                wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
+            }
+        }
    }
 function SetMeasher(iStatus)
 {
@@ -654,7 +643,6 @@ function onUsrValidSuccess(result){
         document.getElementById("btnRefreshOvedDetails").disabled = false;  
     }
 }
-
 function onButtonFocusIn(btnID) {
   btnID.style.border = "1px solid black";
 }
