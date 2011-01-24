@@ -110,42 +110,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox12">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>דו''ח התייצבות בפונדקים - כלכלית</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <HangingIndent>0cm</HangingIndent>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Left>1.48484cm</Left>
-        <Height>0.74083cm</Height>
-        <Width>11.5108cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle2">
         <ReportItems>
           <Textbox Name="Textbox231">
@@ -331,7 +295,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>6.69951in</Width>
+                  <Width>7.03472in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1399,7 +1363,7 @@
                               </TablixRowHierarchy>
                               <DataSetName>dsTlunotPundakim</DataSetName>
                               <Top>1.18181cm</Top>
-                              <Left>0.21069cm</Left>
+                              <Left>0.824cm</Left>
                               <Height>2.45148cm</Height>
                               <Width>16.52854cm</Width>
                               <Style>
@@ -1913,7 +1877,7 @@
                               </TablixRowHierarchy>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>dsTlunotPundakim</DataSetName>
-                              <Left>0.21069cm</Left>
+                              <Left>0.824cm</Left>
                               <Height>1.11125cm</Height>
                               <Width>16.52854cm</Width>
                               <ZIndex>1</ZIndex>
@@ -1973,7 +1937,7 @@
             <DataSetName>dsKalkalitPundakim</DataSetName>
             <Top>1.45718cm</Top>
             <Height>3.93771cm</Height>
-            <Width>17.01676cm</Width>
+            <Width>17.86818cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1983,32 +1947,35 @@
           </Tablix>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>0.74083cm</Top>
-        <Height>6.32264cm</Height>
-        <Width>17.25487cm</Width>
-        <ZIndex>1</ZIndex>
+        <Top>1.39353cm</Top>
+        <Left>0.19075in</Left>
+        <Height>5.58181cm</Height>
+        <Width>17.86818cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Rectangle>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>14.91536cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>2</ZIndex>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דו''ח התייצבות בפונדקים - כלכלית"</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0.19073in</Left>
+        <Height>1.2877cm</Height>
+        <Width>17.86818cm</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Image>
+      </Subreport>
     </ReportItems>
-    <Height>2.78089in</Height>
+    <Height>2.81214in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -2037,7 +2004,7 @@
       <Prompt>P_MISPAR_ISHI</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.79326in</Width>
+  <Width>7.30787in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

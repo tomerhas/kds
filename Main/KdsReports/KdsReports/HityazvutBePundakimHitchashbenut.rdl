@@ -48,43 +48,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox12">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>דו''ח התייצבות בפונדקים - התחשבנות</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <HangingIndent>0cm</HangingIndent>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.49388cm</Top>
-        <Left>2.44415cm</Left>
-        <Height>0.74083cm</Height>
-        <Width>7.25472cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle2">
         <ReportItems>
           <Textbox Name="Textbox231">
@@ -775,32 +738,34 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>1.60583cm</Top>
-        <Left>0.56657cm</Left>
+        <Left>2.02692cm</Left>
         <Height>3.75088cm</Height>
         <Width>11.81507cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Rectangle>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>10.88164cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>2</ZIndex>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דו''ח התייצבות בפונדקים - התחשבנות"</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0.25in</Left>
+        <Height>1.2877cm</Height>
+        <Width>14.90485cm</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Image>
+      </Subreport>
     </ReportItems>
-    <Height>2.35245in</Height>
+    <Height>2.92537in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -832,7 +797,7 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>5.05086in</Width>
+  <Width>6.24305in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

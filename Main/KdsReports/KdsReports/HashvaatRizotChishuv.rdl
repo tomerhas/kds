@@ -136,43 +136,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox12">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>דוח השוואת ריצות חישוב</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <HangingIndent>0cm</HangingIndent>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.05362cm</Top>
-        <Left>4.35208cm</Left>
-        <Height>0.74083cm</Height>
-        <Width>13.07374cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
@@ -534,7 +497,6 @@
         <Left>0.02978cm</Left>
         <Height>1.33584cm</Height>
         <Width>19.65856cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1275,7 +1237,7 @@
         <Left>0.15029cm</Left>
         <Height>3.8432cm</Height>
         <Width>19.53804cm</Width>
-        <ZIndex>2</ZIndex>
+        <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsNetuneyOvdim")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1285,20 +1247,6 @@
           </Border>
         </Style>
       </Tablix>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>18.18833cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Textbox Name="Textbox2">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -1323,7 +1271,7 @@
         <Left>5.01012cm</Left>
         <Height>0.6cm</Height>
         <Width>9.74748cm</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>2</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("dsNetuneyOvdim")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -1337,6 +1285,24 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>="דוח השוואת ריצות חישוב"</Value>
+          </Parameter>
+        </Parameters>
+        <Top>0cm</Top>
+        <Left>0.15029cm</Left>
+        <Height>1.35889cm</Height>
+        <Width>19.53803cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
     <Height>5.25572in</Height>
     <Style>

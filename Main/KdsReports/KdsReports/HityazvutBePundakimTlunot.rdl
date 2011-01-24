@@ -110,43 +110,6 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox12">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>דו''ח התייצבות בפונדקים - תלונות</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <LeftIndent>0cm</LeftIndent>
-            <HangingIndent>0cm</HangingIndent>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.40576cm</Top>
-        <Left>2.37742cm</Left>
-        <Height>0.74083cm</Height>
-        <Width>12.95497cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Rectangle Name="Rectangle2">
         <ReportItems>
           <Textbox Name="Textbox231">
@@ -1915,7 +1878,7 @@
                               <DataSetName>dsTlunotPundakim</DataSetName>
                               <Left>0.21069cm</Left>
                               <Height>1.07599cm</Height>
-                              <Width>16.52859cm</Width>
+                              <Width>16.52854cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -1983,33 +1946,34 @@
           </Tablix>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>1.2877cm</Top>
-        <Left>0.23427cm</Left>
-        <Height>5.89931cm</Height>
+        <Top>1.89171cm</Top>
+        <Left>0.28246cm</Left>
+        <Height>5.87285cm</Height>
         <Width>17.25487cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Rectangle>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>15.4735cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>2</ZIndex>
+      <Subreport Name="SubReportHeader">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>= "דו''ח התייצבות בפונדקים - תלונות"</Value>
+          </Parameter>
+        </Parameters>
+        <Height>1.4729cm</Height>
+        <Width>17.86818cm</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Image>
+      </Subreport>
     </ReportItems>
-    <Height>3.09543in</Height>
+    <Height>3.05691in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -2040,7 +2004,7 @@
       <Prompt>P_MISPAR_ISHI</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.97842in</Width>
+  <Width>7.03472in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
