@@ -101,28 +101,28 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.85707in</Width>
+              <Width>0.83547in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79631in</Width>
+              <Width>1.24825in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07427in</Width>
+              <Width>0.80829in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.6066in</Width>
+              <Width>0.52329in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7784in</Width>
+              <Width>0.52255in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9011in</Width>
+              <Width>0.60545in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.46979in</Width>
+              <Width>1.38749in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65579in</Width>
+              <Width>0.65422in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -557,7 +557,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -745,8 +744,9 @@
         <LayoutDirection>RTL</LayoutDirection>
         <DataSetName>DsNesiotKfulot</DataSetName>
         <Top>3.26286cm</Top>
+        <Left>0.29044in</Left>
         <Height>1.53208cm</Height>
-        <Width>18.1339cm</Width>
+        <Width>16.72591cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -776,7 +776,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox33</rd:DefaultName>
-        <Top>0.71504in</Top>
+        <Top>0.70115in</Top>
         <Left>0.87377in</Left>
         <Height>0.25in</Height>
         <Width>3.02892in</Width>
@@ -811,8 +811,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox33</rd:DefaultName>
-        <Top>0.70115in</Top>
-        <Left>4.06414in</Left>
+        <Top>0.68726in</Top>
+        <Left>4.48088in</Left>
         <Height>0.25in</Height>
         <Width>1.74034in</Width>
         <ZIndex>2</ZIndex>
@@ -872,10 +872,10 @@
 &amp; " עד " &amp; Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value)</Value>
           </Parameter>
         </Parameters>
-        <Top>0.24978cm</Top>
-        <Left>0cm</Left>
+        <Top>0.17923cm</Top>
+        <Left>0.73771cm</Left>
         <Height>1.49586cm</Height>
-        <Width>18.1339cm</Width>
+        <Width>16.43487cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -884,7 +884,7 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>2in</Height>
+    <Height>5.08cm</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -905,14 +905,17 @@
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.16154in</Width>
+  <Width>18.36633cm</Width>
   <Page>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <rd:ReportID>089a037f-6e6d-4eed-96e4-fbe50e015bdd</rd:ReportID>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>
