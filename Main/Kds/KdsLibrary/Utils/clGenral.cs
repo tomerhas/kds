@@ -217,6 +217,7 @@ namespace KdsLibrary
         public const string cProGetMakatOfActivity = "PKG_REPORTS.pro_get_MakatOfActivity";
         public const string cProGetSidurimOvdim = "PKG_REPORTS.pro_get_SidurimOvdim";
         public const string cProGetDefinitionReports = "PKG_REPORTS.pro_get_Definition_Reports";
+        public const string cProGetDetailsReport = "PKG_REPORTS.pro_get_ReportDetails";
         public const string cProGetDetailsReports = "PKG_REPORTS.pro_get_Details_Reports";
         public const string cProGetDestinationsReports = "PKG_REPORTS.pro_get_Destinations_Reports";
         public const string cProInsertHeavyReports = "PKG_REPORTS.pro_ins_Heavy_Reports";
