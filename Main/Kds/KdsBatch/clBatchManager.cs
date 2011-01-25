@@ -1624,7 +1624,7 @@ namespace KdsBatch
                            if (oSidur.bSidurMyuhad && oSidur.sZakaiLeChariga=="3")
                                bError=false;
 
-                           if (bError  && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                           if (bError)  // && !CheckApproval("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                            {
                                drNew = dtErrors.NewRow();
                                InsertErrorRow(oSidur, ref drNew, "זמן החתמת שעון לא מזכה בחריגה", enErrors.errCharigaZmanHachtamatShaonNotValid.GetHashCode());
@@ -4948,8 +4948,8 @@ namespace KdsBatch
         {
             DataTable dtDuplicate=new DataTable();
             try {
-                if (!CheckApproval("2511,25", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia))
-                {
+                //if (!CheckApproval("2511,25", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia))
+                //{
                     if (oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode())
                     {
                         if (IsDuplicateTravle(_iMisparIshi,_dCardDate,oPeilut.lMakatNesia,oPeilut.dFullShatYetzia,oPeilut.iMisparKnisa,ref dtDuplicate))
@@ -4961,13 +4961,13 @@ namespace KdsBatch
 
                             for (int i = 0; i < dtDuplicate.Rows.Count; i++)
                             {
-                                if (!CheckApprovalToEmploee((int)dtDuplicate.Rows[i]["mispar_ishi"],(DateTime)dtDuplicate.Rows[i]["taarich"],"25", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia))
+                                //if (!CheckApprovalToEmploee((int)dtDuplicate.Rows[i]["mispar_ishi"],(DateTime)dtDuplicate.Rows[i]["taarich"],"25", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia))
                                       clDefinitions.UpdateCardStatus((int)dtDuplicate.Rows[i]["mispar_ishi"], (DateTime)dtDuplicate.Rows[i]["taarich"], clGeneral.enCardStatus.Error, _iUserId);
                                 
                             }
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -4981,8 +4981,8 @@ namespace KdsBatch
             DataTable dtChafifa = new DataTable();
             try
             {
-                if (!CheckApproval("2711,27", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                {
+                //if (!CheckApproval("2711,27", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                //{
                     if (CheckSidurNihulTnua(oSidur, drSugSidur))
                     {
                         if (IsSidurChofef(_iMisparIshi, _dCardDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oSidur.dFullShatGmar, _oParameters.iMaxChafifaBeinSidureyNihulTnua, ref dtChafifa))
@@ -4993,12 +4993,12 @@ namespace KdsBatch
 
                             for (int i = 0; i < dtChafifa.Rows.Count; i++)
                             {
-                                if (!CheckApprovalToEmploee((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], "27", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                                //if (!CheckApprovalToEmploee((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], "27", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                                      clDefinitions.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], clGeneral.enCardStatus.Error, _iUserId);
                             }
                         }
                     }
-                }
+                //}
             }
             catch (Exception ex)
             {
@@ -6155,7 +6155,7 @@ namespace KdsBatch
                             UpdateOutMichsa(ref oSidur, ref oObjSidurimOvdimUpd);
 
                         //חריגה
-                        if (!CheckApproval("2,4,5,6,10", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("CHARIGA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                        if (!CheckIdkunRashemet("CHARIGA", oSidur.iMisparSidur, oSidur.dFullShatHatchala)) //!CheckApproval("2,4,5,6,10", oSidur.iMisparSidur, oSidur.dFullShatHatchala) &&
                             UpdateChariga(ref oSidur, ref oObjSidurimOvdimUpd);
 
                         //השלמה
@@ -9515,7 +9515,7 @@ namespace KdsBatch
                     oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                     oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
                     oPeilutNew.iBitulOHosafa = 4;
-                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "") + "1", oPeilutNew);
+                    oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "") + iPeilutNesiaIndex + 1, oPeilutNew);
                     iIndexElement = iPeilutNesiaIndex;
                     iPeilutNesiaIndex += 1;
 
@@ -9723,7 +9723,7 @@ namespace KdsBatch
                 oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                 oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
                 oPeilutNew.iBitulOHosafa = 4;
-                oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "")+"11", oPeilutNew);
+                oSidur.htPeilut.Insert(iPeilutNesiaIndex, dShatYetiza.ToString("HH:mm:ss").Replace(":", "") + iPeilutNesiaIndex + 11, oPeilutNew);
                 iIndexElement = iPeilutNesiaIndex;
                 iPeilutNesiaIndex += 1;
 
@@ -10603,8 +10603,8 @@ namespace KdsBatch
                         iKodSibaLoLetashlum = 2;
                     }
 
-                    if ((iKodSibaLoLetashlum == 4 || iKodSibaLoLetashlum == 5 || iKodSibaLoLetashlum == 10) && CheckApprovalStatus("211,2,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
-                    { bSign = false; }
+                    //if ((iKodSibaLoLetashlum == 4 || iKodSibaLoLetashlum == 5 || iKodSibaLoLetashlum == 10) && CheckApprovalStatus("211,2,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                    //{ bSign = false; }
 
                     if (bSign)
                     {
@@ -11444,10 +11444,10 @@ namespace KdsBatch
                             //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
                             if (sBitulTypeField == "SIBA_LE_DIVUCH_YADANI_NESIAA")
                             {
-                                if (!bSidurHaveNahagut && CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                                if (!bSidurHaveNahagut)// && CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                                     bKnisaValid = true;
                             }
-                            else if (CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                            else // if (CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                                 bKnisaValid = true;
                         }
 
@@ -11487,10 +11487,10 @@ namespace KdsBatch
                            //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
                            if (sBitulTypeField=="SIBA_LE_DIVUCH_YADANI_NESIAA")
                             {
-                                if (!bSidurHaveNahagut &&(CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1))
+                                if (!bSidurHaveNahagut)// &&(CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1))
                                         bYetizaValid = true;
                            }
-                          else if (CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                           else  //if (CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                           bYetizaValid = true;
                           
                        }   
@@ -12458,8 +12458,8 @@ namespace KdsBatch
                     if ((oObjSidurimOvdimUpd.CHARIGA != 0) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0))
                     {
                         //ראשית יש לבדוק האם החריגה אושרה במנגנון האישורים, רק אם כן יש לבצע את השינוי.
-                        if (CheckApprovalStatus("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
-                        {
+                        //if (CheckApprovalStatus("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                        //{
                             //א. אם מסומן קוד חריגה "1"  (חריגה משעת התחלה) אזי שעת התחלה לתשלום = שעת תחילת הסידור.
                             //אם שעת הגמר של הסידור גדולה משעת מאפיין הגמר המותר (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים): שעת גמר לתשלום = השעה המוגדרת במאפיין. 
 
@@ -12506,9 +12506,9 @@ namespace KdsBatch
                                 dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
                                 dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
                              }
-                        }
-                        else
-                        { SetShaotHatchalaGmar(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd,ref dShatHatchalaLetashlumToUpd,ref dShatGmarLetashlumToUpd); }
+                        //}
+                        //else
+                        //{ SetShaotHatchalaGmar(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd,ref dShatHatchalaLetashlumToUpd,ref dShatGmarLetashlumToUpd); }
                     }
                 }
                 
