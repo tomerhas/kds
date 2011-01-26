@@ -67,6 +67,7 @@ namespace KdsBatch
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         if (iSugSidur == 69)
                         {
+                            //•	סידור כוננות גרירה – אם סוג סידור = 69 
                             if (fErechRechiv > _oGeneralData.objParameters.iMinZmanGriraDarom)
                             {
                                 if (int.Parse(iMisparSidur.ToString().Substring(0, 2)) > 11)
@@ -86,7 +87,7 @@ namespace KdsBatch
                                 }
                             }
                         }
-
+                        fSumErechRechiv += fErechRechiv;
                         addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
                     }
                 }

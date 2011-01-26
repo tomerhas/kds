@@ -107,7 +107,6 @@ namespace KdsBatch
                                     
                      clCalcData.iSugYom = iSugYom;
                      _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom);
-                     _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
                      _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich);
                      clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
                      clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);

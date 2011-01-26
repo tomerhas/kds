@@ -25,7 +25,7 @@ namespace KdsBatch
         
 
        #region Methods
-            // חישוב לעובד - main
+            //דרך תחקור וסיכום חודשי חישוב לעובד - main
             public void MainCalcOved(int iMisparIshi, long lBakashaId, DateTime dCalcMonth, int iTzuga, ref DataTable dtHeadrut, ref DataTable dtRechivimChodshiym, ref  DataTable dtRikuz1To10, ref DataTable dtRikuz11To20, ref  DataTable dtRikuz21To31, ref DataTable dtAllRikuz)
            {
                DateTime dTarMe,dTarAd;
@@ -51,6 +51,7 @@ namespace KdsBatch
               }
            }
 
+         //חישוב לאוכלוסית עובדים דרך batch
            public void MainCalc(long lBakashaId, DateTime dAdChodesh, string sMaamad, bool bRitzaGorefet, TypeCalc iTypeCalc)
            {
 
