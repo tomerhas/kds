@@ -170,6 +170,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         try
         {
             dt = oUtils.GetMaamad(GetKodHevra(txtSnif.Text));
+            KdsLibrary.clGeneral.InsertNotSelectedOption(ref dt, 2, "שכירים");
+            KdsLibrary.clGeneral.InsertNotSelectedOption(ref dt, 1, "חברים");
             KdsLibrary.clGeneral.InsertNotSelectedOption(ref dt, -1, "הכל");
             ddlMaamad.DataTextField = "description";
             ddlMaamad.DataValueField = "code";
@@ -348,12 +350,16 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 iKodSnif = GetKodSnif(txtSnif.Text);
                 iKodHevra = GetKodHevra(txtSnif.Text);
             }
-            if (ddlMaamad.SelectedIndex > 0)
+            if (ddlMaamad.SelectedIndex > 2)
             {
                 arrMaamadHevraKeys = ddlMaamad.SelectedValue.Split(char.Parse("-"));
                 iKodMaamad = int.Parse(arrMaamadHevraKeys[1]);
                 iKodHevra = int.Parse(arrMaamadHevraKeys[0]);
-            }
+            }else if (ddlMaamad.SelectedIndex ==1 || ddlMaamad.SelectedIndex ==2)
+                    {
+                        iKodMaamad = int.Parse(ddlMaamad.SelectedItem.Value);
+                        iKodHevra = 0;
+                    }
             dFrom = DateTime.Parse(clnFromDate.Text);
             dTo = DateTime.Parse(clnToDate.Text);
             dt = oOvdim.GetErrorOvdim(iKodHevra,iKodEzor, iKodSnif, iKodMaamad, dFrom, dTo);
