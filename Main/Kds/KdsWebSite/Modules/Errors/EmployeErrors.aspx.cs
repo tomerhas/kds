@@ -30,6 +30,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
         try
         {
             if (!Page.IsPostBack)
@@ -44,7 +46,10 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 PageHeader = "רשימת עובדים בעלי כרטיסי עבודה לטיפול";
                 SetFields();
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
-
+                
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                for (int i = 0; i < dtParametrim.Rows.Count; i++)
+                    Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
             }
         }
         catch (Exception ex)

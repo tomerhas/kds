@@ -93,7 +93,9 @@ function ChangeKeyCode()
                     מיום:
                 </td>
                 <td align="right" dir="ltr"  style="width:160px">  
-                  <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate" CalenderTabIndex="4"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
+                  <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate" CalenderTabIndex="4"  AutoPostBack="false" OnChangeCalScript="onChange_FromDate();"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
+                   <asp:CustomValidator runat="server" id="vldFrom"   ControlToValidate="clnFromDate" ErrorMessage="לא ניתן להזין תאריך מעבר ל 10 חודשים אחורה"   Display="None"    ></asp:CustomValidator>
+                   <cc1:ValidatorCalloutExtender runat="server" ID="vldExFrom" BehaviorID="vldExFromDate"   TargetControlID="vldFrom" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
                   <%--<wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                      
                 </td>  
                 <td class="InternalLabel" style="width:40px">
@@ -113,7 +115,7 @@ function ChangeKeyCode()
                     </asp:UpdatePanel >          
                 </td>                    
                 <td>                                       
-                   <asp:CustomValidator id="vldCmpDates" runat="server" ClientValidationFunction="CheckDates" ErrorMessage="תאריך סיום קטן מתאריך התחלה" Display="Dynamic"></asp:CustomValidator>
+                   <asp:CustomValidator id="vldCmpDates" runat="server" ClientValidationFunction="CheckDates"  ErrorMessage="תאריך סיום קטן מתאריך התחלה" Display="Dynamic"    ></asp:CustomValidator>
                 </td>
             </tr>                   
          </table>                
@@ -238,6 +240,7 @@ function ChangeKeyCode()
         </td>     
     </tr>           
    </table>
+   <input type="hidden" id="Params" name="Params"  runat="server" />
    <input type="hidden" id="InputHiddenBack" name="InputHiddenBack" value="false" runat="server" />
    <script language="javascript" type="text/javascript">
     function window.onload()
@@ -280,8 +283,7 @@ function ChangeKeyCode()
     
     function CheckDates(src,args)
     {
-      
-     var StartDateString = document.getElementById('ctl00_KdsContent_clnFromDate').value;
+      var StartDateString = document.getElementById('ctl00_KdsContent_clnFromDate').value;
      var EndDateString = document.getElementById('ctl00_KdsContent_clnToDate').value;
  
      var StartDateSplit = StartDateString.split('/');
@@ -292,7 +294,23 @@ function ChangeKeyCode()
      
      args.IsValid = (StartDate <= EndDate);
     }
-    
+    function onChange_FromDate() {
+      
+        var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+        var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
+        var StartDate = new Date(StartDateSplit[2], StartDateSplit[1]-1, StartDateSplit[0], 0, 0, 0, 0);
+        var minDate = new Date();
+        minDate.setMonth(minDate.getMonth() - Param100);
+        if (StartDate < minDate) {
+            var sBehaviorId = 'vldExFromDate';
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+            document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+        }
+        else 
+            document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
+          
+    }
  
     function onClientHiddenHandler_getID(sender, eventArgs)
     {
@@ -348,7 +366,7 @@ function ChangeKeyCode()
          document.getElementById("ctl00_KdsContent_txtName").value=result;
      }
     }
-   
+  
     function OpenOvedDetails(RowIndex)
     {
       
