@@ -1934,10 +1934,11 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <KeepTogether>true</KeepTogether>
             <DataSetName>dsKalkalitPundakim</DataSetName>
             <Top>1.45718cm</Top>
             <Height>3.93771cm</Height>
-            <Width>17.86818cm</Width>
+            <Width>17.86819cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1950,7 +1951,7 @@
         <Top>1.39353cm</Top>
         <Left>0.19075in</Left>
         <Height>5.58181cm</Height>
-        <Width>17.86818cm</Width>
+        <Width>17.86819cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2008,10 +2009,6 @@
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

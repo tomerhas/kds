@@ -17,8 +17,8 @@
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="SUM">
-          <DataField>SUM</DataField>
+        <Field Name="NUM">
+          <DataField>NUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="KOD">
@@ -335,14 +335,14 @@
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="SUM">
+                                          <Textbox Name="NUM">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!SUM.Value</Value>
+                                                    <Value>=Fields!NUM.Value</Value>
                                                     <Style>
                                                       <Language>he-IL</Language>
                                                     </Style>
@@ -353,7 +353,7 @@
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>SUM</rd:DefaultName>
+                                            <rd:DefaultName>NUM</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -449,7 +449,7 @@
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(Fields!SUM.Value)</Value>
+                                                    <Value>=Sum(Fields!NUM.Value)</Value>
                                                     <Style>
                                                       <FontSize>12pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -685,6 +685,7 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <KeepTogether>true</KeepTogether>
             <DataSetName>dsHitchashbenutPundakim</DataSetName>
             <Top>1.17448cm</Top>
             <Left>1.95376cm</Left>
@@ -736,7 +737,6 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <KeepTogether>true</KeepTogether>
         <Top>1.60583cm</Top>
         <Left>2.02692cm</Left>
         <Height>3.75088cm</Height>
@@ -754,9 +754,9 @@
             <Value>= "דו''ח התייצבות בפונדקים - התחשבנות"</Value>
           </Parameter>
         </Parameters>
-        <Left>0.25in</Left>
+        <Left>0.38542in</Left>
         <Height>1.2877cm</Height>
-        <Width>14.90485cm</Width>
+        <Width>14.23886cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -764,8 +764,94 @@
           </Border>
         </Style>
       </Subreport>
+      <Textbox Name="Textbox229">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>***סוף דו''ח התייצבות בפונדקים - התחשבנות***</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Language>he-IL</Language>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox222</rd:DefaultName>
+        <Top>6.0915cm</Top>
+        <Left>7.57901cm</Left>
+        <Height>0.42333cm</Height>
+        <Width>7.26456cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+          <Direction>RTL</Direction>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox230">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>***</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Language>he-IL</Language>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>="סך כל ההתייצבויות: " &amp; Sum(Fields!NUM.Value, "dsHitchashbenutPundakim")</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Language>he-IL</Language>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>***</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                  <TextDecoration>Underline</TextDecoration>
+                  <Language>he-IL</Language>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox222</rd:DefaultName>
+        <Top>6.0915cm</Top>
+        <Left>0.50271cm</Left>
+        <Height>0.42333cm</Height>
+        <Width>6.89992cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+          <Direction>RTL</Direction>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.92537in</Height>
+    <Height>2.75479in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -797,14 +883,10 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.24305in</Width>
+  <Width>6.13888in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
