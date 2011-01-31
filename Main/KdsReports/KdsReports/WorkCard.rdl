@@ -1843,7 +1843,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.91616in</Width>
+                  <Width>1.83191in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1905,9 +1905,9 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>2.17405cm</Top>
-            <Left>0.09161cm</Left>
+            <Left>0.3056cm</Left>
             <Height>0.7cm</Height>
-            <Width>4.86705cm</Width>
+            <Width>4.65306cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1919,7 +1919,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.91616in</Width>
+                  <Width>1.83191in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1983,9 +1983,9 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.01516cm</Top>
-            <Left>0.09161cm</Left>
+            <Left>0.3056cm</Left>
             <Height>0.7cm</Height>
-            <Width>4.86705cm</Width>
+            <Width>4.65306cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -2053,7 +2053,8 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>1.53528cm</Top>
+            <Top>1.57056cm</Top>
+            <Left>0.03607in</Left>
             <Height>0.46238cm</Height>
             <Width>4.95866cm</Width>
             <ZIndex>8</ZIndex>
@@ -2227,7 +2228,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.55361in</Width>
+                  <Width>0.52523in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.51108in</Width>
@@ -2239,13 +2240,13 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>0.43788in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.47725in</Width>
+                  <Width>0.44891in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.56678in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.47152in</Width>
+                  <Width>0.43in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.50507in</Width>
@@ -2254,7 +2255,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>0.57091in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.50337in</Width>
+                  <Width>0.47502in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.69561in</Width>
@@ -3248,9 +3249,10 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>dsSidurimVePeiluyot</DataSetName>
-            <Top>5.95821cm</Top>
+            <Top>5.92293cm</Top>
+            <Left>0.07622in</Left>
             <Height>0.81773cm</Height>
-            <Width>19.63664cm</Width>
+            <Width>19.31511cm</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -3300,13 +3302,14 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>0.01895cm</Top>
             <Left>5.88338cm</Left>
-            <Height>0.74083cm</Height>
+            <Height>0.59972cm</Height>
             <Width>9.83447cm</Width>
             <ZIndex>15</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
+              <VerticalAlign>Bottom</VerticalAlign>
             </Style>
           </Textbox>
           <Image Name="Image1">
@@ -3410,19 +3413,6 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
               </Border>
             </Style>
           </Image>
-          <Rectangle Name="Rectangle1">
-            <KeepTogether>true</KeepTogether>
-            <Top>0.01799cm</Top>
-            <Left>14.32016cm</Left>
-            <Height>1.44673cm</Height>
-            <Width>4.95866cm</Width>
-            <ZIndex>20</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Rectangle>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>0.02309cm</Top>
@@ -3439,7 +3429,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>2.71498in</Height>
+    <Height>2.74623in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -3535,7 +3525,7 @@ Dim BarSlice As Short
 </Code>
   <Width>7.74274in</Width>
   <Page>
-    <PageHeight>27.7cm</PageHeight>
+    <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0cm</LeftMargin>
     <RightMargin>0cm</RightMargin>
