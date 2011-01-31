@@ -2802,7 +2802,7 @@ namespace KdsBatch
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                                 fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
-                                if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                if (fErechSidur >= 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
                                 {
                                     if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
                                     {
@@ -2903,7 +2903,7 @@ namespace KdsBatch
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                                 fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
-                                if (fErechSidur > 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
+                                if (fErechSidur >= 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
                                 {
                                     if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
                                     {
