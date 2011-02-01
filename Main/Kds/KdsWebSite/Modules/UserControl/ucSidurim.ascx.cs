@@ -19,6 +19,7 @@ using KdsWorkFlow.Approvals;
 using KdsLibrary.Security;
 public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//, System.Web.UI.ICallbackEventHandler
 {
+    
     private OrderedDictionary _DataSource;
     private OrderedDictionary _CancledSidurim;
     private clMeafyenyOved _MeafyenyOved;
@@ -76,6 +77,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private clGeneral.enCardStatus _StatusCard;
     private UpdatePanel _UpEmpDetails;
     
+    public const string NBSP ="&nbsp;";
     public const int _COL_DUMMY =0;
     public const int _COL_ADD_NESIA_REKA = 1;
     public const int _COL_KISUY_TOR = 2;
@@ -121,7 +123,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         enShisi = 2,
         enShabat = 3
     }
-    private enum enPeilutStatus
+    public enum enPeilutStatus
     {
         enError = 1, enValid = 0, enApproved = 2
     }
@@ -458,8 +460,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //נבנה את הטבלה שתכיל את הנתוני הסידור העדכניים
             if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                 BuildUpdatedSidurimColumns(ref dtUpdatedSidurim);
-            if (htEmployeeDetails != null)
+            if ((OrderedDictionary)Session["Sidurim"]!= null)
             {
+                htEmployeeDetails = (OrderedDictionary)Session["Sidurim"]; 
                 for (int iIndex = 0; iIndex < htEmployeeDetails.Count; iIndex++)
                 {
                     BuildSidurAndPeiluyot(ref htEmployeeDetails, iIndex);
@@ -852,7 +855,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcSidur.DataType = System.Type.GetType("System.Int32");
         dtUpdatedSidurim.Columns.Add(dcSidur);
     }
-    protected void BuildDataTableColumns(ref DataTable dtPeilutyot)
+    public void BuildDataTableColumns(ref DataTable dtPeilutyot)
     {
         DataColumn dcPeilut;
         dcPeilut = new DataColumn();
@@ -1257,10 +1260,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //hCell = CreateTableCell("70px", "", "");
             if (!(HasNoPremmisionToAddPeilut(oSidur)))
             {
-                Image imgCollapse = new Image();
+                ImageButton imgCollapse = new ImageButton();
                 imgCollapse.ID = "imgAddPeilut" + iIndex;
                 imgCollapse.ImageUrl = "~/images/plus.jpg";
-                imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");               
+                //imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
+                imgCollapse.Attributes.Add("onclick", "hidErrChg.value='1'; MovePanel(" + iIndex + ");");
+                imgCollapse.Attributes.Add("SdrInd", iIndex.ToString());
+                imgCollapse.CausesValidation = false;
+                imgCollapse.Click += new ImageClickEventHandler(imgCollapse_Click);    
                 hCell = CreateTableCell("43px", "", "");
                 hCell.Controls.Add(imgCollapse);
             }
@@ -1271,6 +1278,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             throw ex;
         }
+    }
+    void imgCollapse_Click(object sender, ImageClickEventArgs e)
+    {
+        AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));        
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {
@@ -1567,6 +1578,244 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
         hCell.Controls.Add(chkBox);
         hCell.Style.Add("border-left", "solid 1px gray");
+    }
+    private void AddEmptyRowToPeilutGrid(int iSidurIndex)
+    {
+        GridView _GridView;
+        DataTable dt = new DataTable();
+        try
+        {
+            //Update DataTable which bind to grid with new data
+          
+            _GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+            if (_GridView != null)
+            {
+                //בניית עמודות הטבלה
+                //BuildDataTableColumns(ref dt);
+                //UpdatePeilutDataTable(iSidurIndex, ref dt, _GridView);
+                //AddEmptyLineToDataTable(ref dt);
+                //BindNewDataTableToGrid(ref dt, _GridView);
+                AddEmptyPeilutToHashTable(iSidurIndex); 
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    private int GetSidurNumber(int iSidurIndex)
+    {   GridView _GridView;
+        int iSidurNumber=0;
+        Label _Lbl;
+        HyperLink _HypLnk = new HyperLink();
+
+        if (_DataSource != null)
+        {
+            //נוציא את מספר הסידור
+            _GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+            if (_GridView != null)
+            {
+                try
+                {
+                    _Lbl = (Label)this.FindControl("lblSidur" + iSidurIndex);
+                }
+                catch (Exception ex)
+                {
+                    _HypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex);
+                    _Lbl = null;
+                }
+                iSidurNumber = (_Lbl == null ? int.Parse(_HypLnk.Text) : int.Parse(_Lbl.Text));
+            }
+        }
+        return iSidurNumber;
+    }
+    private void AddEmptyPeilutToHashTable(int iSidurIndex)
+    {
+        //הוספת פעילות ריקה ל- HASHTABLE
+        clSidur _Sidur = new clSidur(); 
+        clPeilut _Peilut = new clPeilut();       
+        //OrderedDictionary _hashSidurimPeiluyot;
+        int iSidurNumber=0;
+      
+        iSidurNumber = GetSidurNumber(iSidurIndex);
+        //_hashSidurimPeiluyot = (OrderedDictionary)Session["Sidurim"];
+        for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
+        {
+            _Sidur = (clSidur)(_DataSource[iIndex]);
+           if (_Sidur.iMisparSidur.Equals(iSidurNumber))
+                    break;
+        }
+         _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
+
+         Session["Sidurim"] = _DataSource;
+         ClearControl();
+         BuildPage();
+    }
+    private void UpdatePeilutDataTable(int iSidurIndex, ref DataTable dt, GridView _GridView)
+    {
+        DataRow drPeilutyot;
+        clSidur _Sidur;
+        clPeilut _Peilut;
+        DateTime dShatYetiza, dKisuyTor;
+        String sShatYetiza, sKisuyTor, sDayToAdd;
+        int iDayToAdd,iSidurNumber;
+        double dblKisuyTor;
+        TextBox oShatYetiza;
+        GridViewRow oGridRow;
+        clKavim _Kavim = new clKavim();
+        DataRow[] drLicenseNumber;
+        DateTime dNewSidurShatHatchala, dOldSidurShatHatchala;
+        TextBox oTxt;
+        Label oLbl;
+        HyperLink oHypLnk = new HyperLink();
+        try
+        {
+            try
+            {
+                oLbl = (Label)this.FindControl("lblSidur" + iSidurIndex);
+            }
+            catch (Exception ex)
+            {
+                oHypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex);
+                oLbl = null;
+            }
+            iSidurNumber = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
+            oTxt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
+            dOldSidurShatHatchala = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
+            if (oTxt.Text == string.Empty)
+                dNewSidurShatHatchala = DateTime.Parse("01/01/0001 00:00:00");
+            else
+            {//נבדוק אם השתנה התאריך
+                dNewSidurShatHatchala = GetSidurNewDate(iSidurNumber, oTxt.Text); 
+                dNewSidurShatHatchala = dNewSidurShatHatchala.AddSeconds(double.Parse(dOldSidurShatHatchala.Second.ToString().PadLeft(2, (char)48)));
+            }
+
+            _Sidur = (clSidur)(_DataSource[iSidurIndex]);
+            for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
+            {
+                oGridRow = _GridView.Rows[iRowIndex];
+                _Peilut = (clPeilut)_Sidur.htPeilut[iRowIndex];
+                drPeilutyot = dt.NewRow();
+
+                //הוספת נסיעה ריקה
+                drPeilutyot["Add_Nesia_reka"] = "1";
+                //מציין האם מותר לבטל פעילות
+                drPeilutyot["cancel_peilut_flag"] = _Peilut.iMisparKnisa == 0 ? 1 : _Peilut.bKnisaNeeded ? 1 : 0;
+                //כיסוי תור ושעת יציאה
+                sDayToAdd = ((TextBox)oGridRow.Cells[COL_DAY_TO_ADD].Controls[0]).Text;
+                iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
+                oShatYetiza = ((TextBox)oGridRow.Cells[COL_SHAT_YETIZA].Controls[0]);
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
+                sShatYetiza = oShatYetiza.Text;
+                if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+                    if (oShatYetiza.Text != string.Empty)
+                    {
+                        if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
+                            oShatYetiza.Attributes["OrgDate"] = dNewSidurShatHatchala.ToShortDateString();
+                    }
+                    else //שעת יציאה ריקה
+                        sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
+
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"] + " " + sShatYetiza);
+
+                if (dShatYetiza.Date == CardDate)
+                    dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
+                else
+                    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+                    {
+                        if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
+                            dShatYetiza = dShatYetiza.AddDays(-1);
+                    }
+                sKisuyTor = ((TextBox)oGridRow.Cells[COL_KISUY_TOR].Controls[0]).Text;
+                if (sKisuyTor != string.Empty)
+                {
+                    dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
+                    dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
+                    if (dblKisuyTor < 0)
+                        dblKisuyTor = 1440 + dblKisuyTor;
+                }
+                else
+                    dblKisuyTor = 0;
+
+                drPeilutyot["Kisuy_Tor"] = dblKisuyTor;
+                drPeilutyot["Kisuy_Tor_map"] = _Peilut.iKisuyTorMap;
+                drPeilutyot["shat_yetzia"] = dShatYetiza;
+                drPeilutyot["oto_no"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text);
+                drPeilutyot["makat_nesia"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
+                drPeilutyot["dakot_bafoal"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
+                drPeilutyot["Makat_Description"] = oGridRow.Cells[_COL_LINE_DESCRIPTION].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_DESCRIPTION].Text;
+                drPeilutyot["makat_shilut"] = oGridRow.Cells[_COL_LINE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE].Text;
+                drPeilutyot["Shirut_type_Name"] = oGridRow.Cells[_COL_LINE_TYPE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_TYPE].Text; 
+                drPeilutyot["imut_netzer"] = oGridRow.Cells[_COL_NETZER].Text;
+                drPeilutyot["makat_type"] = _Kavim.GetMakatType(long.Parse(drPeilutyot["makat_nesia"].ToString()));
+                drPeilutyot["mazan_tichnun"] = oGridRow.Cells[_COL_DEF_MINUTES].Text;
+                drPeilutyot["mazan_tashlum"] = oGridRow.Cells[_COL_MAZAN_TASHLUM].Text;
+                drPeilutyot["knisa"] = oGridRow.Cells[_COL_KNISA].Text;
+                drPeilutyot["last_update"] = oGridRow.Cells[_COL_LAST_UPDATE].Text;
+                drPeilutyot["DayToAdd"] = ((TextBox)(oGridRow.Cells[_COL_DAY_TO_ADD].Controls[0])).Text;
+                drPeilutyot["bitul_o_hosafa"] = oGridRow.Cells[_COL_CANCEL_PEILUT].Text;               
+                drLicenseNumber = Mashar.Select("bus_number=" + drPeilutyot["oto_no"].ToString());
+                if (drLicenseNumber.Length > 0)                
+                    drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
+                
+
+                //drPeilutyot["PeilutStatus"] = e.Row.Cells[_COL_PEILUT_STATUS];   
+                dt.Rows.Add(drPeilutyot);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex; //פעילויות            
+        }
+    }
+    private void BindNewDataTableToGrid(ref DataTable dt, GridView _GridView)
+    {
+        DataView dv = new DataView(dt);
+        _GridView.DataSource = dv;
+        _GridView.DataBind();
+    }
+    private void AddEmptyLineToDataTable(ref DataTable dt)
+    {
+        DataRow drPeilutyot;
+
+        drPeilutyot = dt.NewRow();
+
+        //מציין האם מותר לבטל פעילות
+        drPeilutyot["Add_Nesia_reka"] = "1";
+        drPeilutyot["cancel_peilut_flag"] = 0;
+        drPeilutyot["Kisuy_Tor"] = 0;
+        drPeilutyot["Kisuy_Tor_map"] = 0;
+        drPeilutyot["shat_yetzia"] = "00:00";
+        drPeilutyot["Makat_Description"] = "";
+        drPeilutyot["makat_shilut"] = "";
+        drPeilutyot["Shirut_type_Name"] = "";
+        drPeilutyot["oto_no"] = 0;
+        drPeilutyot["makat_nesia"] = 0;
+        drPeilutyot["dakot_bafoal"] = 0;
+        drPeilutyot["imut_netzer"] = "לא";
+        drPeilutyot["makat_type"] = 0;
+        drPeilutyot["mazan_tichnun"] = 0;
+        drPeilutyot["last_update"] = "";
+        drPeilutyot["mazan_tashlum"] = 0;
+        drPeilutyot["bitul_o_hosafa"] = 0;
+        drPeilutyot["knisa"] = "0,0,0,0";
+        drPeilutyot["DayToAdd"] = "0";
+        drPeilutyot["license_number"] = 0;
+        drPeilutyot["PeilutStatus"] = 0;// lstSidurim.enPeilutStatus.enValid.GetHashCode();
+        dt.Rows.Add(drPeilutyot);
+    }
+    private DateTime GetSidurNewDate(int iSidurKey, string sSidurHour)
+    {
+        //מחזיר את  התארי המעודכן של הסידור
+        //DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+        DataRow[] dr;
+        DateTime dtDate = new DateTime();
+        dr = ((DataTable)Session["SidurimUpdated"]).Select("sidur_number=" + iSidurKey + " and sidur_start_hour='" + sSidurHour + "'");
+        if (dr.Length > 0)
+            dtDate = DateTime.Parse(dr[0]["sidur_date"].ToString());
+
+
+        return dtDate;
     }
     protected DropDownList BuildHashlamaDLL(bool bEnabled)
     {
@@ -2452,15 +2701,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             case enDayType.enRegular:
                 bLess = fSidurTime < Param101;
-                hidDayType.Value = enDayType.enRegular.GetHashCode().ToString();
+                //hidDayType.Value = enDayType.enRegular.GetHashCode().ToString();
                 break;
             case enDayType.enShisi:                
                 bLess = fSidurTime < Param102;
-                hidDayType.Value = enDayType.enShisi.GetHashCode().ToString();
+                //hidDayType.Value = enDayType.enShisi.GetHashCode().ToString();
                 break;
             case enDayType.enShabat:
                 bLess = fSidurTime < Param103;
-                hidDayType.Value = enDayType.enShabat.GetHashCode().ToString();
+                //hidDayType.Value = enDayType.enShabat.GetHashCode().ToString();
                 break;
         }
         return bLess;

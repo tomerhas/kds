@@ -347,7 +347,8 @@
                             <tr>                                     
                                 <td width="100%">
                                     <div id="divSidur" style="text-align: right; overflow:hidden;">                                        
-                                      <uc:ucSidurim runat="server" ID="lstSidurim"/>                                           
+                                      <uc:ucSidurim runat="server" ID="lstSidurim"/> 
+                                      <input type="hidden" runat="server" id="hidErrChg" />                                         
                                    </div>    
                                 </td>
                             </tr>
@@ -534,6 +535,7 @@
     <input type="hidden" runat="server" id="hidLvl2Chg" />
     <input type="hidden" runat="server" id="hidLvl3Chg" />
     <input type="hidden" runat="server" id="hidExecInputChg" />
+   
     <input type="hidden" runat="server" id="hidRashemet" />  
     </form>   
     <script language="javascript" type="text/javascript">

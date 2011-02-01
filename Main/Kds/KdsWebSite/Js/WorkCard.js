@@ -265,10 +265,10 @@
      var iMisparIshi = document.getElementById("txtId").value;
      var dCardDate = document.getElementById("clnDate").value;
      var sFName = oObj.getAttribute("FName");
-     var iSidurNum=0; var sStartH=''; var sPShatY=''; var iMKnisa=0; 
+     var iSidurNum=0; var sStartH=''; var sPShatY='';var iMKnisa = 0; 
      document.getElementById("hErrKey").value=oId;     
-     if (level==1){       
-        wsGeneral.GetFieldErrors(level,iMisparIshi,dCardDate,iSidurNum,sStartH,sPShatY,iMKnisa,sFName,onGetdErrSucc);     
+     if (level==1){
+         wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);     
      }
      else
      {      
@@ -276,7 +276,7 @@
       {            
        var i = String(id.id).substr("lstSidurim_txtSH".length);
        iSidurNum=document.getElementById(("lstSidurim_lblSidur").concat(pKey)).innerHTML;
-       sStartH = document.getElementById(("lstSidurim_txtSH").concat(pKey)).getAttribute("OrgShatHatchala");      
+       sStartH = document.getElementById(("lstSidurim_txtSH").concat(pKey)).getAttribute("OrgShatHatchala");         
        wsGeneral.GetFieldErrors(level, iMisparIshi,dCardDate,iSidurNum,sStartH,sPShatY,iMKnisa,sFName, onGetdErrSucc);
       }
       else
@@ -284,8 +284,7 @@
        var arrKey =  pKey.toString().split("|");
        sPShatY = document.getElementById(arrKey[0]).value;
        if (sPShatY == '__:__') {
-           sPShatY = document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza');
-         
+           sPShatY = document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza');           
        } else {
            var AddDay = Number(document.getElementById(arrKey[3].concat("_txtDayToAdd")).value);
            if (AddDay == 1) {
@@ -295,18 +294,18 @@
                ShStart.setMonth(Number(dCardDate.substr(3, 2)) - 1);
                ShStart.setDate(dCardDate.substr(0, 2));
                ShStart.setDate(ShStart.getDate() + 1);
-               sPShatY = String(GetDateDDMMYYYY(ShStart)).concat(' ' + sPShatY);
+               sPShatY = String(GetDateDDMMYYYY(ShStart)).concat(' ' + sPShatY);              
            }
            else {
-               sPShatY = dCardDate.concat(' ' + sPShatY);
+               sPShatY = dCardDate.concat(' ' + sPShatY);              
            }
        }
        iMKnisa = document.getElementById(arrKey[1]).innerHTML;
        arrKnisa = iMKnisa.toString().split(",");
        iMKnisa = arrKnisa[0];
        iSidurNum = document.getElementById(("lstSidurim_lblSidur").concat(arrKey[2])).innerHTML;
-       sStartH = document.getElementById(("lstSidurim_txtSH").concat(arrKey[2])).getAttribute("OrgShatHatchala");
-       wsGeneral.GetFieldErrors(level,iMisparIshi,dCardDate,iSidurNum,sStartH,sPShatY,iMKnisa,sFName, onGetdErrSucc);
+       sStartH = document.getElementById(("lstSidurim_txtSH").concat(arrKey[2])).getAttribute("OrgShatHatchala");       
+       wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
       }
      }     
     }

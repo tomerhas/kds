@@ -1421,11 +1421,12 @@ public class wsGeneral : System.Web.Services.WebService
     //}
     [WebMethod(EnableSession = true)]
     public string GetFieldErrors(int iLevel, int iMisparIshi, string sCardDate, int iSidurNumber,
-                                 string sSidurStartHour, string sPeilutShatYetiza, int iMisparKnisa, string sFieldName)
+                                 string sSidurStartHour, string sPeilutShatYetiza, int iMisparKnisa,
+                                 string sFieldName)
     {
         DataSet ds = new DataSet();
         string sWriter = "";
-        DateTime dSidurStartHour, dActiveStartHour;
+        DateTime dSidurStartHour, dActiveStartHour;        
         bool bProfileRashemet = (bool)Session["ProfileRashemet"];
         DataTable dt = (DataTable)Session["Errors"];
         switch (iLevel)
@@ -1435,12 +1436,14 @@ public class wsGeneral : System.Web.Services.WebService
                 break;
             case 2:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), iSidurNumber, dSidurStartHour, sFieldName);
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), 
+                     iSidurNumber, dSidurStartHour, sFieldName);
                 break;
             case 3:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
                 dActiveStartHour = DateTime.Parse(sPeilutShatYetiza);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), iSidurNumber, dSidurStartHour, dActiveStartHour, iMisparKnisa, sFieldName);
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), 
+                     iSidurNumber, dSidurStartHour, dActiveStartHour, iMisparKnisa, sFieldName);
                 break;
         }
 
@@ -1464,7 +1467,6 @@ public class wsGeneral : System.Web.Services.WebService
         xslTran.Transform(nav, xslArg, writer, null);
         return writer.ToString();
     }
-
 
     [WebMethod]
     public string[] GetOvdim(string prefixText, int count, string contextKey)
