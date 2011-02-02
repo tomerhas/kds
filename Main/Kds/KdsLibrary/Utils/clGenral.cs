@@ -109,6 +109,8 @@ namespace KdsLibrary
         public const string cFnIsApprovalErrorExists = "PKG_ERRORS.fn_is_approval_errors_exists";
         public const string cProInsPeilutOvdim = "pkg_errors.pro_ins_peilut_ovdim";
         public const string cProGetAllErrorsAndFields = "pkg_errors.pro_get_all_shgiot";
+        public const string cProGetApprovalErrors = "pkg_errors.get_approval_errors";
+        
 #endregion
 
 #region pkg_ovdim constants

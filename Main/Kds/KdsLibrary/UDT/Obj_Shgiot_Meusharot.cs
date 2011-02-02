@@ -42,6 +42,10 @@ namespace KdsLibrary.UDT
         private System.DateTime m_SHAT_YETZIA;
         
         private bool m_SHAT_YETZIAIsNull;
+
+        private System.DateTime m_NEW_SHAT_YETZIA;
+
+        private bool m_NEW_SHAT_YETZIAIsNull;
         
         private System.DateTime m_TAARICH;
         
@@ -50,11 +54,19 @@ namespace KdsLibrary.UDT
         private decimal m_MISPAR_KNISA;
         
         private bool m_MISPAR_KNISAIsNull;
-        
+
+        private int m_NEW_MISPAR_KNISA;
+
+        private bool m_NEW_MISPAR_KNISAIsNull;
+
         private System.DateTime m_SHAT_HATCHALA;
         
         private bool m_SHAT_HATCHALAIsNull;
-        
+
+        private System.DateTime m_NEW_SHAT_HATCHALA;
+
+        private bool m_NEW_SHAT_HATCHALAIsNull;
+
         private decimal m_MISPAR_ISHI;
         
         private bool m_MISPAR_ISHIIsNull;
@@ -66,9 +78,12 @@ namespace KdsLibrary.UDT
             this.m_KOD_SHGIAIsNull = true;
             this.m_TAARICH_ISHURIsNull = true;
             this.m_SHAT_YETZIAIsNull = true;
+            this.m_NEW_SHAT_YETZIAIsNull = true;
             this.m_TAARICHIsNull = true;
             this.m_MISPAR_KNISAIsNull = true;
+            this.m_NEW_MISPAR_KNISAIsNull = true;
             this.m_SHAT_HATCHALAIsNull = true;
+            this.m_NEW_SHAT_HATCHALAIsNull = true;
             this.m_MISPAR_ISHIIsNull = true;
         }
         
@@ -199,7 +214,33 @@ namespace KdsLibrary.UDT
                 this.m_SHAT_YETZIAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("NEW_SHAT_YETZIA")]
+        public System.DateTime NEW_SHAT_YETZIA
+        {
+            get
+            {
+                return this.m_NEW_SHAT_YETZIA;
+            }
+            set
+            {
+                this.m_NEW_SHAT_YETZIA = value;
+                this.m_NEW_SHAT_YETZIAIsNull = false;
+            }
+        }
+
+        public bool NEW_SHAT_YETZIAIsNull
+        {
+            get
+            {
+                return this.m_NEW_SHAT_YETZIAIsNull;
+            }
+            set
+            {
+                this.m_NEW_SHAT_YETZIAIsNull = value;
+            }
+        }
+
         [OracleObjectMappingAttribute("TAARICH")]
         public System.DateTime TAARICH {
             get {
@@ -239,7 +280,33 @@ namespace KdsLibrary.UDT
                 this.m_MISPAR_KNISAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("NEW_MISPAR_KNISA")]
+        public int NEW_MISPAR_KNISA
+        {
+            get
+            {
+                return this.m_NEW_MISPAR_KNISA;
+            }
+            set
+            {
+                this.m_NEW_MISPAR_KNISA = value;
+                this.m_NEW_MISPAR_KNISAIsNull = false;
+            }
+        }
+
+        public bool NEW_MISPAR_KNISAIsNull
+        {
+            get
+            {
+                return this.m_NEW_MISPAR_KNISAIsNull;
+            }
+            set
+            {
+                this.m_NEW_MISPAR_KNISAIsNull = value;
+            }
+        }
+
         [OracleObjectMappingAttribute("SHAT_HATCHALA")]
         public System.DateTime SHAT_HATCHALA {
             get {
@@ -250,7 +317,7 @@ namespace KdsLibrary.UDT
                 this.m_SHAT_HATCHALAIsNull = false;
             }
         }
-        
+
         public bool SHAT_HATCHALAIsNull {
             get {
                 return this.m_SHAT_HATCHALAIsNull;
@@ -259,7 +326,33 @@ namespace KdsLibrary.UDT
                 this.m_SHAT_HATCHALAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("NEW_SHAT_HATCHALA")]
+        public System.DateTime NEW_SHAT_HATCHALA
+        {
+            get
+            {
+                return this.m_NEW_SHAT_HATCHALA;
+            }
+            set
+            {
+                this.m_NEW_SHAT_HATCHALA = value;
+                this.m_NEW_SHAT_HATCHALAIsNull = false;
+            }
+        }
+
+        public bool NEW_SHAT_HATCHALAIsNull
+        {
+            get
+            {
+                return this.m_NEW_SHAT_HATCHALAIsNull;
+            }
+            set
+            {
+                this.m_NEW_SHAT_HATCHALAIsNull = value;
+            }
+        }
+
         [OracleObjectMappingAttribute("MISPAR_ISHI")]
         public decimal MISPAR_ISHI {
             get {
@@ -297,14 +390,26 @@ namespace KdsLibrary.UDT
             if ((SHAT_YETZIAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SHAT_YETZIA", this.SHAT_YETZIA);
             }
+            if ((NEW_SHAT_YETZIAIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "NEW_SHAT_YETZIA", this.NEW_SHAT_YETZIA);
+            }
             if ((TAARICHIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TAARICH", this.TAARICH);
             }
             if ((MISPAR_KNISAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MISPAR_KNISA", this.MISPAR_KNISA);
             }
+            if ((NEW_MISPAR_KNISAIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "NEW_MISPAR_KNISA", this.NEW_MISPAR_KNISA);
+            }
             if ((SHAT_HATCHALAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SHAT_HATCHALA", this.SHAT_HATCHALA);
+            }
+            if ((NEW_SHAT_HATCHALAIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "NEW_SHAT_HATCHALA", this.NEW_SHAT_HATCHALA);
             }
             if ((MISPAR_ISHIIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MISPAR_ISHI", this.MISPAR_ISHI);
@@ -333,6 +438,11 @@ namespace KdsLibrary.UDT
             if ((SHAT_YETZIAIsNull == false)) {
                 this.SHAT_YETZIA = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SHAT_YETZIA")));
             }
+            this.NEW_SHAT_YETZIAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "NEW_SHAT_YETZIA");
+            if ((NEW_SHAT_YETZIAIsNull == false))
+            {
+                this.NEW_SHAT_YETZIA = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "NEW_SHAT_YETZIA")));
+            }
             this.TAARICHIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "TAARICH");
             if ((TAARICHIsNull == false)) {
                 this.TAARICH = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "TAARICH")));
@@ -341,9 +451,19 @@ namespace KdsLibrary.UDT
             if ((MISPAR_KNISAIsNull == false)) {
                 this.MISPAR_KNISA = ((decimal)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MISPAR_KNISA")));
             }
+            this.NEW_MISPAR_KNISAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "NEW_MISPAR_KNISA");
+            if ((NEW_MISPAR_KNISAIsNull == false))
+            {
+                this.NEW_MISPAR_KNISA = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "NEW_MISPAR_KNISA")));
+            }
             this.SHAT_HATCHALAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SHAT_HATCHALA");
             if ((SHAT_HATCHALAIsNull == false)) {
                 this.SHAT_HATCHALA = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SHAT_HATCHALA")));
+            }
+            this.NEW_SHAT_HATCHALAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "NEW_SHAT_HATCHALA");
+            if ((NEW_SHAT_HATCHALAIsNull == false))
+            {
+                this.NEW_SHAT_HATCHALA = ((System.DateTime)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "NEW_SHAT_HATCHALA")));
             }
             this.MISPAR_ISHIIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MISPAR_ISHI");
             if ((MISPAR_ISHIIsNull == false)) {

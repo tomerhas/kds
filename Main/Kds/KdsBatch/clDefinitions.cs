@@ -37,7 +37,8 @@ namespace KdsBatch
         public const string cProUpdYameyAvodaOvdim = "pkg_errors.pro_upd_yamey_avoda_ovdim";
         public const string cProUpdSidurimOvdim = "pkg_errors.pro_upd_sidurim_ovdim";
         public const string cProUpdPeilutOvdim = "pkg_errors.pro_upd_peilut_ovdim";
-        
+        public const string cProUpdApprovalErrors = "pkg_errors.pro_upd_approval_errors";
+
         public const string cProInsSidurimOvdim = "pkg_errors.pro_ins_sidurim_ovdim";
         public const string cProDelPeilutOvdim = "pkg_errors.pro_del_peilut_ovdim";
         public const string cProGetSugeySidurRechiv = "pkg_utils.pro_get_sug_sidur_rechiv";
@@ -68,6 +69,7 @@ namespace KdsBatch
         public const string cProGetShgiotNoActive = "pkg_errors.pro_get_shgiot_no_active";
         public const string cProGetPremiaOvdimLechishuv = "pkg_batch.pro_get_ovdim_lehishuv_premiot";
         public const string cProUpdateChishuvPremia = "pkg_batch.pro_update_chishuv_premia";
+
         private static List<int> SpecialSidurim = new List<int> { 99200 };
 
 
@@ -538,6 +540,27 @@ namespace KdsBatch
             }
         }
 
+        public static DataTable GetApprovalErrors(int iMisparIshi, DateTime dTaarich)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetApprovalErrors, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static DataTable GetTmpMeafyeneyElements(DateTime dTarMe, DateTime dTarAd)
         {
             clDal oDal = new clDal();
@@ -909,6 +932,20 @@ namespace KdsBatch
             {
                 Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemet, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
                 Dal.ExecuteSP(clGeneral.cProUpdIdkunRashemet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
+        {
+            clDal Dal = new clDal();
+            try
+            {
+                Dal.AddParameter("p_coll_shgiot_meusharot", ParameterType.ntOracleArray, oCollShgiotMeusharot, ParameterDir.pdInput, "COLL_SHGIOT_MEUSHAROT");
+                Dal.ExecuteSP(clDefinitions.cProUpdApprovalErrors);
             }
             catch (Exception ex)
             {

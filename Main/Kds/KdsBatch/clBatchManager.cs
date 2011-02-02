@@ -42,8 +42,11 @@ namespace KdsBatch
         private int _iUserId;
         private bool _bSuccsess;
         private clGeneral.enCardStatus _CardStatus;
-        private DataTable _dtApproval;
+        //private DataTable _dtApproval;
         private DataTable _dtIdkuneyRashemet;
+        private DataTable _dtApprovalError;
+        private DataTable _dtErrorsNotActive;
+
         private bool _bHaveCount = true;
         //private DataTable dtDetails;
         //private DataTable dtLookUp;       
@@ -75,7 +78,8 @@ namespace KdsBatch
         private COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd; //= new COLL_OBJ_PEILUT_OVDIM();
         private COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns; // new COLL_OBJ_PEILUT_OVDIM();
         private COLL_IDKUN_RASHEMET _oCollIdkunRashemet;
-            
+        private COLL_SHGIOT_MEUSHAROT _oCollApprovalErrors;
+   
         private ApprovalRequest[] arrEmployeeApproval;
         private bool bHasShaonIsurInMaxLevel;
         private clCalculation objCalc = new clCalculation();
@@ -621,6 +625,7 @@ namespace KdsBatch
             try
             {
                 dtLookUp = oUtils.GetLookUpTables();
+                _dtErrorsNotActive = clDefinitions.GetErrorsNoActive();
 
                 //Get LookUp Tables
                 if (!_IsExecuteInputData)
@@ -631,7 +636,7 @@ namespace KdsBatch
                     dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                     _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                     _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
-
+                    
                     //Get Meafyeny Ovdim
                     GetMeafyeneyOvdim(iMisparIshi, dCardDate);
 
@@ -646,7 +651,7 @@ namespace KdsBatch
 
                     //Get Temp Meafyeney Elements
                     dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
-                    _dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
+                    //_dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
 
                 }
                 SetOvedYomAvodaDetails(iMisparIshi, dCardDate);
@@ -673,13 +678,13 @@ namespace KdsBatch
                     _oOvedYomAvodaDetails = oOvedYomAvodaDetails;
 
                     //Check01
-                    IsHrStatusValid01(dCardDate, iMisparIshi, ref dtErrors);
+                   if (CheckErrorActive(1)) IsHrStatusValid01(dCardDate, iMisparIshi, ref dtErrors);
 
                     //Check30
-                    IsSidurLina30(dCardDate, ref dtErrors);
+                   if (CheckErrorActive(30)) IsSidurLina30(dCardDate, ref dtErrors);
                                         
                     //Check27
-                    IsSimunNesiaValid27(dCardDate, ref dtErrors);
+                   if (CheckErrorActive(27)) IsSimunNesiaValid27(dCardDate, ref dtErrors);
 
                     //Check163
                     //IsHashlamaLeYomAvodaValid163(iMisparIshi, dCardDate, ref dtErrors);
@@ -688,7 +693,7 @@ namespace KdsBatch
                     //IsZakaiLeNesiot26(iMisparIshi,dCardDate, ref dtErrors);
 
                     //Check 47
-                    IsShbatHashlamaValid47(iMisparIshi, dCardDate, ref dtErrors);
+                   if (CheckErrorActive(47)) IsShbatHashlamaValid47(iMisparIshi, dCardDate, ref dtErrors);
 
                     //Get Oved Details
                     dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
@@ -696,7 +701,7 @@ namespace KdsBatch
                     if (dtDetails.Rows.Count > 0)
                     {
                         //Check36
-                        IsHalbashValid36(dCardDate, ref dtErrors);
+                        if (CheckErrorActive(36)) IsHalbashValid36(dCardDate, ref dtErrors);
 
                         //Insert Oved Details to Class
                         //if (htEmployeeDetails == null)
@@ -725,16 +730,16 @@ namespace KdsBatch
                         }
 
                         //Check103
-                        IsDuplicateShatYetiza103(iMisparIshi, dCardDate, ref dtErrors);
+                        if (CheckErrorActive(103)) IsDuplicateShatYetiza103(iMisparIshi, dCardDate, ref dtErrors);
 
                         //Check132
-                        IsOvodaInMachalaAllowed132(dCardDate, iMisparIshi, ref dtErrors);
+                        if (CheckErrorActive(132)) IsOvodaInMachalaAllowed132(dCardDate, iMisparIshi, ref dtErrors);
 
                         CheckAllError(ref dtErrors, dCardDate, iMisparIshi);
                     }
                     //Write errors to tb_shgiot
                     DeleteErrorsFromTbShgiot();
-                    RemoveShgiotNotActiveFromDt(ref dtErrors);
+                    //RemoveShgiotNotActiveFromDt(ref dtErrors);
                     sArrKodShgia = "";
                     RemoveShgiotMeusharotFromDt(ref dtErrors, ref sArrKodShgia);
                     if (sArrKodShgia.Length > 0)
@@ -852,34 +857,54 @@ namespace KdsBatch
 
         }
 
-        private void RemoveShgiotNotActiveFromDt(ref DataTable dtErrors)
+        //private void RemoveShgiotNotActiveFromDt(ref DataTable dtErrors)
+        //{
+        //   DataRow dr;
+        //   DataRow[] drShgiaNotActive;
+        //    int iCount;
+        //    DataTable dtErrorsNotActive;
+        //    iCount = dtErrors.Rows.Count;
+        //    int I = 0;
+        //    try
+        //    {
+        //        dtErrorsNotActive = clDefinitions.GetErrorsNoActive();
+                
+        //        if (iCount > 0)
+        //        {
+        //            do
+        //            {
+        //                dr = dtErrors.Rows[I];
+        //                drShgiaNotActive=dtErrorsNotActive.Select("kod_shgia=" + dr["check_num"].ToString());
+        //                if (drShgiaNotActive.Length>0)
+        //                    dr.Delete();
+        //                else
+        //                  I+=1;
+                            
+        //                iCount = dtErrors.Rows.Count;
+        //            }
+        //            while (I < iCount);
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        // }
+
+        private bool CheckErrorActive(int iKodShgia)
         {
-           DataRow dr;
            DataRow[] drShgiaNotActive;
-            int iCount;
-            DataTable dtErrorsNotActive;
-            iCount = dtErrors.Rows.Count;
-            int I = 0;
+            
             try
             {
-                dtErrorsNotActive = clDefinitions.GetErrorsNoActive();
-                
-                if (iCount > 0)
-                {
-                    do
-                    {
-                        dr = dtErrors.Rows[I];
-                        drShgiaNotActive=dtErrorsNotActive.Select("kod_shgia=" + dr["check_num"].ToString());
-                        if (drShgiaNotActive.Length>0)
-                            dr.Delete();
-                        else
-                          I+=1;
-                            
-                        iCount = dtErrors.Rows.Count;
-                    }
-                    while (I < iCount);
-
-                }
+              
+                drShgiaNotActive = _dtErrorsNotActive.Select("kod_shgia=" + iKodShgia);
+                if (drShgiaNotActive.Length > 0)
+                    return false;
+                else
+                    return true;
+                   
             }
             catch (Exception ex)
             {
@@ -1155,13 +1180,13 @@ namespace KdsBatch
                 //    iKey = int.Parse(deEntry.Key.ToString());   
 
                 //HasHafifaBecauseOfHashlama108(ref dtErrors);
-                HasHafifa167(iMisparIshi, dCardDate, ref dtErrors);
+                if (CheckErrorActive(167)) HasHafifa167(iMisparIshi, dCardDate, ref dtErrors);
 
                 // Check171
-                HasBothSidurEilatAndSidurVisa171(iMisparIshi, dCardDate, ref dtErrors);
+                if (CheckErrorActive(171)) HasBothSidurEilatAndSidurVisa171(iMisparIshi, dCardDate, ref dtErrors);
 
                 // Check172
-                IsOvedPeilutValid172(dCardDate, iMisparIshi, ref dtErrors);
+                if (CheckErrorActive(172)) IsOvedPeilutValid172(dCardDate, iMisparIshi, ref dtErrors);
 
                 
                 
@@ -1184,50 +1209,50 @@ namespace KdsBatch
                     iTotalTimePrepareMechineForSidur = 0;
 
                     //בדיקות ברמת סידור   
-                    IsSidurExists9(ref oSidur, ref dtErrors);
-                    IsStartHourMissing15(ref oSidur,ref dtErrors);
-                    IsEndHourMissing174(ref oSidur, ref dtErrors);
-                    IsSidurChariga33(dCardDate, ref oSidur,ref dtErrors);
-                    IsPitzulHafsakaValid20(i,ref oSidur,ref dtErrors);
-                    IsHashlamaValid137(ref oSidur,ref dtErrors);                    
-                    IsShabatPizulValid23(ref oSidur, ref dtErrors);
-                    IsKmExists96(ref oSidur, ref dtErrors);
-                    IsOutMichsaValid118(ref oSidur, ref dtErrors);
-                    IsOutMichsaValid40(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(9)) IsSidurExists9(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(15)) IsStartHourMissing15(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(174)) IsEndHourMissing174(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(33)) IsSidurChariga33(dCardDate, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(20)) IsPitzulHafsakaValid20(i, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(137)) IsHashlamaValid137(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(23)) IsShabatPizulValid23(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(96)) IsKmExists96(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(118)) IsOutMichsaValid118(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(40)) IsOutMichsaValid40(ref oSidur, ref dtErrors);
                     //IsHamaraValid42(ref oSidur, ref dtErrors);
                     //IsHamaratShabatValid39(drSugSidur,ref oSidur, ref dtErrors);
-                    IsDriverLessonsNumberValid136(drSugSidur, ref oSidur, ref dtErrors);
-                    IsZakaiLeChariga34(ref oSidur,ref dtErrors);
-                    IsHashlamaForSidurValid48(fSidurTime,ref oSidur,ref dtErrors);
+                    if (CheckErrorActive(136))  IsDriverLessonsNumberValid136(drSugSidur, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(34)) IsZakaiLeChariga34(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(48)) IsHashlamaForSidurValid48(fSidurTime, ref oSidur, ref dtErrors);
                     //IsHalbashaInSidurValid37(ref oSidur, ref iCount);                   
-                    IsPitzulAndNotZakai25(ref oSidur, ref dtErrors);
-                    IsSidurVisaValid57(ref oSidur, ref dtErrors);                    
-                    IsOneSidurValid22(i, ref oSidur, ref dtErrors);
-                    IsVisaInSidurRagil58(ref oSidur, ref dtErrors);
-                    IsSidurStartHourValid14(dCardDate,ref oSidur, ref dtErrors);
-                    IsSidurEndHourValid173(dCardDate, ref oSidur, ref dtErrors); 
-                    IsHashlamatHazmanaValid49(fSidurTime, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(25)) IsPitzulAndNotZakai25(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(57)) IsSidurVisaValid57(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(22)) IsOneSidurValid22(i, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(158)) IsVisaInSidurRagil58(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(14)) IsSidurStartHourValid14(dCardDate, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(173)) IsSidurEndHourValid173(dCardDate, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(49)) IsHashlamatHazmanaValid49(fSidurTime, ref oSidur, ref dtErrors);
                     //IsYomVisaValid56(ref oSidur, ref dtErrors);                    
                     //IsZakaiLehamara44(drSugSidur,ref oSidur, ref dtErrors);
                     //IsHamaratShabatAllowed43(dCardDate, ref oSidur, ref dtErrors);
-                    IsSidurVisaMissingSugVisa106(oSidur, ref dtErrors);
-                    IsMissingKodMevatzeaVisa178(oSidur, ref dtErrors);
-                    IsOnePeilutExists127(ref oSidur, ref dtErrors);
-                    IsSidurAllowedForEggedTaavora148(enEmployeeType, ref  oSidur, ref  dtErrors);
-                    IsSidurNetzerNotValidForOved124( ref  oSidur, ref  dtErrors);
-                    IsSidurAvodaValidForTaarich160(ref oSidur, ref dtErrors);
-                    IsSidurValidInShabaton50(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(106)) IsSidurVisaMissingSugVisa106(oSidur, ref dtErrors);
+                    if (CheckErrorActive(178)) IsMissingKodMevatzeaVisa178(oSidur, ref dtErrors);
+                    if (CheckErrorActive(127)) IsOnePeilutExists127(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(148)) IsSidurAllowedForEggedTaavora148(enEmployeeType, ref  oSidur, ref  dtErrors);
+                    if (CheckErrorActive(124)) IsSidurNetzerNotValidForOved124(ref  oSidur, ref  dtErrors);
+                    if (CheckErrorActive(160)) IsSidurAvodaValidForTaarich160(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(50)) IsSidurValidInShabaton50(ref oSidur, ref dtErrors);
                     //IsSidurTafkidValid145(ref oSidur, ref dtErrors);
-                    IsCharigaValid32(ref oSidur, ref dtErrors);
-                   
-                    IsSidurSummerValid164(ref  oSidur, ref dtErrors);
-                    IsSidurNAhagutValid161(drSugSidur, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(32)) IsCharigaValid32(ref oSidur, ref dtErrors);
+
+                    if (CheckErrorActive(164)) IsSidurSummerValid164(ref  oSidur, ref dtErrors);
+                    if (CheckErrorActive(161)) IsSidurNAhagutValid161(drSugSidur, ref oSidur, ref dtErrors);
                     //IsSidurGriraValid177(drSugSidur, ref oSidur, ref dtErrors);
                    
                     if (!(bFirstSidur))//לא נבצע את הבדיקה לסידור הראשון
                     {
-                        IsSidurimHoursNotValid16(i, ref oSidur, ref dtErrors);
-                        IsPitzulSidurInShabatValid24(dCardDate,i, ref oSidur, ref dtErrors);
+                        if (CheckErrorActive(16)) IsSidurimHoursNotValid16(i, ref oSidur, ref dtErrors);
+                        if (CheckErrorActive(24)) IsPitzulSidurInShabatValid24(dCardDate, i, ref oSidur, ref dtErrors);
                         
                     }
                     else
@@ -1236,7 +1261,7 @@ namespace KdsBatch
                         //IsOvedEggedTaavoraKodValid141(enEmployeeType, ref oSidur, ref dtErrors);                        
                        
                         //סידור יחיד ביום
-                        IsHashlamaForComputerAndAccidentValid45(ref oSidur, ref dtErrors);                        
+                        if (CheckErrorActive(45)) IsHashlamaForComputerAndAccidentValid45(ref oSidur, ref dtErrors);                        
                     }
                     
                     //נתונים של סידור קודם
@@ -1253,27 +1278,28 @@ namespace KdsBatch
                     {
                         iTotalHashlamotForSidur = iTotalHashlamotForSidur + 1;
                         //check 142
-                        IsTotalHashlamotInCardValid142(iTotalHashlamotForSidur, ref oSidur, ref dtErrors);
+                        if (CheckErrorActive(142)) IsTotalHashlamotInCardValid142(iTotalHashlamotForSidur, ref oSidur, ref dtErrors);
               
                     }
                      bSidurNahagut = IsSidurNahagut(drSugSidur, oSidur);
                      if (bSidurNahagut) bHaveSidurNahagut = true;
-                    IsSidurMiluimAndAvoda156(oSidur, ref dtErrors);
-                    IsSidurMissingNumStore143(oSidur, ref dtErrors);
-                    IsChafifaBesidurNihulTnua152(drSugSidur,oSidur, ref dtErrors);
-                    IsHighPremya153(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
-                    IsNegativePremya154(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);                    
+                     if (CheckErrorActive(156)) IsSidurMiluimAndAvoda156(oSidur, ref dtErrors);
+                     if (CheckErrorActive(143)) IsSidurMissingNumStore143(oSidur, ref dtErrors);
+                     if (CheckErrorActive(152)) IsChafifaBesidurNihulTnua152(drSugSidur, oSidur, ref dtErrors);
+                     if (CheckErrorActive(153)) IsHighPremya153(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
+                     if (CheckErrorActive(154)) IsNegativePremya154(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);                    
 
                     clSidur prevSidur = null;
                     if (i > 0) prevSidur = htEmployeeDetails[i - 1] as clSidur;
                     if (prevSidur != null)
-                        IsCurrentSidurInPrevSidur168(ref oSidur, ref prevSidur, ref dtErrors);
-
+                    {
+                        if (CheckErrorActive(168)) IsCurrentSidurInPrevSidur168(ref oSidur, ref prevSidur, ref dtErrors);
+                    }
                     //IsOvedExistsInWorkDay169(ref oSidur, iMisparIshi, dCardDate, ref dtErrors);
 
                     //IsValidSidurVisa170(ref oSidur, iMisparIshi, dCardDate, ref dtErrors);
-                    IsHachtamaYadanitKnisaMissing175(ref oSidur, ref dtErrors);
-                    IsHachtamaYadanitYetziaMissing176(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(175)) IsHachtamaYadanitKnisaMissing175(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(176)) IsHachtamaYadanitYetziaMissing176(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
                     //foreach (DictionaryEntry dePeilutEntry in oSidur.htPeilut)
@@ -1284,47 +1310,49 @@ namespace KdsBatch
 
                         
                         //IsShatYetizaExist92(ref oSidur,ref oPeilut, ref dtErrors);
-                        IsKodNesiaExists81(ref  oSidur, ref  oPeilut, ref  dtErrors,  dCardDate);
-                        MisparSiduriOtoNotExists139(ref oPeilut, ref oSidur, ref dtErrors);
+                        if (CheckErrorActive(81)) IsKodNesiaExists81(ref  oSidur, ref  oPeilut, ref  dtErrors, dCardDate);
+                        if (CheckErrorActive(139)) MisparSiduriOtoNotExists139(ref oPeilut, ref oSidur, ref dtErrors);
                         //IsMisparSidurEilatInRegularSidurExists140(ref oPeilut, ref oSidur, ref dtErrors);
                         //IsPeilutShatYeziaValid113(ref  oSidur, ref  oPeilut, ref  dtErrors, dCardDate);
-                        IsElementTimeValid129(fSidurTime, ref  oSidur, ref  oPeilut, ref dtErrors);
-                        IsShatPeilutNotValid121(dCardDate, ref oSidur, ref oPeilut, ref dtErrors);
-                        IsPeilutInSidurValid84(ref oSidur, ref oPeilut,ref dtErrors);
-                        IsOtoNoValid69(dCardDate,ref oSidur, ref oPeilut, ref dtErrors);
-                        IsZakaiLina31(ref oSidur, ref oPeilut, ref dtErrors);
-                        IsOtoNoExists68(drSugSidur, ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(129)) IsElementTimeValid129(fSidurTime, ref  oSidur, ref  oPeilut, ref dtErrors);
+                        if (CheckErrorActive(121)) IsShatPeilutNotValid121(dCardDate, ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(84)) IsPeilutInSidurValid84(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(69)) IsOtoNoValid69(dCardDate, ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(31)) IsZakaiLina31(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(68)) IsOtoNoExists68(drSugSidur, ref oSidur, ref oPeilut, ref dtErrors);
                         //IsNesiaTimeNotValid91(fSidurTime, dCardDate, ref oSidur, ref oPeilut, ref dtErrors);
-                        IsTeoodatNesiaValid52(ref oSidur, ref oPeilut, ref dtErrors);
-                        HighValueKisuyTor87(oSidur,  oPeilut, ref dtErrors);
-                        ElementInSpecialSidurNotAllowed123(ref oSidur, ref oPeilut, ref dtErrors);
-                        IsNesiaInSidurVisaAllowed125(ref oSidur, ref oPeilut, ref dtErrors);
-                        IsHmtanaTimeValid166(ref oSidur, ref oPeilut, ref dtErrors);
-                        IsSidurNamlakWithoutNesiaCard13(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(52)) IsTeoodatNesiaValid52(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(87)) HighValueKisuyTor87(oSidur, oPeilut, ref dtErrors);
+                        if (CheckErrorActive(123)) ElementInSpecialSidurNotAllowed123(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(125)) IsNesiaInSidurVisaAllowed125(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(166)) IsHmtanaTimeValid166(ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(13)) IsSidurNamlakWithoutNesiaCard13(ref oSidur, ref oPeilut, ref dtErrors);
                    
                         if (j > 0)//לא נבצע את הבדיקה לפעילות הראשונה 
                         {
                             oPrevPeilut = (clPeilut)oSidur.htPeilut[j - 1];
-                            IsCurrentPeilutInPrevPeilut162(ref oSidur, ref oPeilut, ref oPrevPeilut, ref dtErrors);
+                            if (CheckErrorActive(162)) IsCurrentPeilutInPrevPeilut162(ref oSidur, ref oPeilut, ref oPrevPeilut, ref dtErrors);
                             
                         }
-                        IsTimeForPrepareMechineValid86(ref iTotalTimePrepareMechineForSidur, ref iTotalTimePrepareMechineForDay, ref iTotalTimePrepareMechineForOtherMechines, ref oSidur, ref oPeilut, ref dtErrors);
-                       IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
-                       HightValueDakotBefoal179(oSidur,oPeilut, ref dtErrors);
+                        if (CheckErrorActive(86)) IsTimeForPrepareMechineValid86(ref iTotalTimePrepareMechineForSidur, ref iTotalTimePrepareMechineForDay, ref iTotalTimePrepareMechineForOtherMechines, ref oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(151)) IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
+                        if (CheckErrorActive(179)) HightValueDakotBefoal179(oSidur, oPeilut, ref dtErrors);
                     }
                     if (!bFirstSidur)
                     {
                         //Check55
-                        IsSidurEilatValid55(i, dCardDate, oSidur, ref dtErrors);
+                        if (CheckErrorActive(55)) IsSidurEilatValid55(i, dCardDate, oSidur, ref dtErrors);
                     }
                     bFirstSidur = false;
 
                     //Check 86
-                    CheckPrepareMechineForSidurValidity86(ref oSidur, iTotalTimePrepareMechineForSidur, ref dtErrors);
+                    if (CheckErrorActive(86)) CheckPrepareMechineForSidurValidity86(ref oSidur, iTotalTimePrepareMechineForSidur, ref dtErrors);
                    
                 }
                 if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                   IsAvodatNahagutValid165(iMisparIshi, dCardDate,bHaveSidurNahagut, ref dtErrors);
+                {
+                    if (CheckErrorActive(165)) IsAvodatNahagutValid165(iMisparIshi, dCardDate, bHaveSidurNahagut, ref dtErrors);
+                }
                 ////שגיאה 37 - נבדוק אם לכל הסידורים לא מגיע הלבשה
                 //if (iCount == htEmployeeDetails.Count)
                 //{
@@ -1337,13 +1365,15 @@ namespace KdsBatch
                 //    dtErrors.Rows.Add(drNew);
                 //}
                  //Check 86
-                CheckPrepareMechineForDayValidity86(iMisparIshi, iTotalTimePrepareMechineForDay, dCardDate, ref dtErrors);
-                //Check86
-                CheckPrepareMechineOtherElementForDayValidity86(iMisparIshi, iTotalTimePrepareMechineForOtherMechines, dCardDate, ref dtErrors);
-
+                if (CheckErrorActive(86))
+                {
+                    CheckPrepareMechineForDayValidity86(iMisparIshi, iTotalTimePrepareMechineForDay, dCardDate, ref dtErrors);
+                    //Check86
+                    CheckPrepareMechineOtherElementForDayValidity86(iMisparIshi, iTotalTimePrepareMechineForOtherMechines, dCardDate, ref dtErrors);
+                }
               if (htEmployeeDetails.Count > 0)
                 {
-                IsNesiaMeshtanaDefine150(dCardDate, ref dtErrors);
+                    if (CheckErrorActive(150)) IsNesiaMeshtanaDefine150(dCardDate, ref dtErrors);
                 }
             }
             catch (Exception ex)
@@ -1578,7 +1608,6 @@ namespace KdsBatch
                                                    bError = true;
                                                }
                                            }
-                                           else { bError = true; }
                                        }
                                        break;
                                    case clGeneral.enCharigaValue.CharigaYetiza:
@@ -1591,7 +1620,6 @@ namespace KdsBatch
                                                    bError = true;
                                                }
                                            }
-                                           else { bError = true; }
                                        }
                                        break;
                                    case clGeneral.enCharigaValue.CharigaKnisaYetiza:
@@ -1605,7 +1633,6 @@ namespace KdsBatch
                                                    bError = true;
                                                }
                                            }
-                                           else { bError = true; }
                                        }
                                        if (!string.IsNullOrEmpty(oSidur.sShatGmar))
                                        {
@@ -1616,8 +1643,7 @@ namespace KdsBatch
                                                    bError = true;
                                                }
                                            }
-                                           else { bError = true; }
-                                       }
+                                        }
                                        break;
                                }
                            }
@@ -5922,8 +5948,9 @@ namespace KdsBatch
                                 dtMashar = oKavim.GetMasharData(sCarNumbers);
                             }
                         }
-                        _dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
+                        //_dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
                         _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
+                        _dtApprovalError = clDefinitions.GetApprovalErrors(iMisparIshi, dCardDate);
 
                         CheckAllData(dCardDate, iMisparIshi, iSugYom);
 
@@ -5973,11 +6000,11 @@ namespace KdsBatch
             oCollPeilutOvdimUpd = new COLL_OBJ_PEILUT_OVDIM();
             oCollPeilutOvdimIns = new COLL_OBJ_PEILUT_OVDIM();
             _oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
+            _oCollApprovalErrors = new COLL_SHGIOT_MEUSHAROT();
             bUpdateShatHatchala = false;
             bool bIdkunRashShatHatchala = false;
             bool bIdkunRashShatGmar = false;
 
-            int iCountSidurim = 0;
             int iCountPeiluyot = 0;
             int i = 0;
             int j = 0;
@@ -6353,6 +6380,9 @@ namespace KdsBatch
                 if (_oCollIdkunRashemet.Count > 0)
                     clDefinitions.SaveIdkunRashemet(_oCollIdkunRashemet);
 
+                if (_oCollApprovalErrors.Count > 0)
+                    clDefinitions.UpdateAprrovalErrors(_oCollApprovalErrors);
+
             }
             catch (Exception ex)
             {
@@ -6361,109 +6391,109 @@ namespace KdsBatch
             }
         }
 
-        private bool CheckApproval(string sKodIshur)
-        {
-            bool bHaveIshur=false;
-            DataRow[] drApproval;
-            try{
-           drApproval= _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ")");
-           if (drApproval.Length > 0)
-               bHaveIshur = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return bHaveIshur;
-        }
+        //private bool CheckApproval(string sKodIshur)
+        //{
+        //    bool bHaveIshur=false;
+        //    DataRow[] drApproval;
+        //    try{
+        //   drApproval= _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ")");
+        //   if (drApproval.Length > 0)
+        //       bHaveIshur = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return bHaveIshur;
+        //}
 
-        private bool CheckApproval(string sKodIshur,int iMisparSidur,DateTime dShatHatchala)
-        {
-            bool bHaveIshur = false;
-            DataRow[] drApproval;
-            try{
-            drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
-            if (drApproval.Length > 0)
-                bHaveIshur = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return bHaveIshur;
-        }
+        //private bool CheckApproval(string sKodIshur,int iMisparSidur,DateTime dShatHatchala)
+        //{
+        //    bool bHaveIshur = false;
+        //    DataRow[] drApproval;
+        //    try{
+        //    drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
+        //    if (drApproval.Length > 0)
+        //        bHaveIshur = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return bHaveIshur;
+        //}
 
-        private bool CheckApproval(string sKodIshur, int iMisparSidur, DateTime dShatHatchala,int iMisparKnisa,DateTime dShatYetzia)
-        {
-            bool bHaveIshur = false;
-            DataRow[] drApproval;
-            try{
-            drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
-            if (drApproval.Length > 0)
-                bHaveIshur = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return bHaveIshur;
-        }
+        //private bool CheckApproval(string sKodIshur, int iMisparSidur, DateTime dShatHatchala,int iMisparKnisa,DateTime dShatYetzia)
+        //{
+        //    bool bHaveIshur = false;
+        //    DataRow[] drApproval;
+        //    try{
+        //    drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
+        //    if (drApproval.Length > 0)
+        //        bHaveIshur = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return bHaveIshur;
+        //}
 
-        private bool CheckApprovalToEmploee(int iMisparIshi, DateTime dTaarich, string sKodIshur, int iMisparSidur, DateTime dShatHatchala)
-        {
-            bool bHaveIshur = false;
-            DataRow[] drApproval;
-            //DataTable dtApproval;
-            try{
-            //dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dTaarich);
+        //private bool CheckApprovalToEmploee(int iMisparIshi, DateTime dTaarich, string sKodIshur, int iMisparSidur, DateTime dShatHatchala)
+        //{
+        //    bool bHaveIshur = false;
+        //    DataRow[] drApproval;
+        //    //DataTable dtApproval;
+        //    try{
+        //    //dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dTaarich);
        
-            drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
-            if (drApproval.Length > 0)
-                bHaveIshur = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return bHaveIshur;
-        }
+        //    drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
+        //    if (drApproval.Length > 0)
+        //        bHaveIshur = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return bHaveIshur;
+        //}
 
-        private bool CheckApprovalToEmploee(int iMisparIshi,DateTime dTaarich, string sKodIshur, int iMisparSidur, DateTime dShatHatchala,int iMisparKnisa,DateTime dShatYetzia)
-        {
-            bool bHaveIshur = false;
-            DataRow[] drApproval;
-            //DataTable dtApproval;
-            try{
-            //dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dTaarich);
+        //private bool CheckApprovalToEmploee(int iMisparIshi,DateTime dTaarich, string sKodIshur, int iMisparSidur, DateTime dShatHatchala,int iMisparKnisa,DateTime dShatYetzia)
+        //{
+        //    bool bHaveIshur = false;
+        //    DataRow[] drApproval;
+        //    //DataTable dtApproval;
+        //    try{
+        //    //dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dTaarich);
        
-            drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
-            if (drApproval.Length > 0)
-                bHaveIshur = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return bHaveIshur;
-        }
+        //    drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
+        //    if (drApproval.Length > 0)
+        //        bHaveIshur = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return bHaveIshur;
+        //}
 
-        private int CheckApprovalStatus(string sKodIshur, int iMisparSidur, DateTime dShatHatchala)
-        {
-            int iStatus=0;
-            DataRow[] drApproval;
-            try{
-            drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')", "RAMA DESC");
-            if (drApproval.Length > 0)
-            {
-                iStatus = int.Parse(drApproval[0]["kod_status_ishur"].ToString());
-            }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return iStatus;
-        }
+        //private int CheckApprovalStatus(string sKodIshur, int iMisparSidur, DateTime dShatHatchala)
+        //{
+        //    int iStatus=0;
+        //    DataRow[] drApproval;
+        //    try{
+        //    drApproval = _dtApproval.Select("KOD_ISHUR IN(" + sKodIshur + ") AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')", "RAMA DESC");
+        //    if (drApproval.Length > 0)
+        //    {
+        //        iStatus = int.Parse(drApproval[0]["kod_status_ishur"].ToString());
+        //    }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return iStatus;
+        //}
 
         private bool CheckIdkunRashemet(string sFieldToChange)
         {
@@ -6497,6 +6527,67 @@ namespace KdsBatch
             return bHaveIdkun;
         }
 
+        private void UpdateApprovalErrors(int iMisparSidur, DateTime dShatHatchala, DateTime dShatHatchalaNew)
+        {
+            DataRow[] drIdkunim;
+            OBJ_SHGIOT_MEUSHAROT ObjShgiotMeusharot;
+
+            try
+            {
+                drIdkunim = _dtApprovalError.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
+                for (int i = 0; i < drIdkunim.Length; i++)
+                {
+                    ObjShgiotMeusharot = FillApprovalErrors(drIdkunim[i]);
+                    ObjShgiotMeusharot.NEW_SHAT_HATCHALA = dShatHatchalaNew;
+                    drIdkunim[i]["SHAT_HATCHALA"] = dShatHatchalaNew;
+
+                    _oCollApprovalErrors.Add(ObjShgiotMeusharot);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void UpdateApprovalErrors(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew)
+        {
+            DataRow[] drIdkunim;
+            OBJ_SHGIOT_MEUSHAROT ObjShgiotMeusharot;
+
+            try
+            {
+                drIdkunim = _dtApprovalError.Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') AND MISPAR_KNISA=" + iMisparKnisa + " AND SHAT_YETZIA=Convert('" + dShatYetzia.ToString() + "', 'System.DateTime') ");
+                for (int i = 0; i < drIdkunim.Length; i++)
+                {
+                    ObjShgiotMeusharot = FillApprovalErrors(drIdkunim[i]);
+                    ObjShgiotMeusharot.NEW_SHAT_YETZIA = dShatYetziaNew;
+                    drIdkunim[i]["SHAT_YETZIA"] = dShatYetziaNew;
+
+                    _oCollApprovalErrors.Add(ObjShgiotMeusharot);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private OBJ_SHGIOT_MEUSHAROT FillApprovalErrors(DataRow drIdkun)
+        {
+            OBJ_SHGIOT_MEUSHAROT ObjShgiotMeusharot = new OBJ_SHGIOT_MEUSHAROT();
+            ObjShgiotMeusharot.MISPAR_ISHI = _iMisparIshi;
+            ObjShgiotMeusharot.MISPAR_SIDUR = int.Parse(drIdkun["MISPAR_SIDUR"].ToString());
+            ObjShgiotMeusharot.SHAT_HATCHALA = DateTime.Parse(drIdkun["SHAT_HATCHALA"].ToString());
+            ObjShgiotMeusharot.NEW_SHAT_HATCHALA = DateTime.Parse(drIdkun["SHAT_HATCHALA"].ToString()); ;
+            ObjShgiotMeusharot.TAARICH = _dCardDate;
+            ObjShgiotMeusharot.SHAT_YETZIA = DateTime.Parse(drIdkun["SHAT_YETZIA"].ToString());
+            ObjShgiotMeusharot.NEW_SHAT_YETZIA = DateTime.Parse(drIdkun["SHAT_YETZIA"].ToString());
+            ObjShgiotMeusharot.MISPAR_KNISA = int.Parse(drIdkun["MISPAR_KNISA"].ToString());
+            ObjShgiotMeusharot.KOD_SHGIA = int.Parse(drIdkun["KOD_SHGIA"].ToString());
+
+            return ObjShgiotMeusharot;
+        }
         private void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, DateTime dShatHatchalaNew)
         {
             DataRow[] drIdkunim;
@@ -6520,6 +6611,8 @@ namespace KdsBatch
             }
         }
 
+
+
         private OBJ_IDKUN_RASHEMET FillIdkunRashemet(DataRow drIdkun)
         {
             OBJ_IDKUN_RASHEMET ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
@@ -6537,6 +6630,8 @@ namespace KdsBatch
            
             return ObjIdkunRashemet;
         }
+
+
 
         private void UpdateIdkunRashemet(int iMisparSidur, DateTime dShatHatchala, int iMisparKnisa, DateTime dShatYetzia, DateTime dShatYetziaNew)
         {
@@ -7818,7 +7913,8 @@ namespace KdsBatch
                     }
                     //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
                     UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
-                                           
+                    UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
+                                          
                      oSidur.dFullShatHatchala = dShatHatchalaNew;
                     oSidur.sShatHatchala = dShatHatchalaNew.ToString("HH:mm");
                     oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = dShatHatchalaNew;
@@ -7965,7 +8061,9 @@ namespace KdsBatch
                                         {
                                             oObjPeilutOvdimUpd.NEW_SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(dZmanLekizuz);
                                             oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
-                                            UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA);        
+                                            UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA);
+                                            UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA);        
+                                            
                                             oPeilut.dFullShatYetzia = oObjPeilutOvdimUpd.NEW_SHAT_YETZIA;
                                         
                                         }
@@ -7985,6 +8083,8 @@ namespace KdsBatch
                                         oObjPeilutOvdimUpd.NEW_SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(dZmanLekizuz);
                                         oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
                                         UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA);
+                                        UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutOvdimUpd.NEW_SHAT_YETZIA);
+                                        
                                         oPeilut.dFullShatYetzia = oObjPeilutOvdimUpd.NEW_SHAT_YETZIA;
                                     }
                                     
@@ -8402,7 +8502,9 @@ namespace KdsBatch
                                             else
                                             {
                                                 oObjPeilutUpd.NEW_SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes((oNewSidurim.ShatHatchalaNew - oObjSidurimOvdimUpd.SHAT_HATCHALA).TotalMinutes);
-                                                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);    
+                                                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+                                                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);    
+                                                
                                                 oPeilut.dFullShatYetzia = oObjPeilutUpd.NEW_SHAT_YETZIA;
                                                   
                                             }
@@ -8413,6 +8515,7 @@ namespace KdsBatch
                                 }
                                 //UpdatePeiluyotMevutalotYadani(iCurSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
                                 UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
+                                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
                     
                                 oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                                 oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
@@ -8469,7 +8572,9 @@ namespace KdsBatch
                                             else
                                             {
                                                 oObjPeilutUpd.NEW_SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes(-(oObjSidurimOvdimUpd.SHAT_HATCHALA - prevSidur.dFullShatGmar).TotalMinutes);
-                                                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);           
+                                                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+                                                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);           
+                                               
                                                 oPeilut.dFullShatYetzia = oObjPeilutUpd.NEW_SHAT_YETZIA;
 
                                             }
@@ -8480,6 +8585,7 @@ namespace KdsBatch
                                 }
                                 //UpdatePeiluyotMevutalotYadani(iCurSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
                                 UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
+                                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
 
                                 oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                                 oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
@@ -9258,6 +9364,7 @@ namespace KdsBatch
                             }
                             //UpdatePeiluyotMevutalotYadani(i, oNewSidurim, oObjSidurimOvdimUpd);
                             UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
+                            UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
 
                              oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                             oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
@@ -9354,6 +9461,8 @@ namespace KdsBatch
                                     oObjPeilutUpd.NEW_SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(1);
                                     oObjPeilutUpd.UPDATE_OBJECT = 1;
                                     UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+                                    UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+                                   
                                     oPeilut.dFullShatYetzia = oObjPeilutUpd.NEW_SHAT_YETZIA;
                                 }
                                
@@ -9383,6 +9492,8 @@ namespace KdsBatch
                 //            oObjPeilutUpd.NEW_SHAT_YETZIA = oPeilut.dFullShatYetzia.AddMinutes(1);
                 //            oObjPeilutUpd.UPDATE_OBJECT = 1;
                 //            UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+                //            UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
+               
                 //            oPeilut.dFullShatYetzia = oObjPeilutUpd.NEW_SHAT_YETZIA;
                 //            oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
                 //            oSidurWithCancled.htPeilut[j] = oPeilut;
@@ -10286,6 +10397,7 @@ namespace KdsBatch
                                             }
                                             //UpdatePeiluyotMevutalotYadani(i,oNewSidurim, oObjSidurimOvdimUpd);
                                             UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
+                                            UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
                                             
                                             oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                                             oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
@@ -12944,8 +13056,8 @@ namespace KdsBatch
 
         public void Dispose()
         {
-            if (_dtApproval != null)
-                _dtApproval.Dispose();
+            //if (_dtApproval != null)
+            //    _dtApproval.Dispose();
             if (_dtDetails != null)
                 _dtDetails.Dispose();
             if (_dtErrors != null)
