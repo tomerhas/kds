@@ -357,7 +357,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             else
             {
                 //שינויי קלט
-                if ((!((hidExecInputChg)).Value.Equals("0")) && (!((hidExecInputChg)).Value.Equals("")))
+                if ((!((hidExecInputChg)).Value.Equals("0")))
                 {
                     bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
                     if (!bInpuDataResult)
