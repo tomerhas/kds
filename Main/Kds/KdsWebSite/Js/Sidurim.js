@@ -52,7 +52,7 @@ var MKT_ELEMENT = 5;
         xmlDoc.loadXML(result);
         root=xmlDoc.documentElement;
         var sMeafyen6='0';
-        var sMeafyen7='0';
+        var sMeafyen7='999';
         var bMeafyen6,bMeafyen7;
         var bExist=false;
         var oRId=sArrPrm[0]; 
@@ -169,7 +169,7 @@ var MKT_ELEMENT = 5;
                  document.getElementById(oRId).cells[_COL_NETZER].childNodes[0].nodeValue='לא';          
                  document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue='';                           
                  if ((bMeafyen6) || (bMeafyen7)){
-                    alert('יש להקליד ערך בתחום: ' + sMeafyen6 + "עד " + sMeafyen7);
+                    alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
                  }
              }
           }
@@ -196,8 +196,9 @@ var MKT_ELEMENT = 5;
         SidurTime = GetSidurTime(dStartHour,dEndHour);  
         args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));    
     }
-    function Test(val, args) { } 
+    function Test(val, args) { }
     function ChkOto(oRow) {
+        //var KeyID = event.keyCode; alert(KeyID);  
             oId = String(oRow.id).substr(0, oRow.id.length - 6);        
             var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;
             SetBtnChanges(); SetLvlChg(3);
@@ -454,7 +455,7 @@ var MKT_ELEMENT = 5;
                       iPDayToAdd = "0";
                       document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
                   }
-                  var utcShatYetiza = Date.UTC(dShatYetiza.getFullYear(), dShatYetiza.getMonth() + 1, dShatYetiza.getDate(), 0, 0, 0);
+                  utcShatYetiza = Date.UTC(dShatYetiza.getFullYear(), dShatYetiza.getMonth() + 1, dShatYetiza.getDate(), 0, 0, 0);
                   if (utcShatYetiza == utcCardDate) {
                       if (iPDayToAdd == 1)
                           dShatYetiza.setDate(dShatYetiza.getDate() + 1);
@@ -842,34 +843,34 @@ var MKT_ELEMENT = 5;
             return (sMisparSidur.substr(0, 2) == "99");
         else{ return false;}        
     }
-    function AddPeilut(iIndex) {
-        var iBitul = document.getElementById("lstSidurim_lblSidurCanceled".concat(iIndex)).value;        
-        if ((iBitul != "1") && (iBitul != "3")) {
-            if (bScreenChanged) {
-                $("#hidSave")[0].value = "1";
-                __doPostBack('btnConfirm', '');                    
-            }
-            var id = document.getElementById("txtId").value;
-            var CardDate = document.getElementById("clnDate").value;
-            var SidurDate =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-            var SidurHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
-            var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
-            if (SidurHour == '')
-                SidurDate = '01/01/0001';            
+//    function AddPeilut(iIndex) {
+//        var iBitul = document.getElementById("lstSidurim_lblSidurCanceled".concat(iIndex)).value;        
+//        if ((iBitul != "1") && (iBitul != "3")) {
+//            if (bScreenChanged) {
+//                $("#hidSave")[0].value = "1";
+//                __doPostBack('btnConfirm', '');                    
+//            }
+//            var id = document.getElementById("txtId").value;
+//            var CardDate = document.getElementById("clnDate").value;
+//            var SidurDate =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+//            var SidurHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
+//            var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+//            if (SidurHour == '')
+//                SidurDate = '01/01/0001';            
 
-            document.getElementById("divHourglass").style.display = 'block';
-            var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
-            var res = window.showModalDialog('HosafatPeiluyot.aspx' + sQuryString, window, "dialogwidth:900px;dialogheight:680px;dialogtop:130px;dialogleft:170px;status:no;resizable:yes;scroll:0;");
-            document.getElementById("divHourglass").style.display = 'none';
-            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {                
-                document.getElementById("hidExecInputChg").value = "1";
-                bScreenChanged = false;
-                RefreshBtn();
-                __doPostBack('btnRefreshOvedDetails', '');
-            }
-        }        
-        return res;
-    }
+//            document.getElementById("divHourglass").style.display = 'block';
+//            var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
+//            var res = window.showModalDialog('HosafatPeiluyot.aspx' + sQuryString, window, "dialogwidth:900px;dialogheight:680px;dialogtop:130px;dialogleft:170px;status:no;resizable:yes;scroll:0;");
+//            document.getElementById("divHourglass").style.display = 'none';
+//            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {                
+//                document.getElementById("hidExecInputChg").value = "1";
+//                bScreenChanged = false;
+//                RefreshBtn();
+//                __doPostBack('btnRefreshOvedDetails', '');
+//            }
+//        }        
+//        return res;
+//    }
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         if (document.getElementById(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgChecked') {
             if (bScreenChanged) {
@@ -918,7 +919,7 @@ var MKT_ELEMENT = 5;
     var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
     var SidurEHour = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value; 
     var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;         
-    var SidurDate;
+    
     SetDate(dPeilutDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");                        
     dPeilutDate.setDate(dPeilutDate.getDate() + Number(iSDayToAdd));                 
     var SidurId= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;       
@@ -943,7 +944,7 @@ var MKT_ELEMENT = 5;
         var lCarNum = document.getElementById(iPeilutIndex.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
         var sMakatDetails = GetMakatEnd(iPeilutIndex.id, lCarNum, iSidurIndex, iLastPeilut);
         var sMakatEnd = sMakatDetails.split(",")[0];
-        var lCarNum = sMakatDetails.split(",")[1];
+        lCarNum = sMakatDetails.split(",")[1];
         var sShatYetiza = document.getElementById(iPeilutIndex.id).cells[_COL_SHAT_YETIZA].childNodes[0].value;
         var sPeilutDate = document.getElementById(iPeilutIndex.id).cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate");
         var iMazanTichnun = document.getElementById(iPeilutIndex.id).cells[_COL_DEF_MINUTES].innerHTML;
@@ -1208,7 +1209,7 @@ var MKT_ELEMENT = 5;
         else {
             if (arrItems[0] == '3'){//שעת התחלה סידור
                 var _SHNew = document.getElementById("lstSidurim_txtSH".concat(arrItems[1]));
-                var sCardDate = document.getElementById("clnDate").value;
+                sCardDate = document.getElementById("clnDate").value;
                 var iSidurKey = document.getElementById("lstSidurim_lblSidur".concat(arrItems[1])).innerHTML;
                 _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
                 document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML = GetDateDDMMYYYY(dSdDate);            

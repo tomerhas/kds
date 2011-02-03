@@ -36,9 +36,9 @@
 var _COL_KISUY_TOR=<%=_COL_KISUY_TOR %>;var _COL_SHAT_YETIZA= <%=_COL_SHAT_YETIZA %>;var _COL_CAR_NUMBER= <%=_COL_CAR_NUMBER %>;var _COL_MAKAT= <%=_COL_MAKAT %>;var _COL_ACTUAL_MINUTES= <%=_COL_ACTUAL_MINUTES %>;var _COL_CANCEL= <%=_COL_CANCEL %>;var _COL_CANCEL_PEILUT = <%=_COL_CANCEL_PEILUT %>;var _COL_DEF_MINUTES= <%=_COL_DEF_MINUTES %>;var _COL_DAY_TO_ADD=<%=_COL_DAY_TO_ADD %>; var _COL_LINE_DESCRIPTION=<%=_COL_LINE_DESCRIPTION %>; var _COL_LINE=<%=_COL_LINE %>; var _COL_LINE_TYPE=<%=_COL_LINE_TYPE %>; var _COL_MAZAN_TASHLUM=<%=_COL_MAZAN_TASHLUM %>; var _COL_NETZER=<%=_COL_NETZER %>; var _COL_PEILUT_STATUS=<%=_COL_PEILUT_STATUS %>; var _COL_KNISA=<%=_COL_KNISA %>; var _COL_ADD_NESIA_REKA=<%=_COL_ADD_NESIA_REKA %>;
 
 function window.onload()
-{
+{    
     SetSidurimCollapseImg();
-    HasSidurHashlama(); 
+    HasSidurHashlama();  
 }
 </script>
 <script src="../../Js/Sidurim.js" type="text/javascript"></script>

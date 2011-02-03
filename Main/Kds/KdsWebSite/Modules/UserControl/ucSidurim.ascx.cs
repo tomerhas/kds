@@ -1264,7 +1264,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgCollapse.ID = "imgAddPeilut" + iIndex;
                 imgCollapse.ImageUrl = "~/images/plus.jpg";
                 //imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
-                imgCollapse.Attributes.Add("onclick", "hidErrChg.value='1'; MovePanel(" + iIndex + ");");
+                imgCollapse.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");                    
                 imgCollapse.Attributes.Add("SdrInd", iIndex.ToString());
                 imgCollapse.CausesValidation = false;
                 imgCollapse.Click += new ImageClickEventHandler(imgCollapse_Click);    
@@ -1633,12 +1633,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         //הוספת פעילות ריקה ל- HASHTABLE
         clSidur _Sidur = new clSidur(); 
-        clPeilut _Peilut = new clPeilut();       
-        //OrderedDictionary _hashSidurimPeiluyot;
+        clPeilut _Peilut = new clPeilut();               
         int iSidurNumber=0;
       
-        iSidurNumber = GetSidurNumber(iSidurIndex);
-        //_hashSidurimPeiluyot = (OrderedDictionary)Session["Sidurim"];
+        iSidurNumber = GetSidurNumber(iSidurIndex);        
         for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
         {
             _Sidur = (clSidur)(_DataSource[iIndex]);
@@ -1651,159 +1649,159 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
          ClearControl();
          BuildPage();
     }
-    private void UpdatePeilutDataTable(int iSidurIndex, ref DataTable dt, GridView _GridView)
-    {
-        DataRow drPeilutyot;
-        clSidur _Sidur;
-        clPeilut _Peilut;
-        DateTime dShatYetiza, dKisuyTor;
-        String sShatYetiza, sKisuyTor, sDayToAdd;
-        int iDayToAdd,iSidurNumber;
-        double dblKisuyTor;
-        TextBox oShatYetiza;
-        GridViewRow oGridRow;
-        clKavim _Kavim = new clKavim();
-        DataRow[] drLicenseNumber;
-        DateTime dNewSidurShatHatchala, dOldSidurShatHatchala;
-        TextBox oTxt;
-        Label oLbl;
-        HyperLink oHypLnk = new HyperLink();
-        try
-        {
-            try
-            {
-                oLbl = (Label)this.FindControl("lblSidur" + iSidurIndex);
-            }
-            catch (Exception ex)
-            {
-                oHypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex);
-                oLbl = null;
-            }
-            iSidurNumber = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
-            oTxt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
-            dOldSidurShatHatchala = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
-            if (oTxt.Text == string.Empty)
-                dNewSidurShatHatchala = DateTime.Parse("01/01/0001 00:00:00");
-            else
-            {//נבדוק אם השתנה התאריך
-                dNewSidurShatHatchala = GetSidurNewDate(iSidurNumber, oTxt.Text); 
-                dNewSidurShatHatchala = dNewSidurShatHatchala.AddSeconds(double.Parse(dOldSidurShatHatchala.Second.ToString().PadLeft(2, (char)48)));
-            }
+    //private void UpdatePeilutDataTable(int iSidurIndex, ref DataTable dt, GridView _GridView)
+    //{
+    //    DataRow drPeilutyot;
+    //    clSidur _Sidur;
+    //    clPeilut _Peilut;
+    //    DateTime dShatYetiza, dKisuyTor;
+    //    String sShatYetiza, sKisuyTor, sDayToAdd;
+    //    int iDayToAdd,iSidurNumber;
+    //    double dblKisuyTor;
+    //    TextBox oShatYetiza;
+    //    GridViewRow oGridRow;
+    //    clKavim _Kavim = new clKavim();
+    //    DataRow[] drLicenseNumber;
+    //    DateTime dNewSidurShatHatchala, dOldSidurShatHatchala;
+    //    TextBox oTxt;
+    //    Label oLbl;
+    //    HyperLink oHypLnk = new HyperLink();
+    //    try
+    //    {
+    //        try
+    //        {
+    //            oLbl = (Label)this.FindControl("lblSidur" + iSidurIndex);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            oHypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex);
+    //            oLbl = null;
+    //        }
+    //        iSidurNumber = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
+    //        oTxt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
+    //        dOldSidurShatHatchala = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
+    //        if (oTxt.Text == string.Empty)
+    //            dNewSidurShatHatchala = DateTime.Parse("01/01/0001 00:00:00");
+    //        else
+    //        {//נבדוק אם השתנה התאריך
+    //            dNewSidurShatHatchala = GetSidurNewDate(iSidurNumber, oTxt.Text); 
+    //            dNewSidurShatHatchala = dNewSidurShatHatchala.AddSeconds(double.Parse(dOldSidurShatHatchala.Second.ToString().PadLeft(2, (char)48)));
+    //        }
 
-            _Sidur = (clSidur)(_DataSource[iSidurIndex]);
-            for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
-            {
-                oGridRow = _GridView.Rows[iRowIndex];
-                _Peilut = (clPeilut)_Sidur.htPeilut[iRowIndex];
-                drPeilutyot = dt.NewRow();
+    //        _Sidur = (clSidur)(_DataSource[iSidurIndex]);
+    //        for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
+    //        {
+    //            oGridRow = _GridView.Rows[iRowIndex];
+    //            _Peilut = (clPeilut)_Sidur.htPeilut[iRowIndex];
+    //            drPeilutyot = dt.NewRow();
 
-                //הוספת נסיעה ריקה
-                drPeilutyot["Add_Nesia_reka"] = "1";
-                //מציין האם מותר לבטל פעילות
-                drPeilutyot["cancel_peilut_flag"] = _Peilut.iMisparKnisa == 0 ? 1 : _Peilut.bKnisaNeeded ? 1 : 0;
-                //כיסוי תור ושעת יציאה
-                sDayToAdd = ((TextBox)oGridRow.Cells[COL_DAY_TO_ADD].Controls[0]).Text;
-                iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
-                oShatYetiza = ((TextBox)oGridRow.Cells[COL_SHAT_YETIZA].Controls[0]);
-                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
-                sShatYetiza = oShatYetiza.Text;
-                if (dShatYetiza.Date.Year < clGeneral.cYearNull)
-                    if (oShatYetiza.Text != string.Empty)
-                    {
-                        if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
-                            oShatYetiza.Attributes["OrgDate"] = dNewSidurShatHatchala.ToShortDateString();
-                    }
-                    else //שעת יציאה ריקה
-                        sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
+    //            //הוספת נסיעה ריקה
+    //            drPeilutyot["Add_Nesia_reka"] = "1";
+    //            //מציין האם מותר לבטל פעילות
+    //            drPeilutyot["cancel_peilut_flag"] = _Peilut.iMisparKnisa == 0 ? 1 : _Peilut.bKnisaNeeded ? 1 : 0;
+    //            //כיסוי תור ושעת יציאה
+    //            sDayToAdd = ((TextBox)oGridRow.Cells[COL_DAY_TO_ADD].Controls[0]).Text;
+    //            iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
+    //            oShatYetiza = ((TextBox)oGridRow.Cells[COL_SHAT_YETIZA].Controls[0]);
+    //            dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
+    //            sShatYetiza = oShatYetiza.Text;
+    //            if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+    //                if (oShatYetiza.Text != string.Empty)
+    //                {
+    //                    if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
+    //                        oShatYetiza.Attributes["OrgDate"] = dNewSidurShatHatchala.ToShortDateString();
+    //                }
+    //                else //שעת יציאה ריקה
+    //                    sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
 
-                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"] + " " + sShatYetiza);
+    //            dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"] + " " + sShatYetiza);
 
-                if (dShatYetiza.Date == CardDate)
-                    dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
-                else
-                    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
-                    {
-                        if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
-                            dShatYetiza = dShatYetiza.AddDays(-1);
-                    }
-                sKisuyTor = ((TextBox)oGridRow.Cells[COL_KISUY_TOR].Controls[0]).Text;
-                if (sKisuyTor != string.Empty)
-                {
-                    dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
-                    dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
-                    if (dblKisuyTor < 0)
-                        dblKisuyTor = 1440 + dblKisuyTor;
-                }
-                else
-                    dblKisuyTor = 0;
+    //            if (dShatYetiza.Date == CardDate)
+    //                dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
+    //            else
+    //                if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+    //                {
+    //                    if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
+    //                        dShatYetiza = dShatYetiza.AddDays(-1);
+    //                }
+    //            sKisuyTor = ((TextBox)oGridRow.Cells[COL_KISUY_TOR].Controls[0]).Text;
+    //            if (sKisuyTor != string.Empty)
+    //            {
+    //                dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
+    //                dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
+    //                if (dblKisuyTor < 0)
+    //                    dblKisuyTor = 1440 + dblKisuyTor;
+    //            }
+    //            else
+    //                dblKisuyTor = 0;
 
-                drPeilutyot["Kisuy_Tor"] = dblKisuyTor;
-                drPeilutyot["Kisuy_Tor_map"] = _Peilut.iKisuyTorMap;
-                drPeilutyot["shat_yetzia"] = dShatYetiza;
-                drPeilutyot["oto_no"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text);
-                drPeilutyot["makat_nesia"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
-                drPeilutyot["dakot_bafoal"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
-                drPeilutyot["Makat_Description"] = oGridRow.Cells[_COL_LINE_DESCRIPTION].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_DESCRIPTION].Text;
-                drPeilutyot["makat_shilut"] = oGridRow.Cells[_COL_LINE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE].Text;
-                drPeilutyot["Shirut_type_Name"] = oGridRow.Cells[_COL_LINE_TYPE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_TYPE].Text; 
-                drPeilutyot["imut_netzer"] = oGridRow.Cells[_COL_NETZER].Text;
-                drPeilutyot["makat_type"] = _Kavim.GetMakatType(long.Parse(drPeilutyot["makat_nesia"].ToString()));
-                drPeilutyot["mazan_tichnun"] = oGridRow.Cells[_COL_DEF_MINUTES].Text;
-                drPeilutyot["mazan_tashlum"] = oGridRow.Cells[_COL_MAZAN_TASHLUM].Text;
-                drPeilutyot["knisa"] = oGridRow.Cells[_COL_KNISA].Text;
-                drPeilutyot["last_update"] = oGridRow.Cells[_COL_LAST_UPDATE].Text;
-                drPeilutyot["DayToAdd"] = ((TextBox)(oGridRow.Cells[_COL_DAY_TO_ADD].Controls[0])).Text;
-                drPeilutyot["bitul_o_hosafa"] = oGridRow.Cells[_COL_CANCEL_PEILUT].Text;               
-                drLicenseNumber = Mashar.Select("bus_number=" + drPeilutyot["oto_no"].ToString());
-                if (drLicenseNumber.Length > 0)                
-                    drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
+    //            drPeilutyot["Kisuy_Tor"] = dblKisuyTor;
+    //            drPeilutyot["Kisuy_Tor_map"] = _Peilut.iKisuyTorMap;
+    //            drPeilutyot["shat_yetzia"] = dShatYetiza;
+    //            drPeilutyot["oto_no"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text);
+    //            drPeilutyot["makat_nesia"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
+    //            drPeilutyot["dakot_bafoal"] = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
+    //            drPeilutyot["Makat_Description"] = oGridRow.Cells[_COL_LINE_DESCRIPTION].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_DESCRIPTION].Text;
+    //            drPeilutyot["makat_shilut"] = oGridRow.Cells[_COL_LINE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE].Text;
+    //            drPeilutyot["Shirut_type_Name"] = oGridRow.Cells[_COL_LINE_TYPE].Text == NBSP ? "" : oGridRow.Cells[_COL_LINE_TYPE].Text; 
+    //            drPeilutyot["imut_netzer"] = oGridRow.Cells[_COL_NETZER].Text;
+    //            drPeilutyot["makat_type"] = _Kavim.GetMakatType(long.Parse(drPeilutyot["makat_nesia"].ToString()));
+    //            drPeilutyot["mazan_tichnun"] = oGridRow.Cells[_COL_DEF_MINUTES].Text;
+    //            drPeilutyot["mazan_tashlum"] = oGridRow.Cells[_COL_MAZAN_TASHLUM].Text;
+    //            drPeilutyot["knisa"] = oGridRow.Cells[_COL_KNISA].Text;
+    //            drPeilutyot["last_update"] = oGridRow.Cells[_COL_LAST_UPDATE].Text;
+    //            drPeilutyot["DayToAdd"] = ((TextBox)(oGridRow.Cells[_COL_DAY_TO_ADD].Controls[0])).Text;
+    //            drPeilutyot["bitul_o_hosafa"] = oGridRow.Cells[_COL_CANCEL_PEILUT].Text;               
+    //            drLicenseNumber = Mashar.Select("bus_number=" + drPeilutyot["oto_no"].ToString());
+    //            if (drLicenseNumber.Length > 0)                
+    //                drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
                 
 
-                //drPeilutyot["PeilutStatus"] = e.Row.Cells[_COL_PEILUT_STATUS];   
-                dt.Rows.Add(drPeilutyot);
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex; //פעילויות            
-        }
-    }
-    private void BindNewDataTableToGrid(ref DataTable dt, GridView _GridView)
-    {
-        DataView dv = new DataView(dt);
-        _GridView.DataSource = dv;
-        _GridView.DataBind();
-    }
-    private void AddEmptyLineToDataTable(ref DataTable dt)
-    {
-        DataRow drPeilutyot;
+    //            //drPeilutyot["PeilutStatus"] = e.Row.Cells[_COL_PEILUT_STATUS];   
+    //            dt.Rows.Add(drPeilutyot);
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw ex; //פעילויות            
+    //    }
+    //}
+    //private void BindNewDataTableToGrid(ref DataTable dt, GridView _GridView)
+    //{
+    //    DataView dv = new DataView(dt);
+    //    _GridView.DataSource = dv;
+    //    _GridView.DataBind();
+    //}
+    //private void AddEmptyLineToDataTable(ref DataTable dt)
+    //{
+    //    DataRow drPeilutyot;
 
-        drPeilutyot = dt.NewRow();
+    //    drPeilutyot = dt.NewRow();
 
-        //מציין האם מותר לבטל פעילות
-        drPeilutyot["Add_Nesia_reka"] = "1";
-        drPeilutyot["cancel_peilut_flag"] = 0;
-        drPeilutyot["Kisuy_Tor"] = 0;
-        drPeilutyot["Kisuy_Tor_map"] = 0;
-        drPeilutyot["shat_yetzia"] = "00:00";
-        drPeilutyot["Makat_Description"] = "";
-        drPeilutyot["makat_shilut"] = "";
-        drPeilutyot["Shirut_type_Name"] = "";
-        drPeilutyot["oto_no"] = 0;
-        drPeilutyot["makat_nesia"] = 0;
-        drPeilutyot["dakot_bafoal"] = 0;
-        drPeilutyot["imut_netzer"] = "לא";
-        drPeilutyot["makat_type"] = 0;
-        drPeilutyot["mazan_tichnun"] = 0;
-        drPeilutyot["last_update"] = "";
-        drPeilutyot["mazan_tashlum"] = 0;
-        drPeilutyot["bitul_o_hosafa"] = 0;
-        drPeilutyot["knisa"] = "0,0,0,0";
-        drPeilutyot["DayToAdd"] = "0";
-        drPeilutyot["license_number"] = 0;
-        drPeilutyot["PeilutStatus"] = 0;// lstSidurim.enPeilutStatus.enValid.GetHashCode();
-        dt.Rows.Add(drPeilutyot);
-    }
+    //    //מציין האם מותר לבטל פעילות
+    //    drPeilutyot["Add_Nesia_reka"] = "1";
+    //    drPeilutyot["cancel_peilut_flag"] = 0;
+    //    drPeilutyot["Kisuy_Tor"] = 0;
+    //    drPeilutyot["Kisuy_Tor_map"] = 0;
+    //    drPeilutyot["shat_yetzia"] = "00:00";
+    //    drPeilutyot["Makat_Description"] = "";
+    //    drPeilutyot["makat_shilut"] = "";
+    //    drPeilutyot["Shirut_type_Name"] = "";
+    //    drPeilutyot["oto_no"] = 0;
+    //    drPeilutyot["makat_nesia"] = 0;
+    //    drPeilutyot["dakot_bafoal"] = 0;
+    //    drPeilutyot["imut_netzer"] = "לא";
+    //    drPeilutyot["makat_type"] = 0;
+    //    drPeilutyot["mazan_tichnun"] = 0;
+    //    drPeilutyot["last_update"] = "";
+    //    drPeilutyot["mazan_tashlum"] = 0;
+    //    drPeilutyot["bitul_o_hosafa"] = 0;
+    //    drPeilutyot["knisa"] = "0,0,0,0";
+    //    drPeilutyot["DayToAdd"] = "0";
+    //    drPeilutyot["license_number"] = 0;
+    //    drPeilutyot["PeilutStatus"] = 0;// lstSidurim.enPeilutStatus.enValid.GetHashCode();
+    //    dt.Rows.Add(drPeilutyot);
+    //}
     private DateTime GetSidurNewDate(int iSidurKey, string sSidurHour)
     {
         //מחזיר את  התארי המעודכן של הסידור

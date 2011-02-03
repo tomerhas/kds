@@ -357,13 +357,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             else
             {
                 //שינויי קלט
-                if ((!((hidExecInputChg)).Value.Equals("0")))
+                if (!(hidExecInputChg.Value.Equals("0")))
                 {
                     bInpuDataResult = oBatchManager.MainInputData(iMisparIshi, dDateCard);
                     if (!bInpuDataResult)
                         //שינויי קלט
                         bResult = false;
                 }
+                else { hidExecInputChg.Value = ""; }
                 if (bResult)
                 {
                     //שגויים
@@ -486,7 +487,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.dtPakadim = (DataTable)Session["Pakadim"];
                 }
                 else
-                {
+                {                    
+                    //UpdateHashTableWithGridChanges(OrderedDictionary)Session["Sidurim"]);
                     lstSidurim.CardDate = dDateCard;
                     lstSidurim.DataSource = (OrderedDictionary)Session["Sidurim"];                                       
                     lstSidurim.Mashar = (DataTable)Session["Mashar"];
@@ -983,10 +985,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         //Check if oved musach
         //Get Employee Ishurim
-        ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(dDateCard, iMisparIshi, 0, clWorkCard.IsOvedMusach(iMisparIshi, dDateCard));
-
-        arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dDateCard);
-        oBatchManager.InitGeneralData();
+        
+        if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))
+        {
+            ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(dDateCard, iMisparIshi, 0, clWorkCard.IsOvedMusach(iMisparIshi, dDateCard));
+            arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dDateCard);
+            Session["EmployeeApproval"] = arrEmployeeApproval;
+        }
+        else
+        {
+            arrEmployeeApproval = (ApprovalRequest[])Session["EmployeeApproval"];
+        }
+       // oBatchManager.InitGeneralData();
+        
     }
     private void SetEmployeeCardData()
     {
@@ -2649,7 +2660,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             }
         }
     }
-    private void FillPeilutUDT(bool bUpdate,
+    private void FillPeilutUDT(bool bUpdate,int iCancelSidur,
                                DateTime dOldSidurShatHatchala, 
                                DateTime dNewSidurShatHatchala, 
                                ref clSidur oSidur,
@@ -2664,6 +2675,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         DateTime dShatYetiza, dKisuyTor;
         Double dblKisuyTor;
         string[] arrKnisaVal;
+        int iCancelPeilut = 0;
 
         oShatYetiza = ((TextBox)oGridRow.Cells[lstSidurim.COL_SHAT_YETIZA].Controls[0]);
         sDayToAdd = ((TextBox)oGridRow.Cells[lstSidurim.COL_DAY_TO_ADD].Controls[0]).Text;
@@ -2724,88 +2736,96 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjPeluyotOvdim.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjPeluyotOvdim.TAARICH_IDKUN_ACHARON = DateTime.Now;
         }
+        if (bUpdate)
+        {
+            iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
+            oObjPeluyotOvdim.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : oPeilut.iBitulOHosafa);
+        }
+        else
+            oObjPeluyotOvdim.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
+
         oObjPeluyotOvdim.UPDATE_OBJECT = 1;
     }
-
-    private void UpdateHashTableWithGridChanges(ref GridView oGridView, ref OrderedDictionary htSidurimPeilut)
+    private void UpdateHashTableWithGridChanges(ref OrderedDictionary htEmployeeDetails)
     {
-        //GridViewRow oGridRow;
-        //int iDayToAdd, iMisparKnisa;
-        //string sDayToAdd, sShatYetiza, sKisuyTor;
-        //TextBox oShatYetiza;
-        //DateTime dShatYetiza, dKisuyTor;
-        //Double dblKisuyTor;
-        //string[] arrKnisaVal;
-        //try
-        //{
-        //    //פעילויות
-        //    for (int iRowIndex = 0; iRowIndex < oGridView.Rows.Count; iRowIndex++)
-        //    {                                              
-        //        oShatYetiza = ((TextBox)oGridRow.Cells[lstSidurim.COL_SHAT_YETIZA].Controls[0]);
-        //        sDayToAdd = ((TextBox)oGridRow.Cells[lstSidurim.COL_DAY_TO_ADD].Controls[0]).Text;
-        //        iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
+        //GridView oGridView;
+        //oGridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+        //UpdateHashTablePeiltoyWithGridChanges(iSidurIndex, ref oGridView, ref htEmployeeDetails);
+    }
+    
+    private void UpdateHashTablePeiltoyWithGridChanges(int iSidurIndex, ref GridView oGridView, ref OrderedDictionary htEmployeeDetails)
+    {
+        GridViewRow oGridRow;
+        int iDayToAdd, iMisparKnisa;
+        string sDayToAdd, sShatYetiza, sKisuyTor;
+        TextBox oShatYetiza;
+        DateTime dShatYetiza, dKisuyTor;
+        Double dblKisuyTor;
+        string[] arrKnisaVal;
+        clPeilut _Peilut;
+        clSidur _Sidur;
+        try
+        {
+            _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+            //פעילויות
+            for (int iRowIndex = 0; iRowIndex < oGridView.Rows.Count; iRowIndex++)
+            {
+                _Peilut = (clPeilut)_Sidur.htPeilut[iRowIndex];
+                oGridRow = oGridView.Rows[iRowIndex];
+                oShatYetiza = ((TextBox)oGridRow.Cells[lstSidurim.COL_SHAT_YETIZA].Controls[0]);
+                sDayToAdd = ((TextBox)oGridRow.Cells[lstSidurim.COL_DAY_TO_ADD].Controls[0]).Text;
+                iDayToAdd = String.IsNullOrEmpty(sDayToAdd) ? 0 : int.Parse(sDayToAdd);
+                
+                _Peilut.dCardDate = dDateCard;
+                _Peilut.iPeilutMisparSidur = _Sidur.iMisparSidur;                
 
-        //        oObjPeluyotOvdim.MISPAR_ISHI = iMisparIshi;
-        //        oObjPeluyotOvdim.TAARICH = dDateCard;
-        //        oObjPeluyotOvdim.MISPAR_SIDUR = oSidur.iMisparSidur;
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
+                sShatYetiza = oShatYetiza.Text;
+                if (dShatYetiza.Date.Year < clGeneral.cYearNull)
+                    if (oShatYetiza.Text != string.Empty)
+                    {
+                        if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
+                            oShatYetiza.Attributes["OrgDate"] = _Sidur.dFullShatHatchala.ToShortDateString();
+                    }
+                    else //שעת יציאה ריקה
+                        sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
 
-        //        oObjPeluyotOvdim.SHAT_HATCHALA_SIDUR = bUpdate ? dOldSidurShatHatchala : dNewSidurShatHatchala;
-        //        oObjPeluyotOvdim.NEW_SHAT_HATCHALA_SIDUR = dNewSidurShatHatchala;
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"] + " " + sShatYetiza);
 
-        //        dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
-        //        sShatYetiza = oShatYetiza.Text;
-        //        if (dShatYetiza.Date.Year < clGeneral.cYearNull)
-        //            if (oShatYetiza.Text != string.Empty)
-        //            {
-        //                if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
-        //                    oShatYetiza.Attributes["OrgDate"] = dNewSidurShatHatchala.ToShortDateString();
-        //            }
-        //            else //שעת יציאה ריקה
-        //                sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
+                if (dShatYetiza.Date == dDateCard.Date)
+                    dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
+                else
+                    if (dShatYetiza.Date.Year > clGeneral.cYearNull)
+                    {
+                        if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
+                            dShatYetiza = dShatYetiza.AddDays(-1);
+                    }
+                sKisuyTor = ((TextBox)oGridRow.Cells[lstSidurim.COL_KISUY_TOR].Controls[0]).Text;
+                if (sKisuyTor != string.Empty)
+                {
+                    dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
+                    dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
+                    if (dblKisuyTor < 0)
+                        dblKisuyTor = 1440 + dblKisuyTor;
+                }
+                else
+                    dblKisuyTor = 0;
 
-        //        dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"] + " " + sShatYetiza);
-
-        //        if (dShatYetiza.Date == dDateCard.Date)
-        //            dShatYetiza = dShatYetiza.AddDays(iDayToAdd);
-        //        else
-        //            if (dShatYetiza.Date.Year > clGeneral.cYearNull)
-        //            {
-        //                if (iDayToAdd == 0) //נוריד יום- iDayToAdd=0 אם תאריך היציאה שונה מתאריך הכרטיס, כלומר הוא של היום הבא ורוצים לשנות ליום נוכחי
-        //                    dShatYetiza = dShatYetiza.AddDays(-1);
-        //            }
-        //        sKisuyTor = ((TextBox)oGridRow.Cells[lstSidurim.COL_KISUY_TOR].Controls[0]).Text;
-        //        if (sKisuyTor != string.Empty)
-        //        {
-        //            dKisuyTor = DateTime.Parse(dShatYetiza.ToShortDateString() + " " + sKisuyTor);
-        //            dblKisuyTor = (dShatYetiza - dKisuyTor).TotalMinutes;
-        //            if (dblKisuyTor < 0)
-        //                dblKisuyTor = 1440 + dblKisuyTor;
-        //        }
-        //        else
-        //            dblKisuyTor = 0;
-
-        //        oObjPeluyotOvdim.KISUY_TOR = (int)(dblKisuyTor);
-        //        oObjPeluyotOvdim.NEW_SHAT_YETZIA = dShatYetiza;
-        //        oObjPeluyotOvdim.SHAT_YETZIA =  dShatYetiza;
-        //        oObjPeluyotOvdim.OTO_NO = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CAR_NUMBER].Controls[0]).Text);
-        //        oObjPeluyotOvdim.MAKAT_NESIA = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]).Text);
-        //        oObjPeluyotOvdim.DAKOT_BAFOAL = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_ACTUAL_MINUTES].Controls[0]).Text);
-        //        arrKnisaVal = oGridRow.Cells[lstSidurim.COL_KNISA].Text.Split(",".ToCharArray());
-        //        iMisparKnisa = int.Parse(arrKnisaVal[0]);
-        //        oObjPeluyotOvdim.MISPAR_KNISA = iMisparKnisa;
-        //        //נבדוק אם נעשה שינוי באחת משדות הפעילות
-        //        oObjPeluyotOvdim.TAARICH_IDKUN_ACHARON = oPeilut.dCardLastUpdate;
-        //        if (PeilutHasChanged(oPeilut, oGridRow))//נבדוק אם נעשה שינוי באחת משדות הפעילות                  
-        //        {
-        //            oObjPeluyotOvdim.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-        //            oObjPeluyotOvdim.TAARICH_IDKUN_ACHARON = DateTime.Now;
-        //        }                                 
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    throw ex;
-        //}
+                _Peilut.iKisuyTor = (int)(dblKisuyTor);
+                _Peilut.dFullShatYetzia = dShatYetiza;
+                _Peilut.sShatYetzia = oShatYetiza.Text;
+                _Peilut.lMisparSiduriOto = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CAR_NUMBER].Controls[0]).Text);
+                _Peilut.lMakatNesia  = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]).Text);
+                _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[lstSidurim.COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_ACTUAL_MINUTES].Controls[0]).Text);
+                arrKnisaVal = oGridRow.Cells[lstSidurim.COL_KNISA].Text.Split(",".ToCharArray());
+                iMisparKnisa = int.Parse(arrKnisaVal[0]);
+                _Peilut.iMisparKnisa = iMisparKnisa;                              
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }   
     private bool FillPeiluyotChanges(int iSidurIndex, int iCancelSidur, DateTime dOldSidurShatHatchala,
                                      DateTime dNewSidurShatHatchala, ref COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd,
@@ -2827,7 +2847,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //string[] arrKnisaVal;
         //string sShatYetiza = "";
         
-        int iCancelPeilut = 0;
+       
         OBJ_PEILUT_OVDIM oObjPeilyutOvdimDel;
         try
         {
@@ -2840,16 +2860,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 {
                     //פעילות חדשה
                     oObjPeiluyotOvdim = new OBJ_PEILUT_OVDIM();
-                    FillPeilutUDT(false, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
+                    FillPeilutUDT(false, iCancelSidur, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
                     oCollPeluyotOvdimIns.Add(oObjPeiluyotOvdim);
                 }
                 else
                 {
                     //פעילות קיימת
                     oObjPeiluyotOvdim = new OBJ_PEILUT_OVDIM();
-                    FillPeilutUDT(true, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
-                    iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
-                    oObjPeiluyotOvdim.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : _Peilut.iBitulOHosafa);
+                    FillPeilutUDT(true,iCancelSidur, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
                     
                     //אם פעילות בוטלה או סידור של הפעילות בוטל, נמחוק את הפעילות מטבלת פעילויות
                     if (oObjPeiluyotOvdim.BITUL_O_HOSAFA == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())

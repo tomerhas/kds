@@ -177,6 +177,8 @@ public class wsGeneral : System.Web.Services.WebService
                             sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));
                             // }
                         }
+                        else
+                            sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
                         dr = dtElement.Select("kod_meafyen=" + 40);
                         if (dr.Length > 0)
                         {
@@ -202,13 +204,13 @@ public class wsGeneral : System.Web.Services.WebService
                         if (dr.Length > 0)
                             if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
                                 if (lElementValue < long.Parse(dr[0]["erech"].ToString()))
-                                    sXML.Append(string.Concat("<MEAFYEN6ERR>", lElementValue.ToString(), "</MEAFYEN6ERR>"));
+                                    sXML.Append(string.Concat("<MEAFYEN6ERR>", long.Parse(dr[0]["erech"].ToString()), "</MEAFYEN6ERR>"));
 
                         dr = dtElement.Select("kod_meafyen=" + 7);
                         if (dr.Length > 0)
                             if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
                                 if (lElementValue > long.Parse(dr[0]["erech"].ToString()))
-                                    sXML.Append(string.Concat("<MEAFYEN7ERR>", lElementValue.ToString(), "</MEAFYEN7ERR>"));
+                                    sXML.Append(string.Concat("<MEAFYEN7ERR>", long.Parse(dr[0]["erech"].ToString()), "</MEAFYEN7ERR>"));
 
                     }
                     else
@@ -228,18 +230,28 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                       
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));                        
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                        
                         //sXML.Append(string.Concat("<HYPER_LINK>", "a onclick='AddHosafatKnisot(0,lstSidurim_000_ctl03);' style='text-decoration:underline;cursor:pointer;'>" + dtMakat.Rows[0]["description"].ToString(), "</HYPER_LINK>"));
                        
+                        if (!sShatYetiza.Equals(""))
+                            dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
 
-                        dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
-                        if (dActivityDate.ToShortTimeString().Equals(sShatYetiza)){
+                        if ((dActivityDate.ToShortTimeString().Equals(sShatYetiza)))
+                        {
                             sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                             sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
-                            }
+                        }
                         else
                         {
-                            sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
-                            sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "1", "</KISUY_TOR_ENABLED>"));
+                            if (sShatYetiza.Equals(""))                            
+                                sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                            else
+                                sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
+
+                            if (int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()).Equals(0))
+                                sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
+                            else
+                                 sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "1", "</KISUY_TOR_ENABLED>"));
                         }
 
                         sXML.Append(string.Concat("<KISUY_TOR_MAP>", dtMakat.Rows[0]["kisuitor"].ToString(), "</KISUY_TOR_MAP>"));
@@ -503,7 +515,7 @@ public class wsGeneral : System.Web.Services.WebService
         DataTable dt;
         clOvdim oOvdim = new clOvdim();
         string sOvdimNumber = "";
-        string sSelect, ezor, snif, maamad;
+        string sSelect;//, ezor, snif, maamad;
         string[] pirteySinun;
         DataRow[] drOvdimNumber;
         try
