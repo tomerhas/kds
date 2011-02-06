@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ShowHeavyReportsList.aspx.cs" Inherits="Modules_Reports_ShowHeavyReportsList" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
@@ -9,12 +11,12 @@
         <%-- <iframe height="700px" width="100%">--%>
          <div id="divNetunim" runat="server"  style="text-align:right;">
              <br /> 
-             <div runat="server" ID="pnlgrdRequest" style="Height:460px;Width:978px;overflow:auto;direction:ltr;">
-                <asp:GridView ID="grdRequest" runat="server"  GridLines="None"  ShowHeader="true"
-                       CssClass="Grid"   AllowPaging="false" AutoGenerateColumns="false"   AllowSorting="true"
+             <div runat="server" ID="pnlgrdReports" style="Height:460px;Width:978px;overflow:auto;direction:ltr;">
+                <asp:GridView ID="grdReports" runat="server"  GridLines="None"  ShowHeader="true"
+                       CssClass="Grid"   AllowPaging="true" PageSize="11" AutoGenerateColumns="false"   AllowSorting="true"
                        Width="945px"   EmptyDataText="לא נמצאו נתונים!" 
                      EmptyDataRowStyle-CssClass="GridHeader"
-                     onrowdatabound="grdRequest_RowDataBound">
+                     onrowdatabound="grdReports_RowDataBound" >
                     <Columns>
                          <asp:BoundField DataField="BAKASHA_ID"    HeaderText="מספר בקשה"  ItemStyle-Width="50px" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" />
                          <asp:BoundField DataField="TEUR"          HeaderText="תאור"       ItemStyle-Width="430px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
@@ -29,6 +31,9 @@
                              </ItemTemplate>           
                          </asp:TemplateField>  
                       </Columns> 
+                      <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>
                     <AlternatingRowStyle CssClass="GridAltRow"  />
                         <RowStyle CssClass="GridRow"   />
                         <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
