@@ -75,80 +75,77 @@ var MKT_ELEMENT = 5;
                 }
             }
         }
-        if (root!=null)
-        {                
-          if (root.childNodes.length>0)
-          {
-             var _FirstChild = root.firstChild;
-             while ((_FirstChild!=null) && (!bExist))
-             {
-                switch (_FirstChild.nodeName){                
-                     case "KISUY_TOR":
-                          document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;                                              
-                          break;
-                     case "KISUY_TOR_ENABLED":
-                          document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled =(_FirstChild.text=="0");
-                          break;
-                      case "KISUY_TOR_MAP":
-                           document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].setAttribute("OldTorMapV", _FirstChild.text);
-                           break;
-                     case "DESC":
-                          if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue==null)
-                            document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue=_FirstChild.text;
-                           else
-                            document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue=_FirstChild.text;
-                          break;
-                     case "SHILUT":
-                           document.getElementById(oRId).cells[_COL_LINE].childNodes[0].nodeValue= _FirstChild.text;
-                           break;
-                     case "SHILUT_NAME":      
-                           document.getElementById(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue= _FirstChild.text;
-                           break;
-                       case "MAZAN_TASHLUM":
-                           document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text; 
-                           break;
-                     case "DAKOT_DEF":
-                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;                          
-                           break;
-                       case "DAKOT_DEF_TITLE":
-                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;                          
-                           break;
-                       case "DAKOT_BAFOAL":
-                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
-                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
-                           break;
-                     case "DAKOT_BAFOAL_ENABLED":
-                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled=(_FirstChild.text=="0");  
-                           break;
-                     case "OTO_NO":
-                           document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value="";
-                           break;      
-                     case "OTO_NO_ENABLED":
-                           document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
-                           if (_FirstChild.text == "1")
-                               document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
-                           break;
-                     case "OTO_NO_TITEL":
-                           document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title=_FirstChild.text;
-                           break;
-                     case "SHAT_YETIZA":
-                           document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value="";
-                           break;      
-                     case "SHAT_YETIZA_ENABLED":
-                           document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled=(_FirstChild.text=="0");
-                           break;
-                       case "MAKAT_NOT_EXIST":
-                           document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
-                           document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].select();
-                           bExist = true;
-                           alert("אלמנט לא קיים");
-                           break;
-                     case "MEAFYEN6ERR":
-                            sMeafyen6=_FirstChild.text;
+        if (root != null) {
+            if (root.childNodes.length > 0) {
+                var _FirstChild = root.firstChild;
+                while ((_FirstChild != null) && (!bExist)) {
+                    switch (_FirstChild.nodeName) {
+                        case "KISUY_TOR":
+                            document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
+                            break;
+                        case "KISUY_TOR_ENABLED":
+                            document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled = (_FirstChild.text == "0");
+                            break;
+                        case "KISUY_TOR_MAP":
+                            document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].setAttribute("OldTorMapV", _FirstChild.text);
+                            break;
+                        case "DESC":
+                            if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue = _FirstChild.text;
+                            else
+                                document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue = _FirstChild.text;
+                            break;
+                        case "SHILUT":
+                            document.getElementById(oRId).cells[_COL_LINE].childNodes[0].nodeValue = _FirstChild.text;
+                            break;
+                        case "SHILUT_NAME":
+                            document.getElementById(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue = _FirstChild.text;
+                            break;
+                        case "MAZAN_TASHLUM":
+                            document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text;
+                            break;
+                        case "DAKOT_DEF":
+                            document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;
+                            break;
+                        case "DAKOT_DEF_TITLE":
+                            document.getElementById(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;
+                            break;
+                        case "DAKOT_BAFOAL":
+                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
+                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
+                            break;
+                        case "DAKOT_BAFOAL_ENABLED":
+                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled = (_FirstChild.text == "0");
+                            break;
+                        case "OTO_NO":
+                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
+                            break;
+                        case "OTO_NO_ENABLED":
+                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                            if (_FirstChild.text == "1")
+                                document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
+                            break;
+                        case "OTO_NO_TITEL":
+                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
+                            break;
+                        case "SHAT_YETIZA":
+                            document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
+                            break;
+                        case "SHAT_YETIZA_ENABLED":
+                            document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled = (_FirstChild.text == "0");
+                            break;
+                        case "MAKAT_NOT_EXIST":
+                            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+                            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].select();
+                            bExist = true;
+                            alert("אלמנט לא קיים");
+                            break;
+                        case "MEAFYEN6ERR":
+                            sMeafyen6 = _FirstChild.text;
                             bMeafyen6 = true;
                             break;
-                     case "MEAFYEN7ERR":
-                            sMeafyen7=_FirstChild.text;
+                        case "MEAFYEN7ERR":
+                            sMeafyen7 = _FirstChild.text;
                             bMeafyen7 = true;
                             break;
                         case "HYPER_LINK":
@@ -167,23 +164,26 @@ var MKT_ELEMENT = 5;
                                             document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue;
                                 }
                             break;
+                    }
+                    _FirstChild = _FirstChild.nextSibling;
                 }
-                _FirstChild = _FirstChild.nextSibling;                
-             }      
-             if ((!bExist)){                  
-                 document.getElementById(oRId).cells[_COL_NETZER].childNodes[0].nodeValue='לא';          
-                 document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue='';                           
-                 if ((bMeafyen6) || (bMeafyen7)){
-                    alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
-                 }
-             }
-          }
-          else{          
-            var sBehaviorId='vldMakatNumBeh'.concat(oRId);
-            $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);
-          }
-       } 
+                if ((!bExist)) {
+                    document.getElementById(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
+                    document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
+                    if ((bMeafyen6) || (bMeafyen7)) {
+                        alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
+                    }
+                }
+            }
+            else {
+                var sBehaviorId = 'vldMakatNumBeh'.concat(oRId);
+                $find(sBehaviorId)._ensureCallout();
+                $find(sBehaviorId).show(true);
+            }
+        } else {
+            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+            alert('מספר מק"ט לא תקין');
+            } 
      }                                        
     function chkHashlama(val,args){
         var id = val.getAttribute("index");   
@@ -570,11 +570,13 @@ var MKT_ELEMENT = 5;
     function ChkShatYetizaKisuyT(iIndx)    
     {
         var sMapKisuyTor = document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].getAttribute("OldTorMapV");
-        var sGrdKisuyTor = document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value;
-       if (sGrdKisuyTor!='')
-       {
-           var sShatYetiza = document.getElementById(iIndx).cells[_COL_SHAT_YETIZA].childNodes[0].value;   
-           
+  //      var sGrdKisuyTor = document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value;
+        if (Number(sMapKisuyTor) == 0) {
+            return '';
+        }
+        else
+//       {
+           var sShatYetiza = document.getElementById(iIndx).cells[_COL_SHAT_YETIZA].childNodes[0].value;              
            if ((sShatYetiza=='') || (sShatYetiza=='__:__')){
                document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value = '';
            }
@@ -585,11 +587,6 @@ var MKT_ELEMENT = 5;
                dOrgMapKisuyTor.setMinutes(dOrgMapKisuyTor.getMinutes()- Number(sMapKisuyTor));
                document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value = dOrgMapKisuyTor.toLocaleTimeString().substr(0, 5);               
            }     
-       }      
-       else
-       {
-       return '';
-       }
   }
   function changeStartHour(iIndex) {
       document.getElementById("lstSidurim_hidCurrIndx").value = "3|" + iIndex;

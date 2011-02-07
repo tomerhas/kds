@@ -1826,12 +1826,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    private int GetSidurNumber(int iSidurIndex)
+    private int GetSidurKey(int iSidurIndex, ref DateTime dSidurShatHatchala)
     {   GridView _GridView;
         int iSidurNumber=0;
         Label _Lbl;
-        HyperLink _HypLnk = new HyperLink();
-
+        TextBox oTxt;
+        HyperLink _HypLnk = new HyperLink();       
         if (_DataSource != null)
         {
             //נוציא את מספר הסידור
@@ -1848,6 +1848,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     _Lbl = null;
                 }
                 iSidurNumber = (_Lbl == null ? int.Parse(_HypLnk.Text) : int.Parse(_Lbl.Text));
+                oTxt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
+                _Lbl = (Label)this.FindControl("lblDate" + iSidurIndex);
+                dSidurShatHatchala = DateTime.Parse(_Lbl.Text + " " + oTxt.Text);                
             }
         }
         return iSidurNumber;
@@ -1858,12 +1861,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         clSidur _Sidur = new clSidur(); 
         clPeilut _Peilut = new clPeilut();               
         int iSidurNumber=0;
-      
-        iSidurNumber = GetSidurNumber(iSidurIndex);        
+        DateTime dSidurShatHatchala= new DateTime();
+
+        iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);        
         for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
         {
             _Sidur = (clSidur)(_DataSource[iIndex]);
-           if (_Sidur.iMisparSidur.Equals(iSidurNumber))
+            if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)))
                     break;
         }
          _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
