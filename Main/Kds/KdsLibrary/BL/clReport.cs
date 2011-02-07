@@ -228,7 +228,7 @@ namespace KdsLibrary.BL
             }
         
         }
-
+            
         public DataTable getDefinitionReports(long BakashaId)
         {
             DataTable dt = new DataTable();
@@ -248,7 +248,24 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable getDetailsReports(long BakashaId )
+        public DataTable getDetailsReport(int KodReport)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+
+                dal.AddParameter("p_kodReport", ParameterType.ntOracleInt64, KodReport, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetDetailsReport, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public DataTable getDetailsReports(long BakashaId)
         {
             DataTable dt = new DataTable();
             try
