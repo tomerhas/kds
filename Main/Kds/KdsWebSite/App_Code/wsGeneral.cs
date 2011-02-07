@@ -222,6 +222,7 @@ public class wsGeneral : System.Web.Services.WebService
                 switch (oMakatType)
                 {
                     case clKavim.enMakatType.mKavShirut:
+                        sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "1", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<SHILUT>", dtMakat.Rows[0]["shilut"].ToString(), "</SHILUT>"));
                         sXML.Append(string.Concat("<SHILUT_NAME>", dtMakat.Rows[0]["sugshirutname"].ToString(), "</SHILUT_NAME>"));
@@ -230,7 +231,8 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                       
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));                        
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
-                        
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
+                       
                         //sXML.Append(string.Concat("<HYPER_LINK>", "a onclick='AddHosafatKnisot(0,lstSidurim_000_ctl03);' style='text-decoration:underline;cursor:pointer;'>" + dtMakat.Rows[0]["description"].ToString(), "</HYPER_LINK>"));
                        
                         if (!sShatYetiza.Equals(""))
@@ -259,22 +261,28 @@ public class wsGeneral : System.Web.Services.WebService
                         break;
                     case clKavim.enMakatType.mNamak:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
-                        dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
+                        if (!sShatYetiza.Equals(""))
+                            dActivityDate = dActivityDate.AddMinutes(-int.Parse(dtMakat.Rows[0]["kisuitor"].ToString()));
+
                         if (dtMakat.Rows[0]["kisuitor"].ToString().Equals("0")){
                              sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                              sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         }
                         else{
-                             sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
+                             if (sShatYetiza.Equals("")) 
+                                sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
+                             else
+                                 sXML.Append(string.Concat("<KISUY_TOR>", dActivityDate.ToShortTimeString(), "</KISUY_TOR>"));
+
                              sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "1", "</KISUY_TOR_ENABLED>"));
                         }
+                        sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<KISUY_TOR_MAP>", dtMakat.Rows[0]["kisuitor"].ToString(), "</KISUY_TOR_MAP>"));
                         sXML.Append(string.Concat("<SHILUT>", dtMakat.Rows[0]["shilut"].ToString(), "</SHILUT>"));
                         sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_NAMAK, "</SHILUT_NAME>"));
                         sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
                         sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
-                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
-                       
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                        
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ","</DAKOT_DEF_TITLE>")) ;
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
@@ -295,6 +303,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "", "</DAKOT_DEF_TITLE>"));
                         break;
                     case clKavim.enMakatType.mEmpty:
+                        sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                         sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
@@ -302,18 +311,20 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                         sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["description"].ToString(), "</DESC>"));
                         sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
-                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
+                        sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));                        
                         sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
                         break;
                     case clKavim.enMakatType.mVisa:
+                        sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
                         sXML.Append(string.Concat("<KISUY_TOR>", "", "</KISUY_TOR>"));
                         sXML.Append(string.Concat("<SHILUT>", "", "</SHILUT>"));
                         sXML.Append(string.Concat("<DESC>", dtMakat.Rows[0]["teur_visut"].ToString(), "</DESC>"));
                         sXML.Append(string.Concat("<DAKOT_DEF>", dtMakat.Rows[0]["mazantichnun"].ToString(), "</DAKOT_DEF>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</DAKOT_BAFOAL>"));
+                        
                         sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         //sXML.Append(string.Concat("<SHILUT_NAME>", COL_TRIP_VISUT, "</SHILUT_NAME>"));
@@ -1008,8 +1019,8 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
-    [WebMethod]
-    public string CheckMakat(long lNewMakat, long lOldMakat, string sTravelDate, string sShatYetiza, string sDayToAdd)
+    [WebMethod(EnableSession = true)]
+    public string CheckMakat(int iSidurIndex, int iPeilutIndex, long lNewMakat, long lOldMakat, string sTravelDate, string sShatYetiza, string sDayToAdd)
     {
         clKavim oKavim = new clKavim();
         string sResult = "0";
@@ -1022,6 +1033,8 @@ public class wsGeneral : System.Web.Services.WebService
                 //בדיקה אם קיים מקט בתנועה
                 dt = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sTravelDate));               
                 sResult = BuildMakatDetails(dt, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat);
+                //Update cash peilyot details from tnua
+                GetPeilyotTnuaDetails(iSidurIndex, iPeilutIndex, dt);
             }
             return sResult;
         }
@@ -1031,6 +1044,64 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
+    private void GetPeilyotTnuaDetails(int iSidurIndex,int iPeilutIndex, DataTable dtPeilyotTnuaDetails)
+    {
+        //string sCacheKey = iMisparIshi + dCardDate.ToShortDateString();
+        clKavim _Kavim = new clKavim();
+        //DataTable _Peilyout;
+        DataRow[] _PeilyotDetails;
+        clPeilut _Peilut;
+        clSidur _Sidur;
+        int iMakatType;
+        long lMakatNesia;
+        try
+        {
+            _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+            _Peilut =  (clPeilut)_Sidur.htPeilut[iPeilutIndex];
+            lMakatNesia = long.Parse(dtPeilyotTnuaDetails.Rows[0]["Makat8"].ToString());
+            _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
+            if (_PeilyotDetails.Length > 0)
+            {
+                iMakatType = _Kavim.GetMakatType(lMakatNesia);
+                clKavim.enMakatType _MakatType;
+                _MakatType = (clKavim.enMakatType)iMakatType;
+                switch (_MakatType)
+                {
+                    case clKavim.enMakatType.mKavShirut:
+                        _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString();
+                        _Peilut.sShilut = _PeilyotDetails[0]["Shilut"].ToString();
+                        _Peilut.sSugShirutName = _PeilyotDetails[0]["SugShirutName"].ToString();
+                        _Peilut.iMazanTichnun =  (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
+                        _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                        break;
+                    case clKavim.enMakatType.mEmpty:
+                        _Peilut.iMazanTichnun =  (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
+                        _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                        _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString();;                        
+                        _Peilut.sShilut =  "";
+                        _Peilut.sSugShirutName = COL_TRIP_EMPTY;                        
+                        break;
+
+                    case clKavim.enMakatType.mNamak:                                                    
+                         _Peilut.iMazanTichnun =  (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
+                         _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                         _Peilut.sMakatDescription =_PeilyotDetails[0]["Description"].ToString();
+                         _Peilut.sShilut = _PeilyotDetails[0]["Shilut"].ToString();       
+                         _Peilut.sSugShirutName  = COL_TRIP_NAMAK;  
+                         break;
+                    case clKavim.enMakatType.mElement:                       
+                        break;
+                    case clKavim.enMakatType.mVisut:                       
+                        break;
+                }
+
+            }            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     [WebMethod]
     public int GetMakatType(long lMakat)
     {

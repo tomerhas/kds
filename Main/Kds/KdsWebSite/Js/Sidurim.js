@@ -40,7 +40,7 @@ var MKT_ELEMENT = 5;
                         sArrPrm[5] = document.getElementById('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur95");
                         sArrPrm[6] = lOMkt;
                         sArrPrm[7] = iInx;
-                        wsGeneral.CheckMakat(lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
+                        wsGeneral.CheckMakat(iInx, document.getElementById(oRId).rowIndex-1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
                     }
                 }                         
           }                       
@@ -104,15 +104,18 @@ var MKT_ELEMENT = 5;
                      case "SHILUT_NAME":      
                            document.getElementById(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue= _FirstChild.text;
                            break;
+                       case "MAZAN_TASHLUM":
+                           document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text; 
+                           break;
                      case "DAKOT_DEF":
-                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue=_FirstChild.text;
+                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;                          
                            break;
-                     case "DAKOT_DEF_TITLE":
-                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].title=_FirstChild.text;
+                       case "DAKOT_DEF_TITLE":
+                           document.getElementById(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;                          
                            break;
-                     case  "DAKOT_BAFOAL":
-                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value=_FirstChild.text;   
-                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage="יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue) + " דקות ";         
+                       case "DAKOT_BAFOAL":
+                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
+                           document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
                            break;
                      case "DAKOT_BAFOAL_ENABLED":
                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled=(_FirstChild.text=="0");  
@@ -121,7 +124,9 @@ var MKT_ELEMENT = 5;
                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value="";
                            break;      
                      case "OTO_NO_ENABLED":
-                           document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled=(_FirstChild.text=="0");
+                           document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                           if (_FirstChild.text == "1")
+                               document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
                            break;
                      case "OTO_NO_TITEL":
                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title=_FirstChild.text;
@@ -1577,7 +1582,8 @@ var MKT_ELEMENT = 5;
                 if ((_NextPeilut.cells[_COL_CANCEL_PEILUT].firstChild.value!='1') && (_NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].disabled!=true)) {
                     _CarNum.setAttribute("OldV",_CurrCarNum);
                     _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV",_CurrCarNum);
-                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value=_CurrCarNum;
+                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value = _CurrCarNum;
+                    _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].title = _CarNum.title;
                 }
             }
             else{//אם נתקלים במספר רכב שונה עוצרים. אם נתקלים בפעילות שאינה דורשת מספר רכב או ריקה או 0 ממשיכים
