@@ -1265,16 +1265,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //hCell = CreateTableCell("70px", "", "");
             if (!(HasNoPremmisionToAddPeilut(oSidur)))
             {
-                ImageButton imgCollapse = new ImageButton();
-                imgCollapse.ID = "imgAddPeilut" + iIndex;
-                imgCollapse.ImageUrl = "~/images/plus.jpg";
+                ImageButton imgAddPeilut = new ImageButton();
+                imgAddPeilut.ID = "imgAddPeilut" + iIndex;
+                imgAddPeilut.ImageUrl = "~/images/plus.jpg";
                 //imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
-                imgCollapse.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");                    
-                imgCollapse.Attributes.Add("SdrInd", iIndex.ToString());
-                imgCollapse.CausesValidation = false;
-                imgCollapse.Click += new ImageClickEventHandler(imgCollapse_Click);    
+                imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
+                imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
+                imgAddPeilut.CausesValidation = false;
+                imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);    
                 hCell = CreateTableCell("43px", "", "");
-                hCell.Controls.Add(imgCollapse);
+                hCell.Controls.Add(imgAddPeilut);
             }
             else
                 hCell = CreateTableCell("53px", "", "");           
@@ -1284,7 +1284,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    void imgCollapse_Click(object sender, ImageClickEventArgs e)
+    void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {
         AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));        
     }
@@ -1740,6 +1740,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         string[] arrKnisaVal;
         clPeilut _Peilut;
         clSidur _Sidur;
+      
         try
         {
             _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
@@ -1791,10 +1792,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.lOtoNo = ((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text == "" ? 0 : long.Parse(((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text);
                 _Peilut.iKisuyTor = (int)(dblKisuyTor);
                 _Peilut.dFullShatYetzia = dShatYetiza;
-                _Peilut.sShatYetzia = oShatYetiza.Text;
-              //  _Peilut.lMisparSiduriOto = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text);
+                _Peilut.sShatYetzia = oShatYetiza.Text;              
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
-                _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);                
+                _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
+                _Peilut.iBitulOHosafa =  int.Parse(((TextBox)oGridRow.Cells[COL_CANCEL_PEILUT].Controls[0]).Text);
+                
+ 
                 arrKnisaVal = oGridRow.Cells[COL_KNISA].Text.Split(",".ToCharArray());
                 iMisparKnisa = int.Parse(arrKnisaVal[0]);
                 _Peilut.iMisparKnisa = iMisparKnisa;

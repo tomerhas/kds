@@ -2691,7 +2691,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         if (oShatYetiza.Text.Equals(""))
             dShatYetiza = DateTime.Parse("01/01/0001 00:00");
-        {
+        else{
             if (bUpdate)
             {
                 if (dShatYetiza.Date.Year < clGeneral.cYearNull)

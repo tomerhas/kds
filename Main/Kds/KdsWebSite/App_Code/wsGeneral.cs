@@ -1729,16 +1729,21 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public string SidurStartHourChanged(string sCardDate, int iSidurKey, string sNewStartHour, string sOrgStartHour)
     {
-        string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
-        DateTime dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
+        DateTime dSidurStartHour;
         DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0,0,0);
+        string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+        if (!sNewStartHour.Equals(string.Empty))
+            dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
+        else
+            dSidurStartHour = dStartHour;
+        
         DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3,2)), 0);
         
         DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         DataRow[] dr;
         string sResult = "0,0";
         //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
-        if ((dSidurStartHour >= dStartHour) && (dSidurStartHour<=dEndHour))
+        if ((dSidurStartHour >= dStartHour) && (dSidurStartHour <= dEndHour) && ((!sNewStartHour.Equals(string.Empty)))) 
         {
             sResult = "0,1";   
             dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
@@ -1772,15 +1777,20 @@ public class wsGeneral : System.Web.Services.WebService
             else
                 dtOrgDate = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString());
 
-            dtCardDate =DateTime.Parse(sCardDate);
-            if (dtOrgDate == dtCardDate)
-                dr[0]["sidur_date"] = DateTime.Parse(dtOrgDate.ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
+            if (sNewStartHour.Equals(string.Empty))
+                dr[0]["sidur_date"] = DateTime.Parse("01/01/001 00:00:00");
             else
             {
-                dr[0]["sidur_date"]=  DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour);
-                if (dtOrgDate > dtCardDate)
-                    if (iAddDay == 0)
-                        dr[0]["sidur_date"] =((DateTime)dr[0]["sidur_date"]).AddDays(-1);
+                dtCardDate = DateTime.Parse(sCardDate);
+                if (dtOrgDate == dtCardDate)
+                    dr[0]["sidur_date"] = DateTime.Parse(dtOrgDate.ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
+                else
+                {
+                    dr[0]["sidur_date"] = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour);
+                    if (dtOrgDate > dtCardDate)
+                        if (iAddDay == 0)
+                            dr[0]["sidur_date"] = ((DateTime)dr[0]["sidur_date"]).AddDays(-1);
+                }
             }
         }
     }

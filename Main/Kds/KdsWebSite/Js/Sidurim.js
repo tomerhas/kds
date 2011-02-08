@@ -366,8 +366,11 @@ var MKT_ELEMENT = 5;
      EnableField("lstSidurim_txtSH",iIndex,bFlag);
      EnableField("lstSidurim_txtSG", iIndex, bFlag);
      EnableField("lstSidurim_txtSHL", iIndex, bFlag);
-     EnableField("lstSidurim_txtSGL", iIndex, bFlag); 
-     
+     EnableField("lstSidurim_txtSGL", iIndex, bFlag);
+     var _AddPeilut = document.getElementById("lstSidurim_imgAddPeilut".concat(iIndex));
+     if (_AddPeilut != undefined)
+         _AddPeilut.disabled = bFlag;
+
      if (document.getElementById("lstSidurim_cImgS".concat(iIndex))!=null){  
         document.getElementById("lstSidurim_cImgS".concat(iIndex)).disabled = bFlag;}
      var sIndex = String("00".concat(String(iIndex)));
