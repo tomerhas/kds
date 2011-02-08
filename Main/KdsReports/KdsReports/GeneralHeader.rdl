@@ -168,7 +168,7 @@
         <rd:DefaultName>Textbox3</rd:DefaultName>
         <Left>3.45404cm</Left>
         <Height>0.6cm</Height>
-        <Width>9.64375cm</Width>
+        <Width>10.62271cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -208,6 +208,10 @@
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
