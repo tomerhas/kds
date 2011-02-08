@@ -144,6 +144,8 @@ public class wsGeneral : System.Web.Services.WebService
         try
         {
             sXML.Append("<MAKAT>");
+
+
             if (dtMakat.Rows.Count > 0)
             {
                 oMakatType = (clKavim.enMakatType)GetMakatType(lNewMakat);

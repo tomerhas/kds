@@ -19,6 +19,7 @@ namespace KdsBatch
         public int iMisparSidurMyuhad;
         public string sShatGmar;
         public DateTime dFullShatHatchala;
+        public DateTime dOldFullShatHatchala;
         public DateTime dFullShatGmar;
         public string sShatHatchala;
         public DateTime  dSidurDate;
@@ -178,6 +179,7 @@ namespace KdsBatch
             //}
 
             dFullShatHatchala = DateTime.Parse(dr["Shat_Hatchala"].ToString());
+            dOldFullShatHatchala = dFullShatHatchala;
             sShatHatchala = (dFullShatHatchala.Year < clGeneral.cYearNull ? "" : DateTime.Parse(dr["Shat_Hatchala"].ToString()).ToString("HH:mm"));
             //if (!string.IsNullOrEmpty(sShatHatchala))
             //{

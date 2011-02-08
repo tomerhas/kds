@@ -16,6 +16,7 @@ namespace KdsBatch
         public long lMakatNesia = 0;
         public string sShatYetzia = "";
         public DateTime dFullShatYetzia;
+        public DateTime dOldFullShatYetzia;
         public long lOtoNo = 0;
         public long lMisparSiduriOto;
         public long iElementLeYedia = 0;//לשנות לטקסט?
@@ -83,7 +84,7 @@ namespace KdsBatch
         public int iKodShinuyPremia;
         public string sKodLechishuvPremia;
         public int iElementLeShatGmar;
-        
+        public enPeilutStatus oPeilutStatus;
        
         private const string COL_TRIP_EMPTY = "ריקה";
         private const string COL_TRIP_NAMAK = "נמ'ק";
@@ -92,6 +93,12 @@ namespace KdsBatch
         private const string COL_TRIP_KNISA = "כניסה";
         private const string MAKAT_KNISA = "לפי צורך";
 
+        public enum enPeilutStatus
+        {
+            enUpdate,
+            enNew,             
+            enDelete
+        }
         public clPeilut(DateTime dCardDate)
         {            
             clUtils oUtils = new clUtils();
@@ -118,7 +125,8 @@ namespace KdsBatch
             iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;
             iKisuyTor = oPeilutOld.iKisuyTor;
             dFullShatYetzia =oPeilutOld.dFullShatYetzia;
-             sShatYetzia = oPeilutOld.sShatYetzia;
+            dOldFullShatYetzia = oPeilutOld.dOldFullShatYetzia;
+            sShatYetzia = oPeilutOld.sShatYetzia;
             
             lOtoNo =oPeilutOld.lOtoNo;
 
@@ -209,6 +217,7 @@ namespace KdsBatch
                 dCardDate = dDateCard;
                 iPeilutMisparSidur = oObjPeilutOvdimIns.MISPAR_SIDUR;
                 dFullShatYetzia = oObjPeilutOvdimIns.SHAT_YETZIA;
+                dOldFullShatYetzia = oObjPeilutOvdimIns.SHAT_YETZIA;
                 sShatYetzia = dFullShatYetzia.ToString("HH:mm");
 
                 lMisparVisa = oObjPeilutOvdimIns.MISPAR_VISA;
@@ -272,6 +281,7 @@ namespace KdsBatch
             iKisuyTor = (System.Convert.IsDBNull(dr["Kisuy_Tor"])? 0 : int.Parse(dr["Kisuy_Tor"].ToString()));
             lMakatNesia = (System.Convert.IsDBNull(dr["Makat_Nesia"]) ? 0 : long.Parse(dr["Makat_Nesia"].ToString()));
             dFullShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? new DateTime(199,1,1) : DateTime.Parse(dr["Shat_Yetzia"].ToString()));
+            dOldFullShatYetzia = dFullShatYetzia;
             sShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? "" : DateTime.Parse(dr["Shat_Yetzia"].ToString()).ToString("HH:mm"));          
             lOtoNo = (System.Convert.IsDBNull(dr["Oto_No"])  ? 0 : long.Parse(dr["Oto_No"].ToString()));
             lMisparSiduriOto = (System.Convert.IsDBNull(dr["mispar_siduri_oto"]) ? 0 : int.Parse(dr["mispar_siduri_oto"].ToString()));

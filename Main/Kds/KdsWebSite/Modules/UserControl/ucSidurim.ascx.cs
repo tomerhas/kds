@@ -787,6 +787,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot["Kisuy_Tor"] = oPeilut.iKisuyTor;
                 drPeilutyot["Kisuy_Tor_map"] = oPeilut.iKisuyTorMap;
                 drPeilutyot["shat_yetzia"] = oPeilut.dFullShatYetzia;
+                drPeilutyot["old_shat_yetzia"] = oPeilut.dOldFullShatYetzia;
                 drPeilutyot["Makat_Description"] = oPeilut.sMakatDescription;
                 drPeilutyot["makat_shilut"] = oPeilut.sShilut;
                 drPeilutyot["Shirut_type_Name"] = oPeilut.sSugShirutName;
@@ -967,6 +968,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcPeilut = new DataColumn();
         dcPeilut.ColumnName = "Update";
         dcPeilut.DataType = System.Type.GetType("System.Int32");
+
+        dcPeilut = new DataColumn();
+        dcPeilut.ColumnName = "old_shat_yetzia";
+        dcPeilut.DataType = System.Type.GetType("System.String");
         dtPeilutyot.Columns.Add(dcPeilut);
       
     }
@@ -1789,7 +1794,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.sShatYetzia = oShatYetiza.Text;
               //  _Peilut.lMisparSiduriOto = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_CAR_NUMBER].Controls[0]).Text);
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
-                _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
+                _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);                
                 arrKnisaVal = oGridRow.Cells[COL_KNISA].Text.Split(",".ToCharArray());
                 iMisparKnisa = int.Parse(arrKnisaVal[0]);
                 _Peilut.iMisparKnisa = iMisparKnisa;
@@ -1811,11 +1816,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
             if (_GridView != null)
             {
-                //בניית עמודות הטבלה
-                //BuildDataTableColumns(ref dt);
-                //UpdatePeilutDataTable(iSidurIndex, ref dt, _GridView);
-                //AddEmptyLineToDataTable(ref dt);
-                //BindNewDataTableToGrid(ref dt, _GridView);
+                //בניית עמודות הטבלה               
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
                 UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
                 AddEmptyPeilutToHashTable(iSidurIndex); 
@@ -1871,9 +1872,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     break;
         }
          _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
-
+         _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
          Session["Sidurim"] = _DataSource;
-       
+
          ClearControl();
          BuildPage();
     }
@@ -3273,7 +3274,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) || (!IsAccessToSidurNotShaon(ref oSidur)) || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            
-            oTextBox.Attributes.Add("OrgShatHatchala", oSidur.dFullShatHatchala.ToString());
+            oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
@@ -3281,7 +3282,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
 
-            AddAttribute(oTextBox,"OldV",oTextBox.Text);
+            AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
             DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_hatchala'");
@@ -4580,7 +4581,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         CustomValidator vldCustomValidator;
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
         bool bIdkunRashemet;
-        DateTime dShatYetiza;
+        DateTime dShatYetiza, dOldShatYetiza;
         int iMisparKnisa;
         HtmlTableCell hCell = new HtmlTableCell();
         string[] arrKnisaVal;
@@ -4594,8 +4595,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
 
-           
-            AddAttribute(oTxt, "OldV", dShatYetiza.ToShortTimeString());
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
+            AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
             sShatYetiza = DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString();
@@ -4612,13 +4613,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     //dShatYetiza.AddMinutes(-iKisuyTorMap).ToShortTimeString();
                 }
                 e.Row.Cells[_COL_KISUY_TOR_MAP].Text = iKisuyTorMap.ToString();
-                oTxt.Attributes.Add("OrgShatYetiza", dShatYetiza.ToString());
-                AddAttribute(oTxt, "OrgDate", dShatYetiza.ToShortDateString());               
+                oTxt.Attributes.Add("OrgShatYetiza", dOldShatYetiza.ToString());//dShatYetiza.ToString());
+                AddAttribute(oTxt, "OrgDate", dOldShatYetiza.ToShortDateString());//dShatYetiza.ToShortDateString());               
             }
             else
             {
                 oTxt.Text = "";
-                oTxt.Attributes.Add("OrgShatYetiza", sShatYetiza);
+                oTxt.Attributes.Add("OrgShatYetiza", sShatYetiza);//sShatYetiza);
                 AddAttribute(oTxt, "OrgDate", "01/01/0001");  
                 ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text = "";
             }

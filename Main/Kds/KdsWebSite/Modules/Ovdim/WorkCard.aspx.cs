@@ -3002,11 +3002,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
 
                 //If new active and sidur or peilut was canceld, we will not add the active.
-                if ((_Peilut.iPeilutMisparSidur.Equals(0)) && (iCancelPeilut == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode() || (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())))
+                if ((_Peilut.oPeilutStatus.Equals(clPeilut.enPeilutStatus.enNew)) && (iCancelPeilut == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode() || (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())))
                     continue;
                 else
                 {
-                    if (_Peilut.iPeilutMisparSidur.Equals(0))
+                    if (_Peilut.oPeilutStatus.Equals(clPeilut.enPeilutStatus.enNew))
                     {
                         //פעילות חדשה
                         oObjPeiluyotOvdim = new OBJ_PEILUT_OVDIM();
