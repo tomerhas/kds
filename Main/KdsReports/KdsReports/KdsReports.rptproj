@@ -113,6 +113,10 @@
       <FullPath>Report1.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>ReportNesiotKfulot.rdl</Name>
+      <FullPath>ReportNesiotKfulot.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RikuzAvodaChodshi.rdl</Name>
       <FullPath>RikuzAvodaChodshi.rdl</FullPath>
     </ProjectItem>
@@ -141,10 +145,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>ReportNesiotKfulot.rdl</Name>
-      <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
