@@ -711,23 +711,23 @@ namespace KdsBatch
                         //}
 
                         //מחיקת סידורי רציפות
-                        int iCountSidurim = htEmployeeDetails.Values.Count;
-                        int I = 0;
+                        //int iCountSidurim = htEmployeeDetails.Values.Count;
+                        //int I = 0;
 
-                        if (iCountSidurim > 0)
-                        {
-                            do
-                            {
-                                oSidur = (clSidur)htEmployeeDetails[I];
-                                if (oSidur.iMisparSidur == 99500 || oSidur.iMisparSidur == 99501)
-                                {
-                                    htEmployeeDetails.RemoveAt(I);
-                                    iCountSidurim -= 1;
-                                    I-=1;
-                                }
-                                I += 1;
-                            } while (I < iCountSidurim);
-                        }
+                        //if (iCountSidurim > 0)
+                        //{
+                        //    do
+                        //    {
+                        //        oSidur = (clSidur)htEmployeeDetails[I];
+                        //        if (oSidur.iMisparSidur == 99500 || oSidur.iMisparSidur == 99501)
+                        //        {
+                        //            htEmployeeDetails.RemoveAt(I);
+                        //            iCountSidurim -= 1;
+                        //            I-=1;
+                        //        }
+                        //        I += 1;
+                        //    } while (I < iCountSidurim);
+                        //}
 
                         //Check103
                         if (CheckErrorActive(103)) IsDuplicateShatYetiza103(iMisparIshi, dCardDate, ref dtErrors);
@@ -1008,79 +1008,6 @@ namespace KdsBatch
                 //col = new DataColumn("error_desc", System.Type.GetType("System.String"));
                 //dtErrors.Columns.Add(col);
 
-                //col = new DataColumn("pitzul_hafsaka", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("Halbasha", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("halbash_kod", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-                                
-                //col = new DataColumn("Kisuy_tor", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("Hashlama", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("shbaton", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("kod_matzav", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("km_visa_lepremia", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("sidur_visa_kod", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-              
-                //col = new DataColumn("hatchala_limit_hour", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-               
-
-                //col = new DataColumn("shat_gmar", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("gmar_limit_hour", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("hamarat_shabat", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("oto_no", System.Type.GetType("System.Int64"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("nesia_time", System.Type.GetType("System.Decimal"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("sidur_time", System.Type.GetType("System.Decimal"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("mispar_visa", System.Type.GetType("System.Int64"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("total_hashlamot", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("zman_maximum", System.Type.GetType("System.Int32"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("bitul_zman_nesiot", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("Out_Michsa", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("visa", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col); 
-
-                //col = new DataColumn("mikum_shaon_knisa", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col);
-
-                //col = new DataColumn("mikum_shaon_Yetzia", System.Type.GetType("System.String"));
-                //dtErrors.Columns.Add(col); 
             }
             catch (Exception ex)
             {
@@ -1849,7 +1776,7 @@ namespace KdsBatch
             try
             {
                 //בדיקה ברמת פעילות                
-                sShatYetzia = oPeilut.sShatYetzia;// htEmployeeDetails["ShatYetzia"].ToString();
+                sShatYetzia = oPeilut.sShatYetzia;
                 if (string.IsNullOrEmpty(sShatYetzia))
                 {
                     drNew = dtErrors.NewRow();
@@ -6360,7 +6287,7 @@ namespace KdsBatch
                  FixedLina07();
                 
 
-                //עבור שינויים ,1,2,4,12
+                //עבור שינויים 5,1,2,4,12
                 SetSidurObjects();
 
                 oCollYameyAvodaUpd.Add(oObjYameyAvodaUpd);
@@ -9636,7 +9563,7 @@ namespace KdsBatch
                     if (dShatYetziaPeilut >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
                     {
                         oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "005", "00"));
-                        dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(3);
+                        dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-3);
                     }
 
                     FindDuplicatPeiluyot(iPeilutNesiaIndex - 1, dShatYetziaPeilut, iIndexSidur, ref oSidur, ref oObjSidurimOvdimUpd);
@@ -10208,8 +10135,6 @@ namespace KdsBatch
 
         private void FixedMisparSidur01(ref clSidur oSidur, int iSidurIndex)
         {
-            //OrderedDictionary dePeilutEntry;
-            //int iKey;
             //const int SIDUR_NESIA  = 99300;
             //const int SIDUR_MATALA = 99301;
             int iMisparSidur = 0;
