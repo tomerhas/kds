@@ -113,9 +113,12 @@ public partial class Modules_Reports_ReportFilters : KdsPage
             {
                 case ReportName.DriverWithoutTacograph:
                 case ReportName.DriverWithoutSignature:
-                    Ezor.Enabled = ((PageModule.SecurityLevel == KdsSecurityLevel.ViewAll) ||
-                        (PageModule.SecurityLevel == KdsSecurityLevel.ViewOnlyEmployeeData));
-                    Ezor.SelectedIndex = Ezor.Items.IndexOf(Ezor.Items.FindByValue(RegionOfWorker.ToString()));
+                    if (!Page.IsPostBack)
+                    {
+                        Ezor.Enabled = ((PageModule.SecurityLevel == KdsSecurityLevel.ViewAll) ||
+                            (PageModule.SecurityLevel == KdsSecurityLevel.ViewOnlyEmployeeData));
+                        Ezor.SelectedIndex = Ezor.Items.IndexOf(Ezor.Items.FindByValue(RegionOfWorker.ToString()));
+                    }
                     break;
                 case ReportName.Presence:
                     CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
