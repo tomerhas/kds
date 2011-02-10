@@ -28,12 +28,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     {
         if (!Page.IsPostBack && Request.QueryString["EmpId"] == null)
             Session["arrParams"] = null;
-        if (!Page.IsPostBack)
-        {
-            txtId.Focus();
-            txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
-            txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
-        }
+ 
         if (Request.QueryString["Key"] != null && Session["arrParams"] == null)
         {
             DriverStation.WSkds wsDriverStation = new DriverStation.WSkds();
@@ -99,6 +94,12 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 PageHeader = "רשימת כרטיסי עבודה לעובד";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
+
+                txtId.Focus();
+                txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
+                txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
+                txtPageIndex.Value = "0";
+
                 clGeneral.LoadDateCombo(ddlMonth, 11);
                 SetDefault();
                
@@ -173,8 +174,9 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
 
         ViewState["SortDirection"] = SortDirection.Descending;
         ViewState["SortExp"] = "taarich";
+        grdEmployee.PageIndex = int.Parse(txtPageIndex.Value);
          
-        txtPageIndex.Value = "-1";
+        txtPageIndex.Value = "0";
         if (rdoId.Checked)
         {
             if ((txtId.Text).Length == 0)
@@ -230,6 +232,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             }
             txtId.Enabled = true;
         }
+         btnExecute_Click(sender, e);
+      
     }
     protected void txtName_TextChanged(object sender, EventArgs e)
     {
@@ -237,10 +241,11 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         string sMisparIshi = "";
         try
         {
-            txtPageIndex.Value = "-1";
+            txtPageIndex.Value = "0";
             ViewState["SortDirection"] = SortDirection.Descending;
             ViewState["SortExp"] = "taarich";
-         
+
+        
             clOvdim oOvdim = new clOvdim();
             if (rdoName.Checked && (txtName.Text).Length > 0)
             {
@@ -294,7 +299,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 divNetunim.Visible = false;
                 //btnExecute.Text = "";
             }
-            
+             btnExecute_Click(sender, e);
         }
         catch (Exception ex)
         { clGeneral.BuildError(Page, ex.Message); }
@@ -357,10 +362,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         {
             
             dv = ShowCards(ViewState["SortExp"].ToString(), ViewState["SortDirection"].ToString());//taarich","asc");
-            if (int.Parse(txtPageIndex.Value) > 0)
-                grdEmployee.PageIndex = int.Parse(txtPageIndex.Value);
-            else
-                grdEmployee.PageIndex = 0;
+            grdEmployee.PageIndex = int.Parse(txtPageIndex.Value); 
+       
             grdEmployee.DataSource = dv;
             grdEmployee.DataBind();
            
@@ -576,9 +579,17 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 gridPager.PageIndexChanged += delegate(object pagerSender,
                     GridViewPageEventArgs pagerArgs)
                 {
-                    ChangeGridPage(pagerArgs.NewPageIndex, grdEmployee,
-                       (DataView)Session["OvedCards"], "SortDirection",
-                       "SortExp");
+                   // if (int.Parse(Session["PageNum"].ToString()) != pagerArgs.NewPageIndex)
+                  //  {
+                    txtPageIndex.Value = pagerArgs.NewPageIndex.ToString();
+                    ChangeGridPage(int.Parse(txtPageIndex.Value), grdEmployee,
+                           (DataView)Session["OvedCards"], "SortDirection",
+                           "SortExp");
+                       
+                  //  }
+                  //  else ChangeGridPage(int.Parse(Session["PageNum"].ToString()), grdEmployee,
+                  //        (DataView)Session["OvedCards"], "SortDirection",
+                  //        "SortExp");
                 };
             }
         }
@@ -600,6 +611,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         }
         grid.DataSource = dataView;
         grid.DataBind();
+        
     }
     private string ConvertSortDirectionToSql(SortDirection sortDirection)
     {

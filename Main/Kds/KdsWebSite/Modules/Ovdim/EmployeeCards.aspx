@@ -103,11 +103,11 @@
             <tr>
                 <td class="style3"><asp:RadioButton runat="server" ID="rdoMonth" GroupName="grpCardType" Text="חודש" > </asp:RadioButton></td>
                 <td class="style2"> 
-                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '-1';"  TabIndex="3" 
+                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0';"  TabIndex="3" 
                         style="width:103px; margin-right: 15px;"></asp:DropDownList></td>
               
             
-                <td style="width:180px;">&nbsp;&nbsp;<asp:RadioButton runat="server" ID="rdoCards" GroupName="grpCardType" Text="כל כרטיסי העבודה בטיפול" onclick="document.getElementById('ctl00_KdsContent_txtPageIndex').value='-1';"> </asp:RadioButton></td>                          
+                <td style="width:182px;">&nbsp;&nbsp;<asp:RadioButton runat="server" ID="rdoCards" GroupName="grpCardType" Text="כל כרטיסי העבודה בטיפול" onclick="document.getElementById('ctl00_KdsContent_txtPageIndex').value='0';"> </asp:RadioButton></td>                          
           
                 <td style="width:60px;">
                 <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
@@ -121,7 +121,7 @@
               <td style="width:60px;">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                        <ContentTemplate>
-                            <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6"
+                            <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6" style="display:none"
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnShowApproval_Click" 
                                 Width="112px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
                                                                                                                                             
@@ -161,7 +161,7 @@
                                 </PagerTemplate>                                                   
                          </asp:GridView>
                         </div> 
-                         <input type="hidden" runat="server" id="txtPageIndex" value="-1"/>  
+                         <input type="hidden" runat="server" id="txtPageIndex" value="0"/>  
                      </ContentTemplate>
                      <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnExecute" />                     
@@ -326,14 +326,13 @@
         else { return true };
 
     }
-    
-    function refresh(){
-        $get("<%=btnExecute.ClientID %>").click();
+
+    function refresh() {
+      $get("<%=btnExecute.ClientID %>").click();
     }
     
     
-    function OpenEmpWorkCard(RowDate)
-    {
+    function OpenEmpWorkCard(RowDate) {
         var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
         var WCardDate = RowDate;
         var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
