@@ -2309,7 +2309,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     bChanged = true;
                 }
                 break;
-            case "KOD_SIBA_LEDIVUCH_YADANI_OUTN":
+            case "KOD_SIBA_LEDIVUCH_YADANI_OUT":
                 if (!oSidur.iOldKodSibaLedivuchYadaniOut.Equals(oSidur.iKodSibaLedivuchYadaniOut))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
@@ -2427,6 +2427,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 break;
             case "DAKOT_BAFOAL":
                 if (!_Peilut.iOldDakotBafoal.Equals(_Peilut.iDakotBafoal))
+                {
+                    _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
+                    _ObjIdkunRashemet.PAKAD_ID = iPakadId;
+                    bChanged = true;
+                }
+                break;
+            case "SHAT_YETIZA":
+                 if (!_Peilut.dOldFullShatYetzia.Equals(_Peilut.dFullShatYetzia))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
                     _ObjIdkunRashemet.PAKAD_ID = iPakadId;
@@ -2809,7 +2817,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
-            if (FillObjIdkunRashemet(_TxtShatYetiza, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
+           // if (FillObjIdkunRashemet(_TxtShatYetiza, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
+            if (FillObjIdkunRashemet(oSidur, iRowIndex,"SHAT_YETIZA", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             {
                 _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
                 _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
