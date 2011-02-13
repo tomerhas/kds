@@ -71,9 +71,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KdsLibrary\bin\Debug\KdsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="KdsWorkFlow">
-      <HintPath>..\KdsWorkFlow\bin\Release\KdsWorkFlow.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -137,12 +134,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
-      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
-      <Name>KdsDataImport</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -158,6 +149,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
+      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
+      <Name>KdsDataImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsWorkFlow\KdsWorkFlow.csproj">
+      <Project>{8979010C-FE5C-4652-8027-FFF2378353E3}</Project>
+      <Name>KdsWorkFlow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
