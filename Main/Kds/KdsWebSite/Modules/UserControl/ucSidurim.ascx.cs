@@ -117,6 +117,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private bool _ProfileRashemet;
     private int _MisparIshiIdkunRashemet;
 
+    //// Delegate declaration
+    //public delegate void OnButtonClick(string strValue);
+
+    //// Event declaration
+    //public event OnButtonClick btnHandler;
+
+
     private enum enDayType
     {
         enRegular = 1,
@@ -792,6 +799,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot["makat_shilut"] = oPeilut.sShilut;
                 drPeilutyot["Shirut_type_Name"] = oPeilut.sSugShirutName;
                 drPeilutyot["oto_no"] = oPeilut.lOtoNo;
+                drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
                 drPeilutyot["makat_nesia"] = oPeilut.lMakatNesia;
                 drPeilutyot["dakot_bafoal"] = oPeilut.iDakotBafoal == -1 ? "" : oPeilut.iDakotBafoal.ToString();
                 drPeilutyot["imut_netzer"] = oPeilut.bImutNetzer ? "כן" : "לא";
@@ -972,6 +980,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dcPeilut = new DataColumn();
         dcPeilut.ColumnName = "old_shat_yetzia";
         dcPeilut.DataType = System.Type.GetType("System.String");
+        dtPeilutyot.Columns.Add(dcPeilut);
+
+        dcPeilut = new DataColumn();
+        dcPeilut.ColumnName = "old_oto_no";
+        dcPeilut.DataType = System.Type.GetType("System.Int64");
         dtPeilutyot.Columns.Add(dcPeilut);
       
     }
@@ -1268,7 +1281,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 ImageButton imgAddPeilut = new ImageButton();
                 imgAddPeilut.ID = "imgAddPeilut" + iIndex;
                 imgAddPeilut.ImageUrl = "~/images/plus.jpg";
-                //imgCollapse.Attributes.Add("onclick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
+               // imgAddPeilut.Attributes.Add("OnClientClick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                 imgAddPeilut.CausesValidation = false;
@@ -1286,6 +1299,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {
+        //if (btnHandler != null)
+        //    btnHandler(string.Empty);
+
+
         AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));        
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
@@ -1351,8 +1368,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
-
-
                         if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
@@ -1507,9 +1522,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bEnable = (((IsLoLetashlum(ref oSidur))) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2);");
-        chkBox.Attributes.Add("OrgVal", oSidur.iLoLetashlum.ToString());
+        chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
         chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");   
-        AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
+       // AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         Image imgRemark = new Image();
         imgRemark.ImageUrl = "../../Images/questionbtn.jpg";
@@ -1540,7 +1555,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2);");
-        AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
+        //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         string sAllApprovalDescription = "";
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Out_michsa'");
@@ -1657,7 +1672,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     oSidur.sChariga = oDDL.SelectedValue;
 
                     oDDL = (DropDownList)this.FindControl("ddlPHfsaka" + iIndex);
-                    oSidur.sPitzulHafsaka = oDDL.Attributes["OldV"].ToString();
+                    oSidur.sPitzulHafsaka = oSidur.sOldPitzulHafsaka; //oDDL.Attributes["OldV"].ToString();
 
                     oDDL = (DropDownList)this.FindControl("ddlHashlama" + iIndex);
                     oSidur.sHashlama = oDDL.SelectedValue;
@@ -1810,20 +1825,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }   
     private void AddEmptyRowToPeilutGrid(int iSidurIndex)
     {
-        GridView _GridView;
-        DataTable dt = new DataTable();
+       // GridView _GridView;
+        //DataTable dt = new DataTable();
         try
         {
             //Update DataTable which bind to grid with new data
           
-            _GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-            if (_GridView != null)
-            {
+            //_GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+            //if (_GridView != null)
+            //{
                 //בניית עמודות הטבלה               
-                OrderedDictionary hashSidurimPeiluyot = DataSource;
-                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-                AddEmptyPeilutToHashTable(iSidurIndex); 
-            }
+            OrderedDictionary hashSidurimPeiluyot = DataSource;
+            UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+            AddEmptyPeilutToHashTable(iSidurIndex); 
+            //}
         }
         catch (Exception ex)
         {
@@ -1877,7 +1892,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
          _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
          _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
          Session["Sidurim"] = _DataSource;
-
+         
          ClearControl();
          BuildPage();
     }
@@ -2111,7 +2126,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1" : "0");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-        AddAttribute(ddl, "OldV", ddl.SelectedValue);
+        //AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         //string sAllApprovalDescription = "";
         //DataRow[] dr = dtApprovals.Select("mafne_lesade='hashlama'");
@@ -2236,7 +2251,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Style.Add("width", "95px");       
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);chkPitzulHafsaka(" + iIndex + ",false)");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");        
-        AddAttribute(ddl, "OldV",ddl.SelectedValue);
+        //AddAttribute(ddl, "OldV",ddl.SelectedValue);
 
         switch (_StatusCard)
         {
@@ -2283,7 +2298,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);ChkCharigaVal(" + iIndex  + ");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
 
-        AddAttribute(ddl, "OldV", ddl.SelectedValue);
+       // AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         
         //string sAllApprovalDescription = "";
@@ -2366,7 +2381,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
-        AddAttribute(oTextBox, "OldV", oTextBox.Text);
+        //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
         oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
         hCell.Controls.Add(oMaskedEditExtender);
@@ -2401,7 +2416,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
 
-        AddAttribute(oTextBox, "OldV", oTextBox.Text);
+        //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
         oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
         hCell.Controls.Add(oMaskedEditExtender);
@@ -2437,7 +2452,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
         ddl.Attributes.Add("OrgEnabled", OrgEnable ? "1" : "0");
-        AddAttribute(ddl, "OldV", ddl.SelectedValue);
+        //AddAttribute(ddl, "OldV", ddl.SelectedValue);
         
       
         //    string sAllApprovalDescription = "";
@@ -2505,7 +2520,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
             ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
-            AddAttribute(ddl, "OldV", ddl.SelectedValue);
+            // AddAttribute(ddl, "OldV", ddl.SelectedValue);
            
             ////נבדוק אם יש אישורים על שדה כניסה
             //string sAllApprovalDescription = "";
@@ -3285,7 +3300,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
 
-            AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
+            //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
             DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_hatchala'");
@@ -3567,7 +3582,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DataView dvFieldsErrors;
         String _ContolType = oObj.GetType().ToString();
 
-        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet,ErrorsList, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, sFieldName);
+        dsFieldsErrors = clDefinitions.GetErrorsForFields(ProfileRashemet,ErrorsList, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dOldFullShatHatchala, sFieldName);
         dvFieldsErrors = new DataView(dsFieldsErrors.Tables[0]);
         dvFieldsErrors.RowFilter = "SHOW_ERROR=1";
 
@@ -3657,9 +3672,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     protected void CreateShatGmarCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex,DataRow[] drSugSidur, bool bSidurActive)
     {
-        TextBox oTextBox;
-        ////String sShatGmarMutertStart = "";
-        ////String sShatGmarMutertEnd = "";
+        TextBox oTextBox;      
         string sMessage;
         CustomValidator vldShatGmar;
         AjaxControlToolkit.MaskedEditExtender oMaskedEditExtender;
@@ -3671,8 +3684,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox = new TextBox();
             oTextBox.ID = "txtSG" + iIndex;
             oTextBox.Text = oSidur.sShatGmar;
-            oTextBox.Width = Unit.Pixel(40);
-            //oTextBox.Height = Unit.Pixel(20);
+            oTextBox.Width = Unit.Pixel(40);          
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
@@ -3682,9 +3694,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onChange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2); ");
             
-            AddAttribute(oTextBox, "OrgDate", oSidur.dFullShatGmar.ToString());           
-            AddAttribute(oTextBox, "OldV", oTextBox.Text);
-            oTextBox.Attributes["OrgDate"] = oSidur.dFullShatGmar.ToShortDateString();
+            AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
+            //AddAttribute(oTextBox, "OldV", oTextBox.Text);
+            oTextBox.Attributes["OrgDate"] = oSidur.dOldFullShatGmar.ToShortDateString();
             oTextBox.ToolTip = "תאריך גמר הסידור הוא: " + oSidur.dFullShatGmar.ToShortDateString();
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
           
@@ -4248,7 +4260,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Enabled = ((!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
             oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
-            AddAttribute(oTxt, "OldV", oTxt.Text);
+            //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = oTxt.ID;
             sID = "defMin";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
@@ -4424,7 +4436,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
             oTxt.ID = e.Row.ClientID + "MakatNumber";
 
-            AddAttribute(oTxt, "OldV", oTxt.Text);
+            //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
             sID = "vldFilterMakatNumber";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
@@ -4514,7 +4526,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           //  oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
-            AddAttribute(oTxt, "OldV", oTxt.Text);
+            AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
 
             sID = "vldFilCarNum";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
@@ -4548,7 +4560,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //רק לאלמנטים
             if ((!bBusMustOtoNumber) && (oMakatType== clKavim.enMakatType.mElement)){
                 ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Text = "";
-                ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
+               // ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
             }
                 
             long lMakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
@@ -4599,7 +4611,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(40);
 
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
-            AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
+            //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
             sShatYetiza = DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString();
@@ -4665,19 +4677,19 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     else
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dShatYetiza, 0, ref oTxt);
+                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dOldShatYetiza, 0, ref oTxt);
                     }
                     break;
                 case clGeneral.enCardStatus.Valid:
                     //במידה והכרטיס תקין נבדוק אישורים                  
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dShatYetiza, 0, ref oTxt);
+                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dOldShatYetiza, 0, ref oTxt);
                     }
                     break;
             }
@@ -4709,7 +4721,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.ID = e.Row.ClientID + "KisoyTor";
             oTxt.Width = Unit.Pixel(40);
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());           
-            AddAttribute(oTxt, "OldV", oTxt.Text);
+            //AddAttribute(oTxt, "OldV", oTxt.Text);
             AddAttribute(oTxt, "OldTorMapV", e.Row.Cells[_COL_KISUY_TOR_MAP].Text);
 
             //Add MaskTextBox

@@ -284,8 +284,9 @@
        var arrKey =  pKey.toString().split("|");
        sPShatY = document.getElementById(arrKey[0]).value;
        if (sPShatY == '__:__') {
-           sPShatY = document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza');           
+           sPShatY = document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza');
        } else {
+           sPShatY=document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza').substr(11,5);
            var AddDay = Number(document.getElementById(arrKey[3].concat("_txtDayToAdd")).value);
            if (AddDay == 1) {
                //add one day to the date              
@@ -513,7 +514,13 @@
                         sMsg = sMsg.concat('בסידור  ' + iSidurNum + " משך הסידור שווה או גדול מזמן ההשלמה הנבחר \n");             
                         bValid = false; 
                      }
-                }     
+                }
+            }
+            //נעבור על פעילויות
+            res = ChkIfPeiluyotValid(i);
+            if (res == false) {
+                sMsg = sMsg.concat(' בסידור ' + iSidurNum + " קיימת פעילות ללא שעת יציאה \n ");
+                bValid = false;
             }
         }       
         i=i+1;
@@ -529,6 +536,16 @@
    }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
 
+   function ChkIfPeiluyotValid(iSidurInx){
+       _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurInx, '0', 3));
+       if (_Peilut != null){
+           for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
+               if (_Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild.value == "")                   
+                   return false;                
+           }
+       }
+       return true;
+   }
    function GetErrorMessageSadotNosafim(id, level, pKey) {    
        oId = id.id;
        var oObj = document.getElementById(oId);

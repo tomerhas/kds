@@ -431,10 +431,10 @@
                         <asp:Button Text="שגיאות" ID="btnDrvErrors" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px" OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                    
                     </td>  
                     <td style="width: 10%">
-                        <asp:Button Text="דוח אישורים" ID="btnApprovalReport" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px" OnClick="btnApprovalReport_click" CausesValidation="false" />                    
+                        <asp:Button Text="דוח אישורים" ID="btnApprovalReport" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px; display:none;" OnClick="btnApprovalReport_click" CausesValidation="false" />                    
                     </td>
                     <td style="width: 10%" align="left">
-                        <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="ImgButtonShow" Style="width: 80px; height: 25px" OnClick="btnClock_click" CausesValidation="false" />                   
+                        <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="ImgButtonShow" Style="width: 80px; height: 25px" OnClick="btnClock_click" CausesValidation="false" />                                           
                     </td>                            
                 </tr>
             </table>    

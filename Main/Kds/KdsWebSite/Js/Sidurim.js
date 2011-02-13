@@ -853,7 +853,8 @@ var MKT_ELEMENT = 5;
 //        if ((iBitul != "1") && (iBitul != "3")) {
 //            if (bScreenChanged) {
 //                $("#hidSave")[0].value = "1";
-//                __doPostBack('btnConfirm', '');                    
+//                __doPostBack('btnConfirm', '');
+                          
 //            }
 //            var id = document.getElementById("txtId").value;
 //            var CardDate = document.getElementById("clnDate").value;

@@ -12,12 +12,15 @@ namespace KdsBatch
     public class clPeilut
     {
         public int iKisuyTor = 0;
+        public int iOldKisuyTor  = 0;
         public int iKisuyTorMap = 0;
         public long lMakatNesia = 0;
+        public long lOldMakatNesia = 0;
         public string sShatYetzia = "";
         public DateTime dFullShatYetzia;
         public DateTime dOldFullShatYetzia;
         public long lOtoNo = 0;
+        public long lOldOtoNo = 0;
         public long lMisparSiduriOto;
         public long iElementLeYedia = 0;//לשנות לטקסט?
         public long iErechElement = 0;
@@ -56,6 +59,7 @@ namespace KdsBatch
         public int iBitulOHosafa;
         public int iOnatiyut;
         public int iDakotBafoal; //דקות בפועל
+        public int iOldDakotBafoal; //דקות בפועל
         public bool bKnisaNeeded; //כניסה לפי צורך
         public int iKmVisa;
         public float fKm;
@@ -72,7 +76,7 @@ namespace KdsBatch
         public bool bImutNetzer;
         private DataTable dtKavim;
         private DataTable dtElementim;
-        private String sMakatNesia;
+        private String sMakatNesia;        
         public String sHeara;
         public String sShilutNetzer;
         public DateTime  dShatYetziaNetzer;
@@ -124,11 +128,13 @@ namespace KdsBatch
             dCardDate = dDateCard;
             iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;
             iKisuyTor = oPeilutOld.iKisuyTor;
+            iOldKisuyTor = iKisuyTor; 
             dFullShatYetzia =oPeilutOld.dFullShatYetzia;
             dOldFullShatYetzia = oPeilutOld.dOldFullShatYetzia;
             sShatYetzia = oPeilutOld.sShatYetzia;
             
             lOtoNo =oPeilutOld.lOtoNo;
+            lOldOtoNo = lOtoNo;
 
             lMisparSiduriOto =oPeilutOld.lMisparSiduriOto;
 
@@ -137,6 +143,7 @@ namespace KdsBatch
             bImutNetzer = oPeilutOld.bImutNetzer;
             iBitulOHosafa = oPeilutOld.iBitulOHosafa;
             iDakotBafoal = oPeilutOld.iDakotBafoal;
+            iOldDakotBafoal = iDakotBafoal;
             iKmVisa = oPeilutOld.iKmVisa;
             dCardLastUpdate = oPeilutOld.dCardLastUpdate;
             sSnifTnua = oPeilutOld.sSnifTnua;
@@ -214,6 +221,7 @@ namespace KdsBatch
                 dtElementim = oUtils.GetCtbElementim();
 
                 lMakatNesia = oObjPeilutOvdimIns.MAKAT_NESIA;
+                lOldMakatNesia = lMakatNesia;
                 dCardDate = dDateCard;
                 iPeilutMisparSidur = oObjPeilutOvdimIns.MISPAR_SIDUR;
                 dFullShatYetzia = oObjPeilutOvdimIns.SHAT_YETZIA;
@@ -225,7 +233,7 @@ namespace KdsBatch
                 lMisparSiduriOto = oObjPeilutOvdimIns.MISPAR_SIDURI_OTO;
                 lMisparMatala = oObjPeilutOvdimIns.MISPAR_MATALA;
                 lOtoNo = oObjPeilutOvdimIns.OTO_NO;
-
+                lOldOtoNo = lOtoNo;
                 dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dDateCard);
 
                 SetKavDetails(dtPeiluyot, lMakatNesia);
@@ -279,11 +287,14 @@ namespace KdsBatch
             //נתוני פעילויות       
             iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));            
             iKisuyTor = (System.Convert.IsDBNull(dr["Kisuy_Tor"])? 0 : int.Parse(dr["Kisuy_Tor"].ToString()));
+            iOldKisuyTor = iKisuyTor;
             lMakatNesia = (System.Convert.IsDBNull(dr["Makat_Nesia"]) ? 0 : long.Parse(dr["Makat_Nesia"].ToString()));
+            lOldMakatNesia = lMakatNesia; 
             dFullShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? new DateTime(199,1,1) : DateTime.Parse(dr["Shat_Yetzia"].ToString()));
             dOldFullShatYetzia = dFullShatYetzia;
             sShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? "" : DateTime.Parse(dr["Shat_Yetzia"].ToString()).ToString("HH:mm"));          
             lOtoNo = (System.Convert.IsDBNull(dr["Oto_No"])  ? 0 : long.Parse(dr["Oto_No"].ToString()));
+            lOldOtoNo = lOtoNo;
             lMisparSiduriOto = (System.Convert.IsDBNull(dr["mispar_siduri_oto"]) ? 0 : int.Parse(dr["mispar_siduri_oto"].ToString()));
             iElementLeYedia =(System.Convert.IsDBNull(dr["element_for_yedia"]) ? 0 : int.Parse(dr["element_for_yedia"].ToString()));
             iErechElement = (System.Convert.IsDBNull(dr["erech_element"]) ? 0 : int.Parse(dr["erech_element"].ToString()));
@@ -316,6 +327,7 @@ namespace KdsBatch
             bImutNetzer = System.Convert.IsDBNull(dr["imut_netzer"]) ? false : true;
             iBitulOHosafa = System.Convert.IsDBNull(dr["peilut_bitul_o_hosafa"]) ? 0 : int.Parse(dr["peilut_bitul_o_hosafa"].ToString());
             iDakotBafoal = System.Convert.IsDBNull(dr["DAKOT_BAFOAL"]) ? 0 : int.Parse(dr["DAKOT_BAFOAL"].ToString());
+            iOldDakotBafoal = iDakotBafoal;
             iKmVisa = System.Convert.IsDBNull(dr["KM_VISA"]) ? 0 : int.Parse(dr["KM_VISA"].ToString());
             dCardLastUpdate = System.Convert.IsDBNull(dr["taarich_idkun_acharon_peilut"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon_peilut"].ToString());
             sSnifTnua = dr["snif_tnua"].ToString();
@@ -500,7 +512,7 @@ namespace KdsBatch
                     if (iKodElement != 0)                    
                         iMakatValid = ((drElementim.Length > 0) ? 0 : 1);
 
-                    sMakatNesia = lMakatNesia.ToString().Substring(0, 3);
+                    sMakatNesia = lMakatNesia.ToString().Substring(0, 3);                     
                     sMakatDescription = ((drElementim.Length > 0)?drElementim[0]["teur_element"].ToString():"");
                     bElementHachanatMechona = ((sMakatNesia.Equals(KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()))
                                                 || (sMakatNesia.Equals(KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()))

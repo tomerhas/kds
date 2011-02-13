@@ -21,6 +21,7 @@ namespace KdsBatch
         public DateTime dFullShatHatchala;
         public DateTime dOldFullShatHatchala;
         public DateTime dFullShatGmar;
+        public DateTime dOldFullShatGmar;
         public string sShatHatchala;
         public DateTime  dSidurDate;
         public string sSidurDay;
@@ -28,12 +29,19 @@ namespace KdsBatch
         public String sShatGmarLetashlum;
         public DateTime dFullShatHatchalaLetashlum;
         public DateTime dFullShatGmarLetashlum;
+        public DateTime dOldFullShatHatchalaLetashlum;
+        public DateTime dOldFullShatGmarLetashlum;
         public string sVisa;
         public string sChariga;
+        public string sOldChariga;
         public string sPitzulHafsaka;
+        public string sOldPitzulHafsaka;
+
         public int iZakayLepizul;
         public string sOutMichsa;
+        public string sOldOutMichsa;
         public string sHashlama;
+        public string sOldHashlama;
         public int iSugHashlama;
         public int iMivtzaVisa;
         public int iTafkidVisa;
@@ -41,6 +49,7 @@ namespace KdsBatch
         public bool bHashlamaExists;
         //public int iKmVisaLepremia;
         public int iLoLetashlum;
+        public int iOldLoLetashlum;
         public int iMisparShiureyNehiga;
         public string sShatHatchalaMuteret;
         public bool bShatHatchalaMuteretExists;
@@ -62,7 +71,7 @@ namespace KdsBatch
         public bool bZakaiLeCharigaExists;
         public string sZakayLezamanNesia;
         public bool bZakayLezamanNesiaExists;
-        public string sHashlamaKod;
+        public string sHashlamaKod;       
         public bool bHashlamaKodExists;
         public string sShaonNochachut;
         public bool bShaonNochachutExists;
@@ -106,7 +115,9 @@ namespace KdsBatch
         public bool bSidurTafkid = false;
         public int iSugSidurRagil;
         public int iKodSibaLedivuchYadaniIn;
+        public int iOldKodSibaLedivuchYadaniIn;
         public int iKodSibaLedivuchYadaniOut;
+        public int iOldKodSibaLedivuchYadaniOut;
         public int iKodSibaLoLetashlum;
         public int iMezakeNesiot;
         public string sKizuzAlPiHatchalaGmar;
@@ -191,27 +202,33 @@ namespace KdsBatch
             sShatHatchalaLetashlum = (System.Convert.IsDBNull(dr["shat_hatchala_letashlum"]) ? "" : DateTime.Parse(dr["shat_hatchala_letashlum"].ToString()).ToString("HH:mm"));
 
             dFullShatHatchalaLetashlum = System.Convert.IsDBNull(dr["shat_hatchala_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala_letashlum"].ToString());
-
+            dOldFullShatHatchalaLetashlum=dFullShatHatchalaLetashlum; 
             sShatGmarLetashlum = (System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? "" : DateTime.Parse(dr["shat_gmar_letashlum"].ToString()).ToString("HH:mm"));
 
             if (dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
                 sShatHatchalaLetashlum = "";
 
             dFullShatGmarLetashlum = System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum"].ToString());
+            dOldFullShatGmarLetashlum = dFullShatGmarLetashlum;
 
             dSidurDate = (DateTime)dr["taarich"];
             sSidurDay = dr["iDay"].ToString();
             sVisa = dr["yom_visa"].ToString();
             sChariga = dr["Chariga"].ToString();
+            sOldChariga = sChariga;
             sPitzulHafsaka = dr["Pitzul_Hafsaka"].ToString();//(System.Convert.IsDBNull(dr["Pitzul_Hafsaka"]) ? 0 : int.Parse(dr["Pitzul_Hafsaka"].ToString()));
+            sOldPitzulHafsaka = sPitzulHafsaka;
             iZakayLepizul = (System.Convert.IsDBNull(dr["zakay_lepizul"]) ? 0 : int.Parse(dr["zakay_lepizul"].ToString()));
             sOutMichsa = dr["out_michsa"].ToString();
+            sOldOutMichsa = sOutMichsa;
             sHashlama = dr["hashlama"].ToString();//(System.Convert.IsDBNull(dr["hashlama"]) ? 0 : int.Parse(dr["Hashlama"].ToString()));
+            sOldHashlama = sHashlama;
             bHashlamaKodExists = !(String.IsNullOrEmpty(dr["hashlama"].ToString()));
             iSugHashlama = (System.Convert.IsDBNull(dr["sug_hashlama"]) ? 0 : int.Parse(dr["sug_hashlama"].ToString()));
             bHashlamaExists = !(String.IsNullOrEmpty(dr["Hashlama"].ToString()));
             //iKmVisaLepremia = (System.Convert.IsDBNull(dr["Km_Visa_Lepremia"]) ? 0 : int.Parse(dr["Km_Visa_Lepremia"].ToString()));
             iLoLetashlum = (System.Convert.IsDBNull(dr["Lo_Letashlum"]) ? 0 : int.Parse(dr["Lo_Letashlum"].ToString()));
+            iOldLoLetashlum = iLoLetashlum;
             iShayahLeyomKodem = (System.Convert.IsDBNull(dr["shayah_leyom_kodem"]) ? 0 : int.Parse(dr["shayah_leyom_kodem"].ToString()));
             iMisparShiureyNehiga = (System.Convert.IsDBNull(dr["mispar_shiurey_nehiga"]) ? 0 : int.Parse(dr["mispar_shiurey_nehiga"].ToString()));
             //iMikumShaonKnisa =(dr["Mikum_ShaonKnisa"] == null ? 0 : int.Parse(dr["Mikum_ShaonKnisa"].ToString()));
@@ -256,7 +273,7 @@ namespace KdsBatch
             bSidurInSummerExists = !(String.IsNullOrEmpty(dr["sidur_in_summer"].ToString()));
             sNoOtoNo = dr["no_oto_no"].ToString();
             bNoOtoNoExists = !(String.IsNullOrEmpty(dr["no_oto_no"].ToString()));
-            sHashlamaKod = dr["hashlama_kod"].ToString();
+            sHashlamaKod = dr["hashlama_kod"].ToString();           
             sShaonNochachut = dr["shaon_nochachut"].ToString();
             bShaonNochachutExists = !(String.IsNullOrEmpty(dr["shaon_nochachut"].ToString()));
             sLoLetashlumAutomati = dr["lo_letashlum_automati"].ToString();
@@ -281,7 +298,9 @@ namespace KdsBatch
             bSidurMyuhad = IsSidurMyuhad(iMisparSidur.ToString());
             sZakayMichutzLamichsa = dr["zakay_michutz_lamichsa"].ToString(); //מאפיין 25
             iKodSibaLedivuchYadaniIn = System.Convert.IsDBNull(dr["kod_siba_ledivuch_yadani_in"]) ? 0 : int.Parse(dr["kod_siba_ledivuch_yadani_in"].ToString());
+            iOldKodSibaLedivuchYadaniIn = iKodSibaLedivuchYadaniIn;
             iKodSibaLedivuchYadaniOut = System.Convert.IsDBNull(dr["kod_siba_ledivuch_yadani_out"]) ? 0 : int.Parse(dr["kod_siba_ledivuch_yadani_out"].ToString());
+            iOldKodSibaLedivuchYadaniOut = iKodSibaLedivuchYadaniOut;
             iKodSibaLoLetashlum = System.Convert.IsDBNull(dr["kod_siba_lo_letashlum"]) ? 0 : int.Parse(dr["kod_siba_lo_letashlum"].ToString());
             iMezakeNesiot = System.Convert.IsDBNull(dr["mezake_nesiot"]) ? 0 : int.Parse(dr["mezake_nesiot"].ToString());
             iMezakeHalbasha = System.Convert.IsDBNull(dr["mezake_halbasha"]) ? 0 : int.Parse(dr["mezake_halbasha"].ToString());
@@ -480,17 +499,22 @@ namespace KdsBatch
         sShatGmarLetashlum = (System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? "" : DateTime.Parse(dr["shat_gmar_letashlum"].ToString()).ToString("HH:mm"));
 
         dFullShatGmarLetashlum = System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum"].ToString());
-
+        dOldFullShatGmarLetashlum =dFullShatGmarLetashlum;
         dSidurDate = (DateTime)dr["taarich"];
         
         sVisa = dr["yom_visa"].ToString();
         sChariga = dr["Chariga"].ToString();
+        sOldChariga = sChariga;
         sPitzulHafsaka = dr["Pitzul_Hafsaka"].ToString();
+        sOldPitzulHafsaka = sPitzulHafsaka;
         sOutMichsa = dr["out_michsa"].ToString();
+        sOldOutMichsa = sOutMichsa;
         sHashlama = dr["hashlama"].ToString();
+        sOldHashlama = sHashlama;
         iSugHashlama = (System.Convert.IsDBNull(dr["sug_hashlama"]) ? 0 : int.Parse(dr["sug_hashlama"].ToString()));
         bHashlamaExists = !(String.IsNullOrEmpty(dr["Hashlama"].ToString()));
         iLoLetashlum = (System.Convert.IsDBNull(dr["Lo_Letashlum"]) ? 0 : int.Parse(dr["Lo_Letashlum"].ToString()));
+        iOldLoLetashlum = iLoLetashlum;
         iShayahLeyomKodem = (System.Convert.IsDBNull(dr["shayah_leyom_kodem"]) ? 0 : int.Parse(dr["shayah_leyom_kodem"].ToString()));
         iMisparShiureyNehiga = (System.Convert.IsDBNull(dr["mispar_shiurey_nehiga"]) ? 0 : int.Parse(dr["mispar_shiurey_nehiga"].ToString()));
       
@@ -498,7 +522,11 @@ namespace KdsBatch
         sMikumShaonYetzia = dr["mikum_shaon_yetzia"].ToString();
        
         iKodSibaLedivuchYadaniIn = System.Convert.IsDBNull(dr["kod_siba_ledivuch_yadani_in"]) ? 0 : int.Parse(dr["kod_siba_ledivuch_yadani_in"].ToString());
+        iOldKodSibaLedivuchYadaniIn = iKodSibaLedivuchYadaniIn;
+
         iKodSibaLedivuchYadaniOut = System.Convert.IsDBNull(dr["kod_siba_ledivuch_yadani_out"]) ? 0 : int.Parse(dr["kod_siba_ledivuch_yadani_out"].ToString());
+        iOldKodSibaLedivuchYadaniOut = iKodSibaLedivuchYadaniOut;
+
         iKodSibaLoLetashlum = System.Convert.IsDBNull(dr["kod_siba_lo_letashlum"]) ? 0 : int.Parse(dr["kod_siba_lo_letashlum"].ToString());
         iMezakeNesiot = System.Convert.IsDBNull(dr["mezake_nesiot"]) ? 0 : int.Parse(dr["mezake_nesiot"].ToString());
         iMezakeHalbasha = System.Convert.IsDBNull(dr["mezake_halbasha"]) ? 0 : int.Parse(dr["mezake_halbasha"].ToString());
@@ -531,21 +559,26 @@ namespace KdsBatch
             sShatHatchala = oSidurKodem.dFullShatHatchala.ToString("HH:mm");
             sShatHatchalaLetashlum = oSidurKodem.sShatHatchalaLetashlum;
             dFullShatHatchalaLetashlum = oSidurKodem.dFullShatHatchalaLetashlum;
+            dOldFullShatHatchalaLetashlum = dFullShatHatchalaLetashlum;  
             sShatGmarLetashlum = oSidurKodem.dFullShatGmarLetashlum.ToString("HH:mm");
             dFullShatGmarLetashlum = oSidurKodem.dFullShatGmarLetashlum;
-
+            dOldFullShatGmarLetashlum = dFullShatGmarLetashlum;
             dSidurDate = dTaarich;
             sSidurDay = (dTaarich.GetHashCode() + 1).ToString();
 
             sVisa = oSidurKodem.sVisa;
             sChariga = oSidurKodem.sChariga;
+            sOldChariga = sChariga;
             sPitzulHafsaka = oSidurKodem.sPitzulHafsaka;
+            sOldPitzulHafsaka = sPitzulHafsaka;
             iZakayLepizul = oSidurKodem.iZakayLepizul;
             sOutMichsa = oSidurKodem.sOutMichsa;
-            
+            sOldOutMichsa = sOutMichsa;
             sHashlama = oSidurKodem.sHashlama;
+            sOldHashlama = sHashlama;
             bHashlamaExists = oSidurKodem.bHashlamaExists;
             iLoLetashlum = oSidurKodem.iLoLetashlum;
+            iOldLoLetashlum = iLoLetashlum;
             iShayahLeyomKodem = oSidurKodem.iShayahLeyomKodem;
             iMisparShiureyNehiga =oSidurKodem.iMisparShiureyNehiga;
             iSugYom = oSidurKodem.iSugYom;
@@ -602,7 +635,7 @@ namespace KdsBatch
                 bSidurInSummerExists = !(String.IsNullOrEmpty(dr["sidur_in_summer"].ToString()));
                 sNoOtoNo = dr["no_oto_no"].ToString();
                 bNoOtoNoExists = !(String.IsNullOrEmpty(dr["no_oto_no"].ToString()));
-                sHashlamaKod = dr["hashlama_kod"].ToString();
+                sHashlamaKod = dr["hashlama_kod"].ToString();               
                 sShaonNochachut = dr["shaon_nochachut"].ToString();
                 sLoLetashlumAutomati = dr["lo_letashlum_automati"].ToString();
                 bLoLetashlumAutomatiExists = !(String.IsNullOrEmpty(dr["lo_letashlum_automati"].ToString()));
@@ -664,7 +697,7 @@ namespace KdsBatch
         dSidurDate = dTaarich;
         sSidurDay = (dTaarich.GetHashCode() + 1).ToString();
         sPitzulHafsaka = "0";
-
+        sOldPitzulHafsaka = "0";
         bSidurMyuhad = IsSidurMyuhad(iMisparSidur.ToString());
 
         if (bSidurMyuhad)
@@ -696,6 +729,7 @@ namespace KdsBatch
             sNoOtoNo = dr["no_oto_no"].ToString();
             bNoOtoNoExists = !(String.IsNullOrEmpty(dr["no_oto_no"].ToString()));
             sHashlamaKod = dr["hashlama_kod"].ToString();
+            
             sShaonNochachut = dr["shaon_nochachut"].ToString();
             sLoLetashlumAutomati = dr["lo_letashlum_automati"].ToString();
             bLoLetashlumAutomatiExists = !(String.IsNullOrEmpty(dr["lo_letashlum_automati"].ToString()));
