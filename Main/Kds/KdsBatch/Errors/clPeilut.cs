@@ -130,7 +130,7 @@ namespace KdsBatch
             iKisuyTor = oPeilutOld.iKisuyTor;
             iOldKisuyTor = iKisuyTor; 
             dFullShatYetzia =oPeilutOld.dFullShatYetzia;
-            dOldFullShatYetzia = oPeilutOld.dOldFullShatYetzia;
+            dOldFullShatYetzia = oPeilutOld.dFullShatYetzia;
             sShatYetzia = oPeilutOld.sShatYetzia;
             
             lOtoNo =oPeilutOld.lOtoNo;

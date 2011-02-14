@@ -51,6 +51,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _NumOfHashlama;
     private DateTime _CardDate;
     private DateTime _FullShatHatchala;
+    private DateTime _FullOldShatHatchala;
     private bool _HasSaveCard = false;
     private DataTable _dtSugSidur;
     private DataTable _dtSidurim;
@@ -117,11 +118,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private bool _ProfileRashemet;
     private int _MisparIshiIdkunRashemet;
 
-    //// Delegate declaration
-    //public delegate void OnButtonClick(string strValue);
+    // Delegate declaration
+    public delegate void OnButtonClick(string strValue);
 
-    //// Event declaration
-    //public event OnButtonClick btnHandler;
+    // Event declaration
+    public event OnButtonClick btnHandler;
 
 
     private enum enDayType
@@ -502,6 +503,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             MisparSidur = oSidur.iMisparSidur;
             ShatHatchala = oSidur.sShatHatchala;
             FullShatHatchala = oSidur.dFullShatHatchala;
+            FullOldShatHatchala = oSidur.dOldFullShatHatchala;
             //Create Sidur
             hTable = BuildOneSidur(ref htEmployeeDetails, oSidur, iIndex);
 
@@ -1303,7 +1305,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //    btnHandler(string.Empty);
 
 
-        AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));        
+        AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));
+        if (btnHandler != null)
+            btnHandler(string.Empty);
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {
@@ -1644,7 +1648,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
                 oDayToAdd = ((TextBox)(this.FindControl("txtDayAdd" + iIndex)));
                 sTmp = oShatGmar.Text;
-                dSidurDate = DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
+                dSidurDate = DateTime.Parse(oSidur.dOldFullShatGmar.ToShortDateString() + " " + sTmp);//DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
                 oSidur.sShatGmar = sTmp;
                 if (sTmp != string.Empty)
                     oSidur.dFullShatGmar = DateTime.Parse(_CardDate.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));
@@ -1661,11 +1665,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     oSidur.iKodSibaLedivuchYadaniOut = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
                     sTmp = ((TextBox)(this.FindControl("txtSHL" + iIndex))).Text;
-                    oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, _CardDate);
+                    oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
 
                     sTmp = ((TextBox)(this.FindControl("txtSGL" + iIndex))).Text;
-                    oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, _CardDate);
+                    oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
                     oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
 
                     oDDL = (DropDownList)this.FindControl("ddlException" + iIndex);
@@ -1811,7 +1815,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
                 _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
                 _Peilut.iBitulOHosafa =  int.Parse(((TextBox)oGridRow.Cells[COL_CANCEL_PEILUT].Controls[0]).Text);
-                
+                if (_Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew)
+                   _Peilut.iKisuyTorMap = _Peilut.iKisuyTor;
  
                 arrKnisaVal = oGridRow.Cells[COL_KNISA].Text.Split(",".ToCharArray());
                 iMisparKnisa = int.Parse(arrKnisaVal[0]);
@@ -3694,9 +3699,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onChange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2); ");
             
-            AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
+            //AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
             //AddAttribute(oTextBox, "OldV", oTextBox.Text);
-            oTextBox.Attributes["OrgDate"] = oSidur.dOldFullShatGmar.ToShortDateString();
+            //oTextBox.Attributes["OrgDate"] = oSidur.dOldFullShatGmar.ToShortDateString();
             oTextBox.ToolTip = "תאריך גמר הסידור הוא: " + oSidur.dFullShatGmar.ToShortDateString();
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
           
@@ -4062,7 +4067,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                     SetShatYetiza(e, bSidurActive, bPeilutActive, iSidurIndex, bElementHachanatMechona);
 
-                    iMakatType = int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
+                    iMakatType =  int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
                     oMakatType = (clKavim.enMakatType)iMakatType;
                     bEnabled = ((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mNamak));
                     
@@ -4677,7 +4682,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Shat_yetzia"))
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     else
                     {
@@ -5387,7 +5392,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         get { return _FullShatHatchala; }
         
     }
+    public DateTime FullOldShatHatchala
+    {
+        set { _FullOldShatHatchala = value; }
+        get { return _FullOldShatHatchala; }
 
+    }
     public string ShatHatchala
     {
         set

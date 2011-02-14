@@ -176,9 +176,11 @@ namespace KdsBatch
             sShatGmar = (System.Convert.IsDBNull(dr["Shat_gmar"]) ? "" : DateTime.Parse(dr["Shat_gmar"].ToString()).ToString("HH:mm"));
             if (String.IsNullOrEmpty(sShatGmar)){            
                 dFullShatGmar = DateTime.MinValue;
+                dOldFullShatGmar = dFullShatGmar; 
             }
             else{            
                 dFullShatGmar = DateTime.Parse(dr["Shat_gmar"].ToString());
+                dOldFullShatGmar = dFullShatGmar; 
             }
             //שעת גמר 00:00 זה חצות, במקרה של NULL יהיה ערך ריק
             //if (!string.IsNullOrEmpty(sShatGmar))
@@ -481,10 +483,12 @@ namespace KdsBatch
         if (String.IsNullOrEmpty(sShatGmar))
         {
             dFullShatGmar = DateTime.MinValue;
+            dOldFullShatGmar = dFullShatGmar; 
         }
         else
         {
             dFullShatGmar = DateTime.Parse(dr["Shat_gmar"].ToString());
+            dOldFullShatGmar = dFullShatGmar; 
         }
     
         dFullShatHatchala = DateTime.Parse(dr["Shat_Hatchala"].ToString());
@@ -554,6 +558,7 @@ namespace KdsBatch
 
             sShatGmar = oSidurKodem.dFullShatGmar.ToString("HH:mm");
             dFullShatGmar = oSidurKodem.dFullShatGmar;
+            dOldFullShatGmar = dFullShatGmar; 
 
             dFullShatHatchala = oSidurKodem.dFullShatHatchala;
             sShatHatchala = oSidurKodem.dFullShatHatchala.ToString("HH:mm");

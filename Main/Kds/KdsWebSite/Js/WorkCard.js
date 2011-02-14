@@ -540,7 +540,8 @@
        _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurInx, '0', 3));
        if (_Peilut != null){
            for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
-               if (_Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild.value == "")                   
+               if ((_Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild.value == "")
+                  && (_Peilut.firstChild.childNodes[j].cells[_COL_CANCEL_PEILUT].childNodes[0].value != "1"))                  
                    return false;                
            }
        }

@@ -195,8 +195,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetErrorInPage();
                     break;
             }
-          
-           
+
+
             //התייצבות
             bParticipationAllowed = SetParticipation();
             
@@ -435,7 +435,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                 ////אישורים               
                 GetApproval();
-               // lstSidurim.btnHandler += new Modules_UserControl_ucSidurim.OnButtonClick(lstSidurim_btnHandler);
+                lstSidurim.btnHandler += new Modules_UserControl_ucSidurim.OnButtonClick(lstSidurim_btnHandler);
                 //if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))
                 if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))                
                 {                    
@@ -979,7 +979,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
     private void SetGeneralData(clBatchManager oBatchManager)
     {
-        if ((!oBatchManager.IsExecuteErrors) && (oBatchManager.CardStatus!= clGeneral.enCardStatus.Calculate)) 
+        if (oBatchManager.CardStatus!= clGeneral.enCardStatus.Calculate) 
         {
             oBatchManager.InitGeneralData();
         }
@@ -2185,17 +2185,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //    MPEErrors.Hide();
     //}
 
-      //void lstSidurim_btnHandler(string strValue)
-      //{
-      //    if (btnUpdateCard.Enabled)
-      //    {
-      //        SaveCard();
-      //        oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-      //        lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
-      //        lstSidurim.ErrorsList = oBatchManager.dtErrors;
-      //        Session["Errors"] = oBatchManager.dtErrors;
-      //    }
-      //}
+    void lstSidurim_btnHandler(string strValue)
+    {
+        bInpuDataResult = true;
+        //if (btnUpdateCard.Enabled)
+        //{
+        //    SaveCard();
+        //    oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+        //    lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+        //    lstSidurim.ErrorsList = oBatchManager.dtErrors;
+        //    Session["Errors"] = oBatchManager.dtErrors;
+        //}
+    }
     protected bool SaveCard()
     {
         //שמירת כרטיס עבודה
@@ -2449,9 +2450,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             _ObjIdkunRashemet.MISPAR_ISHI = iMisparIshi;
             _ObjIdkunRashemet.MISPAR_SIDUR = iMisparSidur;
             _ObjIdkunRashemet.SHAT_HATCHALA = dShatHatchala;
-            _ObjIdkunRashemet.NEW_SHAT_HATCHALA = dShatHatchala;
-            _ObjIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-            _ObjIdkunRashemet.NEW_SHAT_YETZIA = dShatYetiza;
+            _ObjIdkunRashemet.NEW_SHAT_HATCHALA =  dShatHatchala;
+            _ObjIdkunRashemet.SHAT_YETZIA = _Peilut.oPeilutStatus==clPeilut.enPeilutStatus.enNew ? _Peilut.dFullShatYetzia : dShatYetiza;
+            _ObjIdkunRashemet.NEW_SHAT_YETZIA = _Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew ? _Peilut.dFullShatYetzia : dShatYetiza;
             _ObjIdkunRashemet.MISPAR_KNISA = iMisparKnisa;
             _ObjIdkunRashemet.GOREM_MEADKEN = int.Parse(LoginUser.UserInfo.EmployeeNumber);
         }
@@ -2575,7 +2576,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         GridView oGridView;
         TextBox _Txt;
         DropDownList _DDL;
-        HtmlInputCheckBox _Chk;
+        //HtmlInputCheckBox _Chk;
         Label _Lbl = new Label();
         HyperLink _HypLnk = new HyperLink();
         int iMisarSidur;
@@ -2619,7 +2620,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), iMisarSidur, dShatHatchala, DateTime.MinValue, 0, ref _objIdkunRashemet))
                 {
                     _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                    _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                    //_objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                     _objIdkunRashemet.UPDATE_OBJECT = 1;
                     oCollIdkunRashemet.Add(_objIdkunRashemet);
                 }
@@ -2631,7 +2632,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (FillObjIdkunRashemet(oSidur, "SHAT_GMAR", iMisarSidur, dShatHatchala, ref  _objIdkunRashemet))                                       
                 {
                     _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                    _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                    //_objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                     _objIdkunRashemet.UPDATE_OBJECT = 1;
                     oCollIdkunRashemet.Add(_objIdkunRashemet);
                 }
@@ -2646,7 +2647,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         if (FillObjIdkunRashemet(oSidur, "KOD_SIBA_LEDIVUCH_YADANI_IN", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                         {
                             _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                            _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                         //   _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                             _objIdkunRashemet.UPDATE_OBJECT = 1;
                             oCollIdkunRashemet.Add(_objIdkunRashemet);
                         }
@@ -2663,7 +2664,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         if (FillObjIdkunRashemet(oSidur, "KOD_SIBA_LEDIVUCH_YADANI_OUT", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                         {
                             _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                            _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                           // _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                             _objIdkunRashemet.UPDATE_OBJECT = 1;
                             oCollIdkunRashemet.Add(_objIdkunRashemet);
                         }
@@ -2678,7 +2679,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur,  "SHAT_HATCHALA_LETASHLUM", iMisarSidur, dShatHatchala,ref _objIdkunRashemet))
                     {
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                       // _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2689,7 +2690,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "SHAT_GMAR_LETASHLUM", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                        //_objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2699,7 +2700,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "KOD_SIBA_LEDIVUCH_YADANI_IN", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2708,7 +2709,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "KOD_SIBA_LEDIVUCH_YADANI_OUT", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                    
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2717,7 +2718,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "CHARIGA", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                     
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2726,7 +2727,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "PITZUL_HAFSAKA", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                    
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2735,7 +2736,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "HASHLAMA", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                    
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2744,7 +2745,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "OUT_MICHSA", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                    
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                      //  _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2753,7 +2754,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (FillObjIdkunRashemet(oSidur, "LO_LETASHLUM", iMisarSidur, dShatHatchala, ref _objIdkunRashemet))
                     {                    
                         _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                        _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
+                       // _objIdkunRashemet.SHAT_HATCHALA = dShatHatchala; //orgin
                         _objIdkunRashemet.UPDATE_OBJECT = 1;
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
@@ -2810,20 +2811,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "KISUY_TOR"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex, "KISUY_TOR", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))                                                  
             {
-                _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
-                _objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-                _objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
            // if (FillObjIdkunRashemet(_TxtShatYetiza, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex,"SHAT_YETIZA", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             {
-                _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
-                _objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-                _objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
@@ -2832,10 +2833,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "OTO_NO"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex,"OTO_NO", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))                                      
             {
-                _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
-                _objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-                _objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
@@ -2843,10 +2844,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "MAKAT_NO"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex, "MAKAT_NO", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))  
             {
-                _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
-                _objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-                _objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
@@ -2854,10 +2855,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             if (FillObjIdkunRashemet(oSidur, iRowIndex, "DAKOT_BAFOAL", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))              
             {
-                _objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
-                _objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
-                _objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
-                _objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
+                //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
+                //_objIdkunRashemet.SHAT_YETZIA = dShatYetiza;
+                //_objIdkunRashemet.NEW_SHAT_YETZIA = dNewShatYetiza;
                 _objIdkunRashemet.UPDATE_OBJECT = 1;
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
@@ -2966,6 +2967,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         oObjPeluyotOvdim.UPDATE_OBJECT = 1;
 
         //נעדכן את ה-HashTable בערכים המקוריים
+        oPeilut.dFullShatYetzia = oObjPeluyotOvdim.NEW_SHAT_YETZIA;
         oPeilut.lOtoNo = oObjPeluyotOvdim.OTO_NO;
         oPeilut.lMakatNesia = oObjPeluyotOvdim.MAKAT_NESIA;
         oPeilut.iKisuyTor = oObjPeluyotOvdim.KISUY_TOR;
@@ -3540,7 +3542,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
                         oDayToAdd = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtDayAdd" + iIndex)));
                         sTmp = oShatGmar.Text;
-                        dSidurDate = DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
+                        dSidurDate = DateTime.Parse(oSidur.dOldFullShatGmar.ToShortDateString() + " " + sTmp); //DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
                        
                         if (sTmp != string.Empty)
                             oObjSidurimOvdimUpd.SHAT_GMAR = DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));
@@ -3557,10 +3559,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
                             sTmp = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSHL" + iIndex))).Text;
-                            oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, dDateCard);//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
+                            oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
 
                             sTmp = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSGL" + iIndex))).Text;
-                            oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, dDateCard);//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                            oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
 
                             oDDL = (DropDownList)this.FindControl("lstSidurim").FindControl("ddlException" + iIndex);
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);

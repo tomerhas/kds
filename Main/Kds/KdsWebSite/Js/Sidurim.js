@@ -77,8 +77,9 @@ var MKT_ELEMENT = 5;
         }
         if (root != null) {
             if (root.childNodes.length > 0) {
-                var _FirstChild = root.firstChild;
-                while ((_FirstChild != null) && (!bExist)) {
+                var _FirstChild = root.firstChild;           
+                document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<img  onclick='AddNesiaReka(" + document.getElementById(oRId).id + ",0,0);' NesiaReka='1' src='../../images/plus.jpg' style='border-width:0px;' />";
+                while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {
                         case "KISUY_TOR":
                             document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
@@ -903,7 +904,9 @@ var MKT_ELEMENT = 5;
             var MakatNesia = document.getElementById(iPeilutIndx.id).cells[_COL_MAKAT].childNodes[0].value;
             var OtoNo = document.getElementById(iPeilutIndx.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
             var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + CardDate + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo + "&dt=" + Date();
+            document.getElementById("divHourglass").style.display = 'block';
             res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:500px;dialogheight:380px;dialogtop:280px;dialogleft:340px;status:no;resizable:yes;');
+            document.getElementById("divHourglass").style.display = 'none';
             if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
                 document.getElementById("hidExecInputChg").value = "1";
                 bScreenChanged = false;
@@ -959,7 +962,8 @@ var MKT_ELEMENT = 5;
         var sPeilutShatYetiza = sMakatDetails.split(",")[2];
         if (sMakatEnd == '')
             alert('לא ניתן להשלים נסיעה ריקה');
-        else {          
+        else {
+            document.getElementById("divHourglass").style.display = 'block';          
             wsGeneral.AddNesiaReka(iMisparIshi,dDate,SidurId,SidurSH, sMakatStart, sMakatEnd, sShatYetiza, sPeilutDate, iMazanTichnun, lCarNum,sPeilutShatYetiza, callBackAddReka);
         }
      }
@@ -971,6 +975,7 @@ var MKT_ELEMENT = 5;
              RefreshBtn();
              __doPostBack('btnRefreshOvedDetails', '');
          }
+         document.getElementById("divHourglass").style.display = 'none';
      }     
      function GetMakatEnd(iPeilutIndex, lCarNum, iSidurIndex, iLastPeilut) {
         var CanAddReka;
