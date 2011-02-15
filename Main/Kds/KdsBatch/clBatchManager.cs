@@ -8671,6 +8671,7 @@ namespace KdsBatch
                         //oObjSidurimOvdimIns.BUTAL = oObjSidurimOvdimUpd.BUTAL;
                         oObjSidurimOvdimIns.SUG_HAZMANAT_VISA = oObjSidurimOvdimUpd.SUG_HAZMANAT_VISA;
                         oObjSidurimOvdimIns.SHAT_HITIATZVUT = oObjSidurimOvdimUpd.SHAT_HITIATZVUT;
+                        
                         if (!oObjSidurimOvdimUpd.SECTOR_VISAIsNull)
                         {
                             oObjSidurimOvdimIns.SECTOR_VISA = oObjSidurimOvdimUpd.SECTOR_VISA;
