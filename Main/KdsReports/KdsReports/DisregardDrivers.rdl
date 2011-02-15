@@ -76,7 +76,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.0405in</Width>
+              <Width>7.32717in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -596,6 +596,7 @@
                                         <rd:DefaultName>MISPAR_ISHI</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <TopBorder>
@@ -603,6 +604,7 @@
                                             <Style>Solid</Style>
                                           </TopBorder>
                                           <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
                                             <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
                                           </BottomBorder>
                                           <RightBorder>
@@ -616,6 +618,7 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -714,7 +717,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>= Trim(FormatDateTime(Fields!TAARICH.Value,2))</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value and Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value,"",Trim(FormatDateTime(Fields!TAARICH.Value,2)))</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -754,7 +757,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>="- " + Fields!DAYOFWEEK.Value</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value and Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value,"","- " + Fields!DAYOFWEEK.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -874,7 +877,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!SHAT_GMAR.Value,4)</Value>
+                                                <Value>=iif(FormatDateTime(Fields!SHAT_GMAR.Value,4)="00:00","", FormatDateTime(Fields!SHAT_GMAR.Value,4))</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -1195,10 +1198,8 @@
                               <Value>=Fields!MISPAR_ISHI.Value</Value>
                             </SortExpression>
                             <SortExpression>
-                              <Value>=Fields!TAARICH.Value</Value>
-                            </SortExpression>
-                            <SortExpression>
                               <Value>=Fields!SHAT_HATCHALA.Value</Value>
+                              <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
                           <Top>3.11508cm</Top>
@@ -1259,7 +1260,7 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Top>1.80071cm</Top>
-                          <Left>13.29571cm</Left>
+                          <Left>13.2957cm</Left>
                           <Height>0.6cm</Height>
                           <Width>1.44834cm</Width>
                           <ZIndex>4</ZIndex>
@@ -1313,8 +1314,9 @@
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
+        <Top>1.20588in</Top>
         <Height>2.39485in</Height>
-        <Width>7.0405in</Width>
+        <Width>7.32717in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1377,11 +1379,14 @@
           </Subreport>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>6.08291cm</Top>
-        <Left>0.03443cm</Left>
+        <Top>0cm</Top>
+        <Left>0.03445cm</Left>
         <Height>2.76458cm</Height>
         <Width>17.88287cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsDisregardDrivers")&gt;0 ,true ,false)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1389,7 +1394,7 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>8.84749cm</Height>
+    <Height>9.14586cm</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1421,7 +1426,7 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>17.9173cm</Width>
+  <Width>18.61103cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

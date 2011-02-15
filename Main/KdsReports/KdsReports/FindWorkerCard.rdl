@@ -1924,6 +1924,7 @@
                       </Style>
                     </Textbox>
                     <ColSpan>16</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -2220,12 +2221,6 @@
     <ReportParameter Name="P_DAYTYPE">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>"1"</Value>
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>P DAYTYPE</Prompt>
     </ReportParameter>
   </ReportParameters>
