@@ -1537,21 +1537,21 @@ public class wsGeneral : System.Web.Services.WebService
         string sWriter = "";
         DateTime dSidurStartHour, dActiveStartHour;        
         bool bProfileRashemet = (bool)Session["ProfileRashemet"];
-        DataTable dt = (DataTable)Session["Errors"];
+      //  DataTable dt = (DataTable)Session["Errors"];
         switch (iLevel)
         {
             case 1:
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), sFieldName);
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, iMisparIshi, DateTime.Parse(sCardDate), sFieldName);
                 break;
             case 2:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), 
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, iMisparIshi, DateTime.Parse(sCardDate), 
                      iSidurNumber, dSidurStartHour, sFieldName);
                 break;
             case 3:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
                 dActiveStartHour = DateTime.Parse(sPeilutShatYetiza);
-                ds = clDefinitions.GetErrorsForFields(bProfileRashemet, dt, iMisparIshi, DateTime.Parse(sCardDate), 
+                ds = clDefinitions.GetErrorsForFields(bProfileRashemet,  iMisparIshi, DateTime.Parse(sCardDate), 
                      iSidurNumber, dSidurStartHour, dActiveStartHour, iMisparKnisa, sFieldName);
                 break;
         }
