@@ -29,10 +29,6 @@
       <FullPath>DescriptionAllComponents.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>DisregardDrivers.rdl</Name>
-      <FullPath>DisregardDrivers.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>DisregardDriversVisot.rdl</Name>
       <FullPath>DisregardDriversVisot.rdl</FullPath>
     </ProjectItem>
@@ -145,6 +141,10 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DisregardDrivers.rdl</Name>
+      <FullPath>DisregardDrivers.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

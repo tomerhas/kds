@@ -11,8 +11,9 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>= "לכבוד מנהל סניף " &amp; Parameters!p_SNIF.Value</Value>
+                    <Value>= "לכבוד מנהל סניף " &amp; Replace(Parameters!p_SNIF.Value,"סניף","")</Value>
                     <Style>
+                      <TextDecoration>Underline</TextDecoration>
                       <Language>he-IL</Language>
                     </Style>
                   </TextRun>
@@ -83,6 +84,7 @@
                   <TextRun>
                     <Value>="באחריותך :"</Value>
                     <Style>
+                      <TextDecoration>Underline</TextDecoration>
                       <Language>he-IL</Language>
                     </Style>
                   </TextRun>
@@ -93,7 +95,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.45521cm</Top>
+            <Top>1.49048cm</Top>
             <Left>0.30904cm</Left>
             <Height>0.55562cm</Height>
             <Width>14.68437cm</Width>
@@ -116,7 +118,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="1.למנוע תופעות חריגות אלו."</Value>
+                    <Value>="  1. " &amp; "למנוע תופעות חריגות אלו."</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
@@ -128,8 +130,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.01083cm</Top>
-            <Left>0.30904cm</Left>
+            <Top>2.0461cm</Top>
+            <Left>0.30903cm</Left>
             <Height>0.55562cm</Height>
             <Width>13.89062cm</Width>
             <ZIndex>3</ZIndex>
@@ -151,7 +153,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="2. לוודא העברת כ""ע / דיווח למחלקת רישום באיזורך."</Value>
+                    <Value>="  2. " &amp; " לוודא העברת כ""ע / דיווח למחלקת רישום באיזורך."</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
@@ -282,7 +284,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="לידיעתך ולטיפולך בהתאם"</Value>
+                    <Value>="לידיעתך ולטיפולך בהתאם."</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
@@ -297,7 +299,7 @@
             <Top>3.74826cm</Top>
             <Left>0.30904cm</Left>
             <Height>0.55562cm</Height>
-            <Width>15.37229cm</Width>
+            <Width>14.1552cm</Width>
             <ZIndex>8</ZIndex>
             <Style>
               <Border>
@@ -317,7 +319,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="3.להתאים שיבוץ הנהג והרכב לנסיעות."</Value>
+                    <Value>="  3. " &amp; " להתאים שיבוץ הנהג והרכב לנסיעות."</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
