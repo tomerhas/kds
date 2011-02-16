@@ -1916,7 +1916,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         if (bInpuDataResult)
         {
-            hidExecInputChg.Value = "0";
+//            hidExecInputChg.Value = "0";
             if (hidSave.Value.Equals("1"))
             {
                 RunBatchFunctions();
@@ -2615,7 +2615,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 dShatHatchala = _objIdkunRashemet.SHAT_HATCHALA;
                
                 oSidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iIndex]);
-              
+                
                 if (FillObjIdkunRashemet(oSidur, "SHAT_HATCHALA", iMisarSidur, dShatHatchala, ref  _objIdkunRashemet))   
                 //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), iMisarSidur, dShatHatchala, DateTime.MinValue, 0, ref _objIdkunRashemet))
                 {
@@ -3694,6 +3694,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oObjSidurimOvdimIns = SplitSidur(ref oObjSidurimOvdimUpd, ref oSidur);
                             oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
                         }
+                        oSidur.dFullShatHatchala = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
                         oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
                         oSidur.iKodSibaLedivuchYadaniIn = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
                         oSidur.iKodSibaLedivuchYadaniOut = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;

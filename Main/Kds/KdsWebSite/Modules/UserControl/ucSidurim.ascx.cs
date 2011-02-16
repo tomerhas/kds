@@ -800,6 +800,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot["Makat_Description"] = oPeilut.sMakatDescription;
                 drPeilutyot["makat_shilut"] = oPeilut.sShilut;
                 drPeilutyot["Shirut_type_Name"] = oPeilut.sSugShirutName;
+               
                 drPeilutyot["oto_no"] = oPeilut.lOtoNo;
                 drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
                 drPeilutyot["makat_nesia"] = oPeilut.lMakatNesia;
@@ -821,6 +822,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
                 }
 
+                if ((!oPeilut.bBusNumberMustExists) && (int.Parse(drPeilutyot["makat_type"].ToString()) == clKavim.enMakatType.mElement.GetHashCode()))
+                {
+                    oPeilut.lOtoNo = 0;
+                    oPeilut.lOldOtoNo = 0;
+                    drPeilutyot["oto_no"] = 0;
+                    drPeilutyot["old_oto_no"] =0;
+                }
                 drPeilutyot["PeilutStatus"] = enPeilutStatus.enValid.GetHashCode();                
                 dtPeilutyot.Rows.Add(drPeilutyot);
             }
@@ -1810,6 +1818,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                
                 _Peilut.lOtoNo = ((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text == "" ? 0 : long.Parse(((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text);
                 _Peilut.iKisuyTor = (int)(dblKisuyTor);
+                
                 _Peilut.dFullShatYetzia = dShatYetiza;
                 _Peilut.sShatYetzia = oShatYetiza.Text;              
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
@@ -4423,13 +4432,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox;
         CustomValidator vlMakatNumber;
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
-        DateTime dShatYetiza;        
+        DateTime dShatYetiza, dOldShatYetiza;        
         HtmlTableCell hCell = new HtmlTableCell();
         bool bIdkunRashemet=false;
         int iMisparKnisa;
 
         try
         {
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
             oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
@@ -4475,7 +4485,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Makat_nesia"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Makat_nesia"))
                     {
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }
@@ -4506,7 +4516,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox;
         CustomValidator vldCarNumber;
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
-        DateTime dShatYetiza;
+        DateTime dShatYetiza, dOldShatYetiza;
         bool  bIdkunRashemet=false;
         String sPeilutKey;
         HtmlTableCell hCell = new HtmlTableCell();
@@ -4555,6 +4565,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt = ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]));
             sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0]));
             string[] arrKnisaVal;
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
@@ -4565,15 +4576,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //רק לאלמנטים
             if ((!bBusMustOtoNumber) && (oMakatType== clKavim.enMakatType.mElement)){
                 ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Text = "";
-               // ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
+                //((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0])).Attributes["OldV"] = "";
             }
                 
             long lMakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
             oTxt.Attributes.Add("MustOtoNum", IsPeilutMustOtoNumber(lMakat, bBusMustOtoNumber).GetHashCode().ToString()); 
             switch (_StatusCard)
             {
-                case clGeneral.enCardStatus.Error:                    
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))
+                case clGeneral.enCardStatus.Error:
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))
                     {
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }
@@ -4687,14 +4698,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     else
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dOldShatYetiza, 0, ref oTxt);
+                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt);
                     }
                     break;
                 case clGeneral.enCardStatus.Valid:
                     //במידה והכרטיס תקין נבדוק אישורים                  
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, dSidurShatHatchala, dOldShatYetiza, 0, ref oTxt);
+                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt);
                     }
                     break;
             }
@@ -4711,14 +4722,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         CustomValidator vldCustomValidator;
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
         TextBox oTxt;
-        string sTargetControlId,  sID,sClientScriptFunction;        
-        DateTime dShatYetiza;
+        string sTargetControlId,  sID,sClientScriptFunction;
+        DateTime dShatYetiza, dOldShatYetiza;
         HtmlTableCell hCell = new HtmlTableCell();
         bool bIdkunRashemet = false;
         int iMisparKnisa;
 
         try
         {
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = (TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0]);
 
             //oTxt.Enabled = ((bEnabled) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet));
@@ -4763,7 +4775,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa, sPeilutKey, "KISUY_TOR"))
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "KISUY_TOR"))
                     {                    
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
                     }

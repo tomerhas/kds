@@ -782,7 +782,7 @@ namespace KdsBatch
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
             ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
-
+            
             //רמת פעילות
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
@@ -799,7 +799,7 @@ namespace KdsBatch
         }
         public static DataSet GetErrorsForFields(bool bProfileRashemet, int iMisparIshi, DateTime dCardDate,
                                                  int iMisparSidur, DateTime dFullShatHatchala, 
-                                                 string sFieldName)
+                                                 string sFieldName, ref DataTable dtErr)
         {
             clBatchManager oBatchManager = new clBatchManager(iMisparIshi, dCardDate);
             DataSet ds;
@@ -809,6 +809,7 @@ namespace KdsBatch
 
             //רוטינת שגויים
             oBatchManager.MainOvedErrors(iMisparIshi, dCardDate);
+            dtErr = oBatchManager.dtErrors;
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());

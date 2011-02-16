@@ -1538,6 +1538,7 @@ public class wsGeneral : System.Web.Services.WebService
         DateTime dSidurStartHour, dActiveStartHour;        
         bool bProfileRashemet = (bool)Session["ProfileRashemet"];
       //  DataTable dt = (DataTable)Session["Errors"];
+        DataTable dtErr = new DataTable();
         switch (iLevel)
         {
             case 1:
@@ -1546,7 +1547,8 @@ public class wsGeneral : System.Web.Services.WebService
             case 2:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
                 ds = clDefinitions.GetErrorsForFields(bProfileRashemet, iMisparIshi, DateTime.Parse(sCardDate), 
-                     iSidurNumber, dSidurStartHour, sFieldName);
+                     iSidurNumber, dSidurStartHour, sFieldName, ref dtErr);
+                Session["Errors"] = dtErr;
                 break;
             case 3:
                 dSidurStartHour = DateTime.Parse(sSidurStartHour);
