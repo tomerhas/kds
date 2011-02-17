@@ -1523,7 +1523,7 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
 
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public string CancelError(int iMisparIshi, string sCardDate, string sErrorKey, string sGoremMeasher)
     {
         clWorkCard oWorkCard = new clWorkCard();
@@ -1532,6 +1532,8 @@ public class wsGeneral : System.Web.Services.WebService
         try
         {
             iResult = oWorkCard.InsertToShgiotMeusharot(iMisparIshi, DateTime.Parse(sCardDate), sErrorKey, sGoremMeasher);
+            if (iResult.Equals(1))
+                RemoveErrorFromSession(iMisparIshi,DateTime.Parse(sCardDate),sErrorKey);
             return iResult.ToString();
         }
         catch (Exception ex)
@@ -1540,7 +1542,47 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
-
+    private void RemoveErrorFromSession(int iMisparIshi, DateTime dCardDate, string sErrorKey){
+        //נוריד מאובייקט שגיאות את השגיאה שבוטלה כדי שלא תעלה שוב במקרה של הוספת פעילות
+        string[] arrResult = sErrorKey.Split((char.Parse("|")));
+        int iMisparSidur,iErrNum, iErrorLevel, iMisparKnisa;
+        DateTime dSidurStartHour, dActivityHour;
+        DataTable dtErrorList = (DataTable)Session["Errors"];
+        DataRow[] drResults;
+        iErrorLevel = arrResult.Length;
+        if (iErrorLevel.Equals(5)) //רמת סידור
+        {
+            iMisparSidur = int.Parse(arrResult[3]);
+            dSidurStartHour = DateTime.Parse(arrResult[4]);
+            iErrNum = int.Parse(arrResult[2]);
+            //הרוטינה מחזיר אמת אם קיימת שגיאה למפתח המתקבל
+            drResults = dtErrorList.Select("mispar_ishi=" + iMisparIshi + " and taarich=Convert('" + dCardDate.ToShortDateString() + "', 'System.DateTime')" + " and check_num=" + iErrNum + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = '" + dSidurStartHour + "'");
+            if (drResults.Length > 0)
+            {
+                foreach (DataRow dr in drResults)
+                {
+                    dr.Delete();
+                }  
+            }
+        }
+        else
+            if (iErrorLevel.Equals(7)) //רמת פעילות
+            {
+                iMisparSidur = int.Parse(arrResult[3]);
+                dSidurStartHour = DateTime.Parse(arrResult[4]);
+                iErrNum = int.Parse(arrResult[2]);
+                dActivityHour=DateTime.Parse(arrResult[5]);
+                iMisparKnisa = int.Parse(arrResult[6]);
+                drResults = dtErrorList.Select("mispar_ishi=" + iMisparIshi + " and taarich=Convert('" + dCardDate.ToShortDateString() + "', 'System.DateTime')" + " and check_num=" + iErrNum + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = '" + dSidurStartHour + "' and shat_yetzia='" + dActivityHour + "' and mispar_knisa=" + iMisparKnisa.ToString());
+                if (drResults.Length > 0)
+                {
+                    foreach (DataRow dr in drResults)
+                    {
+                        dr.Delete();
+                    }
+                }
+            }        
+    }
     [WebMethod]
     public string ApproveError(int iMisparIshi, string sCardDate, string sErrorKey, string sGoremMeasher)
     {
