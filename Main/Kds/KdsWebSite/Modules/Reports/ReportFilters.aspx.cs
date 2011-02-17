@@ -595,8 +595,10 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         switch (rpt.NameReport)
         {
             case ReportName.DisregardDrivers:
+                Params.Add("P_DISREGARDTYPE", "-1");
+                break;
             case ReportName.DisregardDriversVisot:
-                Params.Add("P_DISREGARDTYPE", rpt.NameReport.ToString());
+                Params.Add("P_DISREGARDTYPE", "0" );
                 break;
             case ReportName.IshurimLerashemet:
                 Params.Add("P_PAGE_ADDRESS", PureUrlRoot + "/Modules/Ovdim/WorkCard.aspx?");

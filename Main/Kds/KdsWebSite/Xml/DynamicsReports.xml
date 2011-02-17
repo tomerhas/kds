@@ -126,7 +126,7 @@
       </DropDownList>
     </Filter>
   </Report>
-  <Report  RdlName="DisregardDrivers" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף">
+  <Report  RdlName="DisregardDrivers" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
@@ -135,7 +135,7 @@
       </DropDownList>
     </Filter>
   </Report>
-  <Report  RdlName="DisregardDriversVisot" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף">
+  <Report  RdlName="DisregardDriversVisot" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נהגים משובצים שלא שלחו כרטיס עבודה מהסניף - ויזות" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
