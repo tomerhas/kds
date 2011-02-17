@@ -1687,7 +1687,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     oSidur.sChariga = oDDL.SelectedValue;
 
                     oDDL = (DropDownList)this.FindControl("ddlPHfsaka" + iIndex);
-                    oSidur.sPitzulHafsaka = oSidur.sOldPitzulHafsaka; //oDDL.Attributes["OldV"].ToString();
+                    oSidur.sPitzulHafsaka = oDDL.SelectedValue.Equals("-1") ? "0" : oDDL.SelectedValue; //oDDL.Attributes["OldV"].ToString();
 
                     oDDL = (DropDownList)this.FindControl("ddlHashlama" + iIndex);
                     oSidur.sHashlama = oDDL.SelectedValue;

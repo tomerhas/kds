@@ -1027,12 +1027,14 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
     [WebMethod(EnableSession = true)]
-    public string CheckMakat(int iSidurIndex, int iPeilutIndex, long lNewMakat, long lOldMakat, string sTravelDate, string sShatYetiza, string sDayToAdd)
+    public string CheckMakat(int iMisparIshi, string  sCardDate, int iSidurIndex, int iPeilutIndex,
+                             long lNewMakat, long lOldMakat, string sTravelDate, 
+                             string sShatYetiza, string sDayToAdd)
     {
         clKavim oKavim = new clKavim();
         string sResult = "0";
         DataTable dt;
-
+        
         try
         {
             if (lNewMakat > 0)
@@ -1043,7 +1045,7 @@ public class wsGeneral : System.Web.Services.WebService
                 {
                     sResult = BuildMakatDetails(dt, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat);
                     //Update cash peilyot details from tnua
-                    GetPeilyotTnuaDetails(iSidurIndex, iPeilutIndex,lNewMakat, dt);
+                    GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dt);
                 }
             }
             return sResult;
@@ -1054,7 +1056,8 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
-    private void GetPeilyotTnuaDetails(int iSidurIndex, int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails)
+    private void GetPeilyotTnuaDetails(int iMisparIshi, DateTime dCardDate, int iSidurIndex, 
+                                       int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails)
     {
         //string sCacheKey = iMisparIshi + dCardDate.ToShortDateString();
         clKavim _Kavim = new clKavim();
@@ -1078,6 +1081,7 @@ public class wsGeneral : System.Web.Services.WebService
                 //iMakatType = _Kavim.GetMakatType(lMakatNesia);
                 //clKavim.enMakatType _MakatType;
                 //_MakatType = (clKavim.enMakatType)iMakatType;
+                _Peilut.lMakatNesia = lMakatNesia;
                 switch (_MakatType)
                 {
                     case clKavim.enMakatType.mKavShirut:
@@ -1089,6 +1093,10 @@ public class wsGeneral : System.Web.Services.WebService
                             _Peilut.sSugShirutName = _PeilyotDetails[0]["SugShirutName"].ToString();
                             _Peilut.iMazanTichnun = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
                             _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                            _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
+                            _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
+                            _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                            AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         }
                         break;
                     case clKavim.enMakatType.mEmpty:
@@ -1097,9 +1105,14 @@ public class wsGeneral : System.Web.Services.WebService
                         {
                             _Peilut.iMazanTichnun = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
                             _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                            _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
+                            _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
+                            _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
                             _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString(); ;
                             _Peilut.sShilut = "";
                             _Peilut.sSugShirutName = COL_TRIP_EMPTY;
+                            
+                            AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         }
                         break;
 
@@ -1107,11 +1120,15 @@ public class wsGeneral : System.Web.Services.WebService
                          _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                          if (_PeilyotDetails.Length > 0)
                          {
+                             _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
+                             _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
                              _Peilut.iMazanTichnun = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
                              _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
                              _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString();
                              _Peilut.sShilut = _PeilyotDetails[0]["Shilut"].ToString();
                              _Peilut.sSugShirutName = COL_TRIP_NAMAK;
+                             _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                             AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                          }
                          break;
                     case clKavim.enMakatType.mElement:
@@ -1119,14 +1136,39 @@ public class wsGeneral : System.Web.Services.WebService
                         break;
                     case clKavim.enMakatType.mVisut:                       
                         break;
-                }
-
-                       
+                }                       
         }
         catch (Exception ex)
         {
             throw ex;
         }
+    }
+    public void AddPeilutToPeiluyotDT(int iMisparIshi, DateTime dCardDate, ref clPeilut _Peilut)
+    {
+     
+      DataRow dr;
+
+      try
+      {
+          DataTable dt = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + dCardDate.ToShortDateString());
+          dr = dt.NewRow();
+          dr["Activity_Date"] = dCardDate;
+          dr["Makat8"] = _Peilut.lMakatNesia;
+          dr["description"] = _Peilut.sMakatDescription;
+          dr["shilut"] = _Peilut.sShilut;
+          dr["kisui_tor"] = _Peilut.iKisuyTor;
+          dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
+          dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
+          dr["km"] = _Peilut.fKm;
+          dr["sug_shirut_name"] = _Peilut.sSugShirutName;
+          dr["xy_moked_tchila"] = _Peilut.iXyMokedTchila;
+          dr["xy_moked_siyum"] = _Peilut.iXyMokedSiyum;
+          dt.Rows.Add(dr);
+      }
+      catch (Exception ex)
+      {
+          throw ex;
+      }
     }
     [WebMethod]
     public int GetMakatType(long lMakat)

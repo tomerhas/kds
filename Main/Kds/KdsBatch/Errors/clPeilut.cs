@@ -45,6 +45,7 @@ namespace KdsBatch
         public int iMakatType = 0;
         public int iMakatValid;
         public int iXyMokedTchila;
+        public int iXyMokedSiyum;
         public int iMisparKnisa = 0;
         //public int iSugKnisa = 0; //נקרא מהקטלוג
         public int iMisparSidurMatalotTnua;
@@ -438,6 +439,7 @@ namespace KdsBatch
                             iMazanTichnun = (!System.Convert.IsDBNull(dr[0]["MAZAN_TICHNUN"])) ? int.Parse(dr[0]["MAZAN_TICHNUN"].ToString()) : 0;
                             iMazanTashlum = (!System.Convert.IsDBNull(dr[0]["MAZAN_TASHLUM"])) ? int.Parse(dr[0]["MAZAN_TASHLUM"].ToString()) : 0;
                             iXyMokedTchila = (System.Convert.IsDBNull(dr[0]["xy_moked_tchila"]) ? 0 : int.Parse(dr[0]["xy_moked_tchila"].ToString()));
+                            iXyMokedSiyum = (System.Convert.IsDBNull(dr[0]["xy_moked_siyum"]) ? 0 : int.Parse(dr[0]["xy_moked_siyum"].ToString()));
                             iSnifAchrai = (System.Convert.IsDBNull(dr[0]["snif"]) ? 0 : int.Parse(dr[0]["snif"].ToString()));
                             sMakatDescription = dr[0]["DESCRIPTION"].ToString();
                             sShilut = dr[0]["SHILUT"].ToString();                           
@@ -459,7 +461,7 @@ namespace KdsBatch
                         if (dr[0]["STATUS"].ToString() == "0")
                         {
                             iXyMokedTchila = (System.Convert.IsDBNull(dr[0]["xy_moked_tchila"]) ? 0 : int.Parse(dr[0]["xy_moked_tchila"].ToString()));
-
+                            iXyMokedSiyum = (System.Convert.IsDBNull(dr[0]["xy_moked_siyum"]) ? 0 : int.Parse(dr[0]["xy_moked_siyum"].ToString()));
                             iMazanTichnun = (!System.Convert.IsDBNull(dr[0]["MAZAN_TICHNUN"])) ? int.Parse(dr[0]["MAZAN_TICHNUN"].ToString()) : 0;
                             iMazanTashlum = (!System.Convert.IsDBNull(dr[0]["MAZAN_TASHLUM"])) ? int.Parse(dr[0]["MAZAN_TASHLUM"].ToString()) : 0;
                             sMakatDescription = dr[0]["DESCRIPTION"].ToString();
@@ -484,7 +486,7 @@ namespace KdsBatch
                         if (dr[0]["STATUS"].ToString() == "0")
                         {
                             iXyMokedTchila = (System.Convert.IsDBNull(dr[0]["xy_moked_tchila"]) ? 0 : int.Parse(dr[0]["xy_moked_tchila"].ToString()));
-
+                            iXyMokedSiyum = (System.Convert.IsDBNull(dr[0]["xy_moked_siyum"]) ? 0 : int.Parse(dr[0]["xy_moked_siyum"].ToString()));
                             iMazanTichnun = (!System.Convert.IsDBNull(dr[0]["MAZAN_TICHNUN"])) ? int.Parse(dr[0]["MAZAN_TICHNUN"].ToString()) : 0;
                             iMazanTashlum = (!System.Convert.IsDBNull(dr[0]["MAZAN_TASHLUM"])) ? int.Parse(dr[0]["MAZAN_TASHLUM"].ToString()) : 0;
                             sMakatDescription = dr[0]["DESCRIPTION"].ToString();

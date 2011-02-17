@@ -5,7 +5,9 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
-    function chkMkt(oRow){    
+function chkMkt(oRow) {
+       var iMisparIshi = document.getElementById("txtId").value;
+       var dCardDate = document.getElementById("clnDate").value;    
        oRId = String(oRow.id).substr(0,oRow.id.length-6);
        var oMkt = document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0];
        var lNMkt = oMkt.value; 
@@ -40,7 +42,7 @@ var MKT_ELEMENT = 5;
                         sArrPrm[5] = document.getElementById('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur95");
                         sArrPrm[6] = lOMkt;
                         sArrPrm[7] = iInx;
-                        wsGeneral.CheckMakat(iInx, document.getElementById(oRId).rowIndex-1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
+                        wsGeneral.CheckMakat(iMisparIshi,dCardDate, iInx, document.getElementById(oRId).rowIndex - 1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
                     }
                 }                         
           }                       
@@ -78,7 +80,7 @@ var MKT_ELEMENT = 5;
         if (root != null) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
-                if ((document.getElementById('lstSidurim_lblSidur'.concat(iSidurIndex)).nextSibling != null) && (GetMakatType(lNewMkt) != MKT_ELEMENT))
+                if ((document.getElementById('lstSidurim_lblSidur'.concat(iSidurIndex+1)) != null) && (GetMakatType(lNewMkt) != MKT_ELEMENT))
                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<img  onclick='AddNesiaReka(" + document.getElementById(oRId).id + ",0,0);' NesiaReka='1' src='../../images/plus.jpg' style='border-width:0px;' />";
                 else
                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";

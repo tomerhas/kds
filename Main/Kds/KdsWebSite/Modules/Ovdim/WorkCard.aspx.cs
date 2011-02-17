@@ -2189,6 +2189,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     void lstSidurim_btnHandler(string strValue)
     {
         bInpuDataResult = true;
+        //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+        //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+        //lstSidurim.ErrorsList = oBatchManager.dtErrors;
         //if (btnUpdateCard.Enabled)
         //{
         //    SaveCard();
