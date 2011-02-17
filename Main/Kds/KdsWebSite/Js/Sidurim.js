@@ -78,8 +78,11 @@ var MKT_ELEMENT = 5;
         if (root != null) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
-                if (document.getElementById('lstSidurim_lblSidur'.concat(iSidurIndex)).nextSibling != null)
-                   document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<img  onclick='AddNesiaReka(" + document.getElementById(oRId).id + ",0,0);' NesiaReka='1' src='../../images/plus.jpg' style='border-width:0px;' />";
+                if ((document.getElementById('lstSidurim_lblSidur'.concat(iSidurIndex)).nextSibling != null) && (GetMakatType(lNewMkt) != MKT_ELEMENT))
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<img  onclick='AddNesiaReka(" + document.getElementById(oRId).id + ",0,0);' NesiaReka='1' src='../../images/plus.jpg' style='border-width:0px;' />";
+                else
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+
                 while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {
                         case "KISUY_TOR":

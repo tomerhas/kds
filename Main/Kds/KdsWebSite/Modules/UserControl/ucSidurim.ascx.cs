@@ -816,11 +816,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //3ואם זה אלמנט עם מאפיין 9
                 drPeilutyot["knisa"] = oPeilut.iMisparKnisa + "," + oPeilut.bKnisaNeeded.GetHashCode().ToString() + "," + oPeilut.bBusNumberMustExists.GetHashCode() + "," + oPeilut.bElementIgnoreReka.GetHashCode(); 
                 drPeilutyot["DayToAdd"] = "0";
-                drLicenseNumber = Mashar.Select("bus_number=" + oPeilut.lOtoNo);
-                if (drLicenseNumber.Length > 0)
+                if (Mashar.Rows.Count > 0)
                 {
-                    drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
+                    drLicenseNumber = Mashar.Select("bus_number=" + oPeilut.lOtoNo);
+                    if (drLicenseNumber.Length > 0)
+                        drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
                 }
+                else
+                    drPeilutyot["license_number"] = 0;
 
                 if ((!oPeilut.bBusNumberMustExists) && (int.Parse(drPeilutyot["makat_type"].ToString()) == clKavim.enMakatType.mElement.GetHashCode()))
                 {
