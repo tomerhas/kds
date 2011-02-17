@@ -1096,6 +1096,7 @@ public class wsGeneral : System.Web.Services.WebService
                             _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
                             _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
                             _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                            _Peilut.fKm = (!System.Convert.IsDBNull(_PeilyotDetails[0]["KM"])) ? float.Parse(_PeilyotDetails[0]["KM"].ToString()) : 0;
                             AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         }
                         break;
@@ -1108,6 +1109,7 @@ public class wsGeneral : System.Web.Services.WebService
                             _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
                             _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
                             _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                            _Peilut.fKm = (!System.Convert.IsDBNull(_PeilyotDetails[0]["KM"])) ? float.Parse(_PeilyotDetails[0]["KM"].ToString()) : 0;
                             _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString(); ;
                             _Peilut.sShilut = "";
                             _Peilut.sSugShirutName = COL_TRIP_EMPTY;
@@ -1128,6 +1130,7 @@ public class wsGeneral : System.Web.Services.WebService
                              _Peilut.sShilut = _PeilyotDetails[0]["Shilut"].ToString();
                              _Peilut.sSugShirutName = COL_TRIP_NAMAK;
                              _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                             _Peilut.fKm = (!System.Convert.IsDBNull(_PeilyotDetails[0]["KM"])) ? float.Parse(_PeilyotDetails[0]["KM"].ToString()) : 0;
                              AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                          }
                          break;
@@ -1156,7 +1159,7 @@ public class wsGeneral : System.Web.Services.WebService
           dr["Makat8"] = _Peilut.lMakatNesia;
           dr["description"] = _Peilut.sMakatDescription;
           dr["shilut"] = _Peilut.sShilut;
-          dr["kisui_tor"] = _Peilut.iKisuyTor;
+          dr["kisui_tor"] = _Peilut.iKisuyTorMap;
           dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
           dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
           dr["km"] = _Peilut.fKm;
