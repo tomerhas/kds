@@ -5,6 +5,10 @@
       <DataSourceReference>KdsCon</DataSourceReference>
       <rd:DataSourceID>0b461b07-96e1-4988-bb18-cdb0c7906233</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:DataSourceID>2e14265f-4bb9-4fad-a8e1-d7c9b5a2f4cd</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DsDriverNotSigned">
@@ -15,7 +19,7 @@
         </Field>
         <Field Name="MISPAR_ISHI">
           <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TEUR_EZOR">
           <DataField>TEUR_EZOR</DataField>
@@ -29,13 +33,17 @@
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
+        <Field Name="NIDRESHET_HITIATZVUT">
+          <DataField>NIDRESHET_HITIATZVUT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="STARTTIME1">
           <DataField>STARTTIME1</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ENDTIME1">
           <DataField>ENDTIME1</DataField>
@@ -51,7 +59,7 @@
         </Field>
       </Fields>
       <Query>
-        <DataSourceName>DsKds</DataSourceName>
+        <DataSourceName>DataSource1</DataSourceName>
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_REPORTS.PRO_GET_DRIVERNOTSIGNED</CommandText>
         <QueryParameters>
@@ -302,8 +310,8 @@
             <Direction>Descending</Direction>
           </SortExpression>
         </SortExpressions>
-        <Top>2.13413cm</Top>
-        <Left>1.33896cm</Left>
+        <Top>2.16941cm</Top>
+        <Left>4.47822cm</Left>
         <Height>1.27937cm</Height>
         <Width>3.73507cm</Width>
         <Style>
@@ -329,12 +337,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.06266in</Width>
+              <Width>8.38048in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>1.67472in</Height>
+              <Height>2.32055in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -350,6 +358,9 @@
                                 <Width>0.63008in</Width>
                               </TablixColumn>
                               <TablixColumn>
+                                <Width>0.6304in</Width>
+                              </TablixColumn>
+                              <TablixColumn>
                                 <Width>0.67175in</Width>
                               </TablixColumn>
                               <TablixColumn>
@@ -359,16 +370,16 @@
                                 <Width>0.68333in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.67175in</Width>
+                                <Width>1.44258in</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.2655in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.703in</Width>
+                                <Width>0.80709in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.08841in</Width>
+                                <Width>0.89049in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -425,6 +436,37 @@
                                           </Paragraph>
                                         </Paragraphs>
                                         <rd:DefaultName>Textbox105</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>None</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox2">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value />
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox2</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -609,7 +651,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>משמרת שנייה</Value>
+                                                <Value>משמרת שנייה </Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -632,9 +674,10 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>2</ColSpan>
+                                      <ColSpan>3</ColSpan>
                                     </CellContents>
                                   </TablixCell>
+                                  <TablixCell />
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
@@ -666,42 +709,11 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>2</ColSpan>
+                                      <ColSpan>3</ColSpan>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell />
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox60">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value />
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox60</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <BackgroundColor>LightGrey</BackgroundColor>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
+                                  <TablixCell />
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox10">
@@ -829,6 +841,38 @@
                                           </Paragraph>
                                         </Paragraphs>
                                         <rd:DefaultName>Textbox17</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox5">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>סידור</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox5</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -1094,7 +1138,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!ENDTIME2.Value,4)</Value>
+                                                <Value>=iif(FormatDateTime(Fields!STARTTIME2.Value,4)="00:00","",FormatDateTime(Fields!STARTTIME2.Value,4))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1106,8 +1150,22 @@
                                         <rd:DefaultName>ENDTIME2</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1125,7 +1183,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!STARTTIME2.Value,4)</Value>
+                                                <Value>=iif(FormatDateTime(Fields!STARTTIME2.Value,4)="00:00","",FormatDateTime(Fields!STARTTIME2.Value,4))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1137,8 +1195,67 @@
                                         <rd:DefaultName>STARTTIME2</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox7">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(Fields!NIDRESHET_HITIATZVUT.Value=2,Fields!MISPAR_SIDUR.Value,"")</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox7</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>White</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Color>Black</Color>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1156,7 +1273,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!ENDTIME1.Value,4)</Value>
+                                                <Value>=iif(FormatDateTime(Fields!ENDTIME1.Value,4)="00:00","",FormatDateTime(Fields!ENDTIME1.Value,4))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1168,8 +1285,22 @@
                                         <rd:DefaultName>ENDTIME1</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1187,7 +1318,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!STARTTIME1.Value,4)</Value>
+                                                <Value>=iif(FormatDateTime(Fields!STARTTIME1.Value,4)="00:00","",FormatDateTime(Fields!STARTTIME1.Value,4))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1199,8 +1330,22 @@
                                         <rd:DefaultName>SHAT_HATCHALA</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1211,14 +1356,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="MISPAR_SIDUR">
+                                      <Textbox Name="Textbox12">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!MISPAR_SIDUR.Value</Value>
+                                                <Value>=iif(Fields!NIDRESHET_HITIATZVUT.Value=1,Fields!MISPAR_SIDUR.Value,"")</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1227,11 +1372,25 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>MISPAR_SIDUR</rd:DefaultName>
+                                        <rd:DefaultName>Textbox12</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Color>Black</Color>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1261,8 +1420,23 @@
                                         <rd:DefaultName>TEUR_SNIF_AV</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                            <Style>Solid</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1292,8 +1466,22 @@
                                         <rd:DefaultName>FULL_NAME</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1323,8 +1511,22 @@
                                         <rd:DefaultName>MISPAR_ISHI</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Color>Black</Color>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1356,8 +1558,22 @@
                                         <rd:DefaultName>TAARICH</rd:DefaultName>
                                         <Style>
                                           <Border>
+                                            <Color>White</Color>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                          </BottomBorder>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Color>Black</Color>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1400,39 +1616,11 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <ColSpan>3</ColSpan>
                                     </CellContents>
                                   </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox76">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value />
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Right</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox76</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox77">
@@ -1449,7 +1637,7 @@
                                             <LeftIndent>0cm</LeftIndent>
                                             <HangingIndent>0cm</HangingIndent>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Center</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -1464,12 +1652,45 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>4</ColSpan>
+                                      <ColSpan>3</ColSpan>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell />
                                   <TablixCell />
-                                  <TablixCell />
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="TEUR_SNIF_AV2">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>TEUR_SNIF_AV2</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox84">
@@ -1479,12 +1700,16 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
+                                                <Value>="סה""כ סניף"</Value>
+                                                <Style />
+                                              </TextRun>
+                                              <TextRun>
+                                                <Value xml:space="preserve"> </Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Center</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -1493,45 +1718,22 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <ColSpan>2</ColSpan>
                                     </CellContents>
                                   </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox85">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value />
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Right</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox85</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
+                                  <TablixCell />
                                   <TablixCell>
                                     <CellContents>
                                       <Textbox Name="Textbox86">
@@ -1571,6 +1773,7 @@
                           </TablixBody>
                           <TablixColumnHierarchy>
                             <TablixMembers>
+                              <TablixMember />
                               <TablixMember />
                               <TablixMember />
                               <TablixMember />
@@ -1629,9 +1832,6 @@
                           <DataSetName>DsDriverNotSigned</DataSetName>
                           <SortExpressions>
                             <SortExpression>
-                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
-                            </SortExpression>
-                            <SortExpression>
                               <Value>=Fields!MISPAR_ISHI.Value</Value>
                             </SortExpression>
                             <SortExpression>
@@ -1644,16 +1844,34 @@
                               <Value>=Fields!STARTTIME2.Value</Value>
                             </SortExpression>
                           </SortExpressions>
-                          <Top>0.17084cm</Top>
+                          <Top>2.28751cm</Top>
                           <Left>0.05523cm</Left>
                           <Height>3.56324cm</Height>
-                          <Width>20.42394cm</Width>
+                          <Width>21.20473cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
                         </Tablix>
+                        <Subreport Name="SubReportHeader2">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="נהגים ללא החתמת התייצבות בשעון נוכחות לתקופה " + Trim(Parameters!P_PERIOD.Value)</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0cm</Top>
+                          <Left>0.05523cm</Left>
+                          <Height>1.80071cm</Height>
+                          <Width>21.20474cm</Width>
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -1679,16 +1897,17 @@
               <Group Name="Details1">
                 <GroupExpressions>
                   <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
+                  <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsDriverNotSigned</DataSetName>
-        <Top>3.58989cm</Top>
-        <Left>0.17905cm</Left>
-        <Height>4.25379cm</Height>
-        <Width>20.47916cm</Width>
+        <Top>4.36073cm</Top>
+        <Left>2.78486cm</Left>
+        <Height>5.8942cm</Height>
+        <Width>21.28642cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1703,10 +1922,10 @@
             <Value>="נהגים ללא החתמת התייצבות בשעון נוכחות לתקופה " + Trim(Parameters!P_PERIOD.Value)</Value>
           </Parameter>
         </Parameters>
-        <Top>0.05278cm</Top>
-        <Left>2.96372cm</Left>
+        <Top>0.19231cm</Top>
+        <Left>2.78486cm</Left>
         <Height>1.80071cm</Height>
-        <Width>16.79555cm</Width>
+        <Width>21.28642cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1715,7 +1934,7 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>3.08806in</Height>
+    <Height>4.30681in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1749,18 +1968,8 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>10.68096in</Width>
+  <Width>10.64971in</Width>
   <Page>
-    <PageHeader>
-      <Height>0.02646cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageHeader>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
     <LeftMargin>0.3cm</LeftMargin>
