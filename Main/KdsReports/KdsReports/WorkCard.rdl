@@ -1907,7 +1907,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <Top>2.17405cm</Top>
             <Left>0.3056cm</Left>
             <Height>0.7cm</Height>
-            <Width>4.65306cm</Width>
+            <Width>4.65305cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -1985,7 +1985,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <Top>3.01516cm</Top>
             <Left>0.3056cm</Left>
             <Height>0.7cm</Height>
-            <Width>4.65306cm</Width>
+            <Width>4.65305cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -2243,13 +2243,13 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>0.44891in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.56678in</Width>
+                  <Width>2.53661in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.43in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.50507in</Width>
+                  <Width>0.55723in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.57091in</Width>
@@ -3252,7 +3252,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
             <Top>5.92293cm</Top>
             <Left>0.07622in</Left>
             <Height>0.81773cm</Height>
-            <Width>19.31511cm</Width>
+            <Width>19.37096cm</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
