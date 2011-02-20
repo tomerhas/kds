@@ -156,7 +156,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>0.10583cm</Top>
-            <Left>13.62537cm</Left>
+            <Left>19.58227cm</Left>
             <Height>0.42333cm</Height>
             <Width>1.4552cm</Width>
             <Style>
@@ -190,8 +190,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.10583cm</Top>
-            <Left>10.8296cm</Left>
+            <Top>0.07055cm</Top>
+            <Left>16.82178cm</Left>
             <Height>0.42333cm</Height>
             <Width>2.61938cm</Width>
             <ZIndex>1</ZIndex>
@@ -225,8 +225,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.10583cm</Top>
-            <Left>7.44876cm</Left>
+            <Top>0.07055cm</Top>
+            <Left>12.74118cm</Left>
             <Height>0.42333cm</Height>
             <Width>1.90499cm</Width>
             <ZIndex>2</ZIndex>
@@ -262,7 +262,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>0.10583cm</Top>
-            <Left>4.99376cm</Left>
+            <Left>10.35673cm</Left>
             <Height>0.42333cm</Height>
             <Width>2.34917cm</Width>
             <ZIndex>3</ZIndex>
@@ -297,8 +297,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.35702cm</Top>
-            <Left>3.73674cm</Left>
+            <Top>1.32174cm</Top>
+            <Left>9.88329cm</Left>
             <Height>0.6cm</Height>
             <Width>9.74748cm</Width>
             <ZIndex>4</ZIndex>
@@ -319,7 +319,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>8.23in</Width>
+                  <Width>10.24371in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -336,22 +336,22 @@
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.37166in</Width>
+                                        <Width>1.70728in</Width>
                                       </TablixColumn>
                                     </TablixColumns>
                                     <TablixRows>
@@ -839,7 +839,7 @@
                                   <DataSetName>dsTlunotPundakim</DataSetName>
                                   <Left>0.00008cm</Left>
                                   <Height>1.07599cm</Height>
-                                  <Width>20.9041cm</Width>
+                                  <Width>26.01895cm</Width>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -851,46 +851,46 @@
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>0.98684in</Width>
+                                        <Width>1.78in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.37517in</Width>
+                                        <Width>0.46772in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.58961in</Width>
+                                        <Width>0.68216in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.37517in</Width>
+                                        <Width>0.46772in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.58961in</Width>
+                                        <Width>0.68216in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.37517in</Width>
+                                        <Width>0.46772in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.58961in</Width>
+                                        <Width>0.6996in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.65689in</Width>
+                                        <Width>0.74944in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.99917in</Width>
+                                        <Width>1.09172in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.4in</Width>
+                                        <Width>0.49255in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.45in</Width>
+                                        <Width>0.54255in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.5in</Width>
+                                        <Width>0.59255in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.5in</Width>
+                                        <Width>0.59255in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.84277in</Width>
+                                        <Width>0.93532in</Width>
                                       </TablixColumn>
                                     </TablixColumns>
                                     <TablixRows>
@@ -2187,7 +2187,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                                   <DataSetName>dsTlunotPundakim</DataSetName>
                                   <Top>1.93792cm</Top>
                                   <Height>1.11125cm</Height>
-                                  <Width>20.90422cm</Width>
+                                  <Width>26.01903cm</Width>
                                   <ZIndex>1</ZIndex>
                                   <Style>
                                     <Border>
@@ -2215,8 +2215,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                                     </Paragraph>
                                   </Paragraphs>
                                   <rd:DefaultName>Textbox222</rd:DefaultName>
-                                  <Top>1.25238cm</Top>
-                                  <Left>17.98888cm</Left>
+                                  <Top>1.3382cm</Top>
+                                  <Left>23.37321cm</Left>
                                   <Height>0.42333cm</Height>
                                   <Width>2.64582cm</Width>
                                   <ZIndex>2</ZIndex>
@@ -2236,7 +2236,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               <Top>0.13999cm</Top>
                               <Left>0cm</Left>
                               <Height>3.135cm</Height>
-                              <Width>20.90422cm</Width>
+                              <Width>26.01903cm</Width>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -2292,7 +2292,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
             <DataSetName>dsTlunotPundakim</DataSetName>
             <Top>2.13341cm</Top>
             <Height>4.39395cm</Height>
-            <Width>20.9042cm</Width>
+            <Width>26.01903cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -2320,8 +2320,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.79258cm</Top>
-            <Left>3.4595cm</Left>
+            <Top>0.72202cm</Top>
+            <Left>9.94745cm</Left>
             <Height>0.42333cm</Height>
             <Width>8.60295cm</Width>
             <ZIndex>6</ZIndex>
@@ -2358,8 +2358,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.79258cm</Top>
-            <Left>12.59349cm</Left>
+            <Top>0.72202cm</Top>
+            <Left>18.5504cm</Left>
             <Height>0.42333cm</Height>
             <Width>2.48707cm</Width>
             <ZIndex>7</ZIndex>
@@ -2379,10 +2379,10 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>1.89171cm</Top>
-        <Left>0cm</Left>
+        <Top>1.82115cm</Top>
+        <Left>1.12933cm</Left>
         <Height>6.52736cm</Height>
-        <Width>20.9042cm</Width>
+        <Width>26.01903cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2396,9 +2396,10 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
             <Value>= "דו''ח התייצבות בפונדקים - תלונות"</Value>
           </Parameter>
         </Parameters>
-        <Left>0.43863in</Left>
+        <Top>0.08155in</Top>
+        <Left>1.46824in</Left>
         <Height>1.4729cm</Height>
-        <Width>19.79008cm</Width>
+        <Width>21.49084cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -2438,14 +2439,14 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
       <Prompt>P_MISPAR_ISHI</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>8.23in</Width>
+  <Width>10.68833in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0.3cm</LeftMargin>
+    <RightMargin>0.3cm</RightMargin>
+    <TopMargin>0.3cm</TopMargin>
+    <BottomMargin>0.3cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
