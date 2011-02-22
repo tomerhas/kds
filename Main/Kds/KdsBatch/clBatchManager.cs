@@ -6026,6 +6026,8 @@ namespace KdsBatch
                         }
                     }
 
+                 
+
                     //שינוי 01
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
@@ -6055,6 +6057,8 @@ namespace KdsBatch
                     //שינוי 28
                     MergerSiduryMapa28();
 
+                    //שינוי 29
+                    SiduryMapaWhithStatusNullLoLetashlum29();
                     //שינוי מספר 5
                     //שינוי זה צריך לעבוד לפני שינוי 4
                     AddElementMechine05();
@@ -6989,7 +6993,7 @@ namespace KdsBatch
                                     if (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1")
                                     {
                                         dShatKnisatShabat = _oParameters.dKnisatShabat;
-                                        if (oNextSidur.dFullShatGmar > dShatKnisatShabat)
+                                        if (oNextSidur.dFullShatHatchala > dShatKnisatShabat)
                                         {
                                             return;
                                         }
@@ -7008,11 +7012,11 @@ namespace KdsBatch
                                             bNextSidurNahagut=true;
                                         else bNextSidurNahagut = false;
 
-                                        if (oSidur.bSidurTafkid || IsSugAvodaKupai(ref oSidur, _dCardDate))
+                                        if (oSidur.bSidurTafkid) // || IsSugAvodaKupai(ref oSidur, _dCardDate))
                                         { bSidurTafkid = true; }
                                         else { bSidurTafkid = false; }
 
-                                        if (oNextSidur.bSidurTafkid || IsSugAvodaKupai(ref oNextSidur, _dCardDate))
+                                        if (oNextSidur.bSidurTafkid)// || IsSugAvodaKupai(ref oNextSidur, _dCardDate))
                                         { bNextSidurTafkid = true; }
                                         else { bNextSidurTafkid = false; }
 
@@ -7284,6 +7288,37 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 28, _dCardDate, "MergerSiduryMapa28: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
+
+        private void SiduryMapaWhithStatusNullLoLetashlum29()
+        {
+            clSidur oSidur = new clSidur();
+            OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = null;
+            int i = 0;
+            try{
+                for (i = 0; i < htEmployeeDetails.Count; i++)
+                {
+                    oSidur = (clSidur)htEmployeeDetails[i];
+                    
+                    if (oSidur.iMisparSidur.ToString().Substring(0,2) != "99" && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
+                    {
+                        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+
+                        oSidur.iLoLetashlum = 1;
+                        oSidur.iKodSibaLoLetashlum = 16;
+                        oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
+                        oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 16;
+                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+
+                        htEmployeeDetails[i] = oSidur;
+                     }      
+                }
+             }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 29, _dCardDate, "SiduryMapaLoLetashlum29: " + ex.Message);
                 _bSuccsess = false;
             }
         }
@@ -11233,7 +11268,7 @@ namespace KdsBatch
         private bool IsSidurNihulTnua(DataRow[] drSugSidur, clSidur oSidur)
         {
             bool bSidurNahagut = false;
-
+            bool bElementZviraZman = false;  
             //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
 
             try
@@ -11241,6 +11276,22 @@ namespace KdsBatch
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
                     bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    if (!bSidurNahagut)
+                    {
+                        clPeilut oPeilut = null;
+                        for (int i = 0; i < oSidur.htPeilut.Count; i++)
+                        {
+                             oPeilut = (clPeilut)oSidur.htPeilut[i];
+                             if (int.Parse(oPeilut.sElementZviraZman) == 4)
+                             {
+                                 bElementZviraZman = true;
+                                 break;
+                             }
+
+                        }
+                        if (oSidur.iMisparSidur == 99301 && bElementZviraZman)
+                            bSidurNahagut = true;
+                    }
                 }
                 else
                 {//סידור רגיל

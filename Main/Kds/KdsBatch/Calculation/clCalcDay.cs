@@ -140,8 +140,7 @@ namespace KdsBatch
                 //רכיב 932 - הלבשה סוף יום
                 CalcRechiv932();
 
-                //זמן לילה ראשון  (רכיב 54) 
-                CalcRechiv54();
+                //*54**//
 
                 //  CalcRechiv74();
 
@@ -452,6 +451,9 @@ namespace KdsBatch
                                 
                 //זמן לילה סידורי בוקר (רכיב 271): 
                 CalcRechiv271();
+
+                //זמן לילה ראשון  (רכיב 54) 
+                CalcRechiv54();
 
                 //זמן לילה שני אחרי 2200 (רכיב 55)
                 CalcRechiv55();
@@ -1966,6 +1968,7 @@ namespace KdsBatch
                     {
                         oSidur.CalcRechiv54();
                         fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLailaEgged.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        fSumDakotRechiv += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         addRowToTable(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), fSumDakotRechiv);
                     }
                 }
@@ -1988,14 +1991,16 @@ namespace KdsBatch
                 {
                     oSidur.CalcRechiv55();
                     fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLailaChok.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                     fZmanLilaSidureyBoker = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                      
+                    fZmanLilaSidureyBoker = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                      
                     if (_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30)
                       {
                           fSumDakotRechiv = fTempX;
                       }
                       else{
-
+                          fTempX += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                    
                           fTempY = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot125.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                           fTempY = fTempY + clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Shaot25.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                           fTempZ = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot150.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
@@ -3487,18 +3492,34 @@ namespace KdsBatch
         private void CalcRechiv96()
         {
             float fSumDakotRechiv, fTempX;
+            float fSumDakotLaylaEgged, fSumDakotLaylaChok;
             try
             {
-                fSumDakotRechiv = oSidur.CalcRechiv96();
+                 fSumDakotLaylaEgged = 0;  fSumDakotLaylaChok = 0;
+                fSumDakotRechiv = oSidur.CalcRechiv96(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok);
 
                 fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
                 fTempX += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString()));
-                
+
                 if (fTempX <= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum && (fSumDakotRechiv + fTempX) > _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
-                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum-fTempX);
+                {
+                    fSumDakotRechiv = _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - fTempX;
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - fTempX);
+                }
                 else if (fTempX <= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum && (fSumDakotRechiv + fTempX) < _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), fSumDakotRechiv);
-                    
+
+                //רציפות לילה  
+                if (fSumDakotLaylaEgged > 0 && fSumDakotLaylaEgged > fSumDakotRechiv && fSumDakotLaylaChok==0)
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fSumDakotRechiv);
+                else
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fSumDakotLaylaEgged);
+                //רציפות לילה  
+                if (fSumDakotLaylaChok > 0 && fSumDakotLaylaChok > fSumDakotRechiv && fSumDakotLaylaEgged == 0)
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fSumDakotRechiv);
+                else
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fSumDakotLaylaChok);
+
             }
             catch (Exception ex)
             {
@@ -3510,17 +3531,36 @@ namespace KdsBatch
         private void CalcRechiv97()
         {
             float fSumDakotRechiv, fTempX;
+            float fSumDakotLaylaEgged, fTempZ1;
+            float fSumDakotLaylaChok, fTempZ2;
             try
             {
-                fSumDakotRechiv = oSidur.CalcRechiv97();
+                fSumDakotLaylaEgged = 0; fSumDakotLaylaChok = 0;
+                fSumDakotRechiv = oSidur.CalcRechiv97(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok);
 
                 fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString()));
                 fTempX += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
-                
+
                 if (fTempX <= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum && (fSumDakotRechiv + fTempX) > _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
-                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - fTempX);
+                {
+                    fSumDakotRechiv = _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - fTempX;
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), fSumDakotRechiv);
+                }
                 else if (fTempX <= _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum && (fSumDakotRechiv + fTempX) < _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), fSumDakotRechiv);
+
+                //רציפות לילה  
+                fTempZ1 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode().ToString() +" and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                if (fSumDakotLaylaEgged > 0 && fSumDakotLaylaEgged > fSumDakotRechiv && fSumDakotLaylaChok == 0)
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fTempZ1 + fSumDakotRechiv);
+                else
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(),fTempZ1 + fSumDakotLaylaEgged);
+
+                fTempZ2 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                if (fSumDakotLaylaChok > 0 && fSumDakotLaylaChok > fSumDakotRechiv && fSumDakotLaylaEgged == 0)
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fTempZ2 + fSumDakotRechiv);
+                else
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fTempZ2 + fSumDakotLaylaChok);
 
             }
             catch (Exception ex)

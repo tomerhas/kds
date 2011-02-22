@@ -870,6 +870,9 @@ namespace KdsBatch
                 //תוספת רציפות תפקיד   - רכיב 97:  
                 CalcRechiv97();
 
+                //רציפות לזמן לילה    - רכיב 272:  
+                CalcRechiv272();
+
                 //סה"כ קיזוזים  (רכיב 83):
                 CalcRechiv83();
 
@@ -2788,6 +2791,34 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv272()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode().ToString()));
+                addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.Message);
+                throw (ex);
+            }
+        }
+        private void CalcRechiv273()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode().ToString()));
+                addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv100()
         {
             float fSumDakotRechiv, fMichsaChodshit, fDakotNochehut;

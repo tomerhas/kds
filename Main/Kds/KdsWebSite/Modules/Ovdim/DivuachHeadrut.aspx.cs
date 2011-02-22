@@ -55,6 +55,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             if (!Page.IsPostBack)
             {
                 ViewState["TimeStart"] = ViewState["DateCard"];
+                //if (Request.QueryString["Status"].Trim().Length > 0) {
+                //    ViewState["Status"] = Request.QueryString["Status"].Trim();
+                //}
+                ViewState["Status"] = "1";
                 if (Request.QueryString["MisparSidur"].Trim().Length>0)
                 {
                     ViewState["MisparSidur"] = int.Parse(Request.QueryString["MisparSidur"].ToString());
@@ -103,6 +107,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
         DataTable dtHeadrutType, dtSidurim, dtHeadrutTypeNew;
         DataRow[] dr;
         DataRow NewDr;
+        string tnaim;
         try
         {
             dtSidurim = oWorkCard.GetSidurimLeoved(int.Parse(Request.QueryString["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()));
@@ -116,7 +121,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             dtHeadrutType.TableName = "SugHeadrut";
             ddlHeadrutType.DataTextField = "teur_sidur_meychad";
             ddlHeadrutType.DataValueField = "kod_sidur_meyuchad";
-            dr = dtHeadrutType.Select("sidur_misug_headrut is not null or kod_sidur_meyuchad=-1 or  nitan_ledaveach_ad_taarich is not null","teur_sidur_meychad asc");
+            tnaim="(sidur_misug_headrut is not null or kod_sidur_meyuchad=-1 or  nitan_ledaveach_ad_taarich is not null) ";
+            if (ViewState["Status"] == null )
+                tnaim += " and rashai_ledaveach=1";
+            dr = dtHeadrutType.Select(tnaim, "teur_sidur_meychad asc");
             dtHeadrutTypeNew = new DataTable();
             dtHeadrutTypeNew = dtHeadrutType.Clone();
             foreach (DataRow dRow in dr)

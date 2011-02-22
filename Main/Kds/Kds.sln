@@ -40,7 +40,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "51868"
+		VWDPort = "25268"
 	EndProjectSection
 EndProject
 Global
