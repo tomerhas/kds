@@ -7178,9 +7178,9 @@ namespace KdsBatch
 
                                 if (bHaveSidur && oSidurPutzal.htPeilut.Values.Count > 0 && oSidur.htPeilut.Values.Count > 0)
                                 {
-                                    oLastPeilut = oSidurPutzal.htPeilut.Values.Cast<clPeilut>().ToList().Last(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
+                                    oLastPeilut = oSidurPutzal.htPeilut.Values.Cast<clPeilut>().ToList().LastOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
                                     oFirstPeilut = oSidur.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
-                                    if (oFirstPeilut != null)
+                                    if (oFirstPeilut != null && oLastPeilut != null)
                                     {
                                         dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(oSidurPutzal.iMisparSidur, oSidurPutzal.dSidurDate, 1, out iResult);
                                         if (iResult == 0)
@@ -10894,11 +10894,14 @@ namespace KdsBatch
 
             if (!string.IsNullOrEmpty(sMeafyenKizuz) && oSidur.iLoLetashlum == 0)
             {
-                if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
-                bLoLetashlumAutomati = true;
-                else if ((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala >= dShatGmarLetashlum))
-                   bLoLetashlumAutomati = true; 
-             }
+                if (sMeafyenKizuz == "1")
+                {
+                    if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
+                        bLoLetashlumAutomati = true;
+                    else if ((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala >= dShatGmarLetashlum))
+                        bLoLetashlumAutomati = true;
+                }
+            }
 
             return bLoLetashlumAutomati;
         }
