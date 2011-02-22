@@ -217,7 +217,9 @@ namespace KdsBatch
             errHachtamaYadanitYetzia = 176,
             errSidurGriraNotValid=177,
             errMissingKodMevatzaVisa=178,
-            errHightValueDakotBefoal=179
+            errHightValueDakotBefoal=179,
+            IsShatHatchalaLetashlumNull = 180,
+            IsShatGmarLetashlumNull = 181
         }
 
         private enum errNesiaMeshtana
@@ -1228,6 +1230,9 @@ namespace KdsBatch
                     if (CheckErrorActive(175)) IsHachtamaYadanitKnisaMissing175(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(176)) IsHachtamaYadanitYetziaMissing176(ref oSidur, ref dtErrors);
 
+                    if (CheckErrorActive(180)) IsShatHatchalaLetashlumNull180(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
+
                     clPeilut oPrevPeilut = null;
                     //foreach (DictionaryEntry dePeilutEntry in oSidur.htPeilut)
                     for (int j = 0; j < ((KdsBatch.clSidur)(htEmployeeDetails[i])).htPeilut.Count; j++)
@@ -1414,6 +1419,54 @@ namespace KdsBatch
                 _bSuccsess = false;
             }
 
+            return isValid;
+        }
+        private bool IsShatHatchalaLetashlumNull180(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if (  oSidur.dFullShatHatchalaLetashlum ==DateTime.MinValue)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה לתשלום", enErrors.IsShatHatchalaLetashlumNull.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.IsShatHatchalaLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatHatchalaLetashlumNull180: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+
+        private bool IsShatGmarLetashlumNull180(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if (oSidur.dFullShatGmar==DateTime.MinValue)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר לתשלום", enErrors.IsShatGmarLetashlumNull.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.IsShatGmarLetashlumNull.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsShatGmarLetashlumNull181: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
             return isValid;
         }
 
