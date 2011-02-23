@@ -899,6 +899,7 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -1762,7 +1763,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.00001cm</Left>
-        <Height>7.76192cm</Height>
+        <Height>7.76194cm</Height>
         <Width>20.04766cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
@@ -1821,7 +1822,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("05/12/2010")</Value>
+          <Value>=CDate("01/02/2011")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -1831,7 +1832,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("06/12/2010")</Value>
+          <Value>=CDate("01/02/2011")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -1855,7 +1856,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>63347</Value>
+          <Value>75290</Value>
         </Values>
       </DefaultValue>
       <Prompt>Mispar_Ishi</Prompt>
@@ -1865,7 +1866,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>7</Value>
+          <Value>0</Value>
         </Values>
       </DefaultValue>
       <Prompt>P WORKERVIEWLEVEL</Prompt>
