@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KdsTaskManager.Action">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAEAAAAAAAQABACAAgAAAAAAAACAEAAAA=</HashCode>
+      <FileName>Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Bl">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAEEAAAABAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Bl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.FactoryCommand" Collapsed="true">
+    <Position X="1.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAQAAAQAAAAACAAAAABAAAACAAAAAAAAAAI=</HashCode>
+      <FileName>Command\FactoryCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.ProgramCommand">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAAEAAAABAA=</HashCode>
+      <FileName>Command\ProgramCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.StoredProcedureCommand">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Command\StoredProcedureCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.OracleSp">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Functions">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Message">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAIAAgAAAAAAAACAEAAQA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Group">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAACAEAAAAAAAAAAAIAQhAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Manager">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAIAAAAAAgABAAAEAAIIAAAAEAAAEAAAAgABAAI=</HashCode>
+      <FileName>Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Operator">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAASAAAAAAAAAAABAAAAAQAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Operator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KdsTaskManager.Program">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="KdsTaskManager.TypeCommand">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="KdsTaskManager.TypeStatus">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAgAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="KdsTaskManager.WakeUpHandler" Collapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Operator.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="KdsTaskManager.EndWorkHandler" Collapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Operator.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Microsoft Sans Serif" Size="8.25" />
+</ClassDiagram>
