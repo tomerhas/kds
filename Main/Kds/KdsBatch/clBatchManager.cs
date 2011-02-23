@@ -6057,8 +6057,7 @@ namespace KdsBatch
                     //שינוי 28
                     MergerSiduryMapa28();
 
-                    //שינוי 29
-                    SiduryMapaWhithStatusNullLoLetashlum29();
+                    
                     //שינוי מספר 5
                     //שינוי זה צריך לעבוד לפני שינוי 4
                     AddElementMechine05();
@@ -6342,7 +6341,9 @@ namespace KdsBatch
                 //שינוי 7
                 if (!CheckIdkunRashemet("LINA"))
                  FixedLina07();
-                
+
+                //שינוי 29
+                SiduryMapaWhithStatusNullLoLetashlum29();
 
                 //עבור שינויים 5,1,2,4,12
                 SetSidurObjects();
@@ -7302,7 +7303,7 @@ namespace KdsBatch
                 {
                     oSidur = (clSidur)htEmployeeDetails[i];
                     
-                    if (oSidur.iMisparSidur.ToString().Substring(0,2) != "99" && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
+                    if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
                     {
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
@@ -11267,7 +11268,7 @@ namespace KdsBatch
 
         private bool IsSidurNihulTnua(DataRow[] drSugSidur, clSidur oSidur)
         {
-            bool bSidurNahagut = false;
+            bool bSidurNihulTnua = false;
             bool bElementZviraZman = false;  
             //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
 
@@ -11275,39 +11276,40 @@ namespace KdsBatch
             {
                 if (oSidur.bSidurMyuhad)
                 {//סידור מיוחד
-                    bSidurNahagut = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
-                    if (!bSidurNahagut)
-                    {
+                    bSidurNihulTnua = (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    if (!bSidurNihulTnua)
+                       if (oSidur.iMisparSidur == 99301){
+                    
                         clPeilut oPeilut = null;
                         for (int i = 0; i < oSidur.htPeilut.Count; i++)
                         {
                              oPeilut = (clPeilut)oSidur.htPeilut[i];
-                             if (int.Parse(oPeilut.sElementZviraZman) == 4)
-                             {
-                                 bElementZviraZman = true;
-                                 break;
-                             }
-
+                             if ( !string.IsNullOrEmpty(oPeilut.sElementZviraZman))
+                                 if (int.Parse(oPeilut.sElementZviraZman) == 4)
+                                 {
+                                     bElementZviraZman = true;
+                                     break;
+                                 }
                         }
-                        if (oSidur.iMisparSidur == 99301 && bElementZviraZman)
-                            bSidurNahagut = true;
+                        if( bElementZviraZman)
+                            bSidurNihulTnua = true;
                     }
                 }
                 else
                 {//סידור רגיל
                     if (drSugSidur.Length > 0)
                     {
-                        bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
                     }
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNahagut: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 0, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNihulTnua: " + ex.Message, null);
                 _bSuccsess = false;
             }
 
-            return bSidurNahagut;
+            return bSidurNihulTnua;
         }
 
         private bool IsSidurZakaiLeNesiot(DataRow[] drSugSidur, clSidur oSidur)
