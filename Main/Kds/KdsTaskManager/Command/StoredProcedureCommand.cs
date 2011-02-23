@@ -14,8 +14,8 @@ namespace KdsTaskManager
 
         protected override bool Execute()
         {
-            // execute the stored procedure
-            throw new NotImplementedException();
+            Console.WriteLine("Sp Action {0} was executed", _ActionToExecute.CommandName);
+            return true;
         }
     }
 }

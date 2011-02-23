@@ -15,7 +15,7 @@ namespace KdsTaskManager
     {
         public void TestCommand()
         {
-            Console.Write("TestCommand is running ");
+            Console.WriteLine("TestCommand is running ");
         }
 
     }
@@ -44,5 +44,11 @@ namespace KdsTaskManager
         /// <remarks>set on success</remarks>
         Success = 4
     }
+    public enum OnFailureBehavior
+    {
+        Exit = 1,
+        Continue = 2
+    }
+
 
 }

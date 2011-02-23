@@ -37,6 +37,7 @@ namespace KdsTaskManager
             {
                 CreateMethodToExecute();
                 _ActionResult = (bool)_MethodInfo.Invoke(this, null);
+                Console.WriteLine("program Action {0} was executed", _ActionToExecute.CommandName);
                 return _ActionResult;
             }
             catch

@@ -38,7 +38,7 @@ namespace KdsTaskManager
 
         protected void UpdateTaskLog(Message msg)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Message {0},{1},{2} was send to Db", msg.GroupId,msg.IdOrder,msg.Status);
         }
 
     }

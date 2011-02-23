@@ -15,7 +15,7 @@ namespace KdsTaskManager
         public string LibraryName { get; set; }
         public string CommandName { get; set; }
         public int IdOrder { get; set; }
-        public int OnFailure { get; set; }
+        public OnFailureBehavior OnFailure { get; set; }
         public int Sequence { get; set; }
     }
 }

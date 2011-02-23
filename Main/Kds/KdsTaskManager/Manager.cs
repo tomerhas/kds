@@ -13,18 +13,13 @@ namespace KdsTaskManager
 
     public class Manager
     {
-        private List<Action> _Actions;
-        private List<Group> _Group;
+        private List<Group> _Groups;
         private List<Operator> _Operators;
-        private int _CntOperatorRun;
-        private DataTable _DsCommandOfGroup;
-        private DataTable _DsGroup;
+        private int _CntRunningOperators = 0 ;
         private int _NbOfGroup;
         public Manager()
         {
             GetGroupsDefinition();
-            if (_NbOfGroup > 0)
-                _Group.ForEach(GroupItem => SetTaskOfGroup(GroupItem.IdGroup));
         }
         public bool HasSomethingToDo
         {
@@ -45,7 +40,7 @@ namespace KdsTaskManager
             _NbOfGroup = dt.Rows.Count;
             if (_NbOfGroup > 0)
             {
-                _Group = new List<Group>();
+                _Groups = new List<Group>();
                 foreach (DataRow item in dt.Rows)
                 {
                     Group groupItem = new Group();
@@ -53,13 +48,13 @@ namespace KdsTaskManager
                     groupItem.Cycle = clGeneral.GetIntegerValue(item["CYCLE"].ToString());
                     groupItem.StartTime = (DateTime)item["STARTTIME"];
                     groupItem.EndTime = (DateTime)item["ENDTIME"];
-                    _Group.Add(groupItem);
+                    _Groups.Add(groupItem);
                 }
             }
         }
 
         /// <summary>
-        /// Get the list of the Command from Db for GroupId
+        /// Set the list of the Command from Db for GroupId
         /// </summary>
         private void SetTaskOfGroup(int GroupId)
         {
@@ -72,15 +67,15 @@ namespace KdsTaskManager
                 List<Action> ActionOfGroup = new List<Action>();
                 foreach (DataRow item in dt.Rows)
                 {
-                    Group groupItem = _Group.Find(group => group.IdGroup == GroupId);
+                    Group groupItem = _Groups.Find(group => group.IdGroup == GroupId);
                     Action ActionItem = new Action();
-                    ActionItem.IdGroup     = GroupId; 
-                    ActionItem.IdOrder     = clGeneral.GetIntegerValue(item["IDORDER"].ToString());
-                    ActionItem.OnFailure   = clGeneral.GetIntegerValue(item["ONFAILURE"].ToString());
-                    ActionItem.Sequence    = clGeneral.GetIntegerValue(item["SEQUENCE"].ToString());
-                    ActionItem.TypeCommand = (TypeCommand)Enum.ToObject(typeof(TypeCommand), clGeneral.GetIntegerValue( item["TYPECOMMAND"].ToString()));
-                    ActionItem.LibraryName = item["LIBRARYNAME"].ToString() ;
-                    ActionItem.CommandName = item["COMMANDNAME"].ToString() ;
+                    ActionItem.IdGroup = GroupId;
+                    ActionItem.IdOrder = clGeneral.GetIntegerValue(item["IDORDER"].ToString());
+                    ActionItem.OnFailure = (OnFailureBehavior)Enum.ToObject(typeof(OnFailureBehavior), clGeneral.GetIntegerValue(item["ONFAILURE"].ToString()));
+                    ActionItem.Sequence = clGeneral.GetIntegerValue(item["SEQUENCE"].ToString());
+                    ActionItem.TypeCommand = (TypeCommand)Enum.ToObject(typeof(TypeCommand), clGeneral.GetIntegerValue(item["TYPECOMMAND"].ToString()));
+                    ActionItem.LibraryName = item["LIBRARYNAME"].ToString();
+                    ActionItem.CommandName = item["COMMANDNAME"].ToString();
                     ActionOfGroup.Add(ActionItem);
                     groupItem.AddActions(ActionOfGroup);
                 }
@@ -88,49 +83,50 @@ namespace KdsTaskManager
 
         }
 
-        private void FillDataItems()
+
+        private void operatorItem_OnEndWork(Operator sender)
         {
-            string ParamLog = null;
-            try
-            {
-                _ReportItems = new List<ReportItem>();
-                _DtParamsReports = _BlReport.GetParamsReports;
-                foreach (DataRow drReport in _DtReportDefinitions.Rows)
-                {
-                    ParamLog = string.Empty;
-                    ReportItem Item = default(ReportItem);
-                    Item = new ReportItem(drReport["REPORT_NAME"].ToString(), EStr.Utilities.GetIntegerValue(drReport["QUERY_RUN_NUMBER"].ToString()), EStr.Utilities.GetIntegerValue(drReport["QUERY_NUMBER"].ToString()), OutputFormat.EXCEL, drReport["USER_NUMBER"].ToString());
-                    foreach (DataRow drReportItem in _DtParamsReports.Select("QUERY_NUMBER=" + EStr.Utilities.GetIntegerValue(drReport["QUERY_NUMBER"].ToString()) + "and QUERY_RUN_NUMBER=" + EStr.Utilities.GetIntegerValue(drReport["QUERY_RUN_NUMBER"].ToString())))
-                    {
-                        ReportParam ItemParams = default(ReportParam);
-                        ItemParams = new ReportParam(drReportItem["PARAM_NAME"].ToString(), drReportItem["PARAM_VALUE"].ToString());
-                        ParamLog += "Name=" + ItemParams.Name + ",Value=" + ItemParams.Value + Constants.vbCr;
-                        Item.ReportParams.Add(ItemParams);
-                    }
-                    EAl.Utilities.LogMessage(Item.ReportName + "(" + Item.QueryRunNumber + ") was created with parameters:" + Constants.vbCr + ParamLog, EventLogEntryType.Information);
-                    _ReportItems.Add(Item);
-                }
-            }
-            catch (Exception ex)
-            {
-                EggedCommon.Alerts.Utilities.LogMessage(ex.Message, EventLogEntryType.Error, true);
-            }
+            _CntRunningOperators--;
+            Console.WriteLine("Operator {0} was finished his job ", sender.GroupId);
         }
 
-
-        /// <summary>
-        /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
-        /// </summary>
-        private void FillCommandInOperators()
+        private void operatorItem_OnWakeUp(Operator sender)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("Operator {0} wake up", sender.GroupId);
+            if ((sender.IsTimeToRun()) && (_CntRunningOperators != 0))
+                RunOperator(sender);
+            else sender.Sleep();
         }
 
         public void Run()
         {
-            FillCommandInOperators();
+            CreateOperators();
+            _Operators.ForEach(Item => RunOperator(Item));
+        }
+        /// <summary>
+        /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
+        /// </summary>
+        private void CreateOperators()
+        {
+            Console.WriteLine("Create Operators");
+            _Operators = new List<Operator>();
+            _Groups.ForEach(groupItem => _Operators.Add(new Operator(groupItem)));
+            _Operators.ForEach(operatorItem => operatorItem.OnEndWork += new EndWorkHandler(operatorItem_OnEndWork));
+            _Operators.ForEach(operatorItem => operatorItem.OnWakeUp += new WakeUpHandler(operatorItem_OnWakeUp));
+            if (_NbOfGroup > 0)
+                _Operators.ForEach((OperatorItem => SetTaskOfGroup(OperatorItem.GroupId)));
+
         }
 
+        private void RunOperator(Operator Item)
+        {
+            if (Item.IsTimeToRun())
+            {
+                _CntRunningOperators++;
+                Item.Start();
+            }
+            else Item.Sleep();
+        }
 
 
 

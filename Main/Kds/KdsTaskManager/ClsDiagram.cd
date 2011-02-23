@@ -59,21 +59,14 @@
   <Class Name="KdsTaskManager.Group">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAACAEAAAAAAAAAAAIAQhAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAIACAEAAAAAAAAAAAIAAhAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Group.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="KdsTaskManager.Manager">
-    <Position X="5.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AASAAAIAAAAAAgABAAAEAAIIAAAAEAAAEAAAAgABAAI=</HashCode>
-      <FileName>Manager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="KdsTaskManager.Operator">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQBAAAAASAAAAAAAAAAABAAAAAQAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAABAAAAASAAAAABAAAAABAAAAQQAAAAAAAAAADAAAA=</HashCode>
       <FileName>Operator.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -24,14 +24,14 @@ namespace KdsTaskManager
         public long Cycle { get; set; }
 
         public DateTime EndTime { get; set; }
-
-        /// <summary>
-        /// Now() ( in hour ) between startTime and Endtime
-        /// or Cycle = true
-        /// </summary>
-        public void IsTimeToRun()
+        public List<Action> Actions
         {
-            throw new System.NotImplementedException();
+            get
+            {
+                return _Actions;
+            }
         }
+
+
     }
 }
