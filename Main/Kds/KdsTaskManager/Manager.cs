@@ -4,44 +4,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Threading;
+
 
 namespace KdsTaskManager
 {
+    
     public class Manager
     {
         private List<Action> _Actions;
         private List<Operator> _Operators;
         private int _CntOperatorRun;
-        private DataSet _DsCommandOfGroup;
+        private DataTable _DsCommandOfGroup;
+        private DataTable _DsGroup;
         private int _NbOfGroup;
-        private int field;
-
         public Manager()
         {
+            _DsGroup = GetGroupsDefinition();
         }
 
         /// <summary>
-        /// Return the number of groups to initiate the list of operators
+        /// Return the definition of groups to initiate the list of operators
         /// </summary>
-        private int GetNumberOfGroups()
+        private DataTable GetGroupsDefinition()
         {
-            throw new System.NotImplementedException();
+            DataTable dt = new DataTable();
+            Bl oBl = Bl.GetInstance();
+            dt = oBl.GetGroupsDefinition();
+            return dt; ;
         }
 
         /// <summary>
-        /// Get the list of the Command from Db for each group defined in the system
+        /// Get the list of the Command from Db for GroupId
         /// </summary>
-        private DataSet GetCommandOfGroup()
+        private DataTable GetTaskOfGroup(int GroupId)
         {
-            throw new System.NotImplementedException();
+            DataTable dt = new DataTable();
+            Bl oBl = Bl.GetInstance();
+            dt = oBl.GetTaskOfGroup(GroupId);
+
+            return dt;
         }
 
         /// <summary>
-        /// Fill DsCommandOfGroup into _Operator group by GroupId
+        /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
         /// </summary>
         private void FillCommandInOperators()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Run()
+        {
+            FillCommandInOperators();
         }
 
 

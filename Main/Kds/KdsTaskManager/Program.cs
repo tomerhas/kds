@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.ComponentModel;
-
 
 namespace KdsTaskManager
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
-                    
-            Console.Write("Hello");
+            Manager oManager = new Manager();
+            oManager.Run();
         }
     }
 }

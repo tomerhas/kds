@@ -19,15 +19,31 @@ namespace KdsTaskManager
         /// <remarks>Fill the Type and MethodInfo</remarks>
         private void CreateMethodToExecute()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _Type = Type.GetType(_ActionToExecute.LibraryName);
+                _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
+            }
+            catch
+            {
+                throw; 
+            }
         }
 
 
         protected override bool Execute()
         {
-            CreateMethodToExecute();
+            try
+            {
+                CreateMethodToExecute();
+                _ActionResult = (bool)_MethodInfo.Invoke(this, null);
+                return _ActionResult;
+            }
+            catch
+            {
+                return false;
+            }
 
-            throw new NotImplementedException();
         }
     }
 

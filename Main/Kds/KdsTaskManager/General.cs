@@ -5,14 +5,29 @@ using System.Text;
 
 namespace KdsTaskManager
 {
-    public class Message
+    public class OracleSp
+    {
+        public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdateLogTask";
+        public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetTaskOfGroup";
+        public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetGroupsDefinition";
+    }
+    public class Functions
+    {
+        public void TestCommand()
+        {
+            Console.Write("TestCommand is running ");
+        }
+
+    }
+    public class Message 
     {
         public int GroupId { get; set; }
         public int IdOrder { get; set; }
-        public TypeCommand TypeCommand { get; set; }
-        public TypeStatus StatusReport { get; set; }
+        public TypeStatus Status { get; set; }
         public int Sequence { get; set; }
         public string Remark { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 
     public enum TypeCommand

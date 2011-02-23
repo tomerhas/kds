@@ -8,6 +8,8 @@ namespace KdsTaskManager
     public abstract class FactoryCommand 
     {
         protected Action _ActionToExecute;
+        protected bool _ActionResult = false;
+
         private static FactoryCommand _FactoryCommand; 
 
         public static FactoryCommand instance(Action action)
@@ -29,7 +31,8 @@ namespace KdsTaskManager
 
         public bool Run()
         {
-            return Execute();
+            _ActionResult =  Execute();
+            return _ActionResult; 
         }
         protected abstract bool Execute();
 
