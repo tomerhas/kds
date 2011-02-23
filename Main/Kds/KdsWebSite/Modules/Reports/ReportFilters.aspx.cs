@@ -121,8 +121,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     }
                     break;
                 case ReportName.Presence:
-                    CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
-                    CtrlEndDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
+                    if (!Page.IsPostBack)
+                    {
+                        CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
+                        CtrlEndDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
+                    }
                     SetWorkerViewLevel();
                     break;
                 case ReportName.IshurimLerashemet:
