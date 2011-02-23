@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClsDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">

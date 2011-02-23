@@ -9,9 +9,12 @@ namespace KdsTaskManager
     {
         private List<Action> _Actions;
 
-        public Group(List<Action> ActionsOfGroup)
+        public Group()
         {
-            _Actions = ActionsOfGroup; 
+        }
+        public void AddActions(List<Action> ActionsOfGroup)
+        {
+            _Actions = ActionsOfGroup;
         }
     
         public int IdGroup { get; set; }

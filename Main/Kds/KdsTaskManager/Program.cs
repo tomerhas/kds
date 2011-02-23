@@ -10,7 +10,8 @@ namespace KdsTaskManager
         static void Main(string[] args)
         {
             Manager oManager = new Manager();
-            oManager.Run();
+            if (oManager.HasSomethingToDo)
+                oManager.Run();
         }
     }
 }
