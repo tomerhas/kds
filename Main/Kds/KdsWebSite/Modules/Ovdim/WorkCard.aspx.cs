@@ -168,6 +168,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 btnPrint.Enabled = true;
                 break;
         }
+        hidMeasherMistayeg.Value = oMasherOMistayeg.GetHashCode().ToString();
     }
     protected void Page_PreRender(object sender, EventArgs e)
     {
@@ -1915,8 +1916,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnRefreshOvedDetails_Click(object sender, EventArgs e)
     {
+       // OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
         if (bInpuDataResult)
         {
+             
 //            hidExecInputChg.Value = "0";
             if (hidSave.Value.Equals("1"))
             {
@@ -1931,8 +1934,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ViewState["LoadNewCard"] = true;
             lstSidurim.RefreshBtn = 0;
             hidRefresh.Value = "0";
+          
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
+            //lstSidurim.UpdateHashTableWithGridChanges(ref htSidurim);
+            //lstSidurim.ClearControl();
+            //lstSidurim.BuildPage();
             //string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
             //ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }

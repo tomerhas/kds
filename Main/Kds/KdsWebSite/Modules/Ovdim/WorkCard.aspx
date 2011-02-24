@@ -535,7 +535,7 @@
     <input type="hidden" runat="server" id="hidLvl1Chg" />
     <input type="hidden" runat="server" id="hidLvl2Chg" />
     <input type="hidden" runat="server" id="hidLvl3Chg" />
-       
+    <input type="hidden" runat="server" id="hidMeasherMistayeg" />   
     <input type="hidden" runat="server" id="hidRashemet" />  
     </form>   
     <script language="javascript" type="text/javascript">

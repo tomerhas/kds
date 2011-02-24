@@ -388,6 +388,7 @@
         sQueryString = sQueryString + "&MisparSidur="; 
         sQueryString = sQueryString + "&TimeStart=";
         sQueryString = sQueryString + "&TimeEnd=";
+        sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';   
         res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:580px;dialogheight:380px;dialogtop:280px;dialogleft:480px;status:no;resizable:no;');
         document.getElementById("divHourglass").style.display = 'none'; 

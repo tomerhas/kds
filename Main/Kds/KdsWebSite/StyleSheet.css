@@ -519,7 +519,7 @@
 	color: White;		
 }
 
-.ImgButtonApprovalChecked
+.ImgButtonApprovalCheckedOld
 {
 	background-image: url(Images/btn-approval-checked.jpg);	
 	width:80px; 
@@ -527,30 +527,32 @@
 	color: white;
 	font-weight:bold;		
 }
-.ImgButtonApprovalCheckedNew
+.ImgButtonApprovalChecked
 {
-	background-image: url(Images/btn-approval-checked.jpg);	
+	background-image: url(Images/pressed.jpg);	
 	width:80px; 
-	height:30px; 		
-	color: gray;
+	height:30px; 
+	font-family: campaign; 		
+	color: #059574;
 	border-style:hidden;
 	background-repeat:no-repeat;	
 	font-weight:bold;
 	background-color:White;		
 }
-.ImgButtonApprovalRegular
+.ImgButtonApprovalRegularOld
 {
 	background-image: url(Images/btn-approval-regular.jpg);	
 	width:80px; 
 	height:30px; 
 	color: White;		
 }
-.ImgButtonApprovalRegularNew
+.ImgButtonApprovalRegular
 {
-	background-image: url(Images/btn-approval-regular.jpg);	
+	background-image: url(Images/unpressed.jpg);	
 	width:80px; 
 	height:30px; 
-	color: gray;	
+	color: #059574;	
+	font-weight:bold;
 	border-style:none;
 	background-repeat:no-repeat;	
 	background-color:White;

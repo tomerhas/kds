@@ -1108,7 +1108,7 @@ public class wsGeneral : System.Web.Services.WebService
                             _Peilut.iMazanTashlum = (!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
                             _Peilut.iXyMokedTchila = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
                             _Peilut.iXyMokedSiyum = (System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedsiyum"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedsiyum"].ToString()));
-                            _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
+                           // _Peilut.iKisuyTorMap = (!System.Convert.IsDBNull(_PeilyotDetails[0]["kisuitor"])) ? int.Parse(_PeilyotDetails[0]["kisuitor"].ToString()) : 0;
                             _Peilut.fKm = (!System.Convert.IsDBNull(_PeilyotDetails[0]["KM"])) ? float.Parse(_PeilyotDetails[0]["KM"].ToString()) : 0;
                             _Peilut.sMakatDescription = _PeilyotDetails[0]["Description"].ToString(); ;
                             _Peilut.sShilut = "";
