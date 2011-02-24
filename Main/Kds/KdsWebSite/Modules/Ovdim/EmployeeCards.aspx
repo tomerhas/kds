@@ -54,7 +54,7 @@
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ontextchanged="txtId_TextChanged"  MaxLength="5" style="width:100px;" TabIndex="1" autopostback="true"></asp:TextBox>                            
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ontextchanged="txtId_TextChanged"  MaxLength="5" style="width:100px;" TabIndex="1" autopostback="true" onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
@@ -75,12 +75,12 @@
                                 <td style="width:220px;">
                                    <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate>--%> 
-                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"  onblur="GetOvedMisparIshiByName();" ontextchanged="txtName_TextChanged"></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();" autopostback="true" ontextchanged="txtName_TextChanged"></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement" FirstRowSelected="true"
                                                         CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">                               
+                                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName" >                                                             
                                             </cc1:AutoCompleteExtender> 
                                         <%-- </ContentTemplate>                       
                                  </asp:UpdatePanel>     --%>  
@@ -237,18 +237,14 @@
         {
           //document.getElementById("ctl00_KdsContent_txtName").value="";              
         }
-        
-        function GetOvedMisparIshiByName()
-        {
-        //document.getElementById("ctl00_KdsContent_txtName").click();
-        //GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName").value);
-          var sName = document.getElementById("ctl00_KdsContent_txtName").value;
-          if (sName.indexOf(")")==-1)
-          {            
-            document.getElementById("ctl00_KdsContent_txtName").click();            
-            //wsGeneral.GetOvdimByName(sName,25,null);
-           // document.getElementById("ctl00_KdsContent_AutoCompleteExtenderByName")            
-          }             
+
+        function setMonthFocus() {
+            if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {
+              if (document.getElementById("ctl00_KdsContent_btnExecute").disabled == false)
+                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+            }
+            else document.getElementById("ctl00_KdsContent_btnExecute").focus();
+
         }                
         function GetOvedMisparSucc(result)
         {
@@ -261,15 +257,18 @@
                 document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
                 document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearchDisable";
                 document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+               
             }
-            else{
-               document.getElementById("ctl00_KdsContent_txtId").value=result;
+            else {
+                
+                document.getElementById("ctl00_KdsContent_txtId").value = result;
+                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
               wsGeneral.GetOvedSnifAndUnit(Number(result),GetOvedSnifAndUnitSucceeded);
             }
         }
         
-        function GetOvedNameSucceeded(result)
-        {
+        function GetOvedNameSucceeded(result) {
+             
            if ((result=='') || (result=='null')){
                 alert('מספר אישי לא קיים');                        
                 document.getElementById("ctl00_KdsContent_txtId").select();
@@ -281,7 +280,9 @@
             }
             else{
                 document.getElementById("ctl00_KdsContent_txtName").value=result;
-                var iMisparIshi=document.getElementById("ctl00_KdsContent_txtId").value;
+                var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value;
+                document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
                 wsGeneral.GetOvedSnifAndUnit(iMisparIshi,GetOvedSnifAndUnitSucceeded);
             }
         }
@@ -299,13 +300,14 @@
          }
          document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearch";
          document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
-         
-         ClearScreen();
+   
+     //    ClearScreen();
         }
       function SetTextBox() 
       {
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
+             
             document.getElementById("ctl00_KdsContent_txtId").disabled = false;
             document.getElementById("ctl00_KdsContent_txtName").disabled = true;
             document.getElementById("ctl00_KdsContent_txtId").select();

@@ -65,6 +65,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         InputHiddenBack.Attributes.Add("Maamad", ParamsBack[2]);
         InputHiddenBack.Attributes.Add("From", ParamsBack[3]);
         InputHiddenBack.Attributes.Add("To", ParamsBack[4]);
+        InputHiddenBack.Attributes.Add("PageIndex", ParamsBack[5]);
     }
     private void SetDatesDefaults()
     {
@@ -376,11 +377,16 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             {               
               dv.Sort = string.Concat(sSortExp, " ", sSortDirection); 
             }
-           
+
+            if (InputHiddenBack.Value == "true")
+            {
+                grdEmployee.PageIndex = int.Parse(InputHiddenBack.Attributes["PageIndex"]);
+            }
             grdEmployee.DataSource = dv;
             grdEmployee.DataBind();
             Session["Ovdim_Details"] = dv;
 
+            
             if (dv.Count == 0)
             {
                 btnSearch.ControlStyle.CssClass = "ImgButtonSearchDisable";
@@ -393,7 +399,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             }
             Session["Params"] = ddlSite.SelectedValue + ";" + txtSnif.Text + ";" +
                         ddlMaamad.SelectedValue + ";" + clnFromDate.Text + ";" +
-                        clnToDate.Text;
+                        clnToDate.Text + ";" + grdEmployee.PageIndex;
             FillPirteySinun();
             btnSearch.ControlStyle.CssClass = "ImgButtonSearch";
             btnSearch.Enabled = true;
@@ -676,7 +682,11 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                                 string sortDirViewStateKey, string sortExprViewStateKey)
     {
         //   SetChangesOfGridInDataview(grid, ref dataView);
+        
+         
         grid.PageIndex = pageIndex;
+        Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + pageIndex;
+        
         string sortExpr = String.Empty;
         SortDirection sortDir = SortDirection.Ascending;
         if (ViewState[sortExprViewStateKey] != null)
@@ -689,6 +699,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         }
         grid.DataSource = dataView;
         grid.DataBind();
+       
     }
     private string ConvertSortDirectionToSql(SortDirection sortDirection)
     {

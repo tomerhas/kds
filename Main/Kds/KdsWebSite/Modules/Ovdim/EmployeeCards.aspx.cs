@@ -171,6 +171,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     {        
         string sOvedName = "";
         clOvdim oOvdim = new clOvdim();
+        bool flag = true;
 
         ViewState["SortDirection"] = SortDirection.Descending;
         ViewState["SortExp"] = "taarich";
@@ -193,7 +194,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 txtName.Text = "";
                 txtSnifUnit.Text = "";
                 ScriptManager.RegisterStartupScript(txtId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
-
+                txtId.Focus();
+                flag = false;
             }
             else
             {
@@ -214,6 +216,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     divNetunim.Visible = true;
                     if (txtId.Text != "")
                         txtSnifUnit.Text = SetSnifName(clGeneral.GetIntegerValue(txtId.Text));
+                   
                 }
                 else
                 {
@@ -223,6 +226,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     txtSnifUnit.Text = "";
                     ScriptManager.RegisterStartupScript((System.Web.UI.WebControls.TextBox) sender, this.GetType(), "errName", "alert('!מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');", true);
                     divNetunim.Visible = false;
+                    txtId.Focus();
+                    flag = false;
                 }
             }
          
@@ -232,6 +237,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             }
             txtId.Enabled = true;
         }
+        if (flag)
          btnExecute_Click(sender, e);
       
     }
@@ -239,6 +245,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     {
         DataTable dt;
         string sMisparIshi = "";
+        bool flag = true;
         try
         {
             txtPageIndex.Value = "0";
@@ -276,6 +283,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     btnExecute.Enabled = true;
                     if (txtId.Text != "")
                         txtSnifUnit.Text = SetSnifName(int.Parse(txtId.Text));
+                    
                 }
                 else
                 {
@@ -284,22 +292,29 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     txtId.Text = "";
 
                     ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים/אינך מורשה לצפות בעובד זה');", true);
+                    txtName.Focus();
+                    flag = false;
                 }
 
             }
-            if (rdoName.Checked && txtName.Text.Length > 0)
+            if (rdoName.Checked)
             {
+                txtName.Enabled = true;
                 txtId.Enabled = false;
             }
-            txtName.Enabled = true;
-            if ((txtName.Text).Length == 0)
+            else
             {
-                btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                btnExecute.Enabled = false;
-                divNetunim.Visible = false;
-                //btnExecute.Text = "";
+                txtName.Enabled = false;
+                txtId.Enabled = true;
             }
-             btnExecute_Click(sender, e);
+            if (flag)
+            {
+                btnExecute_Click(sender, e);
+                 if (rdoMonth.Checked == true)
+                    ddlMonth.Focus();
+                else btnExecute.Focus();
+            }
+
         }
         catch (Exception ex)
         { clGeneral.BuildError(Page, ex.Message); }

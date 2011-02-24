@@ -1453,7 +1453,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (oSidur.dFullShatGmar==DateTime.MinValue)
+                if (oSidur.dFullShatGmarLetashlum==DateTime.MinValue)
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר לתשלום", enErrors.IsShatGmarLetashlumNull.GetHashCode());
@@ -7299,23 +7299,24 @@ namespace KdsBatch
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = null;
             int i = 0;
             try{
-                for (i = 0; i < htEmployeeDetails.Count; i++)
-                {
-                    oSidur = (clSidur)htEmployeeDetails[i];
-                    
-                    if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
+                if (htEmployeeDetails  != null)
+                    for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
-                        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                        oSidur = (clSidur)htEmployeeDetails[i];
+                    
+                        if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
+                        {
+                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                        oSidur.iLoLetashlum = 1;
-                        oSidur.iKodSibaLoLetashlum = 16;
-                        oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
-                        oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 16;
-                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                            oSidur.iLoLetashlum = 1;
+                            oSidur.iKodSibaLoLetashlum = 16;
+                            oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
+                            oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 16;
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                        htEmployeeDetails[i] = oSidur;
-                     }      
-                }
+                            htEmployeeDetails[i] = oSidur;
+                         }      
+                    }
              }
             catch (Exception ex)
             {
