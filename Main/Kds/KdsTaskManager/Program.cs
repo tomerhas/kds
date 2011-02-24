@@ -12,6 +12,8 @@ namespace KdsTaskManager
             Manager oManager = new Manager();
             if (oManager.HasSomethingToDo)
                 oManager.Run();
+            
+            Console.ReadKey();
         }
     }
 }

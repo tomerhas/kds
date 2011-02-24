@@ -2,20 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KdsLibrary.DAL;
 
-namespace KdsTaskManager 
+namespace KdsTaskManager
 {
-    public class StoredProcedureCommand : FactoryCommand
+    public class StoredProcedureCommand : Command
     {
-        public StoredProcedureCommand(Action action)
+        private string Command = string.Empty;
+        public StoredProcedureCommand(Action ActionToExecute)
         {
-            _ActionToExecute = action;
+            _ActionToExecute = ActionToExecute;
+            Command = _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
         }
 
         protected override bool Execute()
         {
-            Console.WriteLine("Sp Action {0} was executed", _ActionToExecute.CommandName);
-            return true;
+            try
+            {
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageStart);
+                clDal dal = new clDal();
+                dal.ExecuteSP(Command);
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageEnd);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageEnd);
+                throw ex;
+            }
         }
     }
 }

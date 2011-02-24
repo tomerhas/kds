@@ -102,13 +102,21 @@ namespace KdsTaskManager
         {
             CreateOperators();
             _Operators.ForEach(Item => RunOperator(Item));
+            while (_CntRunningOperators > 0)
+            {
+                Console.WriteLine("Manager goes to sleep until {0} operators will finish them job...", _CntRunningOperators.ToString());
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine("Manager was finished his job", _CntRunningOperators.ToString());
+            Console.ReadKey();
+
         }
         /// <summary>
         /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
         /// </summary>
         private void CreateOperators()
         {
-            Console.WriteLine("Create Operators");
+            Console.WriteLine("Create {0} Operator(s)" , _NbOfGroup);
             _Operators = new List<Operator>();
             _Groups.ForEach(groupItem => _Operators.Add(new Operator(groupItem)));
             _Operators.ForEach(operatorItem => operatorItem.OnEndWork += new EndWorkHandler(operatorItem_OnEndWork));
@@ -123,6 +131,7 @@ namespace KdsTaskManager
             if (Item.IsTimeToRun())
             {
                 _CntRunningOperators++;
+                Console.WriteLine("Operator {0} will start...{1} operator(s) are running ", Item.GroupId, _CntRunningOperators);
                 Item.Start();
             }
             else Item.Sleep();

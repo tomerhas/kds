@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace KdsTaskManager
 {
-    public class ProgramCommand : FactoryCommand
+    public class ProgramCommand : Command
     {
         private Type _Type;
         private MethodInfo _MethodInfo;
 
-        public ProgramCommand(Action action)
+        public ProgramCommand(Action ActionToExecute)
         {
-            _ActionToExecute = action;
+            _ActionToExecute = ActionToExecute;
         }
 
         /// <remarks>Fill the Type and MethodInfo</remarks>
@@ -24,9 +24,9 @@ namespace KdsTaskManager
                 _Type = Type.GetType(_ActionToExecute.LibraryName);
                 _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
             }
-            catch
+            catch (Exception ex)
             {
-                throw; 
+                throw ex;
             }
         }
 
@@ -35,18 +35,24 @@ namespace KdsTaskManager
         {
             try
             {
+                object[] nullObj = null;
                 CreateMethodToExecute();
-                _ActionResult = (bool)_MethodInfo.Invoke(this, null);
-                Console.WriteLine("program Action {0} was executed", _ActionToExecute.CommandName);
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageStart);
+                _ActionResult = (bool)_MethodInfo.Invoke(_Type, nullObj);
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageEnd);
                 return _ActionResult;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, string.Empty, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageEnd);
+                throw ex;
             }
 
         }
     }
 
-  
+
 }

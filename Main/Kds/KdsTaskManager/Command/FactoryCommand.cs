@@ -3,43 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KdsTaskManager 
+namespace KdsTaskManager
 {
-    public abstract class FactoryCommand 
+    public abstract class Command
     {
         protected Action _ActionToExecute;
         protected bool _ActionResult = false;
-
-        private static FactoryCommand _FactoryCommand; 
-
-        public static FactoryCommand instance(Action action)
-        {
-            if (_FactoryCommand == null)
-            {
-                switch (action.TypeCommand)
-                {
-                    case TypeCommand.Program:
-                        _FactoryCommand = new ProgramCommand(action);
-                        break;
-                    case TypeCommand.StoredProcedure:
-                        _FactoryCommand = new StoredProcedureCommand(action);
-                        break;
-                }
-            }
-            return _FactoryCommand; 
-        }
-
-        public bool Run()
-        {
-            _ActionResult =  Execute();
-            return _ActionResult; 
-        }
+        protected Message _MessageStart, _MessageEnd;
         protected abstract bool Execute();
 
         protected void UpdateTaskLog(Message msg)
         {
-            Console.WriteLine("Message {0},{1},{2} was send to Db", msg.GroupId,msg.IdOrder,msg.Status);
+            Console.WriteLine("group {0}, Order {1} with Command {4} was send message {2} \n {3}", msg.GroupId, msg.IdOrder, msg.Status, msg.Remark, _ActionToExecute.TypeCommand);
         }
+
+        public bool Run()
+        {
+            try
+            {
+                return Execute();
+            }
+            catch (Exception ex)
+            {
+                Message msg = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(msg);
+                return false;
+            }
+        }
+    
+    }
+
+    public static class FactoryCommand
+    {
+
+        public static Command GetInstance(Action action)
+        {
+            switch (action.TypeCommand)
+            {
+                case TypeCommand.Program:
+                    return new ProgramCommand(action);
+                case TypeCommand.StoredProcedure:
+                    return new StoredProcedureCommand(action);
+                default:
+                    return null;
+            }
+        }
+
 
     }
 }

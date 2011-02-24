@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace KdsTaskManager
 {
@@ -11,16 +12,35 @@ namespace KdsTaskManager
         public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetTaskOfGroup";
         public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetGroupsDefinition";
     }
-    public class Functions
+    public static class Utilities
     {
-        public void TestCommand()
+        public static string PrepareExceptionMessage(string message)
+        {
+            string OriginFunction = string.Empty;
+            string StrError = message;
+            StackTrace st = new StackTrace();
+            StackFrame[] AllStack = st.GetFrames();
+            List<StackFrame> RelevantStack = AllStack.Reverse().ToList();
+            RelevantStack.RemoveAt(0);
+            RelevantStack.RemoveAt(1);
+            RelevantStack.RemoveAt(RelevantStack.Count -1 );
+            RelevantStack.ForEach(stack => OriginFunction += stack.GetMethod().DeclaringType.Name + ":" + stack.GetMethod().Name + "=>\n");
+            StrError = OriginFunction + StrError;
+            return StrError;
+        }
+    }
+    public static class Functions
+    {
+        public static bool TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
+            return true;
         }
 
     }
-    public class Message 
+    public class Message
     {
+
         public int GroupId { get; set; }
         public int IdOrder { get; set; }
         public TypeStatus Status { get; set; }
@@ -28,6 +48,24 @@ namespace KdsTaskManager
         public string Remark { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+
+        public Message(Action action, TypeStatus status, string remark, DateTime startTime, DateTime endTime)
+        {
+            try
+            {
+                GroupId = action.IdGroup;
+                IdOrder = action.IdOrder;
+                Status = status;
+                Sequence = action.Sequence;
+                Remark = (status == TypeStatus.Stopped) ? Utilities.PrepareExceptionMessage(remark) : remark;
+                StartTime = startTime;
+                EndTime = endTime;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
     public enum TypeCommand
