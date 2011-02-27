@@ -923,8 +923,9 @@ function chkMkt(oRow) {
     }
     function AddSadotLsidur(iIndex) {
     if (bScreenChanged) {
-        $("#hidSave")[0].value = "1";           
+        $("#hidSave")[0].value = "1";
         __doPostBack('btnConfirm', '');
+        pausecomp(1250);       
     }
     var dPeilutDate = new Date();
     var id = document.getElementById("txtId").value;

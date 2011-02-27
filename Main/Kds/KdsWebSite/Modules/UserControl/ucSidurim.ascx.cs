@@ -1725,8 +1725,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
 
                 InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, iSidurIndex, iPeilutIndex, lMakat, lCarNum, _NesiaDetails);
-                sScript = "SetBtnChanges();";
-                ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "InsertReka", sScript, true); 
+                sScript = " bScreenChanged = true; document.getElementById('btnUpdateCard').disabled = false;";
+                ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "OpenUpd", sScript, true); 
             }
             else
             {

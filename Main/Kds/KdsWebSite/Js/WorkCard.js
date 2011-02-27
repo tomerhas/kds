@@ -191,7 +191,7 @@
             btnId.style.cssText = "BACKGROUND-IMAGE: url(../../Images/allscreens-checkbox-empty.jpg)";
         }SetBtnChanges();          
     }
-    function SetBtnChanges(){    
+    function SetBtnChanges(){
          bScreenChanged = true; document.getElementById("btnUpdateCard").disabled = false; 
          document.getElementById("btnRefreshOvedDetails").disabled = true;          
          document.getElementById("txtId").disabled = true;          
