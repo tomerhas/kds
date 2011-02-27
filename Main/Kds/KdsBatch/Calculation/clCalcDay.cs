@@ -654,13 +654,47 @@ namespace KdsBatch
                
                     addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fShaotshabat100 + fZmanNesiot);
                 }
+           //     HashlamatNochehutLetashlumMiRechiveyPremia();
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
+        private void HashlamatNochehutLetashlumMiRechiveyPremia()
+        {
+            float fErechRechiv1 ,fErechRechiv126, fErechRechiv2, fErechRechiv133, fErechRechiv134;
+            try{
+                fErechRechiv1 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                fErechRechiv126 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                fErechRechiv2 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNehigaChol.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                fErechRechiv133 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.PremyaRegila.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                fErechRechiv134 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.PremyaNamlak.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
+                if ((fErechRechiv1 < fErechRechiv126) && (fErechRechiv2 >= (fErechRechiv126 / 2)) && ((fErechRechiv133 + fErechRechiv134) > 0))
+                {
+                    fErechRechiv1 = Math.Max(fErechRechiv126, fErechRechiv1 + Math.Max(fErechRechiv133, 30));
+                    addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1);
+                    fErechRechiv133 = fErechRechiv133 - (Math.Max(Math.Max(fErechRechiv133, 30), fErechRechiv1 - Math.Max(fErechRechiv133, 30)));
+                    addRowToTable(clGeneral.enRechivim.PremyaRegila.GetHashCode(), fErechRechiv133);
+
+                    if (fErechRechiv1 < fErechRechiv126)
+                    {
+                        fErechRechiv1 = Math.Max(fErechRechiv126, fErechRechiv1 + Math.Max(fErechRechiv134, 30));
+                        addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1);
+
+                        fErechRechiv134 = fErechRechiv134 - (Math.Max(Math.Max(fErechRechiv134, 30), fErechRechiv1 - Math.Max(fErechRechiv134, 30)));
+                        addRowToTable(clGeneral.enRechivim.PremyaNamlak.GetHashCode(), fErechRechiv134);
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         private void CalcRechiv2()
         {
             float fSumDakotRechiv;
