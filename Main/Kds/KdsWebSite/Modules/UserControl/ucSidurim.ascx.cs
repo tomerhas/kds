@@ -1332,7 +1332,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
         _NextPeilut = _CurrSidur.Rows[iPeilutIndex];
         //iMazanTichnun = int.Parse(((TextBox)_NextPeilut.Cells[_COL_DEF_MINUTES].Controls[0]).Text);
-        lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
+        if (((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text == string.Empty)
+            lCarNum = 0;
+        else
+           lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
 
         //string sShatYetiza = ((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
         //DateTime dPeilutDate = DateTime.Parse(((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes["OrgDate"] + " " + sShatYetiza);
@@ -1393,7 +1396,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
             }
 
-            if ((bCanAddReka) && (!((TextBox)(_NextPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text.Equals("1")))
+            string sCancelPeilut = ((TextBox)(_NextPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text;
+            if ((bCanAddReka) && (!sCancelPeilut.Equals("1")))
             {
                 //sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
                 lMakatEnd = long.Parse(((TextBox) _NextPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
@@ -1402,20 +1406,50 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                
             }
             else
-            {    
-                _txt = ((TextBox)(_NextPeilut.Cells[_COL_MAKAT].Controls[0]));
-                if (_txt.Text != String.Empty)
-                {
-                    lMakat = long.Parse(_txt.Text);
-                    arrKnisa = _NextPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
-                    // 3אלמנט ללא מאפיין 9                   
-                    if (((_Kavim.GetMakatType(lMakat)) == clKavim.enMakatType.mElement.GetHashCode()) && ((arrKnisa[3]) == "0"))
-                        bExists = true;
+            {                    
+                    _txt = ((TextBox)(_NextPeilut.Cells[_COL_MAKAT].Controls[0]));
+                    if ((_txt.Text != String.Empty) && (!sCancelPeilut.Equals("1")))
+                    {
+                        lMakat = long.Parse(_txt.Text);
+                        arrKnisa = _NextPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+                        // 3אלמנט ללא מאפיין 9                   
+                        if (((_Kavim.GetMakatType(lMakat)) == clKavim.enMakatType.mElement.GetHashCode()) && ((arrKnisa[3]) == "0"))
+                            bExists = true;
+                        else
+                        {
+                            //sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
+                            iPeilutIndex = iPeilutIndex + 1;
+                            if (iPeilutIndex < _NextSidur.Rows.Count)
+                                _NextPeilut = _NextSidur.Rows[iPeilutIndex];
+                            else
+                                _NextPeilut = null;
+
+                            if (_NextPeilut == null)
+                            {   //אם הגענו לסוף הסידור נעבור לסידור הבא
+                                iSidurIndex = iSidurIndex + 1;
+                                bFound = false;
+                                _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                while ((_NextSidur != null) && (!bFound))
+                                {
+                                    if (_NextSidur != null)
+                                        bFound = true;
+                                    else
+                                    {
+                                        iSidurIndex = iSidurIndex + 1;
+                                        _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else
                     {
-                        //sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
                         iPeilutIndex = iPeilutIndex + 1;
-                        _NextPeilut = _NextSidur.Rows[iPeilutIndex];
+                        if (iPeilutIndex < _NextSidur.Rows.Count)
+                            _NextPeilut = _NextSidur.Rows[iPeilutIndex];
+                        else
+                            _NextPeilut = null;
+
                         if (_NextPeilut == null)
                         {   //אם הגענו לסוף הסידור נעבור לסידור הבא
                             iSidurIndex = iSidurIndex + 1;
@@ -1433,7 +1467,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             }
                         }
                     }
-                }
+                
             }
             
         }
@@ -1470,19 +1504,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iSidurNumber = 0;
         DateTime dSidurShatHatchala = new DateTime();
         DateTime dPeilutDate = CardDate;
+        DateTime dPeilutShatYetiza;
         try
         {
             _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
             _NextPeilut = _CurrSidur.Rows[iPeilutIndex];
             iMazanTichnun = int.Parse(_NextPeilut.Cells[_COL_DEF_MINUTES].Text);
             string sShatYetiza = ((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
-            if (((TextBox)_NextPeilut.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
-                dPeilutDate=dPeilutDate.AddDays(1);
+            
+            if (sShatYetiza.Equals(""))
+                dPeilutShatYetiza = DateTime.Parse("01/01/0001 00:00:00");
+             else
+                {
+                if (((TextBox)_NextPeilut.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
+                    dPeilutDate=dPeilutDate.AddDays(1);
 
-            DateTime dPeilutShatYetiza = DateTime.Parse(dPeilutDate.ToShortDateString() + " " + sShatYetiza);
+                dPeilutShatYetiza = DateTime.Parse(dPeilutDate.ToShortDateString() + " " + sShatYetiza);
 
-            dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
-
+                dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
+                }
             _CurrSidur = ((GridView)this.FindControl(iSidurIndexNew.ToString().PadLeft(3, char.Parse("0"))));
             _NextPeilut = _CurrSidur.Rows[iPeilutIndexNew];
                         
@@ -1497,14 +1537,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
             _Peilut.dFullShatYetzia = dPeilutShatYetiza;
             _Peilut.dOldFullShatYetzia = dPeilutShatYetiza;
-            _Peilut.sShatYetzia = dPeilutShatYetiza.ToShortTimeString(); 
+            _Peilut.sShatYetzia = (sShatYetiza==string.Empty) ? "" : dPeilutShatYetiza.ToShortTimeString(); 
             _Peilut.lMakatNesia = lMakat;
             _Peilut.lOldOtoNo = lCarNum;
             _Peilut.lOtoNo = lCarNum;
             _Peilut.iMakatType = _Kavim.GetMakatType(lMakat);
-           
+            _Peilut.iMazanTashlum = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantashlum"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantashlum"].ToString());
+            _Peilut.iMazanTichnun = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantichnun"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantichnun"].ToString());
             _Peilut.sMakatDescription = _NesiaDetails.Rows[0]["description"].ToString();
-            _Peilut.sShilut = COL_TRIP_EMPTY;
+            _Peilut.sSugShirutName = COL_TRIP_EMPTY;
 
             iPos = FindPeilutPos(dPeilutShatYetiza, _Sidur.htPeilut);
             if (iPos == _Sidur.htPeilut.Count)
@@ -1568,7 +1609,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         //נמצא את המיקום שבו נכניס את הפעילות החדשה
         int iPos=0;
-        bool bFirst = false;
+        bool bFirst = false; //מציין אם המיקום הוא בפעילות הראשונה
+        bool bFound = false; //חייבים לעבור על כל הפעילויות כיוון שפעילויות שנכנסו ע"י הוספת פעילויות הן לא ממויינות ויכולות להיות בעלות אותה שעה של הריקה החדשה
         clPeilut _Peilut;
         for (int i = 0; i < htPeiluyot.Count; i++)
         {
@@ -1580,12 +1622,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             if (_Peilut.dFullShatYetzia > dPeilutShatYetiza)
             {
-                iPos = i;
-                if (iPos == 0)
-                    bFirst = true;
-                break;
+                if (!bFound)
+                {
+                    bFound = true;
+                    iPos = i;
+                    if (iPos == 0)
+                        bFirst = true;
+                }
             }
         }
+
         if ((iPos == 0) && (!bFirst))
             iPos = htPeiluyot.Count+1; //אם לא מצאנו, יש להכניס את הפעילות בסוף עם שעה מלאה
         return iPos;
@@ -2171,7 +2217,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (dShatYetiza.Date.Year < clGeneral.cYearNull)
                     if (oShatYetiza.Text != string.Empty)
                     {
-                        if (DateTime.Parse(oShatYetiza.Text).Hour > 0)
+                        if ((DateTime.Parse(oShatYetiza.Text).Hour > 0) || (DateTime.Parse(oShatYetiza.Text).Minute > 0))
                             oShatYetiza.Attributes["OrgDate"] = _Sidur.dFullShatHatchala.ToShortDateString();
                     }
                     else //שעת יציאה ריקה
