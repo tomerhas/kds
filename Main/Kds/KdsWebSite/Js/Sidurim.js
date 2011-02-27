@@ -939,7 +939,7 @@ function chkMkt(oRow) {
     var SidurId= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;       
     if (SidurSHour=='')
         SidurDate='01/01/0001';
-      
+
     var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();        
     var res=window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString , window , "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
     if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){

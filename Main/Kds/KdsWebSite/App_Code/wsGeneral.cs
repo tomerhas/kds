@@ -1081,10 +1081,11 @@ public class wsGeneral : System.Web.Services.WebService
                 //iMakatType = _Kavim.GetMakatType(lMakatNesia);
                 //clKavim.enMakatType _MakatType;
                 //_MakatType = (clKavim.enMakatType)iMakatType;
-                _Peilut.lMakatNesia = lMakatNesia;
+               
                 switch (_MakatType)
                 {
                     case clKavim.enMakatType.mKavShirut:
+                        _Peilut.lMakatNesia = lMakatNesia;
                         _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                         if (_PeilyotDetails.Length > 0)
                         {
@@ -1101,6 +1102,7 @@ public class wsGeneral : System.Web.Services.WebService
                         }
                         break;
                     case clKavim.enMakatType.mEmpty:
+                        _Peilut.lMakatNesia = lMakatNesia;
                         _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                         if (_PeilyotDetails.Length > 0)
                         {
@@ -1119,6 +1121,7 @@ public class wsGeneral : System.Web.Services.WebService
                         break;
 
                     case clKavim.enMakatType.mNamak:
+                         _Peilut.lMakatNesia = lMakatNesia;
                          _PeilyotDetails = dtPeilyotTnuaDetails.Select("Makat8=" + lMakatNesia.ToString());
                          if (_PeilyotDetails.Length > 0)
                          {
@@ -1135,7 +1138,16 @@ public class wsGeneral : System.Web.Services.WebService
                          }
                          break;
                     case clKavim.enMakatType.mElement:
-                       _Peilut.sMakatDescription=dtPeilyotTnuaDetails.Rows[0]["TEUR_ELEMENT"].ToString();
+                        _Peilut.sMakatDescription=dtPeilyotTnuaDetails.Rows[0]["TEUR_ELEMENT"].ToString();
+                        _Peilut.sShilut = "";
+                        _Peilut.sSugShirutName = "";
+                        _Peilut.iKisuyTorMap = 0;
+                        _Peilut.iMazanTichnun = 0;//(!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
+                        _Peilut.iMazanTashlum =0 ;//(!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
+                        _Peilut.iXyMokedTchila = 0;//(System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
+                        _Peilut.iXyMokedSiyum=0;
+                        _Peilut.fKm = 0;
+                       AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         break;
                     case clKavim.enMakatType.mVisut:                       
                         break;
