@@ -332,9 +332,10 @@
     function refresh() {
       $get("<%=btnExecute.ClientID %>").click();
     }
-    
-    
+
+
     function OpenEmpWorkCard(RowDate) {
+       // debugger;
         var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
         var WCardDate = RowDate;
         var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();

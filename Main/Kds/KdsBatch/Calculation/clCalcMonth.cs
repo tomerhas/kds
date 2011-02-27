@@ -868,7 +868,7 @@ namespace KdsBatch
                 CalcRechiv96();
 
                 //תוספת רציפות תפקיד   - רכיב 97:  
-                CalcRechiv97();
+                //CalcRechiv97(); בוטל
 
                 //רציפות לזמן לילה    - רכיב 272:  
                 CalcRechiv272();

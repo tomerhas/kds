@@ -2747,16 +2747,18 @@ namespace KdsBatch
         public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok)
         {
             DataRow[] drSidurim;
-            int iMisparSidur, J, iMisparSidurNext;
+            int iMisparSidur, J ;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
             float fErech,fErechSidur;
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
-            bool bSidurNehiga = false;
-            int iSugSidur;
-            bool bYeshSidur = false;
+            bool bSidurNehigaFirst = false;
+            bool bSidurNehigaSecond = false;
+            bool bSidurNihulOrTafkidFirst = false;
+            bool bSidurNihulOrTafkidSecond = false;
+       
             try
             {
                 drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC");
@@ -2765,42 +2767,22 @@ namespace KdsBatch
                 fErechLaylaChok = 0;
                 for (int I = 0; I < drSidurim.Length;I++)
                 {
-                    bSidurNehiga = false;
+                    bSidurNehigaFirst = false;
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-                            
-                    iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && drSidurim[I]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-                        bSidurNehiga = true;
-                    else if (iMisparSidur.ToString().Substring(0, 2) != "99") 
-                    {
-                        SetSugSidur(ref drSidurim[I], dTaarich, iMisparSidur);
-                        iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
-                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), dTaarich, iSugSidur);
-                        if (bYeshSidur)
-                            bSidurNehiga = true;
-                    }
-
-                    if (bSidurNehiga)
+                    bSidurNehigaFirst = isSidurNehiga(ref drSidurim[I]);
+                    bSidurNihulOrTafkidFirst = isSidurNihulTnuaOrTafkidMezakeRezifut(ref drSidurim[I]);
+                   
+                    if (bSidurNehigaFirst || bSidurNihulOrTafkidFirst)
                     {
                         J = I + 1;
                         if (J < drSidurim.Length)
                         {
-                            bSidurNehiga = false;
-                            iMisparSidurNext = int.Parse(drSidurim[J]["mispar_sidur"].ToString());
-                            if (iMisparSidurNext.ToString().Substring(0, 2) == "99" && drSidurim[J]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-                                bSidurNehiga = true;
-                            else if (iMisparSidurNext.ToString().Substring(0, 2) != "99")
-                            {
-                                SetSugSidur(ref drSidurim[J], dTaarich, iMisparSidurNext);
-                                iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
-
-                                bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), dTaarich, iSugSidur);
-                                if (bYeshSidur)
-                                    bSidurNehiga = true;
-                            }
-
-                            if (bSidurNehiga)
+                             
+                            bSidurNehigaSecond = isSidurNehiga(ref drSidurim[J]);
+                            bSidurNihulOrTafkidSecond = isSidurNihulTnuaOrTafkidMezakeRezifut(ref drSidurim[J]);
+                            
+                            if ((bSidurNehigaFirst && (bSidurNehigaSecond || bSidurNihulOrTafkidSecond)) || (bSidurNehigaSecond && (bSidurNehigaFirst || bSidurNihulOrTafkidFirst)))
                             {
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[J]["shat_hatchala_letashlum"].ToString());
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
@@ -2844,6 +2826,80 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(_lBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), _iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
+                throw (ex);
+            }
+        }
+
+        private bool isSidurNehiga(ref DataRow drSidurim)
+        {
+            int iMisparSidur=0;
+            bool bSidurNehiga = false;
+            bool bYeshSidur = false;
+            int iSugSidur;
+            DateTime dShatHatchalaSidur=DateTime.MinValue;
+            try{
+                iMisparSidur = int.Parse(drSidurim["mispar_sidur"].ToString());
+                dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
+
+                if (iMisparSidur.ToString().Substring(0, 2) == "99" && drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                    bSidurNehiga = true;
+                else if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                {
+                    SetSugSidur(ref drSidurim, dTaarich, iMisparSidur);
+                    iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
+
+                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), dTaarich, iSugSidur);
+                    if (bYeshSidur)
+                        bSidurNehiga = true;
+                }
+                return bSidurNehiga;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, "E", null, 0, _iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
+                throw (ex);
+            }
+        }
+        private bool isSidurNihulTnuaOrTafkidMezakeRezifut(ref DataRow drSidurim)
+        {
+            int iMisparSidur = 0;
+            bool bSidurNihulOrTafkid = false;
+            bool bYeshSidur = false;
+            int iSugSidur;
+            DataRow[]   drPeiluyot;
+            DataTable dtPeiluyot;
+            DateTime dShatHatchalaSidur = DateTime.MinValue;
+            try
+            {
+                iMisparSidur = int.Parse(drSidurim["mispar_sidur"].ToString());
+                dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
+
+                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim["zakay_lepizul"].ToString()) == 1))
+                    bSidurNihulOrTafkid = true;
+                else if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                {
+                    SetSugSidur(ref drSidurim , dTaarich, iMisparSidur);
+                    iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
+
+                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), dTaarich, iSugSidur);
+                    if (bYeshSidur)
+                        bSidurNihulOrTafkid = true;
+                    else
+                    {
+                        dtPeiluyot = oPeilut.GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                        drPeiluyot = dtPeiluyot.Select("sector_zvira_zman_haelement=4");
+
+                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), dTaarich, iSugSidur);
+                        if (bYeshSidur || (iMisparSidur == 99301 && drPeiluyot.Length > 0)) // && clCalcGeneral.objMeafyeneyOved.iMeafyen33))
+                            bSidurNihulOrTafkid = true;
+
+                    }
+                }
+                return bSidurNihulOrTafkid;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, "E", null, 0, _iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
         }

@@ -42,6 +42,11 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                     InputHiddenBack.Value = "true";
                     SlofParamsFromSession();
                 }
+                else
+                {
+                    Session["SortExp"] = null;
+                    Session["SortDirection"] = null;
+                }
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 PageHeader = "רשימת עובדים בעלי כרטיסי עבודה לטיפול";
                 SetFields();
@@ -82,6 +87,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     }
     private void SetFields()
     {
+        string Direction;
         try
         {
             //טעינת איזורים
@@ -103,11 +109,23 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             rdoId.Checked = true;         
             rdoId.Attributes.Add("onclick", "SetTextBox();");
             rdoName.Attributes.Add("onclick", "SetTextBox();");
-            ViewState["SortDirection"] = SortDirection.Descending;
-            ViewState["SortExp"] = "mispar_ishi";
             SetDatesDefaults();
             LoadMaamad();
-            LoadOvdimGrid("", "ASC");
+            if (Session["SortExp"] == null)
+                Session["SortExp"] = "mispar_ishi";
+
+            if (Session["SortDirection"] == null)
+            {
+                Session["SortDirection"] = SortDirection.Ascending;
+                Direction = "ASC";
+            }
+            else
+            {
+                if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
+                    Direction = "ASC";
+                else Direction = "DESC";
+            }
+            LoadOvdimGrid(Session["SortExp"].ToString(), Direction);
            // AutoCompleteExtenderID.OnClientHidden = "GetOvedName();";
         }
         catch (Exception ex)
@@ -320,7 +338,10 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     protected void btnExecute_Click(object sender, EventArgs e)
     {                        
         try
-        {               
+        {
+            grdEmployee.PageIndex = 0;
+            InputHiddenBack.Value = "false";
+           Session["SortDirection"] = SortDirection.Ascending;   
            LoadOvdimGrid("","ASC");
         
            //AutoCompleteExtenderID.ContextKey = Session["MisparimIshi"].ToString();
@@ -517,7 +538,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             iColSort = GetCurrentColSort();
             lbl.Text = " ";
             e.Row.Cells[iColSort].Controls.Add(lbl);
-            if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
+            if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
             {
                 System.Web.UI.WebControls.Image ImageSort = new System.Web.UI.WebControls.Image();
                 ImageSort.ID = "imgAscSort";
@@ -546,7 +567,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
 
     private int GetCurrentColSort()
     {
-        string sSortExp = (string)ViewState["SortExp"];
+        string sSortExp = (string)Session["SortExp"];
         int iColNum = -1;
         try
         {
@@ -568,29 +589,31 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {
         string sDirection;
 
-        if ((string.Empty != (string)ViewState["SortExp"]) && (string.Compare(e.SortExpression, (string)ViewState["SortExp"], true) == 0))
+        if ((string.Empty != (string)Session["SortExp"]) && (string.Compare(e.SortExpression, (string)ViewState["SortExp"], true) == 0))
         {
-            if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
+            if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
             {
                 sDirection = "DESC";
-                ViewState["SortDirection"] = SortDirection.Descending;
+                Session["SortDirection"] = SortDirection.Descending;
             }
             else
             {
                 sDirection = "ASC";
-                ViewState["SortDirection"] = SortDirection.Ascending;
+                Session["SortDirection"] = SortDirection.Ascending;
             }
         }
         else
         {
             sDirection = "DESC";
-            ViewState["SortDirection"] = SortDirection.Descending;
+            Session["SortDirection"] = SortDirection.Descending;
         }
-        ViewState["SortExp"] = e.SortExpression;
+        Session["SortExp"] = e.SortExpression;
 
         //LoadOvdimGrid(e.SortExpression, sDirection);
         ((DataView)Session["Ovdim_Details"]).Sort= string.Concat(e.SortExpression," ", sDirection);
         grdEmployee.DataSource = (DataView)Session["Ovdim_Details"];
+        grdEmployee.PageIndex = 0;
+        InputHiddenBack.Value = "false";
         grdEmployee.DataBind();
     }
 
