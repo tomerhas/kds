@@ -30,7 +30,7 @@ function chkMkt(oRow) {
                     var oDate = document.getElementById('lstSidurim_lblDate'.concat(iInx)).firstChild.nodeValue;
                     var iSidur = document.getElementById('lstSidurim_lblSidur'.concat(iInx)).firstChild.nodeValue;
                     var iSidurVisa = document.getElementById('lstSidurim_lblSidur'.concat(iInx)).getAttribute("SidurVisa");
-                    SetBtnChanges(); SetLvlChg(3);
+                    SetBtnChanges(); //SetLvlChg(3);
                     if ((lNMkt != '') && (Number(lNMkt != 0))) {
                         var oShatYetiza = document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value;
                         var oDayToAdd = document.getElementById(oRId).cells[_COL_DAY_TO_ADD].childNodes[0].value;
@@ -213,7 +213,7 @@ function chkMkt(oRow) {
         //var KeyID = event.keyCode; alert(KeyID);  
             oId = String(oRow.id).substr(0, oRow.id.length - 6);        
             var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;
-            SetBtnChanges(); SetLvlChg(3);
+            SetBtnChanges(); //SetLvlChg(3);
             if ((lOtoNo != '') && (trim(String(lOtoNo)).length>=5)) {
                 wsGeneral.CheckOtoNo(lOtoNo, callBackOto, null, oRow);
             }           
@@ -290,7 +290,7 @@ function chkMkt(oRow) {
     }    
     function ChangeStatusSidur(id){      
      var iIndex = String(id).substr(String(id).length-1,1);
-     SetBtnChanges();SetLvlChg(2);
+     SetBtnChanges(); SetLvlChg(2, iIndex);
      if (document.getElementById(id).className == "ImgChecked")
      {
         SetSidurStatus(iIndex,true);       
@@ -306,7 +306,7 @@ function chkMkt(oRow) {
      return false;
     }    
     function SetPeilutStatus(RowId,bFlag, iSidur)
-    {   SetBtnChanges();SetLvlChg(3);
+    {   SetBtnChanges();//SetLvlChg(3);
         var oRow=document.getElementById(RowId);
         var oColPeilutCancel=oRow.cells[_COL_CANCEL_PEILUT].firstChild;
         var oColCancel=oRow.cells[_COL_CANCEL].firstChild;
@@ -408,7 +408,7 @@ function chkMkt(oRow) {
         $find("cPanel".concat(iIndex))._doOpen();}
     }    
     function ChkExitHour(val,args)
-    {   SetBtnChanges();SetLvlChg(3);
+    {   SetBtnChanges();//SetLvlChg(3);
         if (document.getElementById("clnDate").value!='')
         { var dShatYetiza = new Date();                                             
           var dSExitHour = new Date();     
@@ -523,7 +523,7 @@ function chkMkt(oRow) {
            }
        }       
     function IsAMinValid(val,args){
-         SetBtnChanges();SetLvlChg(3);
+         SetBtnChanges();//SetLvlChg(3);
          var sGridRowID = val.getAttribute("index");   
          var iKnisaNum, iKnisaType, arrKnisaVal;
          var _ActMIn = document.getElementById(sGridRowID).cells[_COL_ACTUAL_MINUTES].childNodes[0];         
@@ -545,7 +545,7 @@ function chkMkt(oRow) {
          }
     }
     function ChkKisyT(val,args)    
-    {  SetBtnChanges();SetLvlChg(3);
+    {  SetBtnChanges();//SetLvlChg(3);
        var sGridRowID = val.getAttribute("index");
        var sValidHour = document.getElementById(sGridRowID).cells[_COL_KISUY_TOR].childNodes[0].getAttribute("OldTorMapV"); //val.outerHTML.substr(val.outerHTML.indexOf('errormessage') + String('errormessage').length + 44 ,5);
        if ((document.getElementById(sGridRowID).cells[_COL_KISUY_TOR].childNodes[0].value) != '')

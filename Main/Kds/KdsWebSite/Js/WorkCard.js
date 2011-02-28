@@ -198,9 +198,12 @@
          document.getElementById("txtName").disabled = true;          
          document.getElementById("clnDate").disabled = true;            
     }
-    function SetLvlChg(iLvl){
+    function SetLvlChg(iLvl, iSidurIndex){
         var id = ("hidLvl".concat(String(iLvl))).concat("Chg");
-        document.getElementById(id).value = "1";
+        if (Number(iLvl==1))
+            document.getElementById(id).value = "1";
+        else
+            document.getElementById(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ","); 
     }    
     function CheckChanges(){    
       if (bScreenChanged) {        
@@ -632,7 +635,7 @@ function chkTravelTime(){
      else{       
        bScreenChanged = true; document.getElementById("btnUpdateCard").disabled = false;
    }
-   SetLvlChg(1);
+   SetLvlChg(1,0);
 }
 function isUserIdValid(){  
     document.getElementById("btnRefreshOvedDetails").disabled = true;  

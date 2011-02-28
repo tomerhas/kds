@@ -265,35 +265,35 @@
                         <table width="100%" cellpadding="1" runat="server" id="tbValWorkDay">
                             <tr>
                                 <td width="150px">
-                                    <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardDDL"  onchange="SetBtnChanges();SetLvlChg(1);"
+                                    <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardDDL"  onchange="SetBtnChanges();SetLvlChg(1,0);"
                                         ondblclick="GetErrorMessage(this,1,'');" width="160px" >
                                     </asp:DropDownList>
                                 </td>
                                 <td width="110px">
-                                    <asp:DropDownList runat="server" ID="ddlTachograph"  CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);"  width="110px" >
+                                    <asp:DropDownList runat="server" ID="ddlTachograph"  CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="110px" >
                                     </asp:DropDownList>
                                 </td>
                                 <td width="110px">
-                                    <asp:DropDownList runat="server" ID="ddlLina" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);"
+                                    <asp:DropDownList runat="server" ID="ddlLina" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"
                                         ondblclick="GetErrorMessage(this,1);" width="100px">
                                     </asp:DropDownList>
                                 </td>
                                 <td width="40px">
-                                    <input type="button" runat="server" id="btnHamara" name="btnHamara" class="ImgButtonCheckBoxEmpty" onclick="CheckButton(this,Hamara);SetLvlChg(1);" width="30px" />                                        
+                                    <input type="button" runat="server" id="btnHamara" name="btnHamara" class="ImgButtonCheckBoxEmpty" onclick="CheckButton(this,Hamara);SetLvlChg(1,0);" width="30px" />                                        
                                     <input type="hidden" runat="server" id="Hamara" />
                                 </td>
                                 <td width="130px">
-                                    <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);" 
+                                    <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);" 
                                         ondblclick="GetErrorMessage(this,1,'');" width="130px">
                                     </asp:DropDownList>
                                 </td>
                                 
                                 <td align="center" width="50px">
                                     <input type="button" runat="server" id="btnHashlamaForDay" name="btnHashlamaForDay"
-                                        class="ImgButtonCheckBox" onclick="CheckButton(this,HashlamaForDayValue);SetLvlChg(1);" width="40px" />
+                                        class="ImgButtonCheckBox" onclick="CheckButton(this,HashlamaForDayValue);SetLvlChg(1,0);" width="40px" />
                                     <input type="hidden" runat="server" id="HashlamaForDayValue" />
                                 </td>                                                             
-                                <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);"  width="180px"></asp:DropDownList></td>
+                                <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="180px"></asp:DropDownList></td>
                                 <td>
                                     <input type="button" value="רכיבים מחושבים" name="btnCalcItem" id="btnCalcItem" runat="server" 
                                         onclick="ShowRecivimCalculation();" class="ImgButtonShow" style="width: 120px; height: 25px" />                                       
@@ -316,15 +316,15 @@
                                                 </td>
                                                 <td style="width: 26.75%">
                                                     סיבת אי התייצבות:
-                                                    <asp:DropDownList runat="server" ID="ddlFirstPart" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);"></asp:DropDownList>                                                    
+                                                    <asp:DropDownList runat="server" ID="ddlFirstPart" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                                 </td>
                                                 <td style="width: 23%">
                                                     התייצבות שניה:
-                                                    <asp:TextBox runat="server" ID="txtSecPart" CssClass="WorkCardTextBox" Width="100px" onchange="SetBtnChanges();SetLvlChg(1);"> </asp:TextBox>                                                    
+                                                    <asp:TextBox runat="server" ID="txtSecPart" CssClass="WorkCardTextBox" Width="100px" onchange="SetBtnChanges();SetLvlChg(1,0);"> </asp:TextBox>                                                    
                                                 </td>
                                                 <td style="width: 27%">
                                                     סיבת אי התייצבות:
-                                                    <asp:DropDownList runat="server" ID="ddlSecPart" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1);"></asp:DropDownList>                                                    
+                                                    <asp:DropDownList runat="server" ID="ddlSecPart" CssClass="WorkCardDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                                 </td>
                                             </tr>
                                         </table>

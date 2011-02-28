@@ -2255,6 +2255,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                                    oCollSidurimOvdimIns, oCollSidurimOvdimDel,oCollPeluyotOvdimDel,
                                                    oCollIdkunRashemet, oCollPeluyotOvdimIns);
                         bResult = true;
+                        ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value = "";
                     }
                     else
                     {
@@ -2616,7 +2617,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                 _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Attributes["OrgShatHatchala"]);
                 if (_Txt.Text == string.Empty)
-                    _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse(String.Concat(dDateCard.ToShortDateString(), " ", "00:00:00"));
+                    _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
                 else
                 {//נבדוק אם השתנה התאריך
                     _objIdkunRashemet.NEW_SHAT_HATCHALA = GetSidurNewDate(iMisarSidur, _Txt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
@@ -2966,17 +2967,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             oObjPeluyotOvdim.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjPeluyotOvdim.TAARICH_IDKUN_ACHARON = DateTime.Now;
+            oObjPeluyotOvdim.UPDATE_OBJECT = 1;
         }
         if (bUpdate)
         {
             iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
             oObjPeluyotOvdim.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : oPeilut.iBitulOHosafa);
+            if (iCancelPeilut!=oObjPeluyotOvdim.BITUL_O_HOSAFA)
+                oObjPeluyotOvdim.UPDATE_OBJECT = 1;
         }
         else
+        {
             oObjPeluyotOvdim.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
-
-        oObjPeluyotOvdim.UPDATE_OBJECT = 1;
-
+            oObjPeluyotOvdim.UPDATE_OBJECT = 1;
+        }
         //נעדכן את ה-HashTable בערכים המקוריים
         oPeilut.dFullShatYetzia = oObjPeluyotOvdim.NEW_SHAT_YETZIA;
         oPeilut.lOtoNo = oObjPeluyotOvdim.OTO_NO;
@@ -3202,7 +3206,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //        throw ex;
     //    }
     //}   
-    private bool FillPeiluyotChanges(int iSidurIndex, int iCancelSidur, DateTime dOldSidurShatHatchala,
+    private bool FillPeiluyotChanges(bool bInsert,int iSidurIndex, int iCancelSidur, DateTime dOldSidurShatHatchala,
                                      DateTime dNewSidurShatHatchala, ref COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimUpd,
                                      ref COLL_OBJ_PEILUT_OVDIM oCollPeluyotOvdimDel,
                                      ref COLL_OBJ_PEILUT_OVDIM oCollPeluyotOvdimIns,
@@ -3229,10 +3233,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     continue;
                 else
                 {
+                   
                     if (_Peilut.oPeilutStatus.Equals(clPeilut.enPeilutStatus.enNew))
                     {
                         //פעילות חדשה
                         oObjPeiluyotOvdim = new OBJ_PEILUT_OVDIM();
+                        if (bInsert)
+                            oObjPeiluyotOvdim.UPDATE_OBJECT = 1;
                         FillPeilutUDT(false, iCancelSidur, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
                         oCollPeluyotOvdimIns.Add(oObjPeiluyotOvdim);
                     }
@@ -3241,6 +3248,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         //פעילות קיימת
                         oObjPeiluyotOvdim = new OBJ_PEILUT_OVDIM();
                         FillPeilutUDT(true, iCancelSidur, dOldSidurShatHatchala, dNewSidurShatHatchala, ref oSidur, ref _Peilut, ref oObjPeiluyotOvdim, ref oGridRow);
+
+                        if (bInsert)
+                            oObjPeiluyotOvdim.UPDATE_OBJECT = 1;
 
                         //אם פעילות בוטלה או סידור של הפעילות בוטל, נמחוק את הפעילות מטבלת פעילויות
                         if (oObjPeiluyotOvdim.BITUL_O_HOSAFA == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
@@ -3501,6 +3511,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             bool bInsert = false;
             clSidur oSidur;
             bool bValid = true;
+            string sSidurimThatChanged = "";
             //נעבור על כל הסידורים
             
                 for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
@@ -3639,11 +3650,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                 {
                                     if (!String.IsNullOrEmpty(ddlFirstPart.SelectedValue))
                                     {
-                                        oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN = ddlFirstPart.SelectedValue.Equals("-1") ? 0 : int.Parse(ddlFirstPart.SelectedValue); // int.Parse(ddlFirstPart.SelectedValue);
+                                        oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN = ddlFirstPart.SelectedValue.Equals("-1") ? 0 : int.Parse(ddlFirstPart.SelectedValue); // int.Parse(ddlFirstPart.SelectedValue);                                        
+                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                     if (!String.IsNullOrEmpty(txtFirstPart.Text) && (txtFirstPart.Text.IndexOf(":") > 0))
                                     {
                                         oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(dDateCard.ToShortDateString() + " " + txtFirstPart.Text);
+                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                 }
                             }
@@ -3657,18 +3670,22 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                     if ((!String.IsNullOrEmpty(txtSecPart.Text)) && (txtSecPart.Text.IndexOf(":") > 0))
                                     {
                                         oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(txtSecPart.Text);
+                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                     if (!String.IsNullOrEmpty(ddlSecPart.SelectedValue))
                                     {
                                         oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN = ddlSecPart.SelectedValue.Equals("-1") ? 0 : int.Parse(ddlSecPart.SelectedValue);//int.Parse(ddlSecPart.SelectedValue);
+                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                 }
                             }
                             //}                      
                         }
-                        if ((((System.Web.UI.HtmlControls.HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value.ToString().Equals("1")))
+                        sSidurimThatChanged = ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value;
+                        if (sSidurimThatChanged.IndexOf(iIndex.ToString())>-1)
                         {
                             oObjSidurimOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         }
                         oObjSidurimOvdimUpd.MIKUM_SHAON_KNISA = String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) ? 0 : int.Parse(oSidur.sMikumShaonKnisa);
                         oObjSidurimOvdimUpd.MIKUM_SHAON_YETZIA = String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) ? 0 : int.Parse(oSidur.sMikumShaonYetzia);
@@ -3682,7 +3699,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.MIVTZA_VISA = oSidur.iMivtzaVisa;
                         oObjSidurimOvdimUpd.TAFKID_VISA = oSidur.iTafkidVisa;
 
-                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                        
                         oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
 
                         if (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
@@ -3727,7 +3744,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oGridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                         if (oGridView != null)
                         {
-                            if (!(FillPeiluyotChanges(iIndex, iCancelSidur, oObjSidurimOvdimUpd.SHAT_HATCHALA, 
+                            if (!(FillPeiluyotChanges(bInsert,iIndex, iCancelSidur, oObjSidurimOvdimUpd.SHAT_HATCHALA, 
                                   oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA, ref oCollPeilutOvdimUpd, 
                                   ref  oCollPeluyotOvdimDel, ref oCollPeluyotOvdimIns, ref oGridView, ref oSidur)))
                             {

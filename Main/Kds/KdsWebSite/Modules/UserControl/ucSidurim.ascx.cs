@@ -1565,7 +1565,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                   ChangePeiluyotIndex(iPos, ref _Sidur.htPeilut, ref _Peilut);
             }
             Session["Sidurim"] = _DataSource;
-
+           
             ClearControl();
             BuildPage();
            
@@ -1720,15 +1720,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             DataTable _NesiaDetails = new DataTable();
             if (AddNesiaReka(iSidurIndexOrg, iPeilutIndexOrg, lMakatEnd, ref lMakat, ref _NesiaDetails))
-            {
+            {              
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
-                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-
-                InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, iSidurIndex, iPeilutIndex, lMakat, lCarNum, _NesiaDetails);
-                sScript = " bScreenChanged = true; document.getElementById('btnUpdateCard').disabled = false;";
-                ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "OpenUpd", sScript, true); 
+                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);               
+                InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, iSidurIndex, iPeilutIndex, lMakat, lCarNum, _NesiaDetails);               
             }
-            else
+            else            
             {
                 sScript = "alert('לא נמצאה ריקה מתאימה');";
                 ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "GetRekaFromTnua", sScript, true);
@@ -1962,7 +1959,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Checked = (oSidur.iLoLetashlum == 1);
         bEnable = (((IsLoLetashlum(ref oSidur))) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
-        chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2);");
+        chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
         chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");   
        // AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
@@ -1995,7 +1992,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bEnabled = (IsOutMichsaAllowed(ref oSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
-        chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2);");
+        chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         string sAllApprovalDescription = "";
@@ -2567,7 +2564,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Style.Add("width", "82px");
         ddl.Enabled = ((bEnabled) && (bSidurActive));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1" : "0");
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);");
+        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
@@ -2692,7 +2689,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sPitzulHafsaka;        
         ddl.Style.Add("width", "95px");       
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);chkPitzulHafsaka(" + iIndex + ",false)");
+        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+"); chkPitzulHafsaka(" + iIndex + ",false)");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");        
         //AddAttribute(ddl, "OldV",ddl.SelectedValue);
 
@@ -2738,7 +2735,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("ChrigaType", sCharigaType);
         ddl.Enabled = ((bEnabled) && (bSidurActive) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "CHARIGA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1":"0");
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);ChkCharigaVal(" + iIndex  + ");");
+        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");ChkCharigaVal(" + iIndex  + ");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
 
        // AddAttribute(ddl, "OldV", ddl.SelectedValue);
@@ -2821,7 +2818,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.CausesValidation = true;
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
+        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
@@ -2872,7 +2869,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnabled));
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
+        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
 
@@ -2924,7 +2921,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
         ddl.Style.Add("width", "75px");        
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);");
+        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
@@ -2992,7 +2989,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             
             ddl.Style.Add("width", "78px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
-            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2);");
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
@@ -3772,7 +3769,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2);");
+            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
             oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
@@ -4169,7 +4166,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onChange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2); ");
+            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             
             //AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
             //AddAttribute(oTextBox, "OldV", oTextBox.Text);
@@ -5104,7 +5101,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 sTmp = DateTime.Parse(sShatYetiza).ToShortTimeString();
                 oTxt.Text = sTmp;
-                oTxt.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(3);" );
+                oTxt.Attributes.Add("onkeypress", "SetBtnChanges();"); //SetLvlChg(3);
                 if (iKisuyTor == 0){                
                     ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text = "";
                 }
