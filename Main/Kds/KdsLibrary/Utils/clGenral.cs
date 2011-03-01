@@ -260,6 +260,8 @@ namespace KdsLibrary
         public const string cProGetKodByTypeSidurDesc = "PKG_SUG_SIDUR.pro_get_kod_by_description";
         public const string cProGetHistoryOfTypeSidur = "PKG_SUG_SIDUR.pro_get_history";
         public const string cProRefreshSugSidur = "PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S";
+        public const string cProGetSugeySidurFromTnua = "PKG_SUG_SIDUR.pro_get_sugey_sidur_tnua";
+
 #endregion 
 
 

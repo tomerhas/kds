@@ -262,10 +262,11 @@ namespace KdsBatch
            {
                clCalcMonth oMonth;
                DataSet dsChishuv;
-
+               clUtils oUtils = new clUtils();
                try
                {
                    clCalcData.ResetDataSet();
+                   clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
 
                    oMonth = new clCalcMonth(iMisparIshi, lBakashaId);
 
@@ -300,6 +301,7 @@ namespace KdsBatch
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
+                   clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
 
                    oMonth = new clCalcMonth(iMisparIshi, lBakashaId);
                   

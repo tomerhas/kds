@@ -967,6 +967,26 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public DataTable InitDtSugeySidur(DateTime dTarMe, DateTime dTarAd, int iMispar_ishi)
+        {
+
+            clDal oDal = new clDal();
+            DataTable dtSugeySidur = new DataTable();
+            try
+            {   //מחזיר סוגי סידור לעובד בחודש מהתנועה
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMispar_ishi, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetSugeySidurFromTnua, ref dtSugeySidur);
+                return dtSugeySidur;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     } 
 
 }
