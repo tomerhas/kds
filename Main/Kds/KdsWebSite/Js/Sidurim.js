@@ -81,7 +81,7 @@ function chkMkt(oRow) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
                 if (GetMakatType(lNewMkt) != MKT_ELEMENT)
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<img  onclick='AddNesiaReka(" + document.getElementById(oRId).id + "," + iSidurIndex + ",0);' NesiaReka='1' src='../../images/plus.jpg' style='border-width:0px;' />";
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex +  " PeilutInd=" + document.getElementById(oRId).id + " NesiaReka='1'>"                                                                                       
                 else
                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
 

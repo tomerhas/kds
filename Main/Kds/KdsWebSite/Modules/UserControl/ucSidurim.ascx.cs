@@ -2176,13 +2176,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     //אם יש פעילויות, נכניס גם אותן
                     oGridView = ((GridView)this.FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                     if (oGridView != null)
-                        UpdateHashTablePeiltoyWithGridChanges(iIndex, ref oGridView, ref htEmployeeDetails);
+                        UpdateHashTablePeiltoyWithGridChanges(iIndex,iCancelSidur, ref oGridView, ref htEmployeeDetails);
                 }
             }
         }
         Session["Sidurim"] = htEmployeeDetails;
     }
-    private void UpdateHashTablePeiltoyWithGridChanges(int iSidurIndex, ref GridView oGridView, ref OrderedDictionary htEmployeeDetails)
+    private void UpdateHashTablePeiltoyWithGridChanges(int iSidurIndex,int iCancelSidur, ref GridView oGridView, ref OrderedDictionary htEmployeeDetails)
     {
         GridViewRow oGridRow;
         int iDayToAdd, iMisparKnisa;
@@ -2249,8 +2249,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.sShatYetzia = oShatYetiza.Text;              
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
                 _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
-                _Peilut.iBitulOHosafa =  int.Parse(((TextBox)oGridRow.Cells[COL_CANCEL_PEILUT].Controls[0]).Text);
-                //if (_Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew)
+                
+                int iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[COL_CANCEL_PEILUT].Controls[0]).Text);
+                _Peilut.iBitulOHosafa = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1  : _Peilut.iBitulOHosafa;
+                
                 _Peilut.iKisuyTorMap = oGridRow.Cells[_COL_KISUY_TOR_MAP].Text == string.Empty ? 0 : int.Parse(oGridRow.Cells[_COL_KISUY_TOR_MAP].Text);
  
                 arrKnisaVal = oGridRow.Cells[COL_KNISA].Text.Split(",".ToCharArray());
