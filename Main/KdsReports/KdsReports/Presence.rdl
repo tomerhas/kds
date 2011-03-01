@@ -89,6 +89,14 @@
           <DataField>CLOCKEXIT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DIFF_S">
+          <DataField>DIFF_S</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DIFF">
+          <DataField>DIFF</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="DIFFERENCE_HOUR">
           <Value>=
 iif(
@@ -129,12 +137,12 @@ iif(
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.89278in</Width>
+              <Width>7.91109in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>3.05588in</Height>
+              <Height>3.20171in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -152,7 +160,7 @@ iif(
                                     <Width>0.98425in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.47345in</Width>
+                                    <Width>0.58145in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.42344in</Width>
@@ -255,7 +263,7 @@ iif(
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox38">
+                                          <Textbox Name="Textbox73">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
@@ -274,7 +282,7 @@ iif(
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox38</rd:DefaultName>
+                                            <rd:DefaultName>Textbox73</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -635,20 +643,17 @@ iif(
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox39">
+                                          <Textbox Name="DIFF">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=  iif(((Fields!SHAT_HATCHALA.Value = nothing)or (Fields!SHAT_GMAR.Value = nothing) ),nothing,
- Code.GetFormatedTime(
-CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
-				      )
-				      ))</Value>
+                                                    <Value>=iif(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60="0.00","",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>0.00;(0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -657,7 +662,7 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox39</rd:DefaultName>
+                                            <rd:DefaultName>DIFF</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -668,6 +673,7 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -981,19 +987,18 @@ CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value)
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="Textbox115">
+                                          <Textbox Name="Textbox75">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Code.GetFormatedTime(
-CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
-				      ))</Value>
+                                                    <Value>=Sum(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
+                                                      <Format>0.00;(0.00)</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1002,7 +1007,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>Textbox115</rd:DefaultName>
+                                            <rd:DefaultName>Textbox75</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -1129,7 +1134,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                               <Top>2.6723cm</Top>
                               <Left>0.04039in</Left>
                               <Height>2.35562cm</Height>
-                              <Width>19.46326cm</Width>
+                              <Width>19.73758cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1721,7 +1726,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                                   <Top>0.47691cm</Top>
                                   <Left>0cm</Left>
                                   <Height>1.2cm</Height>
-                                  <Width>19.48389cm</Width>
+                                  <Width>19.48388cm</Width>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1744,8 +1749,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
                           <KeepTogether>true</KeepTogether>
                           <Top>2.50442cm</Top>
                           <Left>0.254cm</Left>
-                          <Height>5.15167cm</Height>
-                          <Width>19.63492cm</Width>
+                          <Height>5.62792cm</Height>
+                          <Width>19.84017cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1821,8 +1826,8 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
-        <Height>7.76194cm</Height>
-        <Width>20.04766cm</Width>
+        <Height>8.13234cm</Height>
+        <Width>20.09417cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1871,7 +1876,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>3.09754in</Height>
+    <Height>3.20171in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1914,7 +1919,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>75290</Value>
+          <Value>75757</Value>
         </Values>
       </DefaultValue>
       <Prompt>Mispar_Ishi</Prompt>
@@ -1947,7 +1952,7 @@ CDbl(Sum(Fields!DIFFERENCE_HOUR.Value)
 
     End Function
 </Code>
-  <Width>8.00156in</Width>
+  <Width>7.98989in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
