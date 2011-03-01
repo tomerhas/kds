@@ -2250,8 +2250,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.lMakatNesia = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text) ? 0 : long.Parse(((TextBox)oGridRow.Cells[COL_MAKAT].Controls[0]).Text);
                 _Peilut.iDakotBafoal = String.IsNullOrEmpty(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text) ? 0 : int.Parse(((TextBox)oGridRow.Cells[COL_ACTUAL_MINUTES].Controls[0]).Text);
                 _Peilut.iBitulOHosafa =  int.Parse(((TextBox)oGridRow.Cells[COL_CANCEL_PEILUT].Controls[0]).Text);
-                if (_Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew)
-                   _Peilut.iKisuyTorMap = _Peilut.iKisuyTor;
+                //if (_Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew)
+                _Peilut.iKisuyTorMap = oGridRow.Cells[_COL_KISUY_TOR_MAP].Text == string.Empty ? 0 : int.Parse(oGridRow.Cells[_COL_KISUY_TOR_MAP].Text);
  
                 arrKnisaVal = oGridRow.Cells[COL_KNISA].Text.Split(",".ToCharArray());
                 iMisparKnisa = int.Parse(arrKnisaVal[0]);

@@ -2973,7 +2973,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             iCancelPeilut = int.Parse(((TextBox)oGridRow.Cells[lstSidurim.COL_CANCEL_PEILUT].Controls[0]).Text);
             oObjPeluyotOvdim.BITUL_O_HOSAFA = ((iCancelSidur == 1) || (iCancelPeilut == 1)) ? 1 : ((iCancelSidur == 2) || (iCancelPeilut == 2) ? 2 : oPeilut.iBitulOHosafa);
-            if (iCancelPeilut!=oObjPeluyotOvdim.BITUL_O_HOSAFA)
+            if (((iCancelPeilut == 1) || (iCancelPeilut == 2)) && (oObjPeluyotOvdim.BITUL_O_HOSAFA == clGeneral.enBitulOHosafa.AddAutomat.GetHashCode()))
                 oObjPeluyotOvdim.UPDATE_OBJECT = 1;
         }
         else
@@ -3442,8 +3442,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         //ביטול-הוספה
         bool bCancelPeilut = ((System.Web.UI.WebControls.WebControl)(((Button)(oGridRow.Cells[lstSidurim.COL_CANCEL].Controls[0])))).CssClass == "ImgCancel";
-        if ((((oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (!bCancelPeilut)) ||
-           (((oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.AddAutomat.GetHashCode()) || (oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.AddByUser.GetHashCode())) && (bCancelPeilut)))
+        //if ((((oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())) && (!bCancelPeilut)) ||
+         //   (((oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.AddAutomat.GetHashCode()) || (oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.AddByUser.GetHashCode())) && (bCancelPeilut)))
+        if ((oPeilut.iBitulOHosafa == clGeneral.enBitulOHosafa.AddAutomat.GetHashCode()) && (bCancelPeilut))
             return true;
 
         return false;
@@ -3651,12 +3652,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                     if (!String.IsNullOrEmpty(ddlFirstPart.SelectedValue))
                                     {
                                         oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN = ddlFirstPart.SelectedValue.Equals("-1") ? 0 : int.Parse(ddlFirstPart.SelectedValue); // int.Parse(ddlFirstPart.SelectedValue);                                        
-                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                        if (oSidur.iKodSibaLedivuchYadaniIn!=oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN) 
+                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                     if (!String.IsNullOrEmpty(txtFirstPart.Text) && (txtFirstPart.Text.IndexOf(":") > 0))
                                     {
                                         oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(dDateCard.ToShortDateString() + " " + txtFirstPart.Text);
-                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                        if (oSidur.dShatHitiatzvut!=oObjSidurimOvdimUpd.SHAT_HITIATZVUT)
+                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                 }
                             }
@@ -3670,23 +3673,23 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                     if ((!String.IsNullOrEmpty(txtSecPart.Text)) && (txtSecPart.Text.IndexOf(":") > 0))
                                     {
                                         oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(txtSecPart.Text);
-                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                        if (oSidur.dShatHitiatzvut != oObjSidurimOvdimUpd.SHAT_HITIATZVUT)
+                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                     if (!String.IsNullOrEmpty(ddlSecPart.SelectedValue))
                                     {
                                         oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN = ddlSecPart.SelectedValue.Equals("-1") ? 0 : int.Parse(ddlSecPart.SelectedValue);//int.Parse(ddlSecPart.SelectedValue);
-                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                        if (oSidur.iKodSibaLedivuchYadaniIn != oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN)
+                                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                 }
                             }
                             //}                      
                         }
                         sSidurimThatChanged = ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value;
-                        if (sSidurimThatChanged.IndexOf(iIndex.ToString())>-1)
-                        {
-                            oObjSidurimOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+                        if (sSidurimThatChanged.IndexOf(iIndex.ToString())>-1)                                                   
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                        }
+                        
                         oObjSidurimOvdimUpd.MIKUM_SHAON_KNISA = String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) ? 0 : int.Parse(oSidur.sMikumShaonKnisa);
                         oObjSidurimOvdimUpd.MIKUM_SHAON_YETZIA = String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) ? 0 : int.Parse(oSidur.sMikumShaonYetzia);
                         //שדות נוספים
@@ -3699,7 +3702,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.MIVTZA_VISA = oSidur.iMivtzaVisa;
                         oObjSidurimOvdimUpd.TAFKID_VISA = oSidur.iTafkidVisa;
 
-                        
+                        if (oObjSidurimOvdimUpd.UPDATE_OBJECT==1)
+                            oObjSidurimOvdimUpd.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+
                         oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
 
                         if (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
