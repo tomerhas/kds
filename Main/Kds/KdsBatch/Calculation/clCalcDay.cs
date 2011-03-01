@@ -654,7 +654,7 @@ namespace KdsBatch
                
                     addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fShaotshabat100 + fZmanNesiot);
                 }
-           //     HashlamatNochehutLetashlumMiRechiveyPremia();
+                 HashlamatNochehutLetashlumMiRechiveyPremia();
             }
             catch (Exception ex)
             {
@@ -664,6 +664,7 @@ namespace KdsBatch
         private void HashlamatNochehutLetashlumMiRechiveyPremia()
         {
             float fErechRechiv1 ,fErechRechiv126, fErechRechiv2, fErechRechiv133, fErechRechiv134;
+            float ftosefetMax133, ftosefetMax134, ftosefetMax134_2,fErechRechiv1New, fErechRechiv1New2;
             try{
                 fErechRechiv1 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 fErechRechiv126 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
@@ -673,21 +674,23 @@ namespace KdsBatch
 
                 if ((fErechRechiv1 < fErechRechiv126) && (fErechRechiv2 >= (fErechRechiv126 / 2)) && ((fErechRechiv133 + fErechRechiv134) > 0))
                 {
-                    fErechRechiv1 = Math.Max(fErechRechiv126, fErechRechiv1 + Math.Max(fErechRechiv133, 30));
-                    addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1);
-                    fErechRechiv133 = fErechRechiv133 - (Math.Max(Math.Max(fErechRechiv133, 30), fErechRechiv1 - Math.Max(fErechRechiv133, 30)));
+                    ftosefetMax133 = fErechRechiv133 > 30 ? 30 : fErechRechiv133;
+                    ftosefetMax134 = fErechRechiv134 > 30 ? 30 : fErechRechiv134;
+
+                    fErechRechiv1New = Math.Min(fErechRechiv126, fErechRechiv1 + ftosefetMax133);
+                    addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1New);
+                    fErechRechiv133 = fErechRechiv133 - (Math.Min(ftosefetMax133, fErechRechiv126 - fErechRechiv1));
                     addRowToTable(clGeneral.enRechivim.PremyaRegila.GetHashCode(), fErechRechiv133);
 
-                    if (fErechRechiv1 < fErechRechiv126)
+                    if (fErechRechiv1New < fErechRechiv126)
                     {
-                        fErechRechiv1 = Math.Max(fErechRechiv126, fErechRechiv1 + Math.Max(fErechRechiv134, 30));
-                        addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1);
+                        ftosefetMax134_2 = Math.Min(fErechRechiv134,( (30 - fErechRechiv133) < 0 ? 0 : (30 - fErechRechiv133)) );
+                        fErechRechiv1New2 = Math.Min(fErechRechiv126, fErechRechiv1New + ftosefetMax134_2);
+                        addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fErechRechiv1New2);
 
-                        fErechRechiv134 = fErechRechiv134 - (Math.Max(Math.Max(fErechRechiv134, 30), fErechRechiv1 - Math.Max(fErechRechiv134, 30)));
+                        fErechRechiv134 = fErechRechiv134 - (Math.Min(ftosefetMax134_2 , fErechRechiv126 - fErechRechiv1New));
                         addRowToTable(clGeneral.enRechivim.PremyaNamlak.GetHashCode(), fErechRechiv134);
-
                     }
-
                 }
             }
             catch (Exception ex)
