@@ -89,14 +89,6 @@
           <DataField>CLOCKEXIT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="DIFF_S">
-          <DataField>DIFF_S</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DIFF">
-          <DataField>DIFF</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="DIFFERENCE_HOUR">
           <Value>=
 iif(
