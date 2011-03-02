@@ -49,13 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs" />
+    <Compile Include="ObjectClasses.cs" />
     <Compile Include="Bl.cs" />
     <Compile Include="Command\FactoryCommand.cs" />
     <Compile Include="Command\ProgramCommand.cs" />
     <Compile Include="Command\StoredProcedureCommand.cs" />
     <Compile Include="General.cs" />
-    <Compile Include="Group.cs" />
     <Compile Include="Manager.cs" />
     <Compile Include="Operator.cs" />
     <Compile Include="Program.cs" />

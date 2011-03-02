@@ -11,6 +11,7 @@ namespace KdsTaskManager
         public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdateLogTask";
         public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetTaskOfGroup";
         public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetGroupsDefinition";
+        public const string GetActionParameters = "PKG_TASK_MANAGER.GetActionParameters";
     }
     public static class Utilities
     {
@@ -75,11 +76,9 @@ namespace KdsTaskManager
     }
     public enum TypeStatus
     {
-        /// <remarks>set on start of action</remarks>
+        Idle = 0,
         Running = 1,
-        /// <remarks>set on failure</remarks>
         Stopped = 3,
-        /// <remarks>set on success</remarks>
         Success = 4
     }
     public enum OnFailureBehavior

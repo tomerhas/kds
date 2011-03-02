@@ -6,7 +6,7 @@ using System.Text;
 using System.Data;
 using System.Threading;
 using KdsLibrary;
-
+using KdsLibrary.DAL;
 
 namespace KdsTaskManager
 {
@@ -15,7 +15,7 @@ namespace KdsTaskManager
     {
         private List<Group> _Groups;
         private List<Operator> _Operators;
-        private int _CntRunningOperators = 0 ;
+        private int _CntRunningOperators = 0;
         private int _NbOfGroup;
         public Manager()
         {
@@ -61,27 +61,47 @@ namespace KdsTaskManager
             DataTable dt = new DataTable();
             Bl oBl = Bl.GetInstance();
             dt = oBl.GetTaskOfGroup(GroupId);
-            int NbOfAction = dt.Rows.Count;
-            if (NbOfAction > 0)
+            List<Action> ActionOfGroup = new List<Action>();
+            foreach (DataRow item in dt.Rows)
             {
-                List<Action> ActionOfGroup = new List<Action>();
+                Group groupItem = _Groups.Find(group => group.IdGroup == GroupId);
+                Action ActionItem = new Action();
+                ActionItem.IdGroup = GroupId;
+                ActionItem.IdOrder = clGeneral.GetIntegerValue(item["IDORDER"].ToString());
+                ActionItem.OnFailure = (OnFailureBehavior)Enum.ToObject(typeof(OnFailureBehavior), clGeneral.GetIntegerValue(item["ONFAILURE"].ToString()));
+                ActionItem.Sequence = clGeneral.GetIntegerValue(item["SEQUENCE"].ToString());
+                ActionItem.TypeCommand = (TypeCommand)Enum.ToObject(typeof(TypeCommand), clGeneral.GetIntegerValue(item["TYPECOMMAND"].ToString()));
+                ActionItem.LibraryName = item["LIBRARYNAME"].ToString();
+                ActionItem.CommandName = item["COMMANDNAME"].ToString();
+                ActionItem.Parameters = FillParameterOfAction(ActionItem);
+                ActionOfGroup.Add(ActionItem);
+                groupItem.AddActions(ActionOfGroup);
+            }
+        }
+
+
+        private List<Parameter> FillParameterOfAction(Action CurrentAction)
+        {
+            int _NbOfParameter = 0;
+            DataTable dt = new DataTable();
+            List<Parameter> ParameterOfAction = new List<Parameter>();
+            Bl oBl = Bl.GetInstance();
+            dt = oBl.GetActionParameters(CurrentAction.IdGroup, CurrentAction.IdOrder);
+            _NbOfParameter = dt.Rows.Count;
+            if (_NbOfParameter > 0)
+            {
                 foreach (DataRow item in dt.Rows)
                 {
-                    Group groupItem = _Groups.Find(group => group.IdGroup == GroupId);
-                    Action ActionItem = new Action();
-                    ActionItem.IdGroup = GroupId;
-                    ActionItem.IdOrder = clGeneral.GetIntegerValue(item["IDORDER"].ToString());
-                    ActionItem.OnFailure = (OnFailureBehavior)Enum.ToObject(typeof(OnFailureBehavior), clGeneral.GetIntegerValue(item["ONFAILURE"].ToString()));
-                    ActionItem.Sequence = clGeneral.GetIntegerValue(item["SEQUENCE"].ToString());
-                    ActionItem.TypeCommand = (TypeCommand)Enum.ToObject(typeof(TypeCommand), clGeneral.GetIntegerValue(item["TYPECOMMAND"].ToString()));
-                    ActionItem.LibraryName = item["LIBRARYNAME"].ToString();
-                    ActionItem.CommandName = item["COMMANDNAME"].ToString();
-                    ActionOfGroup.Add(ActionItem);
-                    groupItem.AddActions(ActionOfGroup);
+                    Parameter ParameterItem = new Parameter();
+                    ParameterItem.Name = item["ParamName"].ToString();
+                    ParameterItem.Type = (ParameterType)clGeneral.GetIntegerValue(item["ParamType"].ToString());
+                    ParameterItem.Value = item["ParamValue"].ToString();
+                    ParameterOfAction.Add(ParameterItem);
                 }
             }
-
+            return ParameterOfAction;
         }
+
 
 
         private void operatorItem_OnEndWork(Operator sender)
@@ -116,7 +136,7 @@ namespace KdsTaskManager
         /// </summary>
         private void CreateOperators()
         {
-            Console.WriteLine("Create {0} Operator(s)" , _NbOfGroup);
+            Console.WriteLine("Create {0} Operator(s)", _NbOfGroup);
             _Operators = new List<Operator>();
             _Groups.ForEach(groupItem => _Operators.Add(new Operator(groupItem)));
             _Operators.ForEach(operatorItem => operatorItem.OnEndWork += new EndWorkHandler(operatorItem_OnEndWork));

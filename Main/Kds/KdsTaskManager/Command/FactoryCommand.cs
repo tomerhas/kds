@@ -21,6 +21,11 @@ namespace KdsTaskManager
         {
             try
             {
+                if (_ActionToExecute.IdOrder == 1)
+                {
+                    Message msg = new Message(_ActionToExecute, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.Now);
+                    UpdateTaskLog(msg);
+                }
                 return Execute();
             }
             catch (Exception ex)

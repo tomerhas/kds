@@ -9,10 +9,27 @@ namespace KdsTaskManager
     public class StoredProcedureCommand : Command
     {
         private string Command = string.Empty;
+        private clDal _dal;
         public StoredProcedureCommand(Action ActionToExecute)
         {
-            _ActionToExecute = ActionToExecute;
-            Command = _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
+            try
+            {
+                _ActionToExecute = ActionToExecute;
+                _dal = new clDal();
+                if (_ActionToExecute.Parameters.Count > 0)
+                {
+                    _ActionToExecute.Parameters.ForEach(ParamItem =>
+                    _dal.AddParameter(ParamItem.Name, ParamItem.Type, ParamItem.Value, ParameterDir.pdInput));
+                }
+                Command = _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
+            }
+            catch (Exception ex)
+            {
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped,ex.Message, DateTime.Now, DateTime.Now);
+                UpdateTaskLog(_MessageEnd);
+                throw ex;
+            }
+
         }
 
         protected override bool Execute()
@@ -21,8 +38,7 @@ namespace KdsTaskManager
             {
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
                 UpdateTaskLog(_MessageStart);
-                clDal dal = new clDal();
-                dal.ExecuteSP(Command);
+                _dal.ExecuteSP(Command);
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
                 UpdateTaskLog(_MessageEnd);
                 return true;
@@ -30,7 +46,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, string.Empty, DateTime.Now, DateTime.Now);
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
                 UpdateTaskLog(_MessageEnd);
                 throw ex;
             }

@@ -33,7 +33,7 @@ namespace KdsTaskManager
             bool ResultCommand = false;
             foreach (Action ActionItem in _Group.Actions)
             {
-                _Command = FactoryCommand.GetInstance (ActionItem);
+                _Command = FactoryCommand.GetInstance(ActionItem);
                 ResultCommand = _Command.Run();
                 if ((ResultCommand) ||
                    ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit)))

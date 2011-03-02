@@ -50,6 +50,25 @@ namespace KdsTaskManager
             }
         }
 
+        public DataTable GetActionParameters(int CurrentGroup, int CurrentOrder)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {
+                oDal.AddParameter("p_GroupId", KdsLibrary.DAL.ParameterType.ntOracleInt64, CurrentGroup, ParameterDir.pdInput);
+                oDal.AddParameter("p_OrderId", KdsLibrary.DAL.ParameterType.ntOracleInt64, CurrentOrder, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(OracleSp.GetActionParameters, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+
         public void UpdateProcessLog(Message message)
         {
             clDal oDal = new clDal();
