@@ -6319,30 +6319,27 @@ namespace KdsBatch
 
         private void SetSugSidur(ref DataRow drSidur,DateTime dSidurDate, int iMisparSidur)
         {
-            //סידורים רגילים
-            //נבדוק מול התנועה
-            DataTable dtSidurim = new DataTable();
-            clKavim oKavim = new clKavim();
-           // int iResult;
-            DataRow[] rowSidur;
-            if (drSidur["sug_sidur"].ToString() == "0" || drSidur["sug_sidur"].ToString() == "")
+            try
             {
-                drSidur["sug_sidur"] = 0;
-                rowSidur = clCalcData.DtSugeySidur.Select("taarich=Convert('" + dSidurDate.ToShortDateString() + "', 'System.DateTime') and mispar_sidur=" + iMisparSidur );
-                if (rowSidur.Length > 0)
+                //סידורים רגילים
+                //נבדוק מול התנועה
+                DataRow[] rowSidur;
+                if (drSidur["sug_sidur"].ToString() == "0" || drSidur["sug_sidur"].ToString() == "")
                 {
-                    drSidur["sug_sidur"] = int.Parse(rowSidur[0]["SUG_SIDUR"].ToString());
+                    drSidur["sug_sidur"] = 0;
+                    rowSidur = clCalcData.DtSugeySidur.Select("taarich=Convert('" + dSidurDate.ToShortDateString() + "', 'System.DateTime') and mispar_sidur=" + iMisparSidur);
+                    if (rowSidur.Length > 0)
+                    {
+                        if (rowSidur[0]["SUG_SIDUR"].ToString() != "")
+                            drSidur["sug_sidur"] = int.Parse(rowSidur[0]["SUG_SIDUR"].ToString());
+                    } 
                 }
-                //  dtSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, dSidurDate, out iResult);
-               
-                //if (iResult == 0)
-                //{
-                //    if (dtSidurim.Rows.Count > 0)
-                //    {
-                //        drSidur["sug_sidur"] = int.Parse(dtSidurim.Rows[0]["SUGSIDUR"].ToString());
-                //    }
-                //}
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
        
