@@ -2193,9 +2193,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //    MPEErrors.Hide();
     //}
 
-    void lstSidurim_btnHandler(string strValue)
+    void lstSidurim_btnHandler(string strValue, bool bOpenUpdateBtn)
     {
         bInpuDataResult = true;
+        if (bOpenUpdateBtn)
+        {
+            string sScript = "SetBtnChanges();";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "OpenUpdBtn", sScript, true);
+        }
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
         //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
         //lstSidurim.ErrorsList = oBatchManager.dtErrors;
@@ -3386,30 +3391,30 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
             _PeilutDate = DateTime.Parse(dDateCard.ToShortDateString() + " " + _txt.Text);
 
-        if (_PeilutDate != oPeilut.dFullShatYetzia)
+        if (_PeilutDate != oPeilut.dOldFullShatYetzia)
             return true;
         
       
         ////כיסוי תור
         _txt = ((TextBox)oGridRow.Cells[lstSidurim.COL_KISUY_TOR].Controls[0]);
         if (_txt.Text == string.Empty){
-             if (oPeilut.iKisuyTor!=0)
+             if (oPeilut.iOldKisuyTor!=0)
                return true;
         }
         else{
-            if ((((_PeilutDate-DateTime.Parse(_PeilutDate.ToShortDateString() + " " +_txt.Text)) )).TotalMinutes != oPeilut.iKisuyTor)
+            if ((((_PeilutDate-DateTime.Parse(_PeilutDate.ToShortDateString() + " " +_txt.Text)) )).TotalMinutes != oPeilut.iOldKisuyTor)
                return true;
         }
         //מק"ט
         _txt = ((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]);
         if (_txt.Text != string.Empty)
         {
-            if (long.Parse(_txt.Text) != oPeilut.lMakatNesia)
+            if (long.Parse(_txt.Text) != oPeilut.lOldMakatNesia)
                 return true;
         }
         else
         {
-            if (oPeilut.lMakatNesia != 0)
+            if (oPeilut.lOldMakatNesia != 0)
                 return true;
         }
         
@@ -3418,12 +3423,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _txt = ((TextBox)oGridRow.Cells[lstSidurim.COL_ACTUAL_MINUTES].Controls[0]);
         if (_txt.Text == string.Empty)
         {
-            if (oPeilut.iMazanTashlum != 0)
+            if (oPeilut.iOldDakotBafoal != 0)
                 return true;
         }
         else
         {
-            if (int.Parse(_txt.Text) != oPeilut.iDakotBafoal)
+            if (int.Parse(_txt.Text) != oPeilut.iOldDakotBafoal)
                 return true;
         }
 
@@ -3431,12 +3436,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         _txt = ((TextBox)oGridRow.Cells[lstSidurim.COL_CAR_NUMBER].Controls[0]);
         if (_txt.Text == string.Empty)
         {
-            if (oPeilut.lOtoNo != 0)
+            if (oPeilut.lOldOtoNo != 0)
                 return true;
         }
         else
         {
-            if (long.Parse(_txt.Text) != oPeilut.lOtoNo)
+            if (long.Parse(_txt.Text) != oPeilut.lOldOtoNo)
                 return true;
         }
 
@@ -3657,7 +3662,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                     }
                                     if (!String.IsNullOrEmpty(txtFirstPart.Text) && (txtFirstPart.Text.IndexOf(":") > 0))
                                     {
-                                        oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(dDateCard.ToShortDateString() + " " + txtFirstPart.Text);
+                                        oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " " + txtFirstPart.Text);
                                         if (oSidur.dShatHitiatzvut!=oObjSidurimOvdimUpd.SHAT_HITIATZVUT)
                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }
@@ -3672,7 +3677,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                 {
                                     if ((!String.IsNullOrEmpty(txtSecPart.Text)) && (txtSecPart.Text.IndexOf(":") > 0))
                                     {
-                                        oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(txtSecPart.Text);
+                                        oObjSidurimOvdimUpd.SHAT_HITIATZVUT = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " " + txtSecPart.Text);
                                         if (oSidur.dShatHitiatzvut != oObjSidurimOvdimUpd.SHAT_HITIATZVUT)
                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                     }

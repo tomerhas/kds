@@ -81,10 +81,12 @@ function chkMkt(oRow) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
                 if (GetMakatType(lNewMkt) != MKT_ELEMENT)
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex +  " PeilutInd=" + document.getElementById(oRId).id + " NesiaReka='1'>"                                                                                       
-                else
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
-
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + document.getElementById(oRId).id + " NesiaReka='1'>"
+                else {
+                     if (document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute!=undefined)
+                        document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
+                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+                }
                 while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {
                         case "KISUY_TOR":
@@ -210,13 +212,15 @@ function chkMkt(oRow) {
     }
     function Test(val, args) { }
     function ChkOto(oRow) {
-        //var KeyID = event.keyCode; alert(KeyID);  
-            oId = String(oRow.id).substr(0, oRow.id.length - 6);        
+        var KeyID = event.keyCode;
+        if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+            oId = String(oRow.id).substr(0, oRow.id.length - 6);
             var lOtoNo = document.getElementById(oId).cells[_COL_CAR_NUMBER].childNodes[0].value;
             SetBtnChanges(); //SetLvlChg(3);
-            if ((lOtoNo != '') && (trim(String(lOtoNo)).length>=5)) {
+            if ((lOtoNo != '') && (trim(String(lOtoNo)).length >= 5)) {
                 wsGeneral.CheckOtoNo(lOtoNo, callBackOto, null, oRow);
-            }           
+            }
+        }           
     }
     function callBackOto(result, oRow) {       
         var oId = String(oRow.id).substr(0, oRow.id.length - 6);  
@@ -547,7 +551,7 @@ function chkMkt(oRow) {
     function ChkKisyT(val,args)    
     {  SetBtnChanges();//SetLvlChg(3);
        var sGridRowID = val.getAttribute("index");
-       var sValidHour = document.getElementById(sGridRowID).cells[_COL_KISUY_TOR].childNodes[0].getAttribute("OldTorMapV"); //val.outerHTML.substr(val.outerHTML.indexOf('errormessage') + String('errormessage').length + 44 ,5);
+       var sValidHour = document.getElementById(sGridRowID).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue; //val.outerHTML.substr(val.outerHTML.indexOf('errormessage') + String('errormessage').length + 44 ,5);
        if ((document.getElementById(sGridRowID).cells[_COL_KISUY_TOR].childNodes[0].value) != '')
        {
            var sCardDate = document.getElementById("clnDate").value;

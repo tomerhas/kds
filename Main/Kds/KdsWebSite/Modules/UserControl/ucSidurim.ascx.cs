@@ -119,7 +119,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _MisparIshiIdkunRashemet;
     private const string COL_TRIP_EMPTY = "ריקה";
     // Delegate declaration
-    public delegate void OnButtonClick(string strValue);
+    public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
 
     // Event declaration
     public event OnButtonClick btnHandler;
@@ -1491,8 +1491,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    private void InsertPeilutReaka(int iSidurIndex, int iPeilutIndex, int iSidurIndexNew, 
-                                   int iPeilutIndexNew, long lMakat, long lCarNum,
+    private void InsertPeilutReaka(int iSidurIndex, int iPeilutIndex, long lMakat, long lCarNum,
                                    DataTable _NesiaDetails)
     {
         int iMazanTichnun, iPos;
@@ -1523,10 +1522,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                 dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
                 }
-            _CurrSidur = ((GridView)this.FindControl(iSidurIndexNew.ToString().PadLeft(3, char.Parse("0"))));
-            _NextPeilut = _CurrSidur.Rows[iPeilutIndexNew];
+            //_CurrSidur = ((GridView)this.FindControl(iSidurIndexNew.ToString().PadLeft(3, char.Parse("0"))));
+            //_NextPeilut = _CurrSidur.Rows[iPeilutIndexNew];
                         
-            iSidurNumber = GetSidurKey(iSidurIndexNew, ref dSidurShatHatchala);
+            iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);
             for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
             {
                 _Sidur = (clSidur)(_DataSource[iIndex]);
@@ -1706,7 +1705,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iSidurIndexOrg = iSidurIndex;
         int iPeilutIndexOrg = iPeilutIndex;
         string sScript;
-      
+        bool bOpenUpdateBtn = false;
         
 
         //נמצא את מספר המק"ט הבא שביניהם תכנס הנסיעה הריקה
@@ -1723,7 +1722,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {              
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
                 UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);               
-                InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, iSidurIndex, iPeilutIndex, lMakat, lCarNum, _NesiaDetails);               
+                InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails);
+                bOpenUpdateBtn = true;
             }
             else            
             {
@@ -1734,14 +1734,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
-            btnHandler(string.Empty);
+            btnHandler(string.Empty, bOpenUpdateBtn);
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {        
         AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
-            btnHandler(string.Empty);
+            btnHandler(string.Empty, false);
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {
