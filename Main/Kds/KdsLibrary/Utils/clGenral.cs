@@ -278,6 +278,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cGetKatalogKavim = "pkg_tnua.pro_get_kavim_details";        
         public const string cProGetMasharBusLicenseNum = "pkg_tnua.pro_get_mashar_bus_license_num";
         public const string cProGetMasharData = "PKG_TNUA.pro_get_mashar_data";
+        public const string cProGetBusesDetails = "PKG_TNUA.pro_get_buses_details";
 #endregion
 
 

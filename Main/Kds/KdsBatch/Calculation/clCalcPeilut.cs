@@ -217,9 +217,8 @@ namespace KdsBatch
              DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
-             DateTime dShatHatchla, dShatYetzia;
-             DataTable dtMashar;
-             string sCarNumbers = "";
+             DateTime dShatHatchla, dShatYetzia,dMeTaarich;
+             clKavim oKavim = new clKavim();
              float fErech,fHistaglutMifraki , fHistaglutEilat;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
@@ -230,17 +229,13 @@ namespace KdsBatch
              {
                  dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
                  drPeiluyot = dtPeiluyot.Select("not SUBSTRING(makat_nesia,1,1)in(5,7)");
-                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 if(clCalcData.DtBusNumbers == null){
+                     dMeTaarich= DateTime.Parse("01/" + dTaarich.Month +"/"+ dTaarich.Year);
+                     clCalcData.DtBusNumbers = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), _iMisparIshi);
+                 }
+        
+                 if (clCalcData.DtBusNumbers.Rows.Count > 0)
                  {
-                     sCarNumbers += drPeiluyot[J]["oto_no"].ToString() + ",";
-                  }
-
-                 if (sCarNumbers.Length > 0)
-                 {
-                     sCarNumbers = sCarNumbers.Substring(0, sCarNumbers.Length - 1);
-
-                     dtMashar = clCalcData.GetNetunimMashar(sCarNumbers);
-
                      for (int J = 0; J < drPeiluyot.Length; J++)
                      {
                          fHistaglutMifraki = 0;
@@ -257,7 +252,7 @@ namespace KdsBatch
                          if (!string.IsNullOrEmpty(drDetailsPeilut["sug_auto"].ToString()))
                                 iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
 
-                         if ((iSugAuto == 4 || iSugAuto == 5 ) && dtMashar.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                         if ((iSugAuto == 4 || iSugAuto == 5) && clCalcData.DtBusNumbers.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                          {
                              fHistaglutMifraki = (_oGeneralData.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                          }

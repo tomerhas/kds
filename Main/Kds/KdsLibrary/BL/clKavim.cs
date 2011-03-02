@@ -641,5 +641,25 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public DataTable GetBusesDetailsLeOvedForMonth(DateTime dTarMe, DateTime dTarAd, int iMispar_ishi)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {   //מביא את נתוני מש"ר: 
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMispar_ishi, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetBusesDetails, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
