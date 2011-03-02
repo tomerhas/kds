@@ -35,7 +35,7 @@ namespace KdsTaskManager
         public static bool TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
-            return true;
+            return false;
         }
 
     }
@@ -49,6 +49,8 @@ namespace KdsTaskManager
         public string Remark { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        private TypeCommand _Type;
+
 
         public Message(Action action, TypeStatus status, string remark, DateTime startTime, DateTime endTime)
         {
@@ -56,6 +58,7 @@ namespace KdsTaskManager
             {
                 GroupId = action.IdGroup;
                 IdOrder = action.IdOrder;
+                _Type = action.TypeCommand;
                 Status = status;
                 Sequence = action.Sequence;
                 Remark = (status == TypeStatus.Stopped) ? Utilities.PrepareExceptionMessage(remark) : remark;
@@ -67,6 +70,12 @@ namespace KdsTaskManager
                 throw ex;
             }
         }
+        public void UpdateTaskLog()
+        {
+            Console.WriteLine("group {0}, Order {1} with Command {4} was send message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
+        }
+
+
     }
 
     public enum TypeCommand

@@ -30,24 +30,23 @@ namespace KdsTaskManager
             }
         }
 
-
-        protected override bool Execute()
+        protected override void Execute()
         {
             try
             {
                 object[] nullObj = null;
                 CreateMethodToExecute();
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageStart);
+                _MessageStart.UpdateTaskLog();
                 _ActionResult = (bool)_MethodInfo.Invoke(_Type, nullObj);
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageEnd);
-                return _ActionResult;
+                _MessageEnd.UpdateTaskLog();
             }
             catch (Exception ex)
             {
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageEnd);
+                _MessageEnd.UpdateTaskLog();
+                _ActionResult = false;
                 throw ex;
             }
 

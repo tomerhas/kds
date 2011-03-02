@@ -10,12 +10,8 @@ namespace KdsTaskManager
         protected Action _ActionToExecute;
         protected bool _ActionResult = false;
         protected Message _MessageStart, _MessageEnd;
-        protected abstract bool Execute();
+        protected abstract void Execute();
 
-        protected void UpdateTaskLog(Message msg)
-        {
-            Console.WriteLine("group {0}, Order {1} with Command {4} was send message {2} \n {3}", msg.GroupId, msg.IdOrder, msg.Status, msg.Remark, _ActionToExecute.TypeCommand);
-        }
 
         public bool Run()
         {
@@ -24,16 +20,17 @@ namespace KdsTaskManager
                 if (_ActionToExecute.IdOrder == 1)
                 {
                     Message msg = new Message(_ActionToExecute, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.Now);
-                    UpdateTaskLog(msg);
+                    msg.UpdateTaskLog();
                 }
-                return Execute();
+                Execute();
             }
             catch (Exception ex)
             {
                 Message msg = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(msg);
-                return false;
+                msg.UpdateTaskLog();
             }
+            return _ActionResult;
+
         }
     
     }

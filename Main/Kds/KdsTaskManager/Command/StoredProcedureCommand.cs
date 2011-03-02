@@ -26,28 +26,28 @@ namespace KdsTaskManager
             catch (Exception ex)
             {
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped,ex.Message, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageEnd);
+                _MessageEnd.UpdateTaskLog();
                 throw ex;
             }
 
         }
 
-        protected override bool Execute()
+        protected override void Execute()
         {
             try
             {
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageStart);
+                _MessageStart.UpdateTaskLog();
                 _dal.ExecuteSP(Command);
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageEnd);
-                return true;
-
+                _MessageEnd.UpdateTaskLog();
+                _ActionResult = true;
             }
             catch (Exception ex)
             {
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
-                UpdateTaskLog(_MessageEnd);
+                _MessageEnd.UpdateTaskLog();
+                _ActionResult = false ;
                 throw ex;
             }
         }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using System.Threading;
 using KdsLibrary;
 using KdsLibrary.DAL;
 
@@ -102,8 +101,6 @@ namespace KdsTaskManager
             return ParameterOfAction;
         }
 
-
-
         private void operatorItem_OnEndWork(Operator sender)
         {
             _CntRunningOperators--;
@@ -156,8 +153,5 @@ namespace KdsTaskManager
             }
             else Item.Sleep();
         }
-
-
-
     }
 }

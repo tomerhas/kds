@@ -37,7 +37,10 @@ namespace KdsTaskManager
                 ResultCommand = _Command.Run();
                 if ((ResultCommand) ||
                    ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit)))
+                {
                     OnEndWork(this);
+                    break;
+                }
             }
 
         }
