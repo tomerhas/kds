@@ -1919,7 +1919,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        // OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
         if (bInpuDataResult)
         {
-             
+           
 //            hidExecInputChg.Value = "0";
             if (hidSave.Value.Equals("1"))
             {
@@ -2083,6 +2083,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnConfirm_click(object sender, EventArgs e)
     {
         ModalPopupEx.Hide();
+       
         if (SaveCard())
         {
             //if ((hidSave.Value.Equals("1")))

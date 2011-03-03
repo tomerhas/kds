@@ -596,7 +596,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         UpdatePanel upPeilyot = new UpdatePanel();
         upPeilyot.RenderMode = UpdatePanelRenderMode.Inline;
-        upPeilyot.UpdateMode = UpdatePanelUpdateMode.Conditional;       
+        upPeilyot.UpdateMode = UpdatePanelUpdateMode.Conditional;   
+        //upPeilyot.Triggers 
         return upPeilyot;
     }
     protected void FixGridHeader(string sNamePnlGrid)
@@ -2891,7 +2892,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
-                if (!SetOneError(oTextBox, hCell, "Shat_Gmar_Letashlum", ref oSidur, iIndex.ToString(), ""))
+                if (!SetOneError(oTextBox, hCell, "Shat_Hatchala_Letashlum", ref oSidur, iIndex.ToString(), ""))
                 {
                     //אם לא נמצאה שגיאה נבדוק אישורים
                     CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);

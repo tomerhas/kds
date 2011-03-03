@@ -512,7 +512,7 @@ function chkMkt(oRow) {
                lKnisaMkt = NextRow.cells[_COL_MAKAT].childNodes[0].value;
                MktType = GetMakatType(lKnisaMkt);
                arrKnisot = NextRow.cells[_COL_KNISA].childNodes[0].toString().split(",");
-               while ((NextRow != null) && ((MktType != MKT_NAMAK) && (MktType != MKT_EMPTY))) {
+               while ((NextRow != null) && ((MktType != MKT_NAMAK) && (MktType != MKT_EMPTY) && ((Number(arrKnisot[0]) > 0)))) {
                    if ((MktType == MKT_SHERUT) && (lKnisaMkt == lMkt) && (Number(arrKnisot[0]) > 0)) {
                        NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value = sHour;
                        NextRow.cells[_COL_DAY_TO_ADD].childNodes[0].value = Number(iDayToAdd);

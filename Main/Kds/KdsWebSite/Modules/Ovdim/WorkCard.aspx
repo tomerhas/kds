@@ -16,7 +16,7 @@
     
 </head>
 <body dir="rtl" style="margin:0px">
-    <form id="frmWorkCard" runat="server" >
+    <form id="frmWorkCard" runat="server" >    
     <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true">
         <Scripts>
             <asp:ScriptReference Name="MicrosoftAjax.js" />
@@ -369,7 +369,7 @@
                             </td>                            
                        </tr>
                     </table>
-            </ContentTemplate>                                                                                                        
+            </ContentTemplate>                
           </asp:UpdatePanel>    
     <asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
