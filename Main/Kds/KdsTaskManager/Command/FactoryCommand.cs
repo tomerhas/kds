@@ -20,7 +20,7 @@ namespace KdsTaskManager
                 if (_ActionToExecute.IdOrder == 1)
                 {
                     Message msg = new Message(_ActionToExecute, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.Now);
-                    msg.UpdateTaskLog();
+                    msg.InsertTaskLog();
                 }
                 Execute();
             }

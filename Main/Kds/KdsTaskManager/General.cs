@@ -8,9 +8,10 @@ namespace KdsTaskManager
 {
     public class OracleSp
     {
+        public const string InsertLogTask = "PKG_TASK_MANAGER.InsertLogTask";
         public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdateLogTask";
         public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetTaskOfGroup";
-        public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetGroupsDefinition";
+        public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetKvuzot";
         public const string GetActionParameters = "PKG_TASK_MANAGER.GetActionParameters";
     }
     public static class Utilities
@@ -72,7 +73,16 @@ namespace KdsTaskManager
         }
         public void UpdateTaskLog()
         {
-            Console.WriteLine("group {0}, Order {1} with Command {4} was send message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
+            Console.WriteLine("group {0}, Order {1} with Command {4} was update message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
+            Bl _Bl = new Bl();
+            _Bl.UpdateProcessLog(this);
+        }
+
+        public void InsertTaskLog()
+        {
+            Console.WriteLine("group {0}, Order {1} with Command {4} was insert message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
+            Bl _Bl = new Bl();
+            _Bl.InsertProcessLog(this);
         }
 
 
@@ -87,8 +97,8 @@ namespace KdsTaskManager
     {
         Idle = 0,
         Running = 1,
-        Stopped = 3,
-        Success = 4
+        Success = 3,
+        Stopped = 4
     }
     public enum OnFailureBehavior
     {
