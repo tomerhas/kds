@@ -57,6 +57,7 @@ namespace KdsLibrary
 
 #region pkg_calc constants
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
+        public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
 #endregion
 
 #region kds_catalog_pack constants
@@ -316,7 +317,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProGetSadotNosafomLePeilut = "PKG_UTILS.get_sadot_nosafim_lePeilut";
         public const string cProMoveRecordsToHistory = "PKG_UTILS.MoveRecordsToHistory";
         public const string cProGetTavlaotToRefresh = "PKG_UTILS.pro_get_tavlaot_to_refresh";
-       
+        
 #endregion
         #region PKG_APPROVALS constants
         public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";       

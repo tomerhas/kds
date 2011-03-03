@@ -23,6 +23,7 @@ namespace KdsBatch
         private static DataTable _dtYemeyAvoda;
         private static DataTable _dtSugeySidur;
         private static DataTable _dtBusNumbers;
+        private static DataTable _dtPeiluyotOved;
         public static int iSugYom;
         public static string sSugYechida;
         public static float fMekademNipuach;
@@ -80,6 +81,12 @@ namespace KdsBatch
         {
             set { _dtBusNumbers = value; }
             get { return _dtBusNumbers; }
+        }
+
+        public static DataTable DtPeiluyotOved
+        {
+            set { _dtPeiluyotOved = value; }
+            get { return _dtPeiluyotOved; }
         }
         
         public static DataTable DtSugeySidurRechiv

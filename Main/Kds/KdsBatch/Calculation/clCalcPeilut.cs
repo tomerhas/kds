@@ -31,7 +31,7 @@ namespace KdsBatch
 
          public void CalcRechiv1(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int  iMakat, iMisparKnisa,iDakotBefoal;
              DateTime dShatHatchla, dShatYetzia;
@@ -39,12 +39,15 @@ namespace KdsBatch
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-
-                 drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3) in (719,720,791,744,785)");
-              
+              //   dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+              //   drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3) in (719,720,791,744,785)");
+                
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury+= "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3) in (719,720,791,744,785))";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
                      iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
@@ -53,7 +56,7 @@ namespace KdsBatch
                      dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
                      iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                      iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
-                     fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                     fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                     
                      addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fErech);
                  }
@@ -69,7 +72,7 @@ namespace KdsBatch
 
          public void CalcRechiv23(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+           //  DataTable dtPeiluyot;
              DataRow drDetailsPeilut;
              DataRow[] drPeiluyot;
              int iHagdaraLegmar, iMakat,iMisparKnisa;
@@ -78,11 +81,16 @@ namespace KdsBatch
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+               //  dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+               //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9)");
 
-                 drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9)");
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9))";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+               
                  if (drPeiluyot.Length > 0)
                  {
                      for (int J = 0; J < drPeiluyot.Length; J++)
@@ -121,8 +129,12 @@ namespace KdsBatch
                             
                      }
                  }
-
-                 drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)=764");
+                 
+                 // drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)=764");
+                 sQury = "";
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)=764)";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                  if (drPeiluyot.Length > 0)
                  {
                      for (int J = 0; J < drPeiluyot.Length; J++)
@@ -150,16 +162,19 @@ namespace KdsBatch
          public int CalcElementReka(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              //משך אלמנטים מסוג ריקה
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int iMakat;
              int iErech=0;
-            
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 //dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 //drPeiluyot = dtPeiluyot.Select("nesia_reika is not null");
 
-                 drPeiluyot = dtPeiluyot.Select("nesia_reika is not null");
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (nesia_reika is not null)";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
 
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
@@ -180,18 +195,23 @@ namespace KdsBatch
          public float CalcRechiv213(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              float fErech=0;
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
+             DataRow[] drPeiluyot;
              int iMisparKnisa=0;
-             string sMakat;
+             string sMakat, sQury;
             DateTime dShatYetzia = DateTime.MinValue;
              try 
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMisparKnisa=int.Parse(dtPeiluyot.Rows[J]["Mispar_Knisa"].ToString());
-                     sMakat = dtPeiluyot.Rows[J]["makat_nesia"].ToString();
-                     dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
+                     sMakat = drPeiluyot[J]["makat_nesia"].ToString();
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
 
                      if ((sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
                      {
@@ -214,7 +234,7 @@ namespace KdsBatch
 
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
              DateTime dShatHatchla, dShatYetzia,dMeTaarich;
@@ -224,12 +244,16 @@ namespace KdsBatch
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
              DataRow drDetailsPeilut;
-              string sCarNumbers = "";
+             string sCarNumbers = "", sQury;
              int iSugAuto;
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-                 drPeiluyot = dtPeiluyot.Select("not SUBSTRING(makat_nesia,1,1)in(5,7)");
+                 //dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 //drPeiluyot = dtPeiluyot.Select("not SUBSTRING(makat_nesia,1,1)in(5,7)");
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (not SUBSTRING(makat_nesia,1,1)in(5,7))";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
                      sCarNumbers += drPeiluyot[J]["oto_no"].ToString() + ",";
@@ -287,7 +311,8 @@ namespace KdsBatch
 
          public void CalcRechiv215(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+           //  DataTable dtPeiluyot;
+             DataRow[] drPeiluyot;
              int  iMisparKnisa,iMakat1;
              float  fKm;
              DataRow drDetailsPeilut;
@@ -295,28 +320,32 @@ namespace KdsBatch
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                  fKm = 0;
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat1 = int.Parse(dtPeiluyot.Rows[J]["makat_nesia"].ToString().Substring(0, 1));
+                     iMakat1 = int.Parse(drPeiluyot[J]["makat_nesia"].ToString().Substring(0, 1));
                      //ב.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia = 5 (זוהי ויזה) אזי: ק"מ = TB_peilut_Ovdim.Km_visa.
                      fKm = 0;
                      if (iMakat1 == 5)
                      {
-                         fKm = float.Parse(dtPeiluyot.Rows[J]["km_visa"].ToString());
+                         fKm = float.Parse(drPeiluyot[J]["km_visa"].ToString());
                      }
                      //ג.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia = 7 (זהו אלמנט) וגם האלמנט הוא מסוג נסיעה [שליפת מאפיינים (מס' אלמנט, קוד מאפיין = 35, תאריך)] אזי: ק"מ = [חישוב קמ לפי זמן נסיעה (מק"ט פעילות)] 
-                     else if (iMakat1 == 7 && dtPeiluyot.Rows[J]["nesia"].ToString() == "1")
+                     else if (iMakat1 == 7 && drPeiluyot[J]["nesia"].ToString() == "1")
                      {
-                         fKm = _oGeneralData.CalcKm(long.Parse(dtPeiluyot.Rows[J]["makat_nesia"].ToString()));
+                         fKm = _oGeneralData.CalcKm(long.Parse(drPeiluyot[J]["makat_nesia"].ToString()));
                      }
                      //א.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia <> 5 או 7 (זו נסיעה מקטלוג נסיעות) אזי: ק"מ = Km מקטלוג הנסיעות לפי מק"ט הפעילות ותאריך יום העבודה. 
                      else if (iMakat1 != 5 && iMakat1 != 7)
                      {
-                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString()));
+                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
 
                          if (!string.IsNullOrEmpty(drDetailsPeilut["km"].ToString()))
                          {
@@ -326,9 +355,9 @@ namespace KdsBatch
 
                      if (fKm > 0)
                      {
-                         dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
-                         dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
-                         iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
+                         dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
+                         dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                         iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                          addRowToTable(clGeneral.enRechivim.SachKM.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fKm);
                      }
                  }
@@ -344,32 +373,37 @@ namespace KdsBatch
 
          public void CalcRechiv216(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+           //  DataTable dtPeiluyot;
+             DataRow[] drPeiluyot;
              int iMisparKnisa, iMakat1;
              float fKm;
              DateTime dShatHatchla, dShatYetzia;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 //dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                  fKm = 0;
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat1 = int.Parse(dtPeiluyot.Rows[J]["makat_nesia"].ToString().Substring(0, 1));
+                     iMakat1 = int.Parse(drPeiluyot[J]["makat_nesia"].ToString().Substring(0, 1));
                      //ב.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia = 5 (זוהי ויזה) אזי: ק"מ = TB_peilut_Ovdim.Km_visa.
                      fKm = 0;
                      if (iMakat1 == 5)
                      {
-                         fKm = float.Parse(dtPeiluyot.Rows[J]["km_visa"].ToString());
+                         fKm = float.Parse(drPeiluyot[J]["km_visa"].ToString());
                      }
                      
                      if (fKm > 0)
                      {
-                         dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
-                         dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
-                         iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
+                         dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
+                         dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                         iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                          addRowToTable(clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fKm);
                      }
                  }
@@ -383,7 +417,7 @@ namespace KdsBatch
 
          public void CalcRechiv217(int iMisparSidur, DateTime dShatHatchalaSidur, bool bFirstSidur)
          {
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
              DataRow[] drPeiluyot;
              int iMakat, iMakatFirst,iMisparKnisa, iMisparKnisaFirst, iDakotBefoal;
              DateTime dShatHatchla, dShatYetzia;
@@ -393,16 +427,21 @@ namespace KdsBatch
              dShatYetzia = DateTime.MinValue;
              DateTime dShatYetziaFirst = DateTime.MinValue;
              float fHagdaraLetashlum;
+             string sQury;
              bool bNoCalc = false;
              iMakatFirst = 0;
              iMisparKnisaFirst = 0;
              try
              {
                  
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 //dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                
                  if (bFirstSidur)
                  {
-                     drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)<>701", "shat_yetzia asc");
+                  //   drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)<>701", "shat_yetzia asc");
+                     sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                     sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)<>701)"; 
+                     drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury,"shat_yetzia asc");
                      if (drPeiluyot.Length > 0)
                      {
                          iMakatFirst = int.Parse(drPeiluyot[0]["MAKAT_NESIA"].ToString());
@@ -411,7 +450,12 @@ namespace KdsBatch
                      }
                  }
 
-                 drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1)<>5");
+               //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1)<>5");
+                 sQury="";
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,1)<>5)"; 
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury,"shat_yetzia asc");
+                     
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
                      if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) != "7" || ((drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "3:1" || drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "3:0") && drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7"))
@@ -449,25 +493,31 @@ namespace KdsBatch
 
          public void CalcRechiv218(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+          //   DataTable dtPeiluyot;
               int iMakat, iMisparKnisa, iKisuyTor;
              DateTime dShatHatchla, dShatYetzia;
              float fErech;
+             string sQury="";
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             DataRow[] drPeiluyot;
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat = int.Parse(dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString());
-                     dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
-                     dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
-                     iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
+                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                     dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                      iKisuyTor = 0;
-                     if (!string.IsNullOrEmpty(dtPeiluyot.Rows[J]["KISUY_TOR"].ToString()))
-                        iKisuyTor = int.Parse(dtPeiluyot.Rows[J]["KISUY_TOR"].ToString());
+                     if (!string.IsNullOrEmpty(drPeiluyot[J]["KISUY_TOR"].ToString()))
+                         iKisuyTor = int.Parse(drPeiluyot[J]["KISUY_TOR"].ToString());
 
                      fErech = iKisuyTor;
 
@@ -484,7 +534,9 @@ namespace KdsBatch
 
          public void CalcRechiv267(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+            // DataTable dtPeiluyot;
+             string sQury = "";
+             DataRow[] drPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
              float fErech;
              DateTime dShatHatchla, dShatYetzia;
@@ -493,36 +545,39 @@ namespace KdsBatch
              dShatYetzia = DateTime.MinValue;
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
 
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat = int.Parse(dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString());
-                     dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
-                     dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
-                     iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
-                     iDakotBefoal = int.Parse(dtPeiluyot.Rows[J]["Dakot_bafoal"].ToString());
+                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                     dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
+                     iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
 
                      fErech = 0;
-                     if ((dtPeiluyot.Rows[J]["kod_lechishuv_premia"].ToString().Trim() == "1:1" && dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7"))
+                     if ((drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "1:1" && drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7"))
                      {
-                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                      }
 
                      if (J == 1)
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
-                         if ( (dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7" && dtPeiluyot.Rows[J]["kupai"].ToString() == "1" && dtPeiluyot.Rows[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701"))
+                         if ((drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7" && drPeiluyot[J]["kupai"].ToString() == "1" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701"))
                          {
-                             if (DateTime.Parse(dtPeiluyot.Rows[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(dtPeiluyot.Rows[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
                                      fErech = 0;
                                  }
@@ -545,45 +600,49 @@ namespace KdsBatch
 
          public void CalcRechiv268(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
-             DataTable dtPeiluyot;
+             DataRow[] drPeiluyot;
+          //   DataTable dtPeiluyot;
              int iMakat, iMisparKnisa, iDakotBefoal;
              float fErech;
              DateTime dShatHatchla, dShatYetzia;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
              dShatYetzia = DateTime.MinValue;
+             string sQury = "";
              try
              {
-                 dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-
-                 for (int J = 0; J < dtPeiluyot.Rows.Count; J++)
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+                 for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat = int.Parse(dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString());
-                     dShatHatchla = DateTime.Parse(dtPeiluyot.Rows[J]["shat_hatchala_sidur"].ToString());
-                     dShatYetzia = DateTime.Parse(dtPeiluyot.Rows[J]["shat_yetzia"].ToString());
-                     iMisparKnisa = int.Parse(dtPeiluyot.Rows[J]["mispar_knisa"].ToString());
-                     iDakotBefoal = int.Parse(dtPeiluyot.Rows[J]["Dakot_bafoal"].ToString());
+                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                     dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
+                     iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
 
                      fErech = 0;
-                     if (dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) != "5" || dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) != "7")
+                     if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) != "5" || drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) != "7")
                      {
-                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                      }
 
                      if (J == 1)
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
-                         if (dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6"  && dtPeiluyot.Rows[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701")
+                         if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701")
                          {
-                             if (DateTime.Parse(dtPeiluyot.Rows[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(dtPeiluyot.Rows[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < _oGeneralData.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
                                      fErech = 0;
                                  }
@@ -591,9 +650,9 @@ namespace KdsBatch
                              }
                          }
                      }
-                     if (dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "8" && dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString().Substring(6, 2) == "41")
+                     if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "8" && drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(6, 2) == "41")
                      {
-                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, dtPeiluyot.Rows[J]["MAKAT_NESIA"].ToString(), int.Parse(dtPeiluyot.Rows[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) * _oGeneralData.objParameters.fMekademTosefetZmanLefiRechev;
+                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) * _oGeneralData.objParameters.fMekademTosefetZmanLefiRechev;
                      }
 
 
@@ -737,18 +796,18 @@ namespace KdsBatch
              }
          }
 
-         public void CalcZmaneyAruchot(DataTable dtPeiluyot,int iMakatLerechiv, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum, out float fZmanAruchatBoker, out float fZmanAruchatTzharim, out float fZmanAruchatErev)
+         public void CalcZmaneyAruchot(DataRow[] drPeiluyot, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum, out float fZmanAruchatBoker, out float fZmanAruchatTzharim, out float fZmanAruchatErev)
         { 
             float fTempY = 0;
             DateTime dTempM1, dTempM2,dShatHatchla,dShatYetzia;
-            DataRow[] drPeiluyot;
+          //  DataRow[] drPeiluyot;
              int iMakat,iZmanElement;
             try
             {
                 fZmanAruchatBoker=0;
                 fZmanAruchatTzharim = 0;
                 fZmanAruchatErev = 0;
-                drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)='" + iMakatLerechiv+ "'","");
+               // drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)='" + iMakatLerechiv+ "'","");
               for (int i = 0; i < drPeiluyot.Length; i++)
               {
                   iMakat = int.Parse(drPeiluyot[i]["MAKAT_NESIA"].ToString());

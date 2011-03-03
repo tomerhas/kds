@@ -269,6 +269,7 @@ namespace KdsBatch
                    clCalcData.ResetDataSet();
                    clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
                    clCalcData.DtBusNumbers = null;
+                   clCalcData.DtPeiluyotOved = oUtils.GetPeiluyLeovedForMonth(dTarMe, dTarAd, iMisparIshi);
                    oMonth = new clCalcMonth(iMisparIshi, lBakashaId);
 
                    dsChishuv = oMonth.CalcMonth(iMisparIshi, dTarMe, dTarAd);
