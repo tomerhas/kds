@@ -19,7 +19,7 @@ namespace KdsTaskManager
                 if (_ActionToExecute.Parameters.Count > 0)
                 {
                     _ActionToExecute.Parameters.ForEach(ParamItem =>
-                    _dal.AddParameter(ParamItem.Name, ParamItem.Type, ParamItem.Value, ParameterDir.pdInput));
+                    _dal.AddParameter(ParamItem.Name, (ParameterType)ParamItem.Type, ParamItem.Value, ParameterDir.pdInput));
                 }
                 Command = _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
             }

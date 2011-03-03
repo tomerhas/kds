@@ -10,7 +10,7 @@ namespace KdsTaskManager
     {
         public const string InsertLogTask = "PKG_TASK_MANAGER.InsertLogTask";
         public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdateLogTask";
-        public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetTaskOfGroup";
+        public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetPeiluyotBekvuza";
         public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetKvuzot";
         public const string GetActionParameters = "PKG_TASK_MANAGER.GetActionParameters";
     }
@@ -36,6 +36,11 @@ namespace KdsTaskManager
         public static bool TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
+            return false;
+        }
+        public static bool TestCommandWithParam(string param)
+        {
+            Console.WriteLine("TestCommand is running with param {0}", param);
             return false;
         }
 
@@ -75,14 +80,14 @@ namespace KdsTaskManager
         {
             Console.WriteLine("group {0}, Order {1} with Command {4} was update message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
             Bl _Bl = new Bl();
-            _Bl.UpdateProcessLog(this);
+//            _Bl.UpdateProcessLog(this);
         }
 
         public void InsertTaskLog()
         {
             Console.WriteLine("group {0}, Order {1} with Command {4} was insert message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
             Bl _Bl = new Bl();
-            _Bl.InsertProcessLog(this);
+     //       _Bl.InsertProcessLog(this);
         }
 
 

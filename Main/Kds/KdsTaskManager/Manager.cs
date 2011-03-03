@@ -93,7 +93,7 @@ namespace KdsTaskManager
                 {
                     Parameter ParameterItem = new Parameter();
                     ParameterItem.Name = item["ParamName"].ToString();
-                    ParameterItem.Type = (ParameterType)clGeneral.GetIntegerValue(item["ParamType"].ToString());
+                    ParameterItem.Type = clGeneral.GetIntegerValue(item["ParamType"].ToString());
                     ParameterItem.Value = item["ParamValue"].ToString();
                     ParameterOfAction.Add(ParameterItem);
                 }
@@ -125,8 +125,6 @@ namespace KdsTaskManager
                 Thread.Sleep(5000);
             }
             Console.WriteLine("Manager was finished his job", _CntRunningOperators.ToString());
-            Console.ReadKey();
-
         }
         /// <summary>
         /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
