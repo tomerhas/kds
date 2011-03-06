@@ -672,7 +672,8 @@ namespace KdsBatch
                 fErechRechiv133 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.PremyaRegila.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 fErechRechiv134 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.PremyaNamlak.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                if ((fErechRechiv1 < fErechRechiv126) && (fErechRechiv2 >= (fErechRechiv126 / 2)) && ((fErechRechiv133 + fErechRechiv134) > 0))
+                if ((fErechRechiv1 < fErechRechiv126) && (fErechRechiv2 >= (fErechRechiv126 / 2)) &&
+                      ((fErechRechiv126 - fErechRechiv1)<=30)  && ((fErechRechiv133 + fErechRechiv134) > 0))
                 {
                     ftosefetMax133 = fErechRechiv133 > 30 ? 30 : fErechRechiv133;
                     ftosefetMax134 = fErechRechiv134 > 30 ? 30 : fErechRechiv134;
