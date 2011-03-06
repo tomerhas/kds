@@ -26,9 +26,18 @@ namespace KdsTaskManager
             try
             {
                 _Type = Type.GetType(_ActionToExecute.LibraryName);
-                _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
-                if (_ActionToExecute.Parameters.Count > 0)
-                    _parameters = GetParametersOfFunction();
+                if (_Type != null)
+                {
+                    _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
+                    if (_MethodInfo != null)
+                    {
+                        if (_ActionToExecute.Parameters.Count > 0)
+                            _parameters = GetParametersOfFunction();
+                    }
+                    else throw new Exception("MethodInfo:" + _ActionToExecute.CommandName + " is not valid");
+                }
+                else throw new Exception("LibraryName:" + _ActionToExecute.LibraryName + " is not valid");
+
             }
             catch (Exception ex)
             {
@@ -66,13 +75,21 @@ namespace KdsTaskManager
         private object[] GetParametersOfFunction()
         {
             object[] Obj = new object[_ActionToExecute.Parameters.Count];
-            int Counter = 0;
-            _ActionToExecute.Parameters.ForEach((ParameterItem) =>
-                                    {
-                                        Obj[Counter] = Convert.ChangeType(ParameterItem.Value,  GetParameterType(ParameterItem.Type));
-                                        Counter++;
-                                    });
+            try
+            {
+                int Counter = 0;
+                _ActionToExecute.Parameters.ForEach((ParameterItem) =>
+                                        {
+                                            Obj[Counter] = Convert.ChangeType(ParameterItem.Value, GetParameterType(ParameterItem.Type));
+                                            Counter++;
+                                        });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return Obj;
+
         }
 
         protected override void Execute()

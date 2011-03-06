@@ -23,26 +23,39 @@ namespace KdsTaskManager
 
         public Operator(Group group)
         {
-            _Group = group;
-            _Thread = new Thread(new ThreadStart(StartWork));
-            OperatorSleepTime = clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["OperatorSleepTime"].ToString());
+            try
+            {
+                _Group = group;
+                _Thread = new Thread(new ThreadStart(StartWork));
+                OperatorSleepTime = clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["OperatorSleepTime"].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private void StartWork()
         {
             bool ResultCommand = false;
-            foreach (Action ActionItem in _Group.Actions)
+            try
             {
-                _Command = FactoryCommand.GetInstance(ActionItem);
-                ResultCommand = _Command.Run();
-                if ((ResultCommand) ||
-                   ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit)))
+                foreach (Action ActionItem in _Group.Actions)
                 {
-                    OnEndWork(this);
-                    break;
+                    _Command = FactoryCommand.GetInstance(ActionItem);
+                    ResultCommand = _Command.Run();
+                    if ((ResultCommand) ||
+                       ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit)))
+                    {
+                        OnEndWork(this);
+                        break;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #region properties

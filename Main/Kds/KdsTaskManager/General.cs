@@ -8,14 +8,17 @@ namespace KdsTaskManager
 {
     public class OracleSp
     {
-        public const string InsertLogTask = "PKG_TASK_MANAGER.InsertLogTask";
-        public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdateLogTask";
+        public const string InsertLogTask = "PKG_TASK_MANAGER.InsLogKvuzot";
+        public const string UpdateLogTask = "PKG_TASK_MANAGER.UpdLogKvuzot";
         public const string GetTaskOfGroup = "PKG_TASK_MANAGER.GetPeiluyotBekvuza";
         public const string GetGroupsDefinition = "PKG_TASK_MANAGER.GetKvuzot";
         public const string GetActionParameters = "PKG_TASK_MANAGER.GetActionParameters";
     }
     public static class Utilities
     {
+        public static string EventLogSource;
+        public static bool Debug; 
+
         public static string PrepareExceptionMessage(string message)
         {
             string OriginFunction = string.Empty;
@@ -78,16 +81,32 @@ namespace KdsTaskManager
         }
         public void UpdateTaskLog()
         {
-            Console.WriteLine("group {0}, Order {1} with Command {4} was update message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
-            Bl _Bl = new Bl();
-//            _Bl.UpdateProcessLog(this);
+            try
+            {
+                if (Utilities.Debug)
+                    EventLog.WriteEntry(Utilities.EventLogSource, "group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will update message " + Status + " \n " + Remark, EventLogEntryType.Information);
+                Bl _Bl = new Bl();
+                _Bl.UpdateProcessLog(this);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void InsertTaskLog()
         {
-            Console.WriteLine("group {0}, Order {1} with Command {4} was insert message {2} \n {3}", GroupId, IdOrder, Status, Remark, _Type);
-            Bl _Bl = new Bl();
-     //       _Bl.InsertProcessLog(this);
+            try
+            {
+                if (Utilities.Debug)
+                    EventLog.WriteEntry(Utilities.EventLogSource, "group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will insert message " + Status + " \n " + Remark, EventLogEntryType.Information);
+                Bl _Bl = new Bl();
+                _Bl.InsertProcessLog(this);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
@@ -102,14 +121,13 @@ namespace KdsTaskManager
     {
         Idle = 0,
         Running = 1,
-        Success = 3,
-        Stopped = 4
+        Success = 2,
+        Stopped = 3
     }
     public enum OnFailureBehavior
     {
         Exit = 1,
         Continue = 2
     }
-
 
 }

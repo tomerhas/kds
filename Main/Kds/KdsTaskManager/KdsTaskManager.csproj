@@ -68,6 +68,10 @@
     <None Include="ClsDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
+      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
+      <Name>KdsDataImport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>

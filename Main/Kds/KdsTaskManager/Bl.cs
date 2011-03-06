@@ -76,7 +76,6 @@ namespace KdsTaskManager
             try
             {
                 oLogMessage = new OBJ_LOGTASKMSG(message.GroupId, message.IdOrder, (int)message.Status, message.Sequence, message.StartTime, message.EndTime, message.Remark);
-
                 oDal.AddParameter("LOGTASKMSG", ParameterType.ntOracleArray, oLogMessage, ParameterDir.pdInput, "OBJ_LOGTASKMSG");
                 oDal.ExecuteSP(OracleSp.UpdateLogTask);
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics; 
 
 namespace KdsTaskManager
 {
@@ -26,9 +27,11 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
+                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
                 Message msg = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
                 msg.UpdateTaskLog();
             }
+
             return _ActionResult;
 
         }
