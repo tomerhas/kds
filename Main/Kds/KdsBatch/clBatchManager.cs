@@ -7510,6 +7510,8 @@ namespace KdsBatch
                         {
                             //if (!CheckBitulRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, 0, oSidur.dFullShatGmar))
                             //{
+                            if (!IsDuplicateShatYeziaHamtana(oSidur))
+                            {
                                 OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
                                 InsertToObjPeilutOvdimForInsert(ref oSidur, ref oObjPeilutOvdimIns);
                                 oObjPeilutOvdimIns.MISPAR_SIDUR = oSidur.iMisparSidur;
@@ -7524,6 +7526,7 @@ namespace KdsBatch
                                 clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
                                 oPeilutNew.iBitulOHosafa = 4;
                                 oSidur.htPeilut.Add(25 + oSidur.htPeilut.Count + 1, oPeilutNew);
+                            }
                             //}
                             //else { bHaveIdkun = true; }
                         }
@@ -7562,6 +7565,28 @@ namespace KdsBatch
             }
         }
 
+        private bool IsDuplicateShatYeziaHamtana(clSidur oSidur)
+        {
+            clPeilut oPeilut;
+            DateTime dShatYezia = new DateTime();
+            try
+            {//בדיקה אם קיימת פעילות בשעת יציאה של פעילות ההמתנה שרוצים להוסיף
+                dShatYezia = oSidur.dFullShatGmar;
+                for (int i = 0; i <= oSidur.htPeilut.Values.Count - 1; i++)
+                {
+                    oPeilut = (clPeilut)oSidur.htPeilut[i];
+                    if (oPeilut.dFullShatYetzia == dShatYezia)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         //private void IpusSidurimMevutalimYadanit23()
         //{
         //    clSidur oSidur;

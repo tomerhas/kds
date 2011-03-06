@@ -198,7 +198,7 @@ namespace KdsService
                 //**oKDs.KdsWriteProcessLog(3, 5, 2, "end ok refresh New_Pirtey_Ovdim", "");
 
                 // refresh pivot_pirtey_ovdim
-                oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
+           //     oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
                 iSeqNum = obatch.InsertProcessLog(3, 8, RecordStatus.Wait, "start refresh tmp_pirtey_ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 8, 1, "start refresh tmp_pirtey_ovdim", "");
                 oDal.ClearCommand();

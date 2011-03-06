@@ -126,12 +126,20 @@ namespace KdsBatch
                }
            }
 
-           public void PremiaCalc(long lBakashaId, ref int numFailed,ref int numSucceed)
+           public void PremiaCalc()
            {
-
+               clBatch obatch= new clBatch();
+               long lBakashaId;
+               int iMisparIshi = 0;
+               int numFailed = 0;
+               int numSucceed = 0;
+               int seq = 0;
+               seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
+               lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
+                
                DataTable dtPremia = GetPremiaCalcPopulation(lBakashaId);
                DateTime startMonth = DateTime.MinValue, tmpMonth, endMonth = DateTime.MinValue;
-               int iMisparIshi = 0;
+              
                clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
                if (clCalcData.DtSugeyYamimMeyuchadim == null)
                    clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
@@ -178,6 +186,7 @@ namespace KdsBatch
                }
                else status = clGeneral.enBatchExecutionStatus.Failed;
                KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+               obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
            }
 
            private DateTime GetEndOfMonth(DateTime date)
