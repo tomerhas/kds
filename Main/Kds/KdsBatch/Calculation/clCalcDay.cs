@@ -2877,7 +2877,7 @@ namespace KdsBatch
                 fSumDakotRechiv = 0;
                 if ((!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30 && clCalcData.iSugYom == clGeneral.enSugYom.Bchirot.GetHashCode())))
                 {
-                    if (clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich) || clCalcData.CheckYomShishi(clCalcData.iSugYom))
+                    if (clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich) || clCalcData.CheckYomShishi(clCalcData.iSugYom) || clCalcData.CheckErevChag(clCalcData.iSugYom))
                     {
                         fDakotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNehigaShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         fDakotTnua = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
