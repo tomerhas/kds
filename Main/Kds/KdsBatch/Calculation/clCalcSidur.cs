@@ -6599,7 +6599,7 @@ namespace KdsBatch
            int I;
            string sSidurim = "";
 
-           drSidurim = clCalcData.DtSidurimMeyuchRechiv.Select("kod_rechiv=" + iKodRechiv);
+           drSidurim = clCalcData.DtSidurimMeyuchRechiv.Select("kod_rechiv=" + iKodRechiv + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')  and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
            if (drSidurim.Length > 0)
            {
                for (I = 0; I < drSidurim.Length; I++)
@@ -6619,7 +6619,7 @@ namespace KdsBatch
            int I;
            string sSugeySidur = "";
 
-           drSidurim = clCalcData.DtSugeySidurRechiv.Select("kod_rechiv=" + iKodRechiv);
+           drSidurim = clCalcData.DtSugeySidurRechiv.Select("kod_rechiv=" + iKodRechiv + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')  and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
            if (drSidurim.Length > 0)
            {
                for (I = 0; I < drSidurim.Length; I++)

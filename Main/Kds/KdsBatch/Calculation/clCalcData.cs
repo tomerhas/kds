@@ -24,6 +24,9 @@ namespace KdsBatch
         private static DataTable _dtSugeySidur;
         private static DataTable _dtBusNumbers;
         private static DataTable _dtPeiluyotOved;
+        private static DataTable _dtPirteyOvedForMonth;
+        private static DataTable _dtParameters;
+        private static DataTable _dtMeafyenimLeOved;
         public static int iSugYom;
         public static string sSugYechida;
         public static float fMekademNipuach;
@@ -88,7 +91,21 @@ namespace KdsBatch
             set { _dtPeiluyotOved = value; }
             get { return _dtPeiluyotOved; }
         }
-        
+        public static DataTable DtPirteyOvedForMonth
+        {
+            set { _dtPirteyOvedForMonth = value; }
+            get { return _dtPirteyOvedForMonth; }
+        }
+        public static DataTable DtParameters
+        {
+            set { _dtParameters = value; }
+            get { return _dtParameters; }
+        }
+        public static DataTable DtMeafyenimLeOved
+        {
+            set { _dtMeafyenimLeOved = value; }
+            get { return _dtMeafyenimLeOved; }
+        }
         public static DataTable DtSugeySidurRechiv
         {
             set { _dtSugeySidurRechiv = value; }

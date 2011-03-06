@@ -58,6 +58,7 @@ namespace KdsLibrary
 #region pkg_calc constants
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
+        public const string cProGetPirteyOvedForMonth = "pkg_calc.pro_get_pirtey_oved_ForMonth";
 #endregion
 
 #region kds_catalog_pack constants

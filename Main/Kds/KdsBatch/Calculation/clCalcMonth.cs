@@ -42,6 +42,7 @@ namespace KdsBatch
             int iSugYom;//, iStatusTipul;
             bool bChishuvYom = false;
             clUtils oUtils = new clUtils();
+            clOvdim oOvdim = new clOvdim();
             clKavim oKavim = new clKavim();
             try
             {
@@ -65,8 +66,11 @@ namespace KdsBatch
                  clCalcData.DtPremyotYadaniyot = oUtils.InitDtPremyotYadaniyot(_iMisparIshi,dTarMe);
                  clCalcData.sSugYechida = InitSugYechida(_iMisparIshi, dTarAd);
                  clCalcData.DtPeiluyotFromTnua = oKavim.GetKatalogKavim(iMisparIshi, dTarMe, dTarAd);
-
-                 
+                 clCalcData.DtPirteyOvedForMonth = oUtils.GetPirteyOvedForTkufa(iMisparIshi, dTarMe, dTarAd);
+                 clCalcData.DtParameters = oUtils.GetKdsParametrs();
+                 clCalcData.DtSidurimMeyuchRechiv = SetSidurimMeyuchaRechiv(dTarMe, dTarAd);
+                 clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTarMe, dTarAd);
+               //  clCalcData.DtMeafyenimLeOved = oOvdim.GetMeafyeneyBitzuaLeOved(iMisparIshi, dCardDate);
                  _dTaarichChishuv = dTarMe;
                                
                 if (!bChishuvYom)
@@ -83,8 +87,9 @@ namespace KdsBatch
                     _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
 
                     iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim, _oGeneralData.objMeafyeneyOved.iMeafyen56);
-                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich);
-                    _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom);
+                    
+                    _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
+                    _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom, "Calc");
                     
                     oDay.CalcRechiv126(dTaarich);
                     dTaarich = dTaarich.AddDays(1);
@@ -106,10 +111,10 @@ namespace KdsBatch
                      iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim, _oGeneralData.objMeafyeneyOved.iMeafyen56);
                                     
                      clCalcData.iSugYom = iSugYom;
-                     _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom);
-                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich);
-                     clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
-                     clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);
+                     _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom,"Calc");
+                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
+                    // clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
+                   //  clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);
 
                      oDay.CalcRechivim(dTaarich);
                      dTaarich = dTaarich.AddDays(1);
@@ -275,13 +280,14 @@ namespace KdsBatch
             return iSachShabatonim;
         }
 
-        private DataTable SetSidurimMeyuchaRechiv(DateTime dTaarich)
+        private DataTable SetSidurimMeyuchaRechiv(DateTime dTarMe, DateTime dTarAd)
         {
             clDal oDal = new clDal();
             DataTable dtSidurimMeyuchaRechiv = new DataTable();
             try
             {   //מחזיר סידורים מיוחדים רכיב 
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clDefinitions.cProGetSidurimMeyuchRechiv, ref dtSidurimMeyuchaRechiv);
 
@@ -294,14 +300,15 @@ namespace KdsBatch
 
         }
 
-        private DataTable GetSugeySidurRechiv(DateTime dTaarich)
+        private DataTable GetSugeySidurRechiv(DateTime dTarMe, DateTime dTarAd)
         {
             DataTable dt = new DataTable();
             clDal oDal = new clDal();
 
             try
             {
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clDefinitions.cProGetSugeySidurRechiv, ref dt);
                 return dt;

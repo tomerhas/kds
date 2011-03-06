@@ -33,35 +33,50 @@ namespace KdsBatch
             dtOvedCardDetails = GetPirteyOved(iMisparIshi, dDate);
             if (dtOvedCardDetails.Rows.Count > 0)
             {
-                SetMeafyneyOved();
+                SetMeafyneyOved(dtOvedCardDetails.Rows[0]);
             }
             dtOvedCardDetails.Dispose();
         }
 
-        private void SetMeafyneyOved()
+         public clPirteyOved(int iMisparIshi, DateTime dDate,string type)
+         {
+              DataRow[] rows;
+             try{
+                 rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                 if (rows.Length > 0)
+                 {
+                     SetMeafyneyOved(rows[0]);
+                 }
+             }
+             catch (Exception ex)
+            {
+              throw ex;
+            }
+         }
+        private void SetMeafyneyOved(DataRow drPratim)
         {
             try
             {
                 //נתונים כללים               
                
                 //קוד מעמד
-                iKodMaamdRashi = int.Parse(dtOvedCardDetails.Rows[0]["maamad"].ToString().Substring(0,1));
-                iKodMaamdMishni = int.Parse(dtOvedCardDetails.Rows[0]["maamad"].ToString().Substring(1, 2));
+                iKodMaamdRashi = int.Parse(drPratim["maamad"].ToString().Substring(0, 1));
+                iKodMaamdMishni = int.Parse(drPratim["maamad"].ToString().Substring(1, 2));
 
-               iIsuk = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Isuk"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["Isuk"].ToString());
-                iZmanMutamut = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["dakot_mutamut"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["dakot_mutamut"].ToString());
-                iMutamut = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["mutaam"])? 0 : int.Parse(dtOvedCardDetails.Rows[0]["mutaam"].ToString());
-                iGil = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["gil"]) ? 0 : Int32.Parse(dtOvedCardDetails.Rows[0]["gil"].ToString());
-               iMutamBitachon = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["mutaam_bitachon"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["mutaam_bitachon"].ToString());
-                iEzor = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["ezor"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["ezor"].ToString());
-                iKodSectorIsuk = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
-                iYechidaIrgunit = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["YECHIDA_IRGUNIT"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["YECHIDA_IRGUNIT"].ToString());
-                iDirug = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["dirug"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["dirug"].ToString());
-                iDarga = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["darga"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["darga"].ToString());
-                iAchsana = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["achsana"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["achsana"].ToString());
-                iSnifAv = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["snif_av"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["snif_av"].ToString());
-                bIsInShlila = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["SHLILAT_RISHAYON"]) ? false : true;
-                iMikumYechida = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["MIKUM_YECHIDA"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["MIKUM_YECHIDA"].ToString());
+                iIsuk = System.Convert.IsDBNull(drPratim["Isuk"]) ? 0 : int.Parse(drPratim["Isuk"].ToString());
+                iZmanMutamut = System.Convert.IsDBNull(drPratim["dakot_mutamut"]) ? 0 : int.Parse(drPratim["dakot_mutamut"].ToString());
+                iMutamut = System.Convert.IsDBNull(drPratim["mutaam"]) ? 0 : int.Parse(drPratim["mutaam"].ToString());
+                iGil = System.Convert.IsDBNull(drPratim["gil"]) ? 0 : Int32.Parse(drPratim["gil"].ToString());
+                iMutamBitachon = System.Convert.IsDBNull(drPratim["mutaam_bitachon"]) ? 0 : int.Parse(drPratim["mutaam_bitachon"].ToString());
+                iEzor = System.Convert.IsDBNull(drPratim["ezor"]) ? 0 : int.Parse(drPratim["ezor"].ToString());
+                iKodSectorIsuk = System.Convert.IsDBNull(drPratim["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(drPratim["KOD_SECTOR_ISUK"].ToString());
+                iYechidaIrgunit = System.Convert.IsDBNull(drPratim["YECHIDA_IRGUNIT"]) ? 0 : int.Parse(drPratim["YECHIDA_IRGUNIT"].ToString());
+                iDirug = System.Convert.IsDBNull(drPratim["dirug"]) ? 0 : int.Parse(drPratim["dirug"].ToString());
+                iDarga = System.Convert.IsDBNull(drPratim["darga"]) ? 0 : int.Parse(drPratim["darga"].ToString());
+                iAchsana = System.Convert.IsDBNull(drPratim["achsana"]) ? 0 : int.Parse(drPratim["achsana"].ToString());
+                iSnifAv = System.Convert.IsDBNull(drPratim["snif_av"]) ? 0 : int.Parse(drPratim["snif_av"].ToString());
+                bIsInShlila = System.Convert.IsDBNull(drPratim["SHLILAT_RISHAYON"]) ? false : true;
+                iMikumYechida = System.Convert.IsDBNull(drPratim["MIKUM_YECHIDA"]) ? 0 : int.Parse(drPratim["MIKUM_YECHIDA"].ToString());
                 
             }
             catch (Exception ex)

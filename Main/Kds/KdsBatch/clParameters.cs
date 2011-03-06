@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary;
-
+using KdsLibrary.BL;
 namespace KdsBatch
 {
     public class clParameters
@@ -195,14 +195,30 @@ namespace KdsBatch
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
         
         private DataTable dtParameters;
+        private string _Type="";
 
         public clParameters(DateTime dCardDate, int iSugYom)
         {
-            dtParameters = GetKdsParametrs();
+            clUtils oUtils = new clUtils();
+            try
+            {
+                dtParameters = oUtils.GetKdsParametrs();
+                SetParameters(dCardDate, iSugYom);
+                dtParameters.Dispose();
+            }
+             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public clParameters(DateTime dCardDate, int iSugYom,string type)
+        {
+            _Type = type;
+            dtParameters = clCalcData.DtParameters;
             SetParameters(dCardDate, iSugYom);
             dtParameters.Dispose();
         }
-
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {
             string sTmp;
@@ -948,23 +964,7 @@ namespace KdsBatch
             return dTemp;
          }
        
-        private DataTable GetKdsParametrs()
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {   //מחזיר טבלת פרמטרים:                 
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clGeneral.cProGetParameters, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+       
 
         public string GetOneParam(int iParamNum, DateTime dDate)
         {   //הפונקציה מקבלת קוד פרמטר ותאריך ומחזירה את הערך

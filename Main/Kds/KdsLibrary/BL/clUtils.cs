@@ -988,7 +988,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public DataTable GetPeiluyLeovedForMonth(DateTime dTarMe, DateTime dTarAd, int iMispar_ishi)
+        public DataTable GetPeiluyLeovedForMonth( int iMispar_ishi,DateTime dTarMe, DateTime dTarAd)
         {
             clDal oDal = new clDal();
             DataTable dt = new DataTable();
@@ -1008,5 +1008,45 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+         public DataTable GetPirteyOvedForTkufa( int iMispar_ishi,DateTime dTarMe, DateTime dTarAd)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {   
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMispar_ishi, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetPirteyOvedForMonth, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+         public DataTable GetKdsParametrs()
+         {
+             clDal oDal = new clDal();
+             DataTable dt = new DataTable();
+
+             try
+             {   //מחזיר טבלת פרמטרים:                 
+                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                 oDal.ExecuteSP(clGeneral.cProGetParameters, ref dt);
+
+                 return dt;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
+        
     } 
 }
