@@ -133,7 +133,8 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
-    private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, long lNewMakat, long lOldMakat)
+    private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, 
+                                     long lNewMakat, long lOldMakat, ref clPeilut _PeilutElement)
     {
         StringBuilder sXML = new StringBuilder();
         DateTime dActivityDate = DateTime.Parse(sTravelDate + " " + sShatYetiza).AddDays(int.Parse(sDayToAdd));
@@ -153,6 +154,7 @@ public class wsGeneral : System.Web.Services.WebService
                 if (oMakatType == clKavim.enMakatType.mElement)
                 {
                     long lElementValue;
+                    //יכיל את מאפייני האלמנט
                     dtElement = _Kavim.GetMeafyeneyElementByKod(lNewMakat, DateTime.Parse(sTravelDate));
                     if (dtElement.Rows.Count > 0)
                     {
@@ -176,15 +178,23 @@ public class wsGeneral : System.Web.Services.WebService
                             //{
                             sXML.Append(string.Concat("<OTO_NO>", "", "</OTO_NO>"));
                             sXML.Append(string.Concat("<OTO_NO_ENABLED>", "0", "</OTO_NO_ENABLED>"));
-                            sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));
+                            sXML.Append(string.Concat("<OTO_NO_TITEL>", "", "</OTO_NO_TITEL>"));                           
                             // }
                         }
-                        else
+                        else{
                             sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                            _PeilutElement.bBusNumberMustExists = true;
+                        }
                         dr = dtElement.Select("kod_meafyen=" + 40);
                         if (dr.Length > 0)
                         {
                             sXML.Append(string.Concat("<MAKAT_NOT_EXIST>", "1", "</MAKAT_NOT_EXIST>"));
+                        }
+
+                        dr = dtElement.Select("kod_meafyen=" + 39);
+                        if (dr.Length == 0)
+                        {
+                            _PeilutElement.bElementIgnoreReka = true;
                         }
                         ////ג.	אם שינוי לאלמנט לידיעה (אלמנט עם מאפיין 3 (פעולה/ידיעה בלבד) וערך 2 (ידיעה בלבד), ולפני שינוי המק"ט היה ערך בשדה שעת יציאה, יש למחוק את שעת היציאה
                         //dr = dtElement.Select("kod_meafyen=" + 3);
@@ -1033,19 +1043,19 @@ public class wsGeneral : System.Web.Services.WebService
     {
         clKavim oKavim = new clKavim();
         string sResult = "0";
-        DataTable dt;
-        
+        DataTable dtDetailsFromTnua;
+        clPeilut _PeilutElement = new clPeilut();
         try
         {
             if (lNewMakat > 0)
             {
                 //בדיקה אם קיים מקט בתנועה
-                dt = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sTravelDate));
-                if (dt.Rows.Count > 0)
+                dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sTravelDate));
+                if (dtDetailsFromTnua.Rows.Count > 0)
                 {
-                    sResult = BuildMakatDetails(dt, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat);
+                    sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat, ref _PeilutElement);
                     //Update cash peilyot details from tnua
-                    GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dt);
+                    GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dtDetailsFromTnua, _PeilutElement);
                 }
             }
             return sResult;
@@ -1057,7 +1067,8 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     private void GetPeilyotTnuaDetails(int iMisparIshi, DateTime dCardDate, int iSidurIndex, 
-                                       int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails)
+                                       int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails,
+                                       clPeilut _PeilutElement)
     {
         //string sCacheKey = iMisparIshi + dCardDate.ToShortDateString();
         clKavim _Kavim = new clKavim();
@@ -1147,7 +1158,9 @@ public class wsGeneral : System.Web.Services.WebService
                         _Peilut.iXyMokedTchila = 0;//(System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
                         _Peilut.iXyMokedSiyum=0;
                         _Peilut.fKm = 0;
-                       AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
+                        _Peilut.bBusNumberMustExists = _PeilutElement.bBusNumberMustExists;
+                        _Peilut.bElementIgnoreReka = _PeilutElement.bElementIgnoreReka;
+                         AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         break;
                     case clKavim.enMakatType.mVisut:                       
                         break;
