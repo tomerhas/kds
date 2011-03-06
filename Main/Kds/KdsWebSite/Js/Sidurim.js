@@ -81,15 +81,19 @@ function chkMkt(oRow) {
         if (root != null) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
-                if (GetMakatType(lNewMkt) != MKT_ELEMENT)
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + document.getElementById(oRId).id + " NesiaReka='1'>"
+                if (GetMakatType(lNewMkt) != MKT_ELEMENT) {
+                    var iPeilutIndex;
+                    iPos = String(document.getElementById(oRId).id).indexOf("ctl");
+                    iPeilutIndex = String(document.getElementById(oRId).id).substr(iPos + 3);
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + document.getElementById(oRId).id + "_AddReka" + document.getElementById(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
+                }
                 else {
                     if (document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
                         oReka = document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
                         if ((oReka != null) && (oReka != undefined))
                             document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
                     }
-                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
                 }
                 while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {

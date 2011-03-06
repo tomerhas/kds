@@ -198,6 +198,16 @@ function GetDateDDMMYYYY(dDate){
 
        do { curDate = new Date(); }
        while (curDate - date < millis);
+   }
+   function PadDigits(n, totalDigits) {
+       n = n.toString();
+       var pd = '';
+       if (totalDigits > n.length) {
+           for (i = 0; i < (totalDigits - n.length); i++) {
+               pd += '0';
+           }
+       }
+       return pd + n.toString();
    } 
 
 
