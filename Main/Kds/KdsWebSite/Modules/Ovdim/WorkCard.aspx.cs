@@ -59,6 +59,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private int iMisparIshiIdkunRashemet;
     private bool bParticipationAllowed;
     private bool bDisabledFrame;
+    private AsyncPostBackTrigger[] TriggerToAdd;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;  
     //private WorkCardObj _WorkCardBeforeChanges, _WorkCardAfterChanges;
@@ -231,6 +232,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
+
+        //    InsertTriggersToUpdatePanel (upEmployeeDetails, TriggerToAdd);
+
+
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
@@ -437,6 +442,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 ////אישורים               
                 GetApproval();
                 lstSidurim.btnHandler += new Modules_UserControl_ucSidurim.OnButtonClick(lstSidurim_btnHandler);
+                //lstSidurim.btnReka +=new Modules_UserControl_ucSidurim.OnButtonClick(lstSidurim_btnReka);
                 //if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))
                 if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))                
                 {                    
@@ -2193,6 +2199,65 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //{
     //    MPEErrors.Hide();
     //}
+
+    void InsertTriggersToUpdatePanel(UpdatePanel upEmployeeDetails, AsyncPostBackTrigger[] TriggerToAdd)
+    {
+        GridView _GridView;
+        GridViewRow _GridRow;
+        ImageButton _ImgReka;
+      //  HyperLink _Knisot = new HyperLink();
+        for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
+        {
+            _GridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
+            if (_GridView != null)
+            {
+                for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
+                {
+                    _GridRow = _GridView.Rows[iRowIndex];
+                    if ((_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls.Count) > 0)
+                    {
+                        _ImgReka = ((ImageButton)_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0]);
+                        //if (_GridRow.Cells[4].Controls.Count > 0)
+                        //{
+                           // _Knisot = ((HyperLink)_GridRow.Cells[4].Controls[0]);
+
+                            // _ImgReka = (ImageButton)_GridRow.FindControl(_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0].ClientID);
+                            upEmployeeDetails.Triggers.Add(AddTrigger(_ImgReka.UniqueID));
+                        //}
+                    }
+                }
+            }
+        }
+        //return;
+        //for (int i = 0; i < TriggerToAdd.Length; i++)
+        //    upEmployeeDetails.Triggers.Add(TriggerToAdd[i]);            
+    }
+    void lstSidurim_btnReka(string strRekaID,bool bDummy)
+    {
+        int iSize;
+        if (TriggerToAdd == null)
+        {
+            TriggerToAdd = new AsyncPostBackTrigger [1];
+            TriggerToAdd[0] = AddTrigger(strRekaID);
+        }
+        else
+        {
+            iSize = TriggerToAdd.Length;
+            TriggerToAdd = (AsyncPostBackTrigger[])clGeneral.ResizeArray(TriggerToAdd, iSize + 1);
+            TriggerToAdd[iSize] = AddTrigger(strRekaID);
+        }       
+    }
+
+    AsyncPostBackTrigger AddTrigger(string strRekaID)
+    {
+        AsyncPostBackTrigger trigger = new AsyncPostBackTrigger();
+
+        trigger.ControlID = strRekaID;
+       // trigger.EventName = "OnClick";
+
+        return trigger;        
+    }
+   
 
     void lstSidurim_btnHandler(string strValue, bool bOpenUpdateBtn)
     {

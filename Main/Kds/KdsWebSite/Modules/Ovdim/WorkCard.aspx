@@ -81,7 +81,7 @@
                     <td width="90%">
                         <fieldset class="FilterFieldSet" style="width: 98%; height: 50px">
                             <legend>כרטיס עבודה עבור:</legend>
-                            <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Always">
+                            <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
                                 <ContentTemplate>
                                     <table width="100%" cellpadding="0">
                                         <tr>
@@ -148,7 +148,8 @@
                                     <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/> 
                                     <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
                                     <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
-                                    <asp:AsyncPostBackTrigger ControlID="btnCancel" />                                                                                              
+                                    <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
+                                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                                                                                                                                                                    
                                 </Triggers>
                             </asp:UpdatePanel>
                         </fieldset>
@@ -161,15 +162,7 @@
                                         <td colspan="2" align="center">
                                            <label runat="server" id="lblCardStatus" class="ImgButtonCardStatus"></label>                                            
                                         </td>
-                                    </tr>                                    
-                                    <%--<tr>
-                                        <td rowspan="2">                                            
-                                            <input type="button"  value="מאשר" ID="btnApprove1" runat="server" width="70px" height="25px"  onclick="SetMeasher(1)" />
-                                        </td>
-                                        <td>
-                                            <input type="button"  value="מסתייג" ID="btnNotApprove1" runat="server" width="70px" height="25px"  onclick="SetMeasher(0)" />                                          
-                                        </td>
-                                    </tr>--%>
+                                    </tr>                                                                     
                                 </table>
                             </ContentTemplate>
                             <Triggers>
@@ -369,7 +362,7 @@
                             </td>                            
                        </tr>
                     </table>
-            </ContentTemplate>                
+            </ContentTemplate>             
           </asp:UpdatePanel>    
     <asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    

@@ -77,14 +77,18 @@ function chkMkt(oRow) {
                 }
             }
         }
+        var oReka;
         if (root != null) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
                 if (GetMakatType(lNewMkt) != MKT_ELEMENT)
                     document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + document.getElementById(oRId).id + " NesiaReka='1'>"
                 else {
-                     if (document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute!=undefined)
-                        document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
+                    if (document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
+                        oReka = document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
+                        if ((oReka != null) && (oReka != undefined))
+                            document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
+                    }
                      document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
                 }
                 while ((_FirstChild != null) && (!bExist)) {                    

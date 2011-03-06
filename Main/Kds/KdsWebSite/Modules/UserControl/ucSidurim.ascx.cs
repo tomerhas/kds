@@ -120,10 +120,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private const string COL_TRIP_EMPTY = "ריקה";
     // Delegate declaration
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
-
+    
     // Event declaration
     public event OnButtonClick btnHandler;
-
+    public event OnButtonClick btnReka;
 
     private enum enDayType
     {
@@ -681,6 +681,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             return _COL_KISUY_TOR;
         }
+    }
+    public int COL_ADD_NESIA_REKA {
+        get { return _COL_ADD_NESIA_REKA; }       
     }
     public int COL_SHAT_YETIZA
     {
@@ -4837,21 +4840,31 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             int iLastRow =((System.Data.DataRowView)(e.Row.DataItem)).Row.Table.Rows.Count==e.Row.RowIndex+1 ? 1 :0;
-            if (((oMakatType == clKavim.enMakatType.mEmpty)) || (oMakatType == clKavim.enMakatType.mNamak) || ((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)))
-            {
+            //if (((oMakatType == clKavim.enMakatType.mEmpty)) || (oMakatType == clKavim.enMakatType.mNamak) || ((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)))
+            //{
                 //Image imgAddReka = new Image();
                 //imgAddReka.ID = "AddReka" + e.Row.ClientID;
                 //imgAddReka.ImageUrl = "~/images/plus.jpg";
-                //imgAddReka.Attributes.Add("onclick", "AddNesiaReka(" + e.Row.ClientID + ","+iSidurIndex+"," + iLastRow +");");
+                //imgAddReka.Attributes.Add("onclick", "AddNesiaReka(" + e.Row.ClientID + "," + iSidurIndex + "," + iLastRow + ");");
                 ImageButton imgAddReka = new ImageButton();
-                imgAddReka.Click +=new ImageClickEventHandler(imgAddReka_Click);
-                imgAddReka.Attributes.Add("NesiaReka", "1");
-                imgAddReka.Attributes.Add("SdrInd", iSidurIndex.ToString());
-                imgAddReka.Attributes.Add("PeilutInd", e.Row.RowIndex.ToString());
+                imgAddReka.Click += new ImageClickEventHandler(imgAddReka_Click);
+                if (((oMakatType == clKavim.enMakatType.mEmpty)) || (oMakatType == clKavim.enMakatType.mNamak) || ((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)))
+                {
+                    imgAddReka.Attributes.Add("NesiaReka", "1");
+                    imgAddReka.Attributes.Add("SdrInd", iSidurIndex.ToString());
+                    imgAddReka.Attributes.Add("PeilutInd", e.Row.RowIndex.ToString());
+                }
+                else                
+                    imgAddReka.Style.Add("display","none");
+                
                 imgAddReka.CausesValidation = false;
                 imgAddReka.ImageUrl = "~/images/plus.jpg";
+                imgAddReka.ID = "AddReka" + e.Row.ClientID;
+              //  imgAddReka.ID = "AddReka" + e.Row.RowIndex.ToString();
                 e.Row.Cells[_COL_ADD_NESIA_REKA].Controls.Add(imgAddReka);
-            }
+                //if (btnReka != null)
+                //    btnReka(((System.Web.UI.Control)(e.Row)).ClientID + "_" + "AddReka" + e.Row.RowIndex.ToString(), false);
+           // }
         }
         catch (Exception ex)
         {
