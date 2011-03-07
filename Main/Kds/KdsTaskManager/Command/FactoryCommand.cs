@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Diagnostics; 
+using System.Diagnostics;
 
 namespace KdsTaskManager
 {
@@ -18,24 +18,19 @@ namespace KdsTaskManager
         {
             try
             {
-                if (_ActionToExecute.IdOrder == 1)
-                {
-                    Message msg = new Message(_ActionToExecute, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.Now);
-                    msg.InsertTaskLog();
-                }
                 Execute();
             }
             catch (Exception ex)
             {
                 EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
-                Message msg = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
+                Message msg = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.Now, DateTime.Now);
                 msg.UpdateTaskLog();
             }
 
             return _ActionResult;
 
         }
-    
+
     }
 
     public static class FactoryCommand

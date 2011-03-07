@@ -12,11 +12,34 @@ namespace KdsTaskManager
         private Type _Type;
         private MethodInfo _MethodInfo;
         private object[] _parameters;
+        private ReferenceDefinitions _oReferenceDefinitions;
+        private Reference _Reference;
+        private Assembly _Dllfile;
+        private ConstructorInfo _ConstructorInfo;
+
 
         public ProgramCommand(Action ActionToExecute)
         {
             _ActionToExecute = ActionToExecute;
             _parameters = null;
+            try
+            {
+                _oReferenceDefinitions = ReferenceDefinitions.GetInstance();
+                _Reference = _oReferenceDefinitions.ReferenceList.Find(refItem => refItem.Name == _ActionToExecute.LibraryName);
+                if (_Reference == null)
+                    throw new Exception("Reference path not defined in xml for library " + _ActionToExecute.LibraryName);
+                _Dllfile = Assembly.LoadFile(_Reference.FullPath);
+                if (_Dllfile == null)
+                    throw new Exception("Problem in loading the assembly reference " + _Reference.FullPath);
+                _Type = _Dllfile.GetType(_ActionToExecute.LibraryName);
+                _ConstructorInfo = _Type.GetConstructor(Type.EmptyTypes);
+                if (_ConstructorInfo == null)
+                    throw new Exception("Object " + _ActionToExecute.LibraryName + " creation failed or is not valid");
+            }
+            catch
+            {
+                throw;
+            }
 
         }
 
@@ -25,19 +48,14 @@ namespace KdsTaskManager
         {
             try
             {
-                _Type = Type.GetType(_ActionToExecute.LibraryName);
-                if (_Type != null)
-                {
-                    _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
-                    if (_MethodInfo != null)
-                    {
-                        if (_ActionToExecute.Parameters.Count > 0)
-                            _parameters = GetParametersOfFunction();
-                    }
-                    else throw new Exception("MethodInfo:" + _ActionToExecute.CommandName + " is not valid");
-                }
-                else throw new Exception("LibraryName:" + _ActionToExecute.LibraryName + " is not valid");
 
+                _MethodInfo = _Type.GetMethod(_ActionToExecute.CommandName);
+                if (_MethodInfo != null)
+                {
+                    if (_ActionToExecute.Parameters.Count > 0)
+                        _parameters = GetParametersOfFunction();
+                }
+                else throw new Exception("MethodInfo:" + _ActionToExecute.CommandName + " is not valid");
             }
             catch (Exception ex)
             {
@@ -99,14 +117,13 @@ namespace KdsTaskManager
                 CreateMethodToExecute();
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
                 _MessageStart.UpdateTaskLog();
-                _ActionResult = (bool)_MethodInfo.Invoke(_Type, _parameters);
+                object obj = _ConstructorInfo.Invoke(new object[] { });
+                _ActionResult = (bool)_MethodInfo.Invoke(obj, _parameters);
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
                 _MessageEnd.UpdateTaskLog();
             }
             catch (Exception ex)
             {
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
-                _MessageEnd.UpdateTaskLog();
                 _ActionResult = false;
                 throw ex;
             }

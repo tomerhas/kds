@@ -83,7 +83,6 @@ namespace KdsTaskManager
         /// <remarks>_Thread has to sleep and raise the OnWakeUp event at the end of sleeping</remarks>
         public void Sleep()
         {
-            Console.WriteLine("Operator {0} goes to sleep", this.GroupId.ToString());
             Thread.Sleep(OperatorSleepTime * 1000);
             OnWakeUp(this);
         }

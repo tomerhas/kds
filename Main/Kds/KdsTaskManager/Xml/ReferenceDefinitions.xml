@@ -1,3 +1,4 @@
 ﻿<ReferenceDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Reference Name="KdsDataImport.ClKds" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsDataImport.dll" />
+  <Reference Name="KdsTaskManager.Functions" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsTaskManager.exe"/>
 </ReferenceDefinitions>

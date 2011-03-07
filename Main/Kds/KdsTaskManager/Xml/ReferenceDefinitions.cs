@@ -24,8 +24,7 @@ namespace KdsTaskManager
             {
                 oReferenceDefinitions = new ReferenceDefinitions();
                 var xmlDoc = new XmlDocument();
-                xmlDoc.Load( "ReferenceDefinitions.xml");
-                Type _type = Type.GetType();
+                xmlDoc.Load(@"ReferenceDefinitions.xml");
                 oReferenceDefinitions = (ReferenceDefinitions)Utilities.DeserializeObject(typeof(KdsTaskManager.ReferenceDefinitions), xmlDoc.OuterXml);
             }
             return oReferenceDefinitions;

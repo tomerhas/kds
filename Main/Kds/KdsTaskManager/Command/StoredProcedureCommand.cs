@@ -45,8 +45,6 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped, ex.Message, DateTime.Now, DateTime.Now);
-                _MessageEnd.UpdateTaskLog();
                 _ActionResult = false ;
                 throw ex;
             }

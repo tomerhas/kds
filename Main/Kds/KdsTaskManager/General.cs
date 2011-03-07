@@ -55,14 +55,13 @@ namespace KdsTaskManager
             return sb.ToString();
         }
     }
-    public static class Functions
+    public class Functions
     {
-        public static bool TestCommand()
+        public  void TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
-            return false;
         }
-        public static bool TestCommandWithParam(string param)
+        public  bool TestCommandWithParam(string param)
         {
             Console.WriteLine("TestCommand is running with param {0}", param);
             return false;

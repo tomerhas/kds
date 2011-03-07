@@ -150,7 +150,13 @@ namespace KdsTaskManager
                 EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + "  wake up", EventLogEntryType.Information);
             if ((sender.IsTimeToRun()) && (_CntRunningOperators != 0))
                 RunOperator(sender);
-            else sender.Sleep();
+            else
+            {
+                if (Utilities.Debug)
+                    EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + "  goes to sleep", EventLogEntryType.Information);
+                sender.Sleep();
+            }
+
         }
 
         public void Run()
@@ -161,8 +167,6 @@ namespace KdsTaskManager
                 _Operators.ForEach(Item => RunOperator(Item));
                 while (_CntRunningOperators > 0)
                 {
-                    if (Utilities.Debug)
-                        EventLog.WriteEntry(Utilities.EventLogSource, "Manager goes to sleep until " + _CntRunningOperators.ToString() + " operators will finish them job...", EventLogEntryType.Information);
                     Thread.Sleep(5000);
                 }
             }
