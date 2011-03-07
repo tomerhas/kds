@@ -124,6 +124,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             if (Request.QueryString["CardDate"] != null)
             {
                 clnDate.Value = Request.QueryString["CardDate"].ToString(); //"08/03/2010";//"26/05/2009"; //
+                Response.Write(clnDate.Value + " ");
             }
             if (Request.QueryString["EmpID"] != null)
             {
@@ -136,15 +137,17 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             if (Request.QueryString["ShatHatchala"] != null)
             {
                 ShatHatchala.Value = Request.QueryString["ShatHatchala"].ToString();//"08/03/2010 06:24";//
-                Response.Write(ShatHatchala.Value);
+                Response.Write(ShatHatchala.Value + " ");
             }
             if (Request.QueryString["ShatGmar"] != null && Request.QueryString["ShatGmarDate"] != null)
             {
                 ShatGmar.Value = Request.QueryString["ShatGmarDate"].ToString() + " " + Request.QueryString["ShatGmar"].ToString(); //"08/03/2010 15:35";//
+                Response.Write(ShatGmar.Value + " ");
             }
             if (Request.QueryString["SidurDate"] != null)
             {
                 txtSidurDate.Value = Request.QueryString["SidurDate"].ToString(); //"08/03/2010";//"26/05/2009"; //
+                Response.Write(txtSidurDate.Value + " ");
             }
 
             Session["dtMakatimCatalog"] = null;
