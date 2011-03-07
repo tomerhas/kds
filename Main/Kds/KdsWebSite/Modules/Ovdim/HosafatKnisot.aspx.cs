@@ -121,7 +121,7 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
                     oObjPeiluyotOvdimIns.SHAT_HATCHALA_SIDUR = DateTime.Parse(ViewState["SidurDate"] + " " + ViewState["SidurHour"]);
                     oObjPeiluyotOvdimIns.MISPAR_KNISA = int.Parse(grdKnisot.Rows[i].Cells[MISPAR_KNISA].Text);
                     oObjPeiluyotOvdimIns.MAKAT_NESIA = long.Parse(ViewState["Makat"].ToString());
-                    if (ViewState["OtoNo"]!=null)
+                    if (ViewState["OtoNo"] != null && ViewState["OtoNo"] != "")
                         oObjPeiluyotOvdimIns.OTO_NO = int.Parse(ViewState["OtoNo"].ToString());
                    oObjPeiluyotOvdimIns.BITUL_O_HOSAFA = 2;
                     oObjPeiluyotOvdimIns.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
