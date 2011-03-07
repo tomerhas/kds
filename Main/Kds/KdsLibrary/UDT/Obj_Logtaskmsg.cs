@@ -50,15 +50,9 @@ namespace KdsLibrary.UDT
         public OBJ_LOGTASKMSG()
         {
             // TODO : Add code to initialise the object
-            this.m_IDORDERIsNull = true;
-            this.m_STATUSIDIsNull = true;
-            this.m_SEQUENCEIsNull = true;
-            this.m_STARTTIMEIsNull = true;
-            this.m_ENDTIMEIsNull = true;
-            this.m_IDGROUPIsNull = true;
         }
 
-        public OBJ_LOGTASKMSG(int Group , int Order , int Status , int Sequence , DateTime StartTime , DateTime EndTime, string Remark) : this ()
+        public OBJ_LOGTASKMSG(int Group , int Order , int Status , int Sequence , DateTime StartTime , DateTime EndTime, string Remark)  //: this ()
         {
             m_IDGROUP = Group;
             m_IDORDER = Order;
@@ -66,7 +60,13 @@ namespace KdsLibrary.UDT
             m_SEQUENCE = Sequence;
             m_STARTTIME = StartTime;
             m_ENDTIME = EndTime;
-            m_REMARK = Remark; 
+            m_REMARK = Remark;
+            this.m_IDGROUPIsNull = false;
+            this.m_IDORDERIsNull = false;
+            this.m_STATUSIDIsNull = false;
+            this.m_SEQUENCEIsNull = false;
+            this.m_STARTTIMEIsNull = false;
+            this.m_ENDTIMEIsNull = false;
         }
 
         public virtual bool IsNull
