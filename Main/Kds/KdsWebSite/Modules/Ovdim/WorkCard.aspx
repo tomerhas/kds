@@ -357,7 +357,7 @@
                             </td>  
                             <td align="right"><asp:Button Text="הוסף/חפש סידור" ID="btnFindSidur" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
                             <td  style="width: 80%" align="left">                                            
-                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="SetMeasher(1); if (document.getElementById('hidFromEmda').value =='false'){document.all('btnPrint').click();  }" />
+                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="SetMeasher(1); if (document.getElementById('hidFromEmda').value =='true'){document.all('btnPrint').click();  }" />
                                 <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="SetMeasher(0); if (document.getElementById('hidFromEmda').value =='true'){document.all('btnPrint').click(); }" />   
                             </td>                            
                        </tr>
