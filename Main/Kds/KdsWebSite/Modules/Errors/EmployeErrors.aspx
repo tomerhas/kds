@@ -211,7 +211,7 @@ function ChangeKeyCode()
 
                     <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                          AllowPaging="true" PageSize="6" AutoGenerateColumns="false" CssClass="Grid"  
-                         Width="960px" EmptyDataText="לא נמצאו נתונים!" 
+                         Width="960px" EmptyDataText="לא נמצאו נתונים!"  
                          OnRowDataBound="grdEmployee_RowDataBound" Height="70px" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                         <Columns>
                             <asp:HyperLinkField DataTextField="mispar_ishi"   ItemStyle-CssClass="ItemRow"   HeaderStyle-CssClass="GridHeader"  Text="מספר אישי"  HeaderText="מספר אישי" SortExpression="mispar_ishi" NavigateUrl="#"  ItemStyle-Width="100px"  />                                          

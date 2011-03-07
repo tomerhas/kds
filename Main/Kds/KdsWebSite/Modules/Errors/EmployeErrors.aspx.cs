@@ -238,8 +238,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {        
         int iPageIndex = 0;        
         int iPos = 0;
-        
-        DataView dv;
+        DataRow[] dr;
+        DataTable dt;
        
         try
          { //מציאת עובד בגריד
@@ -249,8 +249,10 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                  //if (Session["MisparimIshi"].ToString().IndexOf(iMisparIshi.ToString()) > -1)
                  if (((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString()).Length > 0)
                  {
-                     dv = GetMisparimIshiFromSession();
-                     iPos = dv.Find(iMisparIshi) + 1;
+                     dr = ((DataTable)Session["MisparimIshi"]).Select("mispar_ishi=" + iMisparIshi.ToString());
+                     dt = GetMisparimIshiFromSession();
+                     iPos = int.Parse(dr[0]["MisparIshiIndex"].ToString())+1;
+                   //  iPos = dv.Find(iMisparIshi) + 1;
                      iPageIndex = iPos / grdEmployee.PageSize;
                      if ((iPos % grdEmployee.PageSize) == 0)
                      {
@@ -454,39 +456,20 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         }
       
     }
-    private DataView GetMisparimIshiFromSession()
+    private DataTable GetMisparimIshiFromSession()
     {
         DataTable dtMisparim = new DataTable();
-        DataRow dr;
-        //string sMisparim = "";        
-        //string delimStr = ",";
-        //char[] delimiter = delimStr.ToCharArray();
-        //string[] arrMisparimIshi;
-        int iCount;
-
         try
         {
-            //SESSION--נשלוף מספרים אישיים מה 
-            //sMisparim = Session["MisparimIshi"].ToString();
-            //arrMisparimIshi = sMisparim.Split(delimiter);
-
-            dtMisparim.Columns.Add("MisparIshiIndex", System.Type.GetType("System.Int32"));
-            dtMisparim.Columns.Add("MisparIshi", System.Type.GetType("System.Int32"));
-            //for (iCount = 0; iCount <= arrMisparimIshi.Length - 1; iCount++)
-            for (iCount = 0; iCount <= ((DataTable)Session["MisparimIshi"]).Rows.Count - 1; iCount++)
+            dtMisparim = ((DataTable)Session["MisparimIshi"]);
+           
+            for (int iCount = 0; iCount <= dtMisparim.Rows.Count - 1; iCount++)
             {
-                dr = dtMisparim.NewRow();
-                dr["MisparIshiIndex"] = iCount;
-                //dr["MisparIshi"] = arrMisparimIshi[iCount];
-                dr["MisparIshi"] = ((DataTable)Session["MisparimIshi"]).Rows[iCount]["mispar_ishi"];
-                dtMisparim.Rows.Add(dr);
-            }
-            
-            DataView dv = new DataView(dtMisparim);
+                dtMisparim.Rows[iCount]["MisparIshiIndex"] = iCount;
 
-            dv.Sort = string.Concat("MisparIshi", " ", "ASC");
-            
-            return dv;
+            }
+          
+            return dtMisparim;
         }
         catch (Exception ex)
         {
@@ -495,25 +478,13 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     }
     private void InsertMisparIshiToSession(DataTable dt)
     {
-        //StringBuilder sOvdimMisparIshi=new StringBuilder();
-        
+  
         try
         {
-            ////נשמור את המספרים האישיים ב- SESSION
-            //foreach (DataRow dr in dt.Rows)
-            //{
-            //    sOvdimMisparIshi.Append(dr["mispar_ishi"] + ",");
-            //}
+      
+            if (dt.Columns.IndexOf("MisparIshiIndex") == -1)
+                dt.Columns.Add("MisparIshiIndex", System.Type.GetType("System.Int32"));
 
-            //if (sOvdimMisparIshi.Length > 0)
-            //{
-            //    sOvdimMisparIshi.Remove( sOvdimMisparIshi.Length - 1,1);
-            //}
-
-            //Session["MisparimIshi"] = sOvdimMisparIshi.ToString();
-            //AutoCompleteExtenderID.ContextKey = sOvdimMisparIshi.ToString();
-            //AutoCompleteExtenderByName.ContextKey = sOvdimMisparIshi.ToString(); 
- 
             Session["MisparimIshi"] = dt;
             AutoCompleteExtenderID.ContextKey = "1";
             AutoCompleteExtenderByName.ContextKey = "1";           
@@ -589,7 +560,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {
         string sDirection;
 
-        if ((string.Empty != (string)Session["SortExp"]) && (string.Compare(e.SortExpression, (string)ViewState["SortExp"], true) == 0))
+        if ((string.Empty != (string)Session["SortExp"]) && (string.Compare(e.SortExpression, (string)Session["SortExp"], true) == 0))
         {
             if ((SortDirection)Session["SortDirection"] == SortDirection.Ascending)
             {
@@ -615,6 +586,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         grdEmployee.PageIndex = 0;
         InputHiddenBack.Value = "false";
         grdEmployee.DataBind();
+        InsertMisparIshiToSession(((DataView)Session["Ovdim_Details"]).ToTable());
     }
 
     protected void grdEmployee_PageIndexChanging(object sender, GridViewPageEventArgs e)
