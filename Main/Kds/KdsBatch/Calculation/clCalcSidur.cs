@@ -6718,7 +6718,7 @@ namespace KdsBatch
                     {
                         fErech = float.Parse((dShatHatchalaLetashlum - Param1).TotalMinutes.ToString());
                     }
-                    else if (dShatGmarLetashlum >= Param1 && dShatHatchalaLetashlum < Param2)
+                    else if (dShatGmarLetashlum >= Param1 && dShatHatchalaLetashlum <= Param2)
                     {
                         fErech = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
                     }
