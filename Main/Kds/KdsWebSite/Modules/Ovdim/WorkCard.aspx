@@ -357,8 +357,8 @@
                             </td>  
                             <td align="right"><asp:Button Text="הוסף/חפש סידור" ID="btnFindSidur" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
                             <td  style="width: 80%" align="left">                                            
-                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="SetMeasher(1)" />
-                                <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="SetMeasher(0)" />   
+                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="SetMeasher(1); if (document.getElementById('hidFromEmda').value =='false'){document.all('btnPrint').click();  }" />
+                                <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="SetMeasher(0); if (document.getElementById('hidFromEmda').value =='true'){document.all('btnPrint').click(); }" />   
                             </td>                            
                        </tr>
                     </table>
@@ -518,11 +518,19 @@
         <br />
         <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
         <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
-     </asp:Panel>     
-          <div id="prtMsg" style="display:none;width:400;height:60;" class="PanelMessage" >
-              <br /><br /><br />
-                                    כרטיס העבודה נשלח להדפסה אנא המתן
-          </div>
+     </asp:Panel>   
+     
+     <asp:Panel runat="server" Style="display: none" ID="prtMsg" CssClass="PanelMessage" Width="350px" Height="100px">                            
+            <asp:Label ID="Label6" runat="server" Width="97%" BackColor="#696969" ForeColor="White">הדפסת כרטיס</asp:Label>
+            <br />
+            <br />
+            <br />
+                   כרטיס העבודה נשלח להדפסה אנא המתן
+            <br/>
+                  <label id="msgErrCar" runat="server" style="display:none"  >קיימת שגיאה על מספר רכב, הכרטיס לא ישולם </label>       
+            <br/>
+     </asp:Panel>  
+         
     <input type="hidden" runat="server" id="hidGoremMeasher" />
     <input type="hidden" runat="server" id="hidSource" />
     <input type="hidden" runat="server" id="hidLvl1Chg" />
@@ -530,6 +538,7 @@
     <input type="hidden" runat="server" id="hidLvl3Chg" />
     <input type="hidden" runat="server" id="hidMeasherMistayeg" />   
     <input type="hidden" runat="server" id="hidRashemet" />  
+    <input type="hidden" runat="server" id="hidFromEmda" />  
     </form>   
     <script language="javascript" type="text/javascript">
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 

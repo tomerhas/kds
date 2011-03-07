@@ -432,6 +432,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             bRashemet = LoginUser.IsRashemetProfile(LoginUser);
             Session["ProfileRashemet"] = bRashemet;
             hidRashemet.Value = bRashemet ? "1" : "0";
+            hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
             iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
            
             Session["LoginUserEmp"] = LoginUser.UserInfo.EmployeeNumber;
@@ -2046,9 +2047,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
       
         bWorkCardWasUpdate = IsWorkCardWasUpdate();
        
-        if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
+       // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
+        if (hidFromEmda.Value =="true")
         {
-            string sScript, sIp;
+            string sScript="";
+            string  sIp;
             string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
             byte[] s;
 
@@ -2073,13 +2076,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             fs.Flush();
             fs.Close();
 
-            sScript = "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "');document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'\", 3000);";
+            for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
+            {
+                if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
+                {
+                    sScript = "document.all('msgErrCar').style.display='block';";
+                    break;
+                }
+            }
+            sScript+= "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000);";
             ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
-
         }
         else
         {
-
             Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
             ReportParameters.Add("P_MISPAR_ISHI", iMisparIshi.ToString());
             ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
