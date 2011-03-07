@@ -486,8 +486,8 @@
             if ((sSH.value!='') && (sSH.value!="__:__")  && (oDDL.value==-1) && (oDDL.disabled == false))
             {                
                sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת התחלה, יש לדווח סיבה \n");  
-               bValid = false; 
-            }
+               bValid = false;
+           }          
             oDDL = document.getElementById("lstSidurim_ddlResonOut".concat(i));        
             if (!IsValidTime(sSG.value))
             {            
@@ -523,7 +523,7 @@
             //נעבור על פעילויות
             res = ChkIfPeiluyotValid(i);
             if (res == false) {
-                sMsg = sMsg.concat(' בסידור ' + iSidurNum + " קיימת פעילות ללא שעת יציאה \n ");
+                sMsg = sMsg.concat(' בסידור ' + iSidurNum + " קיימת פעילות ללא שעת יציאה/שעה לא חוקית  \n ");
                 bValid = false;
             }
         }       
@@ -540,11 +540,13 @@
    }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
 
-   function ChkIfPeiluyotValid(iSidurInx){
+   function ChkIfPeiluyotValid(iSidurInx) {
+       var sActualShatYetiza;
        _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurInx, '0', 3));
        if (_Peilut != null){
-           for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
-               if ((_Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild.value == "")
+           for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+               sActualShatYetiza = _Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild;
+               if (((sActualShatYetiza.value == "") || (!IsValidTime(sActualShatYetiza.value)))
                   && (_Peilut.firstChild.childNodes[j].cells[_COL_CANCEL_PEILUT].childNodes[0].value != "1"))                  
                    return false;                
            }

@@ -505,8 +505,8 @@ function chkMkt(oRow) {
             }
             else
             {
-             val.errormessage = "שעה לא חוקית";
-             args.IsValid = false;
+              val.errormessage = "שעה לא חוקית";              
+              args.IsValid = false;
             }
          }
        }
@@ -616,7 +616,8 @@ function chkMkt(oRow) {
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
       var sNewSH = _ShatHatchala.value;
       var sCardDate = document.getElementById("clnDate").value;
-      wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH, callBackStartHour, null, iIndex);
+      if (IsValidTime(sNewSH))
+        wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH, callBackStartHour, null, iIndex);
   }
   function callBackStartHour(result, iIndex) {
      result = result.split(",");
