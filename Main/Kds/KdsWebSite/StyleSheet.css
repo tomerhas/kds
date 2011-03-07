@@ -539,6 +539,18 @@
 	font-weight:bold;
 	background-color:White;		
 }
+.ImgButtonApprovalCheckedDisabled
+{
+	background-image: url(Images/pressed.jpg);	
+	width:80px; 
+	height:30px; 
+	font-family: campaign; 		
+	color: #c0c0c0;
+	border-style:hidden;
+	background-repeat:no-repeat;	
+	font-weight:bold;
+	background-color:White;		
+}
 .ImgButtonApprovalRegularOld
 {
 	background-image: url(Images/btn-approval-regular.jpg);	
@@ -552,6 +564,19 @@
 	width:80px; 
 	height:30px; 
 	color: #059574;	
+	font-family: campaign; 	
+	font-weight:bold;
+	border-style:none;
+	background-repeat:no-repeat;	
+	background-color:White;
+}
+.ImgButtonApprovalRegularDisabled
+{
+	background-image: url(Images/unpressed.jpg);	
+	width:80px; 
+	height:30px; 
+	color: #c0c0c0;	
+	font-family: campaign; 	
 	font-weight:bold;
 	border-style:none;
 	background-repeat:no-repeat;	

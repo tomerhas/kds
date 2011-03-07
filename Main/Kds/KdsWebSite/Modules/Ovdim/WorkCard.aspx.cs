@@ -140,21 +140,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         btnNotApprove.Disabled = true;                    
                 }           
         }
-        //if (btnApprove.Disabled)
-        //    btnApprove.Attributes.Add("class", "ImgButtonApprovalDisabled");
-        //else
-        //    btnApprove.Attributes.Add("class", "ImgButtonApprovalEnabled");
-
-
-        //if (btnNotApprove.Disabled)
-        //    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalDisabled");
-        //else
-        //    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalEnabled");
+       
 
         clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         switch (oMasherOMistayeg)
         {
             case clGeneral.enMeasherOMistayeg.ValueNull:
+                if (btnApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                if (btnNotApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 if (!bRashemet)                
                     btnPrint.Enabled = false;                
                 if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
@@ -165,7 +160,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                     EnabledFrames(true);                
                 break;
+            case clGeneral.enMeasherOMistayeg.Measher:
+                if (btnApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                if (btnNotApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                break;
+            case clGeneral.enMeasherOMistayeg.Mistayeg:
+                 if (btnApprove.Disabled)
+                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                 if (btnNotApprove.Disabled)
+                     btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                break;
+
             default:
+                if (btnApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                if (btnNotApprove.Disabled)
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 btnPrint.Enabled = true;
                 break;
         }
