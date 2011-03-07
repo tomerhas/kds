@@ -937,7 +937,7 @@ namespace KdsBatch
                 CalcRechiv10();
                   
                 //השלמה ע"ח פרמיה (רכיב 149): 
-                CalcRechiv149();
+                //CalcRechiv149();
 
                 ////CalcRechiv150();
                 ////CalcRechiv151();
