@@ -11,7 +11,7 @@ namespace KdsTaskManager
     {
         static void Main(string[] args)
         {
-
+            ReferenceDefinitions oReferenceDefinitions = ReferenceDefinitions.GetInstance();
             Utilities.EventLogSource = ConfigurationSettings.AppSettings["EventLogSource"].ToString();
             Utilities.Debug = (KdsLibrary.clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["Debug"].ToString()) == 1) ? true : false;
             if (Utilities.Debug)

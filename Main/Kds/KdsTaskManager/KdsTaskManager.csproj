@@ -59,9 +59,11 @@
     <Compile Include="Operator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xml\ReferenceDefinitions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDlls\Oracle.DataAccess.dll" />
+    <Content Include="Xml\ReferenceDefinitions.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -78,6 +80,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(ProjectDir)\xml\*.xml $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

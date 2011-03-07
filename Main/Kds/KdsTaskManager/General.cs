@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.Xml.Serialization;
+using System.Xml.Xsl;
+using System.Xml;
+using System.IO;
+
 
 namespace KdsTaskManager
 {
@@ -32,6 +37,22 @@ namespace KdsTaskManager
             RelevantStack.ForEach(stack => OriginFunction += stack.GetMethod().DeclaringType.Name + ":" + stack.GetMethod().Name + "=>\n");
             StrError = OriginFunction + StrError;
             return StrError;
+        }
+
+        public static object DeserializeObject(System.Type type, string xmlSerialized)
+        {
+            XmlSerializer serializer = new XmlSerializer(type);
+            TextReader reader = new StringReader(xmlSerialized);
+            return serializer.Deserialize(reader);
+        }
+
+        public static string SerializeObject(object objToSerialzie)
+        {
+            StringBuilder sb = new StringBuilder();
+            TextWriter writer = new StringWriter(sb);
+            XmlSerializer serializer = new XmlSerializer(objToSerialzie.GetType());
+            serializer.Serialize(writer, objToSerialzie);
+            return sb.ToString();
         }
     }
     public static class Functions

@@ -43,6 +43,11 @@ namespace KdsTaskManager
                 foreach (Action ActionItem in _Group.Actions)
                 {
                     _Command = FactoryCommand.GetInstance(ActionItem);
+                    if (_Group.Actions[0] == ActionItem)
+                    {
+                        Message msg = new Message(ActionItem, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.Now);
+                        msg.InsertTaskLog();
+                    }
                     ResultCommand = _Command.Run();
                     if ((ResultCommand) ||
                        ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit)))
