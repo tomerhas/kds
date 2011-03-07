@@ -4855,7 +4855,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgAddReka.Attributes.Add("PeilutInd", e.Row.RowIndex.ToString());
                 }
                 else                
-                    imgAddReka.Style.Add("display","none");
+                    imgAddReka.Style.Add("visibility","hidden");
                 
                 imgAddReka.CausesValidation = false;
                 imgAddReka.ImageUrl = "~/images/plus.jpg";

@@ -192,7 +192,7 @@ public class wsGeneral : System.Web.Services.WebService
                         }
 
                         dr = dtElement.Select("kod_meafyen=" + 39);
-                        if (dr.Length == 0)
+                        if (dr.Length > 0)
                         {
                             _PeilutElement.bElementIgnoreReka = true;
                         }
@@ -1160,6 +1160,7 @@ public class wsGeneral : System.Web.Services.WebService
                         _Peilut.fKm = 0;
                         _Peilut.bBusNumberMustExists = _PeilutElement.bBusNumberMustExists;
                         _Peilut.bElementIgnoreReka = _PeilutElement.bElementIgnoreReka;
+                        _Peilut.lMakatNesia = lMakatNesia;
                          AddPeilutToPeiluyotDT(iMisparIshi, dCardDate, ref _Peilut);
                         break;
                     case clKavim.enMakatType.mVisut:                       
