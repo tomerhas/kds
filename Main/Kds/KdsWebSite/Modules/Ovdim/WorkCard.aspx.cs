@@ -1745,7 +1745,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     private void SetImageForButtonMeasherOMistayeg()
     {
-        clOvdim _Ovdim = new clOvdim();
+        //clOvdim _Ovdim = new clOvdim();
         string strImageUrlApprove = "";
         string strImageUrlNotApprove = "";
         clGeneral.enMeasherOMistayeg oMasherOMistayeg;
@@ -1960,8 +1960,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //lstSidurim.UpdateHashTableWithGridChanges(ref htSidurim);
             //lstSidurim.ClearControl();
             //lstSidurim.BuildPage();
-            //string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-            //ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
+            string sScript = "document.getElementById('divHourglass').style.display = 'none';";
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }
     }
 
@@ -2160,7 +2160,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (arrVal.Length>1)
                     if (arrVal[0].Equals("1"))
                     {
-                        hidSadotLSidur.Value = "0";
                         sScript = "bScreenChanged=true; ExecSadotLsidur(" + arrVal[1] + ");";
                         ScriptManager.RegisterStartupScript(Page, this.GetType(), "ExecSadotNosafim", sScript, true);
                        
