@@ -149,7 +149,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 if (btnNotApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 if (!bRashemet)                
                     btnPrint.Enabled = false;                
                 if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
@@ -164,20 +164,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
                 if (btnNotApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
                 break;
             case clGeneral.enMeasherOMistayeg.Mistayeg:
                  if (btnApprove.Disabled)
                      btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
                  if (btnNotApprove.Disabled)
-                     btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
                 break;
 
             default:
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 if (btnNotApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 btnPrint.Enabled = true;
                 break;
         }
@@ -315,7 +315,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         btnRefreshOvedDetails.Attributes.Add("onfocus", "onButtonFocusIn(" + btnRefreshOvedDetails.ID + ")");
         btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");
         btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
-        btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");  
+        btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");
+        
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
         ErrorImage(imgLinaErr, false);
@@ -2109,6 +2110,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnConfirm_click(object sender, EventArgs e)
     {
+        string sScript;
         ModalPopupEx.Hide();
        
         if (SaveCard())
@@ -2131,7 +2133,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //   // lstSidurim.BuildPage();
             //}
             //else
-            if (!(hidSave.Value.Equals("1")))             
+            if (!(hidSave.Value.Equals("1")))
             {
                 if ((Request.QueryString["Page"] != null))
                 {
@@ -2148,9 +2150,22 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 else
                 {
-                    string sScript = "window.close();";
+                    sScript = "window.close();";
                     ScriptManager.RegisterStartupScript(Page, this.GetType(), "closeCard", sScript, true);
                 }
+            }
+            else
+            {
+                string[] arrVal = hidSadotLSidur.Value.Split(char.Parse(","));
+                if (arrVal.Length>1)
+                    if (arrVal[0].Equals("1"))
+                    {
+                        hidSadotLSidur.Value = "0";
+                        sScript = "bScreenChanged=true; ExecSadotLsidur(" + arrVal[1] + ");";
+                        ScriptManager.RegisterStartupScript(Page, this.GetType(), "ExecSadotNosafim", sScript, true);
+                       
+                    }
+            
             }
         }
         //Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString());
@@ -2221,63 +2236,63 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //    MPEErrors.Hide();
     //}
 
-    void InsertTriggersToUpdatePanel(UpdatePanel upEmployeeDetails, AsyncPostBackTrigger[] TriggerToAdd)
-    {
-        GridView _GridView;
-        GridViewRow _GridRow;
-        ImageButton _ImgReka;
-      //  HyperLink _Knisot = new HyperLink();
-        for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
-        {
-            _GridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
-            if (_GridView != null)
-            {
-                for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
-                {
-                    _GridRow = _GridView.Rows[iRowIndex];
-                    if ((_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls.Count) > 0)
-                    {
-                        _ImgReka = ((ImageButton)_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0]);
-                        //if (_GridRow.Cells[4].Controls.Count > 0)
-                        //{
-                           // _Knisot = ((HyperLink)_GridRow.Cells[4].Controls[0]);
+    //void InsertTriggersToUpdatePanel(UpdatePanel upEmployeeDetails, AsyncPostBackTrigger[] TriggerToAdd)
+    //{
+    //    GridView _GridView;
+    //    GridViewRow _GridRow;
+    //    ImageButton _ImgReka;
+    //  //  HyperLink _Knisot = new HyperLink();
+    //    for (int iIndex = 0; iIndex < this.lstSidurim.DataSource.Count; iIndex++)
+    //    {
+    //        _GridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
+    //        if (_GridView != null)
+    //        {
+    //            for (int iRowIndex = 0; iRowIndex < _GridView.Rows.Count; iRowIndex++)
+    //            {
+    //                _GridRow = _GridView.Rows[iRowIndex];
+    //                if ((_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls.Count) > 0)
+    //                {
+    //                    _ImgReka = ((ImageButton)_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0]);
+    //                    //if (_GridRow.Cells[4].Controls.Count > 0)
+    //                    //{
+    //                       // _Knisot = ((HyperLink)_GridRow.Cells[4].Controls[0]);
 
-                            // _ImgReka = (ImageButton)_GridRow.FindControl(_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0].ClientID);
-                            upEmployeeDetails.Triggers.Add(AddTrigger(_ImgReka.UniqueID));
-                        //}
-                    }
-                }
-            }
-        }
-        //return;
-        //for (int i = 0; i < TriggerToAdd.Length; i++)
-        //    upEmployeeDetails.Triggers.Add(TriggerToAdd[i]);            
-    }
-    void lstSidurim_btnReka(string strRekaID,bool bDummy)
-    {
-        int iSize;
-        if (TriggerToAdd == null)
-        {
-            TriggerToAdd = new AsyncPostBackTrigger [1];
-            TriggerToAdd[0] = AddTrigger(strRekaID);
-        }
-        else
-        {
-            iSize = TriggerToAdd.Length;
-            TriggerToAdd = (AsyncPostBackTrigger[])clGeneral.ResizeArray(TriggerToAdd, iSize + 1);
-            TriggerToAdd[iSize] = AddTrigger(strRekaID);
-        }       
-    }
+    //                        // _ImgReka = (ImageButton)_GridRow.FindControl(_GridRow.Cells[lstSidurim.COL_ADD_NESIA_REKA].Controls[0].ClientID);
+    //                        upEmployeeDetails.Triggers.Add(AddTrigger(_ImgReka.UniqueID));
+    //                    //}
+    //                }
+    //            }
+    //        }
+    //    }
+    //    //return;
+    //    //for (int i = 0; i < TriggerToAdd.Length; i++)
+    //    //    upEmployeeDetails.Triggers.Add(TriggerToAdd[i]);            
+    //}
+    //void lstSidurim_btnReka(string strRekaID,bool bDummy)
+    //{
+    //    int iSize;
+    //    if (TriggerToAdd == null)
+    //    {
+    //        TriggerToAdd = new AsyncPostBackTrigger [1];
+    //        TriggerToAdd[0] = AddTrigger(strRekaID);
+    //    }
+    //    else
+    //    {
+    //        iSize = TriggerToAdd.Length;
+    //        TriggerToAdd = (AsyncPostBackTrigger[])clGeneral.ResizeArray(TriggerToAdd, iSize + 1);
+    //        TriggerToAdd[iSize] = AddTrigger(strRekaID);
+    //    }       
+    //}
 
-    AsyncPostBackTrigger AddTrigger(string strRekaID)
-    {
-        AsyncPostBackTrigger trigger = new AsyncPostBackTrigger();
+    //AsyncPostBackTrigger AddTrigger(string strRekaID)
+    //{
+    //    AsyncPostBackTrigger trigger = new AsyncPostBackTrigger();
 
-        trigger.ControlID = strRekaID;
-       // trigger.EventName = "OnClick";
+    //    trigger.ControlID = strRekaID;
+    //   // trigger.EventName = "OnClick";
 
-        return trigger;        
-    }
+    //    return trigger;        
+    //}
    
 
     void lstSidurim_btnHandler(string strValue, bool bOpenUpdateBtn)

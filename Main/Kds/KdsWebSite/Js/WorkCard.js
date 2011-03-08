@@ -380,6 +380,8 @@
     }
     function AddSidurHeadrut() {
         if (bScreenChanged) {
+            if (!ChkCardVld())
+                return false;
             $("#hidSave")[0].value = "1";
             __doPostBack('btnConfirm', '');
         }
@@ -405,9 +407,11 @@
         return false;
     }
     function AddSidur() {
-        if (bScreenChanged) {            
+        if (bScreenChanged) {
+            if (!ChkCardVld())
+                return false;
             $("#hidSave")[0].value = "1";
-            __doPostBack('btnConfirm', '');
+            __doPostBack('btnConfirm', '');            
         }
         
         var sQueryString;        

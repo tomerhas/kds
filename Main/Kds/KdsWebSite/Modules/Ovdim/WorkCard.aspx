@@ -539,6 +539,7 @@
     <input type="hidden" runat="server" id="hidMeasherMistayeg" />   
     <input type="hidden" runat="server" id="hidRashemet" />  
     <input type="hidden" runat="server" id="hidFromEmda" />  
+    <input type="hidden" runat="server" id="hidSadotLSidur" />
     </form>   
     <script language="javascript" type="text/javascript">
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 

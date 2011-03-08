@@ -123,7 +123,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     
     // Event declaration
     public event OnButtonClick btnHandler;
-    public event OnButtonClick btnReka;
+    //public event OnButtonClick btnReka;
 
     private enum enDayType
     {
@@ -1745,7 +1745,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
-            btnHandler(string.Empty, false);
+            btnHandler(string.Empty, true);
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {

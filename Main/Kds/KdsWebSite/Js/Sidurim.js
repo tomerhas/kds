@@ -470,11 +470,15 @@ function chkMkt(oRow) {
                   var dParamDate = new Date();var dItemDate = new Date();
                   SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
                   SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), sSG.substr(0, 2), sSG.substr(3, 2));
+                  dParamDate.setSeconds(0);
+                  dItemDate.setSeconds(0);
+                  dParamDate.setMilliseconds(0);
+                  dItemDate.setMilliseconds(0);
                   var utcItemDate = Date.UTC(dItemDate.getFullYear(), dItemDate.getMonth() + 1, dItemDate.getDate(), 0, 0, 0);
                   if (((document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value == "1")) && (utcItemDate == utcCardDate)) {                      
                       dItemDate.setDate(dItemDate.getDate() + 1);
                   }                                
-                  if (((IsShatGmarInNextDay(sActualShatYetiza)) || (sActualShatYetiza == '00:00')) && (dItemDate >= dParamDate)) {
+                  if (((IsShatGmarInNextDay(sActualShatYetiza)) || (sActualShatYetiza == '00:00')) && (dItemDate > dParamDate)) {
                       iPDayToAdd = "1";
                       document.getElementById(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "1";
                   }
@@ -899,6 +903,8 @@ function chkMkt(oRow) {
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         if (document.getElementById(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgChecked') {
             if (bScreenChanged) {
+                if (!ChkCardVld())
+                    return false;
                 $("#hidSave")[0].value = "1";
                 __doPostBack('btnConfirm', '');
             }
@@ -935,36 +941,43 @@ function chkMkt(oRow) {
         }           
     }
     function AddSadotLsidur(iIndex) {
-    if (bScreenChanged) {
-        $("#hidSave")[0].value = "1";
-        __doPostBack('btnConfirm', '');
-       
+        if (bScreenChanged) {
+            if (!ChkCardVld())
+                return false;
+            $("#hidSave")[0].value = "1";
+            document.getElementById("hidSadotLSidur").value = "1,".concat(iIndex);            
+            __doPostBack('btnConfirm', '');
+        } else {
+            res = ExecSadotLsidur(iIndex);
+            return res;
+        }        
     }
-    var dPeilutDate = new Date();
-    var id = document.getElementById("txtId").value;
-    var CardDate = document.getElementById("clnDate").value;
-    var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-    var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
-    var SidurEHour = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value; 
-    var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;         
-    
-    SetDate(dPeilutDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");                        
-    dPeilutDate.setDate(dPeilutDate.getDate() + Number(iSDayToAdd));                 
-    var SidurId= document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;       
-    if (SidurSHour=='')
-        SidurDate='01/01/0001';
+    function ExecSadotLsidur(iIndex) {
+        var dPeilutDate = new Date();
+        var id = document.getElementById("txtId").value;
+        var CardDate = document.getElementById("clnDate").value;
+        var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+        var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
+        var SidurEHour = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value;
+        var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;
 
-    var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();        
-    var res=window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString , window , "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
-    if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
-        document.getElementById("hidExecInputChg").value = "1";
-        bScreenChanged = false;
-        RefreshBtn();
-        __doPostBack('btnRefreshOvedDetails', '');
-    }              
-    return res;
+        document.getElementById("hidSadotLSidur").value = "";
+        SetDate(dPeilutDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");
+        dPeilutDate.setDate(dPeilutDate.getDate() + Number(iSDayToAdd));
+        var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+        if (SidurSHour == '')
+            SidurDate = '01/01/0001';
+
+        var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
+        var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
+        if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
+            document.getElementById("hidExecInputChg").value = "1";
+            bScreenChanged = false;
+            RefreshBtn();
+            __doPostBack('btnRefreshOvedDetails', '');
+        }
+        return res;
     }
-
 //    function AddNesiaReka(iPeilutIndex, iSidurIndex, iLastPeilut) {
 //        var iMisparIshi = document.getElementById("txtId").value;
 //        var dDate = document.getElementById("clnDate").value;
