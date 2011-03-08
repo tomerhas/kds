@@ -36,10 +36,10 @@ namespace KdsTaskManager
         {
             try
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.Now);
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now,DateTime.MinValue);
                 _MessageStart.UpdateTaskLog();
                 _dal.ExecuteSP(Command);
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.MinValue, DateTime.Now);
                 _MessageEnd.UpdateTaskLog();
                 _ActionResult = true;
             }
