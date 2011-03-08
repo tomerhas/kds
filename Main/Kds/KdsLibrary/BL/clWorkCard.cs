@@ -41,52 +41,56 @@ namespace KdsLibrary.BL
         {            
             bool bIdkunExists = false;
             DataRow[] drResults;
-            if (!(bProfileRashemet))
+
+            if (dtIdkuneyRashemet != null)
             {
-                switch (enLevel)
+                if (!(bProfileRashemet))
                 {
-                    case ErrorLevel.LevelYomAvoda:
-                        drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId);
-                        break;
-                    case ErrorLevel.LevelSidur:
-                        drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = Convert('" + dShatHatchala + "', 'System.DateTime')");
-                        break;
-                    case ErrorLevel.LevelPeilut:
-                        drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = Convert('" + dShatHatchala + "', 'System.DateTime')" + " and shat_yetzia= Convert('" + dShatYetiza + "', 'System.DateTime') and mispar_knisa=" + iMisparKnisa);
-                        break;
-                    default:
-                        drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId);
-                        break;
-                }
-                if (drResults != null)
-                {
-                    if (iMisparIshi > 0)
-                    {//המשתמש מעדכן את הכרטיס של עצמו, לכן נבדוק אם בפעם האחרונה
-                     //מי שעדכן את הכרטיס היה המשתמש או הרשמת  או כל גורם אחר
-                      //אם מי שעדכן את הכרטיס היה כל גורם אחר מלבד הוא עצמו או עדכון מערכת )מספר ב-מינוס, לא נאפשר עדכון השדה
-                        
-                        if ((drResults.Length) > 0)
-                        {
-                            int iGoremMeasher;
-                            for (int i=0; i < drResults.Length; i++)
+                    switch (enLevel)
+                    {
+                        case ErrorLevel.LevelYomAvoda:
+                            drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId);
+                            break;
+                        case ErrorLevel.LevelSidur:
+                            drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = Convert('" + dShatHatchala + "', 'System.DateTime')");
+                            break;
+                        case ErrorLevel.LevelPeilut:
+                            drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId + " and mispar_sidur=" + iMisparSidur + " and shat_hatchala = Convert('" + dShatHatchala + "', 'System.DateTime')" + " and shat_yetzia= Convert('" + dShatYetiza + "', 'System.DateTime') and mispar_knisa=" + iMisparKnisa);
+                            break;
+                        default:
+                            drResults = dtIdkuneyRashemet.Select("pakad_id=" + iPakadId);
+                            break;
+                    }
+                    if (drResults != null)
+                    {
+                        if (iMisparIshi > 0)
+                        {//המשתמש מעדכן את הכרטיס של עצמו, לכן נבדוק אם בפעם האחרונה
+                            //מי שעדכן את הכרטיס היה המשתמש או הרשמת  או כל גורם אחר
+                            //אם מי שעדכן את הכרטיס היה כל גורם אחר מלבד הוא עצמו או עדכון מערכת )מספר ב-מינוס, לא נאפשר עדכון השדה
+
+                            if ((drResults.Length) > 0)
                             {
-                                iGoremMeasher = String.IsNullOrEmpty(drResults[i]["GOREM_MEADKEN"].ToString()) ? 0 : int.Parse(drResults[i]["GOREM_MEADKEN"].ToString());
-                                if ((iMisparIshi != iGoremMeasher) && (iGoremMeasher >= 0))
+                                int iGoremMeasher;
+                                for (int i = 0; i < drResults.Length; i++)
                                 {
-                                    bIdkunExists = true;
-                                    break;
+                                    iGoremMeasher = String.IsNullOrEmpty(drResults[i]["GOREM_MEADKEN"].ToString()) ? 0 : int.Parse(drResults[i]["GOREM_MEADKEN"].ToString());
+                                    if ((iMisparIshi != iGoremMeasher) && (iGoremMeasher >= 0))
+                                    {
+                                        bIdkunExists = true;
+                                        break;
+                                    }
                                 }
-                            }                            
+                            }
+                            else
+                            {
+                                bIdkunExists = false;
+                            }
                         }
                         else
                         {
-                            bIdkunExists = false;
+                            bIdkunExists = drResults.Length > 0;
                         }
                     }
-                    else
-                    {
-                        bIdkunExists = drResults.Length > 0;
-                    }                   
                 }
             }
             return bIdkunExists;            
