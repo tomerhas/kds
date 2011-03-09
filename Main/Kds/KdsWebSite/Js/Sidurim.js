@@ -497,7 +497,7 @@ function chkMkt(oRow) {
                   }                  
                   val.errormessage = "שעת היציאה לא יכולה להיות גדולה משעת גמר הסידור";
                   args.IsValid = (dShatYetiza <= dSidurDate);                                  
-                  document.getElementById(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dShatYetiza);
+                  document.getElementById(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dShatYetiza);                  
                   var sRes = ChkShatYetizaKisuyT(val.getAttribute("index"));                
                   //אם פעילות מסוג שירות נשנה לכל הכניסות את שעת היציאה בהתאם
                   var lMkt = document.getElementById(sGridRowID).cells[_COL_MAKAT].childNodes[0].value;
