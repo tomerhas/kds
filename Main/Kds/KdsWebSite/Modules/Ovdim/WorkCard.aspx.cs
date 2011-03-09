@@ -2046,61 +2046,68 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void PrintCard(object sender, EventArgs e)
     {
         string urlBarcode,key;
-        bWorkCardWasUpdate = IsWorkCardWasUpdate();
-        key = iMisparIshi.ToString() + dDateCard.ToString("yyyyMMdd");
-        urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
-       // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
-        if (hidFromEmda.Value =="true")
+        try
         {
-            string sScript="";
-            string  sIp;
-            string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
-            byte[] s;
-           
-            ReportModule Report = ReportModule.GetInstance();
-            Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
-            Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
-            Report.AddParameter("P_EMDA", "0");
-            Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-            Report.AddParameter("P_URL_BARCODE", urlBarcode);
-            Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
-
-            s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
-
-            string sFileName, sPathFile;
-            FileStream fs;
-            sIp = "";// arrParams[1];
-            sFileName = "WorkCard.pdf";
-            sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
-            if (!Directory.Exists(sPathFile))
-                Directory.CreateDirectory(sPathFile);
-            fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
-            fs.Write(s, 0, s.Length);
-            fs.Flush();
-            fs.Close();
-
-            for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
+            bWorkCardWasUpdate = IsWorkCardWasUpdate();
+            key = iMisparIshi.ToString() + dDateCard.ToString("yyyyMMdd");
+            urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
+            // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
+            if (hidFromEmda.Value == "true")
             {
-                if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
-                {
-                    sScript = "document.all('msgErrCar').style.display='block';";
-                    break;
-                }
-            }
-            sScript+= "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000);";
-            ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
-        }
-        else
-        {
-            Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
-            ReportParameters.Add("P_MISPAR_ISHI", iMisparIshi.ToString());
-            ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
-            ReportParameters.Add("P_EMDA", "0");
-            ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-            ReportParameters.Add("P_URL_BARCODE", urlBarcode);
-            ReportParameters.Add("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+                string sScript = "";
+                string sIp;
+                string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                byte[] s;
 
-            OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
+                ReportModule Report = ReportModule.GetInstance();
+                Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
+                Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
+                Report.AddParameter("P_EMDA", "0");
+                Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
+                Report.AddParameter("P_URL_BARCODE", urlBarcode);
+                Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+
+                s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
+
+                string sFileName, sPathFile;
+                FileStream fs;
+                sIp = "";// arrParams[1];
+                sFileName = "WorkCard.pdf";
+                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+                if (!Directory.Exists(sPathFile))
+                    Directory.CreateDirectory(sPathFile);
+                fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
+                fs.Write(s, 0, s.Length);
+                fs.Flush();
+                fs.Close();
+
+                for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
+                {
+                    if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
+                    {
+                        sScript = "document.all('msgErrCar').style.display='block';";
+                        break;
+                    }
+                }
+                sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000);";
+                ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
+            }
+            else
+            {
+                Dictionary<string, string> ReportParameters = new Dictionary<string, string>();
+                ReportParameters.Add("P_MISPAR_ISHI", iMisparIshi.ToString());
+                ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
+                ReportParameters.Add("P_EMDA", "0");
+                ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
+                ReportParameters.Add("P_URL_BARCODE", urlBarcode);
+                ReportParameters.Add("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+
+                OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+           clGeneral.BuildError(this, ex.Message,true);
         }
     }
     
