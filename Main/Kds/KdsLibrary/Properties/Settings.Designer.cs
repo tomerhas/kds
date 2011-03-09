@@ -32,5 +32,15 @@ namespace KdsLibrary.Properties {
                 return ((string)(this["KdsLibrary_ReportingServices_ReportExecutionService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.2.42/BarCode/wsBarcode.asmx")]
+        public string KdsLibrary_Barcode_wsBarCode {
+            get {
+                return ((string)(this["KdsLibrary_Barcode_wsBarCode"]));
+            }
+        }
     }
 }

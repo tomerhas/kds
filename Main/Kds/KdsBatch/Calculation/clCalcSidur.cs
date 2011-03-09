@@ -2759,7 +2759,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int iMisparSidur, J ;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
-            float fErech,fErechSidur;
+            float fErech, fErechSidur, fTempX;
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
             dShatHatchalaSidur = DateTime.MinValue;
@@ -2771,6 +2771,8 @@ namespace KdsBatch
        
             try
             {
+                fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
+               
                 drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC");
                 fErech=0;
                 fErechLaylaEgged = 0;
@@ -2807,7 +2809,15 @@ namespace KdsBatch
                                             fErechSidur = fErechSidur - 10;
                                         else fErechSidur = 0;
                                     }
-                                    fErech += fErechSidur;
+
+                                    if ((fTempX+fErech) < _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum)
+                                    {
+                                        if ((fErech + fErechSidur + fTempX) > _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
+                                            fErech += _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - (fTempX + fErech);
+                                        else fErech += fErechSidur;
+                                    }
+                                    
+                                     // fErech += fErechSidur;
 
                                     //רציפות לילה                                
                                     fErechSidurLaylaEgged = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters.dTchilatTosefetLaila, _oGeneralData.objParameters.dSiyumTosefetLaila);//9,10

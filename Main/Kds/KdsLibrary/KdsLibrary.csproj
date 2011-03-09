@@ -115,6 +115,11 @@
     <Compile Include="DAL\clTnua.cs" />
     <Compile Include="DAL\clTxDal.cs" />
     <Compile Include="BL\clOvdim.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Security\KdsModule.cs" />
     <Compile Include="Security\SecurityManager.cs" />
     <Compile Include="Service References\Exchange\Reference.cs">
@@ -159,6 +164,7 @@
     <Compile Include="UI\SystemManager\KdsSysManPageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utils\ClBarcode.cs" />
     <Compile Include="Utils\clGenral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\LoginUser.cs" />
@@ -177,6 +183,11 @@
     <Compile Include="Utils\Reports\clReportFunctions.cs" />
     <Compile Include="Utils\Reports\KdsReportTemplate.cs" />
     <Compile Include="Utils\Reports\ReportModule.cs" />
+    <Compile Include="Web References\Barcode\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ReportingServices\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -188,6 +199,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Service References\Exchange\ExchangeInfoService.wsdl" />
   </ItemGroup>
@@ -207,6 +222,11 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Web References\Barcode\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\Barcode\wsBarcode.wsdl" />
     <None Include="Web References\ReportingServices\DocumentMapNode.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -232,6 +252,17 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="http://192.168.2.42/BarCode/wsBarcode.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\Barcode\</RelPath>
+      <UpdateFromURL>http://192.168.2.42/BarCode/wsBarcode.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>KdsLibrary_Barcode_wsBarCode</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="http://kdstst01/ReportServer/ReportExecution2005.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\ReportingServices\</RelPath>
@@ -260,6 +291,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\Barcode\wsBarcode.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
