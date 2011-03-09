@@ -624,15 +624,25 @@ function chkMkt(oRow) {
         wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH, callBackStartHour, null, iIndex);
   }
   function callBackStartHour(result, iIndex) {
-     result = result.split(",");
-     if (result[0]=='1')
-         document.getElementById("lstSidurim_btnShowMessage").click();
+      var dSidurSHDate = new Date();
+      var sCardDate = document.getElementById("clnDate").value;
 
-     var dSdDate = new Date();     
+      result = result.split(",");
+
+      if (result[0] == '1') {
+          document.getElementById("lstSidurim_lblSidur".concat(iIndex)).disabled = true;
+          document.getElementById("lstSidurim_btnShowMessage").click();
+          document.getElementById("lstSidurim_lblSidur".concat(iIndex)).disabled = false;
+      }
+     var dSdDate = new Date();
      var _SHNew = document.getElementById("lstSidurim_txtSH".concat(iIndex));
-     if (result[1] == '0') {//שעת התחלה
-         document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = document.getElementById("clnDate").value;
-     }
+
+     SetDate(dSidurSHDate, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), "0", "0");
+     dSidurSHDate.setDate(dSidurSHDate.getDate() + Number(result[1]));
+    // if (result[1] == '0') {//שעת התחלה
+     document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(dSidurSHDate);  //document.getElementById("clnDate").value;
+    // }
+
      var sSdDate=document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML; 
      var sYear = sSdDate.substr(sSdDate.length-4,4);
      var sMonth = Number(sSdDate.substr(3, 2)) - 1;
@@ -944,8 +954,12 @@ function chkMkt(oRow) {
         if (bScreenChanged) {
             if (!ChkCardVld())
                 return false;
+
+            var SidurNumber = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+            var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+            var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
             $("#hidSave")[0].value = "1";
-            document.getElementById("hidSadotLSidur").value = "1,".concat(iIndex);            
+            document.getElementById("hidSadotLSidur").value = ("1,".concat(SidurDate + " " + SidurSHour)).concat("," + SidurNumber);            
             __doPostBack('btnConfirm', '');
         } else {
             res = ExecSadotLsidur(iIndex);
@@ -953,7 +967,7 @@ function chkMkt(oRow) {
         }        
     }
     function ExecSadotLsidur(iIndex) {
-        var dPeilutDate = new Date();
+        var dSidurSGDate = new Date();
         var id = document.getElementById("txtId").value;
         var CardDate = document.getElementById("clnDate").value;
         var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
@@ -962,14 +976,15 @@ function chkMkt(oRow) {
         var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;
 
         document.getElementById("hidSadotLSidur").value = "";
-        SetDate(dPeilutDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");
-        dPeilutDate.setDate(dPeilutDate.getDate() + Number(iSDayToAdd));
+        SetDate(dSidurSGDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");
+        dSidurSGDate.setDate(dSidurSGDate.getDate() + Number(iSDayToAdd));
         var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
         if (SidurSHour == '')
             SidurDate = '01/01/0001';
 
+              
         document.getElementById("divHourglass").style.display = 'block';
-        var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dPeilutDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
+        var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'none';
         var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
         if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {

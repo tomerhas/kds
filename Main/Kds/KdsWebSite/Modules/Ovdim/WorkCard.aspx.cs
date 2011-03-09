@@ -2123,6 +2123,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnConfirm_click(object sender, EventArgs e)
     {
         string sScript;
+        int iSidurIndex;
         ModalPopupEx.Hide();
        
         if (SaveCard())
@@ -2172,7 +2173,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (arrVal.Length>1)
                     if (arrVal[0].Equals("1"))
                     {
-                        sScript = "bScreenChanged=true; ExecSadotLsidur(" + arrVal[1] + ");";
+                        oBatchManager.InitGeneralData();
+                        lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+                        Session["Sidurim"] = lstSidurim.DataSource;
+                        lstSidurim.ClearControl();
+                        lstSidurim.BuildPage();
+                        iSidurIndex= FindSidurIndex(DateTime.Parse(arrVal[1]),int.Parse(arrVal[2]),  lstSidurim.DataSource);
+                        sScript = "bScreenChanged=true; ExecSadotLsidur(" + iSidurIndex + ");";
                         ScriptManager.RegisterStartupScript(Page, this.GetType(), "ExecSadotNosafim", sScript, true);
                        
                     }
@@ -2187,6 +2194,28 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //lstSidurim.ErrorsList = oBatchManager.dtErrors;
         //lstSidurim.ClearControl();
         //lstSidurim.BuildPage();  
+    }
+    protected int FindSidurIndex(DateTime dSidurDate,int iSidurNumber, OrderedDictionary htSidurim)
+    {
+        int iSidurIndex = 0;
+        clSidur _Sidur = new clSidur();
+        try
+        {
+            for (int iIndex = 0; iIndex < htSidurim.Count; iIndex++)
+            {
+                _Sidur = (clSidur)(htSidurim[iIndex]);
+                if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurDate)))
+                {
+                    iSidurIndex = iIndex;
+                    break;
+                }
+            }
+            return iSidurIndex;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
     protected void btnPopUpd_click(object sender, EventArgs e)
     {

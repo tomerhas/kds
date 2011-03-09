@@ -135,7 +135,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             }
             if (Request.QueryString["ShatHatchala"] != null)
             {
-                ShatHatchala.Value = Request.QueryString["ShatHatchala"].ToString();//"08/03/2010 06:24";//                
+                ShatHatchala.Value = Request.QueryString["ShatHatchala"].ToString();//"08/03/2010 06:24";//                 
             }
             if (Request.QueryString["ShatGmar"] != null && Request.QueryString["ShatGmarDate"] != null)
             {

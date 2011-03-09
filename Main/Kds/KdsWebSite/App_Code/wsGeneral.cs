@@ -1180,19 +1180,22 @@ public class wsGeneral : System.Web.Services.WebService
       try
       {
           DataTable dt = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + dCardDate.ToShortDateString());
-          dr = dt.NewRow();
-          dr["Activity_Date"] = dCardDate;
-          dr["Makat8"] = _Peilut.lMakatNesia;
-          dr["description"] = _Peilut.sMakatDescription;
-          dr["shilut"] = _Peilut.sShilut;
-          dr["kisui_tor"] = _Peilut.iKisuyTorMap;
-          dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
-          dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
-          dr["km"] = _Peilut.fKm;
-          dr["sug_shirut_name"] = _Peilut.sSugShirutName;
-          dr["xy_moked_tchila"] = _Peilut.iXyMokedTchila;
-          dr["xy_moked_siyum"] = _Peilut.iXyMokedSiyum;
-          dt.Rows.Add(dr);
+          if (dt.Columns.Count > 0)
+          {
+              dr = dt.NewRow();
+              dr["Activity_Date"] = dCardDate;
+              dr["Makat8"] = _Peilut.lMakatNesia;
+              dr["description"] = _Peilut.sMakatDescription;
+              dr["shilut"] = _Peilut.sShilut;
+              dr["kisui_tor"] = _Peilut.iKisuyTorMap;
+              dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
+              dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
+              dr["km"] = _Peilut.fKm;
+              dr["sug_shirut_name"] = _Peilut.sSugShirutName;
+              dr["xy_moked_tchila"] = _Peilut.iXyMokedTchila;
+              dr["xy_moked_siyum"] = _Peilut.iXyMokedSiyum;
+              dt.Rows.Add(dr);
+          }
       }
       catch (Exception ex)
       {
