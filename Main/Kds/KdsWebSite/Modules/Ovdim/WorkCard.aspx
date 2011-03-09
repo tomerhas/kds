@@ -569,7 +569,7 @@
             SetMeasher(value); 
             if (document.getElementById('hidFromEmda').value =='true') 
                 {
-                    document.getElementById("btnPrint").disabled==false;
+                    document.getElementById("btnPrint").disabled=false;
                     document.all('btnPrint').click(); 
                 } 
          }           
