@@ -259,12 +259,12 @@ function chkMkt(oRow) {
              oColPeilutCancel = document.getElementById(Row.id).cells[_COL_CANCEL_PEILUT].childNodes[0];
              if ((oColCancel.className == "ImgChecked") || (oColCancel.className == "ImgCheckedDisable")){
                  SetPeilutStatus(Row.id, true, iSidur);
-                 oColCancel.className = "ImgCancel";
+                 //oColCancel.className = "ImgCancel";
                  oColPeilutCancel.value = "1";
              }
              else {
                  SetPeilutStatus(Row.id, false, iSidur);
-                 oColCancel.className = "ImgChecked";
+                 //oColCancel.className = "ImgChecked";
                  oColPeilutCancel.value = "0";
              }             
          }
@@ -346,14 +346,24 @@ function chkMkt(oRow) {
         if ((oColTor.getAttribute("OrgEnabled"))=="1"){        
           oColTor.disabled = bFlag;       
         }}
-        if (oColCancel.className!=undefined){               
-        if (bFlag){
-            oColCancel.className = "ImgCancel";oColPeilutCancel.value="1";
-            
-        }else{        
-            oColCancel.className = "ImgChecked";oColPeilutCancel.value="0";            
-         }
-       }       
+        if (oColCancel.className != undefined){
+            if (bFlag) {
+                if (oColCancel.getAttribute("OrgEnabled") == "1") {
+                    oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                }
+                else {
+                    oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
+                }
+            }
+            else {
+                if (oColCancel.getAttribute("OrgEnabled") == "1") {
+                   oColCancel.className = "ImgChecked"; oColPeilutCancel.value = "0";
+                }
+                else {
+                    oColCancel.className = "ImgCheckedDisable"; oColPeilutCancel.value = "0";
+                }
+            }                       
+        }
     }
     function SetLabelColor(sCtl,iIndex, sColor){        
         document.getElementById(sCtl.concat(iIndex)).style.color=sColor;  
@@ -986,7 +996,7 @@ function chkMkt(oRow) {
         document.getElementById("divHourglass").style.display = 'block';
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'none';
-        var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:10px;dialogleft:320px;status:no;resizable:yes;");
+        var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:210px;dialogleft:220px;status:no;resizable:yes;");
         if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
             bScreenChanged = false;
@@ -1176,31 +1186,33 @@ function chkMkt(oRow) {
     function SetDay(iInx){
       $find("pBehvDate").hide();
       var sEndHour;
-      var sSidurDate;     
+     // var sSidurDate;     
       var sParamNxtDay;
       var dParamDate = new Date();
       var dItemDate = new Date();
       var arrItems = iInx.split("|");
       var sCardDate = document.getElementById("clnDate").value;
       if (arrItems[0] == '1') {//שעת גמר
-          sEndHour = document.getElementById("lstSidurim_txtSG" + arrItems[1]).value;
-          sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;                     
+            sEndHour = document.getElementById("lstSidurim_txtSG" + arrItems[1]).value;
+            //sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;                     
             var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-            var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
-            var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
-            var utcSidurDate = Date.UTC(dSidurTime.getFullYear(), dSidurTime.getMonth() + 1, dSidurTime.getDate(), 0, 0, 0);
+           // var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
+            var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+//            var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
+//            var utcSidurDate = Date.UTC(dSidurTime.getFullYear(), dSidurTime.getMonth() + 1, dSidurTime.getDate(), 0, 0, 0);
             var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
-            if (sEndHour == '00:00') {
+            if (sEndHour == '00:00'){
                _Add = '1'
                document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1])).value='1';
             }
-            if (_Add == '1') {
-                if (utcCardDate == utcSidurDate)
-                    dSidurTime.setDate(dSidurTime.getDate() + 1);
-            }
-            else {//add=0                
-                    dSidurTime = dCardDate;
-            }
+           dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+//            if (_Add == '1') {
+//                if (utcCardDate == utcSidurDate)
+//                    dSidurTime.setDate(dSidurTime.getDate() + 1);
+//            }
+//            else {//add=0                
+//                    dSidurTime = dCardDate;
+//            }
             document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
       }
       else {//שעת יציאה
@@ -1243,29 +1255,33 @@ function chkMkt(oRow) {
         var dSdDate = new Date();
         var sCardDate = document.getElementById("clnDate").value;
         var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-        var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
-         
-        if ((arrItems[0]=='1') || (arrItems[0]=='3')){ //שעת התחלה וגמר                  
-            sSdDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])); 
-        }
-        else{
-            sSdDate =  document.getElementById("lstSidurim_lblDate".concat(arrItems[2])); 
-        }
-        var sYear=sSdDate.innerHTML.substr(sSdDate.innerHTML.length-4,4);
-        var sMonth=Number(sSdDate.innerHTML.substr(3,2))-1;
-        var sDay=sSdDate.innerHTML.substr(0,2);             
+        //var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
+
+        sSdDate = sCardDate;
+//        if ((arrItems[0]=='1') || (arrItems[0]=='3')){ //שעת התחלה וגמר                  
+//            sSdDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])); 
+//        }
+//        else{
+//            sSdDate =  document.getElementById("lstSidurim_lblDate".concat(arrItems[2])); 
+//        }
+        var sYear=sSdDate.substr(sSdDate.length-4,4);
+        var sMonth=Number(sSdDate.substr(3,2))-1;
+        var sDay=sSdDate.substr(0,2);             
         dSdDate.setFullYear(sYear);
         dSdDate.setMonth(sMonth);
         dSdDate.setDate(sDay);
-        var utcSidurDate = Date.UTC(dSdDate.getFullYear(), dSdDate.getMonth() + 1, dSdDate.getDate(), 0, 0, 0);
-        if (iDayToAdd == 1) {
-            if (utcSidurDate==utcCardDate)
-                dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));             
-        }
-        else {//addday=0
-            if (utcSidurDate > utcCardDate)
-                dSdDate.setDate(dSdDate.getDate()-1);  
-        }    
+
+        dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));   
+
+//        var utcSidurDate = Date.UTC(dSdDate.getFullYear(), dSdDate.getMonth() + 1, dSdDate.getDate(), 0, 0, 0);
+//        if (iDayToAdd == 1) {
+//            if (utcSidurDate==utcCardDate)
+//                dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));             
+//        }
+//        else {//addday=0
+//            if (utcSidurDate > utcCardDate)
+//                dSdDate.setDate(dSdDate.getDate()-1);  
+//        }    
          
         if (arrItems[0]=='1'){
             document.getElementById("lstSidurim_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            

@@ -58,7 +58,7 @@
         </ProgressTemplate>
     </asp:UpdateProgress>
     <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
-        <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" /><br /> 
+        <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
     </div>  
    <center>
         <fieldset class="FilterFieldSet" style="width: 1000px; height: 677px;">
