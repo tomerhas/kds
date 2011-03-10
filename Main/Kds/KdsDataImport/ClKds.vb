@@ -2544,15 +2544,15 @@ Public Class ClKds
             End Try
             Try
                 sub_tahalich = 8
-                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start tmp_pirtey_ovdim", 0)
+                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start pivot_pirtey_ovdim", 0)
                 ''** KdsWriteProcessLog(3, 8, 1, "start tmp_pirtey_ovdim")
-                oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim")
+                ' no need, in the procedure oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim")
                 oDal.ClearCommand()
-                oDal.ExecuteSP("Create_Cursor_Pirtey_Ovdim")
-                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok tmp_pirtey_ovdim", 0)
+                oDal.ExecuteSP("Create_pivot_Pirtey_Ovdim")
+                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok pivot_pirtey_ovdim", 0)
                 ''**KdsWriteProcessLog(3, 8, 2, "end ok tmp_pirtey_ovdim")
             Catch ex As Exception
-                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Faild, "tmp_pirtey_ovdim aborted " & ex.Message, 7)
+                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Faild, "pivot_pirtey_ovdim aborted " & ex.Message, 7)
                 ''**KdsWriteProcessLog(3, 8, 3, "tmp_pirtey_ovdim aborted " & ex.Message, 7)
             End Try
             Try
@@ -2858,7 +2858,7 @@ Public Class ClKds
             sub_tahalich = 27
             iRunRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start  tmp_meafyenim_ovdim", 0)
             ''**KdsWriteProcessLog(3, 27, 1, "start  tmp_meafyenim_ovdim")
-            oDal.ExecuteSQL("truncate table  tmp_meafyenim_ovdim")
+            ' noneed in the prc,oDal.ExecuteSQL("truncate table  tmp_meafyenim_ovdim")
             oDal.ClearCommand()
             oDal.ExecuteSP("cursor_Meafyenim_Ovdim")
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok  tmp_meafyenim_ovdim", 0)

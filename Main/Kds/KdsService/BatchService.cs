@@ -199,11 +199,11 @@ namespace KdsService
 
                 // refresh pivot_pirtey_ovdim
            //     oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
-                iSeqNum = obatch.InsertProcessLog(3, 8, RecordStatus.Wait, "start refresh tmp_pirtey_ovdim", 0);
+                iSeqNum = obatch.InsertProcessLog(3, 8, RecordStatus.Wait, "start refresh pivot_pirtey_ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 8, 1, "start refresh tmp_pirtey_ovdim", "");
                 oDal.ClearCommand();
-                oDal.ExecuteSP("Create_Cursor_Pirtey_Ovdim");
-                obatch.UpdateProcessLog(iSeqNum, RecordStatus.Finish, "end ok refresh tmp_pirtey_ovdim", 0);
+                oDal.ExecuteSP("Create_pivot_Pirtey_Ovdim");
+                obatch.UpdateProcessLog(iSeqNum, RecordStatus.Finish, "end ok refresh pivot_pirtey_ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 8, 2, "end ok refresh tmp_pirtey_ovdim", "");
             }
             catch (Exception ex)
