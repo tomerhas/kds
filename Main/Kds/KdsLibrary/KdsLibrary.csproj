@@ -115,11 +115,6 @@
     <Compile Include="DAL\clTnua.cs" />
     <Compile Include="DAL\clTxDal.cs" />
     <Compile Include="BL\clOvdim.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="Security\KdsModule.cs" />
     <Compile Include="Security\SecurityManager.cs" />
     <Compile Include="Service References\Exchange\Reference.cs">
@@ -146,6 +141,7 @@
     <Compile Include="UDT\Obj_Chishuv_Yomi.cs" />
     <Compile Include="UDT\Obj_Idkun_Rashemet.cs" />
     <Compile Include="UDT\Obj_Kavim.cs" />
+    <Compile Include="UDT\Obj_Logtaskmsg.cs" />
     <Compile Include="UDT\Obj_Meafyeney_Oved.cs" />
     <Compile Include="UDT\Obj_Ovdim_Im_Shinuy_Hr.cs" />
     <Compile Include="UDT\Obj_Peilut_Ovdim.cs" />
@@ -199,10 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Service References\Exchange\ExchangeInfoService.wsdl" />
   </ItemGroup>
