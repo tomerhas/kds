@@ -2416,6 +2416,9 @@ Public Class ClKds
 
             p_TAARICH = getFullDateString(Now)
 
+            Dim threadMeafyenim As New System.Threading.Thread(AddressOf refrsh_meafyenim)
+            threadMeafyenim.Start()
+
             Try
                 iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start matzav", 0)
                 ''**KdsWriteProcessLog(3, 1, 1, "start matzav")
@@ -2459,8 +2462,9 @@ Public Class ClKds
                 ''**KdsWriteProcessLog(3, 2, 3, "ovdim aborted " & ex.Message, 7)
             End Try
 
-            Dim threadMeafyenim As New System.Threading.Thread(AddressOf refrsh_meafyenim)
-            threadMeafyenim.Start()
+            'moved to beginning of this sub
+            'Dim threadMeafyenim As New System.Threading.Thread(AddressOf refrsh_meafyenim)
+            'threadMeafyenim.Start()
 
             sub_tahalich = 4
             'KdsWriteProcessLog(3, 4, 1, "start ovdim_im_shinuy")
