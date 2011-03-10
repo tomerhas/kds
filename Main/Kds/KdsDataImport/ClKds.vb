@@ -1900,19 +1900,20 @@ Public Class ClKds
                 'todo: check table tb_log_bakashot for errors etc
                 oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "shguyim", 0)
                 ''** KdsWriteProcessLog(8, 1, 2, "after shguyim")
-                ' 2010/07/27               no mail ishurim at all
-                teur = "ishurim"
-                iNumSeq = oBatch.InsertProcessLog(6, 1, KdsLibrary.BL.RecordStatus.Wait, "ishurim", 0)
-                ''**KdsWriteProcessLog(8, 1, 2, "after shguyim before ishurim")
-                SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '2=test, 3=prod since 2010/07/08
-                ' 2010/07/08               If SdrnStatTimes = "2" Then
-                If SdrnStatTimes = "3" Then
-                    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, True)
-                Else
-                    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
-                End If
-                oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "ishurim", 0)
-                ''**KdsWriteProcessLog(6, 1, 2, "after ishurim")
+                '2011/03/10 no ishurim till...
+                '' 2010/07/27               no mail ishurim at all
+                'teur = "ishurim"
+                'iNumSeq = oBatch.InsertProcessLog(6, 1, KdsLibrary.BL.RecordStatus.Wait, "ishurim", 0)
+                ' ''**KdsWriteProcessLog(8, 1, 2, "after shguyim before ishurim")
+                'SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '2=test, 3=prod since 2010/07/08
+                '' 2010/07/08               If SdrnStatTimes = "2" Then
+                'If SdrnStatTimes = "3" Then
+                '    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, True)
+                'Else
+                '    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
+                'End If
+                'oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Finish, "ishurim", 0)
+                ' ''**KdsWriteProcessLog(6, 1, 2, "after ishurim")
             Else
                 oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim not run UserBatch=" & UserBatch, 0)
                 ''**KdsWriteProcessLog(8, 1, 4, "shguyim not run UserBatch=" & UserBatch)
@@ -2356,18 +2357,19 @@ Public Class ClKds
                                 'todo: check table tb_log_bakashot for errors etc
                                 oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro shguyim", 0)
                                 ''**KdsWriteProcessLog(8, 2, 2, "after retro shguyim")
-                                ' 2010/07/27               no mail ishurim at all
-                                iSeqChkSdrnRetro = oBatch.InsertProcessLog(6, 2, KdsLibrary.BL.RecordStatus.Wait, "retro ishurim", 0)
-                                ''**KdsWriteProcessLog(8, 2, 2, "after retro shguyim before ishurim")
-                                SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '2=test, 3=prod since 2010/07/08
-                                ' 2010/07/08               If SdrnStatTimes = "2" Then
-                                If SdrnStatTimes = "3" Then
-                                    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, True)
-                                Else
-                                    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
-                                End If
-                                oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro ishurim ", 0)
-                                ''**KdsWriteProcessLog(6, 2, 2, "after retro ishurim ")
+                                '2011/03/10 no ishurim till...
+                                '' 2010/07/27               no mail ishurim at all
+                                'iSeqChkSdrnRetro = oBatch.InsertProcessLog(6, 2, KdsLibrary.BL.RecordStatus.Wait, "retro ishurim", 0)
+                                ' ''**KdsWriteProcessLog(8, 2, 2, "after retro shguyim before ishurim")
+                                'SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '2=test, 3=prod since 2010/07/08
+                                '' 2010/07/08               If SdrnStatTimes = "2" Then
+                                'If SdrnStatTimes = "3" Then
+                                '    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, True)
+                                'Else
+                                '    KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
+                                'End If
+                                'oBatch.UpdateProcessLog(iSeqChkSdrnRetro, KdsLibrary.BL.RecordStatus.Finish, "retro ishurim ", 0)
+                                ' ''**KdsWriteProcessLog(6, 2, 2, "after retro ishurim ")
                             Else
                                 oBatch.InsertProcessLog(8, 2, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim retro not run UserBatch=" & UserBatch, 0)
                                 ''** KdsWriteProcessLog(8, 2, 4, "shguyim retro not run UserBatch=" & UserBatch)
