@@ -773,6 +773,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ZmanLilaSidureyBoker=271,
             ZmanRetzifutLaylaEgged = 272,
             ZmanRetzifutLaylaChok = 273,
+            ZmanRetzifutBoker = 274,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,

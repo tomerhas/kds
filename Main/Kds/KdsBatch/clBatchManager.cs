@@ -11858,25 +11858,27 @@ namespace KdsBatch
                         if (IsOvedZakaiLZmanNesiaLaAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
                         {
                             //לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
-                            if (iSidurZakaiLenesiaKnisa > -1)
+                            if (iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                             {
-                                if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                    oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
-                              
-                                OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+                                if (iSidurZakaiLenesiaKnisa > -1)
+                                {
+                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
 
-                                oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
-                                oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
 
-                                oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
-                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                    oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
+                                    oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
 
+                                    oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
+                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
+                                }
                                 //עבור מאפיין 51: 
                                 //אם שדה נסיעות התעדכן בערך 1, אז יש לעדכן את שדה זמן נסיעה הלוך בטבלת ימי עבודה עובדים בערך הזמן ממאפיין 51
                                 if (IsOvedZakaiLZmanNesiaLaAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                 {
-                                    if ((oMeafyeneyOved.Meafyen61Exists))
+                                    if ((oMeafyeneyOved.Meafyen61Exists) && iSidurZakaiLenesiaKnisa>-1)
                                     {
                                         //עבור מאפיין 61:
                                         //אם שדה נסיעות התעדכן בערך 1 ויש ערך בשדה מיקום שעון כניסה בסידור הראשון ביום, יש לעדכן את שדה זמן נסיעה הלוך בערך מטבלה זמן נסיעה משתנה.                                        
@@ -11898,25 +11900,27 @@ namespace KdsBatch
                         //עובד זכאי לנסיעות מהעבודה
                         if (IsOvedZakaiLZmanNesiaMeAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
                         {
-                            if (iSidurZakaiLenesiaYetzia > -1)
+                            if (iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                             {
-                                if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                    oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
-                               
-                                //אם הסידור הראשון זכאי לנסיעות, נעדכן את שדה MEZAKE_NESIOT 
+                                if (iSidurZakaiLenesiaYetzia > -1)
+                                {
+                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
+
+                                    //אם הסידור הראשון זכאי לנסיעות, נעדכן את שדה MEZAKE_NESIOT 
 
 
-                                OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+                                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
 
-                                oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaYetzia];
-                                oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                                    oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaYetzia];
+                                    oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
 
-                                oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
-                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-
+                                    oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
+                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                }
                                 if (IsOvedZakaiLZmanNesiaMeAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
                                 {
-                                    if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0))
+                                    if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaYetzia>-1)
                                     {
                                         //נשלוף את הסידור האחרון
                                         iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
@@ -11934,24 +11938,26 @@ namespace KdsBatch
                         //עובד זכאי לנסיעות מהעבודה ולעבודה
                         if (IsOvedZakaiLZmanNesiaLeMeAvoda())
                         {
-                            if (iSidurZakaiLenesiaYetzia >-1 && iSidurZakaiLenesiaKnisa > -1)
+                            if ((iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1) || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
                             {
-                                if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                     oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
-                               
-                                //אם ביום קיים סידור אחד בלבד  ולפי הסידור מגיע גם נסיעות כניסה וגם נסיעות יציאה - יש לעדכן את השדה "נסיעות" ברמת סידור העבודה בקוד - זכאי לנסיעות לכניסה/יציאה לעבודה.
-                                if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa == iSidurZakaiLenesiaYetzia)
+                                if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1)
                                 {
-                                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
-                                    oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
-                                    oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
 
-                                    oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
-                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                    //אם ביום קיים סידור אחד בלבד  ולפי הסידור מגיע גם נסיעות כניסה וגם נסיעות יציאה - יש לעדכן את השדה "נסיעות" ברמת סידור העבודה בקוד - זכאי לנסיעות לכניסה/יציאה לעבודה.
+                                    if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa == iSidurZakaiLenesiaYetzia)
+                                    {
+                                        OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+                                        oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
+                                        oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+
+                                        oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
+                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                    }
                                 }
                             }
-
-                            if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0))
+                            if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaKnisa>-1)
                             {
                                 if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                 {
@@ -11971,9 +11977,9 @@ namespace KdsBatch
                             if (oMeafyeneyOved.Meafyen51Exists)
                             {
                                 iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                                if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                if ((iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0)) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                if (iSidurZakaiLenesiaYetzia > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                if ((iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0)) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
                             }
 

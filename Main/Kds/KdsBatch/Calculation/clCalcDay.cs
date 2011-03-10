@@ -3391,7 +3391,7 @@ namespace KdsBatch
             float fDakotTafkidChol, fDakotTafkidShabat, fDakotTafkidShishi, fMichsaYomit;
             DataRow RowKodem, RowNext;
             int iSugYom;
-            bool bNahag = false;
+            bool bLogNahag = false;
             try
             {
 
@@ -3401,7 +3401,7 @@ namespace KdsBatch
                 fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
                 if ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
-                    bNahag=true;
+                    bLogNahag = true;
                     // תנאי מקדים לחישוב הרכיב: 
                     //אם העובד הוא קופאי - עיסוק העובד שליפת פרטי עובד (קוד נתון  HR = 6, מ.א., תאריך)  = 183, 184, 193 וגם סהכ ניהול תנועה (רכיב 190) גדול שווה 240 [שליפת פרמטר (קוד פרמטר = 238)]
                     //אחרת – אם עובד אינו קופאי:
@@ -3449,7 +3449,7 @@ namespace KdsBatch
                                 if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == RowKodem["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == RowKodem["shat_hatchala_sidur"].ToString()))
                                 {
                                     fNesiotTchilatYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Haloch"].ToString());
-                                    if (bNahag)
+                                    if (bLogNahag)
                                         fNesiotTchilatYom = fNesiotTchilatYom - 45;
                                     if (fNesiotTchilatYom < 0)
                                     {
@@ -3459,7 +3459,7 @@ namespace KdsBatch
                                 else
                                 {
                                     fNesiotTchilatYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Haloch"].ToString());
-                                    if (bNahag)
+                                    if (bLogNahag)
                                         fNesiotTchilatYom = fNesiotTchilatYom - 45;
                                     fNesiotTchilatYom = Math.Min(fNesiotTchilatYom, (float.Parse((DateTime.Parse(rowMezakeNesia[0]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString())));
                                     if (fNesiotTchilatYom < 0)
@@ -3468,8 +3468,13 @@ namespace KdsBatch
                                     }
                                 }
                             }
-                            else fNesiotTchilatYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Haloch"].ToString());
-                                   
+                            else
+                            {
+                                if (bLogNahag)
+                                    fNesiotTchilatYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Haloch"].ToString()) - 45;
+                                else
+                                    fNesiotTchilatYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Haloch"].ToString());
+                            }                           
                         }
                         //ג.	חישוב [ סוף יום]:
                         rowBitulZmanNesiot = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and (Bitul_Zman_nesiot =2 or Bitul_Zman_nesiot =3) and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc"); ;
@@ -3497,8 +3502,8 @@ namespace KdsBatch
 
                                 if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
                                 {
-                                    fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString()) ;
-                                    if (bNahag)
+                                    fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
+                                    if (bLogNahag)
                                         fNesiotSofYom = fNesiotSofYom - 45;
                                     if (fNesiotSofYom < 0)
                                     {
@@ -3508,7 +3513,7 @@ namespace KdsBatch
                                 else
                                 {
                                     fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
-                                    if (bNahag)
+                                    if (bLogNahag)
                                         fNesiotSofYom = fNesiotSofYom - 45;
                                     fNesiotSofYom = Math.Min(fNesiotSofYom, float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeNesia[0]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()));
                                     if (fNesiotSofYom < 0)
@@ -3517,7 +3522,13 @@ namespace KdsBatch
                                     }
                                 }
                             }
-                            else fNesiotSofYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Hazor"].ToString());
+                            else
+                            {
+                                if (bLogNahag)
+                                    fNesiotSofYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Hazor"].ToString()) - 45;
+                                else
+                                    fNesiotSofYom = int.Parse(rowBitulZmanNesiot[0]["Zman_Nesia_Hazor"].ToString());
+                            }
                         }
 
                         fDakotRechiv = fNesiotTchilatYom + fNesiotSofYom;
@@ -3558,11 +3569,11 @@ namespace KdsBatch
         private void CalcRechiv96()
         {
             float fSumDakotRechiv ;
-            float fSumDakotLaylaEgged, fSumDakotLaylaChok;
+            float fSumDakotLaylaEgged, fSumDakotLaylaChok, fSumDakotLaylaBoker;
             try
             {
-                 fSumDakotLaylaEgged = 0;  fSumDakotLaylaChok = 0;
-                fSumDakotRechiv = oSidur.CalcRechiv96(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok);
+                fSumDakotLaylaEgged = 0; fSumDakotLaylaChok = 0; fSumDakotLaylaBoker = 0;
+                 fSumDakotRechiv = oSidur.CalcRechiv96(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok, ref fSumDakotLaylaBoker);
 
                 ////fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
                 //fTempX += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString()));
@@ -3575,17 +3586,19 @@ namespace KdsBatch
                 ////else if (fTempX <  _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum && (fSumDakotRechiv + fTempX) < _oGeneralData.objParameters.iMaxRetzifutChodshitImGlisha)
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), fSumDakotRechiv);
 
-                //רציפות לילה  
+                //רציפות לילה אגד  
                 if (fSumDakotLaylaEgged > 0 && fSumDakotLaylaEgged > fSumDakotRechiv && fSumDakotLaylaChok==0)
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fSumDakotRechiv);
                 else
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaEgged.GetHashCode(), fSumDakotLaylaEgged);
-                //רציפות לילה  
+                //רציפות לילה חוק  
                 if (fSumDakotLaylaChok > 0 && fSumDakotLaylaChok > fSumDakotRechiv && fSumDakotLaylaEgged == 0)
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fSumDakotRechiv);
                 else
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), fSumDakotLaylaChok);
-
+                //רציפות בוקר  
+                addRowToTable(clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), fSumDakotLaylaBoker);
+ 
             }
             catch (Exception ex)
             {
@@ -6313,7 +6326,7 @@ namespace KdsBatch
                           //{
                           oSidur.CalcRechiv271();
                           fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-
+                          fSumDakotRechiv += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                           addRowToTable(clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), fSumDakotRechiv);
                           //}
                       }

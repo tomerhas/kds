@@ -2754,7 +2754,7 @@ namespace KdsBatch
         //    }
         //}
 
-        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok)
+        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok, ref float fSumDakotLaylaBoker)
         {
             DataRow[] drSidurim;
             int iMisparSidur, J ;
@@ -2762,6 +2762,7 @@ namespace KdsBatch
             float fErech, fErechSidur, fTempX;
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
+            float fErecBoker,fErechSidurBoker;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             bool bSidurNehigaFirst = false;
@@ -2777,6 +2778,7 @@ namespace KdsBatch
                 fErech=0;
                 fErechLaylaEgged = 0;
                 fErechLaylaChok = 0;
+                fErecBoker =0;
                 for (int I = 0; I < drSidurim.Length;I++)
                 {
                     bSidurNehigaFirst = false;
@@ -2816,24 +2818,21 @@ namespace KdsBatch
                                             fErech += _oGeneralData.objParameters.iMaxRetzifutChodshitLetashlum - (fTempX + fErech);
                                         else fErech += fErechSidur;
                                     }
-                                    
-                                     // fErech += fErechSidur;
+                                    // fErech += fErechSidur;
 
-                                    //רציפות לילה                                
+                                    //רציפות לילה  
+                                    if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3")
+                                        dShatGmarLetashlum = dShatGmarLetashlum.AddMinutes(10) < dShatHatchalaLetashlum ? dShatGmarLetashlum.AddMinutes(10) : dShatHatchalaLetashlum;
+                                    if (drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
+                                        dShatHatchalaLetashlum = dShatHatchalaLetashlum.AddMinutes(-10) > dShatGmarLetashlum ? dShatHatchalaLetashlum.AddMinutes(-10) : dShatGmarLetashlum;
+                                                                 
                                     fErechSidurLaylaEgged = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters.dTchilatTosefetLaila, _oGeneralData.objParameters.dSiyumTosefetLaila);//9,10
                                     fErechSidurLaylaChok = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters.dSiyumTosefetLaila, _oGeneralData.objParameters.dSiyumTosefetLailaChok);//10,12
-                                        if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
-                                        {
-                                            if (fErechSidurLaylaEgged >= 10)
-                                                fErechSidurLaylaEgged = fErechSidurLaylaEgged - 10;
-                                            else fErechSidurLaylaEgged = 0;
-
-                                            if (fErechSidurLaylaChok >= 10)
-                                                fErechSidurLaylaChok = fErechSidurLaylaChok - 10;
-                                            else fErechSidurLaylaChok = 0;
-                                        }
-                                        fErechLaylaEgged += fErechSidurLaylaEgged;
-                                        fErechLaylaChok += fErechSidurLaylaChok;
+                                    fErechSidurBoker = getDakotRezifutBoker(dShatHatchalaLetashlum, dShatGmarLetashlum);   
+                                    
+                                    fErechLaylaEgged += fErechSidurLaylaEgged;
+                                    fErechLaylaChok += fErechSidurLaylaChok;
+                                    fErecBoker += fErechSidurBoker;
                                 }
                             }
                         }
@@ -2841,6 +2840,7 @@ namespace KdsBatch
                 }
                 fSumDakotLaylaEgged = fErechLaylaEgged;
                 fSumDakotLaylaChok = fErechLaylaChok;
+                fSumDakotLaylaBoker = fErecBoker;
                 return fErech;
             }
             catch (Exception ex)
@@ -6737,16 +6737,16 @@ namespace KdsBatch
                     {
                         fErech = float.Parse((Param2 - dShatGmarLetashlum).TotalMinutes.ToString());
                     }
-                    else if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date==dTaarich &&
-                             dShatGmarLetashlum < Param2.AddDays(-1) && dShatHatchalaLetashlum <= Param2.AddDays(-1))
-                    {
-                        fErech = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
-                    }
-                    else if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date == dTaarich &&
-                             dShatGmarLetashlum < Param2.AddDays(-1) && dShatHatchalaLetashlum > Param2.AddDays(-1))
-                    {
-                        fErech = float.Parse((Param2.AddDays(-1) - dShatGmarLetashlum).TotalMinutes.ToString());
-                    }
+                    //else if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date==dTaarich &&
+                    //         dShatGmarLetashlum < Param2.AddDays(-1) && dShatHatchalaLetashlum <= Param2.AddDays(-1))
+                    //{
+                    //    fErech = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                    //}
+                    //else if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date == dTaarich &&
+                    //         dShatGmarLetashlum < Param2.AddDays(-1) && dShatHatchalaLetashlum > Param2.AddDays(-1))
+                    //{
+                    //    fErech = float.Parse((Param2.AddDays(-1) - dShatGmarLetashlum).TotalMinutes.ToString());
+                    //}
 
                 return fErech;
             }
@@ -6755,6 +6755,33 @@ namespace KdsBatch
                 throw ex;
             }
        }
+
+         public float getDakotRezifutBoker(DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum)
+         {
+             float fErech;
+             DateTime param12 = new DateTime();
+             try
+             {
+                 fErech = 0;
+                 param12 = _oGeneralData.objParameters.dSiyumTosefetLailaChok;
+                 if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date == dTaarich &&
+                         dShatGmarLetashlum < param12.AddDays(-1) && dShatHatchalaLetashlum <= param12.AddDays(-1))
+                 {
+                     fErech = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                 }
+                 else if (dShatHatchalaLetashlum.Date == dTaarich && dShatGmarLetashlum.Date == dTaarich &&
+                          dShatGmarLetashlum < param12.AddDays(-1) && dShatHatchalaLetashlum > param12.AddDays(-1))
+                 {
+                     fErech = float.Parse((param12.AddDays(-1) - dShatGmarLetashlum).TotalMinutes.ToString());
+                 }
+
+                 return fErech;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
     }
 
 
