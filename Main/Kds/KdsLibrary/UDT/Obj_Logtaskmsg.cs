@@ -65,8 +65,8 @@ namespace KdsLibrary.UDT
             this.m_IDORDERIsNull = false;
             this.m_STATUSIDIsNull = false;
             this.m_SEQUENCEIsNull = false;
-            this.m_STARTTIMEIsNull = false;
-            this.m_ENDTIMEIsNull = false;
+            this.m_STARTTIMEIsNull = (StartTime == DateTime.MinValue) ? true: false;
+            this.m_ENDTIMEIsNull = (EndTime == DateTime.MinValue)? true: false;
         }
 
         public virtual bool IsNull
