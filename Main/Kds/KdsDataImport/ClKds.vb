@@ -2791,11 +2791,11 @@ Public Class ClKds
             'End Try
             Try
                 sub_tahalich = 28
-                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start tmp_meafyeney_elementim", 0)
+                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start pivot_meafyeney_elementim", 0)
                 ''** KdsWriteProcessLog(3, 28, 1, "start tmp_meafyeney_elementim")
                 oDal.ClearCommand()
                 oDal.ExecuteSP("PKG_ELEMENTS.calling_Pivot_Meafyeney_e")
-                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok tmp_meafyeney_elementim", 0)
+                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok pivot_meafyeney_elementim", 0)
                 ''**KdsWriteProcessLog(3, 28, 2, "end ok tmp_meafyeney_elementim")
             Catch ex As Exception
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Faild, "calling_Pivot_Meafyeney_e aborted " & ex.Message, 7)
@@ -2803,11 +2803,11 @@ Public Class ClKds
             End Try
             Try
                 sub_tahalich = 29
-                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start tmp_meafyeney_sug_sidur", 0)
+                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start pivot_meafyeney_sug_sidur", 0)
                 ''** KdsWriteProcessLog(3, 29, 1, "start tmp_meafyeney_sug_sidur")
                 oDal.ClearCommand()
                 oDal.ExecuteSP("PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S")
-                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok tmp_meafyeney_sug_sidur", 0)
+                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok pivot_meafyeney_sug_sidur", 0)
                 ''**  KdsWriteProcessLog(3, 29, 2, "end ok tmp_meafyeney_sug_sidur")
             Catch ex As Exception
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Faild, "calling_Pivot_Meafyeney_S aborted " & ex.Message, 7)
@@ -2815,11 +2815,11 @@ Public Class ClKds
             End Try
             Try
                 sub_tahalich = 30
-                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start tmp_sidurim_meyuchadim", 0)
+                iSeqRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start pivot_sidurim_meyuchadim", 0)
                 ''**KdsWriteProcessLog(3, 30, 1, "start tmp_sidurim_meyuchadim")
                 oDal.ClearCommand()
                 oDal.ExecuteSP("PKG_SIDURIM.calling_Pivot_Sidurim_M")
-                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok tmp_sidurim_meyuchadim", 0)
+                oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok pivot_sidurim_meyuchadim", 0)
                 ''** KdsWriteProcessLog(3, 30, 2, "end ok tmp_sidurim_meyuchadim")
             Catch ex As Exception
                 oBatch.UpdateProcessLog(iSeqRefresh, KdsLibrary.BL.RecordStatus.Faild, "calling_Pivot_Sidurim_M aborted " & ex.Message, 7)
@@ -2860,12 +2860,12 @@ Public Class ClKds
             ''** KdsWriteProcessLog(3, 3, 2, "end ok meafyenim_ovdim")
             'End If
             sub_tahalich = 27
-            iRunRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start  tmp_meafyenim_ovdim", 0)
+            iRunRefresh = oBatch.InsertProcessLog(3, sub_tahalich, KdsLibrary.BL.RecordStatus.Wait, "start  pivot_meafyenim_ovdim", 0)
             ''**KdsWriteProcessLog(3, 27, 1, "start  tmp_meafyenim_ovdim")
             ' noneed in the prc,oDal.ExecuteSQL("truncate table  tmp_meafyenim_ovdim")
             oDal.ClearCommand()
-            oDal.ExecuteSP("cursor_Meafyenim_Ovdim")
-            oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok  tmp_meafyenim_ovdim", 0)
+            oDal.ExecuteSP("create_pivot_Meafyenim_Ovdim")
+            oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "end ok  pivot_meafyenim_ovdim", 0)
             ''** KdsWriteProcessLog(3, 27, 2, "end ok  tmp_meafyenim_ovdim")
             'sub_tahalich = 33
             'KdsWriteProcessLog(3, 33, 1, "start upd meafyenim_ovdim")

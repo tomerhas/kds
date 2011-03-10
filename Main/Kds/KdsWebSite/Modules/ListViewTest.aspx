@@ -273,8 +273,8 @@ CollapsedImage="App_Themes/CollapsiblePanel/images/BackgroundEmployeeDetail.png"
            v_element.bitul_biglal_ichur_lasidur                                    
     FROM tb_sidurim_ovdim o,tb_peilut_ovdim po,
          tb_yamim_meyuchadim ym,ctb_sugey_yamim_meyuchadim sug_yom,
-         tmp_sidurim_meyuchadim v_sidurm,
-         tmp_meafyeney_elementim v_element         
+         pivot_sidurim_meyuchadim v_sidurm,
+         pivot_meafyeney_elementim v_element         
     WHERE o.mispar_ishi = po.mispar_ishi(+)
           AND o.taarich = po.taarich(+)
           AND o.mispar_sidur= po.mispar_sidur(+)
