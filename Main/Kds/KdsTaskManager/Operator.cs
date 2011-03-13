@@ -43,11 +43,6 @@ namespace KdsTaskManager
                 foreach (Action ActionItem in _Group.Actions)
                 {
                     _Command = FactoryCommand.GetInstance(ActionItem);
-             //       if (_Group.Actions[0] == ActionItem)
-                    //{
-                        Message msg = new Message(ActionItem, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.MinValue);
-                        msg.InsertTaskLog();
-                    //}
                     ResultCommand = _Command.Run();
                     if ((!ResultCommand) && (ActionItem.OnFailure == OnFailureBehavior.Exit))
                     {
@@ -90,9 +85,20 @@ namespace KdsTaskManager
         /// <remarks>_Thread has to sleep and raise the OnWakeUp event at the end of sleeping</remarks>
         public void Sleep()
         {
-            Thread.Sleep(OperatorSleepTime * 1000);
+            _Thread.Join(OperatorSleepTime * 6000);
             OnWakeUp(this);
         }
+
+        public void SetGroupToIdle()
+        {
+            _Group.Actions.ForEach(Action => SetToIdle(Action));
+        }
+        private void SetToIdle(Action CurrentAction)
+        {
+            Message msg = new Message(CurrentAction, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.MinValue);
+            msg.InsertTaskLog();
+        }
+
 
 
 

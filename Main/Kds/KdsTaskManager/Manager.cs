@@ -205,6 +205,7 @@ namespace KdsTaskManager
         {
             try
             {
+                Item.SetGroupToIdle();
                 if (Item.IsTimeToRun())
                 {
                     _CntRunningOperators++;
