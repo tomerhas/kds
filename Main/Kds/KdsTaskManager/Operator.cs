@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Configuration;
 using KdsLibrary;
 
 namespace KdsTaskManager
 {
-    public delegate void WakeUpHandler(Operator sender);
-
     public delegate void EndWorkHandler(Operator sender);
 
     public class Operator
     {
-        public event WakeUpHandler OnWakeUp;
         public event EndWorkHandler OnEndWork;
         private Thread _Thread;
         private Group _Group;
         private Command _Command;
-        private int OperatorSleepTime = 0;
+        public OperatorState State { get; set; }
 
         public Operator(Group group)
         {
@@ -27,7 +23,6 @@ namespace KdsTaskManager
             {
                 _Group = group;
                 _Thread = new Thread(new ThreadStart(StartWork));
-                OperatorSleepTime = clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["OperatorSleepTime"].ToString());
             }
             catch (Exception ex)
             {
@@ -82,26 +77,22 @@ namespace KdsTaskManager
             }
         }
 
-        /// <remarks>_Thread has to sleep and raise the OnWakeUp event at the end of sleeping</remarks>
-        public void Sleep()
-        {
-            _Thread.Join(OperatorSleepTime * 6000);
-            OnWakeUp(this);
-        }
-
         public void SetGroupToIdle()
         {
-            _Group.Actions.ForEach(Action => SetToIdle(Action));
+            try
+            {
+                _Group.Actions.ForEach(Action => SetToIdle(Action));
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
         }
         private void SetToIdle(Action CurrentAction)
         {
             Message msg = new Message(CurrentAction, TypeStatus.Idle, string.Empty, DateTime.Now, DateTime.MinValue);
             msg.InsertTaskLog();
         }
-
-
-
-
         /// <summary>
         /// Now() ( in hour ) between startTime and Endtime
         /// or Cycle = true

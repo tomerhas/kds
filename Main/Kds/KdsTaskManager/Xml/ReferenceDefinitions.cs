@@ -15,17 +15,26 @@ namespace KdsTaskManager
     public class ReferenceDefinitions
     {
         private static ReferenceDefinitions oReferenceDefinitions ;
+        private static object syncRoot = new object();
+        private static bool InstanceWasCreated = false;
         [XmlElement("Reference", typeof(Reference))]
         public List<Reference> ReferenceList { get; set; }
 
         public static ReferenceDefinitions GetInstance()
         {
-            if (oReferenceDefinitions == null)
+            if (!InstanceWasCreated)
             {
-                oReferenceDefinitions = new ReferenceDefinitions();
-                var xmlDoc = new XmlDocument();
-                xmlDoc.Load(@"ReferenceDefinitions.xml");
-                oReferenceDefinitions = (ReferenceDefinitions)Utilities.DeserializeObject(typeof(KdsTaskManager.ReferenceDefinitions), xmlDoc.OuterXml);
+                lock (syncRoot)
+                {
+                    if (!InstanceWasCreated)
+                    {
+                        var xmlDoc = new XmlDocument();
+                        xmlDoc.Load(@"ReferenceDefinitions.xml");
+                        oReferenceDefinitions = new ReferenceDefinitions();
+                        oReferenceDefinitions = (ReferenceDefinitions)Utilities.DeserializeObject(typeof(KdsTaskManager.ReferenceDefinitions), xmlDoc.OuterXml);
+                        InstanceWasCreated = true;
+                    }
+                }
             }
             return oReferenceDefinitions;
         }

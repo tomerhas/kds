@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading;
+using System.Timers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Data;
@@ -17,10 +19,17 @@ namespace KdsTaskManager
         private List<Operator> _Operators;
         private int _CntRunningOperators = 0;
         private int _NbOfGroup;
+        private System.Timers.Timer TmrOperatorSleep;
+        private int OperatorSleepTime = 0;
         public Manager()
         {
             try
             {
+                OperatorSleepTime = clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["OperatorSleepTime"].ToString());
+                TmrOperatorSleep = new System.Timers.Timer();
+                TmrOperatorSleep.Elapsed += new ElapsedEventHandler(TmrOperatorSleep_Elapsed);
+                TmrOperatorSleep.Start();
+                TmrOperatorSleep.Interval = OperatorSleepTime * 6000;
                 GetGroupsDefinition();
             }
             catch (Exception ex)
@@ -28,6 +37,7 @@ namespace KdsTaskManager
                 EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
             }
         }
+
         public bool HasSomethingToDo
         {
             get
@@ -63,13 +73,13 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                throw ex; 
+                throw ex;
             }
         }
         private DateTime IsDateTime(string strdate)
         {
             DateTime TheDate;
-            return (DateTime.TryParse(strdate, out TheDate))? TheDate: DateTime.Now;
+            return (DateTime.TryParse(strdate, out TheDate)) ? TheDate : DateTime.Now;
         }
 
         /// <summary>
@@ -141,23 +151,43 @@ namespace KdsTaskManager
         {
             _CntRunningOperators--;
             if (Utilities.Debug)
-            EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId+  " was finished his job ", EventLogEntryType.Information);
+                EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + " was finished his job ", EventLogEntryType.Information);
         }
 
-        private void operatorItem_OnWakeUp(Operator sender)
+        private void TmrOperatorSleep_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + "  wake up", EventLogEntryType.Information);
-            if ((sender.IsTimeToRun()) && (_CntRunningOperators != 0))
-                RunOperator(sender);
-            else
+                EventLog.WriteEntry(Utilities.EventLogSource, "Check ", EventLogEntryType.Information);
+            _Operators.FindAll(item =>
+                                ((item.State == OperatorState.Sleeping) &&
+                                (item.IsTimeToRun()) &&
+                                (_CntRunningOperators != 0))
+                ).ForEach(OperatorFound => RunOperator(OperatorFound));
+        }
+        private void RunOperator(Operator Item)
+        {
+            try
             {
-                if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + "  goes to sleep", EventLogEntryType.Information);
-                sender.Sleep();
+                if (Item.IsTimeToRun())
+                {
+                    _CntRunningOperators++;
+                    if (Utilities.Debug)
+                        EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + Item.GroupId + " will start..." + _CntRunningOperators + " operator(s) are running ", EventLogEntryType.Information);
+                    Item.Start();
+                    Item.State = OperatorState.Working;
+                }
+                else
+                {
+                    Item.State = OperatorState.Sleeping;
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
             }
 
         }
+
 
         public void Run()
         {
@@ -167,6 +197,8 @@ namespace KdsTaskManager
                 _Operators.ForEach(Item => RunOperator(Item));
                 while (_CntRunningOperators > 0)
                 {
+                    if (Utilities.Debug)
+                        EventLog.WriteEntry(Utilities.EventLogSource, "There are still " + _CntRunningOperators  + " are running.." , EventLogEntryType.Information);
                     Thread.Sleep(5000);
                 }
             }
@@ -175,7 +207,7 @@ namespace KdsTaskManager
                 EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
             }
             if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Manager was finished his job" , EventLogEntryType.Information);
+                EventLog.WriteEntry(Utilities.EventLogSource, "Manager was finished his job", EventLogEntryType.Information);
         }
         /// <summary>
         /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
@@ -185,13 +217,13 @@ namespace KdsTaskManager
             try
             {
                 if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "Create " + _NbOfGroup+" Operator(s)", EventLogEntryType.Information);
+                    EventLog.WriteEntry(Utilities.EventLogSource, "Create " + _NbOfGroup + " Operator(s)", EventLogEntryType.Information);
                 _Operators = new List<Operator>();
                 _Groups.ForEach(groupItem => _Operators.Add(new Operator(groupItem)));
                 _Operators.ForEach(operatorItem => operatorItem.OnEndWork += new EndWorkHandler(operatorItem_OnEndWork));
-                _Operators.ForEach(operatorItem => operatorItem.OnWakeUp += new WakeUpHandler(operatorItem_OnWakeUp));
                 if (_NbOfGroup > 0)
                     _Operators.ForEach((OperatorItem => SetTaskOfGroup(OperatorItem.GroupId)));
+                _Operators.ForEach(OperatorItem => OperatorItem.SetGroupToIdle());
             }
             catch (Exception ex)
             {
@@ -201,25 +233,8 @@ namespace KdsTaskManager
 
         }
 
-        private void RunOperator(Operator Item)
-        {
-            try
-            {
-                Item.SetGroupToIdle();
-                if (Item.IsTimeToRun())
-                {
-                    _CntRunningOperators++;
-                    if (Utilities.Debug)
-                        EventLog.WriteEntry(Utilities.EventLogSource, "Operator "+Item.GroupId +" will start..."+_CntRunningOperators+" operator(s) are running ", EventLogEntryType.Information);
-                    Item.Start();
-                }
-                else Item.Sleep();
-            }
-            catch (Exception ex)
-            {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
-            }
 
-        }
+
+
     }
 }

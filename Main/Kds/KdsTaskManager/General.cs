@@ -144,6 +144,12 @@ namespace KdsTaskManager
         Success = 2,
         Stopped = 3
     }
+    public enum OperatorState
+    {
+        Sleeping ,
+        Working ,
+        Endded 
+    }
     public enum OnFailureBehavior
     {
         Exit = 1,
