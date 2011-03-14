@@ -17,6 +17,9 @@
           <Parameter Name="P_DT">
             <Value>=Parameters!P_DT.Value</Value>
           </Parameter>
+          <Parameter Name="P_URL_BARCODE">
+            <Value>=Parameters!P_URL_BARCODE.Value</Value>
+          </Parameter>
           <Parameter Name="P_TIKUN">
             <Value>=Parameters!P_TIKUN.Value</Value>
           </Parameter>
@@ -46,6 +49,9 @@
               </Parameter>
               <Parameter Name="P_DT">
                 <Value>=Parameters!P_DT.Value</Value>
+              </Parameter>
+              <Parameter Name="P_URL_BARCODE">
+                <Value>=Parameters!P_URL_BARCODE.Value</Value>
               </Parameter>
               <Parameter Name="P_TIKUN">
                 <Value>=Parameters!P_TIKUN.Value</Value>
@@ -127,6 +133,11 @@
         </Values>
       </DefaultValue>
       <Prompt>P_SIDUR_VISA</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_URL_BARCODE">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_URL_BARCODE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_TIKUN">
       <DataType>String</DataType>
