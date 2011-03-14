@@ -1159,13 +1159,13 @@
 //               document.getElementById("lblMessage").value = ":יש לקבוע את תאריך שעת יציאה של הסידור";
            $find('ModalPopupEx').show;
            document.getElementById("btnHosafa").disabled = true;
-           document.getElementById("btnHosafatPeilut").disabled = true;
+        //   document.getElementById("btnHosafatPeilut").disabled = true;
        }
        function btnNochachi_click() {
            $find('ModalPopupEx').hide();
            var obj;
            document.getElementById("btnHosafa").disabled = false;
-           document.getElementById("btnHosafatPeilut").disabled = false;
+        //   document.getElementById("btnHosafatPeilut").disabled = false;
             if (document.getElementById("DestTime").value == "gmar") {
                 onchange_txtShatGmar(true, "1");
             }
@@ -1189,7 +1189,7 @@
            var shatYeziaDate; //= document.getElementById("txtShatHatchala").value;
            var obj;
            document.getElementById("btnHosafa").disabled = false;
-           document.getElementById("btnHosafatPeilut").disabled = false;
+         //  document.getElementById("btnHosafatPeilut").disabled = false;
            if (document.getElementById("DestTime").value.split(';')[0] == "gmar") {
                onchange_txtShatGmar(true, "2")
            }

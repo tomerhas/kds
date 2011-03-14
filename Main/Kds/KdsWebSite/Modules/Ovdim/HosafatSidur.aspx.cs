@@ -143,7 +143,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 txtShatGmar.Text = "";
                 txtShatGmar.ToolTip = "";
                 YeziratDTSource(ref dtSource);
-                btnHosafatPeilut.Disabled = false;
+              //  btnHosafatPeilut.Disabled = false;
                 if (type == 1)//סידור מפה
                 {
                     txtTeurSidur.Text = "";
@@ -392,14 +392,14 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             dtMustElemnts = oUtils.GetMeafyenSidurByKodSidur(KodSidur, TaarichCA.Value);
             sSQL = "KOD_MEAFYEN =46";
             drSelect = dtMustElemnts.Select(sSQL);
-            if (drSelect.Length > 0)
-            {
-                if (drSelect[0]["KOD_MEAFYEN"].ToString() == "46" && drSelect[0]["ERECH"].ToString() == "1")
-                    btnHosafatPeilut.Disabled = true;
-            }
-            else
-            {
-                btnHosafatPeilut.Disabled = false;
+            //if (drSelect.Length > 0)
+            //{
+            //    if (drSelect[0]["KOD_MEAFYEN"].ToString() == "46" && drSelect[0]["ERECH"].ToString() == "1")
+            //        btnHosafatPeilut.Disabled = true;
+            //}
+            //else
+            //{
+                //btnHosafatPeilut.Disabled = false;
                 sSQL = "KOD_MEAFYEN in (93,94,95,45)";
                 drSelect = dtMustElemnts.Select(sSQL);
                 for (int i = 0; i < drSelect.Length; i++)
@@ -421,8 +421,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     dr["PRATIM"] = getPratimLeMakat(int.Parse(dr["MAKAT"].ToString()), ref dr, ref type);
                     dr["PRATIM"] += ";KISUY_TOR=;ENABLE_MAKAT=" + enable_makat; 
                     dtSource.Rows.Add(dr);
-                }
-            }
+                 }
+            //}
            
             Session["DataSource"] = dtSource;
 
