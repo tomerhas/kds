@@ -673,10 +673,16 @@ function onUsrValidSuccess(result){
 function onButtonFocusIn(btnID) {
   btnID.style.border = "1px solid black";
 }
-function onButtonFocusOut(btnID) {
+function onButtonFocusOut(btnID){
     btnID.style.border = "none";
 }
-function setBorderBtns() {
+function BarCodeTest(){
+    if (Number(String(document.getElementById("txtId").value).length) >4) {        
+        event.returnValue = false;
+        event.cancel = true;
+    }
+ }
+function setBorderBtns(){
     var aButton = document.getElementsByTagName('Input');
     for (var i = 0; i < aButton.length; i++) {
         if (aButton[i].type == "button" || aButton[i].type == "submit") {

@@ -71,8 +71,7 @@
                             <DynamicHoverStyle  CssClass="clLevel1over" />          
                         </asp:Menu>
                     </td>                
-                </tr>
-               
+                </tr>               
              </table>
          </ContentTemplate>
       </asp:UpdatePanel>

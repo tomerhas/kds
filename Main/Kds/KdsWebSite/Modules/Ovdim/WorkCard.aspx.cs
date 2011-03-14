@@ -310,6 +310,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        // clnDate.Attributes.Add("onkeyup", "CheckIfCardExists();");
         txtId.Attributes.Add("onblur", "isUserIdValid();");
         txtId.Attributes.Add("onfocus", "document.getElementById('txtId').select();");
+        //txtId.Attributes.Add("onkeydown", "BarCodeTest();");
         txtId.Focus();
         txtName.Attributes.Add("onchange", "isUserNameValid();");
         btnRefreshOvedDetails.Attributes.Add("onfocus", "onButtonFocusIn(" + btnRefreshOvedDetails.ID + ")");
@@ -330,7 +331,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void SetIdkuneyRashemet()
     {
-
         try
         {
             ddlLina.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "LINA"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
@@ -348,8 +348,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             throw ex;
         }
-
-
     }
     protected bool RunBatchFunctions()
     {
@@ -3732,13 +3730,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             if (sTmp == string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));
                             else
-                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
+                                oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp);
 
                             sTmp = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSGL" + iIndex))).Text;
                             if (sTmp==string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
                             else
-                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmar.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
 
                             oDDL = (DropDownList)this.FindControl("lstSidurim").FindControl("ddlException" + iIndex);
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);

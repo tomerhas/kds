@@ -997,18 +997,16 @@ function chkMkt(oRow) {
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'none';
         var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:210px;dialogleft:220px;status:no;resizable:yes;");
-        if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
+        if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
             document.getElementById("hidExecInputChg").value = "1";
             bScreenChanged = false;
             RefreshBtn();
             var oSh = document.getElementById("lstSidurim_txtSH".concat(iIndex));
             if (!(oSh.disabled))
                 oSh.disabled = true;
-
-            document.getElementById("divHourglass").style.display = 'block';
             __doPostBack('btnRefreshOvedDetails', '');
-            
         }
+
         return res;
     }
 //    function AddNesiaReka(iPeilutIndex, iSidurIndex, iLastPeilut) {

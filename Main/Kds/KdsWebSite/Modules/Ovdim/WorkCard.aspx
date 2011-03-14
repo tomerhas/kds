@@ -89,9 +89,9 @@
                                                 <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>                                                    
                                             </td>
                                             <td style="width: 1%"><img src="../../Images/ErrorSign.jpg" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"   /></td>
-                                            <td style="width: 10%">                                                
-                                                <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" MaxLength="5"
-                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1" ></asp:TextBox>
+                                            <td style="width: 10%">                                                                                      
+                                                <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
+                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1"  ></asp:TextBox>
                                                 <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                                                     CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                                                     ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -548,7 +548,9 @@
           var KeyID = event.keyCode;                           
            switch(KeyID){            
               case 13: //Enter           
-                 if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){                  
+                 if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){  
+                     if ((document.getElementById("txtId").value).length>5)
+                         SetBarCode();              
                      event.returnValue=false;
                      event.cancel = true;
                  }
@@ -563,9 +565,15 @@
                  break;
              }                
          }
-         function btnMeasherOrMistayeg_onclick(value)
+         function SetBarCode()
          {
-         debugger;
+           var sKey = document.getElementById("txtId").value;
+           document.getElementById("txtId").value = String(sKey).substr(0,5);
+           document.getElementById("clnDate").value = String(sKey).substr(11,2) + "/" +  String(sKey).substr(9,2) + "/" + String(sKey).substr(5,4) ;
+           document.getElementById("btnRefreshOvedDetails").click();
+         }
+         function btnMeasherOrMistayeg_onclick(value)
+         {       
             SetMeasher(value); 
             if (document.getElementById('hidFromEmda').value =='true') 
                 {
