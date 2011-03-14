@@ -676,12 +676,6 @@ function onButtonFocusIn(btnID) {
 function onButtonFocusOut(btnID){
     btnID.style.border = "none";
 }
-function BarCodeTest(){
-    if (Number(String(document.getElementById("txtId").value).length) >4) {        
-        event.returnValue = false;
-        event.cancel = true;
-    }
- }
 function setBorderBtns(){
     var aButton = document.getElementsByTagName('Input');
     for (var i = 0; i < aButton.length; i++) {
