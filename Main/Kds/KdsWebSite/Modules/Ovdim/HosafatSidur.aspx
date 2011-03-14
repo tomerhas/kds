@@ -1551,7 +1551,7 @@
                           
                          <td align="left">
                              <asp:Button ID="btnIdkunGridHidden" runat="server" onclick="BtIdkunGrid_Click"  />
-                            <input type="button" id="btnHosafatPeilut"  class="ImgButtonSearch"  runat="server" value="הוסף/חפש פעילות" style="width:150px" onclick="OpenHosefPeilut();"   causesvalidation="false"  />
+                            <input type="button" id="btnHosafatPeilut"  class="ImgButtonSearch"  runat="server" value="הוסף/חפש פעילות" style="width:150px;display:none" onclick="OpenHosefPeilut();"   causesvalidation="false"  />
                             <input id="btnHosafa" runat="server" type="button"  class="ImgButtonSearch" style="width:238px"  value="הוסף את הסידור לכרטיס העבודה"  
                               onclick="btnHosafa_OnClick();" onblur="document.getElementById('btnMapa').focus();" />
                  <%--
