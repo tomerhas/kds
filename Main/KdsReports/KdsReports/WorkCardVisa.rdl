@@ -212,92 +212,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <Textbox Name="txtKey">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Parameters!P_MISPAR_ISHI.Value.ToString() + Format(Parameters!P_TAARICH.Value,"yyyyMMdd")</Value>
-                                  <Style>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <LeftIndent>0cm</LeftIndent>
-                              <HangingIndent>0cm</HangingIndent>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <Top>1.10471cm</Top>
-                          <Left>0.59301cm</Left>
-                          <Height>0.40638cm</Height>
-                          <Width>4.98901cm</Width>
-                          <ZIndex>2</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <Image Name="barkod">
-                          <Source>Database</Source>
-                          <Value>=code.Barcode(reportitems!txtKey.Value)</Value>
-                          <MIMEType>image/gif</MIMEType>
-                          <Sizing>Clip</Sizing>
-                          <Left>0.16555cm</Left>
-                          <Height>1.05833cm</Height>
-                          <Width>5.61538cm</Width>
-                          <ZIndex>3</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Image>
-                        <Textbox Name="Textbox18">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm") + " "</Value>
-                                  <Style>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <LeftIndent>0cm</LeftIndent>
-                              <HangingIndent>0cm</HangingIndent>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox12</rd:DefaultName>
-                          <Top>1.8465cm</Top>
-                          <Left>0.248cm</Left>
-                          <Height>0.56444cm</Height>
-                          <Width>4.84695cm</Width>
-                          <ZIndex>4</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
                         <Textbox Name="Textbox45">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -323,7 +237,7 @@
                           <Left>0.248cm</Left>
                           <Height>0.31819cm</Height>
                           <Width>4.84695cm</Width>
-                          <ZIndex>5</ZIndex>
+                          <ZIndex>2</ZIndex>
                           <Visibility>
                             <Hidden>=iif(Parameters!P_EMDA.Value &lt;&gt;1 ,true ,false)</Hidden>
                           </Visibility>
@@ -363,7 +277,7 @@
                           <Left>0.16555cm</Left>
                           <Height>11.01348cm</Height>
                           <Width>19.52201cm</Width>
-                          <ZIndex>6</ZIndex>
+                          <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -448,7 +362,7 @@
                           <Left>0.20677cm</Left>
                           <Height>1.00472cm</Height>
                           <Width>4.88818cm</Width>
-                          <ZIndex>7</ZIndex>
+                          <ZIndex>4</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -569,7 +483,7 @@
                           <Left>17.31361cm</Left>
                           <Height>0.92476cm</Height>
                           <Width>2.37396cm</Width>
-                          <ZIndex>8</ZIndex>
+                          <ZIndex>5</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -916,7 +830,7 @@
                           <Left>6.06197cm</Left>
                           <Height>0.92476cm</Height>
                           <Width>10.79294cm</Width>
-                          <ZIndex>9</ZIndex>
+                          <ZIndex>6</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1268,7 +1182,7 @@
                           <Left>6.06197cm</Left>
                           <Height>0.92476cm</Height>
                           <Width>13.62555cm</Width>
-                          <ZIndex>10</ZIndex>
+                          <ZIndex>7</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1623,7 +1537,7 @@
                           <Left>6.06197cm</Left>
                           <Height>0.92476cm</Height>
                           <Width>13.6256cm</Width>
-                          <ZIndex>11</ZIndex>
+                          <ZIndex>8</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2285,7 +2199,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           <Left>0.20677cm</Left>
                           <Height>1.2cm</Height>
                           <Width>19.48084cm</Width>
-                          <ZIndex>12</ZIndex>
+                          <ZIndex>9</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -2368,13 +2282,98 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           <Left>0.20677cm</Left>
                           <Height>1.00472cm</Height>
                           <Width>4.9294cm</Width>
-                          <ZIndex>13</ZIndex>
+                          <ZIndex>10</ZIndex>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
                             </Border>
                           </Style>
                         </Tablix>
+                        <Image Name="barkod">
+                          <Source>External</Source>
+                          <Value>=Parameters!P_URL_BARCODE.Value</Value>
+                          <Sizing>Clip</Sizing>
+                          <Left>1.41645cm</Left>
+                          <Height>2.05866cm</Height>
+                          <Width>2.41392cm</Width>
+                          <ZIndex>11</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
+                        <Textbox Name="txtKey2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!P_MISPAR_ISHI.Value.ToString() + Format(Parameters!P_TAARICH.Value,"yyyyMMdd")</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Top>2.05866cm</Top>
+                          <Left>0.25426cm</Left>
+                          <Height>0.2248cm</Height>
+                          <Width>4.65305cm</Width>
+                          <ZIndex>12</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox21">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>= " תאריך הדפסה "   +  Format(Globals!ExecutionTime,"dd/MM/yyyy")  + " " +   Format(Globals!ExecutionTime,"HH:mm") + " "</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Top>2.35402cm</Top>
+                          <Left>0.09764in</Left>
+                          <Height>0.22425cm</Height>
+                          <Width>4.65931cm</Width>
+                          <ZIndex>13</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -2465,6 +2464,11 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Values>
       </DefaultValue>
       <Prompt>P_DT</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_URL_BARCODE">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_URL_BARCODE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_TIKUN">
       <DataType>String</DataType>
