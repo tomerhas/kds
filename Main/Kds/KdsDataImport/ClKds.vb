@@ -2168,7 +2168,8 @@ Public Class ClKds
                             ''**KdsWriteProcessLog(tahalich, sub_tahalich, 3, "status 7 error during replication,tell someone there was an error while replicating", "12")
                             'record exist but an error occurd during replication
                             ToMail = ConfigurationSettings.AppSettings("miri")
-                            ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
+                            'ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
+                            ToMail = ToMail & "," & ConfigurationSettings.AppSettings("DavidP")
                             BodyMail = "status 7 error during replication,tell someone there was an error while replicating"
                             SendMail(ToMail, "no peace 4 the wicked", BodyMail)
                             oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.SendMail, "mail sdrn", 0)
