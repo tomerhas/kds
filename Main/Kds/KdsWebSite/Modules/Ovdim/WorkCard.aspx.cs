@@ -2125,25 +2125,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ModalPopupEx.Hide();
        
         if (SaveCard())
-        {
-            //if ((hidSave.Value.Equals("1")))
-            //{                
-            //    //hidSave.Value = "0";
-            //   // string sQueryString="";
-            //   // //sQueryString = "?dt=" + DateTime.Now.ToString();
-            //   // sQueryString = sQueryString + "EmpID=" + iMisparIshi;
-            //   // sQueryString = sQueryString + "&CardDate=" + dDateCard.ToShortDateString();
-
-            //   // string sAddSidur = "window.showModalDialog('HosafatSidur.aspx?" + sQueryString + "');"; //+ ", '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');";
-            //   // ScriptManager.RegisterStartupScript(Page, this.GetType(), "AddSidur", sAddSidur, true);
-            //   //// btnFindSidur_Click(sender, e);
-            //   // RunBatchFunctions();
-            //   // lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
-            //   // lstSidurim.ErrorsList = oBatchManager.dtErrors;
-            //   // lstSidurim.ClearControl();
-            //   // lstSidurim.BuildPage();
-            //}
-            //else
+        {          
             if (!(hidSave.Value.Equals("1")))
             {
                 if ((Request.QueryString["Page"] != null))
@@ -2224,11 +2206,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
             //hidExecInputChg.Value = "1";
             ////נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
-            
+
             //RunBatchFunctions();
             //Session["Errors"] = oBatchManager.dtErrors;
             //Session["Parameters"] = oBatchManager.oParam;
-             
+
             ////oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
             //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
             //lstSidurim.ErrorsList = oBatchManager.dtErrors;
