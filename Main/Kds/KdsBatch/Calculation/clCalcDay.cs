@@ -1194,7 +1194,7 @@ namespace KdsBatch
          private void CalcRechiv22()
          {
              //יש לפתוח רכיב רק אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך כלשהו ו/או קיים סידור מזכה לגמול 
-             float fSumDakotRechiv, fDakotNehiga, fMichsaYomit126;
+             float fSumDakotRechiv, fDakotNehiga, fMichsaYomit126,fNochechtLeTashlum;
              try{
              //יש לחשב רק בתנאים אלו:
              // אם עובד שכיר קבוע (קוד מעמד = 22 או 21) 
@@ -1209,6 +1209,8 @@ namespace KdsBatch
                      if (_objMefyeneyOved.iMeafyen60 > 0 )
                      {
                          fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                         fNochechtLeTashlum = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime') AND (MISPAR_SIDUR=99207 or MISPAR_SIDUR=99007 or MISPAR_SIDUR=99011 )"));
+                          fSumDakotRechiv = fSumDakotRechiv - fNochechtLeTashlum;
                      }
                      else
                      {

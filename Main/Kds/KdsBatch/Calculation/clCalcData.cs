@@ -420,15 +420,15 @@ namespace KdsBatch
         {
             clUtils oUtils = new clUtils();
             clParameters itemParams;
-            int iSugYom;
+            int sugYom;
             try
             {
                 DtParameters = oUtils.GetKdsParametrs();
                 ListParametersMonth = new List<clParameters>();
                 while (dTarMe <= dTarAd)
                 {
-                    iSugYom = clGeneral.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
-                    itemParams = new clParameters(dTarMe, iSugYom, "Calc");
+                    sugYom = clGeneral.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
+                    itemParams = new clParameters(dTarMe, sugYom, "Calc");
                     ListParametersMonth.Add(itemParams);
                     dTarMe = dTarMe.AddDays(1);
                 }

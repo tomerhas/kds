@@ -90,7 +90,7 @@ namespace KdsBatch
                                                                                             });
                    // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
 
-                    iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
+                 //   iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
                     
                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
                     _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
@@ -115,18 +115,19 @@ namespace KdsBatch
                                   
                  while (dTaarich <= dTarAd)
                  {
+                     clCalcData.iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);
                      _oGeneralData.objMeafyeneyOved = clCalcData.ListMeafyeneyOvedMonth.Find(delegate(clMeafyenyOved Meafyenim)
                      {
                          return (Meafyenim._Taarich == dTaarich);
                      });
                     // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
-                     //iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
+                   //  iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
                      _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
                      {
                          return (Params._Taarich == dTaarich);
                      });
                                 
-                    // clCalcData.iSugYom = iSugYom;
+                   //  clCalcData.iSugYom = iSugYom;
                     // _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom,"Calc");
                      _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
                     // clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);

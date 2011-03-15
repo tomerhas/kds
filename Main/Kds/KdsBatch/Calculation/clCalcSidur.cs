@@ -3148,6 +3148,7 @@ namespace KdsBatch
             float fErech, fTempX, fTempY, fTempDakot;
             string sSidurimMeyuchadim;
             dShatHatchalaSidur = DateTime.MinValue;
+            DateTime dShaa = dTaarich;
             iMisparSidur = 0;
             try
             {
@@ -3161,8 +3162,10 @@ namespace KdsBatch
                     {
                         iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-                            
+                        dShaa = DateTime.Parse(dTaarich.ToShortDateString() + " 15:30:00");
                         
+                        if (dShatHatchalaSidur >= dShaa)
+                        {
                             drSidurimLeyom = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
                             if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur)
                             {
@@ -3215,7 +3218,7 @@ namespace KdsBatch
                                fTempDakot = float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString());
                                fTempX = Math.Min(_oGeneralData.objParameters.iTosefetZmanGrira, fTempDakot);
                           }
-                       
+                        }
                       
                         addRowToTable(clGeneral.enRechivim.TosefetGririoTchilatSidur.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fTempY);
                         addRowToTable(clGeneral.enRechivim.TosefetGrirotSofSidur.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fTempX);
