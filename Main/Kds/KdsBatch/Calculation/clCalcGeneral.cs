@@ -14,6 +14,7 @@ namespace KdsBatch
         public  clParameters objParameters;
         public  clMeafyenyOved objMeafyeneyOved;
         public  clPirteyOved objPirteyOved;
+       
 
         public  bool CheckMutamut()
         {
@@ -106,6 +107,7 @@ namespace KdsBatch
             }
         }
 
+       
     }
 }
 

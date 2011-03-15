@@ -127,13 +127,26 @@ namespace KdsBatch
         private bool _bMeafyen107Exists = false;
         private bool _bMeafyen108Exists = false;
         private bool _bMeafyen110Exists = false;
-
+        private string _Type;
+        public DateTime _Taarich= new DateTime();
         public clMeafyenyOved(int iMisparIshi, DateTime dDate)
         {
             GetMeafyeneyOvdim(iMisparIshi, dDate);
             if (dtMeafyenyOved.Rows.Count > 0)
             {
                 SetMeafyneyOved();                
+            }
+            dtMeafyenyOved.Dispose();
+        }
+
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate,string Type)
+        {
+            _Type = Type;
+            _Taarich = dDate;
+            dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                SetMeafyneyOved();
             }
             dtMeafyenyOved.Dispose();
         }
@@ -385,10 +398,18 @@ namespace KdsBatch
         public void SetOneMeafyen(string sMeafyenNum, ref bool bMeafyenExists, ref string sMeafyenValue)
         {
             DataRow[] drMeafyn;
+            string sQury = "";
             try
             {
                 bMeafyenExists = false;
-                drMeafyn = dtMeafyenyOved.Select(string.Concat("kod_meafyen=", sMeafyenNum));
+                if (_Type == "Calc")
+                {
+                    sQury = "kod_meafyen=" + sMeafyenNum;
+                    sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                    sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+                    drMeafyn = dtMeafyenyOved.Select(sQury);
+                }
+                else drMeafyn = dtMeafyenyOved.Select(string.Concat("kod_meafyen=", sMeafyenNum));
                 if (drMeafyn.Length > 0)
                 {
                     bMeafyenExists = int.Parse(drMeafyn[0]["source_meafyen"].ToString()) == 1;

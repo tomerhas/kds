@@ -39,11 +39,14 @@ namespace KdsBatch
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
 
+                   if (clCalcData.ListParametersMonth == null)
+                       clCalcData.InitListParamObject(dTarMe, dTarAd);
+
                    CalcOved(iMisparIshi, lBakashaId, dTarMe, dTarAd);
 
                    SaveChishuvTemp(iMisparIshi, dCalcMonth,iTzuga,ref  dtHeadrut ,ref  dtRechivimChodshiym,ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31,ref dtAllRikuz);
-                    
-                 
+
+                   clCalcData.ListParametersMonth = null;
                }
               catch (Exception ex)
               {
@@ -67,12 +70,11 @@ namespace KdsBatch
                    clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-13);
-                   
+                   clCalcData.DtParameters = oUtils.GetKdsParametrs();
                     for (dMeChodesh = dFrom; dMeChodesh <= dAdChodesh; dMeChodesh = dMeChodesh.AddMonths(1))
                    {
                        try
                        {
-                         
                                dtOvdim = GetOvdimLechishuv(dMeChodesh, sMaamad, bRitzaGorefet);
                                 
                                 dTarMe = dMeChodesh;
@@ -81,6 +83,9 @@ namespace KdsBatch
 
                                clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                                clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
+
+                               if (clCalcData.ListParametersMonth == null)
+                                   clCalcData.InitListParamObject(dTarMe, dTarAd);
 
                                for (i = 0; i <= dtOvdim.Rows.Count - 1; i++)
                                {
@@ -105,6 +110,7 @@ namespace KdsBatch
                                        clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0,dTarAd, "MainCalc: " + ex.Message);
                                    }
                                }
+                               clCalcData.ListParametersMonth = null;
                            }
                         catch(Exception ex)
                        {
@@ -125,7 +131,7 @@ namespace KdsBatch
                    clDefinitions.UpdateLogBakasha(lBakashaId,DateTime.Now,iStatus);
                }
            }
-
+          
            public void PremiaCalc()
            {
                clBatch obatch= new clBatch();

@@ -26,7 +26,10 @@ namespace KdsBatch
         private static DataTable _dtPeiluyotOved;
         private static DataTable _dtPirteyOvedForMonth;
         private static DataTable _dtParameters;
-        private static DataTable _dtMeafyenimLeOved;
+        private static List<clParameters> _listParametersMonth;
+        private static DataTable _dtMeafyenyOvedMonth;
+        private static List<clMeafyenyOved> _listMeafyeneyOvedMonth;
+
         public static int iSugYom;
         public static string sSugYechida;
         public static float fMekademNipuach;
@@ -101,11 +104,25 @@ namespace KdsBatch
             set { _dtParameters = value; }
             get { return _dtParameters; }
         }
-        public static DataTable DtMeafyenimLeOved
+
+        public static List<clParameters> ListParametersMonth
         {
-            set { _dtMeafyenimLeOved = value; }
-            get { return _dtMeafyenimLeOved; }
+            set { _listParametersMonth = value; }
+            get { return _listParametersMonth; }
         }
+
+
+        public static List<clMeafyenyOved> ListMeafyeneyOvedMonth
+        {
+            set { _listMeafyeneyOvedMonth = value; }
+            get { return _listMeafyeneyOvedMonth; }
+        }
+        public static DataTable DtMeafyenyOvedMonth
+        {
+            set { _dtMeafyenyOvedMonth = value; }
+            get { return _dtMeafyenyOvedMonth; }
+        }
+        
         public static DataTable DtSugeySidurRechiv
         {
             set { _dtSugeySidurRechiv = value; }
@@ -373,7 +390,55 @@ namespace KdsBatch
             _DtSidur.Columns.Add("out_michsa", System.Type.GetType("System.Int32"));
             _dsChishuv.Tables.Add(_DtSidur);
         }
+
         #endregion
+
+
+        public static void InitListMeafyenyOvedObject(int iMisparIshi, DateTime dTarMe, DateTime dTarAd)
+        {
+            clOvdim oOvdim = new clOvdim();
+            clMeafyenyOved itemMeafyenyOved;
+            try
+            {
+                DtMeafyenyOvedMonth = oOvdim.GetMeafyeneyBitzuaLeOvedAll(iMisparIshi, dTarMe, dTarAd, 1);
+                ListMeafyeneyOvedMonth = new List<clMeafyenyOved>();
+                while (dTarMe <= dTarAd)
+                {
+                    itemMeafyenyOved = new clMeafyenyOved(iMisparIshi, dTarMe, "Calc");
+                    ListMeafyeneyOvedMonth.Add(itemMeafyenyOved);
+                    dTarMe = dTarMe.AddDays(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                throw ex;
+            }
+        }
+
+        public static void InitListParamObject(DateTime dTarMe, DateTime dTarAd)
+        {
+            clUtils oUtils = new clUtils();
+            clParameters itemParams;
+            int iSugYom;
+            try
+            {
+                DtParameters = oUtils.GetKdsParametrs();
+                ListParametersMonth = new List<clParameters>();
+                while (dTarMe <= dTarAd)
+                {
+                    iSugYom = clGeneral.GetSugYom(DtYamimMeyuchadim, dTarMe, DtSugeyYamimMeyuchadim);
+                    itemParams = new clParameters(dTarMe, iSugYom, "Calc");
+                    ListParametersMonth.Add(itemParams);
+                    dTarMe = dTarMe.AddDays(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                throw ex;
+            }
+        }
     }
 
 

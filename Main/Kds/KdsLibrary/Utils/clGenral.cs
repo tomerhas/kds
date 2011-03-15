@@ -1814,7 +1814,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
 
 
-        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim, int iMeafyen56)
+        public static int GetSugYom(DataTable dtYamimMeyuchadim, DateTime dTaarich, DataTable dtSugeyYamimMeyuchadim) //, int iMeafyen56)
         {
             int iSugYom;
             if (dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length > 0)
@@ -1822,7 +1822,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 iSugYom = int.Parse(dtYamimMeyuchadim.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0]["sug_yom"].ToString());
                 if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shabat.GetHashCode())
                 { iSugYom = 20; }
-                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode() && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
+                else if ((dTaarich.DayOfWeek.GetHashCode() + 1) == clGeneral.enDay.Shishi.GetHashCode()) // && !(dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["Shishi_Muhlaf"].ToString() == "1") && (iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()))
                 { iSugYom = 10; }
                 return iSugYom;
             }

@@ -196,12 +196,14 @@ namespace KdsBatch
         
         private DataTable dtParameters;
         private string _Type="";
+        public DateTime _Taarich; 
 
         public clParameters(DateTime dCardDate, int iSugYom)
         {
             clUtils oUtils = new clUtils();
             try
             {
+                _Taarich = dCardDate;
                 dtParameters = oUtils.GetKdsParametrs();
                 SetParameters(dCardDate, iSugYom);
                 dtParameters.Dispose();
@@ -214,6 +216,7 @@ namespace KdsBatch
 
         public clParameters(DateTime dCardDate, int iSugYom,string type)
         {
+            _Taarich = dCardDate;
             _Type = type;
             dtParameters = clCalcData.DtParameters;
             SetParameters(dCardDate, iSugYom);
