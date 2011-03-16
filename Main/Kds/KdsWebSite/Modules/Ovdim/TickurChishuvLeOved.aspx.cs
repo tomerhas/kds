@@ -251,7 +251,14 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                         nextStep = btchMan.MainInputData(int.Parse(txtEmpId.Text), dTaarich);
 
                         if (nextStep)
+                        {
                             nextStep = btchMan.MainOvedErrors(int.Parse(txtEmpId.Text), dTaarich);
+                            if (!nextStep)
+                            {
+                                if (sError.Length > 0) sError += ", ";
+                                sError += dTaarich.ToString("dd/MM/yyyy");
+                            }
+                        }
                         else
                         {
                             if (sError.Length > 0) sError += ", ";

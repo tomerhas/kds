@@ -3142,7 +3142,7 @@ namespace KdsBatch
         public void CalcRechiv128()
         {
             DataRow[] drSidurim,drSidurimLeyom;
-            DataRow RowKodem, RowNext;
+            DataRow RowKodem, RowNext, drConenutGrira;
             int iMisparSidur;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
             float fErech, fTempX, fTempY, fTempDakot;
@@ -3150,76 +3150,92 @@ namespace KdsBatch
             dShatHatchalaSidur = DateTime.MinValue;
             DateTime dShaa = dTaarich;
             iMisparSidur = 0;
+            bool bConenutGrira, bGriraInConenutGrira;
+            int iMikumKnisa=0;
+            int iMikumYetzia=0;
             try
             {
                 fTempX = 0;
                 fTempY = 0;
+                drConenutGrira = null;
                 sSidurimMeyuchadim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.ZmanGrirot.GetHashCode());
                 if (sSidurimMeyuchadim.Length > 0)
                 {
+                    bConenutGrira = IsSidurConenutGriraExist(ref drConenutGrira);
                     drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ") and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
                         iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-                        dShaa = DateTime.Parse(dTaarich.ToShortDateString() + " 15:30:00");
                         
-                        if (dShatHatchalaSidur >= dShaa)
-                        {
-                            drSidurimLeyom = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
-                            if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur)
-                            {
-                                fTempY = _oGeneralData.objParameters.iTosefetZmanGrira;
-                            }
-                            else if ((int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) != iMisparSidur || DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) != dShatHatchalaSidur))
-                            {
-                                fTempX = 0;
-                                RowKodem = drSidurimLeyom[0];
-                                for (int J = 0; J < drSidurimLeyom.Length; J++)
-                                {
-                                    RowKodem = drSidurimLeyom[J];
-                                    if ((drSidurim[I]["mispar_sidur"].ToString() == drSidurimLeyom[J]["mispar_sidur"].ToString()) && (drSidurim[I]["shat_hatchala_sidur"].ToString() == drSidurimLeyom[J]["shat_hatchala_sidur"].ToString()))
-                                    {
-                                        if (J > 0)
-                                        {
-                                            RowKodem = drSidurimLeyom[J - 1];
-                                        }
+                        if (bConenutGrira){
+                           dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                           dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+                           bGriraInConenutGrira = cheakSidurGrirainConenutGrira(dShatHatchalaLetashlum, dShatGmarLetashlum, drConenutGrira);
+                      
+                            dShaa = DateTime.Parse(dTaarich.ToShortDateString() + " 15:30:00");
 
-                                        break;
-                                    }
+                            if (drSidurim[I]["MIKUM_SHAON_KNISA"].ToString() != "")
+                                iMikumKnisa = int.Parse(drSidurim[I]["MIKUM_SHAON_KNISA"].ToString());
+                            if (drSidurim[I]["MIKUM_SHAON_YETZIA"].ToString() != "")
+                                iMikumYetzia = int.Parse(drSidurim[I]["MIKUM_SHAON_YETZIA"].ToString());
+                        
+                            if (dShatHatchalaSidur >= dShaa && bGriraInConenutGrira && (iMikumKnisa>0  || iMikumYetzia>0))
+                            {
+                                drSidurimLeyom = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
+                                if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur)
+                                {
+                                    fTempY = _oGeneralData.objParameters.iTosefetZmanGrira;
                                 }
-                                fTempDakot = float.Parse((DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString());
-                                fTempY = Math.Min(_oGeneralData.objParameters.iTosefetZmanGrira, fTempDakot);
-                            }
+                                else if ((int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) != iMisparSidur || DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) != dShatHatchalaSidur))
+                                {
+                                    fTempX = 0;
+                                    RowKodem = drSidurimLeyom[0];
+                                    for (int J = 0; J < drSidurimLeyom.Length; J++)
+                                    {
+                                        RowKodem = drSidurimLeyom[J];
+                                        if ((drSidurim[I]["mispar_sidur"].ToString() == drSidurimLeyom[J]["mispar_sidur"].ToString()) && (drSidurim[I]["shat_hatchala_sidur"].ToString() == drSidurimLeyom[J]["shat_hatchala_sidur"].ToString()))
+                                        {
+                                            if (J > 0)
+                                            {
+                                                RowKodem = drSidurimLeyom[J - 1];
+                                            }
+
+                                            break;
+                                        }
+                                    }
+                                    fTempDakot = float.Parse((DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(RowKodem["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString());
+                                    fTempY = Math.Min(_oGeneralData.objParameters.iTosefetZmanGrira, fTempDakot);
+                                }
                        
                       
-                            drSidurimLeyom = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null  and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur desc");
-                           if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur)
-                           {
-                               fTempX = _oGeneralData.objParameters.iTosefetZmanGrira;
-                           }
-                           else if ((int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) != iMisparSidur || DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) != dShatHatchalaSidur))
-                           {
-                               fTempY = 0;
-                               RowNext = drSidurimLeyom[0];
-                               for (int J = 0; J < drSidurimLeyom.Length; J++)
+                                drSidurimLeyom = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null  and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur desc");
+                               if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur)
                                {
-                                   RowNext = drSidurimLeyom[J];
-                                   if ((drSidurim[I]["mispar_sidur"].ToString() == drSidurimLeyom[J]["mispar_sidur"].ToString()) && (drSidurim[I]["shat_hatchala_sidur"].ToString() == drSidurimLeyom[J]["shat_hatchala_sidur"].ToString()))
-                                   {
-                                       if (J > 0)
-                                       {
-                                           RowNext = drSidurimLeyom[J - 1];
-                                       }
-
-                                       break;
-                                   }
+                                   fTempX = _oGeneralData.objParameters.iTosefetZmanGrira;
                                }
-                               fTempDakot = float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString());
-                               fTempX = Math.Min(_oGeneralData.objParameters.iTosefetZmanGrira, fTempDakot);
-                          }
+                               else if ((int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) != iMisparSidur || DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) != dShatHatchalaSidur))
+                               {
+                                   fTempY = 0;
+                                   RowNext = drSidurimLeyom[0];
+                                   for (int J = 0; J < drSidurimLeyom.Length; J++)
+                                   {
+                                       RowNext = drSidurimLeyom[J];
+                                       if ((drSidurim[I]["mispar_sidur"].ToString() == drSidurimLeyom[J]["mispar_sidur"].ToString()) && (drSidurim[I]["shat_hatchala_sidur"].ToString() == drSidurimLeyom[J]["shat_hatchala_sidur"].ToString()))
+                                       {
+                                           if (J > 0)
+                                           {
+                                               RowNext = drSidurimLeyom[J - 1];
+                                           }
+
+                                           break;
+                                       }
+                                   }
+                                   fTempDakot = float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString());
+                                   fTempX = Math.Min(_oGeneralData.objParameters.iTosefetZmanGrira, fTempDakot);
+                              }
+                            }
                         }
-                      
                         addRowToTable(clGeneral.enRechivim.TosefetGririoTchilatSidur.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fTempY);
                         addRowToTable(clGeneral.enRechivim.TosefetGrirotSofSidur.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fTempX);
                     
@@ -6785,8 +6801,55 @@ namespace KdsBatch
                  throw ex;
              }
          }
-    }
 
+         private bool IsSidurConenutGriraExist(ref DataRow dr)
+         {
+             DataRow[] drSugSidur,drSidurim;
+             string sSql = "";
+             try
+             {
+                 sSql="sug_sidur=69 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')";
+                 drSugSidur = clCalcData.DtSugeySidur.Select(sSql);
+                 if (drSugSidur.Length > 0)
+                 {
+                     sSql = "taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and lo_letashlum=1 and mispar_sidur=" + drSugSidur[0]["mispar_sidur"];
+                     drSidurim = clCalcData.DtYemeyAvoda.Select(sSql);
+                     if (drSidurim.Length > 0)
+                         dr = drSidurim[0];
+                     return true;
+                 }
+                 else return false;
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
 
+         private bool cheakSidurGrirainConenutGrira(DateTime dShatHatchalaGrira, DateTime dShatGmarGrira, DataRow drConenutGrira)
+         {
+             DateTime dShatHatchalaConenutGrira, dShatGmarConenutGrira;
+             try
+             {
+                 dShatHatchalaConenutGrira =DateTime.Parse(drConenutGrira["shat_hatchala_letashlum"].ToString());
+                 dShatGmarConenutGrira = DateTime.Parse(drConenutGrira["shat_gmar_letashlum"].ToString());
+
+                 if (dShatHatchalaGrira >= dShatHatchalaConenutGrira && dShatGmarGrira <= dShatGmarConenutGrira)
+                     return true;
+                 else if (dShatHatchalaGrira < dShatHatchalaConenutGrira && dShatGmarGrira > dShatHatchalaConenutGrira && dShatGmarGrira <= dShatGmarConenutGrira)
+                     return true;
+                 else if (dShatHatchalaGrira >= dShatHatchalaConenutGrira && dShatGmarGrira > dShatGmarConenutGrira)
+                     return true;
+                 else if (dShatHatchalaGrira < dShatHatchalaConenutGrira && dShatGmarGrira > dShatGmarConenutGrira)
+                     return true;
+                 else return false;
+
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
     }
+ }
 

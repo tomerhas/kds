@@ -753,6 +753,7 @@ namespace KdsBatch
                     {
                         InsertErrorsToTbShgiot(dtErrors, dCardDate);
                         _CardStatus = clGeneral.enCardStatus.Error;
+                        _bSuccsess = false;
                     }
                     else
                     {
