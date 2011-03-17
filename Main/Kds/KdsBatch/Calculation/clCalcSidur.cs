@@ -6815,8 +6815,11 @@ namespace KdsBatch
                      sSql = "taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and lo_letashlum=1 and mispar_sidur=" + drSugSidur[0]["mispar_sidur"];
                      drSidurim = clCalcData.DtYemeyAvoda.Select(sSql);
                      if (drSidurim.Length > 0)
+                     {
                          dr = drSidurim[0];
-                     return true;
+                         return true;
+                     }
+                     else return false;
                  }
                  else return false;
              }
