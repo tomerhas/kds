@@ -425,10 +425,18 @@ namespace KdsBatch
         public void SetOneMeafyen(string sMeafyenNum, ref bool bMeafyenExists, ref int iMeafyenValue)
         {
             DataRow[] drMeafyn;
+            string sQury;
             try
             {
                 bMeafyenExists = false;
-                drMeafyn = dtMeafyenyOved.Select(string.Concat("kod_meafyen=", sMeafyenNum));
+                if (_Type == "Calc")
+                {
+                    sQury = "kod_meafyen=" + sMeafyenNum;
+                    sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                    sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+                    drMeafyn = dtMeafyenyOved.Select(sQury);
+                }
+                else  drMeafyn = dtMeafyenyOved.Select(string.Concat("kod_meafyen=", sMeafyenNum));
                 if (drMeafyn.Length > 0)
                 {
                     bMeafyenExists = (drMeafyn[0]["source_meafyen"].ToString() == "1");
