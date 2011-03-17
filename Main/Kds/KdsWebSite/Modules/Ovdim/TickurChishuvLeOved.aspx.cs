@@ -235,11 +235,16 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
     protected void btnInputData_Click(object sender, EventArgs e)
     {
         string sError = "";
-        DateTime dTaarich, dTarAd;
+        DateTime dTaarich, dTarAd, dTarMe;
             bool nextStep = false;
+            clOvdim oOvdim = new clOvdim();
+            DataTable dtOvdim = new DataTable();
+            DataRow[] drErrors;
+            string sdate;
             try
             {
                 dTaarich = clGeneral.GetDateTimeFromStringMonthYear(1, ddlMonth.SelectedValue);
+                dTarMe = dTaarich;
                 dTarAd = dTaarich.AddMonths(1).AddDays(-1);
 
                 while (dTaarich <= dTarAd)
@@ -253,17 +258,12 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                         if (nextStep)
                         {
                             nextStep = btchMan.MainOvedErrors(int.Parse(txtEmpId.Text), dTaarich);
-                            if (!nextStep)
-                            {
-                                if (sError.Length > 0) sError += ", ";
-                                sError += dTaarich.ToString("dd/MM/yyyy");
-                            }
                         }
-                        else
-                        {
-                            if (sError.Length > 0) sError += ", ";
-                            sError += dTaarich.ToString("dd/MM/yyyy");
-                        }
+                        //else
+                        //{
+                        //    if (sError.Length > 0) sError += ", ";
+                        //    sError += dTaarich.ToString("dd/MM/yyyy");
+                        //}
                         dTaarich = dTaarich.AddDays(1);
                     }
                     catch (Exception ex)
@@ -274,6 +274,16 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                     {
                         btchMan.Dispose();
                     }
+                }
+
+                dtOvdim = oOvdim.GetOvedErrorsCards(int.Parse(txtEmpId.Text), dTarMe, dTarAd);
+                drErrors = dtOvdim.Select("status_card=0","taarich asc");
+                if (drErrors.Length>0)
+                    sError = DateTime.Parse(drErrors[0]["taarich"].ToString()).ToShortDateString();
+                for (int i = 1; i < drErrors.Length; i++)
+                {
+                    sdate = DateTime.Parse(drErrors[i]["taarich"].ToString()).ToShortDateString();
+                    sError += ", " + sdate;
                 }
 
                 if (sError.Length > 0)

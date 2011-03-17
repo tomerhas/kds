@@ -2745,11 +2745,16 @@ namespace KdsBatch
         private float CalcDayRechiv76(float fMichsaYomit,DateTime dTaarich)
         {
             float fDakotNochehut, fErech, fNochehutBeshishi, fNochehutLetashlum;
+            float SumNochechutMeyuchdim;
             fErech = 0;
+          
             try
             {
-
+               
                 fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                SumNochechutMeyuchdim = oSidur.GetSumSidurim100();
+                fDakotNochehut = fDakotNochehut - SumNochechutMeyuchdim;
+
                 fNochehutBeshishi = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutBeshishi.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 fNochehutLetashlum = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 if (fMichsaYomit > 0 && fDakotNochehut > 0)
@@ -2806,11 +2811,14 @@ namespace KdsBatch
         private float CalcDayRechiv77(float fMichsaYomit,DateTime dTaarich)
         {
             float  fDakotNochehut, fErech, fNosafot125;
+            float SumNochechutMeyuchdim;
             fErech = 0;
             Boolean bMafilimSchirim = false;
             DataRow[] dr;
             try
             {
+                SumNochechutMeyuchdim = oSidur.GetSumSidurim100();
+                
                 //ו.	עבור מפעילים שכירים במשמרת לילה יש לשלם את שעות 125% ב- 150% כדלקמן: אם העיסוק שליפת פרטי עובד (קוד נתון  HR = 6, מ.א., תאריך) עם ערך = 122,  123,  124,  127 וגם מעמד שכיר שליפת פרטי עובד (קוד נתון  HR = 13, מ.א., תאריך) הספרה הראשונה = 2 וגם [סוג משמרת] = לילה (ראה חישוב [סוג משמרת] למפעילים ברכיב 126) אזי: ערך הרכיב = ערך הרכיב + נוספות 125% (רכיב 76)
               if (_oGeneralData.objPirteyOved.iIsuk == 122 || _oGeneralData.objPirteyOved.iIsuk == 123 || _oGeneralData.objPirteyOved.iIsuk == 124 || _oGeneralData.objPirteyOved.iIsuk == 127)
                   {
@@ -2825,7 +2833,7 @@ namespace KdsBatch
                
 
                     fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                   
+                    fDakotNochehut = fDakotNochehut - SumNochechutMeyuchdim;
                     if (fMichsaYomit > 0 && fDakotNochehut > 0 && _objMefyeneyOved.sMeafyen32 != "1")
                     {
                         if (fDakotNochehut > (fMichsaYomit + 120))
