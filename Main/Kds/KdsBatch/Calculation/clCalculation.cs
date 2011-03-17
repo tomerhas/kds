@@ -135,6 +135,7 @@ namespace KdsBatch
            public void PremiaCalc()
            {
                clBatch obatch= new clBatch();
+               clUtils oUtils = new clUtils();
                long lBakashaId;
                int iMisparIshi = 0;
                int numFailed = 0;
@@ -142,7 +143,9 @@ namespace KdsBatch
                int seq = 0;
                seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
                lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
-                
+
+               clCalcData.DtParameters = oUtils.GetKdsParametrs();
+              
                DataTable dtPremia = GetPremiaCalcPopulation(lBakashaId);
                DateTime startMonth = DateTime.MinValue, tmpMonth, endMonth = DateTime.MinValue;
               
@@ -153,7 +156,7 @@ namespace KdsBatch
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                if (dtPremia != null)
                {
-                   clUtils oUtils = new clUtils();
+                  
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Mispar Ovdim Lechishuv Premiyot:" + dtPremia.Rows.Count);
                    foreach (DataRow dr in dtPremia.Rows)
                    {
@@ -165,6 +168,8 @@ namespace KdsBatch
                            {
                                startMonth = tmpMonth;
                                endMonth = GetEndOfMonth(startMonth);
+                               if (clCalcData.ListParametersMonth == null)
+                                   clCalcData.InitListParamObject(startMonth, endMonth);
                                clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(startMonth, endMonth);
                                clCalcData.DtMeafyeneySugSidur =
                                    oUtils.InitDtMeafyeneySugSidur(startMonth, endMonth);
@@ -249,8 +254,12 @@ namespace KdsBatch
                {
                    clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                 
 
                    dTarAd = dTarMe.AddMonths(1).AddDays(-1);
+                   clCalcData.DtParameters = oUtils.GetKdsParametrs();
+                   if (clCalcData.ListParametersMonth == null)
+                       clCalcData.InitListParamObject(dTarMe, dTarAd);
 
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);

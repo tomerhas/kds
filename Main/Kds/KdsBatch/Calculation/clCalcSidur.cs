@@ -3356,7 +3356,7 @@ namespace KdsBatch
 
                 if ((clCalcData.CheckYomShishi(iSugYom) || clCalcData.CheckErevChag(iSugYom)) && fMichsaYomit == 0)
                 {
-                    _drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and MISPAR_SIDUR IN(99011,99207)");
+                    _drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and MISPAR_SIDUR IN(99011,99207,99007)");
                     
                     for (int I = 0; I < _drSidurim.Length; I++)
                     {
