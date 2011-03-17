@@ -36,9 +36,11 @@ namespace KdsTaskManager
                 if (_ConstructorInfo == null)
                     throw new Exception("Object " + _ActionToExecute.LibraryName + " creation failed or is not valid");
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart.UpdateTaskLog();
+                throw ex;
             }
 
         }
@@ -59,6 +61,8 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart.UpdateTaskLog();
                 throw ex;
             }
         }
@@ -104,6 +108,8 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart.UpdateTaskLog();
                 throw ex;
             }
             return Obj;
@@ -120,7 +126,7 @@ namespace KdsTaskManager
                 object obj = _ConstructorInfo.Invoke(new object[] { });
                 _MethodInfo.Invoke(obj, _parameters);
                 _ActionResult = true; 
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.Now, DateTime.Now);
+                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.MinValue, DateTime.Now);
                 _MessageEnd.UpdateTaskLog();
             }
             catch (Exception ex)

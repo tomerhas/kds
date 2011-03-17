@@ -21,12 +21,12 @@ namespace KdsTaskManager
                     _ActionToExecute.Parameters.ForEach(ParamItem =>
                     _dal.AddParameter(ParamItem.Name, (ParameterType)ParamItem.Type, ParamItem.Value, ParameterDir.pdInput));
                 }
-                Command = _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
+                Command = (_ActionToExecute.LibraryName == "") ? _ActionToExecute.CommandName : _ActionToExecute.LibraryName + "." + _ActionToExecute.CommandName;
             }
             catch (Exception ex)
             {
-                _MessageEnd = new Message(_ActionToExecute, TypeStatus.Stopped,ex.Message, DateTime.Now, DateTime.Now);
-                _MessageEnd.UpdateTaskLog();
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart.UpdateTaskLog();
                 throw ex;
             }
 
@@ -36,7 +36,7 @@ namespace KdsTaskManager
         {
             try
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now,DateTime.MinValue);
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.MinValue);
                 _MessageStart.UpdateTaskLog();
                 _dal.ExecuteSP(Command);
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.MinValue, DateTime.Now);
@@ -45,7 +45,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                _ActionResult = false ;
+                _ActionResult = false;
                 throw ex;
             }
         }
