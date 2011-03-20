@@ -3159,7 +3159,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.Rows.Add(hRow);
 
             //אם לסידור אין מאפיין 99 והסידור הוא ללא התייחסות, לא נאפשר  את עידכון הסידור
-             bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
+            bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
 
             bSidurNahagutOrTnua=(IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)));//IsSidurNahagutOrTnua(ref oSidur, drSugSidur);
             //נבדוק אם אחד מהסידורים הוא סידור נהגות או ניהול תנועה
@@ -3290,8 +3290,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bRashaiLedavech = oSidur.bRashaiLedaveachExists;
         else //סידור מפה
             bRashaiLedavech = true;
-            //if (drSugSidur.Length > 0)
-            //    bRashaiLedavech = (drSugSidur[0]["rashai_ledaveach"].ToString() == "1"); 
+        if (drSugSidur.Length > 0)
+            bRashaiLedavech = (drSugSidur[0]["RASHAI_LEDAVEACH"].ToString() == "1"); 
           
 
         //אם הכרטיס הוא ללא התייחסות והמספר שאישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס

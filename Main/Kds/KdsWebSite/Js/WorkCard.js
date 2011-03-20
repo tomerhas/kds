@@ -118,11 +118,13 @@
        }
        else{       
          sCardDate = getSysDate().toString();
-       }       
-       if (iKodOved!=''){
-           wsGeneral.GetOvedAllDetails(iKodOved,sCardDate,GetOvedDetailsSucceeded);
-           document.getElementById("txtId").value=iKodOved;    
-           EnabledAllFrames(false);      
+       }
+     if (iKodOved != '') {
+           if (String(iKodOved).length<=5){
+               wsGeneral.GetOvedAllDetails(iKodOved,sCardDate,GetOvedDetailsSucceeded);
+               document.getElementById("txtId").value=iKodOved;    
+               EnabledAllFrames(false);      
+           }
        }
     }    
     function GetOvedMisparIshiByName(){
@@ -684,5 +686,8 @@ function setBorderBtns(){
             aButton[i].onfocus = function () { onButtonFocusIn(this); };
             aButton[i].onfocusout = function () { onButtonFocusOut(this); };
         }
+    }
+    function onTxtIdPress() {
+        var key = document.getElementById("txtId").value;
     }
 }

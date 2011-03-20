@@ -149,7 +149,8 @@
                                     <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
                                     <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
                                     <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
-                                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                                                                                                                                                                                            
+                                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
+                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />                                                                                                                                                                                                                                                                                     
                                 </Triggers>
                             </asp:UpdatePanel>
                         </fieldset>
@@ -545,15 +546,17 @@
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck;  
         function KeyCheck(){  
-          var KeyID = event.keyCode;                           
+          var KeyID = event.keyCode;
            switch(KeyID){            
               case 13: //Enter           
                  if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){  
                      if ((document.getElementById("txtId").value).length>5)
-                         SetBarCode();              
-                     event.returnValue=false;
-                     event.cancel = true;
-                 }
+                         SetBarCode();
+                     else{              
+                         event.returnValue=false;
+                         event.cancel = true;
+                         }
+                 }                 
                  break;  
               case 107:
                  event.keyCode=9;
@@ -567,10 +570,10 @@
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value;
+           var sKey = document.getElementById("txtId").value;           
            document.getElementById("txtId").value = String(sKey).substr(0,5);
-           document.getElementById("clnDate").value = String(sKey).substr(11,2) + "/" +  String(sKey).substr(9,2) + "/" + String(sKey).substr(5,4) ;
-           document.getElementById("btnRefreshOvedDetails").click();
+           document.getElementById("clnDate").value = String(sKey).substr(11,2) + "/" +  String(sKey).substr(9,2) + "/" + String(sKey).substr(5,4);     
+           document.getElementById("btnRefreshOvedDetails").click();          
          }
          function btnMeasherOrMistayeg_onclick(value)
          {       

@@ -312,6 +312,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         txtId.Attributes.Add("onblur", "isUserIdValid();");
         txtId.Attributes.Add("onfocus", "document.getElementById('txtId').select();");
         //txtId.Attributes.Add("onkeydown", "BarCodeTest();");
+        //txtId.Attributes.Add("onkeydown", "onTxtIdPress");
         txtId.Focus();
         txtName.Attributes.Add("onchange", "isUserNameValid();");
         btnRefreshOvedDetails.Attributes.Add("onfocus", "onButtonFocusIn(" + btnRefreshOvedDetails.ID + ")");
@@ -420,7 +421,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         DataTable dtLicenseNumbers = new DataTable();
         try
-        {
+        {          
             ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
             //הרשאות לדף
             SetSecurityLevel();

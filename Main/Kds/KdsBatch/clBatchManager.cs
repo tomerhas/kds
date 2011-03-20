@@ -5876,8 +5876,7 @@ namespace KdsBatch
 
                 //Set global variable with parameters
                 oParam = new clParameters(dCardDate, iSugYom);
-
-               
+                               
                 //Get Meafyeney Sug Sidur
                 dtSugSidur = clDefinitions.GetSugeySidur();
 
