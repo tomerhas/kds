@@ -182,6 +182,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 BuildSidurim(_DataSource);
                 SetHideParameters();
+                ////Set first sidur focus 
+                //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
+                //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
             }
         }
         catch (Exception ex)
@@ -3812,7 +3815,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
-
+          
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
