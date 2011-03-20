@@ -77,7 +77,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private string _ShatHatchala;
     private clGeneral.enCardStatus _StatusCard;
     private UpdatePanel _UpEmpDetails;
-    
+    private clGeneral.enMeasherOMistayeg _MeasherOMistayeg;
+
     public const string NBSP ="&nbsp;";
     public const int _COL_DUMMY =0;
     public const int _COL_ADD_NESIA_REKA = 1;
@@ -191,16 +192,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
         }
     }
+    public clGeneral.enMeasherOMistayeg MeasherOMistayeg
+    {
+        get {return _MeasherOMistayeg; }
+        set { _MeasherOMistayeg = value; }
+    }
     public clGeneral.enCardStatus StatusCard
     {
-        get
-        {
-            return _StatusCard;
-        }
-        set
-        {
-            _StatusCard = value;
-        }
+        get { return _StatusCard; }        
+        set { _StatusCard = value;}        
     }
     public bool ProfileRashemet
     {
@@ -497,6 +497,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         clSidur oSidur;
         DataView dvPeiluyot = new DataView();       
         UpdatePanel up = new UpdatePanel();
+        bool bEnableSidur=false; // אם הכרטיס הוא ללא התייחסות וגורם המטפל שונה מבעל הכרטיס הנוכחי ולסידור אין מאפיין 99 לא נאפשר עדכון סידור ופעילויות
         try
         {
             oSidur = (clSidur)htEmployeeDetails[iIndex];
@@ -505,7 +506,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             FullShatHatchala = oSidur.dFullShatHatchala;
             FullOldShatHatchala = oSidur.dOldFullShatHatchala;
             //Create Sidur
-            hTable = BuildOneSidur(ref htEmployeeDetails, oSidur, iIndex);
+            hTable = BuildOneSidur(ref htEmployeeDetails, oSidur, iIndex, ref bEnableSidur);
 
             //Add sidur table to header panel
             pnlHeader = CreatePanel(iIndex, "pnlHeader", "CollapseHeader");
@@ -529,7 +530,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                        
             grdPeiluyot.DataSource = dvPeiluyot;
             grdPeiluyot.DataBind();
-            
+
+            if (!bEnableSidur)
+                grdPeiluyot.Enabled = false;
             //נוריד הוספת נסיעה ריקה, בפעילות אחרונה
             //if ((grdPeiluyot.Rows.Count > 0) && (htEmployeeDetails.Count-1==iIndex))
             //    if (grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.Count > 0)
@@ -1288,7 +1291,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         return bNotValid;
     }
-    protected void CreateAddPeilutCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
+    protected void CreateAddPeilutCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bEnableSidur)
     {
         try
         {
@@ -1302,7 +1305,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                 imgAddPeilut.CausesValidation = false;
-                imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);    
+                imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);
+                if (!bEnableSidur)
+                    imgAddPeilut.Enabled = false; 
                 hCell = CreateTableCell("43px", "", "");
                 hCell.Controls.Add(imgAddPeilut);
             }
@@ -1940,13 +1945,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         lbl.Text = String.IsNullOrEmpty(oSidur.sShatGmarMuteret) ? "" : DateTime.Parse(oSidur.sShatGmarMuteret).ToShortTimeString(); 
         hCell.Controls.Add(lbl);
     }
-    protected void CreateCancelCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
+    protected void CreateCancelCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive, bool bEnableSidur)
     {
         hCell = CreateTableCell("35px", "", "");
         Button btnImage = new Button();
         btnImage.ID = "imgCancel" + iIndex;
         btnImage.CssClass = bSidurActive ? "ImgChecked" : "ImgCancel";
-        if (!_ProfileRashemet){        
+        if ((!_ProfileRashemet) || (!bEnableSidur)){        
             btnImage.Attributes.Add("disabled", "true");
         }        
         //btnImage.OnClientClick = "if (!ChangeStatusSidur(this.id)) {return false;} else {return true;} ";
@@ -3129,7 +3134,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dtUpdatedSidurim.Rows.Add(drSidur);
        
     }
-    private HtmlTable BuildOneSidur(ref OrderedDictionary htEmployeeDetails,clSidur oSidur, int iIndex)
+    private HtmlTable BuildOneSidur(ref OrderedDictionary htEmployeeDetails, clSidur oSidur, int iIndex, ref bool bEnableSidur)
     {
         HtmlTable hTable = new HtmlTable();
         HtmlTableRow hRow = new HtmlTableRow();
@@ -3148,10 +3153,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.CellPadding = 1;
             hTable.CellSpacing = 0;               
             hTable.Style.Add("height", "20px");
+          
             bSidurContinue = ((oSidur.iMisparSidur == SIDUR_CONTINUE_NAHAGUT) || (oSidur.iMisparSidur == SIDUR_CONTINUE_NOT_NAHAGUT));
                                                       
             hTable.Rows.Add(hRow);
-           
+
+            //אם לסידור אין מאפיין 99 והסידור הוא ללא התייחסות, לא נאפשר  את עידכון הסידור
+             bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
+
             bSidurNahagutOrTnua=(IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)));//IsSidurNahagutOrTnua(ref oSidur, drSugSidur);
             //נבדוק אם אחד מהסידורים הוא סידור נהגות או ניהול תנועה
             if (!bAtLeatOneSidurIsNOTNahagutOrTnua){
@@ -3171,9 +3180,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                 FillUpdateSidurimTable(ref oSidur, drSugSidur);
             
-            //הוספת פעילות
-            
-            CreateAddPeilutCell(oSidur, ref hCell, iIndex);
+            //הוספת פעילות            
+            CreateAddPeilutCell(oSidur, ref hCell, iIndex, bEnableSidur);
             hTable.Rows[0].Cells.Add(hCell);
 
             //מספר סידור    
@@ -3233,9 +3241,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hTable.Rows[0].Cells.Add(hCell);
 
                 //פעיל
-                CreateCancelCell(oSidur, ref hCell, iIndex, bSidurActive);
+                CreateCancelCell(oSidur, ref hCell, iIndex, bSidurActive, bEnableSidur);
                 hTable.Rows[0].Cells.Add(hCell);
-            }       
+             }       
                 //עמודות נסתרות
                 //שעת התחלה מותרת לסידור, ערך מאפיין 7     
                 CreateShatHatchalaMutereHiddentCell(oSidur, ref hCell, iIndex);               
@@ -3260,6 +3268,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 CreateAddDayToShatGmarHiddenCell(ref hCell, iIndex, oSidur);
                 hTable.Rows[0].Cells.Add(hCell);
            
+                //אם הכרטיס הוא ללא התייחסות וגם המספר של הגורם המטפל בכרטיס הוא לא בעל הכרטיס הנוכחי והסידור הוא ללא מאפיין 99, נחסום את הסידור לעריכה
+                if (!bEnableSidur)
+                    hTable.Disabled = true;
+                
+                
             return hTable;
             
         }
@@ -3267,6 +3280,26 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             throw ex;
         }
+    }
+    protected bool IsEnableSidur(ref clSidur oSidur, DataRow[] drSugSidur)
+    {
+        bool bEnable = true;
+        bool bRashaiLedavech=false;
+
+        if (oSidur.bSidurMyuhad) //סידור מיוחד
+            bRashaiLedavech = oSidur.bRashaiLedaveachExists;
+        else //סידור מפה
+            bRashaiLedavech = true;
+            //if (drSugSidur.Length > 0)
+            //    bRashaiLedavech = (drSugSidur[0]["rashai_ledaveach"].ToString() == "1"); 
+          
+
+        //אם הכרטיס הוא ללא התייחסות והמספר שאישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס
+        //לא נאפשר עדכון סידור אם לסידור לא קיים מאפיין 99
+        if ((MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) && (!bRashaiLedavech) && (LoginUserId != MisparIshi))
+            bEnable = false;
+
+        return bEnable;
     }
     protected void AddAttribute(Control oObj, string sAttrName, string sAttrValue)
     {
@@ -5019,7 +5052,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //oTxt.Attributes.Add("onkeypress", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
            // oTxt.Attributes.Add("onkeyup", "CarKeyUp(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             //oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
-            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            oTxt.Attributes.Add("onchange", "SetBtnChanges();");
+            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");
           //  oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
@@ -6261,8 +6295,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         private ListItemType _Type;
         private string _sColName;
         private int _iIndex;        
-        private DataTable _Mashar;
-        private DateTime _CardDate;
+        //private DataTable _Mashar;
+        //private DateTime _CardDate;
        
         public GridControls(enControlToAdd[] gcControlType, string sMessage,string sControlID,
                             string sClientValidationFunction, string sTargetID,

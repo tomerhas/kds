@@ -95,6 +95,10 @@ namespace KdsBatch
         public bool bPeilutRequiredKodExists;
         public string sSidurNotValidKod;
         public bool bSidurNotValidKodExists;
+
+        public string sRashaiLedaveach; //מאפיין 99
+        public bool bRashaiLedaveachExists;
+
         //public string sSidurNetzerKod;
         public string sSidurNotInShabtonKod;
         public bool bSidurNotInShabtonKodExists;
@@ -294,6 +298,10 @@ namespace KdsBatch
             bPeilutRequiredKodExists = !(String.IsNullOrEmpty(dr["peilut_required_kod"].ToString()));
             sSidurNotValidKod = dr["sidur_not_valid_kod"].ToString();
             bSidurNotValidKodExists = !(String.IsNullOrEmpty(dr["sidur_not_valid_kod"].ToString()));
+
+            sRashaiLedaveach = dr["rashai_ledaveach"].ToString();
+            bRashaiLedaveachExists = !(String.IsNullOrEmpty(dr["rashai_ledaveach"].ToString()));
+
             //sSidurNetzerKod = dr["sidur_netzer_kod"].ToString();
             sSidurNotInShabtonKod = dr["sidur_not_in_shabton_kod"].ToString();
             bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dr["sidur_not_in_shabton_kod"].ToString()));

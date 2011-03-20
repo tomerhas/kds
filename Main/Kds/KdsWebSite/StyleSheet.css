@@ -534,6 +534,7 @@
 	height:30px; 
 	font-family: campaign; 		
 	color: #059574;
+	text-align:center;
 	border-style:hidden;
 	background-repeat:no-repeat;	
 	font-weight:bold;
@@ -545,6 +546,7 @@
 	width:80px; 
 	height:30px; 
 	font-family: campaign; 		
+	text-align:center;
 	color: #c0c0c0;
 	border-style:hidden;
 	background-repeat:no-repeat;	
@@ -567,6 +569,7 @@
 	font-family: campaign; 	
 	font-weight:bold;
 	border-style:none;
+	text-align:center;
 	background-repeat:no-repeat;	
 	background-color:White;
 }
@@ -576,6 +579,7 @@
 	width:80px; 
 	height:30px; 
 	color: #c0c0c0;	
+	text-align:center;
 	font-family: campaign; 	
 	font-weight:bold;
 	border-style:none;

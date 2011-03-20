@@ -149,7 +149,7 @@
                                     <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
                                     <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
                                     <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
-                                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                                                                                                                                                                    
+                                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                                                                                                                                                                                            
                                 </Triggers>
                             </asp:UpdatePanel>
                         </fieldset>

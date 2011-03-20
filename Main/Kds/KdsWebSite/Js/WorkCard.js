@@ -463,7 +463,8 @@
      var bValid=true;var sMsg='';var sCallBack='';     
      var HashForDay = document.getElementById("HashlamaForDayValue").value;
      var HashReason = document.getElementById("ddlHashlamaReason").value;
-     document.getElementById("hidExecInputChg").value="0";
+     document.getElementById("hidExecInputChg").value = "0";
+   //  document.getElementById("hidErrChg").value = "1";
      if ((Number(HashForDay)==1) && (Number(HashReason) == -1)){      
         sMsg ='סומנה השלמה ליום, יש לדווח סיבה'; 
         bValid = false;
