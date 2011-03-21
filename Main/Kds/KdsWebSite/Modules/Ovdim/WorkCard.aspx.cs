@@ -163,21 +163,34 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             case clGeneral.enMeasherOMistayeg.Measher:
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                else
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
+
                 if (btnNotApprove.Disabled)
                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                else
+                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
                 break;
             case clGeneral.enMeasherOMistayeg.Mistayeg:
                  if (btnApprove.Disabled)
                      btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                 else
+                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
                  if (btnNotApprove.Disabled)
                      btnNotApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                 else
+                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
                 break;
 
             default:
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                else
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
                 if (btnNotApprove.Disabled)
                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                else
+                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
                 btnPrint.Enabled = true;
                 break;
         }
