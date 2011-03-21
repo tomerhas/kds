@@ -571,9 +571,10 @@
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value;           
-           document.getElementById("txtId").value = String(sKey).substr(0,5);
-           document.getElementById("clnDate").value = String(sKey).substr(11,2) + "/" +  String(sKey).substr(9,2) + "/" + String(sKey).substr(5,4);     
+           var sKey = document.getElementById("txtId").value.split("|");           
+           
+           document.getElementById("txtId").value =sKey[0];
+           document.getElementById("clnDate").value = sKey[1];//String(sKey).substr(11,2) + "/" +  String(sKey).substr(9,2) + "/" + String(sKey).substr(5,4);     
            document.getElementById("btnRefreshOvedDetails").click();          
          }
          function btnMeasherOrMistayeg_onclick(value)
