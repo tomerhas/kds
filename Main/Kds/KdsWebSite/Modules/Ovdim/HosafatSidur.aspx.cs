@@ -89,7 +89,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             SetFixedHeaderGrid(pnlgrdPeiluyot.ClientID, Header);
             sugSidur.Value = "1";
             AautoTeurSidur.ContextKey = "27,53;99200,99214";
-            AautoKodSidur.ContextKey = "27,53;99200,99214";
+            AautoKodSidur.ContextKey = "27,53,99;99200,99214";
             if (Request.QueryString["CardDate"] != null)
             {
                 TaarichCA.Value = Request.QueryString["CardDate"].ToString(); //"26/05/2009"; //
@@ -98,6 +98,11 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             {
                 MisparIshi.Value =  Request.QueryString["EmpID"].ToString();
             }
+            if (Request.QueryString["Status"] != null)
+            {
+                StatusCard.Value = Request.QueryString["Status"].ToString(); //"26/05/2009"; //
+            }
+             
           //  txtShatGmar.Attributes.Add("Date","");
 
             //שליפת פרמטרים חיצוניים ושמירתם

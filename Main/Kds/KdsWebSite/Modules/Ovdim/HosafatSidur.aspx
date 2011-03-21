@@ -136,8 +136,9 @@
                              wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
                      }
                      else {//מפה
-                         //  alert(sugSidur);
-                         wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
+                         if (document.getElementById("StatusCard").value == -1)
+                             wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
+                         else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
                      }
                  }
              }
@@ -155,6 +156,19 @@
 
                document.getElementById("btnShow").disabled = true;
              }
+         }
+     }
+
+     function MeafyenSidurExistsSucceded(result) { 
+         var taarich = document.getElementById("TaarichCA").value;
+         var misSidur = document.getElementById("txtMisSidurMapa").value; 
+        
+         if (result == 1)
+             wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
+         else if (result == -1) {    
+             document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+             ShowValidatorCalloutExtender("vldExSidurMapa");
+             document.getElementById("btnShow").disabled = true;
          }
      }
 
@@ -1571,6 +1585,7 @@
         <input type="hidden" id="MustMeafyenim" name="MustMeafyenim"  runat="server"  />
         <input type="hidden" id="SidureyEadrut" name="SidureyEadrut"  runat="server"  />
         <input type="hidden" id="HiddenTakin" name="HiddenTakin"  runat="server"  />
+        <input type="hidden" id="StatusCard" name="StatusCard"  runat="server"  />
          </ContentTemplate>
     </asp:UpdatePanel>
        <input type="button" ID="btnCopy" runat="server" style="display: none;" />

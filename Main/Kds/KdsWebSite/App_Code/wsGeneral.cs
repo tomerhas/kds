@@ -1912,6 +1912,37 @@ public class wsGeneral : System.Web.Services.WebService
             }
         }
     }
+    [WebMethod]
+    public int MeafyenSidurMapaExists(int imisSidur, string sTaarich, int iMeafyen, int iErech)
+    {
+        clKavim oKavim = new clKavim();
+        clUtils oUtils = new clUtils();
+        DataTable PirteySidur, dtMeafyeneySidur;
+        int result,sugSidur;
+        string sSql;
+        try
+        {
+            PirteySidur = oKavim.GetSidurDetailsFromTnua(imisSidur,DateTime.Parse(sTaarich), out result);
+            if (PirteySidur.Rows.Count > 0)
+            {
+                if (PirteySidur.Rows[0]["sugsidur"].ToString() != "")
+                {
+                    sugSidur = int.Parse(PirteySidur.Rows[0]["sugsidur"].ToString());
+                    dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(sTaarich), DateTime.Parse(sTaarich));
+                    sSql = "sug_sidur=" + sugSidur + " and kod_meafyen=99 and erech=1 ";
+                    if (dtMeafyeneySidur.Select(sSql).Length > 0)
+                        return 1;
+                    else return -1;
+                }
+                return 0;
+            }
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     //[WebMethod(EnableSession = true)]
     //public string ChkIfSidurNahagut(int iSidurIndex, string sCardDate)
     //{

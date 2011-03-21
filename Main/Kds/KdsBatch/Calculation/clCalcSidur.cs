@@ -2759,7 +2759,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int iMisparSidur, J ;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
-            float fErech, fErechSidur, fTempX;
+            float fErech, fErechSidur, fTempX, fSachDakotTafkid;
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
             float fErecBoker,fErechSidurBoker;
@@ -2779,6 +2779,7 @@ namespace KdsBatch
                 fErechLaylaEgged = 0;
                 fErechLaylaChok = 0;
                 fErecBoker =0;
+
                 for (int I = 0; I < drSidurim.Length;I++)
                 {
                     bSidurNehigaFirst = false;
@@ -2802,10 +2803,12 @@ namespace KdsBatch
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                                 fErechSidur = float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
-
+                                fSachDakotTafkid = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotTafkid.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
+               
                                 if (fErechSidur >= 1 && fErechSidur <= _oGeneralData.objParameters.iMinTimeBetweenSidurim)
                                 {
-                                    if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
+                                    if (fSachDakotTafkid >= _oGeneralData.objParameters.iMinYomAvodaForHalbasha &&
+                                        (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3" || drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3"))
                                     {
                                         if (fErechSidur >= 10)
                                             fErechSidur = fErechSidur - 10;
@@ -2821,11 +2824,13 @@ namespace KdsBatch
                                     // fErech += fErechSidur;
 
                                     //רציפות לילה  
-                                    if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3")
-                                        dShatGmarLetashlum = dShatGmarLetashlum.AddMinutes(10) < dShatHatchalaLetashlum ? dShatGmarLetashlum.AddMinutes(10) : dShatHatchalaLetashlum;
-                                    if (drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
-                                        dShatHatchalaLetashlum = dShatHatchalaLetashlum.AddMinutes(-10) > dShatGmarLetashlum ? dShatHatchalaLetashlum.AddMinutes(-10) : dShatGmarLetashlum;
-                                                                 
+                                    if (fSachDakotTafkid >= _oGeneralData.objParameters.iMinYomAvodaForHalbasha)
+                                    {
+                                        if (drSidurim[I]["Mezake_Halbasha"].ToString() == "2" || drSidurim[I]["Mezake_Halbasha"].ToString() == "3")
+                                            dShatGmarLetashlum = dShatGmarLetashlum.AddMinutes(10) < dShatHatchalaLetashlum ? dShatGmarLetashlum.AddMinutes(10) : dShatHatchalaLetashlum;
+                                        if (drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
+                                            dShatHatchalaLetashlum = dShatHatchalaLetashlum.AddMinutes(-10) > dShatGmarLetashlum ? dShatHatchalaLetashlum.AddMinutes(-10) : dShatGmarLetashlum;
+                                    }       
                                     fErechSidurLaylaEgged = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters.dTchilatTosefetLaila, _oGeneralData.objParameters.dSiyumTosefetLaila);//9,10
                                     fErechSidurLaylaChok = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, _oGeneralData.objParameters.dSiyumTosefetLaila, _oGeneralData.objParameters.dSiyumTosefetLailaChok);//10,12
                                     fErechSidurBoker = getDakotRezifutBoker(dShatHatchalaLetashlum, dShatGmarLetashlum);   

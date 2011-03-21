@@ -2756,7 +2756,7 @@ namespace KdsBatch
                 fDakotNochehut = fDakotNochehut - SumNochechutMeyuchdim;
 
                 fNochehutBeshishi = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutBeshishi.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                fNochehutLetashlum = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+              //  fNochehutLetashlum = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 if (fMichsaYomit > 0 && fDakotNochehut > 0)
                 {
                     if (fDakotNochehut > fMichsaYomit)
@@ -2771,7 +2771,7 @@ namespace KdsBatch
                     if ((_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 120)
                         fErech = Math.Min(120, fNochehutBeshishi-120);
                     else if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
-                        fErech = Math.Min(240, fNochehutLetashlum);
+                        fErech = Math.Min(240, fDakotNochehut);
                 }
                 
                 return fErech;
