@@ -3292,10 +3292,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (oSidur.bSidurMyuhad) //סידור מיוחד
             bRashaiLedavech = oSidur.bRashaiLedaveachExists;
         else //סידור מפה
-            bRashaiLedavech = true;
-        if (drSugSidur.Length > 0)
-            bRashaiLedavech = (drSugSidur[0]["RASHAI_LEDAVEACH"].ToString() == "1"); 
-          
+            if (drSugSidur.Length > 0)
+            {
+                bRashaiLedavech = true;
+                bRashaiLedavech = (drSugSidur[0]["RASHAI_LEDAVEACH"].ToString() == "1");
+            }
+            else //אינו סידור מיוחד ואינו סידור מפה
+                bRashaiLedavech = false;
 
         //אם הכרטיס הוא ללא התייחסות והמספר שאישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס
         //לא נאפשר עדכון סידור אם לסידור לא קיים מאפיין 99

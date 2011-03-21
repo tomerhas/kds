@@ -1436,12 +1436,12 @@ function chkMkt(oRow) {
      var _Sidur, _Img, _Peilut, stat;
      var i=0;
      
-        _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
+     _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
      while (_Sidur != null) {
-         if (document.getElementById("hidDriver").value == "1") //אם עמדת נהג נשים פוקוס על שעת התחלה של הסידור  הראשון
+         if (document.getElementById("hidDriver").value == "1") //אם עמדת נהג נשים פוקוס על שעת התחלה של הסידור  הראשון            
              if (i == 0)
-                 if (document.getElementById("lstSidurim_txtSH" + i).disabled == false)
-                     document.getElementById("lstSidurim_txtSH" + i).select();
+                 document.getElementById("lstSidurim_tbSidurim").focus();
+
 
         _Img = document.getElementById("lstSidurim_cImgS" + i);
         if (_Img!=null){
