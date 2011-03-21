@@ -7,6 +7,8 @@ using System.Xml.Serialization;
 using System.Xml.Xsl;
 using System.Xml;
 using System.IO;
+using KdsLibrary.Utils;
+using System.Configuration;
 
 
 namespace KdsTaskManager
@@ -21,8 +23,21 @@ namespace KdsTaskManager
     }
     public static class Utilities
     {
+        public enum LogType
+        {
+            Database,
+            EventLog,
+            Mail
+        }
+        public enum SeverityLevel
+        {
+            Fatal,
+            Critical,
+            Information
+        }
         public static string EventLogSource;
-        public static bool Debug; 
+        public static bool Debug;
+        public static string[] RecipientsList;
 
         public static string PrepareExceptionMessage(string message)
         {
@@ -33,7 +48,7 @@ namespace KdsTaskManager
             List<StackFrame> RelevantStack = AllStack.Reverse().ToList();
             RelevantStack.RemoveAt(0);
             RelevantStack.RemoveAt(1);
-            RelevantStack.RemoveAt(RelevantStack.Count -1 );
+            RelevantStack.RemoveAt(RelevantStack.Count - 1);
             RelevantStack.ForEach(stack => OriginFunction += stack.GetMethod().DeclaringType.Name + ":" + stack.GetMethod().Name + "=>\n");
             StrError = OriginFunction + StrError;
             return StrError;
@@ -54,14 +69,44 @@ namespace KdsTaskManager
             serializer.Serialize(writer, objToSerialzie);
             return sb.ToString();
         }
+        public static void WriteLog(string Message, SeverityLevel severityLevel)
+        {
+            clMail omail;
+            switch (severityLevel)
+            {
+                case SeverityLevel.Fatal:
+                    EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
+                    RecipientsList.ToList().ForEach(recipient =>
+                    {
+                        omail = new clMail(recipient, "Fatal event from KdsTaskManager", Message);
+                        omail.SendMail();
+                    });
+                    break;
+                case SeverityLevel.Critical:
+                    EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
+                    RecipientsList.ToList().ForEach(recipient =>
+                    {
+                        omail = new clMail(recipient, "Critical event from KdsTaskManager", Message);
+                        omail.SendMail();
+                    });
+                    break;
+                case SeverityLevel.Information:
+                    if (Utilities.Debug)
+                        EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Information);
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
     public class Functions
     {
-        public  void TestCommand()
+        public void TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
         }
-        public  bool TestCommandWithParam(string param)
+        public bool TestCommandWithParam(string param)
         {
             Console.WriteLine("TestCommand is running with param {0}", param);
             return false;
@@ -103,8 +148,7 @@ namespace KdsTaskManager
         {
             try
             {
-                if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will update message " + Status + " \n " + Remark, EventLogEntryType.Information);
+                Utilities.WriteLog("group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will update message " + Status + " \n " + Remark, Utilities.SeverityLevel.Information);
                 Bl _Bl = new Bl();
                 _Bl.UpdateProcessLog(this);
             }
@@ -118,8 +162,7 @@ namespace KdsTaskManager
         {
             try
             {
-                if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will insert message " + Status + " \n " + Remark, EventLogEntryType.Information);
+                Utilities.WriteLog("group " + GroupId + ",Order " + IdOrder + " with Command " + _Type + " will insert message " + Status + " \n " + Remark, Utilities.SeverityLevel.Information);
                 Bl _Bl = new Bl();
                 _Bl.InsertProcessLog(this);
             }
@@ -146,9 +189,9 @@ namespace KdsTaskManager
     }
     public enum OperatorState
     {
-        Sleeping ,
-        Working ,
-        Endded 
+        Sleeping,
+        Working,
+        Endded
     }
     public enum OnFailureBehavior
     {

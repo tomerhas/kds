@@ -13,14 +13,15 @@ namespace KdsTaskManager
         {
             Utilities.EventLogSource = ConfigurationSettings.AppSettings["EventLogSource"].ToString();
             Utilities.Debug = (KdsLibrary.clGeneral.GetIntegerValue(ConfigurationSettings.AppSettings["Debug"].ToString()) == 1) ? true : false;
-            if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Manager waked up ", EventLogEntryType.Information);
+            Utilities.RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
+
+            Utilities.WriteLog("Manager waked up ", Utilities.SeverityLevel.Information);
             Manager oManager = new Manager();
             if (oManager.HasSomethingToDo)
                 oManager.Run();
             else
-                if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "There is no activities to execute ...", EventLogEntryType.Information);
+
+                Utilities.WriteLog("There is no activities to execute ...", Utilities.SeverityLevel.Information);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
         }
 
@@ -111,7 +111,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
 
         }
@@ -141,7 +141,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
 
             return ParameterOfAction;
@@ -150,14 +150,12 @@ namespace KdsTaskManager
         private void operatorItem_OnEndWork(Operator sender)
         {
             _CntRunningOperators--;
-            if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + sender.GroupId + " was finished his job ", EventLogEntryType.Information);
+            Utilities.WriteLog("Operator " + sender.GroupId + " was finished his job ", Utilities.SeverityLevel.Information);
         }
 
         private void TmrOperatorSleep_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Check ", EventLogEntryType.Information);
+            Utilities.WriteLog("Check ", Utilities.SeverityLevel.Information);
             _Operators.FindAll(item =>
                                 ((item.State == OperatorState.Sleeping) &&
                                 (item.IsTimeToRun()) &&
@@ -171,8 +169,7 @@ namespace KdsTaskManager
                 if (Item.IsTimeToRun())
                 {
                     _CntRunningOperators++;
-                    if (Utilities.Debug)
-                        EventLog.WriteEntry(Utilities.EventLogSource, "Operator " + Item.GroupId + " will start..." + _CntRunningOperators + " operator(s) are running ", EventLogEntryType.Information);
+                    Utilities.WriteLog("Operator " + Item.GroupId + " will start..." + _CntRunningOperators + " operator(s) are running ", Utilities.SeverityLevel.Information);
                     Item.Start();
                     Item.State = OperatorState.Working;
                 }
@@ -183,7 +180,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
 
         }
@@ -197,17 +194,15 @@ namespace KdsTaskManager
                 _Operators.ForEach(Item => RunOperator(Item));
                 while (_CntRunningOperators > 0)
                 {
-                    if (Utilities.Debug)
-                        EventLog.WriteEntry(Utilities.EventLogSource, "There are still " + _CntRunningOperators  + " are running.." , EventLogEntryType.Information);
+                    Utilities.WriteLog("There are still " + _CntRunningOperators + " are running..", Utilities.SeverityLevel.Information);
                     Thread.Sleep(5000);
                 }
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
-            if (Utilities.Debug)
-                EventLog.WriteEntry(Utilities.EventLogSource, "Manager was finished his job", EventLogEntryType.Information);
+            Utilities.WriteLog("Manager was finished his job", Utilities.SeverityLevel.Information);
         }
         /// <summary>
         /// Fill DsCommandOfGroup into _Operator group by GroupId of _DsGroup
@@ -216,8 +211,8 @@ namespace KdsTaskManager
         {
             try
             {
-                if (Utilities.Debug)
-                    EventLog.WriteEntry(Utilities.EventLogSource, "Create " + _NbOfGroup + " Operator(s)", EventLogEntryType.Information);
+                Utilities.WriteLog("Create " + _NbOfGroup + " Operator(s)", Utilities.SeverityLevel.Information);
+
                 _Operators = new List<Operator>();
                 _Groups.ForEach(groupItem => _Operators.Add(new Operator(groupItem)));
                 _Operators.ForEach(operatorItem => operatorItem.OnEndWork += new EndWorkHandler(operatorItem_OnEndWork));
@@ -227,7 +222,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
             }
 
 

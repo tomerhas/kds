@@ -22,7 +22,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                EventLog.WriteEntry(Utilities.EventLogSource, Utilities.PrepareExceptionMessage(ex.Message), EventLogEntryType.Error);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Critical);
                 Message msg = new Message(_ActionToExecute, TypeStatus.Stopped,  "Group:" + _ActionToExecute.IdGroup + 
                                                                                  ",Order:" +  _ActionToExecute.IdOrder + "\n" +
                         Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
