@@ -424,7 +424,7 @@
         document.getElementById("divHourglass").style.display = 'block';
         res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');
         document.getElementById("divHourglass").style.display = 'none'; 
-        if ((bScreenChanged) || ((res != undefined) && (!bScreenChanged))) {
+        if ((bScreenChanged) || ((res != undefined) && (!bScreenChanged))){
             document.getElementById("hidExecInputChg").value = "1";
             document.getElementById("hidRefresh").value = "1";
             __doPostBack('btnFindSidur', '');
