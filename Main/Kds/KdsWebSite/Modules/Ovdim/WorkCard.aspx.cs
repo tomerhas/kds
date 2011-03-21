@@ -1806,6 +1806,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bWorkCardWasUpdateRun = true;
         clOvdim _Ovdim = new clOvdim();
+        int iMisparIshiTrail=0;
         //נבדוק אם הכרטיס עודכן ע"י גורם אנושי לא ע"י מערכת - קוד מעדכן אחרון גדול מאפס
         bool bWasUpdate = false;
         DataTable dt = _Ovdim.GetLastUpdate(iMisparIshi, dDateCard);
@@ -1814,7 +1815,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             if (!String.IsNullOrEmpty(dr["MEADKEN_ACHARON"].ToString()))
             {
                 int iMeadkenAcharon =  int.Parse(dr["MEADKEN_ACHARON"].ToString());
-                if ((iMeadkenAcharon >= 0) && (iMeadkenAcharon!=iMisparIshi)) 
+                if (!String.IsNullOrEmpty(dr["MISPAR_ISHI_TRAIL"].ToString()))                
+                     iMisparIshiTrail = int.Parse(dr["MISPAR_ISHI_TRAIL"].ToString());
+                
+
+                if ((iMeadkenAcharon >= 0) && (iMeadkenAcharon != iMisparIshi) && (iMisparIshiTrail >= 0) && (iMisparIshiTrail != iMisparIshi)) 
                 {
                     bWasUpdate = true;
                 }
