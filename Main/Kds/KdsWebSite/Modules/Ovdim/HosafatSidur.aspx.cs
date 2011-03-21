@@ -89,7 +89,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             SetFixedHeaderGrid(pnlgrdPeiluyot.ClientID, Header);
             sugSidur.Value = "1";
             AautoTeurSidur.ContextKey = "27,53;99200,99214";
-            AautoKodSidur.ContextKey = "27,53,99;99200,99214";
+            AautoKodSidur.ContextKey = "27,53;99200,99214";
             if (Request.QueryString["CardDate"] != null)
             {
                 TaarichCA.Value = Request.QueryString["CardDate"].ToString(); //"26/05/2009"; //

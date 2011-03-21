@@ -132,8 +132,10 @@
                                 document.getElementById("btnShow").disabled = true;
      
                          }
-                         else
-                             wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
+                            else
+                                if (document.getElementById("StatusCard").value == -1)
+                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
+                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
                      }
                      else {//מפה
                          if (document.getElementById("StatusCard").value == -1)
@@ -159,15 +161,27 @@
          }
      }
 
-     function MeafyenSidurExistsSucceded(result) { 
+     function MeafyenSidurExistsSucceded(result) {
+         var sugSidur = document.getElementById("sugSidur").value;
          var taarich = document.getElementById("TaarichCA").value;
-         var misSidur = document.getElementById("txtMisSidurMapa").value; 
-        
+         var misSidur;  
+         if (sugSidur == 1) 
+             misSidur = document.getElementById("txtMisSidurMapa").value;
+         else
+             misSidur = document.getElementById("txtMisSiduri").value;
+         
          if (result == 1)
              wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
-         else if (result == -1) {    
-             document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
-             ShowValidatorCalloutExtender("vldExSidurMapa");
+         else if (result == -1) {
+
+             if (sugSidur == 2) {
+                 document.getElementById("vldMis").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+                 ShowValidatorCalloutExtender("vldExSidur");
+
+             } else {
+                 document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+                 ShowValidatorCalloutExtender("vldExSidurMapa");
+             } 
              document.getElementById("btnShow").disabled = true;
          }
      }

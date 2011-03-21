@@ -1943,6 +1943,30 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+
+    [WebMethod]
+    public int MeafyenSidurRagilExists(int imisSidur, string sTaarich, int iMeafyen, int iErech)
+    {
+      clUtils oUtils = new clUtils();
+      DataTable dtSidur;
+      string sSql;
+      try
+      {
+          dtSidur = oUtils.GetMeafyenSidurByKodSidur(imisSidur, sTaarich);
+          if (dtSidur.Rows.Count > 0)
+          {
+              sSql = "kod_meafyen=99 and erech=1";
+              if (dtSidur.Select(sSql).Length > 0)
+                  return 1;
+              else return -1;
+          }
+          else return 0;
+      }
+      catch (Exception ex)
+      {
+         throw ex;
+      }
+    }
     //[WebMethod(EnableSession = true)]
     //public string ChkIfSidurNahagut(int iSidurIndex, string sCardDate)
     //{
