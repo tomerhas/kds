@@ -169,9 +169,13 @@
              misSidur = document.getElementById("txtMisSidurMapa").value;
          else
              misSidur = document.getElementById("txtMisSiduri").value;
-         
-         if (result == 1)
-             wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
+      
+         if (result == 1) {
+             if (sugSidur == 2)
+                wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
+              else 
+                 wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
+         }
          else if (result == -1) {
 
              if (sugSidur == 2) {
@@ -181,13 +185,14 @@
              } else {
                  document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
-             } 
+             }
              document.getElementById("btnShow").disabled = true;
          }
      }
 
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
+   
          if (result != -1 ) {
              if (sugSidur == 2)
                  document.getElementById("txtTeurSidur").value = result;
