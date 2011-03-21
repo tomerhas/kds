@@ -523,9 +523,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.dtPakadim = (DataTable)Session["Pakadim"];
                     lstSidurim.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];
                 }
-            }
-            //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
-            //ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "txtSH0SHMask0", sScript, true);
+            }            
         }
         catch (Exception ex)
         {
@@ -596,12 +594,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
-            //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
-            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
-            //    InsertTriggersToUpdatePanel (upEmployeeDetails, TriggerToAdd);
-
-
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);            
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
