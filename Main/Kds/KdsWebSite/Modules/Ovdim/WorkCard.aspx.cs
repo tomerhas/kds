@@ -92,6 +92,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             arrParams = (string[])Session["arrParams"];
             SetUserKiosk(arrParams);
+            hidDriver.Value = "1";
         }
         else { base.CreateUser(); }
     }
@@ -100,7 +101,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private void SetUserKiosk(string[] arrParamsKiosk)
     {
         iMisparIshiKiosk = int.Parse(arrParamsKiosk[0].ToString());
-
 
         LoginUser = LoginUser.GetLimitedUser(iMisparIshiKiosk.ToString());
         LoginUser.InjectEmployeeNumber(iMisparIshiKiosk.ToString());
@@ -524,6 +524,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];
                 }
             }
+            //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
+            //ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "txtSH0SHMask0", sScript, true);
         }
         catch (Exception ex)
         {
@@ -595,7 +597,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
-
+            //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
+            //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
             //    InsertTriggersToUpdatePanel (upEmployeeDetails, TriggerToAdd);
 
 

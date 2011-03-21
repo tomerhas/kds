@@ -541,6 +541,7 @@
     <input type="hidden" runat="server" id="hidRashemet" />  
     <input type="hidden" runat="server" id="hidFromEmda" />  
     <input type="hidden" runat="server" id="hidSadotLSidur" />
+    <input type="hidden" runat="server" id="hidDriver"/>
     </form>   
     <script language="javascript" type="text/javascript">
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 

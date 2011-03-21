@@ -1257,33 +1257,16 @@ function chkMkt(oRow) {
         var dSdDate = new Date();
         var sCardDate = document.getElementById("clnDate").value;
         var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-        //var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
 
         sSdDate = sCardDate;
-//        if ((arrItems[0]=='1') || (arrItems[0]=='3')){ //שעת התחלה וגמר                  
-//            sSdDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])); 
-//        }
-//        else{
-//            sSdDate =  document.getElementById("lstSidurim_lblDate".concat(arrItems[2])); 
-//        }
+
         var sYear=sSdDate.substr(sSdDate.length-4,4);
         var sMonth=Number(sSdDate.substr(3,2))-1;
         var sDay=sSdDate.substr(0,2);             
         dSdDate.setFullYear(sYear);
         dSdDate.setMonth(sMonth);
         dSdDate.setDate(sDay);
-
         dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));   
-
-//        var utcSidurDate = Date.UTC(dSdDate.getFullYear(), dSdDate.getMonth() + 1, dSdDate.getDate(), 0, 0, 0);
-//        if (iDayToAdd == 1) {
-//            if (utcSidurDate==utcCardDate)
-//                dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));             
-//        }
-//        else {//addday=0
-//            if (utcSidurDate > utcCardDate)
-//                dSdDate.setDate(dSdDate.getDate()-1);  
-//        }    
          
         if (arrItems[0]=='1'){
             document.getElementById("lstSidurim_txtDayAdd" + arrItems[1]).value = Number(iDayToAdd);            
@@ -1453,8 +1436,13 @@ function chkMkt(oRow) {
      var _Sidur, _Img, _Peilut, stat;
      var i=0;
      
-     _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
-     while  (_Sidur!=null){
+        _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
+     while (_Sidur != null) {
+         if (document.getElementById("hidDriver").value == "1") //אם עמדת נהג נשים פוקוס על שעת התחלה של הסידור  הראשון
+             if (i == 0)
+                 if (document.getElementById("lstSidurim_txtSH" + i).disabled == false)
+                     document.getElementById("lstSidurim_txtSH" + i).select();
+
         _Img = document.getElementById("lstSidurim_cImgS" + i);
         if (_Img!=null){
             _Peilut = document.getElementById("lstSidurim_" + padLeft(i,'0',3));

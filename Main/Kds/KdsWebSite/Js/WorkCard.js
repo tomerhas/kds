@@ -420,6 +420,7 @@
         sQueryString = "?dt=" + Date();
         sQueryString = sQueryString + "&EmpID=" + document.getElementById("txtId").value;
         sQueryString = sQueryString + "&CardDate=" + document.getElementById("clnDate").value;
+        sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';
         res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');
         document.getElementById("divHourglass").style.display = 'none'; 
