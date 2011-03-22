@@ -78,7 +78,7 @@ namespace KdsTaskManager
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
                     RecipientsList.ToList().ForEach(recipient =>
                     {
-                        omail = new clMail(recipient, "Fatal event from KdsTaskManager", Message);
+                        omail = new clMail(recipient, "Fatal event" , Message);
                         omail.SendMail();
                     });
                     break;
@@ -86,7 +86,7 @@ namespace KdsTaskManager
                     EventLog.WriteEntry(Utilities.EventLogSource, Message, EventLogEntryType.Error);
                     RecipientsList.ToList().ForEach(recipient =>
                     {
-                        omail = new clMail(recipient, "Critical event from KdsTaskManager", Message);
+                        omail = new clMail(recipient, "Critical event", Message);
                         omail.SendMail();
                     });
                     break;
