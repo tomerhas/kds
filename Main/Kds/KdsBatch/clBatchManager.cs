@@ -7105,10 +7105,14 @@ namespace KdsBatch
 
         private void FixedShatHatchalaAndGmarSidurMapa27(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
-
+            string sug_sidur = "";
             try
             {
-                if (!oSidur.bSidurMyuhad)
+                DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
+                if (drSugSidur.Length>0)
+                    sug_sidur= drSugSidur[0]["sug_sidur"].ToString();
+                
+                if (!oSidur.bSidurMyuhad && sug_sidur != "69")
                 {
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = oSidur.dFullShatHatchala;
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM =oSidur.dFullShatGmar;
@@ -9147,15 +9151,17 @@ namespace KdsBatch
             //גרירה בפועל
             //הוספת קודים לפעילות גרירה בפועל:
             //"זמן נסיעה", "השלמה
-
+            float Minutes;
             clSidur oSidur=null;
             bool bSidurKonnutGrira = false;
             int iSidurKonnutGrira = 0;
+            clSidur oSidurKonenutGrira =null;
              DataTable dtSidurGrira=new DataTable();
             int iTypeGrira,i;
             int iGriraNum=0;
             clSidur oSidurGrira=null;
             OBJ_SIDURIM_OVDIM oObjSidurGriraUpd=null;
+            OBJ_SIDURIM_OVDIM oObjSidurimConenutGriraUpd;
             try
             {
                 if (htEmployeeDetails != null)
@@ -9193,7 +9199,7 @@ namespace KdsBatch
                                     //אם יש סידור כוננות גרירה  וגם לפחות סידור גרירה בפועל אחד 
                                     if ((bSidurKonnutGrira) && (oObjSidurGriraUpd != null))
                                     {
-                                        clSidur oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
+                                         oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
                                         if (!CheckIdkunRashemet("LO_LETASHLUM", oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala))
                                         {
                                             SetLoLetashlum(oSidurKonenutGrira);
@@ -9216,6 +9222,7 @@ namespace KdsBatch
                                             SetZmanHashlama(ref oObjSidurGriraUpd, oSidurKonenutGrira, iGriraNum, oSidurGrira);
                                         }
                                     }
+                                    
                                     break;
                                 }
                             }
@@ -9242,7 +9249,7 @@ namespace KdsBatch
                                             //אם יש סידור כוננות גרירה  וגם לפחות סידור גרירה בפועל אחד 
                                             if ((bSidurKonnutGrira) && (oObjSidurGriraUpd != null))
                                             {
-                                                clSidur oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
+                                                 oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
                                                 if (!CheckIdkunRashemet("LO_LETASHLUM", oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala))
                                                 {
                                                     SetLoLetashlum(oSidurKonenutGrira);
@@ -9264,9 +9271,49 @@ namespace KdsBatch
                         }
 
                     }
+                    //לשאול אם כוננות לא לתשלום =0
+                    if ((bSidurKonnutGrira))
+                    {
+                        oSidurKonenutGrira = (clSidur)htEmployeeDetails[iSidurKonnutGrira];
+                        oObjSidurimConenutGriraUpd = GetSidurOvdimObject(oSidurKonenutGrira.iMisparSidur, oSidurKonenutGrira.dFullShatHatchala);
+                        if (oObjSidurimConenutGriraUpd.LO_LETASHLUM == 0)
+                        {
+                            oObjSidurimConenutGriraUpd.UPDATE_OBJECT = 1;
+                            Minutes = float.Parse((oSidurKonenutGrira.dFullShatGmar - oSidurKonenutGrira.dFullShatHatchala).TotalMinutes.ToString());
+                            if (Minutes > _oParameters.iMinZmanGriraDarom)
+                            {
+                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                                {
+                                    oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
+                                    oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraDarom);
+                                }
+                                else
+                                {
+                                    oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
+                                    oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraTzafon);
+                                }
+                            }
+                            else if (Minutes > _oParameters.iMinZmanGriraTzafon && Minutes < _oParameters.iMinZmanGriraDarom)
+                            {
+                                if (int.Parse(oSidurKonenutGrira.iMisparSidur.ToString().Substring(0, 2)) >= 25)
+                                {
+                                    oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
+                                    oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
+                                }
+                                else
+                                {
+                                    oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
+                                    oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala.AddMinutes(_oParameters.iMinZmanGriraTzafon);
+                                }
+                            }
+                            else if (Minutes <= _oParameters.iMinZmanGriraTzafon)
+                            {
+                                oObjSidurimConenutGriraUpd.SHAT_HATCHALA_LETASHLUM = oSidurKonenutGrira.dFullShatHatchala;
+                                oObjSidurimConenutGriraUpd.SHAT_GMAR_LETASHLUM = oSidurKonenutGrira.dFullShatGmar;
+                            }
+                        }
+                    }                   
                 }
-
-               
             }
             catch (Exception ex)
             {

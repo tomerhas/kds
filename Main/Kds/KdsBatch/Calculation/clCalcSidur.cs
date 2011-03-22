@@ -62,31 +62,31 @@ namespace KdsBatch
                         dShatGmarLetashlum = DateTime.Parse(_drSidurRagil[I]["shat_gmar_letashlum"].ToString());
                        fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
                                  
-                        SetSugSidur(ref _drSidurRagil[I],dTaarich, iMisparSidur);
+                       // SetSugSidur(ref _drSidurRagil[I],dTaarich, iMisparSidur);
 
-                        iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
-                        if (iSugSidur == 69)
-                        {
-                            //•	סידור כוננות גרירה – אם סוג סידור = 69 
-                            if (fErechRechiv > _oGeneralData.objParameters.iMinZmanGriraDarom)
-                            {
-                                if (int.Parse(iMisparSidur.ToString().Substring(0, 2)) > 11)
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraDarom;
-                                }
-                                else
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraTzafon;
-                                }
-                            }
-                            else if (fErechRechiv > _oGeneralData.objParameters.iMinZmanGriraTzafon && fErechRechiv <= _oGeneralData.objParameters.iMinZmanGriraDarom)
-                            {
-                                if (int.Parse(iMisparSidur.ToString().Substring(0, 2)) <= 11)
-                                {
-                                    fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraTzafon;
-                                }
-                            }
-                        }
+                        //iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
+                        //if (iSugSidur == 69)
+                        //{
+                        //    //•	סידור כוננות גרירה – אם סוג סידור = 69 
+                        //    if (fErechRechiv > _oGeneralData.objParameters.iMinZmanGriraDarom)
+                        //    {
+                        //        if (int.Parse(iMisparSidur.ToString().Substring(0, 2)) > 11)
+                        //        {
+                        //            fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraDarom;
+                        //        }
+                        //        else
+                        //        {
+                        //            fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraTzafon;
+                        //        }
+                        //    }
+                        //    else if (fErechRechiv > _oGeneralData.objParameters.iMinZmanGriraTzafon && fErechRechiv <= _oGeneralData.objParameters.iMinZmanGriraDarom)
+                        //    {
+                        //        if (int.Parse(iMisparSidur.ToString().Substring(0, 2)) <= 11)
+                        //        {
+                        //            fErechRechiv = _oGeneralData.objParameters.iMinZmanGriraTzafon;
+                        //        }
+                        //    }
+                        //}
                         fSumErechRechiv += fErechRechiv;
                         addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
                     }
