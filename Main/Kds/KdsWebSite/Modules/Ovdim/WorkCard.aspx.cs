@@ -1812,24 +1812,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bWorkCardWasUpdateRun = true;
         clOvdim _Ovdim = new clOvdim();
-        int iMisparIshiTrail=0;
+        int iMisparIshiTrail;
+        int iMeadkenAcharon;
         //נבדוק אם הכרטיס עודכן ע"י גורם אנושי לא ע"י מערכת - קוד מעדכן אחרון גדול מאפס
         bool bWasUpdate = false;
         DataTable dt = _Ovdim.GetLastUpdate(iMisparIshi, dDateCard);
         foreach (DataRow dr in dt.Rows)
         {
-            if (!String.IsNullOrEmpty(dr["MEADKEN_ACHARON"].ToString()))
-            {
-                int iMeadkenAcharon =  int.Parse(dr["MEADKEN_ACHARON"].ToString());
-                if (!String.IsNullOrEmpty(dr["MISPAR_ISHI_TRAIL"].ToString()))                
-                     iMisparIshiTrail = int.Parse(dr["MISPAR_ISHI_TRAIL"].ToString());
+            iMeadkenAcharon=0;
+            if (!String.IsNullOrEmpty(dr["MEADKEN_ACHARON"].ToString()))             
+                iMeadkenAcharon =  int.Parse(dr["MEADKEN_ACHARON"].ToString());
                 
+            iMisparIshiTrail=0;
+            if  (!String.IsNullOrEmpty(dr["MISPAR_ISHI_TRAIL"].ToString()))                
+                    iMisparIshiTrail = int.Parse(dr["MISPAR_ISHI_TRAIL"].ToString());                
 
-                if ((iMeadkenAcharon >= 0) && (iMeadkenAcharon != iMisparIshi) && (iMisparIshiTrail >= 0) && (iMisparIshiTrail != iMisparIshi)) 
-                {
-                    bWasUpdate = true;
-                }
-            }
+            if (((iMeadkenAcharon >= 0) && (iMeadkenAcharon != iMisparIshi)) || ((iMisparIshiTrail >= 0) && (iMisparIshiTrail != iMisparIshi)))             
+                bWasUpdate = true;
+                        
         }
         return bWasUpdate;
     }
@@ -2209,7 +2209,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             btnShowPrintMsg_Click(sender, e);                    
         else
             PrintCard(sender, e);
-        
+
+
+
+        string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+        ScriptManager.RegisterStartupScript(btnPrint, this.GetType(), "PrintCard", sScript, true);  
     }
     protected void btnConfirm_click(object sender, EventArgs e)
     {
@@ -2844,7 +2848,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                 {//נבדוק אם השתנה התאריך
                     _objIdkunRashemet.NEW_SHAT_HATCHALA = GetSidurNewDate(iMisarSidur, _Txt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
-                    _objIdkunRashemet.NEW_SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(_objIdkunRashemet.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));                    
+                    if (_objIdkunRashemet.NEW_SHAT_HATCHALA.Second!=_objIdkunRashemet.SHAT_HATCHALA.Second)
+                       _objIdkunRashemet.NEW_SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(_objIdkunRashemet.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));                    
                 }
                 dNewShatHatchala = _objIdkunRashemet.NEW_SHAT_HATCHALA;
                 dShatHatchala = _objIdkunRashemet.SHAT_HATCHALA;
@@ -3771,7 +3776,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         else
                         {//נבדוק אם השתנה התאריך
                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = GetSidurNewDate(oObjSidurimOvdimUpd.MISPAR_SIDUR, oTxt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
-                            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                            if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.Second != oObjSidurimOvdimUpd.SHAT_HATCHALA.Second)                                
+                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
                             //אם תאריך הסידור גדול מתאריך כרטיס העבודה נסמן בסידור, שייך ליום קודם
                             if ((!oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.ToShortDateString().Equals(dDateCard.ToShortDateString())))
                                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 1;

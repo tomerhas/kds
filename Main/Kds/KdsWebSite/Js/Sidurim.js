@@ -638,7 +638,6 @@ function chkMkt(oRow) {
       var sCardDate = document.getElementById("clnDate").value;
 
       result = result.split(",");
-
       if (result[0] == '1') {
           document.getElementById("lstSidurim_lblSidur".concat(iIndex)).disabled = true;
           document.getElementById("lstSidurim_btnShowMessage").click();
@@ -891,35 +890,7 @@ function chkMkt(oRow) {
             return (sMisparSidur.substr(0, 2) == "99");
         else{ return false;}        
     }
-//    function AddPeilut(iIndex) {
-//        var iBitul = document.getElementById("lstSidurim_lblSidurCanceled".concat(iIndex)).value;        
-//        if ((iBitul != "1") && (iBitul != "3")) {
-//            if (bScreenChanged) {
-//                $("#hidSave")[0].value = "1";
-//                __doPostBack('btnConfirm', '');
-                          
-//            }
-//            var id = document.getElementById("txtId").value;
-//            var CardDate = document.getElementById("clnDate").value;
-//            var SidurDate =  document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-//            var SidurHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
-//            var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
-//            if (SidurHour == '')
-//                SidurDate = '01/01/0001';            
-
-//            document.getElementById("divHourglass").style.display = 'block';
-//            var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&SidurHour=" + SidurHour + "&SidurDate=" + SidurDate + "&dt=" + Date();
-//            var res = window.showModalDialog('HosafatPeiluyot.aspx' + sQuryString, window, "dialogwidth:900px;dialogheight:680px;dialogtop:130px;dialogleft:170px;status:no;resizable:yes;scroll:0;");
-//            document.getElementById("divHourglass").style.display = 'none';
-//            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {                
-//                document.getElementById("hidExecInputChg").value = "1";
-//                bScreenChanged = false;
-//                RefreshBtn();
-//                __doPostBack('btnRefreshOvedDetails', '');
-//            }
-//        }        
-//        return res;
-//    }
+//    
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         if (document.getElementById(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgChecked') {
             if (bScreenChanged) {
@@ -1013,125 +984,6 @@ function chkMkt(oRow) {
         }
         return res;
     }
-//    function AddNesiaReka(iPeilutIndex, iSidurIndex, iLastPeilut) {
-//        var iMisparIshi = document.getElementById("txtId").value;
-//        var dDate = document.getElementById("clnDate").value;
-//        var sMakatStart = document.getElementById(iPeilutIndex.id).cells[_COL_MAKAT].childNodes[0].value;
-//        var lCarNum = document.getElementById(iPeilutIndex.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
-//        var sMakatDetails = GetMakatEnd(iPeilutIndex.id, lCarNum, iSidurIndex, iLastPeilut);
-//        var sMakatEnd = sMakatDetails.split(",")[0];
-//        lCarNum = sMakatDetails.split(",")[1];
-//        var sShatYetiza = document.getElementById(iPeilutIndex.id).cells[_COL_SHAT_YETIZA].childNodes[0].value;
-//        var sPeilutDate = document.getElementById(iPeilutIndex.id).cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate");
-//        var iMazanTichnun = document.getElementById(iPeilutIndex.id).cells[_COL_DEF_MINUTES].innerHTML;
-//        var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iSidurIndex)).innerHTML;
-//        var SidurSH = document.getElementById("lstSidurim_txtSH".concat(iSidurIndex)).value;
-//        var sPeilutShatYetiza = sMakatDetails.split(",")[2];
-//        if (sMakatEnd == '')
-//            alert('לא ניתן להשלים נסיעה ריקה');
-//        else {
-//            document.getElementById("divHourglass").style.display = 'block';          
-//            wsGeneral.AddNesiaReka(iMisparIshi,dDate,SidurId,SidurSH, sMakatStart, sMakatEnd, sShatYetiza, sPeilutDate, iMazanTichnun, lCarNum,sPeilutShatYetiza, callBackAddReka);
-//        }
-//     }
-//     function callBackAddReka(result) {
-//         if (result == 1)
-//             alert('לא נמצאה ריקה מתאימה');
-//         else {
-//             document.getElementById("hidExecInputChg").value = "1";
-//             RefreshBtn();
-//             __doPostBack('btnRefreshOvedDetails', '');
-//         }
-//         document.getElementById("divHourglass").style.display = 'none';
-//     }     
-//     function GetMakatEnd(iPeilutIndex, lCarNum, iSidurIndex, iLastPeilut){
-//        var CanAddReka;
-//        var bExists=false;
-//        var arrKnisa;
-//        var sMakatEnd = '';
-//        var sMakat;
-//        var sPeilutShatYetiza = '';       
-//        var NextRow, NextSidur, NextSidurimPeiluyot;
-//        var bFound=false;
-
-//        if (iLastPeilut == '1') {
-//            iSidurIndex = iSidurIndex + 1;
-//            NextSidur = document.getElementById("lstSidurim_tblSidurim".concat(iSidurIndex));
-//            while ((NextSidur != null) && (!bFound)) {
-//                NextSidurimPeiluyot = document.getElementById("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
-//                if (NextSidurimPeiluyot != null) {
-//                    NextRow = NextSidurimPeiluyot.firstChild.childNodes[1];
-//                    bFound = true;
-//                }
-//                else {
-//                    iSidurIndex = iSidurIndex + 1;
-//                    NextSidur = document.getElementById("lstSidurim_tblSidurim".concat(iSidurIndex));
-//                }
-//            }
-//        }
-//        else {
-//            NextRow = document.getElementById(iPeilutIndex).nextSibling;
-//            NextSidur = document.getElementById("lstSidurim_tblSidurim".concat(iSidurIndex));
-//        }
-
-//        while ((NextRow != null) && (sMakatEnd == '') && (bExists == false) && (NextSidur != null)) {
-//            try {
-//                CanAddReka = NextRow.cells[_COL_ADD_NESIA_REKA].childNodes[0].getAttribute("NesiaReka");
-//            }
-//            catch (err) {
-//                try {
-//                    CanAddReka = NextRow.cells[_COL_ADD_NESIA_REKA].getAttribute("NesiaReka");
-//                }
-//                catch (err) {
-//                    CanAddReka = 0;
-//                }
-//            }
-
-//            if ((CanAddReka == "1") && (NextRow.cells[_COL_CANCEL_PEILUT].childNodes[0].value != '1')) {
-//                sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
-//                sMakatEnd = NextRow.cells[_COL_MAKAT].childNodes[0].value;
-//                if (lCarNum != NextRow.cells[_COL_CAR_NUMBER].childNodes[0].value)
-//                    lCarNum = 0;
-//            }
-//            else {
-//                if (NextRow.cells[_COL_MAKAT].childNodes[0].value != undefined) {
-//                    sMakat = NextRow.cells[_COL_MAKAT].childNodes[0].value;
-//                    arrKnisa = NextRow.cells[_COL_KNISA].childNodes[0].toString().split(",");
-//                    // 3אלמנט ללא מאפיין 9                   
-//                    if ((GetMakatType(sMakat) == MKT_ELEMENT) && (Number(arrKnisa[3]) == 0))
-//                    //if ((Number(sMakat.substr(0, 3)) >= 701) && (Number(sMakat.substr(0, 3)) <= 799) && (Number(arrKnisa[3]) == 0))
-//                        bExists = true;
-//                    else {
-//                        sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
-//                    }
-//                }
-//            }
-//            NextRow = NextRow.nextSibling;
-//            if (NextRow == null) { //אם הגענו לסוף הסידור נעבור לסידור הבא
-//                iSidurIndex = iSidurIndex + 1;
-//                bFound = false;
-//                while ((NextSidur != null) && (!bFound)) {
-//                    NextSidurimPeiluyot = document.getElementById("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
-//                    if (NextSidurimPeiluyot != null) {
-//                        NextRow = NextSidurimPeiluyot.firstChild.childNodes[1];
-//                        bFound = true;
-//                    }
-//                    else {
-//                        iSidurIndex = iSidurIndex + 1;
-//                        NextSidur = document.getElementById("lstSidurim_tblSidurim".concat(iSidurIndex));
-//                    }
-//                }
-//            }
-//        }
-//        //נמלא את שעת היציאה של כל שאר הפעילויות
-//        while (NextRow != null) {
-//            if (NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value != undefined) {
-//                sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
-//            }
-//            NextRow = NextRow.nextSibling;
-//        }
-//        return sMakatEnd.concat(",").concat(lCarNum).concat(",").concat(sPeilutShatYetiza);
-//        }           
     function FixSidurHeadrut(iIndex){         
         var sQueryString;
         sQueryString = "?dt=" + Date();
