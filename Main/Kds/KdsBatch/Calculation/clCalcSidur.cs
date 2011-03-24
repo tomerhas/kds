@@ -2682,11 +2682,11 @@ namespace KdsBatch
                         fErech = 0;
                         if (dShatHatchalaLetashlum < dTemp)
                         {
-                        
-                            if (dShatHatchalaLetashlum < _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim)
-                                fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                            else
-                                fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim).TotalMinutes.ToString());
+                            fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                            //if (dShatHatchalaLetashlum < _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim)
+                            //    fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                            //else
+                            //    fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim).TotalMinutes.ToString());
                         }
                         
                         addRowToTable(clGeneral.enRechivim.Shaot50.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
