@@ -2690,7 +2690,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             _ObjIdkunRashemet.MISPAR_SIDUR = iMisparSidur;
             _ObjIdkunRashemet.SHAT_HATCHALA = dShatHatchala;
             _ObjIdkunRashemet.NEW_SHAT_HATCHALA =  dShatHatchala;
-            _ObjIdkunRashemet.SHAT_YETZIA = _Peilut.oPeilutStatus==clPeilut.enPeilutStatus.enNew ? _Peilut.dFullShatYetzia : dShatYetiza;
+            _ObjIdkunRashemet.SHAT_YETZIA = _Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew ? _Peilut.dFullShatYetzia : _Peilut.dOldFullShatYetzia;
             _ObjIdkunRashemet.NEW_SHAT_YETZIA = _Peilut.oPeilutStatus == clPeilut.enPeilutStatus.enNew ? _Peilut.dFullShatYetzia : dShatYetiza;
             _ObjIdkunRashemet.MISPAR_KNISA = iMisparKnisa;
             _ObjIdkunRashemet.GOREM_MEADKEN = int.Parse(LoginUser.UserInfo.EmployeeNumber);

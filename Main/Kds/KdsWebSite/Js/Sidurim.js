@@ -780,22 +780,27 @@ function chkMkt(oRow) {
     function IsSHBigSG(val,args)
     {//נבדוק אם שעת ההתחלה קטנה משעת הגמר
        SetBtnChanges();
-       var iIndex = String(val.id).substr(String(val.id).length-1,1);  
-       var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)); 
+       var iIndex = String(val.id).substr(String(val.id).length-1,1);
+       var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
        var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
-       var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)); 
+       var sSidurDate;
        var dCardDate = document.getElementById("clnDate").value;     
+       if (((IsShatGmarInNextDay(sShatHatchala)) || (sShatHatchala == '00:00')))
+           sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+       else
+           sSidurDate = dCardDate; 
+
        var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);      
        var ShatGmar = new Date();     
        var ShatHatchala = new Date();    
-       var sYear=sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length-4,4);
-       var sMonth=Number(sSidurDate.innerHTML.substr(3,2))-1;
-       var sDay=sSidurDate.innerHTML.substr(0,2);                     
+       var sYear=sSidurDate.substr(sSidurDate.length-4,4);
+       var sMonth=Number(sSidurDate.substr(3,2))-1;
+       var sDay=sSidurDate.substr(0,2);                     
        ShatHatchala.setFullYear(sYear);
        ShatHatchala.setMonth(sMonth);
        ShatHatchala.setDate(sDay);
-       ShatHatchala.setHours(sShatHatchala.value.substr(0,2));
-       ShatHatchala.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length - 2, 2));
+       ShatHatchala.setHours(sShatHatchala.substr(0,2));
+       ShatHatchala.setMinutes(sShatHatchala.substr(sShatHatchala.length - 2, 2));
        sYear = dCardDate.substr(dCardDate.length - 4, 4);
        sMonth = Number(dCardDate.substr(3, 2)) - 1;
        sDay = dCardDate.substr(0, 2);        
