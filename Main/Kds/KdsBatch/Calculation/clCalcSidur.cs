@@ -162,9 +162,9 @@ namespace KdsBatch
 
                 //יוצאי דופן סידורים מיוחדים  
                 if (iMisparSidur == 99707)
-                    fErechRechiv = fMichsaYomit + 120;
+                    fErechRechiv = fErechRechiv + 120;
                 else if (iMisparSidur == 99708)
-                    fErechRechiv = fMichsaYomit + 60;
+                    fErechRechiv = fErechRechiv + 60;
                 else if (iMisparSidur == 99010)
                 {
                     //•	סידור 99010 (8549) – כדורגל: הנמוך מבין (נוכחות מחושבת, 180 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 60 ) ).
@@ -896,7 +896,7 @@ namespace KdsBatch
             int iMisparSidur, iKodRechiv,  iSugSidur;
             float fErech, fSumDakotRechiv;
             DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur;
-            DataRow[] drSidurim;
+            DataRow[] drSidurim,dr;
             iKodRechiv = clGeneral.enRechivim.KamutGmulChisachon.GetHashCode();
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
@@ -939,7 +939,12 @@ namespace KdsBatch
                         }
                         else
                         {
-                            fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+
+                            dr = _dsChishuv.Tables["CHISHUV_SIDUR"].Select( "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                            if (dr.Length > 0)
+                                fErech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                            else fErech = 0;
+                           // fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
 
                             addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fErech);
                         }
@@ -961,8 +966,11 @@ namespace KdsBatch
                                    
                                     dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                                     dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
-                                    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-
+                                    //fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                                    dr = _dsChishuv.Tables["CHISHUV_SIDUR"].Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                                    if (dr.Length > 0)
+                                        fErech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                                    else fErech = 0;
                                     addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fErech);
                                 }
                             }
@@ -2658,7 +2666,7 @@ namespace KdsBatch
             try
             {
 
-                if (fMichsaYomit > 0 && fNochehutLetashlum > fMichsaYomit)
+                if (fMichsaYomit > 0 && fNochehutLetashlum >= fMichsaYomit)
                 {
                     drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0  and MISPAR_SIDUR=99001 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC");
                     for (int I = 0; I < drSidurim.Length; I++)
@@ -2674,7 +2682,8 @@ namespace KdsBatch
                         fErech = 0;
                         if (dShatHatchalaLetashlum < dTemp)
                         {
-                            if (dShatHatchalaLetashlum > _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim)
+                        
+                            if (dShatHatchalaLetashlum < _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim)
                                 fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - dShatHatchalaLetashlum).TotalMinutes.ToString());
                             else
                                 fErech = float.Parse((_oGeneralData.objParameters.dTchlatTashlumTosefetLilaMafilim - _oGeneralData.objParameters.dTchilatMishmeretLilaMafilim).TotalMinutes.ToString());
