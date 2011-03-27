@@ -124,6 +124,7 @@
     <Compile Include="SystemCompare\CompareScope.cs" />
     <Compile Include="SystemCompare\ImportColumn.cs" />
     <Compile Include="SystemCompare\ImportStructure.cs" />
+    <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />
     <Compile Include="Transfer\clTransferToHilan.cs" />
@@ -189,6 +190,9 @@
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

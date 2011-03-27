@@ -23,6 +23,7 @@ Public Class ClKds
         Dim MyFile As String
         Dim ShaonimNumber As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim strErrorOfFiles As String = String.Empty
         Try
             MyFile = Dir(InPath & FileName)
             If Not MyFile = "" Then
@@ -30,13 +31,20 @@ Public Class ClKds
                 ''**KdsWriteProcessLog(2, 1, 1, "start shaonim")
 
                 While Not MyFile = ""
-                    LoadKdsFile(MyFile)
+                    Try
+                        LoadKdsFile(MyFile)
+                    Catch ex As Exception
+                        strErrorOfFiles = strErrorOfFiles & ex.Message & vbCr
+                    End Try
                     FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
                     File.Delete(InPath & MyFile)
                     MyFile = Dir()
                 End While
                 oBatch.UpdateProcessLog(ShaonimNumber, KdsLibrary.BL.RecordStatus.Finish, "shaonim", 0)
+                If (strErrorOfFiles <> String.Empty) Then
+                    Throw New Exception(strErrorOfFiles)
+                End If
                 ''*KdsWriteProcessLog(2, 1, 2, "end shaonim")
             End If
 
@@ -1123,6 +1131,7 @@ Public Class ClKds
                 oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "clKds " & Mid(InFileName, 9, 5) & " " & ErrFileName, 3)
                 ''** KdsWriteProcessLog(2, 1, 3, "clKds " & Mid(InFileName, 9, 5) & " " & ErrFileName, "3")
                 sw.Close()
+                Throw New Exception("Failure in reading file :" & InFileName)
             End If
         End Try
 
@@ -2081,6 +2090,9 @@ Public Class ClKds
         End Try
 
     End Sub
+    Public Sub RunSdrnYesterday()
+        RunSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
+    End Sub
     Public Sub RunSdrn(ByVal In_TAARICH)
         Dim tahalich As Integer
         Dim sub_tahalich As Integer
@@ -2097,6 +2109,7 @@ Public Class ClKds
         Dim WhrStr As String
         Dim RetSql As String
         Dim iSeqChkSdrn As Integer
+        Dim strErrors As String = String.Empty
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
             SdrnStrtHour = ConfigurationSettings.AppSettings("SdrnStrtHour") '4
@@ -2152,11 +2165,11 @@ Public Class ClKds
                         oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Faild, "status 6 abort during execution of pkg sdrn, check dblink", 2)
                         ''**KdsWriteProcessLog(tahalich, sub_tahalich, 3, "status 6 abort during execution of pkg sdrn, check dblink", "2")
                         'abort during execution of pkg
-                        ToMail = ConfigurationSettings.AppSettings("miri")
-                        ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
-
-                        BodyMail = "status 6 abort during execution of pkg sdrn, check dblink"
-                        SendMail(ToMail, "no peace 4 the wicked", BodyMail)
+                        'ToMail = ConfigurationSettings.AppSettings("miri")
+                        'ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
+                        'BodyMail = "status 6 abort during execution of pkg sdrn, check dblink"
+                        'SendMail(ToMail, "no peace 4 the wicked", BodyMail)
+                        strErrors = strErrors & "status 6 abort during execution of pkg sdrn, check dblink" & vbCr
                         oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.SendMail, "mail sdrn", 0)
                         ''**KdsWriteProcessLog(tahalich, sub_tahalich, 6, "mail sdrn")
                     Case 7
@@ -2167,11 +2180,12 @@ Public Class ClKds
                             oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Faild, "status 7 error during replication,tell someone there was an error while replicating", 12)
                             ''**KdsWriteProcessLog(tahalich, sub_tahalich, 3, "status 7 error during replication,tell someone there was an error while replicating", "12")
                             'record exist but an error occurd during replication
-                            ToMail = ConfigurationSettings.AppSettings("miri")
+                            '                            ToMail = ConfigurationSettings.AppSettings("miri")
                             'ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
-                            ToMail = ToMail & "," & ConfigurationSettings.AppSettings("DavidP")
-                            BodyMail = "status 7 error during replication,tell someone there was an error while replicating"
-                            SendMail(ToMail, "no peace 4 the wicked", BodyMail)
+                            '                           ToMail = ToMail & "," & ConfigurationSettings.AppSettings("DavidP")
+                            '                          BodyMail = "status 7 error during replication,tell someone there was an error while replicating"
+                            strErrors = strErrors & "status 7 error during replication,tell someone there was an error while replicating" & vbCr
+                            '                         SendMail(ToMail, "no peace 4 the wicked", BodyMail)
                             oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.SendMail, "mail sdrn", 0)
                             ''**KdsWriteProcessLog(tahalich, sub_tahalich, 6, "mail sdrn")
                         End If
@@ -2188,6 +2202,7 @@ Public Class ClKds
                             ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
                             BodyMail = "status 8 replication activated but no status returned"
                             SendMail(ToMail, "no peace 4 the wicked", BodyMail)
+
                             oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.SendMail, "mail sdrn", 0)
                             ''**KdsWriteProcessLog(tahalich, sub_tahalich, 6, "mail sdrn")
                         End If
@@ -2208,14 +2223,18 @@ Public Class ClKds
                         oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Faild, "unknown status", 2)
                         ''**KdsWriteProcessLog(tahalich, sub_tahalich, 3, "unknown status", "2")
                         'unknown answer
-                        ToMail = ConfigurationSettings.AppSettings("miri")
-                        ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
-                        BodyMail = "unknown status " & p_status.ToString
-                        SendMail(ToMail, "no peace 4 the wicked", BodyMail)
+                        strErrors = strErrors & "unknown status " & p_status.ToString & vbCr
+                        '                        ToMail = ConfigurationSettings.AppSettings("miri")
+                        '                       ToMail = ToMail & "," & ConfigurationSettings.AppSettings("merav")
+                        '                      BodyMail = "unknown status " & p_status.ToString
+                        '                     SendMail(ToMail, "no peace 4 the wicked", BodyMail)
                         oBatch.InsertProcessLog(tahalich, sub_tahalich, KdsLibrary.BL.RecordStatus.SendMail, "mail sdrn", 0)
                         ''**KdsWriteProcessLog(tahalich, sub_tahalich, 6, "mail sdrn")
                 End Select
             Loop
+            If (strErrors <> String.Empty) Then
+                Throw New Exception(strErrors)
+            End If
             oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Finish, "end check sdrn/RunSdrn", 0)
         Catch ex As Exception
             oBatch.UpdateProcessLog(iSeqChkSdrn, KdsLibrary.BL.RecordStatus.Faild, "RunSdrn " & ex.Message, 10)
@@ -3462,6 +3481,7 @@ Public Class ClKds
 
         Return taarich
     End Function
+
 #End Region
 
 End Class

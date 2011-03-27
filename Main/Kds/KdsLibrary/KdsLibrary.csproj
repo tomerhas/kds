@@ -122,6 +122,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="UDT\Coll_Brerot_Mechdal_Meafyenim.cs" />
     <Compile Include="UDT\Coll_Chishuv_Chodesh.cs" />
     <Compile Include="UDT\Coll_Chishuv_Sidur.cs" />
