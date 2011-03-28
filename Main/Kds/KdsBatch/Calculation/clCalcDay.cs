@@ -91,10 +91,10 @@ namespace KdsBatch
                 CalcRechiv215();
 
                 //סה"כ לאשל בוקר (רכיב 38) 
-                CalcRechiv38();
+         //       CalcRechiv38();
 
                 //סה"כ לאשל ערב (רכיב 40)
-                CalcRechiv40();
+           //     CalcRechiv40();
                        
                 //סה"כ לינה (רכיב 47 
                 CalcRechiv47();
@@ -292,7 +292,7 @@ namespace KdsBatch
                 CalcRechiv37();
                     
                 //סה"כ לאשל צהריים (רכיב 42)
-                CalcRechiv42();
+            //    CalcRechiv42();
 
                 //סה"כ לאשל בוקר/ערב/צהריים למבקרים בדרכים (רכיב /41/43/39) 
                 CalcRechiv39_41_43();

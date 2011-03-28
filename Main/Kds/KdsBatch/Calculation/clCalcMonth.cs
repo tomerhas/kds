@@ -705,10 +705,10 @@ namespace KdsBatch
                 CalcRechiv215();
 
                 //סה"כ לאשל בוקר (רכיב 38) 
-                CalcRechiv38();
+         //       CalcRechiv38();
 
                 //סה"כ לאשל ערב (רכיב 40)
-                CalcRechiv40();
+         //       CalcRechiv40();
 
                 //סה"כ לינה (רכיב 47 
                 CalcRechiv47();
@@ -934,7 +934,7 @@ namespace KdsBatch
                 CalcRechiv32();
 
                 //סה"כ לאשל צהריים (רכיב 42)
-                CalcRechiv42();
+          //      CalcRechiv42();
 
                 //כמות גמול חסכון (רכיב 22) 
                 CalcRechiv22();
