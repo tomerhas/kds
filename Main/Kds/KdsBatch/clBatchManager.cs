@@ -4835,7 +4835,9 @@ namespace KdsBatch
                 if ((oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode())  || (oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
                 {
                     dCurrStartPeilut = oPeilut.dFullShatYetzia;
-                    dblCurrTimeInMinutes = oPeilut.iMazanTichnun;
+                    if (oPeilut.iDakotBafoal>0)
+                        dblCurrTimeInMinutes = oPeilut.iDakotBafoal;
+                    else dblCurrTimeInMinutes = oPeilut.iMazanTichnun;
                     bCheck = 1;
                 }
                 //else
@@ -4865,7 +4867,10 @@ namespace KdsBatch
                 if ((oPrevPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode()) || (oPrevPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
                 {
                     dPrevStartPeilut = oPrevPeilut.dFullShatYetzia;
-                    dblPrevTimeInMinutes = oPrevPeilut.iMazanTichnun;
+                    if (oPrevPeilut.iDakotBafoal > 0)
+                        dblPrevTimeInMinutes = oPrevPeilut.iDakotBafoal;
+                    else dblPrevTimeInMinutes = oPrevPeilut.iMazanTichnun;
+                   // dblPrevTimeInMinutes = oPrevPeilut.iMazanTichnun;
                     bCheck &= 1;
                 }
                 //else
