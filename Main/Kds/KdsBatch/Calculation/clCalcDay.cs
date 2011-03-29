@@ -2022,7 +2022,7 @@ namespace KdsBatch
 
         private void CalcRechiv55()
         {
-            float fSumDakotRechiv, fTempX, fTempY, fTempZ, fZmanLilaSidureyBoker;
+            float fSumDakotRechiv, fTempX, fTempY, fTempZ, fZmanLilaSidureyBoker,fMichsaYomitMechushevet;
             try
             {
                 if ((_oGeneralData.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()) ||
@@ -2055,7 +2055,13 @@ namespace KdsBatch
                           {
                               if (fTempX > 0)
                               {
-                                  if (fTempZ >= fTempX)
+                                  fMichsaYomitMechushevet = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+
+                                  if (fMichsaYomitMechushevet  == 0)
+                                  {
+                                      fSumDakotRechiv = fTempX;
+                                  }
+                                  else  if (fTempZ >= fTempX)
                                   {
                                       fSumDakotRechiv = fTempX * float.Parse("1.5");
                                   }
