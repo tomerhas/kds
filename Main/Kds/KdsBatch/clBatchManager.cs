@@ -1234,12 +1234,16 @@ namespace KdsBatch
                     if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
+                    //bool change = true;
+                    int numPrev;
                     //foreach (DictionaryEntry dePeilutEntry in oSidur.htPeilut)
                     for (int j = 0; j < ((KdsBatch.clSidur)(htEmployeeDetails[i])).htPeilut.Count; j++)
                     {
                         //iKey = int.Parse(dePeilutEntry.Key.ToString());
                         oPeilut = (clPeilut)oSidur.htPeilut[j];
-
+                        if (j==0 && oPeilut.iMisparKnisa == 0)
+                            oPrevPeilut = oPeilut;
+                     
                         
                         //IsShatYetizaExist92(ref oSidur,ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(81)) IsKodNesiaExists81(ref  oSidur, ref  oPeilut, ref  dtErrors, dCardDate);
@@ -1259,12 +1263,12 @@ namespace KdsBatch
                         if (CheckErrorActive(125)) IsNesiaInSidurVisaAllowed125(ref oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(166)) IsHmtanaTimeValid166(ref oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(13)) IsSidurNamlakWithoutNesiaCard13(ref oSidur, ref oPeilut, ref dtErrors);
-                   
-                        if (j > 0)//לא נבצע את הבדיקה לפעילות הראשונה 
+
+                        if (j > 0 && oPeilut.iMisparKnisa==0)//לא נבצע את הבדיקה לפעילות הראשונה 
                         {
-                            oPrevPeilut = (clPeilut)oSidur.htPeilut[j - 1];
+                            //oPrevPeilut = (clPeilut)oSidur.htPeilut[j - 1];
                             if (CheckErrorActive(162)) IsCurrentPeilutInPrevPeilut162(ref oSidur, ref oPeilut, ref oPrevPeilut, ref dtErrors);
-                            
+                            oPrevPeilut = oPeilut;
                         }
                         if (CheckErrorActive(86)) IsTimeForPrepareMechineValid86(ref iTotalTimePrepareMechineForSidur, ref iTotalTimePrepareMechineForDay, ref iTotalTimePrepareMechineForOtherMechines, ref oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(151)) IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
@@ -4832,7 +4836,7 @@ namespace KdsBatch
             try
             {
                 //זמן תחילת פעילות לאחר זמן תחילת הפעילות הקודמת לה וזמן סיום הפעילות קודם לזמן סיום הפעילות הקודמת לה. זיהוי זמן הפעילות (זיהוי סוג פעילות לפי רוטינת זיהוי מק"ט) :עבור קו שירות, נמ"ק, , יש לפנות לקטלוג נסיעות כדי לקבל את הזמן. עבור אלמנט, במידה וזה אלמנט זמן (לפי ערך 1 במאפיין 4 בטבלת מאפייני אלמנטים), הזמן נלקח מפוזיציות 4-6 של האלמנט. בבדיקה זו אין  להתייחס לפעילות המתנה (מזהים פעילות המתנה (מסוג אלמנט) לפי מאפיין 15 בטבלת מאפייני אלמנטים).           
-                if ((oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode())  || (oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
+                if ((oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode()) || (oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode()))
                 {
                     dCurrStartPeilut = oPeilut.dFullShatYetzia;
                     if (oPeilut.iDakotBafoal>0)
