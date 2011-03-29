@@ -162,9 +162,9 @@ namespace KdsBatch
 
                 //יוצאי דופן סידורים מיוחדים  
                 if (iMisparSidur == 99707)
-                    fErechRechiv = fErechRechiv + 120;
+                    fErechRechiv = fMichsaYomit;// fErechRechiv + 120;
                 else if (iMisparSidur == 99708)
-                    fErechRechiv = fErechRechiv + 60;
+                    fErechRechiv = fMichsaYomit; // fErechRechiv + 60;
                 else if (iMisparSidur == 99010)
                 {
                     //•	סידור 99010 (8549) – כדורגל: הנמוך מבין (נוכחות מחושבת, 180 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 60 ) ).

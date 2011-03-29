@@ -10888,7 +10888,10 @@ namespace KdsBatch
             //תנאי חמישי לסעיף 11
             bool bSign = false;
             try{
-            if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())))
+            if ((oSidur.bSidurMyuhad) && 
+                (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && 
+                ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
+                (oSidur.sShaonNochachut == "1" || oSidur.sShaonNochachut == "2" || oSidur.sShaonNochachut == "3"))
             {
                 bSign = (!oMeafyeneyOved.Meafyen5Exists);
             }
