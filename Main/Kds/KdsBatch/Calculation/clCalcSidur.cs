@@ -286,7 +286,9 @@ namespace KdsBatch
                 {
                     //•	סידור 99013 (8585) – שעות 100% בלבד
                     // הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126) ).
-                    fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
+                    if (fMichsaYomit > 0)
+                        fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
+                    else fErechRechiv = fErechRechiv;
                 }
                 else if (iMisparSidur == 99220)
                 {
