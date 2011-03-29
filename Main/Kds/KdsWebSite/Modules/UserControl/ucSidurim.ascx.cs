@@ -2340,7 +2340,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
         {
             _Sidur = (clSidur)(_DataSource[iIndex]);
-            if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)))
+            if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)) && (_Sidur.iBitulOHosafa!= clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
                     break;
         }
          _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);

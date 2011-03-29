@@ -2468,7 +2468,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                         ref oCollPeluyotOvdimDel, ref oCollPeluyotOvdimIns))
                 {
                     //נמצאו פעילויות זהות
-                    string sScript = "alert('קיימים פעילויות זהות, לא ניתן לשמור נתונים' )";
+                    string sScript = "alert('קיימות פעילויות זהות, לא ניתן לשמור נתונים' )";
                     ScriptManager.RegisterStartupScript(btnUpdateCard, this.GetType(), "Save", sScript, true);
                 }
                 else
@@ -2502,16 +2502,23 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private bool HasMultiSidurim(ref COLL_SIDURIM_OVDIM oCollSidurimOvdimIns, ref COLL_SIDURIM_OVDIM oCollSidurimOvdimUpd)
     {
         bool bError = false;
-
+        int  iCount=0; //אם נמצא פעם אחת זה הסידור עצמו מעל ל-1 יש כפילות
         for (int i = 0; i < oCollSidurimOvdimIns.Count; i++)
         {
+            iCount = 0;
             for (int j = 0; j < oCollSidurimOvdimUpd.Count; j++)
             {
-                if ((oCollSidurimOvdimIns.Value[i].MISPAR_SIDUR == oCollSidurimOvdimUpd.Value[j].MISPAR_SIDUR) && (oCollSidurimOvdimIns.Value[i].SHAT_HATCHALA == oCollSidurimOvdimUpd.Value[j].NEW_SHAT_HATCHALA) && (oCollSidurimOvdimUpd.Value[j].UPDATE_OBJECT != 0))
+                if ((oCollSidurimOvdimIns.Value[i].MISPAR_SIDUR == oCollSidurimOvdimUpd.Value[j].MISPAR_SIDUR) &&
+                    (oCollSidurimOvdimIns.Value[i].SHAT_HATCHALA == oCollSidurimOvdimUpd.Value[j].NEW_SHAT_HATCHALA) &&
+                    (oCollSidurimOvdimUpd.Value[j].BITUL_O_HOSAFA != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))                
                 {
-                    bError = true;
-                    break;
-                }
+                    iCount = iCount + 1;
+                    if (iCount > 1)
+                    {
+                        bError = true;
+                        break;
+                    }
+                }                
             }
         }
         return bError;
@@ -3491,13 +3498,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     //נבדוק אם מפתח כבר קיים
                     //אם קיים, נחזיר שגיאה ולא נאפשר שמירת נתונים
+                   
                     if (!HasMultiPeiluyot(ref oCollPeilutOvdimUpd, ref oObjPeiluyotOvdim))
                         oCollPeilutOvdimUpd.Add(oObjPeiluyotOvdim);
                     else
                     {
                         bValid = false;
                         break;
-                    }
+                    }                   
                 }
             }
             return bValid;
@@ -3688,7 +3696,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if ((oCollPeilutOvdimUpd.Value[i].MISPAR_SIDUR == oObjPeiluyotOvdimUpd.MISPAR_SIDUR) &&
                     (oCollPeilutOvdimUpd.Value[i].NEW_SHAT_HATCHALA_SIDUR == oObjPeiluyotOvdimUpd.NEW_SHAT_HATCHALA_SIDUR) &&
                     (oCollPeilutOvdimUpd.Value[i].NEW_SHAT_YETZIA == oObjPeiluyotOvdimUpd.NEW_SHAT_YETZIA) &&
-                    (oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oObjPeiluyotOvdimUpd.MISPAR_KNISA))
+                    (oCollPeilutOvdimUpd.Value[i].MISPAR_KNISA == oObjPeiluyotOvdimUpd.MISPAR_KNISA) && 
+                    (oCollPeilutOvdimUpd.Value[i].BITUL_O_HOSAFA!=clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()) && 
+                    (oObjPeiluyotOvdimUpd.BITUL_O_HOSAFA!=clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
                 {
                     bHasMultiPeilyot = true;
                 }
@@ -3941,6 +3951,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim   
                             oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
                             FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
+                            oObjSidurimOvdimDel.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode(); //^^^^
+                            oObjSidurimOvdimDel.UPDATE_OBJECT = 0;  //^^^^^
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;                            
                             oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
                         }
@@ -4160,7 +4172,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimDel.SHAT_HATCHALA = oObjSidurimOvdimUpd.SHAT_HATCHALA;
             oObjSidurimOvdimDel.MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
             oObjSidurimOvdimDel.MEADKEN_ACHARON =long.Parse(LoginUser.UserInfo.EmployeeNumber);
-            oObjSidurimOvdimDel.BITUL_O_HOSAFA = 1;
+            //oObjSidurimOvdimDel.BITUL_O_HOSAFA = 1;
             oObjSidurimOvdimDel.UPDATE_OBJECT = 1;
         }
         catch (Exception ex)

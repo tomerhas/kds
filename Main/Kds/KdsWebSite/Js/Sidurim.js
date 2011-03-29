@@ -5,6 +5,7 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
+var bSidurDateWasUpdate=false;
 function chkMkt(oRow) {
        var iMisparIshi = document.getElementById("txtId").value;
        var dCardDate = document.getElementById("clnDate").value;    
@@ -624,6 +625,7 @@ function chkMkt(oRow) {
         }   
   }
   function changeStartHour(iIndex) {
+      bSidurDateWasUpdate = true;
       document.getElementById("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
       var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
@@ -642,6 +644,9 @@ function chkMkt(oRow) {
           document.getElementById("lstSidurim_lblSidur".concat(iIndex)).disabled = true;
           document.getElementById("lstSidurim_btnShowMessage").click();
           document.getElementById("lstSidurim_lblSidur".concat(iIndex)).disabled = false;
+      }
+      else {
+          document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML = sCardDate;
       }
      var dSdDate = new Date();
      var _SHNew = document.getElementById("lstSidurim_txtSH".concat(iIndex));
@@ -664,22 +669,26 @@ function chkMkt(oRow) {
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
         document.getElementById("lstSidurim_hidCurrIndx").value ="3|" + iIndex;
         var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
-        if (IsValidTime(sShatHatchala.value)){                            
-            if (!IsSHBigSG(val, args)) {
-                if (args.IsValid == false)
-                    val.errormessage = val.errormessage + "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר " + "\n";
-                else {
-                    val.errormessage = "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר \n";
-                    args.IsValid = false;
-                }
-            }
-            if (iIndex > 0) {
-                if (!IsSHGreaterPrvSG(val, args)) {
+
+        if (IsValidTime(sShatHatchala.value)) {
+            if (bSidurDateWasUpdate) {
+                bSidurDateWasUpdate = false;
+                if (!IsSHBigSG(val, args)) {
                     if (args.IsValid == false)
-                        val.errormessage = val.errormessage + "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם " + "\n";
+                        val.errormessage = val.errormessage + "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר " + "\n";
                     else {
-                        val.errormessage = "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
+                        val.errormessage = "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר \n";
                         args.IsValid = false;
+                    }
+                }
+                if (iIndex > 0) {
+                    if (!IsSHGreaterPrvSG(val, args)) {
+                        if (args.IsValid == false)
+                            val.errormessage = val.errormessage + "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם " + "\n";
+                        else {
+                            val.errormessage = "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
+                            args.IsValid = false;
+                        }
                     }
                 }
             }
@@ -784,13 +793,16 @@ function chkMkt(oRow) {
        var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
        var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
        var sSidurDate;
-       var dCardDate = document.getElementById("clnDate").value;     
-       if (((IsShatGmarInNextDay(sShatHatchala)) || (sShatHatchala == '00:00')))
-           sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-       else
-           sSidurDate = dCardDate; 
+       
+       var dCardDate = document.getElementById("clnDate").value;
+       if (((IsShatGmarInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
+           sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;           
+       }
+       else {
+           sSidurDate = dCardDate;         
+       }
 
-       var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);      
+       var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);
        var ShatGmar = new Date();     
        var ShatHatchala = new Date();    
        var sYear=sSidurDate.substr(sSidurDate.length-4,4);
