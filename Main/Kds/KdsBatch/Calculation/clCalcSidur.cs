@@ -173,7 +173,7 @@ namespace KdsBatch
                 else if (iMisparSidur == 99706)
                 {
                     //•	סידור 99706 (8552) – קייטנה מאבטח: הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126)).
-                    fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
+                    fErechRechiv = fMichsaYomit; // Math.Min(fErechRechiv, fMichsaYomit);
 
                 }
                 else if (iMisparSidur == 99703)

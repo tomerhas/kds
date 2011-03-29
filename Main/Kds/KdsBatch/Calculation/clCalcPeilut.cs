@@ -200,6 +200,11 @@ namespace KdsBatch
              int iMisparKnisa=0;
              string sMakat, sQury;
             DateTime dShatYetzia = DateTime.MinValue;
+
+            clKavim _Kavim = new clKavim();
+            int iMakatType; //= _Kavim.GetMakatType(lMakatNesia);
+            clKavim.enMakatType oMakatType;
+           
              try 
              {
                 // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
@@ -212,8 +217,9 @@ namespace KdsBatch
                      iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
                      sMakat = drPeiluyot[J]["makat_nesia"].ToString();
                      dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
-
-                     if ((sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
+                     iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
+                     oMakatType = (clKavim.enMakatType)iMakatType;
+                     if (oMakatType != clKavim.enMakatType.mVisa && oMakatType != clKavim.enMakatType.mEmpty && oMakatType != clKavim.enMakatType.mElement) //(sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
                      {
                          fErech+=1;
                      }
