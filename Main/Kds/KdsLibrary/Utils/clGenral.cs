@@ -288,7 +288,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cCheckHityatzvutNehag = "kds.KdsVerifyDriverCheckIn";                   
 #endregion
 
-#region pkg_utils constants
+        #region pkg_task_Manager 
+        public const string cGetStuckGroup = "pkg_task_Manager.GetStuckGroup";
+        #endregion 
+        #region pkg_utils constants
         public const string cProGetPremiaYadanit = "pkg_utils.pro_get_premia_yadanit";
         public const string cProGetOvdimLeritza = "pkg_utils.pro_get_ovdim_leRitza";
         public const string cProGetEzorim = "pkg_utils.pro_get_ezorim";

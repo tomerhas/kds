@@ -30,6 +30,7 @@ namespace KdsLibrary.Utils
             _mailToAddress = new MailAddress(To);
             message = new MailMessage(_mailFromAddress, _mailToAddress);
             message.Subject = Subject;
+            message.IsBodyHtml = true;
             message.Body = Body;
         }
 
