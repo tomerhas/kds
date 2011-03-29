@@ -22,10 +22,11 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Critical);
-                Message msg = new Message(_ActionToExecute, TypeStatus.Stopped,  "Group:" + _ActionToExecute.IdGroup + 
-                                                                                 ",Order:" +  _ActionToExecute.IdOrder + "\n" +
-                        Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                string AllMessage = Utilities.PrepareExceptionMessage(ex.Message + "\n" + ex.InnerException.Message);
+                Utilities.WriteLog(AllMessage, Utilities.SeverityLevel.Critical);
+                Message msg = new Message(_ActionToExecute, TypeStatus.Stopped,
+                                        "Group:" + _ActionToExecute.IdGroup + ",Order:" + _ActionToExecute.IdOrder + "\n" +
+                                        AllMessage, DateTime.MinValue, DateTime.Now);
                 msg.UpdateTaskLog();
             }
 
