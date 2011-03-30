@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using KdsLibrary.DAL;
 using System.Configuration;
-
+using System.Web;
 namespace KdsLibrary.BL
 {
     public class clKavim
@@ -410,19 +410,25 @@ namespace KdsLibrary.BL
 
         public bool IsBusNumberValid(long lOtoNo, DateTime dCardDate)
         {
-            clDal oDal = new clDal();
-            
+            clDal oDal = new clDal();           
+            string sCacheKey = lOtoNo + dCardDate.ToShortDateString();
             try
             {   //בודק מול מש"ר אם מספר רכב תקין:   
                 //0-תקין 
                 //1- שגיאה
                 //2- לא אותר
-                oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
-                oDal.AddParameter("p_oto_no", ParameterType.ntOracleLong, lOtoNo, ParameterDir.pdInput);
-                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
-                oDal.ExecuteSP(clGeneral.cFnIsOtoNumberExists);
 
-                return int.Parse(oDal.GetValParam("p_result").ToString()) == 0;              
+                if (HttpRuntime.Cache.Get(sCacheKey) == null)
+                {
+                    oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                    oDal.AddParameter("p_oto_no", ParameterType.ntOracleLong, lOtoNo, ParameterDir.pdInput);
+                    oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                    oDal.ExecuteSP(clGeneral.cFnIsOtoNumberExists);
+                    HttpRuntime.Cache.Insert(sCacheKey, int.Parse(oDal.GetValParam("p_result").ToString()), null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                    return int.Parse(oDal.GetValParam("p_result").ToString()) == 0;
+                }
+                else                
+                    return  (int)HttpRuntime.Cache.Get(sCacheKey) == 0;                                  
             }
             catch (Exception ex)
             {
