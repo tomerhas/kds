@@ -512,8 +512,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     {
                         lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
                         Session["Sidurim"] = oBatchManager.htEmployeeDetails;
-                        dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
-                        Session["Mashar"] = dtLicenseNumbers;
+                        if (oBatchManager.dtMashar == null)
+                            dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
+                        else
+                        {
+                            dtLicenseNumbers = oBatchManager.dtMashar;
+                            Session["Mashar"] =dtLicenseNumbers ;
+                        }
                         lstSidurim.Mashar = dtLicenseNumbers;
                     }
                     ViewState["LoadNewCard"] = true;
@@ -1497,6 +1502,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.Param102 = oBatchManager.oParam.iHashlamaShisi;
         lstSidurim.Param103 = oBatchManager.oParam.iHashlamaShabat;
         lstSidurim.Param242 = oBatchManager.oParam.dShatGmarNextDay;
+        lstSidurim.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua; 
         lstSidurim.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         ////lstSidurim.Param108 = oBatchManager.oParam.iHashlamaMaxYomRagil;//parameter 108
         ////lstSidurim.Param109 = oBatchManager.oParam.iHashlamaMaxShisi;  //parameter 109

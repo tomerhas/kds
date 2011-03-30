@@ -7,7 +7,8 @@ using System.Data;
 using System.Collections;
 using KdsLibrary.BL;
 using KdsLibrary;
-
+using System.Diagnostics;
+using System.Web;
 namespace KdsBatch
 {
 
@@ -408,9 +409,10 @@ namespace KdsBatch
         }
 
         private DataTable GetSidurRagilDetails(DateTime dCardDate, int iMisparSidur, int iShayahLeyomKodem, out int iResult)
-        {
+        {            
             //סידורים רגילים
             //נבדוק מול התנועה
+            string sCacheKey = iMisparSidur + dCardDate.ToShortDateString();
             DataTable dsSidurim = new DataTable();
             clKavim oKavim = new clKavim();
             DateTime dSidurDate = dCardDate;
@@ -418,7 +420,21 @@ namespace KdsBatch
             //{   //אם הסידור שייך מבחינת תכנון ליום הקודם (בודקת האם בשדה Shayah_LeYom_Kodem בטבלת "סידורים עובדים" קיים ערך 1) . אם כן, יש לפנות  לממשק עם תאריך של יום קודם.
             //    dSidurDate = dSidurDate.AddDays(-1);
             //}
-            dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, dSidurDate, out iResult);
+            iResult = 0;
+            try
+            {
+                dsSidurim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                dsSidurim = null;
+            }
+            if (dsSidurim == null)
+            {
+                dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, dSidurDate, out iResult);
+                HttpRuntime.Cache.Insert(sCacheKey, dsSidurim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            }
+            
             return dsSidurim;
         }
         private bool IsSidurMyuhad(string sMisparSidur)

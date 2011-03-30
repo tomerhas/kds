@@ -5,7 +5,7 @@ var MKT_SHERUT = 1;
 var MKT_EMPTY = 2;
 var MKT_NAMAK = 3;
 var MKT_ELEMENT = 5;
-var bSidurDateWasUpdate=false;
+
 function chkMkt(oRow) {
        var iMisparIshi = document.getElementById("txtId").value;
        var dCardDate = document.getElementById("clnDate").value;    
@@ -624,8 +624,7 @@ function chkMkt(oRow) {
             }
         }   
   }
-  function changeStartHour(iIndex) {
-      bSidurDateWasUpdate = true;
+  function changeStartHour(iIndex){
       document.getElementById("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
       var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
@@ -670,28 +669,25 @@ function chkMkt(oRow) {
         document.getElementById("lstSidurim_hidCurrIndx").value ="3|" + iIndex;
         var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
 
-        if (IsValidTime(sShatHatchala.value)) {
-            if (bSidurDateWasUpdate) {
-                bSidurDateWasUpdate = false;
-                if (!IsSHBigSG(val, args)) {
+        if (IsValidTime(sShatHatchala.value)){
+            if (!IsSHBigSG(val, args)){
+                if (args.IsValid == false)
+                    val.errormessage = val.errormessage + "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר " + "\n";
+                else{
+                    val.errormessage = "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר \n";
+                    args.IsValid = false;
+                }
+            }
+            if (iIndex > 0){
+                if (!IsSHGreaterPrvSG(val, args)){
                     if (args.IsValid == false)
-                        val.errormessage = val.errormessage + "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר " + "\n";
+                        val.errormessage = val.errormessage + "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם " + "\n";
                     else {
-                        val.errormessage = "\n שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר \n";
+                        val.errormessage = "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
                         args.IsValid = false;
                     }
                 }
-                if (iIndex > 0) {
-                    if (!IsSHGreaterPrvSG(val, args)) {
-                        if (args.IsValid == false)
-                            val.errormessage = val.errormessage + "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם " + "\n";
-                        else {
-                            val.errormessage = "\n שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
-                            args.IsValid = false;
-                        }
-                    }
-                }
-            }
+            }            
         }
         else {
             args.IsValid = false;
@@ -795,7 +791,7 @@ function chkMkt(oRow) {
        var sSidurDate;
        
        var dCardDate = document.getElementById("clnDate").value;
-       if (((IsShatGmarInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
+       if (((IsShatHatchalaInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
            sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;           
        }
        else {
@@ -1065,26 +1061,15 @@ function chkMkt(oRow) {
       var sCardDate = document.getElementById("clnDate").value;
       if (arrItems[0] == '1') {//שעת גמר
             sEndHour = document.getElementById("lstSidurim_txtSG" + arrItems[1]).value;
-            //sSidurDate = document.getElementById("lstSidurim_lblDate".concat(arrItems[1])).innerHTML;                     
             var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-           // var dSidurTime = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), 0, 0);
             var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-//            var utcCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
-//            var utcSidurDate = Date.UTC(dSidurTime.getFullYear(), dSidurTime.getMonth() + 1, dSidurTime.getDate(), 0, 0, 0);
             var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
             if (sEndHour == '00:00'){
                _Add = '1'
                document.getElementById("lstSidurim_txtDayAdd".concat(arrItems[1])).value='1';
             }
            dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
-//            if (_Add == '1') {
-//                if (utcCardDate == utcSidurDate)
-//                    dSidurTime.setDate(dSidurTime.getDate() + 1);
-//            }
-//            else {//add=0                
-//                    dSidurTime = dCardDate;
-//            }
-            document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
+           document.getElementById("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
       }
       else {//שעת יציאה
           sEndHour = document.getElementById(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;

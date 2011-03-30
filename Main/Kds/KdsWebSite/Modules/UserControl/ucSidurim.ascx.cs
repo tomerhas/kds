@@ -48,6 +48,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _Param41;
     private int _Param98;
     private DateTime _Param242;
+    private DateTime _Param244;
     private int _NumOfHashlama;
     private DateTime _CardDate;
     private DateTime _FullShatHatchala;
@@ -301,20 +302,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
     protected void SetHideParameters()
     {
-        //Set General Parameters
-       // hidParam1.Value = Param1.ToShortTimeString();
-       // hidParam4.Value = Param4.ToShortTimeString();
-       // hidParam93.Value = Param93.ToShortTimeString();
-        //hidParam80.Value = Param80.ToShortTimeString();
-        //hidParam3.Value = Param3.ToShortTimeString();
-        hidParam29.Value = Param29.ToShortTimeString();
-        //hidParam30.Value = Param30.ToShortTimeString();
-       //hidParam101.Value = Param101.ToString();
-        //hidParam102.Value = Param102.ToString();
-        //hidParam103.Value = Param103.ToString();
+        //Set General Parameters     
+        hidParam29.Value = Param29.ToShortTimeString();     
         hidParam41.Value = Param41.ToString();
         hidParam98.Value = Param98.ToString();
-        hidParam242.Value = Param242.ToShortTimeString();       
+        hidParam242.Value = Param242.ToShortTimeString();
+        hidParam244.Value = Param244.ToShortTimeString(); 
         hidNumOfHashlama.Value = NumOfHashlama.ToString();
     }
     protected Panel CreatePanel(int iIndex, string sID, string sClass)
@@ -2337,12 +2330,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DateTime dSidurShatHatchala= new DateTime();
 
         iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);        
-        for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
-        {
-            _Sidur = (clSidur)(_DataSource[iIndex]);
-            if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)) && (_Sidur.iBitulOHosafa!= clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
-                    break;
-        }
+        //for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
+        //{
+        //    _Sidur = (clSidur)(_DataSource[iIndex]);
+        //    if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)) && (_Sidur.iBitulOHosafa!= clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
+        //            break;
+        //}
+         _Sidur = (clSidur)(_DataSource[iSidurIndex]);
          _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
          _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
          Session["Sidurim"] = _DataSource;
@@ -5819,6 +5813,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         get
         {
             return _Param242;
+        }
+    }
+    public DateTime Param244
+    {
+        set
+        {
+            _Param244 = value;
+        }
+        get
+        {
+            return _Param244;
         }
     }
     //public int Param108

@@ -146,7 +146,7 @@ function trim(str) {
     return str.replace(/^[\s]+/, '').replace(/[\s]+$/, '').replace(/[\s]{2,}/, ' ');
 }
 
-function IsShatGmarInNextDay(shaa) {
+function IsShatGmarInNextDay(shaa){
     var Time=shaa.split(':');
     var hours = Time[0];
     var minuts = Time[1];
@@ -156,7 +156,17 @@ function IsShatGmarInNextDay(shaa) {
     else
         return false;
 }
-
+function IsShatHatchalaInNextDay(shaa) {
+    var sParam244 = document.getElementById("lstSidurim_hidParam244").value;
+    var Time = shaa.split(':');
+    var hours = Time[0];
+    var minuts = Time[1];
+    if ((Number(hours) > 0 && Number(hours) <= Number(sParam244.substr(0,2))) ||
+         (Number(hours) == 0 && Number(minuts) > 0))
+        return true;
+    else
+        return false;
+}
 function GetDateDDMMYYYY(dDate){   
     var dd = dDate.getDate();
     var mm = dDate.getMonth()+1;//January is 0!

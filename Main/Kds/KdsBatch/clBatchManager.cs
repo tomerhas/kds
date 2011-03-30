@@ -63,7 +63,7 @@ namespace KdsBatch
         private DataTable dtMutamut;
         private DataTable dtSibotLedivuachYadani;
         private DataSet dtChishuvYom;
-        private DataTable dtMashar;
+        public DataTable dtMashar;
         //private OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
         private OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel;
         private OBJ_SIDURIM_OVDIM oObjSidurimOvdimIns;
@@ -2449,80 +2449,6 @@ namespace KdsBatch
     }
 
         private bool IsHighPremya153(clSidur oSidur, ref DataTable dtErrors, bool bSidurNahagut, ref bool bCheckBoolSidur)
-        {
-            bool isValid = true;
-            float dSumMazanTashlum = 0;
-            int iTypeMakat,iMoneNesiot;
-            clPeilut oPeilut;
-            OrderedDictionary htPeilut = new OrderedDictionary();
-            float dSumMazanElementim = 0;
-            float dSumKisuyTor = 0;
-            float fZmanSidur = 0;
-            float fPremiyeSidur = 0;
-           // clPeilut oPeilutAchrona;
-           bool isSidurValid = true;
-            try
-            {
-                iMoneNesiot = 0;
-               // oPeilutAchrona = GetLastPeilutNoElementLeyedia(oSidur);    
-               // fZmanSidur = float.Parse(((oPeilutAchrona.dFullShatYetzia.AddMinutes(oPeilutAchrona.iMazanTichnun)) - oSidur.dFullShatHatchala).TotalMinutes.ToString());
-                fZmanSidur = float.Parse((oSidur.dFullShatGmar - oSidur.dFullShatHatchala).TotalMinutes.ToString());
-                htPeilut = oSidur.htPeilut;
-                for (int i = 0; i < oSidur.htPeilut.Values.Count; i++)
-                {
-                    oPeilut = ((clPeilut)htPeilut[i]);
-                    iTypeMakat = oPeilut.iMakatType;
-                    if ( (oPeilut.iMisparKnisa==0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
-                    {
-                        dSumMazanTashlum += oPeilut.iMazanTashlum;
-                        if (iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode())
-                        {
-                            iMoneNesiot += 1;
-                            dSumKisuyTor += oPeilut.iKisuyTor;
-                        }
-                    }
-                    else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
-                    {
-                        if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
-                        {
-                            dSumMazanElementim += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
-
-                        }
-                    }
-                }
-
-                 fPremiyeSidur =float.Parse(((dSumMazanTashlum * 1.333) + dSumMazanElementim + dSumKisuyTor + (2.5 * (iMoneNesiot - 1) + 2)).ToString());
-
-                 if (oSidur.bSidurMyuhad)
-                 {
-                     if (fPremiyeSidur > (fZmanSidur * 2))
-                         isSidurValid = false;
-                 }
-                 else
-                 {
-                     if (oSidur.iPremium != null && oSidur.iPremium >0)
-                         if ((fPremiyeSidur / oSidur.iPremium) > _oParameters.fHighPremya) 
-                             isSidurValid = false;
-                 }
-
-                 if (!isSidurValid)
-                 {
-                     drNew = dtErrors.NewRow();
-                     InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", enErrors.errHighPremya.GetHashCode());
-                     dtErrors.Rows.Add(drNew);
-                     isValid = false;
-                 }
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errHighPremya.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsHighPremya153: " + ex.Message, null);
-                isValid = false;
-                _bSuccsess = false;
-            }
-
-            return isValid;
-        }
-        private bool IsHighPremya153_2(clSidur oSidur, ref DataTable dtErrors, bool bSidurNahagut, ref bool bCheckBoolSidur)
         {
            
             bool isSidurValid = true;
