@@ -2911,7 +2911,7 @@ namespace KdsBatch
                 iMisparSidur = int.Parse(drSidurim["mispar_sidur"].ToString());
                 dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
 
-                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim["zakay_lepizul"].ToString()) == 1))
+                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim["zakay_lechishuv_retzifut"].ToString()) == 1))
                     bSidurNihulOrTafkid = true;
                 else if (iMisparSidur.ToString().Substring(0, 2) != "99")
                 {

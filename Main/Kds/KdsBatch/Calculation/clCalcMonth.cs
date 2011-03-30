@@ -1508,8 +1508,8 @@ namespace KdsBatch
                 if (_oGeneralData.objPirteyOved.iDirug != 85 || _oGeneralData.objPirteyOved.iDarga != 30)
                 {
                     
-                        if (_oGeneralData.objMeafyeneyOved.iMeafyen54 > 0)
-                        {
+                        //if (_oGeneralData.objMeafyeneyOved.iMeafyen54 > 0)
+                        //{
                             fDakotNosafotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode().ToString()));
                             if ((fDakotNosafotNahagut / 60) > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
                             {
@@ -1517,7 +1517,7 @@ namespace KdsBatch
                                 addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
 
                             }
-                        }
+                        //}
                    
                 }
             }
