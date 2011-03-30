@@ -528,7 +528,7 @@
             <br />
                    כרטיס העבודה נשלח להדפסה אנא המתן
             <br/>
-                  <label id="msgErrCar" runat="server" style="display:none"  >קיימת שגיאה על מספר רכב, הכרטיס לא ישולם </label>       
+                  <label id="msgErrCar" runat="server" style="display:none"  >חסר מספר רכב, כרטיס עבודה לא יועבר לתשלום </label>       
             <br/>
      </asp:Panel>  
          
