@@ -53,6 +53,23 @@ namespace KdsBatch
               throw ex;
             }
          }
+
+         public clPirteyOved(DataRow dr)
+         {
+            // DataRow[] rows;
+             try
+             {
+                 //rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                 //if (rows.Length > 0)
+                 //{
+                     SetMeafyneyOved(dr);
+                 //}
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
         private void SetMeafyneyOved(DataRow drPratim)
         {
             try
