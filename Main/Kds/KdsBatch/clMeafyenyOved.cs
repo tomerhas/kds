@@ -151,6 +151,18 @@ namespace KdsBatch
             dtMeafyenyOved.Dispose();
         }
 
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type,DataTable dtMeafyenim)
+        {
+            _Type = Type;
+            _Taarich = dDate;
+            dtMeafyenyOved = dtMeafyenim;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                SetMeafyneyOved();
+            }
+            dtMeafyenyOved.Dispose();
+        }
+
         public bool Meafyen1Exists
         {
             get { return _bMeafyen1Exists; }
