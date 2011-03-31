@@ -27,6 +27,7 @@ namespace KdsBatch
         public bool bIsInShlila = false;
 
          private DataTable dtOvedCardDetails;
+         public DateTime _Taarich;
 
          public clPirteyOved(int iMisparIshi, DateTime dDate)
         {
@@ -54,11 +55,12 @@ namespace KdsBatch
             }
          }
 
-         public clPirteyOved(DataRow dr)
+         public clPirteyOved(DataRow dr, DateTime dTaarich)
          {
             // DataRow[] rows;
              try
              {
+                 _Taarich = dTaarich;
                  //rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                  //if (rows.Length > 0)
                  //{
