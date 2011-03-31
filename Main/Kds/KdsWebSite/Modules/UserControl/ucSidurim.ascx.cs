@@ -407,13 +407,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //אם לא מצאנו מספר סידור או קודי מאפיין, נבדוק ברמת פעילות
         //סידור שיש בו לפחות פעילות אחת מסוג שירות שיש לה 71=Onatiut.
         bool bExists = false;
+        clKavim.enMakatType _MakatType;
         try
         {
             clPeilut _Peilut;
             for (int i = 0; i < oSidur.htPeilut.Count; i++)
             {
                 _Peilut = ((clPeilut)oSidur.htPeilut[i]);
-                if (_Peilut.iOnatiyut == clGeneral.enOnatiut.enOnatiut.GetHashCode()) 
+                _MakatType = (clKavim.enMakatType)(_Peilut.iMakatType);
+                if (_Peilut.iOnatiyut == clGeneral.enOnatiut.enOnatiut.GetHashCode() && (_MakatType== clKavim.enMakatType.mKavShirut)) 
                 {
                     bExists = true;
                     break;
