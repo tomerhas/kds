@@ -6161,17 +6161,36 @@ namespace KdsBatch
                     //שינוי 17
                     //SidurNetzer17(ref oSidur);
 
+                    clSidur oSidurFirst = new clSidur();
+                    clSidur oSidurSecond = new clSidur();
+                    bool flag = true;
                     //שינוי 6
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
-                        oSidur = (clSidur)htEmployeeDetails[i];
-
-                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                        if (flag) 
                         {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                            oSidur = (clSidur)htEmployeeDetails[i];
+                            if ( oSidur.iLoLetashlum == 0)
+                            {
+                                oSidurFirst = oSidur;
+                                flag = false;
+                            }
+                        }
+                        if (!flag && i < (htEmployeeDetails.Count-1))
+                        {
+                            oSidurSecond = (clSidur)htEmployeeDetails[i + 1];
+                            if (oSidurFirst.iLoLetashlum == 0 && oSidurSecond.iLoLetashlum == 0)
+                            {
+                                if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
+                                {
+                                    oObjSidurimOvdimUpd = GetUpdSidurObject(oSidurFirst);
 
-                            FixedPitzulHafsaka06(ref oSidur, i + 1, ref oObjSidurimOvdimUpd);
-                            htEmployeeDetails[i] = oSidur;
+                                    FixedPitzulHafsaka06(ref oSidurFirst, i + 1, ref oObjSidurimOvdimUpd);
+                                    htEmployeeDetails[i] = oSidurFirst;
+                                }
+                                oSidurFirst = oSidurSecond;
+                            }
+                            
                         }
                     }
 
@@ -7075,15 +7094,16 @@ namespace KdsBatch
 
                                     //ביום שישי/ערב חג (לפי ה- oracle או טבלת ימים מיוחדים) יחושב פיצול רק במידה ושעת הגמר של הסידור השני היא לפני כניסת שבת. 
                                     if (oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString() || oSidur.sErevShishiChag == "1")
-                                    {
+                                    { 
                                         dShatKnisatShabat = _oParameters.dKnisatShabat;
                                         if (oNextSidur.dFullShatHatchala > dShatKnisatShabat)
                                         {
                                             return;
                                         }
+                                        else iMinPaar = _oParameters.iMinHefreshSidurimLepitzulSummer;
                                     }
 
-                                    if (dMinutsPitzul >= iMinPaar)
+                                    if (dMinutsPitzul > iMinPaar)
                                     {
                                          DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
 
