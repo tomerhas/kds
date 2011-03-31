@@ -160,7 +160,7 @@ namespace KdsBatch
         public string sZakayMichutzLamichsa; //מאפיין 25
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
-        public int iPremium;
+        public int iPremium=0;
         //נתוני פעילות
         public OrderedDictionary htPeilut = new OrderedDictionary();
 
@@ -361,7 +361,8 @@ namespace KdsBatch
                         bSidurRagilExists = true;
                         //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
                         iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                        iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+                        if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+                            iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
                     }
                 }
             }
@@ -707,7 +708,8 @@ namespace KdsBatch
                         bSidurRagilExists = true;
                         //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
                         iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                        iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+                        if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+                             iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
                     }
                 }
             }
@@ -804,7 +806,8 @@ namespace KdsBatch
                     bSidurRagilExists = true;
                     //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
                     iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                    iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+                    if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+                        iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
                 }
             }
         }
