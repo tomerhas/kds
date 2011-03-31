@@ -2906,12 +2906,14 @@ namespace KdsBatch
             DataRow[]   drPeiluyot;
            // DataTable dtPeiluyot;
             DateTime dShatHatchalaSidur = DateTime.MinValue;
+            int zakay = 0;
             try
             {
                 iMisparSidur = int.Parse(drSidurim["mispar_sidur"].ToString());
                 dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
-
-                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || int.Parse(drSidurim["zakay_lechishuv_retzifut"].ToString()) == 1))
+                if (drSidurim["zakay_lechishuv_retzifut"].ToString() !="")
+                    zakay= int.Parse(drSidurim["zakay_lechishuv_retzifut"].ToString());
+                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || zakay == 1))
                     bSidurNihulOrTafkid = true;
                 else if (iMisparSidur.ToString().Substring(0, 2) != "99")
                 {
