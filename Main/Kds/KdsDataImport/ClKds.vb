@@ -24,6 +24,7 @@ Public Class ClKds
         Dim ShaonimNumber As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Dim strErrorOfFiles As String = String.Empty
+        Dim ErrorCounter As Integer = 0
         Try
             MyFile = Dir(InPath & FileName)
             If Not MyFile = "" Then
@@ -34,7 +35,8 @@ Public Class ClKds
                     Try
                         LoadKdsFile(MyFile)
                     Catch ex As Exception
-                        strErrorOfFiles = strErrorOfFiles & ex.Message & vbCr
+                        ErrorCounter = ErrorCounter + 1
+                        strErrorOfFiles = strErrorOfFiles & ErrorCounter.ToString() & "." & ex.Message & vbCr
                     End Try
                     FileNameOld = Left(MyFile, Len(MyFile) - 4) & ".old"
                     File.Copy(InPath & MyFile, InPath & SubFolder & FileNameOld, True)
