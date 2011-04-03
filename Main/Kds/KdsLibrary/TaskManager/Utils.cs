@@ -6,6 +6,7 @@ using System.Data;
 using System.Configuration;
 using System.IO;
 using KdsLibrary.BL;
+using KdsLibrary.Utils;
 
 
 namespace KdsLibrary.TaskManager
@@ -83,6 +84,33 @@ namespace KdsLibrary.TaskManager
                 //oKDsData = New KdsDataImport.ClKds
                 oBatch.UpdateProcessLog(iDeleteHeavyReport, KdsLibrary.BL.RecordStatus.Faild, "DeleteHeavyReport faild: " + ex.Message, 9);
                 //'**oKDsData.KdsWriteProcessLog(20, 1, 3, "DeleteHeavyReport faild: " + ex.Message, 9)
+            }
+        }
+
+        public void NoticeStuckGroup(int GroupId, int ActionId)
+        {
+            clTaskManager tm = clTaskManager.GetInstance();
+            DataTable dt = tm.GetStuckGroup(GroupId, ActionId);
+            string GroupDesc = string.Empty , ActionDesc = string.Empty, Delta = string.Empty;
+            string Body = string.Empty ,Subject = string.Empty;
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow Row in dt.Rows)
+                {
+                    GroupDesc = Row["GroupDesc"].ToString();
+                    ActionDesc = Row["ActionDesc"].ToString();
+                    Delta= Row["Delta"].ToString();
+                    clMail omail;
+                    Subject = "פעילות תקועה";
+                    Body = " :פעולה " + ActionDesc + " :מקבוצה" + GroupDesc + " רצה כבר " + Delta;
+                    Body += "\n" + "לטיפולך.";
+                    string[] RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
+                    RecipientsList.ToList().ForEach(recipient =>
+                    {
+                        omail = new clMail(recipient, Subject, Body);
+                        omail.SendMail();
+                    });
+                }
             }
         }
     }
