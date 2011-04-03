@@ -2495,13 +2495,14 @@ namespace KdsBatch
 
                 if (oSidur.bSidurMyuhad)
                 {
-                    if (fPremiyeSidur > (fZmanSidur * 2))
-                        isSidurValid = false;
+                    if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        if (fPremiyeSidur > (fZmanSidur * 2))
+                            isSidurValid = false;
                 }
                 else
                 {
                     if (oSidur.iPremium > 0)
-                        if ((fPremiyeSidur / oSidur.iPremium) > _oParameters.fHighPremya)
+                        if ((fPremiyeSidur / oSidur.iPremium) * 10 > _oParameters.fHighPremya)
                             isSidurValid = false;
                 }
 
