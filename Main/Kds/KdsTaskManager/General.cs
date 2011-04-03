@@ -9,6 +9,7 @@ using System.Xml;
 using System.IO;
 using KdsLibrary.Utils;
 using System.Configuration;
+using System.Threading;
 
 
 namespace KdsTaskManager
@@ -105,6 +106,7 @@ namespace KdsTaskManager
         public void TestCommand()
         {
             Console.WriteLine("TestCommand is running ");
+            Thread.Sleep(100000); 
         }
         public bool TestCommandWithParam(string param)
         {
@@ -135,7 +137,7 @@ namespace KdsTaskManager
                 _Type = action.TypeCommand;
                 Status = status;
                 Sequence = action.Sequence;
-                Remark = (status == TypeStatus.Stopped) ? Utilities.PrepareExceptionMessage(remark) : remark;
+                Remark = remark;
                 StartTime = startTime;
                 EndTime = endTime;
             }

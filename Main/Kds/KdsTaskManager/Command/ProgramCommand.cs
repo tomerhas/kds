@@ -124,7 +124,7 @@ namespace KdsTaskManager
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.MinValue);
                 _MessageStart.UpdateTaskLog();
                 object obj = _ConstructorInfo.Invoke(new object[] { });
-                _MethodInfo.Invoke(obj, _parameters);
+                _MethodInfo.Invoke(obj, _parameters.ToArray());
                 _ActionResult = true; 
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.MinValue, DateTime.Now);
                 _MessageEnd.UpdateTaskLog();
