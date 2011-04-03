@@ -30,6 +30,7 @@ namespace KdsBatch
         private OrderedDictionary _htEmployeeDetails;
         private OrderedDictionary _htSpecialEmployeeDetails;
         //private OrderedDictionary _htEmployeeDetailsWithCancled;
+        
         private DataTable _dtErrors;
         private DataTable _dtSidurimMeyuchadim;
         private DataTable _dtMeafyeneyElements;
@@ -292,8 +293,9 @@ namespace KdsBatch
                     dtDetails = oDefinition.GetOvedDetails(_iMisparIshi, _dCardDate);
                     if (dtDetails.Rows.Count > 0)
                     {
+                        OrderedDictionary htFullEmployeeDetails = new OrderedDictionary();
                         //Insert Oved Details to Class
-                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(false,dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
+                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
                     }
                 }
             }
@@ -615,6 +617,7 @@ namespace KdsBatch
 
             DataTable dtErrors = new DataTable();
             clDefinitions oDefinition = new clDefinitions();
+            OrderedDictionary htFullEmployeeDetails;
             //DataTable dtYamimMeyuchadim;
             clUtils oUtils = new clUtils();
             string sArrKodShgia;
@@ -626,6 +629,7 @@ namespace KdsBatch
             _dCardDate = dCardDate;
             try
             {
+                htFullEmployeeDetails = new OrderedDictionary();
                 dtLookUp = oUtils.GetLookUpTables();
                 _dtErrorsNotActive = clDefinitions.GetErrorsNoActive();
 
@@ -708,8 +712,8 @@ namespace KdsBatch
                         //Insert Oved Details to Class
                         //if (htEmployeeDetails == null)
                         //{
-                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
-                        _htEmployeeDetails = htEmployeeDetails;
+                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
+                        _htEmployeeDetails = htFullEmployeeDetails;
                         //}
 
                         //מחיקת סידורי רציפות
@@ -6001,8 +6005,9 @@ namespace KdsBatch
                         dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
                         if (dtDetails.Rows.Count > 0)
                         {
+                            OrderedDictionary htFullEmployeeDetails = new OrderedDictionary();
                             //Insert Oved Details to Class
-                            htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
+                            htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
 
                             sCarNumbers = clDefinitions.GetMasharCarNumbers(htEmployeeDetails);
 
