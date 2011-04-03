@@ -1091,8 +1091,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         //if (oBatchManager.CardStatus!= clGeneral.enCardStatus.Calculate) 
         //{
-           // oBatchManager.InitGeneralData();
-        //}
+        if (oBatchManager.htEmployeeDetails==null)
+            oBatchManager.InitGeneralData();
+       
         //Check if oved musach
         //Get Employee Ishurim
         
