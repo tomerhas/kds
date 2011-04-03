@@ -170,6 +170,7 @@
                                 <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails"/>
                                 <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut"/>
                                 <asp:AsyncPostBackTrigger ControlID="btnFindSidur"/>
+                                <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/>
                             </Triggers>
                         </asp:UpdatePanel>
                     </td>

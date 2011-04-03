@@ -251,7 +251,7 @@ namespace KdsBatch
                     //oSidurWithCanceld.AddEmployeeSidurim(dr,false);
                     //oSidurWithCanceld.iSugSidurRagil = oSidur.iSugSidurRagil;
                     //oSidurWithCanceld.bSidurRagilExists = oSidur.bSidurRagilExists;
-                  
+
                     if (SpecialSidurim.Contains(iMisparSidur))
                     {
                         //htSpecialEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
@@ -261,15 +261,15 @@ namespace KdsBatch
                     //{
                     //    htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
                     //}
-                    else 
-                        if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
-                        {
+                    else
+                    {
+                        if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum == 0 || (oSidur.iLoLetashlum == 1 && oSidur.iLebdikaShguim == 1))))                        
                             //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
                             htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                             //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
-                        }
-                    htFullEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
-                    
+                        
+                        htFullEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                    }
                     iMisparSidurPrev = iMisparSidur;
                     dShatHatchalaPrev = dShatHatchala;
 

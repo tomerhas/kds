@@ -1091,8 +1091,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         if (oBatchManager.CardStatus!= clGeneral.enCardStatus.Calculate) 
         {
-            oBatchManager.InitGeneralData();
-        }
+           // oBatchManager.InitGeneralData();
+        }//
         //Check if oved musach
         //Get Employee Ishurim
         
@@ -1492,8 +1492,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 _FirstSidur = ((clSidur)oBatchManager.htEmployeeDetails[0]);
             }
         }
-        lstSidurim.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;     
-       // lstSidurim.Param93 = oBatchManager.oParam.dSidurEndLimitShatHatchala;
+        lstSidurim.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;           
         lstSidurim.Param80 = oBatchManager.oParam.dNahagutLimitShatGmar;
         lstSidurim.Param3 = oBatchManager.oParam.dSidurEndLimitHourParam3;
         lstSidurim.Param29 = oBatchManager.oParam.dStartHourForPeilut;
@@ -1504,9 +1503,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.Param242 = oBatchManager.oParam.dShatGmarNextDay;
         lstSidurim.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua; 
         lstSidurim.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
-        ////lstSidurim.Param108 = oBatchManager.oParam.iHashlamaMaxYomRagil;//parameter 108
-        ////lstSidurim.Param109 = oBatchManager.oParam.iHashlamaMaxShisi;  //parameter 109
-        ////lstSidurim.Param110 = oBatchManager.oParam.iHashlamaMaxShabat;//parameter 110
+     
         if ((dDateCard.DayOfWeek==System.DayOfWeek.Friday)) 
             lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxShisi; //109
         else if(dDateCard.DayOfWeek==System.DayOfWeek.Saturday)
@@ -2306,22 +2303,40 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         if (SaveCard())
         {
-           // hidRefresh.Value = "1";
-            Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
-           // LoadPage();
+            //          hidRefresh.Value = "1";
+            //    Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString() + "&WCardUpdate=true");
+            //          ViewState["LoadNewCard"] = true;
+            //          LoadPage();
 
-           // //hidExecInputChg.Value = "1";
-           // ////נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
+            //          //hidExecInputChg.Value = "1";
+            //          ////נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
+            //          lstSidurim.ClearControl();
+            //          lstSidurim.BuildPage();  
 
-           // //RunBatchFunctions();
-           // //Session["Errors"] = oBatchManager.dtErrors;
-           // //Session["Parameters"] = oBatchManager.oParam;
+            hidRefresh.Value = "1";
+            RunBatchFunctions();
 
-           // ////oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
-           // lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
-           // lstSidurim.ErrorsList = oBatchManager.dtErrors;
-           // lstSidurim.ClearControl();
-           // lstSidurim.BuildPage();  
+            SetImageForButtonMeasherOMistayeg();
+            oBatchManager.IsExecuteErrors = false;
+            ShowOvedCardDetails(iMisparIshi, dDateCard);
+            SetImageForButtonValiditiy();
+            //SetLookUpDDL();
+
+            ViewState["LoadNewCard"] = true;
+            lstSidurim.RefreshBtn = 1;
+            hidRefresh.Value = "0";
+
+            _StatusCard = oBatchManager.CardStatus;
+            lstSidurim.StatusCard = _StatusCard;
+            lstSidurim.Mashar = oBatchManager.dtMashar;
+            lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+            lstSidurim.ErrorsList = oBatchManager.dtErrors;
+            Session["Sidurim"] = oBatchManager.htEmployeeDetails;
+            Session["Errors"] = oBatchManager.dtErrors;
+            lstSidurim.ClearControl();
+            lstSidurim.BuildPage();
+            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }
        
     }
