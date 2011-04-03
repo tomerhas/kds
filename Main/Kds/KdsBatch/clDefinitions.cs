@@ -189,23 +189,26 @@ namespace KdsBatch
             return _Peiluyot;
         }
 
-        public OrderedDictionary BuildSidurimPeiluyot(int _iMisparIshi, DateTime _dCardDate,ref int iLastMisaprSidur, out  OrderedDictionary _htSpecialEmployeeDetails) //, out  OrderedDictionary _htEmployeeDetailsWithCancled
-        {
-            DataTable dtDetails;
-            OrderedDictionary htEmployeeDetails= new OrderedDictionary();
-            _htSpecialEmployeeDetails = new OrderedDictionary();
-            //_htEmployeeDetailsWithCancled = new OrderedDictionary();
-            //Get Oved Details
-            dtDetails = GetOvedDetails(_iMisparIshi, _dCardDate);
-            if (dtDetails.Rows.Count > 0)
-            {
-                //Insert Oved Details to Class
-                htEmployeeDetails = InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
-            }
-            return htEmployeeDetails;
-        }
+        //public OrderedDictionary BuildSidurimPeiluyot(int _iMisparIshi, DateTime _dCardDate,ref int iLastMisaprSidur, out  OrderedDictionary _htSpecialEmployeeDetails) //, out  OrderedDictionary _htEmployeeDetailsWithCancled
+        //{
+        //    DataTable dtDetails;
+        //    OrderedDictionary htEmployeeDetails= new OrderedDictionary();
+        //    _htSpecialEmployeeDetails = new OrderedDictionary();
+        //    //_htEmployeeDetailsWithCancled = new OrderedDictionary();
+        //    //Get Oved Details
+        //    dtDetails = GetOvedDetails(_iMisparIshi, _dCardDate);
+        //    if (dtDetails.Rows.Count > 0)
+        //    {
+        //        //Insert Oved Details to Class
+        //        htEmployeeDetails = InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
+        //    }
+        //    return htEmployeeDetails;
+        //}
 
-        public OrderedDictionary InsertEmployeeDetails(bool bInsertToShguim, DataTable dtDetails, DateTime dCardDate, ref int iLastMisaprSidur, out OrderedDictionary htSpecialEmployeeDetails)//,  out OrderedDictionary htEmployeeDetailsWithCancled
+        public OrderedDictionary InsertEmployeeDetails(bool bInsertToShguim, DataTable dtDetails, 
+                                                       DateTime dCardDate, ref int iLastMisaprSidur, 
+                                                       out OrderedDictionary htSpecialEmployeeDetails,
+                                                       ref OrderedDictionary htFullEmployeeDetails)
         {
             int iMisparSidur, iPeilutMisparSidur;
             int iKey = 0;
@@ -258,12 +261,15 @@ namespace KdsBatch
                     //{
                     //    htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
                     //}
-                    else if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
-                    {
-                        //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
-                        htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
-                        //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
-                    }
+                    else 
+                        if (!bInsertToShguim || (bInsertToShguim && (oSidur.iLoLetashlum==0 || (oSidur.iLoLetashlum==1 && oSidur.iLebdikaShguim==1))))
+                        {
+                            //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
+                            htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                            //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
+                        }
+                    htFullEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+                    
                     iMisparSidurPrev = iMisparSidur;
                     dShatHatchalaPrev = dShatHatchala;
 
