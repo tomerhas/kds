@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Excel;
+using System.Threading;
+using System.Globalization; 
 
 namespace KdsBatch.Premia
 {
@@ -29,7 +31,10 @@ namespace KdsBatch.Premia
         #region Methods
         public void OpenNewWorkBook()
         {
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             _workBook = _application.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+            Thread.CurrentThread.CurrentCulture = originalCulture;
             //_workBook = _application.Workbooks.Open(_filename, true, false, 5, "", "", 
             //    false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
         }
