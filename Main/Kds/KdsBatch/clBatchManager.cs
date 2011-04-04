@@ -31,7 +31,7 @@ namespace KdsBatch
         private OrderedDictionary _htFullEmployeeDetails;
         private OrderedDictionary _htSpecialEmployeeDetails;
         //private OrderedDictionary _htEmployeeDetailsWithCancled;
-        
+        private int _iLoginUserId = 0;
         private DataTable _dtErrors;
         private DataTable _dtSidurimMeyuchadim;
         private DataTable _dtMeafyeneyElements;
@@ -5901,6 +5901,18 @@ namespace KdsBatch
                 return _htEmployeeDetails;
             }
         }
+
+        public int iLoginUserId
+        {
+            set
+            {
+                _iLoginUserId = value;
+            }
+            get
+            {
+                return _iLoginUserId;
+            }
+        }
         public OrderedDictionary htFullEmployeeDetails
         {
             set
@@ -7429,8 +7441,8 @@ namespace KdsBatch
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
-                    
-                        if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg==-1)
+
+                        if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1 && _iLoginUserId != oSidur.iMisparIshi)
                         {
                             oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
