@@ -34,15 +34,20 @@ namespace KdsBatch.CalcNew
         public List<clMeafyenyOved>  MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyot { set; get; }
-        //public int iSugYom { get; set; }
-        //public string sSugYechida { get; set; }
-        //public float fMekademNipuach { get; set; }
+        public string sSugYechida { get; set; }
         public  float fMekademNipuach { set; get; }
         public DataSet _dsChishuv { set; get; }
-        public DataTable _DtMonth { set; get; }
-        public DataTable _DtDay { set; get; }
-        public DataTable _DtSidur { set; get; }
-        public DataTable _DtPeilut { set; get; }
+        private DataTable _DtMonth; // { set; get; }
+        private DataTable _DtDay;// { set; get; }
+        private DataTable _DtSidur;// { set; get; }
+        private DataTable _DtPeilut;// { set; get; }
+       
+        public clParameters objParameters { get; set; }
+        public clPirteyOved objPirteyOved { get; set; }
+        public clMeafyenyOved objMeafyeneyOved { get; set; }
+
+        public DateTime Taarich { get; set; }
+        public int SugYom { get; set; }
 
           public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd)
         {
@@ -53,26 +58,34 @@ namespace KdsBatch.CalcNew
         }
         private void SetNetunimLeOved()
         {
+            try
+            {
+                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
+                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
+                Parameters = oGeneralData.ListParameters;
+                DtMichsaYomit = oGeneralData._dtMichsaYomitAll;
+                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;
+                DtSugeySidur = oGeneralData._dtSugeySidurAll;
+                DtBusNumbers = oGeneralData._dtBusNumbersAll;
+                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
+                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
+                dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;
+                dtPremyot = oGeneralData._dtPremyotAll;
 
-            DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
-            DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
-            Parameters = oGeneralData.ListParameters;
-            DtMichsaYomit = oGeneralData._dtMichsaYomitAll;
-            DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;
-            DtSugeySidur = oGeneralData._dtSugeySidurAll;
-            DtBusNumbers = oGeneralData._dtBusNumbersAll;
-            DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
-            DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
-            dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;
-            dtPremyot = oGeneralData._dtPremyotAll;
-            InitPirteyOvedList();
-            InitDtYemeyAvoda();
-            InitDtPeiluyotFromTnua();
-            InitDtPeiluyotLeOved();
-            InitMeafyenyOved();
+                InitPirteyOvedList();
+                InitDtYemeyAvoda();
+                InitDtPeiluyotFromTnua();
+                InitDtPeiluyotLeOved();
+                InitMeafyenyOved();
+                InitSugeyYechida();
 
-            //* For *//
-            //sSugYechida
+                InitDataSetChishuv();
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "SetNetunimLeOved: " + ex.Message);
+                throw ex;
+            }
         }
         private void InitPirteyOvedList()
         { 
@@ -96,7 +109,7 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPirteyOvedList: " + ex.Message);
                 throw ex;
             }
         }
@@ -116,7 +129,7 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtYemeyAvoda: " + ex.Message);
                 throw ex;
             }
         }
@@ -136,7 +149,7 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotFromTnua: " + ex.Message); 
                 throw ex;
             }
         }
@@ -156,7 +169,7 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotLeOved: " + ex.Message); 
                 throw ex;
             }
         }
@@ -179,13 +192,32 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message); 
+                throw ex;
+            }
+        }
+        private void InitSugeyYechida()
+        {
+            DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
+            DataRow[] rows;
+            DtSugeyYechida = new DataTable();
+            try
+            {
+                rows = oGeneralData._dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and me_tarich <= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich  >= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                if (rows.Length > 0)
+                {
+                    DtSugeyYechida = rows.CopyToDataTable();
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitSugeyYechida: " + ex.Message); 
                 throw ex;
             }
         }
         #region Initialize
 
-        public DataSet GetDataSetChishuv()
+        public void InitDataSetChishuv()
         {
             _dsChishuv = new DataSet();
 
@@ -194,7 +226,7 @@ namespace KdsBatch.CalcNew
             InitDtChishuvSidur();
             InitDtChishuvChodesh();
 
-            return _dsChishuv; 
+            //return _dsChishuv; 
         }
 
         private  void InitDtChishuvPeilut()

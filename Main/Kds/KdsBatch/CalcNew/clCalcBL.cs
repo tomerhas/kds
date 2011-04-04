@@ -47,12 +47,18 @@ namespace KdsBatch.CalcNew
 
         public  bool CheckErevChag(DataTable dtSugeyYamimMeyuchadim,int iSugYom)
         {
-            if (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom).Length > 0)
-            {
-                return (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["EREV_SHISHI_CHAG"].ToString() == "1") ? true : false;
+            try{
+                if (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom).Length > 0)
+                {
+                    return (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["EREV_SHISHI_CHAG"].ToString() == "1") ? true : false;
 
+                }
+                else return false;
             }
-            else return false;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public  bool CheckOutMichsa(int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala, int iOutMichsa)
@@ -68,103 +74,154 @@ namespace KdsBatch.CalcNew
         public  bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala)
         {
             clUtils objUtils = new clUtils();
-            if (objUtils.CheckIshurToSidur(iMisparIshi, dTaarich, iKodIshur, iMisparSidur, dShatHatchala) == 1)
-            { return true; }
-            else { return false; }
+            try{
+                if (objUtils.CheckIshurToSidur(iMisparIshi, dTaarich, iKodIshur, iMisparSidur, dShatHatchala) == 1)
+                { return true; }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public  bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich)
         {
             clUtils objUtils = new clUtils();
-            if (objUtils.CheckIshur(iMisparIshi, dTaarich, iKodIshur) == 1)
-            { return true; }
-            else { return false; }
+            try
+            {
+                if (objUtils.CheckIshur(iMisparIshi, dTaarich, iKodIshur) == 1)
+                { return true; }
+                else { return false; } 
+             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int GetSugYomLemichsa(Oved oOved, DateTime dTaarich, int iKodSectorIsuk, int iMeafyen56)
         {
             int iSugYom;
-            if (oOved.DtYamimMeyuchadim == null)
-            {
-                oOved.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-            }
+            try{
+                if (oOved.DtYamimMeyuchadim == null)
+                {
+                    oOved.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                }
 
-            iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.DtYamimMeyuchadim, iKodSectorIsuk, oOved.DtSugeyYamimMeyuchadim, iMeafyen56);
-            return iSugYom;
+                iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.DtYamimMeyuchadim, iKodSectorIsuk, oOved.DtSugeyYamimMeyuchadim, iMeafyen56);
+                return iSugYom;
+             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool CheckIsurShaotNosafot(clPirteyOved objPirteyOved)
         {
             clUtils objUtils = new clUtils();
             DataTable dtMutamut;
-            if (objPirteyOved.iMutamut > 0)
-            {
-                dtMutamut = objUtils.GetCtbMutamut();
-                if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["Isur_Shaot_Nosafot"].ToString() == "1")
-                { return true; }
-                else { return false; }
+            try{
+                if (objPirteyOved.iMutamut > 0)
+                {
+                    dtMutamut = objUtils.GetCtbMutamut();
+                    if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["Isur_Shaot_Nosafot"].ToString() == "1")
+                    { return true; }
+                    else { return false; }
+                }
+                else return false;
             }
-            else return false;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool CheckMutamut(clPirteyOved objPirteyOved)
         {
+            
             clUtils objUtils = new clUtils();
             DataTable dtMutamut;
-            if (objPirteyOved.iMutamut > 0)
+            try
             {
-                dtMutamut = objUtils.GetCtbMutamut();
-                if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["MEZAKE_GMUL"].ToString() == "1")
-                { return true; }
-                else { return false; }
+                if (objPirteyOved.iMutamut > 0)
+                {
+                    dtMutamut = objUtils.GetCtbMutamut();
+                    if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["MEZAKE_GMUL"].ToString() == "1")
+                    { return true; }
+                    else { return false; }
+                }
+                else return false;
             }
-            else return false;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int GetMichsaYomit(Oved oOved, int iKodMichsa, ref int iSugYom, DateTime dTaarich, int iKodSectorIsuk, int iMeafyen56)
         {
             DataRow[] drMichsa;
             int iShvuaAvoda;
-            if (iSugYom == 0)
+            try
             {
-                iSugYom = GetSugYomLemichsa(oOved, dTaarich, iKodSectorIsuk, iMeafyen56);
-            }
-            if ( iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() ||  iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
-            { iShvuaAvoda = 6; }
-            else { iShvuaAvoda = 5; }
+                if (iSugYom == 0)
+                {
+                    iSugYom = GetSugYomLemichsa(oOved, dTaarich, iKodSectorIsuk, iMeafyen56);
+                }
+                if ( iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() ||  iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
+                { iShvuaAvoda = 6; }
+                else { iShvuaAvoda = 5; }
 
-            drMichsa = clCalcData.DtMichsaYomit.Select("Kod_Michsa=" + iKodMichsa + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
-            if (drMichsa.Length > 0)
-            { return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); }
-            else
+                drMichsa = oOved.DtMichsaYomit.Select("Kod_Michsa=" + iKodMichsa + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                if (drMichsa.Length > 0)
+                { return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
             {
-                return 0;
+                throw ex;
             }
         }
 
         public int GetPremiaYadanit(DataTable dtPremyotYadaniyot, int iSugPremia)
         {
             DataRow[] drPremia;
-
-            drPremia = dtPremyotYadaniyot.Select("Sug_premya=" + iSugPremia);
-            if (drPremia.Length > 0)
-            { return int.Parse(drPremia[0]["Dakot_premya"].ToString()); }
-            else
+            try
             {
-                return 0;
+                drPremia = dtPremyotYadaniyot.Select("Sug_premya=" + iSugPremia);
+                if (drPremia.Length > 0)
+                { return int.Parse(drPremia[0]["Dakot_premya"].ToString()); }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public  int GetPremiaChodshit(DataTable dtPremyot,int iSugPremia)
         {
             DataRow[] drPremia;
-
-            drPremia = dtPremyot.Select("Sug_premia=" + iSugPremia);
-            if (drPremia.Length > 0)
-            { return int.Parse(drPremia[0]["Sum_dakot"].ToString()); }
-            else
+            try{
+                drPremia = dtPremyot.Select("Sug_premia=" + iSugPremia);
+                if (drPremia.Length > 0)
+                { return int.Parse(drPremia[0]["Sum_dakot"].ToString()); }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
             {
-                return 0;
+                throw ex;
             }
         }
 
@@ -195,6 +252,28 @@ namespace KdsBatch.CalcNew
                 throw ex;
             }
         }
-       
+
+        public string InitSugYechida(Oved oved,DateTime dDay)
+        {
+            DataRow[] drSugYechida;
+            try
+            {
+                if (oved.DtSugeyYechida.Rows.Count > 0)
+                {
+                    drSugYechida = oved.DtSugeyYechida.Select(" Convert('" + dDay.ToShortDateString() + "', 'System.DateTime') >= me_tarich and " + " Convert('" + dDay.ToShortDateString() + "', 'System.DateTime') <= ad_tarich ");
+                    if (drSugYechida.Length > 0)
+                    { return drSugYechida[0]["SUG_YECHIDA"].ToString(); }
+                    else
+                    {
+                        return "";
+                    }
+                }
+                else return ""; ;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

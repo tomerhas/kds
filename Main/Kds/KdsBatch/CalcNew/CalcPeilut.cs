@@ -15,15 +15,16 @@ namespace KdsBatch.CalcNew
         private DataTable _dtChishuvPeilut;
         public DateTime dTaarich { get; set; }
         public int iSugYom { get; set; }
-        private clParameters objParameters;
         public CalcPeilut(Oved oOved)
         {
             objOved = oOved;
-            _dtChishuvPeilut = objOved._DtPeilut;
-            objParameters = objOved.Parameters.Find(Params => (Params._Taarich == dTaarich));
-             
+            _dtChishuvPeilut = objOved._dsChishuv.Tables["CHISHUV_PEILUT"];// objOved._DtPeilut;    
         }
-
+        public void SetNetunim(int SugYom,DateTime Taarich)
+        {
+            dTaarich = Taarich;
+            iSugYom = SugYom;
+        }
          public void CalcRechiv1(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              DataRow[] drPeiluyot;
@@ -109,13 +110,13 @@ namespace KdsBatch.CalcNew
                                      switch (int.Parse(drDetailsPeilut["Migun"].ToString()))
                                      {
                                          case 1:
-                                             fAchuzSikun =  objParameters.fAchuzSikun1;
+                                             fAchuzSikun =  objOved.objParameters.fAchuzSikun1;
                                              break;
-                                         case 2: fAchuzSikun =  objParameters.fAchuzSikun2;
+                                         case 2: fAchuzSikun =  objOved.objParameters.fAchuzSikun2;
                                              break;
-                                         case 3: fAchuzSikun =   objParameters.fAchuzSikun3;
+                                         case 3: fAchuzSikun =   objOved.objParameters.fAchuzSikun3;
                                              break;
-                                         case 4: fAchuzSikun =  objParameters.fAchuzSikun4;
+                                         case 4: fAchuzSikun =  objOved.objParameters.fAchuzSikun4;
                                              break;
                                          default: fAchuzSikun = 0; break;
                                      }
@@ -139,7 +140,7 @@ namespace KdsBatch.CalcNew
                      for (int J = 0; J < drPeiluyot.Length; J++)
                      {
                          iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
-                         fDakotSikun =   objParameters.fAchuzSikunLehamtana / 100 * iMakat;
+                         fDakotSikun =   objOved.objParameters.fAchuzSikunLehamtana / 100 * iMakat;
                          if (fDakotSikun > 0)
                          {
                              dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
@@ -168,7 +169,7 @@ namespace KdsBatch.CalcNew
             
              try
              {
-                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(nesia_reika is not null))");
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(nesia_reika is not null)");
                 
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
@@ -280,7 +281,7 @@ namespace KdsBatch.CalcNew
 
                              if ((iSugAuto == 4 || iSugAuto == 5) && objOved.DtBusNumbers.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                              {
-                                 fHistaglutMifraki = ( objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                                 fHistaglutMifraki = ( objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                              }
 
                              if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 1)
@@ -335,7 +336,7 @@ namespace KdsBatch.CalcNew
                      //ג.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia = 7 (זהו אלמנט) וגם האלמנט הוא מסוג נסיעה [שליפת מאפיינים (מס' אלמנט, קוד מאפיין = 35, תאריך)] אזי: ק"מ = [חישוב קמ לפי זמן נסיעה (מק"ט פעילות)] 
                      else if (iMakat1 == 7 && drPeiluyot[J]["nesia"].ToString() == "1")
                      {
-                         fKm = oCalcBL.CalcKm(long.Parse(drPeiluyot[J]["makat_nesia"].ToString()), objParameters.fGoremChishuvKm);
+                         fKm = oCalcBL.CalcKm(long.Parse(drPeiluyot[J]["makat_nesia"].ToString()), objOved.objParameters.fGoremChishuvKm);
                      }
                      //א.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia <> 5 או 7 (זו נסיעה מקטלוג נסיעות) אזי: ק"מ = Km מקטלוג הנסיעות לפי מק"ט הפעילות ותאריך יום העבודה. 
                      else if (iMakat1 != 5 && iMakat1 != 7)
@@ -456,7 +457,7 @@ namespace KdsBatch.CalcNew
                          iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
                          fHagdaraLetashlum = CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
 
-                         fErech =  objParameters.fMekademTosefetZmanLefiRechev * fHagdaraLetashlum;
+                         fErech =  objOved.objParameters.fMekademTosefetZmanLefiRechev * fHagdaraLetashlum;
                         
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" || drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 3) == "791")
                          {
@@ -554,14 +555,14 @@ namespace KdsBatch.CalcNew
                          {
                              if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) ||  clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objParameters.iMaxZmanRekaAdShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
                              else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objParameters.iMaxZmanRekaAchreyShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
                                      fErech = 0;
                                  }
@@ -617,14 +618,14 @@ namespace KdsBatch.CalcNew
                          {
                              if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objParameters.iMaxZmanRekaAdShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
                              else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
-                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objParameters.iMaxZmanRekaAchreyShmone)
+                                 if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
                                      fErech = 0;
                                  }
@@ -634,7 +635,7 @@ namespace KdsBatch.CalcNew
                      }
                      if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "8" && drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(6, 2) == "41")
                      {
-                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) * objParameters.fMekademTosefetZmanLefiRechev;
+                         fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) * objOved.objParameters.fMekademTosefetZmanLefiRechev;
                      }
 
 
@@ -810,8 +811,8 @@ namespace KdsBatch.CalcNew
                   fZmanAruchatBoker += fTempY;
 
 
-                  dTempM1 = objParameters.dStartAruchatTzaharayim;
-                  dTempM2 = objParameters.dEndAruchatTzaharayim;
+                  dTempM1 = objOved.objParameters.dStartAruchatTzaharayim;
+                  dTempM2 = objOved.objParameters.dEndAruchatTzaharayim;
                   fTempY = 0;
 
                   if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)

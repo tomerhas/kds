@@ -2495,7 +2495,7 @@ namespace KdsBatch
                     }
                 }
 
-                fPremiyeSidur = float.Parse(((dSumMazanTashlum * 1.333) + dSumMazanElementim + dSumKisuyTor + (2.5 * (iMoneNesiot - 1) + 2)).ToString());
+                fPremiyeSidur = float.Parse((((dSumMazanTashlum * 1.333) + dSumMazanElementim + dSumKisuyTor + (2.5 * (iMoneNesiot - 1) + 2)) - fZmanSidur).ToString());
 
                 if (oSidur.bSidurMyuhad)
                 {
@@ -9469,6 +9469,7 @@ namespace KdsBatch
                             {
                                 oObjPeilutDel = new OBJ_PEILUT_OVDIM();
                                 InsertToObjPeilutOvdimForDelete(ref oPeilut, ref oSidur, ref oObjPeilutDel);
+                                oObjPeilutDel.BITUL_O_HOSAFA = 3;// int.Parse(clGeneral.enBitulOHosafa.BitulAutomat.ToString());
                                 oCollPeilutOvdimDel.Add(oObjPeilutDel);
 
                                 oSidur.htPeilut.RemoveAt(j);

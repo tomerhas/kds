@@ -39,7 +39,13 @@ namespace KdsBatch.CalcNew
             }
             return Instance;
         }
+        public static void ResetObject()
+        {
+            _IsCreated = false;
+            Instance = null;
+        }
     }
+    
     public class GeneralData
     {
         private clParameters objParameters;
@@ -123,7 +129,7 @@ namespace KdsBatch.CalcNew
             }
             catch (Exception ex)
             {
-                //  clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+              //   clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
                 throw ex;
             }
         }

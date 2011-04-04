@@ -25,7 +25,7 @@ namespace KdsBatch.CalcNew
             _Ovdim = new List<Oved>(); 
           //  SetListOvdimLechishuv();
         }
-
+     
         public void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
         {
             Oved ItemOved;
