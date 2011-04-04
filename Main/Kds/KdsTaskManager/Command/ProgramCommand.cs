@@ -38,7 +38,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex), DateTime.MinValue, DateTime.Now);
                 _MessageStart.UpdateTaskLog();
                 throw ex;
             }
@@ -55,14 +55,14 @@ namespace KdsTaskManager
                 if (_MethodInfo != null)
                 {
                     if (_ActionToExecute.Parameters.Count > 0)
-                        _parameters = GetParametersOfFunction();
+                        _parameters = GetParametersOfFunction(_MethodInfo);
                 }
                 else throw new Exception("MethodInfo:" + _ActionToExecute.CommandName + " is not valid");
             }
             catch (Exception ex)
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
-                _MessageStart.UpdateTaskLog();
+//                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+  //              _MessageStart.UpdateTaskLog();
                 throw ex;
             }
         }
@@ -94,22 +94,23 @@ namespace KdsTaskManager
             return Type.GetType(type);
         }
 
-        private object[] GetParametersOfFunction()
+        private object[] GetParametersOfFunction(MethodInfo Method)
         {
             object[] Obj = new object[_ActionToExecute.Parameters.Count];
             try
             {
                 int Counter = 0;
-                _ActionToExecute.Parameters.ForEach((ParameterItem) =>
-                                        {
-                                            Obj[Counter] = Convert.ChangeType(ParameterItem.Value, GetParameterType(ParameterItem.Type));
-                                            Counter++;
-                                        });
+                _MethodInfo.GetParameters().ToList().ForEach(Param =>
+                {
+                    Parameter Item = _ActionToExecute.Parameters.Find(ParameterItem => (Param.Name == ParameterItem.Name));
+                    Obj[Counter] = Convert.ChangeType(Item.Value, GetParameterType(Item.Type));
+                    Counter++;
+                });
             }
             catch (Exception ex)
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
-                _MessageStart.UpdateTaskLog();
+//                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+  //              _MessageStart.UpdateTaskLog();
                 throw ex;
             }
             return Obj;
@@ -124,15 +125,15 @@ namespace KdsTaskManager
                 _MessageStart = new Message(_ActionToExecute, TypeStatus.Running, string.Empty, DateTime.Now, DateTime.MinValue);
                 _MessageStart.UpdateTaskLog();
                 object obj = _ConstructorInfo.Invoke(new object[] { });
-                _MethodInfo.Invoke(obj, _parameters.ToArray());
-                _ActionResult = true; 
+                _MethodInfo.Invoke(obj, _parameters);
+                _ActionResult = true;
                 _MessageEnd = new Message(_ActionToExecute, TypeStatus.Success, string.Empty, DateTime.MinValue, DateTime.Now);
                 _MessageEnd.UpdateTaskLog();
             }
             catch (Exception ex)
             {
                 _ActionResult = false;
-                throw ex;
+                throw new Exception(Utilities.PrepareExceptionMessage(ex));
             }
 
         }

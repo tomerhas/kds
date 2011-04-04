@@ -25,7 +25,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex.Message), DateTime.MinValue, DateTime.Now);
+                _MessageStart = new Message(_ActionToExecute, TypeStatus.Stopped, Utilities.PrepareExceptionMessage(ex), DateTime.MinValue, DateTime.Now);
                 _MessageStart.UpdateTaskLog();
                 throw ex;
             }

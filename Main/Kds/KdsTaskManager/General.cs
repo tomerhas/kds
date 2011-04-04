@@ -40,19 +40,21 @@ namespace KdsTaskManager
         public static bool Debug;
         public static string[] RecipientsList;
 
-        public static string PrepareExceptionMessage(string message)
+        public static string PrepareExceptionMessage(Exception exception)
         {
-            string OriginFunction = string.Empty;
-            string StrError = message;
+            string StrError = string.Empty ;
             StackTrace st = new StackTrace();
             StackFrame[] AllStack = st.GetFrames();
             List<StackFrame> RelevantStack = AllStack.Reverse().ToList();
             RelevantStack.RemoveAt(0);
             RelevantStack.RemoveAt(1);
             RelevantStack.RemoveAt(RelevantStack.Count - 1);
-            RelevantStack.ForEach(stack => OriginFunction += stack.GetMethod().DeclaringType.Name + ":" + stack.GetMethod().Name + "=>\n");
-            StrError = OriginFunction + StrError;
-            return StrError;
+            RelevantStack.ForEach(stack => StrError += stack.GetMethod().DeclaringType.Name + ":" + stack.GetMethod().Name + "=>\r\n");
+            if (exception.InnerException != null)
+                StrError += "\n" + exception.InnerException.Message;
+            if (exception.TargetSite != null)
+                StrError += "\n" + exception.TargetSite;
+            return StrError + "\nError message:" + exception.Message ;
         }
 
         public static object DeserializeObject(System.Type type, string xmlSerialized)

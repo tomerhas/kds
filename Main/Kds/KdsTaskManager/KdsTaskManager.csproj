@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KdsDataImport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\KdsDataImport\bin\Debug\KdsDataImport.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess, Version=2.112.1.2, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ExternalDlls\Oracle.DataAccess.dll</HintPath>
@@ -70,10 +74,6 @@
     <None Include="ClsDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
-      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
-      <Name>KdsDataImport</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KdsLibrary\KdsLibrary.csproj">
       <Project>{B3E759EC-2A7B-4C38-9013-730C3A628AA8}</Project>
       <Name>KdsLibrary</Name>

@@ -101,7 +101,9 @@ namespace KdsTaskManager
         {
             DateTime StartHour = PrepareDateFromDayAndHour(DateTime.Now, _Group.StartTime);
             DateTime EndHour = PrepareDateFromDayAndHour(DateTime.Now, _Group.EndTime);
-            return ((_Group.Cycle == 1) || ((StartHour <= DateTime.Now) && (EndHour >= DateTime.Now)));
+            return (((_Group.Cycle == 1) && ((StartHour <= DateTime.Now) && (EndHour >= DateTime.Now))) 
+                        || 
+                        ((StartHour <= DateTime.Now) && (EndHour >= DateTime.Now)));
         }
 
         private DateTime PrepareDateFromDayAndHour(DateTime Date, DateTime Hour)

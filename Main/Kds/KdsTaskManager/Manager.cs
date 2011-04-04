@@ -34,7 +34,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
         }
 
@@ -111,7 +111,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
 
         }
@@ -141,7 +141,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
 
             return ParameterOfAction;
@@ -155,7 +155,6 @@ namespace KdsTaskManager
 
         private void TmrOperatorSleep_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Utilities.WriteLog("Check ", Utilities.SeverityLevel.Information);
             _Operators.FindAll(item =>
                                 ((item.State == OperatorState.Sleeping) &&
                                 (item.IsTimeToRun()) &&
@@ -180,7 +179,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
 
         }
@@ -200,7 +199,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
             Utilities.WriteLog("Manager was finished his job", Utilities.SeverityLevel.Information);
         }
@@ -222,7 +221,7 @@ namespace KdsTaskManager
             }
             catch (Exception ex)
             {
-                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex.Message), Utilities.SeverityLevel.Fatal);
+                Utilities.WriteLog(Utilities.PrepareExceptionMessage(ex), Utilities.SeverityLevel.Fatal);
             }
 
 
