@@ -1940,6 +1940,23 @@ Public Class ClKds
         End Try
 
     End Sub
+    Public Sub NoticeStatusSadran()
+        Dim Status As String
+        Try
+            Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
+
+            Select Case Status
+                Case "6"
+                    Throw New Exception("the procedure PKG_sdrn.pro_GetStatusSdrn was aborted")
+                Case "7"
+                    Throw New Exception("the record exists but there was an error while replicating")
+                Case "8"
+                    Throw New Exception("the record does not exist")
+            End Select
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Sub
     Public Function ChkStatusSdrn(ByVal p_date_str As String) As String
 
         Dim oDal As KdsLibrary.DAL.clDal
