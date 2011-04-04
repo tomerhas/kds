@@ -508,17 +508,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetIdkuneyRashemet();
                     RefreshEmployeeData(iMisparIshi, dDateCard);
                     //רק אם יש סידורים 
-                    if (oBatchManager.htEmployeeDetails != null)
+                    if (oBatchManager.htFullEmployeeDetails != null)
                     {
-                        lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
-                        Session["Sidurim"] = oBatchManager.htEmployeeDetails;
+                        lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;
+                        Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
                         if (oBatchManager.dtMashar == null)
-                            dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
-                        else
-                        {
+                            dtLicenseNumbers = GetMasharData(oBatchManager.htFullEmployeeDetails);
+                        else                        
                             dtLicenseNumbers = oBatchManager.dtMashar;
-                            Session["Mashar"] =dtLicenseNumbers ;
-                        }
+
+                        Session["Mashar"] = dtLicenseNumbers;
                         lstSidurim.Mashar = dtLicenseNumbers;
                     }
                     ViewState["LoadNewCard"] = true;
@@ -725,11 +724,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clPeilut _Peilut;
         //1. סידור מפה
         //2. סידור מיוחד שמקורו במטלה (מזהים סידור מיוחד שמקורו במטלה לפי שבאחת הרשומות של הפעילויות של הסידור קיים ערך גדול מ- 0 
-        if (oBatchManager.htEmployeeDetails != null)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
+            for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
             {
-                _Sidur = (clSidur)(oBatchManager.htEmployeeDetails[i]);
+                _Sidur = (clSidur)(oBatchManager.htFullEmployeeDetails[i]);
                 if (!(_Sidur.bSidurMyuhad))
                 {
                     _Allowed = true;
@@ -2329,7 +2328,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             _StatusCard = oBatchManager.CardStatus;
             lstSidurim.StatusCard = _StatusCard;
-            lstSidurim.Mashar = oBatchManager.dtMashar;
+            lstSidurim.Mashar = (oBatchManager.dtMashar == null) ? (DataTable)Session["Mashar"] : oBatchManager.dtMashar;
             lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
             lstSidurim.ErrorsList = oBatchManager.dtErrors;
             Session["Sidurim"] = oBatchManager.htEmployeeDetails;

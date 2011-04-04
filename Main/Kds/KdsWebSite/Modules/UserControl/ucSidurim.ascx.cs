@@ -457,7 +457,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //        throw ex;
     //    }
     //}
-    protected void BuildSidurim(OrderedDictionary htEmployeeDetails)
+    protected void BuildSidurim(OrderedDictionary htFullEmployeeDetails)
     {            
         try
         {
@@ -468,10 +468,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 BuildUpdatedSidurimColumns(ref dtUpdatedSidurim);
             if ((OrderedDictionary)Session["Sidurim"]!= null)
             {
-                htEmployeeDetails = (OrderedDictionary)Session["Sidurim"]; 
-                for (int iIndex = 0; iIndex < htEmployeeDetails.Count; iIndex++)
+                htFullEmployeeDetails = (OrderedDictionary)Session["Sidurim"];
+                for (int iIndex = 0; iIndex < htFullEmployeeDetails.Count; iIndex++)
                 {
-                    BuildSidurAndPeiluyot(ref htEmployeeDetails, iIndex);
+                    BuildSidurAndPeiluyot(ref htFullEmployeeDetails, iIndex);
                 }
                 if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                     Session["SidurimUpdated"]=dtUpdatedSidurim;
@@ -485,7 +485,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
         }
     }
-    protected void BuildSidurAndPeiluyot(ref OrderedDictionary htEmployeeDetails, int iIndex)
+    protected void BuildSidurAndPeiluyot(ref OrderedDictionary htFullEmployeeDetails, int iIndex)
     {
         AjaxControlToolkit.CollapsiblePanelExtender Ax;
         HtmlTable hTable;
@@ -498,13 +498,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bool bEnableSidur=false; // אם הכרטיס הוא ללא התייחסות וגורם המטפל שונה מבעל הכרטיס הנוכחי ולסידור אין מאפיין 99 לא נאפשר עדכון סידור ופעילויות
         try
         {
-            oSidur = (clSidur)htEmployeeDetails[iIndex];
+            oSidur = (clSidur)htFullEmployeeDetails[iIndex];
             MisparSidur = oSidur.iMisparSidur;
             ShatHatchala = oSidur.sShatHatchala;
             FullShatHatchala = oSidur.dFullShatHatchala;
             FullOldShatHatchala = oSidur.dOldFullShatHatchala;
             //Create Sidur
-            hTable = BuildOneSidur(ref htEmployeeDetails, oSidur, iIndex, ref bEnableSidur);
+            hTable = BuildOneSidur(ref htFullEmployeeDetails, oSidur, iIndex, ref bEnableSidur);
 
             //Add sidur table to header panel
             pnlHeader = CreatePanel(iIndex, "pnlHeader", "CollapseHeader");
@@ -519,7 +519,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             //Add grid   
 
-            grdPeiluyot = BuildSidurPeiluyot(((KdsBatch.clSidur)(htEmployeeDetails[iIndex])).htPeilut, iIndex, ref dvPeiluyot);
+            grdPeiluyot = BuildSidurPeiluyot(((KdsBatch.clSidur)(htFullEmployeeDetails[iIndex])).htPeilut, iIndex, ref dvPeiluyot);
 
             //Add Update Panel
             up = AddUpdatePanel();
@@ -2044,7 +2044,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(chkBox);
         hCell.Style.Add("border-left", "solid 1px gray");
     }
-    public void UpdateHashTableWithGridChanges(ref OrderedDictionary htEmployeeDetails)
+    public void UpdateHashTableWithGridChanges(ref OrderedDictionary htFullEmployeeDetails)
     {
         GridView oGridView;
         clSidur oSidur;
@@ -2069,7 +2069,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             if ((oLbl != null) || (oHypLnk != null))
             {
-                oSidur = (clSidur)((htEmployeeDetails)[iIndex]);
+                oSidur = (clSidur)((htFullEmployeeDetails)[iIndex]);
 
                 oSidur.iMisparSidur = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
                 oTxt = ((TextBox)(this.FindControl("txtSH" + iIndex)));
@@ -2183,11 +2183,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     //אם יש פעילויות, נכניס גם אותן
                     oGridView = ((GridView)this.FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                     if (oGridView != null)
-                        UpdateHashTablePeiltoyWithGridChanges(iIndex,iCancelSidur, ref oGridView, ref htEmployeeDetails);
+                        UpdateHashTablePeiltoyWithGridChanges(iIndex, iCancelSidur, ref oGridView, ref htFullEmployeeDetails);
                 }
             }
         }
-        Session["Sidurim"] = htEmployeeDetails;
+        Session["Sidurim"] = htFullEmployeeDetails;
     }
     private void UpdateHashTablePeiltoyWithGridChanges(int iSidurIndex,int iCancelSidur, ref GridView oGridView, ref OrderedDictionary htEmployeeDetails)
     {

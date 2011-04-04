@@ -208,7 +208,7 @@ namespace KdsBatch
         public OrderedDictionary InsertEmployeeDetails(bool bInsertToShguim, DataTable dtDetails, 
                                                        DateTime dCardDate, ref int iLastMisaprSidur, 
                                                        out OrderedDictionary htSpecialEmployeeDetails,
-                                                       ref OrderedDictionary htFullEmployeeDetails)
+                                                       ref OrderedDictionary htFullSidurimDetails)
         {
             int iMisparSidur, iPeilutMisparSidur;
             int iKey = 0;
@@ -267,8 +267,8 @@ namespace KdsBatch
                             //htEmployeeDetails.Add(int.Parse(string.Concat(i, iMisparSidur)), oSidur);
                             htEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                             //htEmployeeDetailsWithCancled.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"),dShatHatchala.ToString("HH:mm").Replace(":", ""), iMisparSidur)), oSidurWithCanceld);
-                        
-                        htFullEmployeeDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
+
+                        htFullSidurimDetails.Add(long.Parse(string.Concat(dShatHatchala.ToString("ddMM"), dShatHatchala.ToString("HH:mm:ss").Replace(":", ""), iMisparSidur)), oSidur);
                     }
                     iMisparSidurPrev = iMisparSidur;
                     dShatHatchalaPrev = dShatHatchala;

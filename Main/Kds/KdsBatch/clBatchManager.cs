@@ -28,6 +28,7 @@ namespace KdsBatch
         private DataTable _dtMatzavOved;
         private DataTable _dtSugSidur;
         private OrderedDictionary _htEmployeeDetails;
+        private OrderedDictionary _htFullEmployeeDetails;
         private OrderedDictionary _htSpecialEmployeeDetails;
         //private OrderedDictionary _htEmployeeDetailsWithCancled;
         
@@ -293,9 +294,10 @@ namespace KdsBatch
                     dtDetails = oDefinition.GetOvedDetails(_iMisparIshi, _dCardDate);
                     if (dtDetails.Rows.Count > 0)
                     {
-                        OrderedDictionary htFullEmployeeDetails = new OrderedDictionary();
+                        OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
                         //Insert Oved Details to Class
-                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
+                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, _dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
+                        htFullEmployeeDetails = htFullSidurimDetails;
                     }
                 }
             }
@@ -617,7 +619,7 @@ namespace KdsBatch
 
             DataTable dtErrors = new DataTable();
             clDefinitions oDefinition = new clDefinitions();
-            OrderedDictionary htFullEmployeeDetails;
+            OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
             //DataTable dtYamimMeyuchadim;
             clUtils oUtils = new clUtils();
             string sArrKodShgia;
@@ -712,8 +714,8 @@ namespace KdsBatch
                         //Insert Oved Details to Class
                         //if (htEmployeeDetails == null)
                         //{
-                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
-                        _htEmployeeDetails = htFullEmployeeDetails;
+                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
+                        htFullEmployeeDetails = htFullSidurimDetails;
                         //}
 
                         //מחיקת סידורי רציפות
@@ -5899,6 +5901,17 @@ namespace KdsBatch
                 return _htEmployeeDetails;
             }
         }
+        public OrderedDictionary htFullEmployeeDetails
+        {
+            set
+            {
+                _htFullEmployeeDetails = value;
+            }
+            get
+            {
+                return _htFullEmployeeDetails;
+            }
+        }
         //public OrderedDictionary htEmployeeDetailsWithCancled
         //{
         //    set
@@ -6005,10 +6018,10 @@ namespace KdsBatch
                         dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
                         if (dtDetails.Rows.Count > 0)
                         {
-                            OrderedDictionary htFullEmployeeDetails = new OrderedDictionary();
+                            OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
                             //Insert Oved Details to Class
-                            htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullEmployeeDetails);//, out  _htEmployeeDetailsWithCancled
-
+                            htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
+                            htFullEmployeeDetails = htFullSidurimDetails;
                             sCarNumbers = clDefinitions.GetMasharCarNumbers(htEmployeeDetails);
 
                             if (sCarNumbers != string.Empty)
