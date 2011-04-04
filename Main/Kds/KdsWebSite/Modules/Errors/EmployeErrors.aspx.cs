@@ -587,6 +587,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         InputHiddenBack.Value = "false";
         grdEmployee.DataBind();
         InsertMisparIshiToSession(((DataView)Session["Ovdim_Details"]).ToTable());
+
+        Session["Params"] = Session["Params"].ToString().Substring(0, Session["Params"].ToString().LastIndexOf(';')) + ";" + 0;
     }
 
     protected void grdEmployee_PageIndexChanging(object sender, GridViewPageEventArgs e)
