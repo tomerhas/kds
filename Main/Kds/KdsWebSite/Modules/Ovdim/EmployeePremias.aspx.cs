@@ -49,6 +49,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         grdPremias.RowCreated += 
             new GridViewRowEventHandler(grdPremias_RowCreated);    
          btnUpdateGrid.Click += new EventHandler(btnUpdateGrid_Click);
+        //btnUpdateGrid.Click += new EventHandler(btnUpdate_Click);
+ 
     }
 
     void grdPremias_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,65 +67,25 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         }
     }
 
-    void grdPremias_RowCreated(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.Pager)
-        {
-            IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
-            as IGridViewPager;
-            if (gridPager != null)
-            {
-                gridPager.PageIndexChanged += delegate(object pagerSender,
-                    GridViewPageEventArgs pagerArgs)
-                {
-                    RememberPremiaValues();
-                    ChangeGridPage(pagerArgs.NewPageIndex);
-                };
-            }
-        }
-    }
+    //void grdPremias_RowCreated(object sender, GridViewRowEventArgs e)
+    //{
+    //    if (e.Row.RowType == DataControlRowType.Pager)
+    //    {
+    //        IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
+    //        as IGridViewPager;
+    //        if (gridPager != null)
+    //        {
+    //            gridPager.PageIndexChanged += delegate(object pagerSender,
+    //                GridViewPageEventArgs pagerArgs)
+    //            {
+    //                RememberPremiaValues();
+    //                ChangeGridPage(pagerArgs.NewPageIndex);
+    //            };
+    //        }
+    //    }
+    //}
 
-    void btnUpdate_Click(object sender, EventArgs e)
-    {
-        Session[SAVED_PREMIAS_ERRORS] = null;
-
-        if (!string.IsNullOrEmpty(txtPremiaMinutes.Text))
-        {
-            int mispar_ishi = 0;
-            if (!Int32.TryParse(txtId.Text, out mispar_ishi))
-            {
-                mispar_ishi = -1;
-            }
-            int dakot = 0;
-            if (!Int32.TryParse(txtPremiaMinutes.Text, out dakot))
-            {
-                dakot = -1;
-            }
-            string shem_oved = txtName.Text;
-            int empID = 0;
-            if (!Int32.TryParse(LoginUser.UserInfo.EmployeeNumber, out empID))
-            {
-                empID = -1;
-            }
-            if (mispar_ishi > -1 && dakot > -1 && !clGeneral.UpdatePremiaForOved(
-                    ddStatuses.SelectedValue, mispar_ishi,
-                    DateTime.Parse("1/" + ddMonths.SelectedItem.Text), dakot, empID) //DateTime.Today.Year, DateTime.Today.Month, 1
-                )
-            {
-                if (Session[SAVED_PREMIAS_ERRORS] == null)
-                {
-                    Session[SAVED_PREMIAS_ERRORS] = new List<string>();
-                }
-                (Session[SAVED_PREMIAS_ERRORS] as List<string>)
-                    .Add(
-                        "There was an error updating premia for oved " + shem_oved
-                     );
-            }
-        }
-        if (grdPremias.PageCount > 1) ChangeGridPage(0);
-
-        RefreshData();
-    }
+   
     void btnUpdateGrid_Click(object sender, EventArgs e)
     {
         DataRow[] drSelect;
@@ -308,7 +270,12 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
     void btnSearch_Click(object sender, EventArgs e)
     {
-        SearchOvedInGrid();        
+        string id =txtId.Text;
+        if (ListOvdim.Value.IndexOf(";" + id + ";") > -1)
+            SearchOvedInGrid();
+        else
+           ScriptManager.RegisterStartupScript(btnSearch, btnSearch.GetType(), "err", " alert('מספר אישי לא קיים לפרמיה שנבחרה');", true);
+   
     }
 
     void btnExecute_Click(object sender, EventArgs e)
@@ -500,6 +467,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         DataTable dtOvedDetails = null;
         DataTable dtOvedPremyaDetails = null;
         DataRow drOved = null;
+        ListOvdim.Value = ";";
         foreach (DataRow row in dtSource.Rows)
         {
             dtOvedDetails = 
@@ -536,6 +504,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             }
 
             dtOvdim.Rows.Add(drOved);
+            ListOvdim.Value += drOved["Mispar_ishi"] + ";";
         }
 
         Session[SAVED_PREMIAS] = dtOvdim;
@@ -744,4 +713,104 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         }
     }
     #endregion
+
+    protected void btnUpdate_Click(object sender, EventArgs e)
+    {
+        Session[SAVED_PREMIAS_ERRORS] = null;
+
+        if (!string.IsNullOrEmpty(txtPremiaMinutes.Text))
+        {
+            int mispar_ishi = 0;
+            if (!Int32.TryParse(txtId.Text, out mispar_ishi))
+            {
+                mispar_ishi = -1;
+            }
+            int dakot = 0;
+            if (!Int32.TryParse(txtPremiaMinutes.Text, out dakot))
+            {
+                dakot = -1;
+            }
+            string shem_oved = txtName.Text;
+            int empID = 0;
+            if (!Int32.TryParse(LoginUser.UserInfo.EmployeeNumber, out empID))
+            {
+                empID = -1;
+            }
+            if (mispar_ishi > -1 && dakot > -1 && !clGeneral.UpdatePremiaForOved(
+                    ddStatuses.SelectedValue, mispar_ishi,
+                    DateTime.Parse("1/" + ddMonths.SelectedItem.Text), dakot, empID) //DateTime.Today.Year, DateTime.Today.Month, 1
+                )
+            {
+                if (Session[SAVED_PREMIAS_ERRORS] == null)
+                {
+                    Session[SAVED_PREMIAS_ERRORS] = new List<string>();
+                }
+                (Session[SAVED_PREMIAS_ERRORS] as List<string>)
+                    .Add(
+                        "There was an error updating premia for oved " + shem_oved
+                     );
+            }
+        }
+        if (grdPremias.PageCount > 1) ChangeGridPage(0);
+
+        RefreshData();
+
+    }
+
+    //*******Pager Functions*********/
+    void grdPremias_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.Pager)
+        {
+            IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
+            as IGridViewPager;
+            if (gridPager != null)
+            {
+                gridPager.PageIndexChanged += delegate(object pagerSender,
+                    GridViewPageEventArgs pagerArgs)
+                {
+                    ChangeGridPage(pagerArgs.NewPageIndex, grdPremias,
+                           new DataView((DataTable)Session[SAVED_PREMIAS]), "SortDirection",
+                           "SortExp");
+                };
+            }
+        }
+    }
+    private void ChangeGridPage(int pageIndex, GridView grid, DataView dataView,
+                                string sortDirViewStateKey, string sortExprViewStateKey)
+    {
+        //   SetChangesOfGridInDataview(grid, ref dataView);
+        grid.PageIndex = pageIndex;
+        string sortExpr = String.Empty;
+        SortDirection sortDir = SortDirection.Ascending;
+        if (ViewState[sortExprViewStateKey] != null)
+        {
+            sortExpr = ViewState[sortExprViewStateKey].ToString();
+            if (ViewState[sortDirViewStateKey] != null)
+                sortDir = (SortDirection)ViewState[sortDirViewStateKey];
+            dataView.Sort = String.Format("{0} {1}", sortExpr,
+                ConvertSortDirectionToSql(sortDir));
+        }
+        grid.DataSource = dataView;
+        grid.DataBind();
+
+    }
+    private string ConvertSortDirectionToSql(SortDirection sortDirection)
+    {
+        string newSortDirection = String.Empty;
+
+        switch (sortDirection)
+        {
+            case SortDirection.Ascending:
+                newSortDirection = "ASC";
+                break;
+
+            case SortDirection.Descending:
+                newSortDirection = "DESC";
+                break;
+        }
+
+        return newSortDirection;
+    }
+    /********************/
 }

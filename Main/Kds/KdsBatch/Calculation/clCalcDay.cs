@@ -4105,14 +4105,15 @@ namespace KdsBatch
                     //חישוב סידורים מיוחדים לפי 100%
                     fSidurim100 = 0;
                     fTempY = oSidur.GetSumSidurim100();
-                    if ((fDakotNocheut - fTempY) > fMichsaYomit)
+                    
+                    if (((fDakotNocheut - fTempY) > fMichsaYomit) ||(fMichsaYomit ==0))
                     {
                         fSidurim100 = fTempY;
                     }
                     else if (((fDakotNocheut - fTempY) < fMichsaYomit) && fDakotNocheut > fMichsaYomit)
                     {
                         fSidurim100 = fDakotNocheut - fMichsaYomit;
-                    }
+                    } 
 
                     // 100%   חישוב שעות שבת 
                     fShaot100 = 0;

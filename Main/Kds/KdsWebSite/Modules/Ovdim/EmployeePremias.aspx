@@ -167,18 +167,21 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                  </asp:UpdatePanel>                         
                 </td>
                 <td colspan="5">
-                    <asp:UpdatePanel ID="upUpdate" runat="server" 
+                     <asp:UpdatePanel ID="upUpdate" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
-                        <ContentTemplate> 
-                            <asp:Button ID="btnUpdate" runat="server"
-                                Text="עדכן" CssClass="ImgButtonSearch" OnClientClick="if(document.getElementById('ctl00_KdsContent_txtPremiaMinutes').value == '') { alert('חובה להזין ערך בשדה דקות פרמיה'); document.getElementById('ctl00_KdsContent_txtPremiaMinutes').focus(); return false;}" />
-                        </ContentTemplate>
+                        <ContentTemplate>  
+                            <asp:Button ID="btnUpdate" runat="server"  
+                                Text="עדכן" CssClass="ImgButtonSearch" 
+                                
+                                OnClientClick="if(document.getElementById('ctl00_KdsContent_txtPremiaMinutes').value == '') { alert('חובה להזין ערך בשדה דקות פרמיה'); document.getElementById('ctl00_KdsContent_txtPremiaMinutes').focus(); return false;}" onclick="btnUpdate_Click" 
+                               />
+                       </ContentTemplate>
                          <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
                             <asp:AsyncPostBackTrigger ControlID="btnSearch" />
                        </Triggers> 
-                    </asp:UpdatePanel>                                    
+                    </asp:UpdatePanel>                                  
                 </td>               
             </tr>     
             <tr>
@@ -263,6 +266,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
             </table>
    </fieldset>
    </div>  
+    <input type="hidden" id="ListOvdim" name="ListOvdim"  runat="server" />
     </ContentTemplate>
                 <%-- <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnExecute" />    
@@ -322,6 +326,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
 
     function GetOvedNameById() {
+        
         GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
     }             
 //    function onClientHiddenHandler_getID(sender, eventArgs)
@@ -369,17 +374,17 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
       }
      } 
              
-    function GetOvedMisparSucc(result)
-    {
-        if (result == '' || result == "null" || result==null) {
-            alert('שם לא נמצא');                                    
+    function GetOvedMisparSucc(result) {
+           if (result == '' || result == "null" || result == null  ) {
+           
+                alert('שם לא נמצא');                                    
             document.getElementById("ctl00_KdsContent_txtName").select();
             document.getElementById("ctl00_KdsContent_txtId").value = "";
             document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
             document.getElementById("ctl00_KdsContent_btnUpdate").disabled = true;
             document.getElementById("ctl00_KdsContent_btnSearch").disabled = true;
         }
-        else{
+        else  {
             document.getElementById("ctl00_KdsContent_txtId").value = result;
             wsGeneral.GetDakotPremiya(result,
                                    "01/" + document.getElementById("ctl00_KdsContent_ddMonths").value,
@@ -390,8 +395,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
         }
     }
     
-    function GetOvedNameSucceeded(result)
-    {
+    function GetOvedNameSucceeded(result) {
+       
         if (result == '' || result == "null" || result == null) {
             alert('מספר אישי לא קיים');
             document.getElementById("ctl00_KdsContent_txtName").value = '';
@@ -415,7 +420,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     }
     function OnChange_PremiaMinutes() {
         var dakot = document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value;
-        if (!IsNumeric(dakot)) {
+        if (!IsDecimal(dakot)) {
             alert('ערך דקות פרמיה לא חוקי');
             document.getElementById("ctl00_KdsContent_btnUpdate").disabled = true;
         }
