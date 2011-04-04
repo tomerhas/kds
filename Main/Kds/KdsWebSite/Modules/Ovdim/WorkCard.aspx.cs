@@ -59,7 +59,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private int iMisparIshiIdkunRashemet;
     private bool bParticipationAllowed;
  //   private bool bDisabledFrame;
-    private AsyncPostBackTrigger[] TriggerToAdd;
+   // private AsyncPostBackTrigger[] TriggerToAdd;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;  
     //private WorkCardObj _WorkCardBeforeChanges, _WorkCardAfterChanges;
@@ -449,6 +449,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
             iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
+            oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
             Session["LoginUserEmp"] = LoginUser.UserInfo.EmployeeNumber;
             //שינויי קלט ושגויים
             if (RunBatchFunctions())
@@ -1090,7 +1091,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         //if (oBatchManager.CardStatus!= clGeneral.enCardStatus.Calculate) 
         //{
-        if (oBatchManager.htEmployeeDetails==null)
+        if (oBatchManager.htFullEmployeeDetails == null)
             oBatchManager.InitGeneralData();
        
         //Check if oved musach
@@ -1348,11 +1349,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bool bHasPeiluyot = false;
         //מחזיר TRUE אם יש פעילויות בכרטיס
-        if (oBatchManager.htEmployeeDetails != null)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
+            for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
             {
-               if (((KdsBatch.clSidur)(oBatchManager.htEmployeeDetails[0])).htPeilut.Count > 0){
+                if (((KdsBatch.clSidur)(oBatchManager.htFullEmployeeDetails[0])).htPeilut.Count > 0)
+                {
                     bHasPeiluyot=true;
                     break;
                }
@@ -1384,7 +1386,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //4  (נהגות) 5 (ניהול תנועה
 
             //
-            bHamaraAllowed = ((oBatchManager.htEmployeeDetails!=null) && 
+            bHamaraAllowed = ((oBatchManager.htFullEmployeeDetails != null) && 
                 (oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode())
                 //&& (oBatchManager.oMeafyeneyOved.Meafyen31Exists)
                 && (
@@ -1485,11 +1487,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         clSidur _FirstSidur = new clSidur();
 
-        if (oBatchManager.htEmployeeDetails != null)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            if (oBatchManager.htEmployeeDetails.Count > 0)
+            if (oBatchManager.htFullEmployeeDetails.Count > 0)
             {
-                _FirstSidur = ((clSidur)oBatchManager.htEmployeeDetails[0]);
+                _FirstSidur = ((clSidur)oBatchManager.htFullEmployeeDetails[0]);
             }
         }
         lstSidurim.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;           
@@ -1511,9 +1513,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
             lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxYomRagil; //108
 
-        if (oBatchManager.htEmployeeDetails != null)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            if (oBatchManager.htEmployeeDetails.Count > 0)
+            if (oBatchManager.htFullEmployeeDetails.Count > 0)
             {
                 if (_FirstSidur.sErevShishiChag.Equals("1"))
                     lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxShisi; //109
@@ -2128,8 +2130,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         if (SaveCard())
         {
-            RunBatchFunctions();  
-            lstSidurim.DataSource = oBatchManager.htEmployeeDetails;        
+            RunBatchFunctions();
+            lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;        
             lstSidurim.ErrorsList = oBatchManager.dtErrors;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();          
@@ -2254,7 +2256,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (arrVal[0].Equals("1"))
                     {
                         oBatchManager.InitGeneralData();
-                        lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+                        lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;
                         Session["Sidurim"] = lstSidurim.DataSource;
                         lstSidurim.ClearControl();
                         lstSidurim.BuildPage();
@@ -2329,9 +2331,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             _StatusCard = oBatchManager.CardStatus;
             lstSidurim.StatusCard = _StatusCard;
             lstSidurim.Mashar = (oBatchManager.dtMashar == null) ? (DataTable)Session["Mashar"] : oBatchManager.dtMashar;
-            lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+            lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;
             lstSidurim.ErrorsList = oBatchManager.dtErrors;
-            Session["Sidurim"] = oBatchManager.htEmployeeDetails;
+            Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
             Session["Errors"] = oBatchManager.dtErrors;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
@@ -4398,11 +4400,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         clSidur _Sidur;
         bool bExists = false;
-        if (oBatchManager.htEmployeeDetails != null)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            for (int i = 0; i < oBatchManager.htEmployeeDetails.Count; i++)
+            for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
             {
-                _Sidur = (clSidur)(oBatchManager.htEmployeeDetails[i]);
+                _Sidur = (clSidur)(oBatchManager.htFullEmployeeDetails[i]);
                 if ((_Sidur.bSidurMyuhad) && (_Sidur.bSidurVisaKodExists))
                 {
                     bExists = true;
