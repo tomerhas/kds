@@ -41,20 +41,7 @@ namespace KdsBatch.CalcNew
             _iTypeCalc = iTypeCalc;
         }
 
-        public Ovdim getOvdimLechishuv()
-        {
-            try
-            {
-                Ovdim listOvdim = new Ovdim();
-                listOvdim.SetListOvdimLechishuv(_dTarMe, _dTarAd, _sMaamad, _bRitzaGorefet, _iBakashaId);
-                return listOvdim;
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "E", 0, _dTarMe, "getOvdimLechishuv: " + ex.Message);
-                throw ex;
-            }
-        }
+      
 
          
         public void CalcOved(Oved oOved)

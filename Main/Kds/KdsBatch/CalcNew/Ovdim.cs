@@ -12,21 +12,21 @@ namespace KdsBatch.CalcNew
 {
     public class Ovdim
     {
-        public List<Oved> _Ovdim;
+        private List<Oved> _Ovdim;
         
 
-        public List<Oved> getOvdimLeChishuv()
+        public List<Oved> OvdimLechishuv
         {
-            return _Ovdim;
+            get { return _Ovdim; }
         }
 
-        public Ovdim()
+        public Ovdim(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
         {
-            _Ovdim = new List<Oved>(); 
-          //  SetListOvdimLechishuv();
+            _Ovdim = new List<Oved>();
+            SetListOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet, iBakashaId);
         }
-     
-        public void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
+
+        private void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
         {
             Oved ItemOved;
             DataTable dtOvdim = new DataTable();
