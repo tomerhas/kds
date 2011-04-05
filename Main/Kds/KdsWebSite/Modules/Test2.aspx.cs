@@ -8,13 +8,13 @@ using KdsBatch;
 using KdsLibrary.UDT;
 using KdsLibrary.Utils.Reports;
 using System.IO;
-
+using KdsBatch.CalcNew;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
 
 using KdsLibrary;
 using System.Configuration;
-
+//using Lesnikowski.Barcode; 
 
 public partial class Modules_Test2 : System.Web.UI.Page
 {
@@ -143,9 +143,25 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void btnSrokTachograf_Click(object sender, EventArgs e)
     {
 
+        
+        //BaseBarcode barcode = BarcodeFactory.GetBarcode(Symbology.EAN13);
+
+        //barcode.Number = "123456789012";
+
+        //barcode.ChecksumAdd = true;
+
+        //// Render barcode:  
+
+        //Bitmap bitmap = barcode.Render();
+
+        //// You can also save it to file:  
+
+        //barcode.Save("c:\\barcode.gif", ImageType.Gif);  
+
+
     }
     protected void btnShowTachograf_Click(object sender, EventArgs e)
     {
-
+      //  Ovdim listOvdim = new Ovdim(DateTime.Parse("01/01/2011"), DateTime.Parse("31/01/2011"), "0,1", false);
     }
 }
