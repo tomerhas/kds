@@ -15,6 +15,7 @@ using KdsBatch;
 using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
+using KdsBatch.CalcNew;
 
 public partial class Modules_Ovdim_Rechivim : KdsLibrary.UI.KdsPage
 {
@@ -64,6 +65,10 @@ public partial class Modules_Ovdim_Rechivim : KdsLibrary.UI.KdsPage
 
         clCalculation objCalc = new clCalculation();
         dsRechivim = objCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
+
+        //MainCalc objMainCalc = new MainCalc();
+        //dsRechivim = objMainCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
+             
 
         if (!bValid)
         {

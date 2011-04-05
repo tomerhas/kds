@@ -37,8 +37,8 @@ namespace KdsBatch.CalcNew
 
         public DataSet CalcMonthOved() //int Mispar_ishi, DateTime dTarMe, DateTime dTarAd)
         {
-            DateTime dTaarich, dTarChishuv, dTarMe, dTarAd;
-            bool bChishuvYom = false;
+            DateTime dTaarich, dTarMe, dTarAd;
+           // bool bChishuvYom = false;
             clUtils oUtils = new clUtils();
             clOvdim oOvdim = new clOvdim();
             clKavim oKavim = new clKavim();
@@ -50,19 +50,10 @@ namespace KdsBatch.CalcNew
                 dTarAd=objOved.Month.AddMonths(1).AddDays(-1);
                // dTarChishuv = objOved.Month;
 
-                //מצב של חישוב יום בודד לצורץ ריצת שינויי קלט
-                //if (dTarMe == dTarAd)
-                //{
-                //    dTarMe = new DateTime(dTarMe.Year, dTarMe.Month, 1);
-
-                //    dTarAd = dTarMe.AddMonths(1).AddDays(-1);
-                //    bChishuvYom = true;
-                //    //iStatusTipul = clGeneral.enStatusTipul.Betipul.GetHashCode();
-                //}
-
+                 
                 _dTaarichChishuv = objOved.Month;
 
-                if (!bChishuvYom)
+                if (!objOved.bChishuvYom)
                 {
                     SimunSidurimLoLetashlum();
                     ////סימון "לא לתשלום" עבור סידורי רציפות
@@ -84,11 +75,11 @@ namespace KdsBatch.CalcNew
 
                 CalcMekademNipuach(dTarMe, dTarAd, objOved.Mispar_ishi);
 
-                //if (bChishuvYom)
-                //{
-                //    dTarMe = dTarChishuv;
-                //    dTarAd = dTarChishuv;
-                //}
+                if (objOved.bChishuvYom)
+                {
+                    dTarMe = objOved._dDay;
+                    dTarAd = objOved._dDay;
+                }
 
                 dTaarich = dTarMe;
 
@@ -107,7 +98,7 @@ namespace KdsBatch.CalcNew
                     dTaarich = dTaarich.AddDays(1);
                 }
 
-                if (!bChishuvYom)
+                if (!objOved.bChishuvYom)
                 {
                     CalcRechivimInMonth(dTarMe, dTarAd);
                     ChangingChofeshFromShaotNosafot();

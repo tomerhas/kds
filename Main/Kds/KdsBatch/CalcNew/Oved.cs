@@ -16,6 +16,8 @@ namespace KdsBatch.CalcNew
         public DateTime Month;
         private GeneralData oGeneralData;
         public long iBakashaId;
+        public bool bChishuvYom { get; set; }
+        public DateTime _dDay { get; set; }
 
         public DataTable DtYamimMeyuchadim { get; set; }
         public DataTable DtSugeyYamimMeyuchadim { get; set; }
@@ -49,11 +51,22 @@ namespace KdsBatch.CalcNew
         public DateTime Taarich { get; set; }
         public int SugYom { get; set; }
 
-          public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd)
+        public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
             oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd);
             Mispar_ishi = mis_ishi;
             Month = month;
+            iBakashaId = BakashaId;
+            SetNetunimLeOved();
+        }
+        public Oved(int mis_ishi, DateTime dDay, long BakashaId)
+        {
+            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay);
+            Mispar_ishi = mis_ishi;
+            Month = DateTime.Parse("01/" + dDay.Month + "/" + dDay.Year);
+            _dDay = dDay;
+            bChishuvYom = true;
+            iBakashaId = BakashaId;
             SetNetunimLeOved();
         }
         private void SetNetunimLeOved()
@@ -141,10 +154,13 @@ namespace KdsBatch.CalcNew
             DtPeiluyotFromTnua = new DataTable();
             try
             {
-                rows = oGeneralData._dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
-                if (rows.Length > 0)
+                if (oGeneralData._dtPeiluyotFromTnuaAll.Rows.Count > 0)
                 {
-                    DtPeiluyotFromTnua = rows.CopyToDataTable();
+                    rows = oGeneralData._dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    if (rows.Length > 0)
+                    {
+                        DtPeiluyotFromTnua = rows.CopyToDataTable();
+                    }
                 }
             }
             catch (Exception ex)
@@ -161,11 +177,15 @@ namespace KdsBatch.CalcNew
             DtPeiluyotOved = new DataTable();
             try
             {
-                rows = oGeneralData._dtPeiluyotOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
-                if (rows.Length > 0)
+                if (oGeneralData._dtPeiluyotOvdimAll.Rows.Count > 0)
                 {
-                    DtPeiluyotOved = rows.CopyToDataTable();
+                    rows = oGeneralData._dtPeiluyotOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    if (rows.Length > 0)
+                    {
+                        DtPeiluyotOved = rows.CopyToDataTable();
+                    }
                 }
+                else DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll;
             }
             catch (Exception ex)
             {

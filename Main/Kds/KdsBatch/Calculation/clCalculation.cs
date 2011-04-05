@@ -329,11 +329,16 @@ namespace KdsBatch
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
                    clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
+                   clCalcData.DtPeiluyotOved = oUtils.GetPeiluyLeovedForMonth(iMisparIshi, dTarMe, dTarAd);
                    clCalcData.DtBusNumbers = null;
+                   clCalcData.DtParameters = oUtils.GetKdsParametrs();
+                   if (clCalcData.ListParametersMonth == null)
+                       clCalcData.InitListParamObject(dTarMe, dTarAd);
                    oMonth = new clCalcMonth(iMisparIshi, lBakashaId);
                   
                    dsChishuv= oMonth.CalcMonth(iMisparIshi, dTarMe, dTarAd);
 
+                   clCalcData.ListParametersMonth = null;
                    bStatus = true;
                  }
                catch (Exception ex)

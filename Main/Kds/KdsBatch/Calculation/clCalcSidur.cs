@@ -2765,14 +2765,16 @@ namespace KdsBatch
         //    }
         //}
 
-        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok, ref float fSumDakotLaylaBoker)
+        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok, ref float fSumDakotLaylaBoker, ref float fSumDakotShabat)
         {
             DataRow[] drSidurim;
             int iMisparSidur, J ;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
+      
             float fErech, fErechSidur, fTempX, fSachDakotTafkid;
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
+             float fErechShabat;
             float fErecBoker,fErechSidurBoker;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
@@ -2790,6 +2792,7 @@ namespace KdsBatch
                 fErechLaylaEgged = 0;
                 fErechLaylaChok = 0;
                 fErecBoker =0;
+                fErechShabat = 0;
 
                 for (int I = 0; I < drSidurim.Length;I++)
                 {
@@ -2849,6 +2852,11 @@ namespace KdsBatch
                                     fErechLaylaEgged += fErechSidurLaylaEgged;
                                     fErechLaylaChok += fErechSidurLaylaChok;
                                     fErecBoker += fErechSidurBoker;
+
+                                    if (dShatGmarLetashlum >= _oGeneralData.objParameters.dKnisatShabat)
+                                        fErechShabat += float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+
+                                    
                                 }
                             }
                         }
@@ -2857,6 +2865,7 @@ namespace KdsBatch
                 fSumDakotLaylaEgged = fErechLaylaEgged;
                 fSumDakotLaylaChok = fErechLaylaChok;
                 fSumDakotLaylaBoker = fErecBoker;
+                fSumDakotShabat = fErechShabat;
                 return fErech;
             }
             catch (Exception ex)

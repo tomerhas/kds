@@ -17,6 +17,7 @@ using KdsLibrary.BL;
 using KdsLibrary.Utils.Reports;
 using KdsBatch;
 using System.IO;
+using KdsBatch.CalcNew;
 
 public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 {
@@ -652,9 +653,11 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
              clOvdim oOvdim = new clOvdim();
 
              clCalculation objCalc = new clCalculation();
-
              objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich,1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
-          
+
+             //MainCalc objMainCalc = new MainCalc();
+             //objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
+             
              grdAbsenceData.DataSource = dtHeadrut;
              grdAbsenceData.DataBind();
 

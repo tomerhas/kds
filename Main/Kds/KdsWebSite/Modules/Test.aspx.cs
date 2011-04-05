@@ -20,6 +20,7 @@ using KdsLibrary.UDT;
 //using KdsBatch.InputData;
 //using KdsBatch;
 using KdsWorkFlow.Approvals;
+using KdsBatch.CalcNew;
 
 public partial class Modules_Test :Page
 {
@@ -343,8 +344,11 @@ public partial class Modules_Test :Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         clCalculation objCalc=new clCalculation();
-
        objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+
+       //MainCalc objMainCalc = new MainCalc();
+       //objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+             
     }
 
     protected void Button3_Click(object sender, EventArgs e)

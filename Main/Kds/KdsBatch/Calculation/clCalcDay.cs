@@ -1067,6 +1067,7 @@ namespace KdsBatch
                              if (fTempX > fMichsaYomit)
                              {
                                  fDakotTafkidChol = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                 fDakotTafkidChol = fDakotTafkidChol - clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanNesia.GetHashCode() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                  if (fDakotTafkidChol > 0 && (iCountNihulTnua == 0 && iCountNahagutChol == 0))
                                  {
                                      fSumDakotRechiv21 = fTempX - fMichsaYomit;
@@ -3585,12 +3586,12 @@ namespace KdsBatch
         private void CalcRechiv96()
         {
             float fSumDakotRechiv ;
-            float fSumDakotLaylaEgged, fSumDakotLaylaChok, fSumDakotLaylaBoker;
+            float fSumDakotLaylaEgged, fSumDakotLaylaChok, fSumDakotLaylaBoker, fSumDakotShabat;
             //int iSugYom = clCalcGeneral.iSugYom;
             try
             {
-                fSumDakotLaylaEgged = 0; fSumDakotLaylaChok = 0; fSumDakotLaylaBoker = 0;
-                 fSumDakotRechiv = oSidur.CalcRechiv96(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok, ref fSumDakotLaylaBoker);
+                fSumDakotLaylaEgged = 0; fSumDakotLaylaChok = 0; fSumDakotLaylaBoker = 0; fSumDakotShabat = 0;
+                fSumDakotRechiv = oSidur.CalcRechiv96(ref fSumDakotLaylaEgged, ref fSumDakotLaylaChok, ref fSumDakotLaylaBoker, ref fSumDakotShabat);
 
                 ////fTempX = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString()));
                 //fTempX += clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode().ToString()));
@@ -3619,6 +3620,10 @@ namespace KdsBatch
                 if (clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich) && fSumDakotRechiv>0)
                 {
                     addRowToTable(clGeneral.enRechivim.ZmanRetzifutShabat.GetHashCode(), fSumDakotRechiv);
+                }
+                else if ((clCalcData.CheckErevChag(clCalcData.iSugYom) || clCalcData.CheckYomShishi(clCalcData.iSugYom)) && fSumDakotShabat>0)
+                {
+                    addRowToTable(clGeneral.enRechivim.ZmanRetzifutShabat.GetHashCode(), fSumDakotShabat);
                 }
             }
             catch (Exception ex)

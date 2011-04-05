@@ -2759,7 +2759,7 @@ namespace KdsBatch.CalcNew
         //    }
         //}
 
-        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok, ref float fSumDakotLaylaBoker)
+        public float CalcRechiv96(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok, ref float fSumDakotLaylaBoker , ref float fSumDakotShabat)
         {
             DataRow[] drSidurim;
             int iMisparSidur, J;
@@ -2768,6 +2768,7 @@ namespace KdsBatch.CalcNew
             float fErechLaylaEgged, fErechSidurLaylaEgged;
             float fErechLaylaChok, fErechSidurLaylaChok;
             float fErecBoker, fErechSidurBoker;
+            float fErechShabat;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             bool bSidurNehigaFirst = false;
@@ -2784,7 +2785,7 @@ namespace KdsBatch.CalcNew
                 fErechLaylaEgged = 0;
                 fErechLaylaChok = 0;
                 fErecBoker = 0;
-
+                fErechShabat = 0;
                 for (int I = 0; I < drSidurim.Length; I++)
                 {
                     bSidurNehigaFirst = false;
@@ -2844,6 +2845,10 @@ namespace KdsBatch.CalcNew
                                     fErechLaylaEgged += fErechSidurLaylaEgged;
                                     fErechLaylaChok += fErechSidurLaylaChok;
                                     fErecBoker += fErechSidurBoker;
+
+                                    if (dShatGmarLetashlum >= objOved.objParameters.dKnisatShabat)
+                                        fErechShabat += float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+
                                 }
                             }
                         }
@@ -2852,6 +2857,7 @@ namespace KdsBatch.CalcNew
                 fSumDakotLaylaEgged = fErechLaylaEgged;
                 fSumDakotLaylaChok = fErechLaylaChok;
                 fSumDakotLaylaBoker = fErecBoker;
+                fSumDakotShabat = fErechShabat;
                 return fErech;
             }
             catch (Exception ex)

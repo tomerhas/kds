@@ -36,8 +36,7 @@ namespace KdsBatch.CalcNew
              /**/   dtOvdim = oCalcDal.GetOvdimLechishuv( dTarMe, dTarAd, sMaamad, bRitzaGorefet);
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
-                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()),DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()),dTarMe, dTarAd);
-                    ItemOved.iBakashaId = iBakashaId;
+                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
                     _Ovdim.Add(ItemOved);
                 }
             }
