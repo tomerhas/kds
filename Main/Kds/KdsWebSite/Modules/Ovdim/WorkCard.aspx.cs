@@ -2250,7 +2250,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
             }
             else
-            {
+            {//יכיל מספר סידור, תאריך ושעה של סידור
                 string[] arrVal = hidSadotLSidur.Value.Split(char.Parse(","));
                 if (arrVal.Length>1)
                     if (arrVal[0].Equals("1"))
@@ -2261,7 +2261,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         lstSidurim.ClearControl();
                         lstSidurim.BuildPage();
                         iSidurIndex= FindSidurIndex(DateTime.Parse(arrVal[1]),int.Parse(arrVal[2]),  lstSidurim.DataSource);
-                        sScript = "bScreenChanged=true; ExecSadotLsidur(" + iSidurIndex + ");";
+                        sScript = "bScreenChanged=true; ExecSadotLsidur(" + iSidurIndex + ",true);";
                         ScriptManager.RegisterStartupScript(Page, this.GetType(), "ExecSadotNosafim", sScript, true);
                        
                     }

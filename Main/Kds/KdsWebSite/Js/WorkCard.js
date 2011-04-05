@@ -381,7 +381,8 @@
         return false;
     }
     function AddSidurHeadrut() {
-        if (bScreenChanged) {
+        _bScreenChanged = bScreenChanged;
+        if (_bScreenChanged) {
             if (!ChkCardVld())
                 return false;
             $("#hidSave")[0].value = "1";
@@ -398,8 +399,8 @@
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';   
         res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:580px;dialogheight:380px;dialogtop:280px;dialogleft:480px;status:no;resizable:no;');
-        document.getElementById("divHourglass").style.display = 'none'; 
-        if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
+        document.getElementById("divHourglass").style.display = 'none';
+        if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
             document.getElementById("hidRefresh").value = "1";
             __doPostBack('btnAddHeadrut', '');
@@ -409,7 +410,8 @@
         return false;
     }
     function AddSidur() {
-        if (bScreenChanged) {
+        _bScreenChanged = bScreenChanged;
+        if (_bScreenChanged) {
             if (!ChkCardVld())
                 return false;
             $("#hidSave")[0].value = "1";
@@ -423,8 +425,8 @@
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';
         res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');
-        document.getElementById("divHourglass").style.display = 'none'; 
-        if ((bScreenChanged) || ((res != undefined) && (!bScreenChanged))){
+        document.getElementById("divHourglass").style.display = 'none';
+        if ((_bScreenChanged) || ((res != undefined) && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
             document.getElementById("hidRefresh").value = "1";
             __doPostBack('btnFindSidur', '');
@@ -467,7 +469,7 @@
      var HashForDay = document.getElementById("HashlamaForDayValue").value;
      var HashReason = document.getElementById("ddlHashlamaReason").value;
      document.getElementById("hidExecInputChg").value = "0";
-   //  document.getElementById("hidErrChg").value = "1";
+  
      if ((Number(HashForDay)==1) && (Number(HashReason) == -1)){      
         sMsg ='סומנה השלמה ליום, יש לדווח סיבה'; 
         bValid = false;
@@ -548,7 +550,7 @@
    }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
 
-   function ChkIfPeiluyotValid(iSidurInx) {
+   function ChkIfPeiluyotValid(iSidurInx){
        var sActualShatYetiza;
        _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurInx, '0', 3));
        if (_Peilut != null){
@@ -561,7 +563,7 @@
        }
        return true;
    }
-   function GetErrorMessageSadotNosafim(id, level, pKey) {    
+   function GetErrorMessageSadotNosafim(id, level, pKey){    
        oId = id.id;
        var oObj = document.getElementById(oId);
        var rc = oObj.getAttribute("ErrCnt");

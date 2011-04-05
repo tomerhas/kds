@@ -905,8 +905,9 @@ function chkMkt(oRow) {
     }
 //    
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
+        _bScreenChanged = bScreenChanged;
         if (document.getElementById(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgChecked') {
-            if (bScreenChanged) {
+            if (_bScreenChanged) {
                 if (!ChkCardVld())
                     return false;
                 $("#hidSave")[0].value = "1";
@@ -935,7 +936,7 @@ function chkMkt(oRow) {
             document.getElementById("divHourglass").style.display = 'block';
             res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:500px;dialogheight:380px;dialogtop:280px;dialogleft:340px;status:no;resizable:yes;');
             document.getElementById("divHourglass").style.display = 'none';
-            if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))){
+            if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
                 document.getElementById("hidExecInputChg").value = "1";
                 bScreenChanged = false;
                 RefreshBtn();
@@ -945,10 +946,10 @@ function chkMkt(oRow) {
         }           
     }
     function AddSadotLsidur(iIndex) {
-        if (bScreenChanged) {
+        _bScreenChanged = bScreenChanged; //bScreenChanged משתנה גלובלי שמתעדכן ב- chkCardVld
+        if (bScreenChanged){
             if (!ChkCardVld())
                 return false;
-
             var SidurNumber = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
             var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
             var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
@@ -956,11 +957,11 @@ function chkMkt(oRow) {
             document.getElementById("hidSadotLSidur").value = ("1,".concat(SidurDate + " " + SidurSHour)).concat("," + SidurNumber);            
             __doPostBack('btnConfirm', '');
         } else {
-            res = ExecSadotLsidur(iIndex);
+            res = ExecSadotLsidur(iIndex, _bScreenChanged);
             return res;
         }        
     }
-    function ExecSadotLsidur(iIndex) {
+    function ExecSadotLsidur(iIndex, bScreenWasChg) {
         var dSidurSGDate = new Date();
         var id = document.getElementById("txtId").value;
         var CardDate = document.getElementById("clnDate").value;
@@ -975,20 +976,18 @@ function chkMkt(oRow) {
         var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
         if (SidurSHour == '')
             SidurDate = '01/01/0001';
-
-              
+                          
         document.getElementById("divHourglass").style.display = 'block';
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'none';
         var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:210px;dialogleft:220px;status:no;resizable:yes;");
-        if ((bScreenChanged) || ((res != undefined) && (res != '') && (!bScreenChanged))) {
+        if ((bScreenWasChg) || ((res != undefined) && (res != '') && (!bScreenWasChg))) {
             document.getElementById("hidExecInputChg").value = "1";
             bScreenChanged = false;
             RefreshBtn();
             var oSh = document.getElementById("lstSidurim_txtSH".concat(iIndex));
             if (!(oSh.disabled))
                 oSh.disabled = true;
-
 
             document.getElementById("divHourglass").style.display = 'block';
 
