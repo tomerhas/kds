@@ -2004,9 +2004,11 @@ Public Class ClKds
             'todo 20101003 : open a thread that will sleep for 30 minutes, then check the control status
             'if status = null -> send "status 7 tell someone/eden.
             p_date_str = getFullDateString(p_date)
-
-            Dim threadSdrn As New System.Threading.Thread(AddressOf ChkStatusSdrn4thread)
-            threadSdrn.Start(p_date_str)
+            Dim Environment As String = ConfigurationSettings.AppSettings("Environment")
+            If (Environment = "Production") Then
+                Dim threadSdrn As New System.Threading.Thread(AddressOf ChkStatusSdrn4thread)
+                threadSdrn.Start(p_date_str)
+            End If
 
             oDal = New KdsLibrary.DAL.clDal
             oDal.ClearCommand()
