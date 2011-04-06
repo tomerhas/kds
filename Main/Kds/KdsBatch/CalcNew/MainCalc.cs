@@ -307,117 +307,77 @@ namespace KdsBatch.CalcNew
         }
 
 
-        //public void PremiaCalc()
-        //{
-        //    clBatch obatch = new clBatch();
-        //    clUtils oUtils = new clUtils();
-        //    long lBakashaId;
-        //    int iMisparIshi = 0;
-        //    int numFailed = 0;
-        //    int numSucceed = 0;
-        //    int seq = 0;
-        //    seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
-        //    lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
+        public void PremiaCalc()
+        {
+            clBatch obatch = new clBatch();
+            clCalcDal oCalcDal = new clCalcDal();
+            List<Oved> ListOvdim = new List<Oved>();
+            Ovdim oOvdim;
+            CalcMonth oMonth;
+            long lBakashaId=0;
+            int numFailed = 0;
+            int numSucceed = 0;
+            int seq = 0;
 
-        //    clCalcData.DtParameters = oUtils.GetKdsParametrs();
+            try
+            {
 
-        //    DataTable dtPremia = GetPremiaCalcPopulation(lBakashaId);
-        //    DateTime startMonth = DateTime.MinValue, tmpMonth, endMonth = DateTime.MinValue;
+                seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
+                lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
 
-        //    clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
-        //    if (clCalcData.DtSugeyYamimMeyuchadim == null)
-        //        clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
-        //    if (clCalcData.DtYamimMeyuchadim == null)
-        //        clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-        //    if (dtPremia != null)
-        //    {
+                clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
+                oOvdim = new Ovdim(lBakashaId);
+                if (oOvdim != null)
+                {
+                    foreach (Oved oOved in oOvdim.OvdimLechishuv)
+                    {
+                        try
+                        {
+                            oMonth = new CalcMonth(oOved);
+                            oMonth.CalcMonthOved();
 
-        //        clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Mispar Ovdim Lechishuv Premiyot:" + dtPremia.Rows.Count);
-        //        foreach (DataRow dr in dtPremia.Rows)
-        //        {
-        //            try
-        //            {
-        //                iMisparIshi = Convert.ToInt32(dr["mispar_ishi"]);
-        //                tmpMonth = Convert.ToDateTime(dr["Chodesh"]);
-        //                if (tmpMonth != startMonth)
-        //                {
-        //                    startMonth = tmpMonth;
-        //                    endMonth = GetEndOfMonth(startMonth);
-        //                    if (clCalcData.ListParametersMonth == null)
-        //                        clCalcData.InitListParamObject(startMonth, endMonth);
-        //                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(startMonth, endMonth);
-        //                    clCalcData.DtMeafyeneySugSidur =
-        //                        oUtils.InitDtMeafyeneySugSidur(startMonth, endMonth);
-        //                }
-        //                CalcOved(iMisparIshi, lBakashaId, startMonth, endMonth);
+                            SaveSidurim(oOved.Mispar_ishi, clCalcData.DtYemeyAvoda);
+                            //שמירת נתוני החישוב לעובד
+                            SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
 
-        //                SaveSidurim(iMisparIshi, clCalcData.DtYemeyAvoda);
+                            oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
+                            numSucceed += 1;
+                        }
+                        catch (Exception ex)
+                        {
+                            numFailed += 1;
+                            clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
+                                (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+                                oOved.Month, ex.Message);
+                            clLogBakashot.InsertErrorToLog();
+                            status = clGeneral.enBatchExecutionStatus.PartialyFinished;
+                        }
+                    }
+                }
+                else status = clGeneral.enBatchExecutionStatus.Failed;
+                KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+                obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(lBakashaId, null, "E",
+                            (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+                            DateTime.Now, ex.Message);
+                clLogBakashot.InsertErrorToLog();
+            }
+            finally
+            {
+                SingleGeneralData.ResetObject();
+            }
+        }
 
-        //                //שמירת נתוני החישוב לעובד
-        //                SaveChishuv(lBakashaId, iMisparIshi);
-
-        //                UpdatePremiaBakashaID(iMisparIshi, lBakashaId, startMonth);
-        //                numSucceed += 1;
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                numFailed += 1;
-        //                clLogBakashot.SetError(lBakashaId, iMisparIshi, "E",
-        //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-        //                    startMonth, ex.Message);
-        //                clLogBakashot.InsertErrorToLog();
-        //                status = clGeneral.enBatchExecutionStatus.PartialyFinished;
-        //            }
-        //        }
-        //    }
-        //    else status = clGeneral.enBatchExecutionStatus.Failed;
-        //    KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
-        //    obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
-        //}
-
-        //private DateTime GetEndOfMonth(DateTime date)
-        //{
-        //    int year = date.Month == 12 ? date.Year + 1 : date.Year;
-        //    int month = date.Month == 12 ? 1 : date.Month + 1;
-        //    return new DateTime(year, month, 1).AddDays(-1);
-        //    // return new DateTime(year, (date.Month + 1) % 12, 1).AddDays(-1);
-        //}
-        //private void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
-        //{
-
-        //    clDal dal = new clDal();
-        //    dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
-        //        ParameterDir.pdInput);
-        //    dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi,
-        //        ParameterDir.pdInput);
-        //    dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
-        //        ParameterDir.pdInput);
-        //    dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
-
-        //}
-
-        //private DataTable GetPremiaCalcPopulation(long lBakashaId)
-        //{
-        //    DataTable dt = new DataTable();
-        //    clDal dal = new clDal();
-        //    try
-        //    {
-        //        dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null,
-        //            ParameterDir.pdOutput);
-        //        dal.ExecuteSP(clDefinitions.cProGetPremiaOvdimLechishuv, ref dt);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        clLogBakashot.SetError(lBakashaId, null, "E",
-        //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-        //                    DateTime.Now, ex.Message);
-        //        clLogBakashot.InsertErrorToLog();
-        //        dt = null;
-        //    }
-        //    return dt;
-
-        //}
-
+        private DateTime GetEndOfMonth(DateTime date)
+        {
+            int year = date.Month == 12 ? date.Year + 1 : date.Year;
+            int month = date.Month == 12 ? 1 : date.Month + 1;
+            return new DateTime(year, month, 1).AddDays(-1);
+            // return new DateTime(year, (date.Month + 1) % 12, 1).AddDays(-1);
+        }
 
     }
 }

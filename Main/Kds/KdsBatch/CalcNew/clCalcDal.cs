@@ -26,7 +26,7 @@ namespace KdsBatch.CalcNew
         private const string cProGetMeafyeneyBitua = "Pkg_Calculation.pro_get_meafyeney_ovdim";
         private const string cProGetSugYechida = "Pkg_Calculation.pro_get_sug_yechida";
         private const string cProGetPeiluyotOvdim = "Pkg_Calculation.pro_get_peiluyot_ovdim";
-
+        private const string cProGetPremiaOvdimLechishuv = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
         public DataTable GetOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet)
         {
             DataTable dt = new DataTable();
@@ -328,6 +328,43 @@ namespace KdsBatch.CalcNew
             {
                 throw ex;
             }
+        }
+
+        public void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
+        {
+
+            clDal dal = new clDal();
+            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
+                ParameterDir.pdInput);
+            dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi,
+                ParameterDir.pdInput);
+            dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
+                ParameterDir.pdInput);
+            dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
+
+        }
+
+        public DataTable GetPremiaCalcPopulation(ref DateTime dTarMe, ref DateTime dTarAd)
+        {
+            DataTable dt = new DataTable();
+            clDal dal = new clDal();
+            try
+            {
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null,  ParameterDir.pdOutput);
+                dal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, null, ParameterDir.pdOutput);
+                dal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(cProGetPremiaOvdimLechishuv, ref dt);
+                if (dal.GetValParam("p_taarich_me") !=null && dal.GetValParam("p_taarich_me") !="")
+                    dTarMe = DateTime.Parse(dal.GetValParam("p_taarich_me"));
+                if (dal.GetValParam("p_taarich_ad") != null && dal.GetValParam("p_taarich_ad") != "")
+                    dTarAd = DateTime.Parse(dal.GetValParam("p_taarich_ad")).AddMonths(1).AddDays(-1);
+            }
+            catch (Exception ex)
+            {
+                //dt = null;
+                throw (ex);
+            }
+            return dt;
         }
     }
 }

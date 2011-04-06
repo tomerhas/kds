@@ -162,6 +162,9 @@ public partial class Modules_Test2 : System.Web.UI.Page
     }
     protected void btnShowTachograf_Click(object sender, EventArgs e)
     {
+        MainCalc objMainCalc = new MainCalc();
+        objMainCalc.PremiaCalc();
+             
       //  Ovdim listOvdim = new Ovdim(DateTime.Parse("01/01/2011"), DateTime.Parse("31/01/2011"), "0,1", false);
     }
 }

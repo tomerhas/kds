@@ -161,6 +161,16 @@ namespace KdsBatch.CalcNew
                     {
                         DtPeiluyotFromTnua = rows.CopyToDataTable();
                     }
+                    else
+                    {
+                        DtPeiluyotFromTnua = oGeneralData._dtPeiluyotFromTnuaAll;
+                        DtPeiluyotFromTnua.Clear();
+                    }
+                }
+                else
+                {
+                    DtPeiluyotFromTnua = oGeneralData._dtPeiluyotFromTnuaAll;
+                    DtPeiluyotFromTnua.Clear();
                 }
             }
             catch (Exception ex)
@@ -184,8 +194,17 @@ namespace KdsBatch.CalcNew
                     {
                         DtPeiluyotOved = rows.CopyToDataTable();
                     }
+                    else
+                    {
+                        DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll;
+                        DtPeiluyotOved.Clear();
+                    }
                 }
-                else DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll;
+                else
+                {
+                    DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll;
+                    DtPeiluyotOved.Clear();
+                }
             }
             catch (Exception ex)
             {
