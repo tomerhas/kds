@@ -8,7 +8,7 @@ using KdsLibrary.BL;
 using System.Data;
 
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     class clCalcBL
     {

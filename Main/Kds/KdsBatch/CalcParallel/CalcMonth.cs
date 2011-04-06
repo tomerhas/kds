@@ -8,7 +8,7 @@ using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     class CalcMonth
     {

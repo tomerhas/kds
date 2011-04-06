@@ -8,7 +8,7 @@ using System.Configuration;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     public class clCalcDal
     {

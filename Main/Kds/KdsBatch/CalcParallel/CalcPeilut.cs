@@ -7,7 +7,7 @@ using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     class CalcPeilut
     {

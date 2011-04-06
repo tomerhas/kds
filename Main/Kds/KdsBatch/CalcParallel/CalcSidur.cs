@@ -8,7 +8,7 @@ using KdsLibrary.UDT;
 using KdsLibrary;
 using KdsLibrary.BL;
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     class CalcSidur
     {

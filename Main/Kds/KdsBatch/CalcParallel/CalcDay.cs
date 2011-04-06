@@ -6,7 +6,7 @@ using System.Data;
 using KdsLibrary.UDT;
 using KdsLibrary;
 
-namespace KdsBatch.CalcNew
+namespace KdsBatch
 {
     class CalcDay
     {
