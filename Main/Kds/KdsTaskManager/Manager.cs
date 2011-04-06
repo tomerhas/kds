@@ -29,7 +29,7 @@ namespace KdsTaskManager
                 TmrOperatorSleep = new System.Timers.Timer();
                 TmrOperatorSleep.Elapsed += new ElapsedEventHandler(TmrOperatorSleep_Elapsed);
                 TmrOperatorSleep.Start();
-                TmrOperatorSleep.Interval = OperatorSleepTime * 6000;
+                TmrOperatorSleep.Interval = OperatorSleepTime * 60000;
                 GetGroupsDefinition();
             }
             catch (Exception ex)
@@ -155,6 +155,7 @@ namespace KdsTaskManager
 
         private void TmrOperatorSleep_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Utilities.WriteLog("There are still " + _CntRunningOperators + " are running..", Utilities.SeverityLevel.Information);
             _Operators.FindAll(item =>
                                 ((item.State == OperatorState.Sleeping) &&
                                 (item.IsTimeToRun()) &&
@@ -192,10 +193,7 @@ namespace KdsTaskManager
                 CreateOperators();
                 _Operators.ForEach(Item => RunOperator(Item));
                 while (_CntRunningOperators > 0)
-                {
-                    Utilities.WriteLog("There are still " + _CntRunningOperators + " are running..", Utilities.SeverityLevel.Information);
-                    Thread.Sleep(5000);
-                }
+                    Thread.Sleep(60000);
             }
             catch (Exception ex)
             {
