@@ -101,7 +101,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                             {
                                 string shem_oved = "";
                                 int mispar_ishi = 0;
-                                int dakot = 0;
+                                float dakot = 0;
 
                                 shem_oved = row.Cells[1].Text;
                                 mispar_ishi = Int32.Parse(row.Cells[0].Text);
@@ -110,7 +110,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                                         as TextBox;
                                 if (txtDakotPremia != null)
                                 {
-                                    if (!Int32.TryParse(txtDakotPremia.Text, out dakot))
+                                    if (!float.TryParse(txtDakotPremia.Text, out dakot))
                                     {
                                         dakot = -1;
                                     }
@@ -509,6 +509,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
         Session[SAVED_PREMIAS] = dtOvdim;
         DataView dv = new DataView((DataTable)Session[SAVED_PREMIAS]);
+        grdPremias.PageIndex = 0;
         dv.Sort = string.Concat(ViewState["SortExp"], " ",  (SortDirection)ViewState["SortDirection"] == SortDirection.Ascending ? "ASC":"DESC");
         grdPremias.DataSource = dv;// dtOvdim;
         grdPremias.DataBind();
@@ -686,9 +687,10 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         {
            dv.Sort = string.Concat(ViewState["SortExp"], " ", sDirection);
         }
-
+        grdPremias.PageIndex = 0;
         grdPremias.DataSource = dv;
         grdPremias.DataBind();
+      
     }
 
     private int GetCurrentColSort()
@@ -725,8 +727,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             {
                 mispar_ishi = -1;
             }
-            int dakot = 0;
-            if (!Int32.TryParse(txtPremiaMinutes.Text, out dakot))
+            float dakot = 0;
+            if (!float.TryParse(txtPremiaMinutes.Text, out dakot))
             {
                 dakot = -1;
             }

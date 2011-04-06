@@ -1378,7 +1378,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
 
 
-        public static bool UpdatePremiaForOved(string premiaType, int mispar_ishi, DateTime taarich, int dakotPremia, int mispar_ishi_of_meadken)
+        public static bool UpdatePremiaForOved(string premiaType, int mispar_ishi, DateTime taarich, float dakotPremia, int mispar_ishi_of_meadken)
         {
             try
             {
@@ -1386,7 +1386,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 dal.AddParameter("p_kod_premia", ParameterType.ntOracleInteger, premiaType, ParameterDir.pdInput);
                 dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, mispar_ishi, ParameterDir.pdInput);
                 dal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
-                dal.AddParameter("p_dakot_premia", ParameterType.ntOracleInteger, dakotPremia, ParameterDir.pdInput);
+                dal.AddParameter("p_dakot_premia", ParameterType.ntOracleDecimal, dakotPremia, ParameterDir.pdInput);
                 dal.AddParameter("p_mispar_ishi_of_meadken", ParameterType.ntOracleInteger, mispar_ishi_of_meadken, ParameterDir.pdInput);
                 dal.ExecuteSP(KdsLibrary.clGeneral.cProUptPremia);
 

@@ -311,7 +311,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
              var cellDakot = cells.get(5);
              $(cellDakot).find('input').each(function() {
                  if ($(this).val() != '') {
-                     if (!IsNumeric($(this).val())) {
+                     if (!IsDecimal($(this).val())) {
                          invalidRows++;
                      }
                  }
