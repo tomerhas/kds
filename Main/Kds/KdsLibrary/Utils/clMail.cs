@@ -19,9 +19,9 @@ namespace KdsLibrary.Utils
         private MailAddress _mailFromAddress, _mailToAddress;
         private string _FromMail;
         private string _host;
-        private string _DisplayNameServer; 
-
-        public clMail(string To, string Subject, string Body)
+        private string _DisplayNameServer;
+        private DirectionType _Direction;
+        private void Init(string To, string Subject, string Body)
         {
             _FromMail = ConfigurationSettings.AppSettings["NoRep"];
             _host = ConfigurationSettings.AppSettings["SmtpHost"];
@@ -31,13 +31,39 @@ namespace KdsLibrary.Utils
             message = new MailMessage(_mailFromAddress, _mailToAddress);
             message.Subject = Subject;
             message.IsBodyHtml = true;
-            message.Body = Body;
+        }
+        public clMail(string To, string Subject, string Body, DirectionType Direction)
+        {
+            Init(To,Subject,Body);
+            _Direction = Direction;
+            message.Body = (_Direction == DirectionType.Rtl) ? "<div dir='rtl' style='Text-align:Right'>" + Body + "</Div>" : Body;
+            message.Body = message.Body.Replace("\n", "<br/>");
         }
 
-        
+        public clMail(string To, string Subject, string Body)
+        {
+            Init(To, Subject, Body);
+            message.Body = (_Direction == DirectionType.Rtl) ? "<div dir='rtl' style='Text-align:Right'>" + Body + "</Div>" : Body;
+            message.Body = message.Body.Replace("\n", "<br/>");
+        }
+
+
+        public DirectionType Direction
+        {
+            set { _Direction = value; }
+        }
+
+        public enum DirectionType
+        {
+            Ltr,
+            Rtl
+
+        }
+
+
         public void attachFile(string Path)
         {
-            Attachment attached = new Attachment(Path); 
+            Attachment attached = new Attachment(Path);
             message.Attachments.Add(attached);
         }
 
@@ -73,13 +99,13 @@ namespace KdsLibrary.Utils
         public string NameFolder { get; set; }
 
 
-       public string GetMessageBody(string folderName)
+        public string GetMessageBody(string folderName)
         {
             string Path;
             FolderPath = folderName;
             NameFolder = folderName.Split('/')[folderName.Split('/').Length - 2];
             string serialized = KdsLibrary.Utils.KdsExtensions.SerializeObject(this);
-          
+
             //XsltArgumentList xslArgs = new XsltArgumentList();
             //xslArgs.AddParam("FolderPath","", folderName);
 #if DEBUG

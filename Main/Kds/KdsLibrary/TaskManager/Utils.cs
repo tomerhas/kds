@@ -102,12 +102,12 @@ namespace KdsLibrary.TaskManager
                     Delta= Row["Delta"].ToString();
                     clMail omail;
                     Subject = "פעילות תקועה";
-                    Body = " :פעולה " + ActionDesc + " :מקבוצה" + GroupDesc + " רצה כבר " + Delta;
-                    Body += "\n" + "לטיפולך.";
+                    Body = "פעולה: " + ActionDesc + "<br/>" + "קבוצה: " + GroupDesc + "<br/>"  + "זמן ריצה: " + Delta;
+                    Body += "<br/>" + "לידיעתך," + "<br/>"  + "מנהל משימות -TaskManager";
                     string[] RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
                     RecipientsList.ToList().ForEach(recipient =>
                     {
-                        omail = new clMail(recipient, Subject, Body);
+                        omail = new clMail(recipient, Subject, Body,clMail.DirectionType.Rtl);
                         omail.SendMail();
                     });
                 }
