@@ -12,6 +12,11 @@ using KdsBatch.Premia;
 using KdsDataImport;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Data;
+
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -35,6 +40,38 @@ namespace KdsService
             }
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
+        //private void RunCalcBatchParallel(object param)
+        //{
+        //    object[] args = param as object[];
+        //    long lRequestNum = (long)args[0];
+        //    DateTime dAdChodesh = (DateTime)args[1];
+        //    string sMaamad = args[2].ToString();
+        //    bool bRitzatTest = (bool)args[3];
+        //    bool bRitzaGorefet = (bool)args[4];
+        //    clCalculation objCalc = new clCalculation();
+        //    clUtils oUtils = new clUtils();
+        //    DateTime dFrom;
+        //    DataTable dtParametrim;
+        //    dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+        //    dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
+
+        //    MainCalc oMainCalc;
+        //    try
+        //    {
+        //       oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum,dFrom, dAdChodesh, sMaamad, bRitzaGorefet,MainCalc.TypeCalc.Test):
+        //                                   new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, MainCalc.TypeCalc.Batch);
+        //        Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
+        //                            {
+        //                                oMainCalc.CalcOved(CurrentOved);
+        //                            });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clGeneral.LogError(ex);
+        //    }
+        //    LogThreadEnd("CalcBatch", lRequestNum);
+        //}
+
 
         private void RunCalcBatchThread(object param)
         {
@@ -91,17 +128,17 @@ namespace KdsService
             string sMonth = (string)args[1];
             int iUserId = (int)args[2];
 
-            clManagerReport objReport = new clManagerReport(lRequestNum, sMonth, iUserId); 
+            clManagerReport objReport = new clManagerReport(lRequestNum, sMonth, iUserId);
             try
             {
-               objReport.MakeReports(lRequestNum);
+                objReport.MakeReports(lRequestNum);
             }
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
             }
             LogThreadEnd("CreateConstantsReports", lRequestNum);
-            
+
         }
 
         private void RunCreateHeavyReports(object param)
@@ -138,8 +175,8 @@ namespace KdsService
 
         private void RunTahalichHrChanges(object param)
         {
-          //  object[] args = param as object[];
-          //  int iSeq = int.Parse(args[0].ToString());
+            //  object[] args = param as object[];
+            //  int iSeq = int.Parse(args[0].ToString());
             ClKds oKDs = new ClKds();
             try
             {
@@ -182,12 +219,13 @@ namespace KdsService
 
 
         private void RunRefreshPirteyOvdim(object param)
-        {           
-          //  ClKds oKDs = new ClKds();
+        {
+            //  ClKds oKDs = new ClKds();
             clDal oDal = new clDal();
             clBatch obatch = new clBatch();
-            int iSeqNum; 
-            try{
+            int iSeqNum;
+            try
+            {
                 // refresh table pirtey_ovdim
                 iSeqNum = obatch.InsertProcessLog(3, 5, RecordStatus.Wait, "start refresh New_Pirtey_Ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 5, 1, "start refresh New_Pirtey_Ovdim", "");
@@ -198,7 +236,7 @@ namespace KdsService
                 //**oKDs.KdsWriteProcessLog(3, 5, 2, "end ok refresh New_Pirtey_Ovdim", "");
 
                 // refresh pivot_pirtey_ovdim
-           //     oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
+                //     oDal.ExecuteSQL("truncate table tmp_pirtey_ovdim");
                 iSeqNum = obatch.InsertProcessLog(3, 8, RecordStatus.Wait, "start refresh pivot_pirtey_ovdim", 0);
                 //**oKDs.KdsWriteProcessLog(3, 8, 1, "start refresh tmp_pirtey_ovdim", "");
                 oDal.ClearCommand();
@@ -231,7 +269,7 @@ namespace KdsService
                 System.Diagnostics.EventLogEntryType.Information);
         }
 
-        
+
         #endregion
 
         #region IBatchService Members
@@ -250,8 +288,16 @@ namespace KdsService
             runThread.Start(new object[] { (KdsBatch.BatchRequestSource)requestSource, 
                 (KdsBatch.BatchExecutionType)execType, 
                 workDate, btchRequest });
-            
+
         }
+
+        //public void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
+        //{
+        //    Thread runThread = new Thread(new ParameterizedThreadStart(RunCalcBatchParallel));
+        //    LogThreadStart("CalcBatch", lRequestNum);
+        //    runThread.Start(new object[] { lRequestNum, dAdChodesh, sMaamad, 
+        //        bRitzatTest, bRitzaGorefet });
+        //}
 
         public void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
         {
@@ -283,10 +329,10 @@ namespace KdsService
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunCreateHeavyReports));
             LogThreadStart("CreateHeavyReports", lRequestNum);
-            runThread.Start(new object[] { lRequestNum});
+            runThread.Start(new object[] { lRequestNum });
         }
 
-        public string CreatePremiaInputFile(long btchRequest, DateTime period, int userId, 
+        public string CreatePremiaInputFile(long btchRequest, DateTime period, int userId,
             long processBtchNumber)
         {
             string result = null;
@@ -305,7 +351,7 @@ namespace KdsService
             return result;
         }
 
-        public string StorePremiaCalculationOutput(long btchRequest, DateTime period, int userId, 
+        public string StorePremiaCalculationOutput(long btchRequest, DateTime period, int userId,
             long processBtchNumber)
         {
             string result = null;
@@ -319,7 +365,7 @@ namespace KdsService
         {
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunRefreshMatzavOvdim));
-            runThread.Start(new object[]{});
+            runThread.Start(new object[] { });
         }
 
         public void TahalichHrChanges(int iSeq)
@@ -334,7 +380,7 @@ namespace KdsService
         {
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunTahalichSadran));
-           // LogThreadStart("CreateHeavyReports", lRequestNum);
+            // LogThreadStart("CreateHeavyReports", lRequestNum);
             runThread.Start(new object[] { taarich });
         }
 
@@ -343,7 +389,7 @@ namespace KdsService
         {
             Thread runThread = new Thread(
                 new ParameterizedThreadStart(RunRefreshMeafyenim));
-            runThread.Start(new object[]{});
+            runThread.Start(new object[] { });
         }
 
         public void RefreshPirteyOvdim()
@@ -352,7 +398,7 @@ namespace KdsService
                 new ParameterizedThreadStart(RunRefreshPirteyOvdim));
             runThread.Start(new object[] { });
         }
-        
+
         #endregion
     }
 }

@@ -15,6 +15,9 @@ namespace KdsService
         void ExecuteInputDataAndErrors(int requestSource,
             int execType, DateTime workDate, long btchRequest);
 
+        //[OperationContract]
+        //void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad,
+        //    bool bRitzatTest, bool bRitzaGorefet);
         [OperationContract]
         void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, 
             bool bRitzatTest, bool bRitzaGorefet);
