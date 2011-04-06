@@ -18,11 +18,16 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
     {
         try
         {
+            DataTable dtParametrim = new DataTable();
+            clUtils oUtils = new clUtils();
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsBatch.asmx";
                 PageHeader = "ריצת חישוב";
-                clGeneral.LoadDateCombo(ddlToMonth,11);
+               
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                clGeneral.LoadDateCombo(ddlToMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+           //  clGeneral.LoadDateCombo(ddlToMonth,11);
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 
                 txtDescription.Attributes.Add("maxLength", txtDescription.MaxLength.ToString());

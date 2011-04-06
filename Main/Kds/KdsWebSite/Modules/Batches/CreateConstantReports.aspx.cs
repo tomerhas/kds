@@ -8,17 +8,22 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using KdsLibrary.UI;
 using KdsBatch.Reports;
+using System.Data;
 public partial class Modules_Batches_CreateConstantReports : KdsPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
         try
         {
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsBatch.asmx";
                 PageHeader = "הפקת דוחו''ת קבועים";
-                clGeneral.LoadDateCombo(ddlToMonth, 12);
+                
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                clGeneral.LoadDateCombo(ddlToMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
                 ddlToMonth.SelectedIndex = 1;
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 

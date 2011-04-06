@@ -392,14 +392,13 @@ namespace KdsLibrary.BL
         }
 
 
-        public void MoveRecordsToHistory(DateTime date)
+        public void MoveRecordsToHistory()
         {
             clDal oDal = new clDal();
         file:///C:\Documents and Settings\meravn\My Documents\Visual Studio 2008\Projects\kds\KdsWebSite\Bin\
             try
             {
-                oDal.AddParameter("p_taarich", KdsLibrary.DAL.ParameterType.ntOracleDate, date, KdsLibrary.DAL.ParameterDir.pdInput);
-                oDal.ExecuteSP(clGeneral.cProMoveRecordsToHistory);
+               oDal.ExecuteSP(clGeneral.cProMoveRecordsToHistory);
             }
             catch (Exception ex)
             {

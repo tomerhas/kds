@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary.DAL;
+using KdsLibrary.BL;
+using KdsLibrary;
 
 namespace KdsBatch.Premia
 {
@@ -12,17 +14,25 @@ namespace KdsBatch.Premia
     /// </summary>
     public class PremiaDataSource
     {
-        private const int PREMIA_PERIODS_LENGTH = 10;
+       // private const int PREMIA_PERIODS_LENGTH = 10;
         public DateTime[] GetPeriods()
         {
+            DataTable dtParametrim = new DataTable();
+            clUtils oUtils = new clUtils();
+            int PREMIA_PERIODS_LENGTH;
+         
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            PREMIA_PERIODS_LENGTH=int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString());
+
             List<DateTime> periods = new List<DateTime>(PREMIA_PERIODS_LENGTH);
             DateTime firstPeriod = DateTime.Now.Date.AddMonths(-1);
-            for (int i = 0; i < PREMIA_PERIODS_LENGTH; ++i)
+            for (int i = 0; i < PREMIA_PERIODS_LENGTH-1; ++i)
             {
                 periods.Add(new DateTime(firstPeriod.Year, firstPeriod.Month, 1));
                 firstPeriod = firstPeriod.AddMonths(-1);
             }
             return periods.ToArray();
+            
         }
 
         public DataTable GetPeriodBatchRequests(DateTime period)

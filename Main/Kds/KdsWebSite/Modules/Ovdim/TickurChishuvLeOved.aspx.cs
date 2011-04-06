@@ -79,9 +79,13 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
     {
         //DataTable dtMonth;
          clOvdim oOvdim = new clOvdim();
+         DataTable dtParametrim = new DataTable();
+         clUtils oUtils = new clUtils();
          if (txtEmpId.Text.Length > 0 && clGeneral.IsNumeric(txtEmpId.Text))
          {
-             clGeneral.LoadDateCombo(ddlMonth, 11);
+             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+             clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+             //clGeneral.LoadDateCombo(ddlMonth, 11);
              //dtMonth = oOvdim.GetMonthsToOved(int.Parse(txtEmpId.Text));
              //ddlMonth.DataSource = dtMonth;
              //ddlMonth.DataBind();

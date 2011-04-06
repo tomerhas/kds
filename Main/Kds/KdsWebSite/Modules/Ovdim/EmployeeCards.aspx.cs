@@ -86,9 +86,11 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
         try
         {
+          
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
@@ -100,7 +102,9 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
                 txtPageIndex.Value = "0";
 
-                clGeneral.LoadDateCombo(ddlMonth, 11);
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+               
                 SetDefault();
                
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;

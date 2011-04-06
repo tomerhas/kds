@@ -60,7 +60,7 @@ namespace KdsBatch
 
                DateTime dTarMe, dTarAd, dMeChodesh, dFrom;
                int iMisparIshi,i;
-               DataTable dtOvdim;
+               DataTable dtOvdim, dtParametrim;
                 int iStatus=0;
                 iMisparIshi = 0;
                 clUtils oUtils = new clUtils();
@@ -69,8 +69,10 @@ namespace KdsBatch
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "START");
                    clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                   dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-13);
-                   clCalcData.DtParameters = oUtils.GetKdsParametrs();
+                   dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                   dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())*-1);
+                   
+                    clCalcData.DtParameters = oUtils.GetKdsParametrs();
                     for (dMeChodesh = dFrom; dMeChodesh <= dAdChodesh; dMeChodesh = dMeChodesh.AddMonths(1))
                    {
                        try

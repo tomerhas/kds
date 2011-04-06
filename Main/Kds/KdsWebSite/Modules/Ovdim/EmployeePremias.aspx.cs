@@ -378,20 +378,32 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
     private void BindPremiaDates()
     {
-        ddMonths.DataSource = 
-            clGeneral.FillDateInDataTable(10, DateTime.Today.AddMonths(-1),false);
-        ddMonths.DataBind();
-        if (!String.IsNullOrEmpty(Request.QueryString["month"]))
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
+        try
         {
-            foreach (ListItem item in ddMonths.Items)
+
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+
+            ddMonths.DataSource =
+                clGeneral.FillDateInDataTable(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())-1, DateTime.Today.AddMonths(-1), false);
+            ddMonths.DataBind();
+            if (!String.IsNullOrEmpty(Request.QueryString["month"]))
             {
-                if (item.Text.Equals(Request.QueryString["month"]))
+                foreach (ListItem item in ddMonths.Items)
                 {
-                    ddMonths.SelectedIndex = ddMonths.Items.IndexOf(item);
-                    _refreshOnLoad = true;
-                    break;
+                    if (item.Text.Equals(Request.QueryString["month"]))
+                    {
+                        ddMonths.SelectedIndex = ddMonths.Items.IndexOf(item);
+                        _refreshOnLoad = true;
+                        break;
+                    }
                 }
             }
+        }
+        catch(Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message);
         }
     }
 

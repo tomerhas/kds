@@ -89,30 +89,43 @@ public partial class Modules_UserControl_MonthlyQuota : System.Web.UI.UserContro
 
     private void SetValuesOfDdlMonth()
     {
-        ddlMonth.Items.Clear();
-        if (_FormType == clGeneral.enMonthlyQuotaForm.VaadatPnim)
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
+        try
         {
-            ddlMonth.Items.Add("הכל");
-            if (DemandType == clGeneral.enDemandType.Treated)
-                clGeneral.LoadDateCombo(ddlMonth, 10, DateTime.Now.AddMonths(-1));
-        }
-        else
-        {
-            SetMontlyAndSharedQuota();
-            clGeneral.LoadDateCombo(ddlMonth, 10, DateTime.Now.AddMonths(-1));
-            if (DemandType == clGeneral.enDemandType.InTreatment)
+            ddlMonth.Items.Clear();
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+
+            if (_FormType == clGeneral.enMonthlyQuotaForm.VaadatPnim)
             {
-                clOvdim _ovdim = clOvdim.GetInstance();
-                DataTable dt = new DataTable();
-                DataRow[] Drs;
-                dt = _ovdim.GetRelevantMonthOfApproval(iMisparIshi);
-                foreach (ListItem item in ddlMonth.Items)
+                ddlMonth.Items.Add("הכל");
+                if (DemandType == clGeneral.enDemandType.Treated)
+                    clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+                // clGeneral.LoadDateCombo(ddlMonth, 10, DateTime.Now.AddMonths(-1));
+            }
+            else
+            {
+                SetMontlyAndSharedQuota();
+                clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+                //  clGeneral.LoadDateCombo(ddlMonth, 10, DateTime.Now.AddMonths(-1));
+                if (DemandType == clGeneral.enDemandType.InTreatment)
                 {
-                    Drs = dt.Select("RelevantMonths ='" + item.Value + "'");
-                    if (Drs.Length > 0)
-                        item.Text = item.Text + "*" ;
+                    clOvdim _ovdim = clOvdim.GetInstance();
+                    DataTable dt = new DataTable();
+                    DataRow[] Drs;
+                    dt = _ovdim.GetRelevantMonthOfApproval(iMisparIshi);
+                    foreach (ListItem item in ddlMonth.Items)
+                    {
+                        Drs = dt.Select("RelevantMonths ='" + item.Value + "'");
+                        if (Drs.Length > 0)
+                            item.Text = item.Text + "*";
+                    }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message, true);
         }
     }
     private void EnableSearchWorker()
