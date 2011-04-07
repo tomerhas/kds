@@ -16,7 +16,6 @@ using KdsLibrary.Security;
 using KdsLibrary.BL;
 using KdsLibrary.Utils.Reports;
 using KdsBatch;
-using KdsBatch.CalcNew;
 
 public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 {
