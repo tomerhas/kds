@@ -49,6 +49,7 @@
             </td>
         </tr>
     </table>
+      <input type="hidden" id="Param100" name="Param100"  runat="server"  />
       <input type="hidden" id="MisRashamot" name="MisRashamot"  runat="server"  />
                     </ContentTemplate>
                 </asp:UpdatePanel>
@@ -106,13 +107,14 @@
             }
         }
         function IsAlowedPeriod(sender, args) {
-       // debugger
+        //debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me =  document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]-1), Number(chodesh_me[0]), '00', '00', '00');
             var today = new Date();
             var mis = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
-            today.setMonth(today.getMonth() - 14);
+            var Param100 = document.getElementById("ctl00_KdsContent_Param100").value;
+            today.setMonth(today.getMonth() - Param100);
             today.setHours(0);
             today.setMinutes(0);
             today.setSeconds(0);
@@ -182,6 +184,29 @@
             args.IsValid = (AdDate >= MeDate);
         }
 
+        function IsAlowedDate(sender, args) {
+          //  debugger
+            var CurrentObj = sender.controltovalidate;
+            var chodesh_me = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
+            var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1] - 1), Number(chodesh_me[0]), '00', '00', '00');
+            var today = new Date();
+           // var mis = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
+            var Param100 = document.getElementById("ctl00_KdsContent_Param100").value;
+            today.setMonth(today.getMonth() - Param100);
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            today.setMilliseconds(0);
+
+            if (FromDate.getTime() < today.getTime())
+                args.IsValid = false;
+            else {
+                args.IsValid = true;
+//                if (mis != "")
+//                    checkRashemet(mis, args);
+            }
+
+        }
     </script>
 
 </asp:Content>

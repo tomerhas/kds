@@ -30,7 +30,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     private List<string> _ControlsList;
     protected void Page_Load(object sender, EventArgs e)
     {
-        UserId.Text =            LoginUser.UserInfo.EmployeeNumber;
+        DataTable dtParametrim = new DataTable();
+        clUtils oUtils = new clUtils();
+        UserId.Text =LoginUser.UserInfo.EmployeeNumber;
         try
         {
             if (!Page.IsPostBack)
@@ -38,6 +40,9 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                 LoadKdsDynamicReport();
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                Param100.Value = dtParametrim.Rows[0]["ERECH_PARAM"].ToString();
+
             }
             FillFilterToForm();
             FillEnabledFilter();
