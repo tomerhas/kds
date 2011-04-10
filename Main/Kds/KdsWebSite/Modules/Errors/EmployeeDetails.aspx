@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EmployeeDetails.aspx.cs" Inherits="Modules_Errors_EmployeeDetails" Title="Untitled Page" %>
+<%@ Register TagPrefix="kds" TagName="GridViewPager" Src="~/UserControls/GridViewPager.ascx" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -44,9 +45,9 @@
             <asp:UpdatePanel ID="udGrid" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                  <ContentTemplate>                    
                     <asp:GridView ID="grdOvedErrorCards" runat="server" AllowSorting="true" 
-                         AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
+                         AllowPaging="true" PageSize="8" AutoGenerateColumns="false" 
                          Width="940px" EmptyDataText="לא נמצאו נתונים!" 
-                         OnRowDataBound="grdOvedErrorCards_RowDataBound" OnPageIndexChanging="grdOvedErrorCards_PageIndexChanging" OnSorting="grdOvedErrorCards_Sorting" >
+                         OnRowDataBound="grdOvedErrorCards_RowDataBound"  OnSorting="grdOvedErrorCards_Sorting" >
                         <Columns>                
                             <asp:HyperLinkField DataTextField="teur_yom" ItemStyle-CssClass="ItemRow"   HeaderStyle-CssClass="GridHeader"   HeaderText="תאריך" SortExpression="teur_yom" NavigateUrl="#"  ItemStyle-Width="220px"   />                                                                 
                             <asp:BoundField DataField="status_key"  SortExpression="status_key" HeaderText="שגוי"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Center" />
@@ -56,8 +57,10 @@
                         </Columns>
                         <AlternatingRowStyle CssClass="GridAltRow"  />
                         <RowStyle CssClass="GridRow"   />
-                        <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
-                        <EmptyDataRowStyle CssClass="GridEmptyData" height="20px"/>  
+                         <PagerStyle CssClass="GridPagerLarge" HorizontalAlign="Center"  />                               
+                        <PagerTemplate>
+                                     <kds:GridViewPager runat="server" ID="ucGridPager" />
+                        </PagerTemplate>   
                     </asp:GridView>                    
                  </ContentTemplate> 
                  <Triggers>

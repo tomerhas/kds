@@ -14,11 +14,15 @@ using KdsLibrary.BL;
 using KdsLibrary.Utils;
 using KdsLibrary;
 using KdsLibrary.UI;
-
+using KdsLibrary.UI.SystemManager;
 public partial class Modules_Errors_EmployeeDetails : KdsPage
 {
     private DataTable dtMisparim = new DataTable();
-    
+    protected override void OnInit(EventArgs e)
+    {
+        base.OnInit(e);
+       grdOvedErrorCards.RowCreated += new GridViewRowEventHandler(grdEmployee_RowCreated);
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         int iMisparIshi;
@@ -121,6 +125,7 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
            
             grdOvedErrorCards.DataSource = dv;
             grdOvedErrorCards.DataBind();
+            Session["OvedCards"] = dv;
         }
         catch (Exception ex)
         {
@@ -239,7 +244,8 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
     {
         string sDirection;
         int iMisparIshi;
-
+        if (ViewState["SortExp"].ToString() == "taarich")
+            ViewState["SortExp"] = "teur_yom";
         if ((string.Empty != (string)ViewState["SortExp"]) && (string.Compare(e.SortExpression, (string)ViewState["SortExp"], true) == 0))
         {
             if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
@@ -259,14 +265,20 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             ViewState["SortDirection"] = SortDirection.Descending;
         }
         ViewState["SortExp"] = e.SortExpression;
-
+        if (ViewState["SortExp"].ToString() == "teur_yom")
+            ViewState["SortExp"] = "taarich";
+        grdOvedErrorCards.PageIndex = 0;
         iMisparIshi = int.Parse(lblMisparIshi.Text);
         SetOvedCards(iMisparIshi, (string)ViewState["SortExp"], sDirection);
         grdOvedErrorCards.DataBind();
     }
     private int GetCurrentColSort()
     {
-        string sSortExp = (string)ViewState["SortExp"];
+        string sSortExp;
+        if (ViewState["SortExp"].ToString() == "taarich")
+            sSortExp = "teur_yom";
+        else
+            sSortExp = (string)ViewState["SortExp"];
         int iColNum = -1;
         try
         {
@@ -284,19 +296,19 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
             throw ex;
         }
     }
-    protected void grdOvedErrorCards_PageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        string sDirection;
-        int iMisparIshi= int.Parse(lblMisparIshi.Text);
+    //protected void grdOvedErrorCards_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    //{
+    //    string sDirection;
+    //    int iMisparIshi= int.Parse(lblMisparIshi.Text);
 
-        if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
-            sDirection = "ASC";
-        else
-            sDirection = "DESC";
+    //    if ((SortDirection)ViewState["SortDirection"] == SortDirection.Ascending)
+    //        sDirection = "ASC";
+    //    else
+    //        sDirection = "DESC";
 
-        grdOvedErrorCards.PageIndex = e.NewPageIndex;
-        SetOvedCards(iMisparIshi, (string)ViewState["SortExp"], sDirection);
-    }
+    //    grdOvedErrorCards.PageIndex = e.NewPageIndex;
+    //    SetOvedCards(iMisparIshi, (string)ViewState["SortExp"], sDirection);
+    //}
 
     //protected void btnFirst_Click(object sender, EventArgs e)
     //{
@@ -426,6 +438,64 @@ public partial class Modules_Errors_EmployeeDetails : KdsPage
         dTo = Request.QueryString["ToDate"];
 
         Response.Redirect(string.Concat("EmployeeDetails.aspx?ID=", lblMisparIshi.Text, "&ToDate=", dTo, "&FromDate=", dFrom));   
+    }
+
+    //*******Pager Functions*********/
+    void grdEmployee_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.Pager)
+        {
+            IGridViewPager gridPager = e.Row.FindControl("ucGridPager")
+            as IGridViewPager;
+            if (gridPager != null)
+            {
+                gridPager.PageIndexChanged += delegate(object pagerSender,
+                    GridViewPageEventArgs pagerArgs)
+                {
+                    ChangeGridPage(int.Parse(pagerArgs.NewPageIndex.ToString()), grdOvedErrorCards,
+                           (DataView)Session["OvedCards"], "SortDirection",
+                           "SortExp");
+                };
+            }
+        }
+    }
+
+
+    private void ChangeGridPage(int pageIndex, GridView grid, DataView dataView,
+                                string sortDirViewStateKey, string sortExprViewStateKey)
+    {
+        //   SetChangesOfGridInDataview(grid, ref dataView);
+        grid.PageIndex = pageIndex;
+        string sortExpr = String.Empty;
+        SortDirection sortDir = SortDirection.Ascending;
+        if (ViewState[sortExprViewStateKey] != null)
+        {
+            sortExpr = ViewState[sortExprViewStateKey].ToString();
+            if (ViewState[sortDirViewStateKey] != null)
+                sortDir = (SortDirection)ViewState[sortDirViewStateKey];
+            dataView.Sort = String.Format("{0} {1}", sortExpr,
+                ConvertSortDirectionToSql(sortDir));
+        }
+        grid.DataSource = dataView;
+        grid.DataBind();
+
+    }
+    private string ConvertSortDirectionToSql(SortDirection sortDirection)
+    {
+        string newSortDirection = String.Empty;
+
+        switch (sortDirection)
+        {
+            case SortDirection.Ascending:
+                newSortDirection = "ASC";
+                break;
+
+            case SortDirection.Descending:
+                newSortDirection = "DESC";
+                break;
+        }
+
+        return newSortDirection;
     }
     //private void MoveLastFirstOved(int iIndex)
     //{

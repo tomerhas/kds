@@ -20,7 +20,6 @@ using KdsLibrary.UDT;
 //using KdsBatch.InputData;
 //using KdsBatch;
 using KdsWorkFlow.Approvals;
-using KdsBatch.CalcNew;
 
 public partial class Modules_Test :Page
 {
