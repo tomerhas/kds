@@ -14,7 +14,7 @@ namespace KdsBatch
         static bool _IsCreated = false;
         static GeneralData Instance;
         static object objlock;
-
+      
         private SingleGeneralData()
         { 
         }
@@ -23,7 +23,7 @@ namespace KdsBatch
             return Instance;
         }
 
-        public static GeneralData GetInstance(DateTime TarMe , DateTime TarAd)
+        public static GeneralData GetInstance(DateTime TarMe , DateTime TarAd,string sMaamad,bool rizaGorefet,int mis_ishi)
         {
             objlock = new object();
             if (!_IsCreated)
@@ -32,7 +32,7 @@ namespace KdsBatch
                 {
                     if (!_IsCreated)
                     {
-                        Instance = new GeneralData(TarMe, TarAd);
+                        Instance = new GeneralData(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
                         _IsCreated = true;
                     }
                 }
@@ -50,6 +50,7 @@ namespace KdsBatch
     {
         private clParameters objParameters;
         private DateTime _TarMe,_TarAd;
+        private DataSet dsNetuneyChishuv;
 
         public DataTable _dtYamimMeyuchadim { get; set; }
         public DataTable _dtSugeyYamimMeyuchadim { get; set; }
@@ -57,6 +58,7 @@ namespace KdsBatch
 
         public List<clParameters> ListParameters{ get; set; }
         //Me>Ad
+        public DataTable _dtOvdimLechishuv { get; set; }
         public DataTable _dtMichsaYomitAll { get; set; }
         public DataTable _dtMeafyeneySugSidurAll { get; set; }
         public DataTable _dtSidurimMeyuchRechivAll { get; set; }
@@ -72,10 +74,11 @@ namespace KdsBatch
         public DataTable _dtSugeyYechidaAll { get; set; }
         public DataTable _dtPeiluyotOvdimAll;
 
-        public GeneralData(DateTime  TarMe, DateTime TarAd)
+        public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {
             _TarMe = TarMe;
             _TarAd = TarAd;
+            GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
             InitGeneralData();
         }
         private void InitGeneralData()
@@ -89,20 +92,21 @@ namespace KdsBatch
                 _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                 _dtParameters = oUtils.GetKdsParametrs();
                  InitListParamObject();
-                _dtPremyotAll = oCalcDal.getPremyot();
-                _dtPremyotYadaniyotAll = oCalcDal.getPremyotYadaniyot();
-                _dtMichsaYomitAll = oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
+                 _dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
+                 _dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; // oCalcDal.getPremyot();
+                 _dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; // oCalcDal.getPremyotYadaniyot();
+                 _dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"]; //oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
                 _dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
-                _dtSidurimMeyuchRechivAll = oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
-                _dtSugeySidurRechivAll = oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);          
-                _dtSugeySidurAll = oCalcDal.GetSugeySidur();
-                _dtBusNumbersAll = oCalcDal.GetBusesDetails();
-                _dtYemeyAvodaAll = oCalcDal.GetYemeyAvoda();
-                _dtPeiluyotFromTnuaAll = oCalcDal.GetKatalogKavim();
-                _dtPirteyOvdimAll = oCalcDal.GetPirteyOvdim();
-                _dtPeiluyotOvdimAll = oCalcDal.GetPeiluyotOvdim();               
-                _dtSugeyYechidaAll = oCalcDal.GetSugYechida();
-                _dtMeafyenyOvedAll = oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
+                _dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; // oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
+                _dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; //oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);
+                _dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
+                _dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
+                _dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
+                _dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
+                _dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
+                _dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
+                _dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
+                _dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
             }
             catch (Exception ex)
             {
@@ -133,6 +137,19 @@ namespace KdsBatch
                 throw ex;
             }
         }
-        
+
+        private void GetNetunimLechishuv(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+        {
+            clCalcDal oCalcDal = new clCalcDal();
+            try
+            {
+                dsNetuneyChishuv = oCalcDal.GetNetuneyChishuvDS(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
+            }
+            catch (Exception ex)
+            {
+                //   clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
+                throw ex;
+            }
+        }
     }
 }

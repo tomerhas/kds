@@ -53,7 +53,7 @@ namespace KdsBatch
 
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
-            oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd);
+            oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
@@ -61,7 +61,7 @@ namespace KdsBatch
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
-            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay);
+            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay, "", false, mis_ishi);
             Mispar_ishi = mis_ishi;
             Month = DateTime.Parse("01/" + dDay.Month + "/" + dDay.Year);
             _dDay = dDay;
