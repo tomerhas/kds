@@ -57,9 +57,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KdsBatch">
-      <HintPath>..\KdsBatch\bin\Release\KdsBatch.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -112,6 +109,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
+      <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
+      <Name>KdsBatch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
       <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
       <Name>KdsDataImport</Name>
