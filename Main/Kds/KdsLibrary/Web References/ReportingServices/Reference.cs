@@ -20,7 +20,6 @@ namespace KdsLibrary.ReportingServices {
     using System.Web.Services.Protocols;
     using System.ComponentModel;
     using System.Xml.Serialization;
-    using System.Configuration;
     
     
     /// <remarks/>
@@ -99,7 +98,7 @@ namespace KdsLibrary.ReportingServices {
         
         /// <remarks/>
         public ReportExecutionService() {
-            this.Url = ConfigurationManager.AppSettings["ReportingServices.reportExecution2005"];
+            this.Url = global::KdsLibrary.Properties.Settings.Default.KdsLibrary_ReportingServices_ReportExecutionService;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

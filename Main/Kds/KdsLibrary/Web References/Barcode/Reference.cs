@@ -20,7 +20,6 @@ namespace KdsLibrary.Barcode {
     using System.Web.Services.Protocols;
     using System.ComponentModel;
     using System.Xml.Serialization;
-    using System.Configuration;
     
     
     /// <remarks/>
@@ -38,7 +37,7 @@ namespace KdsLibrary.Barcode {
         
         /// <remarks/>
         public wsBarCode() {
-            this.Url = ConfigurationSettings.AppSettings["WsBarcode"].ToString();
+            this.Url = global::KdsLibrary.Properties.Settings.Default.KdsLibrary_Barcode_wsBarCode;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
