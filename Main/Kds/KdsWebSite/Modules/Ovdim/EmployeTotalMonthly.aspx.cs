@@ -655,7 +655,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
              objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich,1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
 
              //MainCalc objMainCalc = new MainCalc();
-             //objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1,ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10,ref  dtRikuz11To20,ref dtRikuz21To31,ref dsRikuzAll);
+             //objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 1, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dsRikuzAll);
              
              grdAbsenceData.DataSource = dtHeadrut;
              grdAbsenceData.DataBind();

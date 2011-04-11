@@ -342,8 +342,8 @@ public partial class Modules_Test :Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        clCalculation objCalc=new clCalculation();
-       objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+        clCalculation objCalc = new clCalculation();
+        objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
 
        //MainCalc objMainCalc = new MainCalc();
        //objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));

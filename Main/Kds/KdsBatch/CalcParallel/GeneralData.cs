@@ -79,6 +79,11 @@ namespace KdsBatch
             _TarMe = TarMe;
             _TarAd = TarAd;
             GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
+          
+            //if (mis_ishi == -1) //premiot
+            //{
+
+            //}
             InitGeneralData();
         }
         private void InitGeneralData()
@@ -102,7 +107,9 @@ namespace KdsBatch
                 _dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
                 _dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
                 _dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
-                _dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
+                if (dsNetuneyChishuv.Tables["Kavim_Details"] != null)
+                    _dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
+                else _dtPeiluyotFromTnuaAll = null;
                 _dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
                 _dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
                 _dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();

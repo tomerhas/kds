@@ -35,11 +35,12 @@ namespace KdsBatch
         public MainCalc()
         {
         }
-        public MainCalc(long iBakashaId)
-        {
-            _Ovdim = new List<Oved>();
-            SetListOvdimLechishuvPremia(iBakashaId);
-        }
+        //public MainCalc(long iBakashaId)
+        //{
+        //    //_Ovdim = new List<Oved>();
+        //   // SetListOvdimLechishuvPremia(iBakashaId);
+            
+        //}
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc)
         {
             _iBakashaId = iBakashaId;
@@ -76,35 +77,30 @@ namespace KdsBatch
             }
         }
 
-        private void SetListOvdimLechishuvPremia(long iBakashaId)
+        private void SetListOvdimLechishuvPremia(long lBakashaId)
         {
             Oved ItemOved;
             DataTable dtOvdim = new DataTable();
             clCalcDal oCalcDal = new clCalcDal();
-            DateTime dTarMe = new DateTime();
-            DateTime dTarAd = new DateTime();
+            GeneralData oGeneralData;
             try
             {
-                dtOvdim = oCalcDal.GetPremiaCalcPopulation(ref dTarMe, ref dTarAd);
-                if (dtOvdim.Rows.Count > 0)
+                _Ovdim = new List<Oved>();
+                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now,"",false,-1);
+                dtOvdim = oGeneralData._dtOvdimLechishuv;
+                for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
-                    for (int i = 0; i < dtOvdim.Rows.Count; i++)
-                    {
-                        ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
-                        _Ovdim.Add(ItemOved);
-                    }
+                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), DateTime.Now, DateTime.Now, lBakashaId);
+                    _Ovdim.Add(ItemOved);
                 }
-                else _Ovdim = null;
+                
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-
-
-
-         
+       
         public void CalcOved(Oved oOved)
         {
           
@@ -189,7 +185,7 @@ namespace KdsBatch
             {
                 dTarAd = dTarMe.AddMonths(1).AddDays(-1);
 
-                InsertOvedToTable(iMisparIshi, dTarMe);
+             //   InsertOvedToTable(iMisparIshi, dTarMe);
                 oOved = new Oved(iMisparIshi, dTarMe, dTarMe, dTarAd, lBakashaId);
                 CalcOved(oOved);
 
@@ -374,25 +370,24 @@ namespace KdsBatch
         {
             clBatch obatch = new clBatch();
             clCalcDal oCalcDal = new clCalcDal();
-            List<Oved> ListOvdim = new List<Oved>();
-            Ovdim oOvdim;
+            List<Oved> ListOvdim = new List<Oved>(); 
             CalcMonth oMonth;
             long lBakashaId=0;
             int numFailed = 0;
             int numSucceed = 0;
             int seq = 0;
-
+              
             try
             {
 
                 seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
                 lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
-
+                SetListOvdimLechishuvPremia(lBakashaId);
                 clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
-                oOvdim = new Ovdim(lBakashaId);
-                if (oOvdim != null)
+ 
+                if (_Ovdim != null)
                 {
-                    foreach (Oved oOved in oOvdim.OvdimLechishuv)
+                    foreach (Oved oOved in _Ovdim)
                     {
                         try
                         {

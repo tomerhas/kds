@@ -369,13 +369,16 @@ namespace KdsBatch
             return dt;
         }
 
-        public DataSet GetNetuneyChishuvDS(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+        public DataSet GetNetuneyChishuvDS1 (DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {
             DataSet ds = new DataSet();
             clDal dal = new clDal();
             string names;
+            DataTable dt = new DataTable();
             try
             {
+ 
+
                 dal.AddParameter("p_Cur_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names= "Ovdim";
                 dal.AddParameter("p_Cur_Michsa_Yomit", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -390,10 +393,6 @@ namespace KdsBatch
                 names += ",Premiot_Yadaniot";
                 dal.AddParameter("p_Cur_Sug_Yechida", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Sug_Yechida";
-                dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                names += ",Sugey_Sidur_Tnua";
-                dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                names += ",Buses_Details";
                 dal.AddParameter("p_Cur_Yemey_Avoda", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Yemey_Avoda";
                 dal.AddParameter("p_Cur_Pirtey_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -401,7 +400,11 @@ namespace KdsBatch
                 dal.AddParameter("p_Cur_Meafyeney_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Meafyeney_Ovdim";
                 dal.AddParameter("p_Cur_Peiluyot_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                names += ",Peiluyot_Ovdim";
+                names += ",Peiluyot_Ovdim"; 
+                dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Buses_Details";
+                 dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Sugey_Sidur_Tnua";
                 dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Kavim_Details";
 
@@ -422,7 +425,79 @@ namespace KdsBatch
                 dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
 
 
-                dal.ExecuteSP(cGetNetunryChishuv, ref ds,names);
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(cGetKatalogKavim, ref dt);
+               //  dal.ExecuteSP(cGetNetunryChishuv, ref ds,names);
+               
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+        public DataSet GetNetuneyChishuvDS(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+        {
+            DataSet ds = new DataSet();
+            string names;
+            DataTable dt = new DataTable();
+            clTxDal dal = new clTxDal();
+ 
+            try
+            {
+
+                dal.TxBegin();
+                dal.AddParameter("p_Cur_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names = "Ovdim";
+                dal.AddParameter("p_Cur_Michsa_Yomit", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Michsa_Yomit";
+                dal.AddParameter("p_Cur_SidurMeyuchadRechiv", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Sidur_Meyuchad_Rechiv";
+                dal.AddParameter("p_Cur_Sug_Sidur_Rechiv", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Sug_Sidur_Rechiv";
+                dal.AddParameter("p_Cur_Premiot_View", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Premiot_View";
+                dal.AddParameter("p_Cur_Premiot_Yadaniot", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Premiot_Yadaniot";
+                dal.AddParameter("p_Cur_Sug_Yechida", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Sug_Yechida";
+                dal.AddParameter("p_Cur_Yemey_Avoda", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Yemey_Avoda";
+                dal.AddParameter("p_Cur_Pirtey_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Pirtey_Ovdim";
+                dal.AddParameter("p_Cur_Meafyeney_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Meafyeney_Ovdim";
+                dal.AddParameter("p_Cur_Peiluyot_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Peiluyot_Ovdim";
+                dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Buses_Details";
+                dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Sugey_Sidur_Tnua";
+                dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Kavim_Details";
+
+                dal.AddParameter("p_tar_me", ParameterType.ntOracleDate, TarMe, ParameterDir.pdInput);
+                dal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, TarAd, ParameterDir.pdInput);
+
+                if (sMaamad.IndexOf(",") > 0)
+                {
+                    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
+                }
+                dal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, rizaGorefet.GetHashCode(), ParameterDir.pdInput);
+                dal.AddParameter("p_status_tipul", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                dal.AddParameter("p_brerat_mechdal", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput);
+                dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
+
+                //dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                //dal.ExecuteSP(cGetKatalogKavim, ref dt);
+                dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
+                dal.TxCommit();
                 return ds;
             }
             catch (Exception ex)

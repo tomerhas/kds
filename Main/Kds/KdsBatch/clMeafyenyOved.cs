@@ -6,11 +6,15 @@ using System.Data;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using KdsLibrary;
+using KdsBatch.CalcParallel; 
 
 namespace KdsBatch
 {
    public class clMeafyenyOved
     {
+        public List<Meafyen> Meafyenim { get; set; }
+        private List<int> kodMeafyenim = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 , 10 ,11,12,13,14,15,16,17,23,24,25,26,27,28,30,32,33,41,42,43,44,45,47,50,51,53,54,56,57,60,61,63,64,72,74,83,84,85,91,100,101,102,103,104,105,106,107,108,110};
+        
         public string sMeafyen1 = "";
         public int iMeafyen2 = -1;
         public string sMeafyen3 = "";
@@ -159,6 +163,17 @@ namespace KdsBatch
             if (dtMeafyenyOved.Rows.Count > 0)
             {
                 SetMeafyneyOved();
+            }
+            dtMeafyenyOved.Dispose();
+        }
+
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate,  DataTable dtMeafyenim)
+        {
+            _Taarich = dDate;
+            dtMeafyenyOved = dtMeafyenim;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                SetMeafyenim();
             }
             dtMeafyenyOved.Dispose();
         }
@@ -466,6 +481,39 @@ namespace KdsBatch
                 throw ex;
             }
         }
+        private void SetMeafyenim()
+        {
+            Meafyenim= new List<Meafyen>();
+            kodMeafyenim.ForEach(item => 
+                {
+                    Meafyen _Meafyen = SetMeafyen(item);
+                    Meafyenim.Add(_Meafyen);
+                });
+        }
+       private Meafyen SetMeafyen(int kod)
+       {
+            DataRow[] drMeafyn;
+            string sQury = "";
+            Meafyen oMeafyen = new  Meafyen(kod);
+            try
+            {
+                sQury = "kod_meafyen=" + oMeafyen.Kod;
+                sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                sQury += " and Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+                drMeafyn = dtMeafyenyOved.Select(sQury);
+                 
+                if (drMeafyn.Length > 0)
+                {
+                    oMeafyen.IsExist = int.Parse(drMeafyn[0]["source_meafyen"].ToString()) == 1;
+                    oMeafyen.Value = drMeafyn[0]["value_erech_ishi"].ToString();
+                }
+                return oMeafyen;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+       }
 
         private void SetMeafyneyOved()
         {
