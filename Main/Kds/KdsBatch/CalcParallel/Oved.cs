@@ -259,13 +259,20 @@ namespace KdsBatch
             clMeafyenyOved itemMeafyenyOved;
             DateTime dTarMe = Month;
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
+            string sQury = "";
+            DataRow[] drMeafyn;
+            DataTable MeafyenimLeYom = new DataTable();
             try
             {
                
                 MeafyeneyOved = new List<clMeafyenyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", oGeneralData._dtMeafyenyOvedAll);
+                    sQury += " Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                    sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+                    drMeafyn = oGeneralData._dtMeafyenyOvedAll.Select(sQury);
+                    MeafyenimLeYom = drMeafyn.CopyToDataTable();
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }

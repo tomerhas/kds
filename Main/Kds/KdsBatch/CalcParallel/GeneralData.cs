@@ -76,14 +76,23 @@ namespace KdsBatch
 
         public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {
+            DataRow[] drs;
             _TarMe = TarMe;
             _TarAd = TarAd;
             GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
-          
-            //if (mis_ishi == -1) //premiot
-            //{
 
-            //}
+             _dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
+            if (mis_ishi == -1) //premiot
+            {
+                if (_dtOvdimLechishuv.Rows.Count > 0)
+                {
+                    drs = _dtOvdimLechishuv.Select("CHODESH", "CHODESH ASC");
+                    _TarMe = DateTime.Parse(drs[0]["CHODESH"].ToString());
+
+                    drs = _dtOvdimLechishuv.Select("CHODESH", "CHODESH DESC");
+                    _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
+                }
+            }
             InitGeneralData();
         }
         private void InitGeneralData()
@@ -97,7 +106,7 @@ namespace KdsBatch
                 _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                 _dtParameters = oUtils.GetKdsParametrs();
                  InitListParamObject();
-                 _dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
+                
                  _dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; // oCalcDal.getPremyot();
                  _dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; // oCalcDal.getPremyotYadaniyot();
                  _dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"]; //oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
