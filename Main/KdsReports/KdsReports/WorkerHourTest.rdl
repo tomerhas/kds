@@ -38,7 +38,7 @@
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="start_realtime">
-          <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!STARTTIME_YAEL.Value)</Value>
+          <Value>=Code.GetRealTime(CDate(Fields!TAARICH.Value),Fields!STARTTIME_YAEL.Value)</Value>
         </Field>
         <Field Name="end_realtime">
           <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!ENDTIME_YAEL.Value)</Value>
@@ -50,8 +50,8 @@ CDbl(DateDiff("s", Fields!start_realtime.Value ,   Fields!end_realtime.Value)
 				      )
 				      ))</Value>
         </Field>
-        <Field Name="Sum">
-          <Value>=1</Value>
+        <Field Name="TimeInMinute">
+          <Value>=Code.GetTimeInMinute(Fields!spearTime.Value)</Value>
         </Field>
       </Fields>
       <Query>
@@ -79,6 +79,18 @@ CDbl(DateDiff("s", Fields!start_realtime.Value ,   Fields!end_realtime.Value)
               <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>0.98425in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.98425in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.79185in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.98425in</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>0.96342in</Width>
             </TablixColumn>
             <TablixColumn>
@@ -98,6 +110,142 @@ CDbl(DateDiff("s", Fields!start_realtime.Value ,   Fields!end_realtime.Value)
             <TablixRow>
               <Height>0.40289in</Height>
               <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox17">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Time In Minute</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox21">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox21</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>end realtime</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>start realtime</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="Textbox25">
@@ -366,6 +514,150 @@ CDbl(DateDiff("s", Fields!start_realtime.Value ,   Fields!end_realtime.Value)
               <TablixCells>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="TimeInMinute">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TimeInMinute.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TimeInMinute</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox22">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=CDbl(DateDiff("s", Fields!start_realtime.Value ,   Fields!end_realtime.Value))</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox22</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="end_realtime">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!end_realtime.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>end_realtime</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="start_realtime">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!start_realtime.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>start_realtime</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="DELTA2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -537,7 +829,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TAARICH.Value</Value>
+                              <Value>=CDate(Fields!TAARICH.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -566,7 +858,43 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox17">
+                    <Textbox Name="Textbox19">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Cint(Fields!TimeInMinute.Value))</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox19</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox23">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -587,7 +915,115 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox17</rd:DefaultName>
+                      <rd:DefaultName>Textbox23</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox6">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Code.GetMinuteInHour(CStr(Sum(Cint(Fields!TimeInMinute.Value))))</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>=IIF(
+CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
+"Green","Red")</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -767,6 +1203,10 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -812,7 +1252,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
         <Top>1.72833cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>13.89733cm</Width>
+        <Width>23.40863cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1018,11 +1458,41 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
         Return Delta
 
     End Function
-</Code>
-  <Width>5.96875in</Width>
+
+    Function GetTimeInMinute(ByVal Hour As String) As String
+        Dim Minute As Integer
+        Dim PreviousSign As Boolean = True
+        Dim Delta As String = String.Empty
+        If (Hour.IndexOf("-") = 0) Then
+            PreviousSign = False
+            Hour = Hour.Remove(0, 1)
+        End If
+        Minute = CInt(Hour.Split(":")(0)) * 60 + CInt(Hour.Split(":")(1))
+        If (Not PreviousSign) Then
+            Minute = Minute * -1
+        End If
+        Return Minute
+
+    End Function
+    Function GetMinuteInHour(ByVal Minute As String) As String
+        Dim Hour As String
+        Dim PreviousSign As Boolean = True
+        Dim Delta As String = String.Empty
+        If (Minute.IndexOf("-") = 0) Then
+            PreviousSign = False
+            Minute = Minute.Remove(0, 1)
+        End If
+        Hour = ((Minute / 60).ToString().Split(".")(0)).ToString() &amp; ":" &amp; CInt(Minute Mod 60)
+        If (Not PreviousSign) Then
+            Hour = "-" &amp; Hour
+        End If
+        Return Hour
+
+    End Function</Code>
+  <Width>9.68486in</Width>
   <Page>
     <PageFooter>
-      <Height>2.50861cm</Height>
+      <Height>1.29153cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1085,8 +1555,8 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.95445cm</Top>
-          <Left>4.04198cm</Left>
+          <Top>0.62618cm</Top>
+          <Left>4.03049cm</Left>
           <Height>0.59972cm</Height>
           <Width>8.8826cm</Width>
           <ZIndex>1</ZIndex>
