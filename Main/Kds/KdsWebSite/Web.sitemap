@@ -21,6 +21,8 @@
       <siteMapNode url="~/Modules/Batches/HaavaraLesachar.aspx" title="העברה לשכר"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/CreateConstantReports.aspx" title=" הפקת דו''חות קבועים"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Premia/PremiaCalculation.aspx" title="פרמיות ניהול תנועה"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/RunCalcParallel.aspx" title="הרצת חישוב מקבילי"  description="" roles="*"/>
+    
     </siteMapNode>
     <siteMapNode   title="טבלאות"  description="" roles="*">
       <siteMapNode url="~/SystemManager/DataEntryView.aspx?table=TB_BUGIM" title="דיווח באגים"  description="" roles="*"/>
