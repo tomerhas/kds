@@ -264,7 +264,7 @@
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>KdsLibrary_Barcode_wsBarCode</CachedSettingsPropName>
+      <CachedSettingsPropName>wsBarCode</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="http://kdstst01/ReportServer/ReportExecution2005.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
@@ -275,7 +275,7 @@
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>KdsLibrary_ReportingServices_ReportExecutionService</CachedSettingsPropName>
+      <CachedSettingsPropName>wsReportingServices</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
