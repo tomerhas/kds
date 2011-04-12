@@ -59,14 +59,7 @@ namespace KdsBatch
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-            //DateTime StartTime;
-            //TimeSpan ts = new TimeSpan();
-            //StartTime = DateTime.Now;
-              SetNetunimLeOved();
-            //ts = DateTime.Now - StartTime;
-            //StartTime = DateTime.Now;
-            //SetNetunimLeOved2();
-            //ts = DateTime.Now - StartTime;
+            SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
@@ -98,12 +91,7 @@ namespace KdsBatch
                 InitDtYemeyAvoda();
                 InitDtPeiluyotFromTnua();
                 InitDtPeiluyotLeOved();
-                DateTime StartTime;
-                TimeSpan ts = new TimeSpan();
-                StartTime = DateTime.Now;
                 InitMeafyenyOved();
-                ts = DateTime.Now - StartTime;
-                StartTime = DateTime.Now;
                 InitSugeyYechida();
 
                 InitDataSetChishuv();
@@ -277,7 +265,7 @@ namespace KdsBatch
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
                     drMeafyn = oGeneralData._dtMeafyenyOvedAll.Select(sQury);
                     MeafyenimLeYom = drMeafyn.CopyToDataTable();
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, MeafyenimLeYom);
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe,"Calc" ,MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }
