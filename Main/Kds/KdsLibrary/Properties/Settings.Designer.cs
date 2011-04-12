@@ -27,9 +27,9 @@ namespace KdsLibrary.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://KDSTST01:80/ReportServer/ReportExecution2005.asmx")]
-        public string KdsLibrary_ReportingServices_ReportExecutionService {
+        public string wsReportingServices {
             get {
-                return ((string)(this["KdsLibrary_ReportingServices_ReportExecutionService"]));
+                return ((string)(this["wsReportingServices"]));
             }
         }
         
@@ -37,9 +37,9 @@ namespace KdsLibrary.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
         [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.2.42/BarCode/wsBarcode.asmx")]
-        public string KdsLibrary_Barcode_wsBarCode {
+        public string wsBarCode {
             get {
-                return ((string)(this["KdsLibrary_Barcode_wsBarCode"]));
+                return ((string)(this["wsBarCode"]));
             }
         }
     }
