@@ -59,6 +59,8 @@ namespace KdsBatch
             DataTable dtOvdim = new DataTable();
             clCalcDal oCalcDal = new clCalcDal();
             GeneralData oGeneralData;
+            DateTime StartTime;
+            TimeSpan ts = new TimeSpan();
             try
             {
                 oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd,sMaamad, bRitzaGorefet,0);
@@ -67,8 +69,13 @@ namespace KdsBatch
                 dtOvdim = oGeneralData._dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
+                   
+                    
+                    StartTime = DateTime.Now;
                     ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
+                    ts = DateTime.Now - StartTime;
                     _Ovdim.Add(ItemOved);
+                  
                 }
             }
             catch (Exception ex)

@@ -97,8 +97,13 @@ namespace KdsBatch
                 InitPirteyOvedList();
                 InitDtYemeyAvoda();
                 InitDtPeiluyotFromTnua();
-                InitDtPeiluyotLeOved();    
+                InitDtPeiluyotLeOved();
+                DateTime StartTime;
+                TimeSpan ts = new TimeSpan();
+                StartTime = DateTime.Now;
                 InitMeafyenyOved();
+                ts = DateTime.Now - StartTime;
+                StartTime = DateTime.Now;
                 InitSugeyYechida();
 
                 InitDataSetChishuv();
@@ -268,11 +273,11 @@ namespace KdsBatch
                 MeafyeneyOved = new List<clMeafyenyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    sQury += " Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                    sQury = " Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
                     drMeafyn = oGeneralData._dtMeafyenyOvedAll.Select(sQury);
                     MeafyenimLeYom = drMeafyn.CopyToDataTable();
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }
