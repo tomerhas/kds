@@ -37,7 +37,7 @@ namespace KdsLibrary.Barcode {
         
         /// <remarks/>
         public wsBarCode() {
-            this.Url = global::KdsLibrary.Properties.Settings.Default.KdsLibrary_Barcode_wsBarCode;
+            this.Url = global::KdsLibrary.Properties.Settings.Default.wsBarCode;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;

@@ -98,7 +98,7 @@ namespace KdsLibrary.ReportingServices {
         
         /// <remarks/>
         public ReportExecutionService() {
-            this.Url = global::KdsLibrary.Properties.Settings.Default.KdsLibrary_ReportingServices_ReportExecutionService;
+            this.Url = global::KdsLibrary.Properties.Settings.Default.wsReportingServices;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
