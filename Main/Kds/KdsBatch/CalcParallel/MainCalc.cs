@@ -124,7 +124,7 @@ namespace KdsBatch
                 {
                     if (_iTypeCalc == clGeneral.TypeCalc.Batch)
                     {
-                        SaveSidurim(oOved.Mispar_ishi, clCalcData.DtYemeyAvoda);
+                        SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                     }
                     //שמירת נתוני החישוב לעובד
                     SaveChishuv(_iBakashaId, oOved.Mispar_ishi);
@@ -402,7 +402,7 @@ namespace KdsBatch
                             oMonth = new CalcMonth(oOved);
                             oMonth.CalcMonthOved();
 
-                            SaveSidurim(oOved.Mispar_ishi, clCalcData.DtYemeyAvoda);
+                            SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                             //שמירת נתוני החישוב לעובד
                             SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
 

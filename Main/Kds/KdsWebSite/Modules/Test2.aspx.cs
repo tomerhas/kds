@@ -151,7 +151,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
 
         //// Render barcode:  
 
-        //Bitmap bitmap = barcode.Render();
+     //   Bitmap bitmap = barcode.Render();
 
         //// You can also save it to file:  
 
@@ -161,11 +161,11 @@ public partial class Modules_Test2 : System.Web.UI.Page
     }
     protected void btnShowTachograf_Click(object sender, EventArgs e)
     {
-        MainCalc objMainCalc = new MainCalc(0, DateTime.Parse("01/01/2011"), DateTime.Parse("31/01/2011"), "0,1", false, clGeneral.TypeCalc.Batch);
-        //foreach (Oved oOved in objMainCalc.Ovdim)
-        //{
-        //    objMainCalc.CalcOved(oOved);
-        //}
+        MainCalc objMainCalc = new MainCalc(0, DateTime.Parse("01/03/2010"), DateTime.Parse("31/08/2010"), "0,1", false, clGeneral.TypeCalc.Batch);
+        foreach (Oved oOved in objMainCalc.Ovdim)
+        {
+            objMainCalc.CalcOved(oOved);
+        }
         //MainCalc objMainCalc = new MainCalc();
         //objMainCalc.PremiaCalc();
 
