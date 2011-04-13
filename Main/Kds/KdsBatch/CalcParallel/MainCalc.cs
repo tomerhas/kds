@@ -39,7 +39,7 @@ namespace KdsBatch
         //{
         //    //_Ovdim = new List<Oved>();
         //   // SetListOvdimLechishuvPremia(iBakashaId);
-            
+
         //}
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc)
         {
@@ -63,19 +63,19 @@ namespace KdsBatch
             TimeSpan ts = new TimeSpan();
             try
             {
-                oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd,sMaamad, bRitzaGorefet,0);
+                oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd, sMaamad, bRitzaGorefet, 0);
                 /**/
-               // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
+                // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
                 dtOvdim = oGeneralData._dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
-                   
-                    
+
+
                     StartTime = DateTime.Now;
                     ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
                     ts = DateTime.Now - StartTime;
                     _Ovdim.Add(ItemOved);
-                  
+
                 }
             }
             catch (Exception ex)
@@ -93,30 +93,30 @@ namespace KdsBatch
             try
             {
                 _Ovdim = new List<Oved>();
-                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now,"",false,-1);
+                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1);
                 dtOvdim = oGeneralData._dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
                     ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), DateTime.Now, DateTime.Now, lBakashaId);
                     _Ovdim.Add(ItemOved);
                 }
-                
+
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-       
+
         public void CalcOved(Oved oOved)
         {
-          
+
             CalcMonth oMonth;
             try
             {
-               // oOved.SetNetunimLeOved();
+                // oOved.SetNetunimLeOved();
                 oMonth = new CalcMonth(oOved);
-               // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
+                // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                 oMonth.CalcMonthOved();
                 DataSetTurnIntoUdt(oOved._dsChishuv);
                 //שמירת הנתונים רק אם התהליך התבצע ב-batch
@@ -144,14 +144,14 @@ namespace KdsBatch
             DateTime StartMonth = DateTime.Parse("01/" + dCalcMonth.Month + "/" + dCalcMonth.Year);
             try
             {
-               //InsertOvedToTable(iMisparIshi, StartMonth);
+                //InsertOvedToTable(iMisparIshi, StartMonth);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
                 CalcOved(oOved);
 
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
                 SingleGeneralData.ResetObject();
-            //    clCalcData.ListParametersMonth = null;
+                //    clCalcData.ListParametersMonth = null;
             }
             catch (Exception ex)
             {
@@ -166,7 +166,7 @@ namespace KdsBatch
             Oved oOved;
             try
             {
-              //  InsertOvedToTable(iMisparIshi, dCalcDay);
+                //  InsertOvedToTable(iMisparIshi, dCalcDay);
                 oOved = new Oved(iMisparIshi, dCalcDay, lBakashaId);
                 CalcOved(oOved);
                 SingleGeneralData.ResetObject();
@@ -193,7 +193,7 @@ namespace KdsBatch
             {
                 dTarAd = dTarMe.AddMonths(1).AddDays(-1);
 
-             //   InsertOvedToTable(iMisparIshi, dTarMe);
+                //   InsertOvedToTable(iMisparIshi, dTarMe);
                 oOved = new Oved(iMisparIshi, dTarMe, dTarMe, dTarAd, lBakashaId);
                 CalcOved(oOved);
 
@@ -368,7 +368,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                
+
                 throw ex;
             }
         }
@@ -378,13 +378,13 @@ namespace KdsBatch
         {
             clBatch obatch = new clBatch();
             clCalcDal oCalcDal = new clCalcDal();
-            List<Oved> ListOvdim = new List<Oved>(); 
+            List<Oved> ListOvdim = new List<Oved>();
             CalcMonth oMonth;
-            long lBakashaId=0;
+            long lBakashaId = 0;
             int numFailed = 0;
             int numSucceed = 0;
             int seq = 0;
-              
+
             try
             {
 
@@ -392,7 +392,7 @@ namespace KdsBatch
                 lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
                 SetListOvdimLechishuvPremia(lBakashaId);
                 clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
- 
+
                 if (_Ovdim != null)
                 {
                     foreach (Oved oOved in _Ovdim)

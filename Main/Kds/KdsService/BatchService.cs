@@ -58,6 +58,7 @@ namespace KdsService
             try
             {
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Test) :
                                             new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch);
                 if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
@@ -80,6 +81,7 @@ namespace KdsService
             {
                 SingleGeneralData.ResetObject();
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
             }
             LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
