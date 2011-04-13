@@ -59,7 +59,7 @@ namespace KdsBatch
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-          //  SetNetunimLeOved();
+             SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
