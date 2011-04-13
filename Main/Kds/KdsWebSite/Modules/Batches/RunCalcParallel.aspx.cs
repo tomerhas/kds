@@ -63,8 +63,8 @@ public partial class Modules_Batches_RunCalcParallel : System.Web.UI.Page
         clUtils oUtils = new clUtils();
         try
         {
-            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
+            //dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            //dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
                    
             if (chkFriends.Checked) { sMaamad = clGeneral.enMaamad.Friends.GetHashCode().ToString(); }
 
@@ -78,7 +78,7 @@ public partial class Modules_Batches_RunCalcParallel : System.Web.UI.Page
            
             iRequestId = objBatch.RunCalcBatch(clGeneral.enGeneralBatchType.Calculation, txtDescription.Text, clGeneral.enStatusRequest.InProcess, iUserId, sMaamad, ddlToMonth.SelectedValue, iRunAll,chkTest.Checked.GetHashCode());
             ViewState["iRequestId"] = iRequestId;
-            ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunCalc('" + dFrom.ToShortDateString()  + "','" + ddlToMonth.SelectedValue + "','" + sMaamad + "','" + chkTest.Checked + "','" + chkRunAll.Checked + "','" + iRequestId + "');", true);
+            ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunCalc(" + iRequestId + ",'" + ddlToMonth.SelectedValue + "','" + sMaamad + "','" + chkTest.Checked + "','" + chkRunAll.Checked + "');", true);
          
 
             sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;

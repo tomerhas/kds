@@ -73,8 +73,8 @@
          else { args.IsValid = true; }
      }
 
-     function RunCalc(dChodeshMe, dChodeshAd, sMaamad, bRitzatTest, bRitzaGoreft, iRequestId) {
-         wsBatch.CalcBatch(dChodeshMe, dChodeshAd, sMaamad, bRitzatTest, bRitzaGoreft,iRequestId); //, RunCalcSucceeded);
+     function RunCalc(iRequestId, dChodeshAd, sMaamad, bRitzatTest, bRitzaGoreft ) {
+         wsBatch.CalcBatchParallel(iRequestId, dChodeshAd, sMaamad, bRitzatTest, bRitzaGoreft); //, RunCalcSucceeded);
      }
 
      //function RunCalcSucceeded(result)

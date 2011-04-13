@@ -75,7 +75,7 @@
 }
 
 function RunCalc(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft) {
-     wsBatch.CalcBatch(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft); //, RunCalcSucceeded);
+    wsBatch.CalcBatchParallel(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft); //, RunCalcSucceeded);
 }
 
 //function RunCalcSucceeded(result)
