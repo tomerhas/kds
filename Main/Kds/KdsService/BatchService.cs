@@ -12,8 +12,7 @@ using KdsBatch.Premia;
 using KdsDataImport;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
-using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Data;
 
 namespace KdsService
@@ -39,37 +38,51 @@ namespace KdsService
             }
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
-        //private void RunCalcBatchParallel(object param)
-        //{
-        //    object[] args = param as object[];
-        //    long lRequestNum = (long)args[0];
-        //    DateTime dAdChodesh = (DateTime)args[1];
-        //    string sMaamad = args[2].ToString();
-        //    bool bRitzatTest = (bool)args[3];
-        //    bool bRitzaGorefet = (bool)args[4];
-        //    clCalculation objCalc = new clCalculation();
-        //    clUtils oUtils = new clUtils();
-        //    DateTime dFrom;
-        //    DataTable dtParametrim;
-        //    dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-        //    dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
+        private void RunCalcBatchParallel(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            DateTime dAdChodesh = (DateTime)args[1];
+            string sMaamad = args[2].ToString();
+            bool bRitzatTest = (bool)args[3];
+            bool bRitzaGorefet = (bool)args[4];
+            clCalculation objCalc = new clCalculation();
+            clUtils oUtils = new clUtils();
+            DateTime dFrom;
+            DataTable dtParametrim;
+            int iStatus = 0;
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
 
-        //    MainCalc oMainCalc;
-        //    try
-        //    {
-        //       oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum,dFrom, dAdChodesh, sMaamad, bRitzaGorefet,MainCalc.TypeCalc.Test):
-        //                                   new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, MainCalc.TypeCalc.Batch);
-        //        Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
-        //                            {
-        //                                oMainCalc.CalcOved(CurrentOved);
-        //                            });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        clGeneral.LogError(ex);
-        //    }
-        //    LogThreadEnd("CalcBatch", lRequestNum);
-        //}
+            MainCalc oMainCalc;
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Test) :
+                                            new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch);
+                if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
+                {
+                    Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
+                                        {
+                                            oMainCalc.CalcOved(CurrentOved);
+                                        });
+                }
+              iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "MainCalc: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                SingleGeneralData.ResetObject();
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+            }
+            LogThreadEnd("CalcBatchParallel", lRequestNum);
+        }
 
 
         private void RunCalcBatchThread(object param)
@@ -290,13 +303,13 @@ namespace KdsService
 
         }
 
-        //public void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
-        //{
-        //    Thread runThread = new Thread(new ParameterizedThreadStart(RunCalcBatchParallel));
-        //    LogThreadStart("CalcBatch", lRequestNum);
-        //    runThread.Start(new object[] { lRequestNum, dAdChodesh, sMaamad, 
-        //        bRitzatTest, bRitzaGorefet });
-        //}
+        public void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
+        {
+            Thread runThread = new Thread(new ParameterizedThreadStart(RunCalcBatchParallel));
+            LogThreadStart("CalcBatchParallel", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, dAdChodesh, sMaamad, 
+                bRitzatTest, bRitzaGorefet });
+        }
 
         public void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
         {

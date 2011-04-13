@@ -59,7 +59,7 @@ namespace KdsBatch
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-            SetNetunimLeOved();
+          //  SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
@@ -69,9 +69,9 @@ namespace KdsBatch
             _dDay = dDay;
             bChishuvYom = true;
             iBakashaId = BakashaId;   
-            SetNetunimLeOved();
+         //   SetNetunimLeOved();
         }
-        private void SetNetunimLeOved()
+        public void SetNetunimLeOved()
         {
             try
             {
@@ -167,11 +167,24 @@ namespace KdsBatch
             DtYemeyAvoda = new DataTable();
             try
             {
-                rows = oGeneralData._dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
-                if (rows.Length > 0)
+                if (oGeneralData._dtYemeyAvodaAll != null && oGeneralData._dtYemeyAvodaAll.Rows.Count > 0)
                 {
-                    DtYemeyAvoda=rows.CopyToDataTable();
+                    rows = oGeneralData._dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    if (rows.Length > 0)
+                    {
+                        DtYemeyAvoda=rows.CopyToDataTable();
+                    }
+                    else
+                    {
+                        DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll;
+                        DtYemeyAvoda.Clear();
+                    }
                 }
+                 else
+                 {
+                     DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll;
+                     //    DtPeiluyotFromTnua.Clear();
+                 }
             }
             catch (Exception ex)
             {

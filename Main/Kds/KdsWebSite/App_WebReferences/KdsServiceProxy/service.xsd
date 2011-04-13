@@ -15,6 +15,22 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="CalcBatchParallel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dAdChodesh" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="sMaamad" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="bRitzatTest" type="xs:boolean" />
+        <xs:element minOccurs="0" name="bRitzaGorefet" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CalcBatchParallelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CalcBatch">
     <xs:complexType>
       <xs:sequence>
