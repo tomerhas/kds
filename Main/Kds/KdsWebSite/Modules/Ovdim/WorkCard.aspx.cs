@@ -548,6 +548,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
+    //protected void Page_Init(object sender, EventArgs e)
+    //{
+    //    this.MaintainScrollPositionOnPostBack = true;
+    //}
     protected void Page_Load(object sender, EventArgs e)
     {
         LoadPage();

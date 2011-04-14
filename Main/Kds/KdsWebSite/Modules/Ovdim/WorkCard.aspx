@@ -17,7 +17,8 @@
 </head>
 <body dir="rtl" style="margin:0px">
     <form id="frmWorkCard" runat="server" >    
-    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true">
+    <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" >
+        
         <Scripts>
             <asp:ScriptReference Name="MicrosoftAjax.js" />
             <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" />
@@ -49,6 +50,7 @@
             <asp:ScriptReference Name="AjaxControlToolkit.ModalPopup.ModalPopupBehavior.js" Assembly="AjaxControlToolkit, Version=3.0.30930.28736, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
         </Scripts>
     </asp:ScriptManager>
+ 
     <asp:UpdateProgress runat="server" ID="Progress1" DisplayAfter="0">
         <ProgressTemplate>
             <div id="divProgress" class="Progress" style="text-align: right; position: absolute;
@@ -334,7 +336,7 @@
                     <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />           
                     <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                        
                 </Triggers>
-            </asp:UpdatePanel>
+            </asp:UpdatePanel>            
             <asp:UpdatePanel ID="upCollpase" runat="server" RenderMode="Inline" UpdateMode="Always">                                
                <ContentTemplate>
                     <div style="text-align: right; overflow: auto">
@@ -364,8 +366,8 @@
                             </td>                            
                        </tr>
                     </table>
-            </ContentTemplate>             
-          </asp:UpdatePanel>    
+           </ContentTemplate>             
+         </asp:UpdatePanel>  
     <asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
             <table style="width:980px;height:30px" cellpadding="1">
@@ -545,6 +547,8 @@
     <input type="hidden" runat="server" id="hidDriver"/>
     </form>   
     <script language="javascript" type="text/javascript">
+         
+//       frmWorkCard.submit =SaveScrollPositionSubmit();
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck;  
         function KeyCheck(){  
@@ -585,7 +589,25 @@
                     document.getElementById("btnPrint").disabled=false;
                     document.all('btnPrint').click(); 
                 } 
-         }           
+         }   
+         
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_pageLoaded(pageLoaded);
+        prm.add_beginRequest(beginRequest);
+        var postbackElement; 
+
+        function beginRequest(sender, args) {
+            postbackElement = args.get_postBackElement();
+        }
+
+        function pageLoaded(sender, args) {
+            var updatedPanels = args.get_panelsUpdated();
+            if (typeof(postbackElement) == "undefined") {
+                return;
+            }
+            
+            $get("lstSidurim_dvS").scrollTop = $get("lstSidurim_hidScrollPos").value;            
+         }
     </script>
 </body>
 </html>

@@ -159,11 +159,24 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //        //vldTst.ServerValidate += new System.Web.UI.WebControls.ServerValidateEventHandler(IsShatHatchalaValid);
     //    }
     //}
-   
+    //protected void Page_Init(object sender, EventArgs e)
+    //{
+    //    this.Page.MaintainScrollPositionOnPostBack = true;
+    //}
+    //protected void Page_PreRender(object sender, EventArgs e)
+    //{
+    //    if (hidScrollPos.Value != string.Empty)
+    //    {
+    //        dvS.Style.Add("scrollTop", hidScrollPos.Value);
+    //        //Set first sidur focus 
+    //        string sScript = "SetScrollPosition();";//"document.getElementById('lstSidurim_dvS').scrollTop= Number(document.getElementById('lstSidurim_hidScrollPos').value) + 600";
+    //        ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
+    //    }
+    //}
     protected void Page_Load(object sender, EventArgs e)
     {
         try
-        {              
+        {            
             if (_DataSource != null)                                     
                 BuildPage();            
         }
@@ -183,9 +196,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 BuildSidurim(_DataSource);
                 SetHideParameters();
-                ////Set first sidur focus 
-                //string sScript = "document.getElementById('lstSidurim_txtSH0').select();";
-                //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
+
+                
             }
         }
         catch (Exception ex)
@@ -1300,6 +1312,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddPeilut.ID = "imgAddPeilut" + iIndex;
                 imgAddPeilut.ImageUrl = "~/images/plus.jpg";
                // imgAddPeilut.Attributes.Add("OnClientClick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
+                //imgAddPeilut.Attributes.Add("onclick", "document.getElementById('lstSidurim_hidScrollPos').value=document.getElementById('lstSidurim_dvS').scrollTop+',' + document.getElementById('lstSidurim_dvS').scrollLeft;  hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                 imgAddPeilut.CausesValidation = false;
@@ -1749,6 +1762,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
             btnHandler(string.Empty, true);
+
+        //string sScript = "SetScrollPosition();";//"document.getElementById('lstSidurim_dvS').scrollTop= Number(document.getElementById('lstSidurim_hidScrollPos').value) + 600";
+        //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {

@@ -1254,7 +1254,7 @@ a
 {
 	height:400px; 	
 	overflow: auto;
-	overflow-x: hidden; 
+	overflow-x: hidden; 	
 	width : 100%;
 }
 .ErrGrid

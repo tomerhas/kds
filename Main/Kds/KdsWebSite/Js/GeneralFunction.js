@@ -220,7 +220,6 @@ function GetDateDDMMYYYY(dDate){
        return pd + n.toString();
    } 
 
-
 if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
 
 
