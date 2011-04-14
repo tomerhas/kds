@@ -55,11 +55,12 @@ namespace KdsBatch
 
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
-            oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi);
+            if (BakashaId==0)
+                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-             SetNetunimLeOved();
+           //  SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
@@ -75,6 +76,8 @@ namespace KdsBatch
         {
             try
             {
+                oGeneralData = SingleGeneralData.GetInstance();//tarMe, tarAd, "", false, mis_ishi);
+          
                 DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
                 DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
                 Parameters = oGeneralData.ListParameters;

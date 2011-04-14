@@ -114,7 +114,7 @@ namespace KdsBatch
             CalcMonth oMonth;
             try
             {
-                // oOved.SetNetunimLeOved();
+               oOved.SetNetunimLeOved();
                 oMonth = new CalcMonth(oOved);
                 // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                 oMonth.CalcMonthOved();
