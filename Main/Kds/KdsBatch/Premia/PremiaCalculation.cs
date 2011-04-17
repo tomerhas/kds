@@ -33,11 +33,28 @@ namespace KdsBatch.Premia
                     throw new Exception(String.Format("Path {0} does not exist",
                         _settings.GetMacroFullPath(_periodDate)));
                 exAdpt.OpenExistingWorkBook();
-                exAdpt.SaveExistingWorkBook();
+                bool saved = false;
+                int attempts=0;
+                while (!saved && attempts < 3)
+                {
+                    try
+                    {
+                        exAdpt.SaveExistingWorkBook();
+                        saved = true;
+                    }
+                    catch (System.Runtime.InteropServices.COMException comEx)
+                    {
+                        System.Diagnostics.EventLog.WriteEntry("KDS", comEx.ToString());
+                        attempts++;
+                        if (attempts >= 3) throw comEx;
+                    }
+                }
+                //exAdpt.SaveExistingWorkBook();
                 exAdpt.CloseWorkBook();
             }
             catch (Exception ex)
             {
+                System.Diagnostics.EventLog.WriteEntry("KDS", ex.ToString());
                 throw ex;
             }
             finally

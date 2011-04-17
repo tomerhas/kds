@@ -81,7 +81,8 @@
                 function getNewBatchRequest(btchType, desc){
                     if(isInProcess==false){
                         isInProcess=true;
-                        batchType=btchType;
+                        batchType = btchType;
+                        $get("<%=hdCurrentStage.ClientID %>").value = batchType - 7;
                         wsBatch.OpenBatchRequest(batchType,
                             document.getElementById("<%=hdUserId.ClientID %>").value, desc, 
                             RunStage, ProcessFailed);
@@ -123,9 +124,31 @@
                 }
                 
                 function showLoader(show){
-                    if(show)
-                        $get('dvLoader').style.visibility='visible';
-                    else  $get('dvLoader').style.visibility='hidden';
+                    if (show) {
+                        $get('dvLoader').style.visibility = 'visible';
+                        disableButtons();
+                    }
+                    else {
+                        $get('dvLoader').style.visibility = 'hidden';
+                        enableButtons();
+                    }
+                }
+
+                function disableButtons() {
+                    $get("<%=btnStage1.ClientID %>").disabled = true;
+                    $get("<%=btnStage2.ClientID %>").disabled = true;
+                    $get("<%=btnStage3.ClientID %>").disabled = true;
+
+                }
+
+                function enableButtons() {
+                    currentStage = parseInt($get("<%=hdCurrentStage.ClientID %>").value);
+                    if (currentStage >= 1) 
+                        $get("<%=btnStage1.ClientID %>").disabled = false;
+                    if (currentStage >= 2)
+                        $get("<%=btnStage2.ClientID %>").disabled = false;
+                    if (currentStage >= 3)
+                        $get("<%=btnStage3.ClientID %>").disabled = false;
                 }
             </script>
         </ContentTemplate>

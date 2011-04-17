@@ -31,10 +31,10 @@ namespace KdsBatch.Premia
         #region Methods
         public void OpenNewWorkBook()
         {
-            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            //CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             _workBook = _application.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
-            Thread.CurrentThread.CurrentCulture = originalCulture;
+            //Thread.CurrentThread.CurrentCulture = originalCulture;
             //_workBook = _application.Workbooks.Open(_filename, true, false, 5, "", "", 
             //    false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
         }
@@ -95,7 +95,16 @@ namespace KdsBatch.Premia
 
         public void OpenExistingWorkBook()
         {
-            _workBook = _application.Workbooks.Open(_filename, true, false, 5, "", "", false, Excel.XlPlatform.xlWindows, "", false, false, 0, true, false, false);
+            CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+           
+            
+            _workBook = _application.Workbooks.Open(_filename, Excel.XlUpdateLinks.xlUpdateLinksAlways
+                , Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlPlatform.xlWindows,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing);
+
+            Thread.CurrentThread.CurrentCulture = originalCulture;
         }
 
         public void SaveExistingWorkBook()
@@ -110,13 +119,22 @@ namespace KdsBatch.Premia
         {
             try
             {
+                if (_excelSheet != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(_excelSheet);
+                    _excelSheet = null;
+                }
+
                 if (_workBook != null)
                 {
                     _workBook.Close(false, _filename, 0);
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(_workBook); 
                     _workBook = null;
+
                 }
                 if (_application != null)
                 {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(_application); 
                     _application = null;
                 }
             }

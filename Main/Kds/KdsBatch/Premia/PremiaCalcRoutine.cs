@@ -45,7 +45,7 @@ namespace KdsBatch.Premia
             catch (Exception ex)
             {
                 success = false;
-                _errorMessage = ex.Message;
+                _errorMessage = ex.ToString();
                 Log(_processBtchNumber, "E", _errorMessage, BatchType, _periodDate);
                 status = KdsLibrary.clGeneral.enBatchExecutionStatus.Failed;
             }

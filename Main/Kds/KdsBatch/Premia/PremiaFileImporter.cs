@@ -17,6 +17,10 @@ namespace KdsBatch.Premia
         #region Fields
         private const string NOT_VISIBLE_ROW_COMPARE_VALUE = "x";
         private const int FIRST_DATA_ROW_INDEX = 5;
+        private const int YEAR_VALUE_ROW = 3;
+        private const string YEAR_VALUE_COL = "B";
+        private const int MONTH_VALUE_ROW = 3;
+        private const string MONTH_VALUE_COL = "C";
         private PremiaItemsCollection _items;
         private long _btchRequest;
         private DataTable _dtPremiaTypes;
@@ -189,7 +193,7 @@ namespace KdsBatch.Premia
             {
                 //connection string
                 string strExcelConnectionString = String.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=""Excel 12.0;HDR=YES;""",
-                    _settings.GetInputFullFilePath(_periodDate));
+                    _settings.GetMacroFullPath(_periodDate));
                 dbFactory = DbProviderFactories.GetFactory("System.Data.OleDb");
 
                 //opens the connection and check it
@@ -261,24 +265,69 @@ namespace KdsBatch.Premia
 
         private void ReloadPeriod(DataTable dt)
         {
-            var exlAdtp = new ExcelAdapter(_settings.GetMacroFullPath(_periodDate));
             try
             {
-                exlAdtp.OpenExistingWorkBook();
-                int month = Convert.ToInt32(exlAdtp.GetValue("C", 4));
-                int year = Convert.ToInt32(exlAdtp.GetValue("C", 2));
+                int month = Convert.ToInt32(
+                    dt.Rows[MONTH_VALUE_ROW][GetExcelColumnIndex(MONTH_VALUE_COL)]);
+                int year = Convert.ToInt32(
+                    dt.Rows[YEAR_VALUE_ROW][GetExcelColumnIndex(YEAR_VALUE_COL)]);
                 _periodDate = new DateTime(year, month, 1);
-                exlAdtp.SaveExistingWorkBook();
-                exlAdtp.CloseWorkBook();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            finally
-            {
-                exlAdtp.Quit();
-            }
+
+            
+            //var exlAdtp = new ExcelAdapter(_settings.GetMacroFullPath(_periodDate));
+            //try
+            //{
+            //    exlAdtp.OpenExistingWorkBook();
+            //    int month = Convert.ToInt32(exlAdtp.GetValue("C", 4));
+            //    int year = Convert.ToInt32(exlAdtp.GetValue("C", 2));
+            //    _periodDate = new DateTime(year, month, 1);
+            //    bool saved = false;
+            //    int attempts = 0;
+            //    while (!saved && attempts < 10)
+            //    {
+            //        try
+            //        {
+            //            exlAdtp.SaveExistingWorkBook();
+            //            saved = true;
+            //        }
+            //        catch (System.Runtime.InteropServices.COMException comEx)
+            //        {
+            //            attempts++;
+            //            if (attempts >= 10) throw comEx;
+            //        }
+            //    }
+            //    saved = false;
+            //    attempts = 0;
+            //    while (!saved && attempts < 10)
+            //    {
+            //        try
+            //        {
+            //            exlAdtp.CloseWorkBook();
+            //            saved = true;
+            //        }
+            //        catch (System.Runtime.InteropServices.COMException comEx)
+            //        {
+            //            attempts++;
+            //            if (attempts >= 10) throw comEx;
+            //        }
+            //    }
+                
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            //finally
+            //{
+            //    exlAdtp.Quit();
+            //    exlAdtp.Dispose();
+            //    exlAdtp = null;
+            //}
         }
 
         protected override KdsLibrary.clGeneral.enGeneralBatchType BatchType
