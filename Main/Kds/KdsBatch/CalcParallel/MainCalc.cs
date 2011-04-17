@@ -247,11 +247,15 @@ namespace KdsBatch
 
             try
             {   //   שמירת נתוני החישוב
-                oDal.AddParameter("p_coll_chishuv_chodesh", ParameterType.ntOracleArray, _collChishuvChodesh, ParameterDir.pdInput, "COLL_CHISHUV_CHODESH");
-                oDal.AddParameter("p_coll_chishuv_yomi", ParameterType.ntOracleArray, _collChishuvYomi, ParameterDir.pdInput, "COLL_CHISHUV_YOMI");
-                oDal.AddParameter("p_coll_chishuv_sidur", ParameterType.ntOracleArray, _collChishuvSidur, ParameterDir.pdInput, "COLL_CHISHUV_SIDUR");
+                if (!_collChishuvChodesh.IsNull)
+                    oDal.AddParameter("p_coll_chishuv_chodesh", ParameterType.ntOracleArray, _collChishuvChodesh, ParameterDir.pdInput, "COLL_CHISHUV_CHODESH");
+                if (!_collChishuvYomi.IsNull)
+                    oDal.AddParameter("p_coll_chishuv_yomi", ParameterType.ntOracleArray, _collChishuvYomi, ParameterDir.pdInput, "COLL_CHISHUV_YOMI");
+                if (!_collChishuvSidur.IsNull)
+                    oDal.AddParameter("p_coll_chishuv_sidur", ParameterType.ntOracleArray, _collChishuvSidur, ParameterDir.pdInput, "COLL_CHISHUV_SIDUR");
 
-                oDal.ExecuteSP(clDefinitions.cProInsChishuv);
+                if (!_collChishuvChodesh.IsNull)
+                    oDal.ExecuteSP(clDefinitions.cProInsChishuv);
                 //SaveChodesh();
 
                 //SaveYom();
