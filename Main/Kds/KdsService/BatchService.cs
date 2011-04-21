@@ -63,12 +63,12 @@ namespace KdsService
                                             new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch);
                 if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
                 {
-                    #region not parallel
-                    //oMainCalc.Ovdim.ForEach( CurrentOved =>
+                    //#region not parallel
+                    //oMainCalc.Ovdim.ForEach(CurrentOved =>
                     //                    {
                     //                        oMainCalc.CalcOved(CurrentOved);
                     //                    });
-                    #endregion
+                    //#endregion
                     #region parallel
                     Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
                                         {
@@ -80,6 +80,7 @@ namespace KdsService
             }
             catch (Exception ex)
             {
+                
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "MainCalc: " + ex.Message);

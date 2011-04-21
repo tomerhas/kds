@@ -114,6 +114,8 @@
             var today = new Date();
             var mis = document.getElementById("ctl00_KdsContent_P_MIS_RASHEMET").value;
             var Param100 = document.getElementById("ctl00_KdsContent_Param100").value;
+           //debugger;
+            today.setDate(1);
             today.setMonth(today.getMonth() - Param100);
             today.setHours(0);
             today.setMinutes(0);

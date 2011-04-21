@@ -40,7 +40,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1217"
+		VWDPort = "2313"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskManager\KdsTaskManager.csproj", "{438301FD-7CC1-40FB-A426-EBC716082965}"
@@ -50,10 +50,10 @@ Global
 		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfssrv01:8080/tfs/ksafimcollection
-		SccProjectUniqueName0 = KdsScheduler\\KdsScheduler.vbproj
-		SccProjectName0 = KdsScheduler
-		SccLocalPath0 = KdsScheduler
-		SccLocalPath1 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = KdsScheduler\\KdsScheduler.vbproj
+		SccProjectName1 = KdsScheduler
+		SccLocalPath1 = KdsScheduler
 		SccProjectUniqueName2 = KdsLibrary\\KdsLibrary.csproj
 		SccProjectName2 = KdsLibrary
 		SccLocalPath2 = KdsLibrary
