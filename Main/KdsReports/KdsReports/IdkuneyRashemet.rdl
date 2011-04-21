@@ -9,8 +9,8 @@
   <DataSets>
     <DataSet Name="DsIdkuneyRashemet">
       <Fields>
-        <Field Name="TAARICH_IDKUN_ACHARON">
-          <DataField>TAARICH_IDKUN_ACHARON</DataField>
+        <Field Name="TAARICH_IDKUN">
+          <DataField>TAARICH_IDKUN</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="MISPAR_ISHI">
@@ -19,7 +19,7 @@
         </Field>
         <Field Name="TAARICH">
           <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <Query>
@@ -201,6 +201,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -243,11 +244,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(instr(Fields!TAARICH_IDKUN_ACHARON.Value,"AM")&gt;0 or cint(Format(Fields!TAARICH_IDKUN_ACHARON.Value,"hh"))=12 ,
-  Format(Fields!TAARICH_IDKUN_ACHARON.Value,"dd/MM/yyyy hh:mm:ss"),
-  Format(Fields!TAARICH_IDKUN_ACHARON.Value,"dd/MM/yyyy") &amp; " " &amp; 
-  cint(Format(Fields!TAARICH_IDKUN_ACHARON.Value,"hh"))+12  &amp; ":" &amp; 
-  Format(Fields!TAARICH_IDKUN_ACHARON.Value,"mm:ss")
+                              <Value>=iif(instr(Fields!TAARICH_IDKUN.Value,"AM")&gt;0 or cint(Format(Fields!TAARICH_IDKUN.Value,"hh"))=12 ,
+  Format(Fields!TAARICH_IDKUN.Value,"dd/MM/yyyy hh:mm:ss"),
+  Format(Fields!TAARICH_IDKUN.Value,"dd/MM/yyyy") &amp; " " &amp; 
+  cint(Format(Fields!TAARICH_IDKUN.Value,"hh"))+12  &amp; ":" &amp; 
+  Format(Fields!TAARICH_IDKUN.Value,"mm:ss")
   )</Value>
                               <Style />
                             </TextRun>
