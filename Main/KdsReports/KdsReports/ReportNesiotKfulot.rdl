@@ -29,10 +29,6 @@
           <DataField>MISPAR_SIDUR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="NUM">
-          <DataField>NUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="TEUR_SNIF_AV">
           <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -43,6 +39,10 @@
         </Field>
         <Field Name="TEUR_YOM">
           <DataField>TEUR_YOM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SHAT_YEZIA_S">
@@ -110,19 +110,22 @@
               <Width>0.80829in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.52329in</Width>
+              <Width>0.42954in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.52255in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.60545in</Width>
+              <Width>0.83842in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.5117in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.38749in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65422in</Width>
+              <Width>0.5813in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -284,6 +287,45 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox78</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Style>Double</Style>
+                        </BottomBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>שם</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -598,6 +640,43 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="FULL_NAME">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!FULL_NAME.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>FULL_NAME</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <LeftBorder>
+                          <Style>Solid</Style>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Style>Solid</Style>
+                        </RightBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="MISPAR_ISHI">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -724,6 +803,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -746,7 +826,7 @@
         <Top>3.26286cm</Top>
         <Left>0.29044in</Left>
         <Height>1.53208cm</Height>
-        <Width>16.72591cm</Width>
+        <Width>18.19405cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -905,7 +985,7 @@
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>18.36633cm</Width>
+  <Width>18.98469cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
