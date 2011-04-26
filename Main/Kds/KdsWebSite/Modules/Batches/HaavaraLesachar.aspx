@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="HaavaraLesachar.aspx.cs" Inherits="Modules_Batches_HaavaraLesachar" %>
-<%--<%@ Register Namespace="Egged.WebCustomControls" Assembly="Egged.WebCustomControls" TagPrefix="wccEgged" %>--%>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
 

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TestApprovals.aspx.cs" Inherits="Modules_Approvals_Test" %>
-<%@ Register Namespace="Egged.WebCustomControls" Assembly="Egged.WebCustomControls" TagPrefix="wccEgged" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -45,18 +45,18 @@
                 <td>
                     <asp:TextBox ID="txtKodIshur" runat="server"></asp:TextBox>
                 </td>
-                <td>
+<%--                <td>
                     <wccEgged:wccCalendar runat="server" BasePath="../../EggedFramework" ID="calTaarich"></wccEgged:wccCalendar>
                 </td>
-                <td>
+--%>                <td>
                     <asp:TextBox ID="txtMisparSidur" runat="server"></asp:TextBox>
                 </td>
-                <td>
+<%--                <td>
                     <wccEgged:wccCalendar runat="server" ID="calShatHatchala" BasePath="../../EggedFramework"></wccEgged:wccCalendar>
                 </td>
-                <td>
+--%> <%--               <td>
                     <wccEgged:wccCalendar runat="server" ID="calShatYetzia" BasePath="../../EggedFramework"></wccEgged:wccCalendar>
-                </td>
+                </td>--%>
                 <td>
                     <asp:TextBox ID="txtMisparKnisa" runat="server"></asp:TextBox>
                 </td>

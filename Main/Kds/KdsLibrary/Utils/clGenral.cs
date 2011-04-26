@@ -1267,8 +1267,6 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                     return ((CheckBox)ctl).Checked;
                 case "System.Web.UI.WebControls.Label":
                     return ((Label)ctl).Text;
-                case "Egged.WebCustomControls.wccCalendar":
-                    return ((Egged.WebCustomControls.wccCalendar)ctl).Date;
                 case "KdsLibrary.Controls.KdsCalendar":
                     return ((KdsCalendar)ctl).Text.ToString();
                 case "System.Web.UI.WebControls.ListBox":

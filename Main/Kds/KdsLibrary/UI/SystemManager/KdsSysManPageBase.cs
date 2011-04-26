@@ -7,8 +7,8 @@ using System.Data;
 using System.Web.UI;
 using System.Globalization;
 using System.Web.UI.HtmlControls;
-using Egged.WebCustomControls;
 using System.Collections;
+using KdsLibrary.Controls;
 
 namespace KdsLibrary.UI.SystemManager
 {
@@ -660,8 +660,8 @@ namespace KdsLibrary.UI.SystemManager
                     return ((HiddenField)ctl).Value;
                 case "System.Web.UI.WebControls.Label":
                     return ((Label)ctl).Text;
-                case "Egged.WebCustomControls.wccCalendar":
-                    return ((Egged.WebCustomControls.wccCalendar)ctl).Date;
+                case "KdsLibrary.Controls.KdsCalendar":
+                    return ((KdsCalendar)ctl).Text.ToString();
                 case "System.Web.UI.WebControls.RadioButtonList":
                     return ((RadioButtonList)ctl).SelectedItem.Value;
                 default: return ((TextBox)ctl).Text;

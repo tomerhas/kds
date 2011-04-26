@@ -17,7 +17,7 @@ using KdsLibrary.Controls;
 using KdsLibrary.UI.SystemManager;
 using Microsoft.Reporting.WebForms;
 using KdsLibrary.DAL;
-using Egged.WebCustomControls;
+//using Egged.WebCustomControls;
 
 
 

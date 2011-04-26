@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Data;
 using System.Web.UI.WebControls;
 using KdsLibrary.Utils;
-using Egged.WebCustomControls;
+using KdsLibrary.Controls;
 using System.Web;
 
 namespace KdsLibrary.UI.SystemManager
@@ -173,15 +173,13 @@ namespace KdsLibrary.UI.SystemManager
                         break;
 
                     case KdsColumnType.Calendar:
-                        wccCalendar calendar = new wccCalendar();
+                        KdsCalendar calendar = new KdsCalendar();
                         calendar.Attributes.Add("dir", "rtl");
                         td.Attributes.Add("dir", "ltr");
                         td.Attributes.Add("align", "right");
                         calendar.ID = kdsColumn.Name;
                         calendar.Width = Unit.Pixel(CALENDAR_MAX_WIDTH);
-                        calendar.BasePath = "../EggedFrameWork";
-                        calendar.ScriptManagerObj = _scriptManager;
-                        calendar.Date = GetDefaultValue(kdsColumn);
+                        calendar.Text = GetDefaultValue(kdsColumn);
                         Fields.Add(calendar.ID, kdsColumn.Name);
                         td.Controls.Add(calendar);
                         calendar.DataBinding += new EventHandler(calendar_DataBinding);
@@ -405,12 +403,12 @@ namespace KdsLibrary.UI.SystemManager
 
         void calendar_DataBinding(object sender, EventArgs e)
         {
-            wccCalendar calendar = (wccCalendar)sender;
+            KdsCalendar calendar = (KdsCalendar)sender;
             DataRowView drv = null;
             KdsColumn _dc = _dataSource.Columns[Fields[calendar.ID].ToString()];
             drv = (DataRowView)((FormView)calendar.NamingContainer).DataItem;
             if (drv != null && drv[_dc.Name] != null && !String.IsNullOrEmpty(drv[_dc.Name].ToString()))
-                calendar.Date = ((DateTime)drv[_dc.Name]).ToString("dd/MM/yyyy");
+                calendar.Text = ((DateTime)drv[_dc.Name]).ToString("dd/MM/yyyy");
         }
 
 

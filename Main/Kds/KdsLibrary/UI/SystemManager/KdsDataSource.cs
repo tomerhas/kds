@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using KdsLibrary.Utils;
 using System.Data;
 using KdsLibrary.DAL;
+using KdsLibrary.Controls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -437,8 +438,8 @@ namespace KdsLibrary.UI.SystemManager
                     return ((HiddenField)ctl).Value;
                 case "System.Web.UI.WebControls.Label":
                     return ((Label)ctl).Text;
-                case "Egged.WebCustomControls.wccCalendar":
-                    return ((Egged.WebCustomControls.wccCalendar)ctl).Date;
+                case "KdsLibrary.Controls.KdsCalendar":
+                    return ((KdsCalendar)ctl).Text.ToString();
                 default: return null;
             }
 

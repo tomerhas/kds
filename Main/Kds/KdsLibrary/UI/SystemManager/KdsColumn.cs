@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 using KdsLibrary.Utils;
 using System.Web.UI.WebControls;
 using System.Data;
-using Egged.WebCustomControls;
 using KdsLibrary.DAL;
 using System.Web.UI;
 

@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Test.aspx.cs" Inherits="Modules_Test" AsyncTimeout=10000  %>
-<%@ Register Namespace="Egged.WebCustomControls" Assembly="Egged.WebCustomControls" TagPrefix="wccEgged" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1"%>
 
 <%@ Register TagPrefix="uc"   Src="~/Modules/UserControl/ucSidurim.ascx" TagName="ucSidurim"%>
@@ -53,7 +52,7 @@
             <tr>               
                <td>תאריך</td>
                 <td>
-                  <wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>                                                                      
+<%--                  <wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>                                                                      --%>
                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
                     <asp:ListBox Width="100%" Height="150px" ID="LstBxOfElement" runat="server"></asp:ListBox>
@@ -126,9 +125,9 @@
             <table>   
             <tr>
                <td dir="ltr" align="right" >                                            
-                    <wccEgged:wccCalendar runat="server" ID="clnDate" CssClass ="WorkCardTextBox" 
+<%--                    <wccEgged:wccCalendar runat="server" ID="clnDate" CssClass ="WorkCardTextBox" 
                         BasePath="../EggedFramework" AutoPostBack="false"   OnChangeScript=""
-                          ></wccEgged:wccCalendar>                                                                                        
+                          ></wccEgged:wccCalendar>--%>                                                                                        
                 </td>
                 <td>           
                     
