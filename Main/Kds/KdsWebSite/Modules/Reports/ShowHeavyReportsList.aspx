@@ -18,14 +18,14 @@
                      EmptyDataRowStyle-CssClass="GridHeader"
                      onrowdatabound="grdReports_RowDataBound" >
                     <Columns>
-                         <asp:BoundField DataField="BAKASHA_ID"    HeaderText="מספר בקשה"  ItemStyle-Width="50px" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" />
-                         <asp:BoundField DataField="TEUR"          HeaderText="תאור"       ItemStyle-Width="430px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
-                         <asp:BoundField DataField="ZMAN_HATCHALA" HeaderText="תחילת הפקה" ItemStyle-Width="110px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy HH:mm}" HtmlEncodeFormatString="true"/>
-                         <asp:BoundField DataField="ZMAN_Siyum"    HeaderText="סיום הפקה" ItemStyle-Width="110px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"   DataFormatString="{0:dd/MM/yyyy HH:mm}" HtmlEncodeFormatString="true"/>
+                         <asp:BoundField DataField="BAKASHA_ID"    HeaderText="מספר בקשה"  ItemStyle-Width="59px" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" />
+                         <asp:BoundField DataField="TEUR"          HeaderText="תאור"       ItemStyle-Width="440px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
+                         <asp:BoundField DataField="ZMAN_HATCHALA" HeaderText="תחילת הפקה" ItemStyle-Width="198px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy HH:mm}" HtmlEncodeFormatString="true"/>
+                         <asp:BoundField DataField="ZMAN_Siyum"    HeaderText="סיום הפקה" ItemStyle-Width="198px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"   DataFormatString="{0:dd/MM/yyyy HH:mm}" HtmlEncodeFormatString="true"/>
                          <asp:BoundField DataField="SHEM_TIKIYA"  ItemStyle-Width="0px" />
                          <asp:BoundField DataField="EXTENSION_TYPE"  ItemStyle-Width="0px"  />                     
                        
-                         <asp:TemplateField HeaderText="קובץ"  ItemStyle-Width="40px"  ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  >
+                         <asp:TemplateField HeaderText="קובץ"  ItemStyle-Width="50px"  ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  >
                              <ItemTemplate>
                                <asp:HyperLink  ID="imgButton" runat="server" NavigateUrl="#" ></asp:HyperLink>
                              </ItemTemplate>           
