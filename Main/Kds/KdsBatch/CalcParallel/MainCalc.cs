@@ -12,14 +12,14 @@ namespace KdsBatch
 {
     public class MainCalc
     {
-        #region Definitions
-        //public enum TypeCalc
-        //{ Batch = 1, OnLine = 2, Test = 3 }
+        //#region Definitions
+        ////public enum TypeCalc
+        ////{ Batch = 1, OnLine = 2, Test = 3 }
 
-        private COLL_CHISHUV_SIDUR _collChishuvSidur;
-        private COLL_CHISHUV_YOMI _collChishuvYomi;
-        private COLL_CHISHUV_CHODESH _collChishuvChodesh;
-        #endregion
+        //private COLL_CHISHUV_SIDUR _collChishuvSidur;
+        //private COLL_CHISHUV_YOMI _collChishuvYomi;
+        //private COLL_CHISHUV_CHODESH _collChishuvChodesh;
+        //#endregion
 
         clGeneral.TypeCalc _iTypeCalc;
         private long _iBakashaId;
@@ -112,22 +112,30 @@ namespace KdsBatch
         {
 
             CalcMonth oMonth;
+            COLL_CHISHUV_SIDUR _collChishuvSidur;
+            COLL_CHISHUV_YOMI _collChishuvYomi;
+            COLL_CHISHUV_CHODESH _collChishuvChodesh;
+       
             try
             {
                oOved.SetNetunimLeOved();
                 oMonth = new CalcMonth(oOved);
                 // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                 oMonth.CalcMonthOved();
-                DataSetTurnIntoUdt(oOved._dsChishuv);
+               // DataSetTurnIntoUdt(oOved._dsChishuv);
+              
                 //שמירת הנתונים רק אם התהליך התבצע ב-batch
                 if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
                 {
+                    _collChishuvChodesh = DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
+                    _collChishuvYomi = DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"]);
+                    _collChishuvSidur = DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"]);
                     if (_iTypeCalc == clGeneral.TypeCalc.Batch)
                     {
                         SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                     }
                     //שמירת נתוני החישוב לעובד
-                    SaveChishuv(_iBakashaId, oOved.Mispar_ishi);
+                    SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
                 }
             }
             catch (Exception ex)
@@ -142,13 +150,16 @@ namespace KdsBatch
             clUtils oUtils = new clUtils();
             Oved oOved;
             DateTime StartMonth = DateTime.Parse("01/" + dCalcMonth.Month + "/" + dCalcMonth.Year);
+            COLL_CHISHUV_YOMI _collChishuvYomi;
+            COLL_CHISHUV_CHODESH _collChishuvChodesh;
             try
             {
                 //InsertOvedToTable(iMisparIshi, StartMonth);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
                 CalcOved(oOved);
-
-                SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
+                _collChishuvChodesh = DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
+                _collChishuvYomi = DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"]);      
+                SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
                 SingleGeneralData.ResetObject();
                 //    clCalcData.ListParametersMonth = null;
@@ -182,36 +193,39 @@ namespace KdsBatch
             }
         }
 
-        public void MainCalcTest(DateTime dTarMe, int iMisparIshi)
-        {
-            long lBakashaId = 0;
-            DateTime dTarAd;
-            int iStatus = 0;
-            clUtils oUtils = new clUtils();
-            Oved oOved;
-            try
-            {
-                dTarAd = dTarMe.AddMonths(1).AddDays(-1);
+        //public void MainCalcTest(DateTime dTarMe, int iMisparIshi)
+        //{
+        //    long lBakashaId = 0;
+        //    DateTime dTarAd;
+        //    int iStatus = 0;
+        //    clUtils oUtils = new clUtils();
+        //    Oved oOved;
+        //    COLL_CHISHUV_SIDUR _collChishuvSidur;
+        //    COLL_CHISHUV_YOMI _collChishuvYomi;
+        //    COLL_CHISHUV_CHODESH _collChishuvChodesh;
+        //    try
+        //    {
+        //        dTarAd = dTarMe.AddMonths(1).AddDays(-1);
 
-                //   InsertOvedToTable(iMisparIshi, dTarMe);
-                oOved = new Oved(iMisparIshi, dTarMe, dTarMe, dTarAd, lBakashaId);
-                CalcOved(oOved);
+        //        //   InsertOvedToTable(iMisparIshi, dTarMe);
+        //        oOved = new Oved(iMisparIshi, dTarMe, dTarMe, dTarAd, lBakashaId);
+        //        CalcOved(oOved);
 
-                SaveSidurim(iMisparIshi, oOved.DtYemeyAvoda);
-                //שמירת נתוני החישוב לעובד
-                SaveChishuv(0, iMisparIshi);
-                iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-            }
-            catch (Exception ex)
-            {
-                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dTarMe, "MainCalcTest: " + ex.Message);
-            }
-            finally
-            {
-                clDefinitions.UpdateLogBakasha(lBakashaId, DateTime.Now, iStatus);
-            }
-        }
+        //        SaveSidurim(iMisparIshi, oOved.DtYemeyAvoda);
+        //        //שמירת נתוני החישוב לעובד
+        //        SaveChishuv(0, iMisparIshi);
+        //        iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+        //        clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dTarMe, "MainCalcTest: " + ex.Message);
+        //    }
+        //    finally
+        //    {
+        //        clDefinitions.UpdateLogBakasha(lBakashaId, DateTime.Now, iStatus);
+        //    }
+        //}
 
         private void SaveSidurim(int iMisparIshi, DataTable dtYemeyAvoda)
         {
@@ -241,7 +255,7 @@ namespace KdsBatch
             }
         }
 
-        private void SaveChishuv(long lbakasha, int imispar)
+        private void SaveChishuv(COLL_CHISHUV_CHODESH _collChishuvChodesh,COLL_CHISHUV_YOMI _collChishuvYomi,COLL_CHISHUV_SIDUR _collChishuvSidur)
         {
             clDal oDal = new clDal();
 
@@ -268,33 +282,104 @@ namespace KdsBatch
             }
         }
 
-        private void DataSetTurnIntoUdt(DataSet dsChishuv)
+        //private void DataSetTurnIntoUdt(DataSet dsChishuv)
+        //{
+        //    try
+        //    {
+        //        int I;
+        //        DataRow drChishuv;
+        //        OBJ_CHISHUV_CHODESH objChsishuvChodesh;
+        //        OBJ_CHISHUV_YOMI objChsishuvYomi;
+        //        OBJ_CHISHUV_SIDUR objChsishuvSidur;
+
+        //        _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+        //        for (I = 0; I <= dsChishuv.Tables["CHISHUV_CHODESH"].Rows.Count - 1; I++)
+        //        {
+        //            drChishuv = dsChishuv.Tables["CHISHUV_CHODESH"].Rows[I];
+        //            objChsishuvChodesh = new OBJ_CHISHUV_CHODESH();
+        //            objChsishuvChodesh.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
+        //            objChsishuvChodesh.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
+        //            objChsishuvChodesh.TAARICH = DateTime.Parse(drChishuv["TAARICH"].ToString());
+        //            objChsishuvChodesh.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
+        //            objChsishuvChodesh.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
+        //            _collChishuvChodesh.Add(objChsishuvChodesh);
+        //        }
+
+        //        _collChishuvYomi = new COLL_CHISHUV_YOMI();
+        //        for (I = 0; I <= dsChishuv.Tables["CHISHUV_YOM"].Rows.Count - 1; I++)
+        //        {
+        //            drChishuv = dsChishuv.Tables["CHISHUV_YOM"].Rows[I];
+        //            objChsishuvYomi = new OBJ_CHISHUV_YOMI();
+        //            objChsishuvYomi.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
+        //            objChsishuvYomi.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
+        //            objChsishuvYomi.TAARICH = DateTime.Parse(drChishuv["TAARICH"].ToString());
+        //            objChsishuvYomi.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
+        //            objChsishuvYomi.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
+        //            objChsishuvYomi.TKUFA = DateTime.Parse(drChishuv["TKUFA"].ToString());
+        //            _collChishuvYomi.Add(objChsishuvYomi);
+        //        }
+
+        //        _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+        //        for (I = 0; I <= dsChishuv.Tables["CHISHUV_SIDUR"].Rows.Count - 1; I++)
+        //        {
+        //            drChishuv = dsChishuv.Tables["CHISHUV_SIDUR"].Rows[I];
+        //            objChsishuvSidur = new OBJ_CHISHUV_SIDUR();
+        //            objChsishuvSidur.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
+        //            objChsishuvSidur.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
+        //            objChsishuvSidur.TAARICH = DateTime.Parse(drChishuv["TAARICH"].ToString());
+        //            objChsishuvSidur.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
+        //            objChsishuvSidur.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
+        //            objChsishuvSidur.MISPAR_SIDUR = int.Parse(drChishuv["MISPAR_SIDUR"].ToString());
+        //            objChsishuvSidur.SHAT_HATCHALA = DateTime.Parse(drChishuv["SHAT_HATCHALA"].ToString());
+        //            _collChishuvSidur.Add(objChsishuvSidur);
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw (ex);
+        //    }
+        //}
+
+
+        private COLL_CHISHUV_CHODESH DataSetTurnIntoUdtChodesh(DataTable dtChishuvChodesh)
         {
             try
             {
                 int I;
                 DataRow drChishuv;
                 OBJ_CHISHUV_CHODESH objChsishuvChodesh;
-                OBJ_CHISHUV_YOMI objChsishuvYomi;
-                OBJ_CHISHUV_SIDUR objChsishuvSidur;
-
-                _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
-                for (I = 0; I <= dsChishuv.Tables["CHISHUV_CHODESH"].Rows.Count - 1; I++)
+                COLL_CHISHUV_CHODESH collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+                for (I = 0; I <= dtChishuvChodesh.Rows.Count - 1; I++)
                 {
-                    drChishuv = dsChishuv.Tables["CHISHUV_CHODESH"].Rows[I];
+                    drChishuv = dtChishuvChodesh.Rows[I];
                     objChsishuvChodesh = new OBJ_CHISHUV_CHODESH();
                     objChsishuvChodesh.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
                     objChsishuvChodesh.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
                     objChsishuvChodesh.TAARICH = DateTime.Parse(drChishuv["TAARICH"].ToString());
                     objChsishuvChodesh.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
                     objChsishuvChodesh.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
-                    _collChishuvChodesh.Add(objChsishuvChodesh);
+                    collChishuvChodesh.Add(objChsishuvChodesh);
                 }
 
-                _collChishuvYomi = new COLL_CHISHUV_YOMI();
-                for (I = 0; I <= dsChishuv.Tables["CHISHUV_YOM"].Rows.Count - 1; I++)
+                return collChishuvChodesh;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        private COLL_CHISHUV_YOMI DataSetTurnIntoUdtYom(DataTable dtChishuvYom)
+        {
+            try
+            {
+                int I;
+                DataRow drChishuv;
+                OBJ_CHISHUV_YOMI objChsishuvYomi;
+                COLL_CHISHUV_YOMI collChishuvYomi = new COLL_CHISHUV_YOMI();
+                for (I = 0; I <= dtChishuvYom.Rows.Count - 1; I++)
                 {
-                    drChishuv = dsChishuv.Tables["CHISHUV_YOM"].Rows[I];
+                    drChishuv = dtChishuvYom.Rows[I];
                     objChsishuvYomi = new OBJ_CHISHUV_YOMI();
                     objChsishuvYomi.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
                     objChsishuvYomi.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
@@ -302,13 +387,27 @@ namespace KdsBatch
                     objChsishuvYomi.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
                     objChsishuvYomi.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
                     objChsishuvYomi.TKUFA = DateTime.Parse(drChishuv["TKUFA"].ToString());
-                    _collChishuvYomi.Add(objChsishuvYomi);
+                    collChishuvYomi.Add(objChsishuvYomi);
                 }
 
-                _collChishuvSidur = new COLL_CHISHUV_SIDUR();
-                for (I = 0; I <= dsChishuv.Tables["CHISHUV_SIDUR"].Rows.Count - 1; I++)
+                return collChishuvYomi;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        private COLL_CHISHUV_SIDUR DataSetTurnIntoUdtSidur(DataTable dtChishuvSidur)
+        {
+            try
+            {
+                int I;
+                DataRow drChishuv;
+                OBJ_CHISHUV_SIDUR objChsishuvSidur;
+                COLL_CHISHUV_SIDUR collChishuvSidur = new COLL_CHISHUV_SIDUR();
+                for (I = 0; I <= dtChishuvSidur.Rows.Count - 1; I++)
                 {
-                    drChishuv = dsChishuv.Tables["CHISHUV_SIDUR"].Rows[I];
+                    drChishuv = dtChishuvSidur.Rows[I];
                     objChsishuvSidur = new OBJ_CHISHUV_SIDUR();
                     objChsishuvSidur.BAKASHA_ID = long.Parse(drChishuv["BAKASHA_ID"].ToString());
                     objChsishuvSidur.MISPAR_ISHI = int.Parse(drChishuv["MISPAR_ISHI"].ToString());
@@ -317,17 +416,17 @@ namespace KdsBatch
                     objChsishuvSidur.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
                     objChsishuvSidur.MISPAR_SIDUR = int.Parse(drChishuv["MISPAR_SIDUR"].ToString());
                     objChsishuvSidur.SHAT_HATCHALA = DateTime.Parse(drChishuv["SHAT_HATCHALA"].ToString());
-                    _collChishuvSidur.Add(objChsishuvSidur);
-
+                    collChishuvSidur.Add(objChsishuvSidur);
                 }
+
+                return collChishuvSidur;
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-
-        private void SaveChishuvTemp(int iMisparIshi, DateTime dCalcMonth, int iTzuga, ref DataTable dtHeadrut, ref DataTable dtRechivimChodshiym, ref  DataTable dtRikuz1To10, ref DataTable dtRikuz11To20, ref  DataTable dtRikuz21To31, ref DataTable dtAllRikuz)
+        private void SaveChishuvTemp(int iMisparIshi, DateTime dCalcMonth, int iTzuga,COLL_CHISHUV_CHODESH _collChishuvChodesh,COLL_CHISHUV_YOMI _collChishuvYomi,ref DataTable dtHeadrut, ref DataTable dtRechivimChodshiym, ref  DataTable dtRikuz1To10, ref DataTable dtRikuz11To20, ref  DataTable dtRikuz21To31, ref DataTable dtAllRikuz)
         {
             clTxDal oDal = new clTxDal();
             DataTable dt = new DataTable();
@@ -378,68 +477,68 @@ namespace KdsBatch
         }
 
 
-        public void PremiaCalc()
-        {
-            clBatch obatch = new clBatch();
-            clCalcDal oCalcDal = new clCalcDal();
-            List<Oved> ListOvdim = new List<Oved>();
-            CalcMonth oMonth;
-            long lBakashaId = 0;
-            int numFailed = 0;
-            int numSucceed = 0;
-            int seq = 0;
+        //public void PremiaCalc()
+        //{
+        //    clBatch obatch = new clBatch();
+        //    clCalcDal oCalcDal = new clCalcDal();
+        //    List<Oved> ListOvdim = new List<Oved>();
+        //    CalcMonth oMonth;
+        //    long lBakashaId = 0;
+        //    int numFailed = 0;
+        //    int numSucceed = 0;
+        //    int seq = 0;
 
-            try
-            {
+        //    try
+        //    {
 
-                seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
-                lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
-                SetListOvdimLechishuvPremia(lBakashaId);
-                clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
+        //        seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
+        //        lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
+        //        SetListOvdimLechishuvPremia(lBakashaId);
+        //        clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
 
-                if (_Ovdim != null)
-                {
-                    foreach (Oved oOved in _Ovdim)
-                    {
-                        try
-                        {
-                            oMonth = new CalcMonth(oOved);
-                            oMonth.CalcMonthOved();
+        //        if (_Ovdim != null)
+        //        {
+        //            foreach (Oved oOved in _Ovdim)
+        //            {
+        //                try
+        //                {
+        //                    oMonth = new CalcMonth(oOved);
+        //                    oMonth.CalcMonthOved();
 
-                            SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
-                            //שמירת נתוני החישוב לעובד
-                            SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
+        //                    SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+        //                    //שמירת נתוני החישוב לעובד
+        //                    SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
 
-                            oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
-                            numSucceed += 1;
-                        }
-                        catch (Exception ex)
-                        {
-                            numFailed += 1;
-                            clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
-                                (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-                                oOved.Month, ex.Message);
-                            clLogBakashot.InsertErrorToLog();
-                            status = clGeneral.enBatchExecutionStatus.PartialyFinished;
-                        }
-                    }
-                }
-                else status = clGeneral.enBatchExecutionStatus.Failed;
-                KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
-                obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.SetError(lBakashaId, null, "E",
-                            (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-                            DateTime.Now, ex.Message);
-                clLogBakashot.InsertErrorToLog();
-            }
-            finally
-            {
-                SingleGeneralData.ResetObject();
-            }
-        }
+        //                    oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
+        //                    numSucceed += 1;
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    numFailed += 1;
+        //                    clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
+        //                        (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+        //                        oOved.Month, ex.Message);
+        //                    clLogBakashot.InsertErrorToLog();
+        //                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;
+        //                }
+        //            }
+        //        }
+        //        else status = clGeneral.enBatchExecutionStatus.Failed;
+        //        KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+        //        obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clLogBakashot.SetError(lBakashaId, null, "E",
+        //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+        //                    DateTime.Now, ex.Message);
+        //        clLogBakashot.InsertErrorToLog();
+        //    }
+        //    finally
+        //    {
+        //        SingleGeneralData.ResetObject();
+        //    }
+        //}
 
         private DateTime GetEndOfMonth(DateTime date)
         {
