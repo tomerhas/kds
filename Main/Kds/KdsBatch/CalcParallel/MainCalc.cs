@@ -77,6 +77,7 @@ namespace KdsBatch
                     _Ovdim.Add(ItemOved);
 
                 }
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: Mispar Ovdim LeChishuv:  " + dtOvdim.Rows.Count);
             }
             catch (Exception ex)
             {
