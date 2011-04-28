@@ -298,7 +298,7 @@ namespace KdsLibrary.DAL
             try
             {
                 CreateCommand(sSPName, CommandType.StoredProcedure);
-                TxCmd.CommandTimeout = 500;
+                TxCmd.CommandTimeout = 0;
                 adapter.SelectCommand = TxCmd;
                 TablesNamesSplit = TablesNames.Split(',');
                 for (int i = 0; i < TxCmd.Parameters.Count; i++)

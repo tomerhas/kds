@@ -222,6 +222,11 @@ namespace KdsBatch
                         itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
                         PirteyOved.Add(itemPirteyOved);
                     }
+                    else
+                    {
+                        itemPirteyOved = new clPirteyOved(dTarMe);
+                        PirteyOved.Add(itemPirteyOved);
+                    }
                     dTarMe = dTarMe.AddDays(1);
                 }
             }

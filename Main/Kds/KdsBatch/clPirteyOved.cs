@@ -29,6 +29,11 @@ namespace KdsBatch
          private DataTable dtOvedCardDetails;
          public DateTime _Taarich;
 
+         public clPirteyOved() { }
+         public clPirteyOved(DateTime dDate) 
+         {
+             _Taarich = dDate;
+         }
          public clPirteyOved(int iMisparIshi, DateTime dDate)
         {
             dtOvedCardDetails = GetPirteyOved(iMisparIshi, dDate);
