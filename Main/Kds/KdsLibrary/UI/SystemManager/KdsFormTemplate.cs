@@ -180,11 +180,11 @@ namespace KdsLibrary.UI.SystemManager
                         calendar.ID = kdsColumn.Name;
                         calendar.Width = Unit.Pixel(CALENDAR_MAX_WIDTH);
                         calendar.Text = GetDefaultValue(kdsColumn);
-                        Fields.Add(calendar.ID, kdsColumn.Name);
+                        Fields.Add(calendar.CalendarId, kdsColumn.Name);
                         td.Controls.Add(calendar);
                         calendar.DataBinding += new EventHandler(calendar_DataBinding);
                         td.Controls.Add(calendar);
-                        AddValidators(calendar, kdsColumn, td);
+                        //KdsCalendar.AddValidators(calendar, kdsColumn, td);
                         break;
 
                     case KdsColumnType.DropDown:
@@ -372,7 +372,7 @@ namespace KdsLibrary.UI.SystemManager
                     case "System.DateTime":
                         comVal = new CompareValidator();
                         comVal.Type = ValidationDataType.Date;
-                        comVal.ControlToValidate = ctl.ID;
+                        comVal.ControlToValidate = ((KdsCalendar)ctl).CalendarId;
                         comVal.Display = ValidatorDisplay.Dynamic;
                         comVal.Operator = ValidationCompareOperator.DataTypeCheck;
                         comVal.Text = _resources.TextResources["DateTimeMessage"].Value;

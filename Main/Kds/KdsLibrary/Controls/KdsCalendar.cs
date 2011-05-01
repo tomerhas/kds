@@ -103,12 +103,19 @@ namespace KdsLibrary.Controls
             set { _calendar.Width = value; }
             get { return _calendar.Width; }
         }
+        public string CalendarId
+        {
+            get
+            {
+                return "objCal_" + this.ID;
+            }
+        }
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
             _calendar.ID = this.ID;
-            this.ID = "objCal_" + this.ID;
+            this.ID = CalendarId;
             if (_calendar.Width.IsEmpty)
             {
                 _calendar.Width = Unit.Parse("90px");
