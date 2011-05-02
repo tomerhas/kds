@@ -490,6 +490,7 @@ namespace KdsBatch
             DtYemeyAvoda.Dispose();
             DtPeiluyotFromTnua.Dispose();
             DtPeiluyotOved.Dispose();
+            DtMutamut.Dispose();
             DtSugeySidurRechiv.Dispose();
             DtSidurimMeyuchRechiv.Dispose();
             dtPremyotYadaniyot.Dispose();
