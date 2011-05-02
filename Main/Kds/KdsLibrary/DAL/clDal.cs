@@ -35,8 +35,9 @@ namespace KdsLibrary.DAL
 
     public class clDal
     {
-        
-        static  string strConnectionString =  (string) ConfigurationSettings.AppSettings["KDS_CONNECTION"];
+
+        static string strConnectionString = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"] +
+                                                ";Max Pool Size=250;Connection Lifetime=120;Connection Timeout=60;";
 
     private OracleConnection conn;// = new OracleConnection(strConnectionString); 
     private OracleCommand cmd = new OracleCommand();
