@@ -10,7 +10,7 @@ using KdsLibrary;
 
 namespace KdsBatch
 {
-    public class Oved
+    public class Oved: IDisposable
     {
         public int Mispar_ishi;
         public DateTime Month;
@@ -474,5 +474,32 @@ namespace KdsBatch
 
         #endregion
 
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            DtYamimMeyuchadim.Dispose();
+            DtSugeyYamimMeyuchadim.Dispose();
+            DtMichsaYomit.Dispose();
+            DtBusNumbers.Dispose();
+            DtMeafyeneySugSidur.Dispose();
+            DtSugeySidur.Dispose();
+            DtSugeyYechida.Dispose();
+            DtYemeyAvoda.Dispose();
+            DtPeiluyotFromTnua.Dispose();
+            DtPeiluyotOved.Dispose();
+            DtSugeySidurRechiv.Dispose();
+            DtSidurimMeyuchRechiv.Dispose();
+            dtPremyotYadaniyot.Dispose();
+            dtPremyot.Dispose();
+            _dsChishuv.Dispose();
+            _DtMonth.Dispose();
+            _DtDay.Dispose();
+            _DtSidur.Dispose();
+            _DtPeilut.Dispose();
+  }
+
+        #endregion
     }
 }
