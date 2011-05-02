@@ -118,14 +118,14 @@ namespace KdsBatch
             }
         }
 
-        public bool CheckIsurShaotNosafot(clPirteyOved objPirteyOved)
+        public bool CheckIsurShaotNosafot(clPirteyOved objPirteyOved,DataTable dtMutamut)
         {
             clUtils objUtils = new clUtils();
-            DataTable dtMutamut;
+           // DataTable dtMutamut;
             try{
                 if (objPirteyOved.iMutamut > 0)
                 {
-                    dtMutamut = objUtils.GetCtbMutamut();
+                   // dtMutamut = objUtils.GetCtbMutamut();
                     if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["Isur_Shaot_Nosafot"].ToString() == "1")
                     { return true; }
                     else { return false; }
@@ -138,16 +138,16 @@ namespace KdsBatch
             }
         }
 
-        public bool CheckMutamut(clPirteyOved objPirteyOved)
+        public bool CheckMutamut(clPirteyOved objPirteyOved, DataTable dtMutamut)
         {
             
             clUtils objUtils = new clUtils();
-            DataTable dtMutamut;
+          //  DataTable dtMutamut;
             try
             {
                 if (objPirteyOved.iMutamut > 0)
                 {
-                    dtMutamut = objUtils.GetCtbMutamut();
+                   // dtMutamut = objUtils.GetCtbMutamut();
                     if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["MEZAKE_GMUL"].ToString() == "1")
                     { return true; }
                     else { return false; }

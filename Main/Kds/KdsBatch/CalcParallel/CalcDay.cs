@@ -1051,7 +1051,7 @@ namespace KdsBatch
             fSumDakotRechiv21 = 0;
             try
             {
-                if (!oCalcBL.CheckIsurShaotNosafot(objOved.objPirteyOved))
+                if (!oCalcBL.CheckIsurShaotNosafot(objOved.objPirteyOved, objOved.DtMutamut))
                 {
                     if (objOved.objMeafyeneyOved.iMeafyen2 == 0)
                     {
@@ -1218,7 +1218,7 @@ namespace KdsBatch
                     }
                     else
                     {
-                        if (oCalcBL.CheckMutamut(objOved.objPirteyOved))
+                        if (oCalcBL.CheckMutamut(objOved.objPirteyOved, objOved.DtMutamut))
                         {
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                         }

@@ -31,6 +31,7 @@ namespace KdsBatch
         public DataTable DtYemeyAvoda { set; get; }
         public DataTable DtPeiluyotFromTnua { set; get; }
         public DataTable DtPeiluyotOved { set; get; }
+        public DataTable DtMutamut { set; get; }
         public DataTable DtSugeySidurRechiv { set; get; }
         public DataTable DtSidurimMeyuchRechiv { set; get; }
         public List<clMeafyenyOved>  MeafyeneyOved { get; set; }
@@ -87,7 +88,7 @@ namespace KdsBatch
                 DtBusNumbers = oGeneralData._dtBusNumbersAll;
                 DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
                 DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
-             
+                DtMutamut = oGeneralData._dtMutamutAll;
 
                 InitPremyotYadaniyot();
                 InitPremyot();

@@ -70,6 +70,7 @@ namespace KdsBatch
         public DataTable _dtYemeyAvodaAll { get; set; }
         public DataTable _dtPeiluyotFromTnuaAll { get; set; }
         public DataTable _dtPirteyOvdimAll { get; set; }
+        public DataTable _dtMutamutAll { get; set; }
         public DataTable _dtMeafyenyOvedAll { get; set; }
         public DataTable _dtSugeyYechidaAll { get; set; }
         public DataTable _dtPeiluyotOvdimAll;
@@ -120,6 +121,7 @@ namespace KdsBatch
                     _dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
                 else _dtPeiluyotFromTnuaAll = null;
                 _dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
+                _dtMutamutAll = dsNetuneyChishuv.Tables["Ctb_Mutamut"]; 
                 _dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
                 _dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
                 _dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
