@@ -143,6 +143,7 @@ namespace KdsBatch
             {
 
                 clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc: " + ex.Message);
+                oOved = null;
             }
         }
 
