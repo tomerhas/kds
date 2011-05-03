@@ -36,8 +36,7 @@ namespace KdsLibrary.DAL
     public class clDal
     {
 
-        static string strConnectionString = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"] +
-                                                ";pooling = false";
+        static string strConnectionString = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"];
 
     private OracleConnection conn;// = new OracleConnection(strConnectionString); 
     private OracleCommand cmd = new OracleCommand();
