@@ -477,7 +477,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             CreateSidurHeader();
             //נבנה את הטבלה שתכיל את הנתוני הסידור העדכניים
             if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
+            {
                 BuildUpdatedSidurimColumns(ref dtUpdatedSidurim);
+                hidScrollPos.Value = "0"; //set scroll to top for new card
+            }
             if ((OrderedDictionary)Session["Sidurim"]!= null)
             {
                 htFullEmployeeDetails = (OrderedDictionary)Session["Sidurim"];

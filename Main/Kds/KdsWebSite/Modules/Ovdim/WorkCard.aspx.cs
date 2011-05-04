@@ -2038,7 +2038,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        // OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
         if (bInpuDataResult)
         {
-           
+             
 //            hidExecInputChg.Value = "0";
             if (hidSave.Value.Equals("1"))
             {
