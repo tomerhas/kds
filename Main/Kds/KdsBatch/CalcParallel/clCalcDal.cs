@@ -8,6 +8,11 @@ using System.Configuration;
 using System.Web;
 using System.Web.UI.WebControls;
 
+
+using KdsLibrary.DAL;
+using KdsLibrary.UDT;
+using KdsLibrary.BL;
+using KdsLibrary;
 namespace KdsBatch
 {
     public class clCalcDal
@@ -498,8 +503,11 @@ namespace KdsBatch
 
                 //dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 //dal.ExecuteSP(cGetKatalogKavim, ref dt);
+                clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before ExecuteSP");
                 dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
+                clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After ExecuteSP");
                 dal.TxCommit();
+                clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After Commit");
                 return ds;
             }
             catch (Exception ex)

@@ -94,7 +94,9 @@ namespace KdsBatch
                     _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
                 }
             }
+            clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before InitGeneralData");
             InitGeneralData();
+            clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After InitGeneralData");
         }
         private void InitGeneralData()
         {
