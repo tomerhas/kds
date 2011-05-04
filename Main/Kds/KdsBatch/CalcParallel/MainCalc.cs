@@ -64,9 +64,11 @@ namespace KdsBatch
             try
             {
                 oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd, sMaamad, bRitzaGorefet, 0);
+               
                 /**/
                 // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
                 dtOvdim = oGeneralData._dtOvdimLechishuv;
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: After storeProcidure Before inilize Ovdim. Mispar Ovdim:" + dtOvdim.Rows.Count);
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
 
@@ -77,7 +79,7 @@ namespace KdsBatch
                     _Ovdim.Add(ItemOved);
 
                 }
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: Mispar Ovdim LeChishuv:  " + dtOvdim.Rows.Count);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc:After inilize Ovdim. Mispar Ovdim LeChishuv:  " + dtOvdim.Rows.Count);
             }
             catch (Exception ex)
             {
