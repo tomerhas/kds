@@ -1947,11 +1947,11 @@ Public Class ClKds
 
             Select Case Status
                 Case "6"
-                    Throw New Exception("the procedure PKG_sdrn.pro_GetStatusSdrn was aborted")
+                    Throw New Exception("Status of Sadran : the procedure PKG_sdrn.pro_GetStatusSdrn was aborted")
                 Case "7"
-                    Throw New Exception("the record exists but there was an error while replicating")
+                    Throw New Exception("Status of Sadran : the record exists but there was an error while replicating")
                 Case "8"
-                    Throw New Exception("the record does not exist")
+                    Throw New Exception("Status of Sadran : the record does not exist")
             End Select
         Catch ex As Exception
             Throw ex
