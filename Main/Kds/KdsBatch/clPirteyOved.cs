@@ -47,17 +47,22 @@ namespace KdsBatch
          public clPirteyOved(int iMisparIshi, DateTime dDate,string type)
          {
               DataRow[] rows;
-             try{
-                 rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
-                 if (rows.Length > 0)
-                 {
-                     SetMeafyneyOved(rows[0]);
-                 }
-             }
-             catch (Exception ex)
-            {
-              throw ex;
-            }
+              try
+              {
+                  rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                  if (rows.Length > 0)
+                  {
+                      SetMeafyneyOved(rows[0]);
+                  }
+              }
+              catch (Exception ex)
+              {
+                  throw ex;
+              }
+              finally
+              {
+                  dtOvedCardDetails.Dispose();
+              }
          }
 
          public clPirteyOved(DataRow dr, DateTime dTaarich)
@@ -75,6 +80,10 @@ namespace KdsBatch
              catch (Exception ex)
              {
                  throw ex;
+             }
+             finally
+             {
+                 dtOvedCardDetails.Dispose();
              }
          }
         private void SetMeafyneyOved(DataRow drPratim)

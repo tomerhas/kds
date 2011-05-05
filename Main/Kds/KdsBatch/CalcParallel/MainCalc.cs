@@ -166,8 +166,8 @@ namespace KdsBatch
                 _collChishuvYomi = DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"]);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
+                oOved.Dispose();
                 SingleGeneralData.ResetObject();
-                //    clCalcData.ListParametersMonth = null;
             }
             catch (Exception ex)
             {
