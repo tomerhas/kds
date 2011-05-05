@@ -786,7 +786,22 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            string sCacheKey = sFieldName + iShgiotLeoved;
+            try
+            {
+                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+
+            if (ds == null)
+            {
+                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            }
+            
             
             //רמת פעילות
             foreach (DataRow dr in ds.Tables[0].Rows)
@@ -835,7 +850,21 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            string sCacheKey = sFieldName + iShgiotLeoved;
+            try
+            {
+                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+
+            if (ds == null)
+            {
+                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            }
 
 
             foreach (DataRow dr in ds.Tables[0].Rows)
@@ -857,7 +886,21 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            string sCacheKey = sFieldName + iShgiotLeoved;
+            try
+            {
+                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+
+            if (ds == null)
+            {
+                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            }
 
 
             foreach (DataRow dr in ds.Tables[0].Rows)

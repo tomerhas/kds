@@ -797,7 +797,8 @@ namespace KdsBatch
         bSidurRagilExists = false;
         if (!bSidurMyuhad)
         {
-            dsSidurim = GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
+            dsSidurim = 
+                GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
             if (iResult == 0)
             {
                 //if (dsSidurim.Tables[0].Rows.Count > 0)
