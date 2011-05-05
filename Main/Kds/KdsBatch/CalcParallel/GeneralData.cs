@@ -9,7 +9,7 @@ using KdsLibrary.BL;
 using KdsLibrary;
 namespace KdsBatch
 {
-    public class SingleGeneralData
+    public class SingleGeneralData  
     {
         static bool _IsCreated = false;
         static GeneralData Instance;
@@ -43,10 +43,32 @@ namespace KdsBatch
         {
             _IsCreated = false;
             Instance = null;
+
+            Instance._dtYamimMeyuchadim.Dispose();
+            Instance. _dtSugeyYamimMeyuchadim.Dispose();
+            Instance._dtParameters.Dispose();
+            Instance._dtOvdimLechishuv.Dispose();
+            Instance._dtMichsaYomitAll.Dispose();
+            Instance._dtMeafyeneySugSidurAll.Dispose();
+            Instance._dtSidurimMeyuchRechivAll.Dispose();
+            Instance._dtSugeySidurRechivAll.Dispose();
+            Instance._dtSugeySidurAll.Dispose();
+            Instance._dtPremyotAll.Dispose();
+            Instance._dtPremyotYadaniyotAll.Dispose();
+            Instance._dtBusNumbersAll.Dispose();
+            Instance._dtYemeyAvodaAll.Dispose();
+            Instance._dtPeiluyotFromTnuaAll.Dispose();
+            Instance._dtPirteyOvdimAll.Dispose();
+            Instance._dtMutamutAll.Dispose();
+            Instance._dtMeafyenyOvedAll.Dispose();
+            Instance._dtSugeyYechidaAll.Dispose();
+            Instance._dtPeiluyotOvdimAll.Dispose();
         }
+
+
     }
-    
-    public class GeneralData
+
+    public class GeneralData 
     {
         private clParameters objParameters;
         private DateTime _TarMe,_TarAd;
@@ -73,7 +95,7 @@ namespace KdsBatch
         public DataTable _dtMutamutAll { get; set; }
         public DataTable _dtMeafyenyOvedAll { get; set; }
         public DataTable _dtSugeyYechidaAll { get; set; }
-        public DataTable _dtPeiluyotOvdimAll;
+        public DataTable _dtPeiluyotOvdimAll { get; set; }
 
         public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {

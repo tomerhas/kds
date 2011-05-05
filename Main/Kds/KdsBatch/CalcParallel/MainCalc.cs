@@ -140,6 +140,7 @@ namespace KdsBatch
                     //שמירת נתוני החישוב לעובד
                     SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
                 }
+                oOved.Dispose();
             }
             catch (Exception ex)
             {
