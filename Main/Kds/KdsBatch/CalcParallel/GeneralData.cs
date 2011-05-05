@@ -45,7 +45,7 @@ namespace KdsBatch
             Instance = null;
 
             Instance._dtYamimMeyuchadim.Dispose();
-            Instance. _dtSugeyYamimMeyuchadim.Dispose();
+            Instance._dtSugeyYamimMeyuchadim.Dispose();
             Instance._dtParameters.Dispose();
             Instance._dtOvdimLechishuv.Dispose();
             Instance._dtMichsaYomitAll.Dispose();
