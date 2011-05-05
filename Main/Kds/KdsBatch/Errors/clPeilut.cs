@@ -217,9 +217,26 @@ namespace KdsBatch
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();
+            string sCacheKey = "ElementsTable";
+           
             try
             {
+                dtElementim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+            }
+            catch (Exception ex)
+            {
+                dtElementim = null;
+            }
+
+            if (dtElementim == null)
+            {
                 dtElementim = oUtils.GetCtbElementim();
+                HttpRuntime.Cache.Insert(sCacheKey, dtElementim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            }
+
+            try
+            {
+               
 
                 lMakatNesia = oObjPeilutOvdimIns.MAKAT_NESIA;
                 lOldMakatNesia = lMakatNesia;
