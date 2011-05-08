@@ -59,31 +59,19 @@ namespace KdsBatch
               {
                   throw ex;
               }
-              finally
-              {
-                  dtOvedCardDetails.Dispose();
-              }
          }
 
          public clPirteyOved(DataRow dr, DateTime dTaarich)
          {
-            // DataRow[] rows;
              try
              {
                  _Taarich = dTaarich;
-                 //rows = clCalcData.DtPirteyOvedForMonth.Select("Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
-                 //if (rows.Length > 0)
-                 //{
-                     SetMeafyneyOved(dr);
-                 //}
+               
+                 SetMeafyneyOved(dr);
              }
              catch (Exception ex)
              {
                  throw ex;
-             }
-             finally
-             {
-                 dtOvedCardDetails.Dispose();
              }
          }
         private void SetMeafyneyOved(DataRow drPratim)

@@ -10,7 +10,7 @@ using KdsLibrary;
 
 namespace KdsBatch
 {
-    public class Oved: IDisposable
+    public class Oved :IDisposable
     {
         public int Mispar_ishi;
         public DateTime Month;
@@ -78,17 +78,18 @@ namespace KdsBatch
             try
             {
                 oGeneralData = SingleGeneralData.GetInstance();//tarMe, tarAd, "", false, mis_ishi);
-          
-                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
-                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
+
+                DtYamimMeyuchadim = new DataTable();
+                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;//.Copy();
+                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;//.Copy();
                 Parameters = oGeneralData.ListParameters;
-                DtMichsaYomit = oGeneralData._dtMichsaYomitAll;
-                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;
-                DtSugeySidur = oGeneralData._dtSugeySidurAll;
-                DtBusNumbers = oGeneralData._dtBusNumbersAll;
-                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
-                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
-                DtMutamut = oGeneralData._dtMutamutAll;
+                DtMichsaYomit = oGeneralData._dtMichsaYomitAll;//.Copy();
+                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;//.Copy();
+                DtSugeySidur = oGeneralData._dtSugeySidurAll;//.Copy();
+                DtBusNumbers = oGeneralData._dtBusNumbersAll;//.Copy();
+                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;//.Copy();
+                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;//.Copy();
+                DtMutamut = oGeneralData._dtMutamutAll;//.Copy();
 
                 InitPremyotYadaniyot();
                 InitPremyot();
@@ -478,30 +479,53 @@ namespace KdsBatch
 
         #region IDisposable Members
 
-        public void Dispose()
-        {
-            DtYamimMeyuchadim.Dispose();
-            DtSugeyYamimMeyuchadim.Dispose();
-            DtMichsaYomit.Dispose();
-            DtBusNumbers.Dispose();
-            DtMeafyeneySugSidur.Dispose();
-            DtSugeySidur.Dispose();
-            DtSugeyYechida.Dispose();
-            DtYemeyAvoda.Dispose();
-            DtPeiluyotFromTnua.Dispose();
-            DtPeiluyotOved.Dispose();
-            DtMutamut.Dispose();
-            DtSugeySidurRechiv.Dispose();
-            DtSidurimMeyuchRechiv.Dispose();
-            dtPremyotYadaniyot.Dispose();
-            dtPremyot.Dispose();
-            _dsChishuv.Dispose();
-            _DtMonth.Dispose();
-            _DtDay.Dispose();
-            _DtSidur.Dispose();
-            _DtPeilut.Dispose();
-  }
+       
 
         #endregion
+
+
+        public void Dispose()
+        {
+            if (DtYamimMeyuchadim != null)
+                DtYamimMeyuchadim.Dispose();
+            if (DtSugeyYamimMeyuchadim != null)
+                DtSugeyYamimMeyuchadim.Dispose();
+            if (DtMichsaYomit != null)
+                DtMichsaYomit.Dispose();
+            if (DtBusNumbers != null)
+                DtBusNumbers.Dispose();
+            if (DtMeafyeneySugSidur != null)
+                DtMeafyeneySugSidur.Dispose();
+            if (DtSugeySidur != null)
+                DtSugeySidur.Dispose();
+            if (DtSugeyYechida != null)
+                DtSugeyYechida.Dispose();
+            if (DtYemeyAvoda != null)
+                DtYemeyAvoda.Dispose();
+            if (DtPeiluyotFromTnua != null)
+                DtPeiluyotFromTnua.Dispose();
+            if (DtPeiluyotOved != null)
+                DtPeiluyotOved.Dispose();
+            if (DtMutamut != null)
+                DtMutamut.Dispose();
+            if (DtSugeySidurRechiv != null)
+                DtSugeySidurRechiv.Dispose();
+            if (DtSidurimMeyuchRechiv != null)
+                DtSidurimMeyuchRechiv.Dispose();
+            if (dtPremyotYadaniyot != null)
+                dtPremyotYadaniyot.Dispose();
+            if (dtPremyot != null)
+                dtPremyot.Dispose();
+            if (_dsChishuv != null)
+                _dsChishuv.Dispose();
+              if (_DtMonth != null)
+                 _DtMonth.Dispose();
+             if (_DtDay != null)
+                 _DtDay.Dispose();
+             if (_DtPeilut != null)
+                 _DtPeilut.Dispose();
+             if (_DtPeilut != null)
+                 _DtPeilut.Dispose();
+        }
     }
 }
