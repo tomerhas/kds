@@ -786,23 +786,23 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            string sCacheKey = sFieldName + iShgiotLeoved;
-            try
-            {
-                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
-            }
-            catch (Exception ex)
-            {
-                ds = null;
-            }
+            //string sCacheKey = sFieldName + iShgiotLeoved;
+            //try
+            //{
+            //    ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ds = null;
+            //}
 
-            if (ds == null)
-            {
-                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
-                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
-            }
-            
-            
+            //if (ds == null)
+            //{
+            //    ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            //    HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            //}
+
+            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
             //רמת פעילות
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
@@ -850,23 +850,23 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            string sCacheKey = sFieldName + iShgiotLeoved;
-            try
-            {
-                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
-            }
-            catch (Exception ex)
-            {
-                ds = null;
-            }
+            //string sCacheKey = sFieldName + iShgiotLeoved;
+            //try
+            //{
+            //    ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ds = null;
+            //}
 
-            if (ds == null)
-            {
-                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
-                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
-            }
+            //if (ds == null)
+            //{
+            //    ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            //    HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            //}
 
-
+            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
@@ -886,23 +886,23 @@ namespace KdsBatch
             DataSet ds;
             int iErrorNum;
             int iShgiotLeoved = bProfileRashemet ? 0 : 1; //אם םרופיל של רשמת/רשמת על/מנהל מערכת- לא נסנן שגיאות לפי שדה 'שגיאות לעובד' אחרת נראה שגיאות לעובד בלבד
-            string sCacheKey = sFieldName + iShgiotLeoved;
-            try
-            {
-                ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
-            }
-            catch (Exception ex)
-            {
-                ds = null;
-            }
+            //string sCacheKey = sFieldName + iShgiotLeoved;
+            //try
+            //{
+            //    ds = (DataSet)HttpRuntime.Cache.Get(sCacheKey);
+            //}
+            //catch (Exception ex)
+            //{
+            //    ds = null;
+            //}
 
-            if (ds == null)
-            {
-                ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
-                HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
-            }
+            //if (ds == null)
+            //{
+            //    ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
+            //    HttpRuntime.Cache.Insert(sCacheKey, ds, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+            //}
 
-
+            ds = GetErrorForFieldFromDB(sFieldName, iShgiotLeoved);
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 iErrorNum = int.Parse(dr["KOD_SHGIA"].ToString());
