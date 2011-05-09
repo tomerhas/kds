@@ -80,16 +80,16 @@ namespace KdsBatch
                 oGeneralData = SingleGeneralData.GetInstance();//tarMe, tarAd, "", false, mis_ishi);
 
                 DtYamimMeyuchadim = new DataTable();
-                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;//.Copy();
-                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;//.Copy();
+                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim.Copy();
+                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim.Copy();
                 Parameters = oGeneralData.ListParameters;
-                DtMichsaYomit = oGeneralData._dtMichsaYomitAll;//.Copy();
-                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;//.Copy();
-                DtSugeySidur = oGeneralData._dtSugeySidurAll;//.Copy();
-                DtBusNumbers = oGeneralData._dtBusNumbersAll;//.Copy();
-                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;//.Copy();
-                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;//.Copy();
-                DtMutamut = oGeneralData._dtMutamutAll;//.Copy();
+                DtMichsaYomit = oGeneralData._dtMichsaYomitAll.Copy();
+                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll.Copy();
+                DtSugeySidur = oGeneralData._dtSugeySidurAll.Copy();
+                DtBusNumbers = oGeneralData._dtBusNumbersAll.Copy();
+                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll.Copy();
+                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll.Copy();
+                DtMutamut = oGeneralData._dtMutamutAll.Copy();
 
                 InitPremyotYadaniyot();
                 InitPremyot();
