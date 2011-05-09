@@ -330,9 +330,7 @@ namespace KdsLibrary.DAL
      {
         try
         {
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before Open");
          Open();
-         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After Open");
          CreateCommand(sSPName,CommandType.StoredProcedure);
          cmd.Connection = conn;
          cmd.ExecuteNonQuery();         
