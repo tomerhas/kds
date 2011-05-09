@@ -41,48 +41,29 @@ namespace KdsBatch
         }
         public static void ResetObject()
         {
-
-            if (Instance._dtYamimMeyuchadim != null)
-                Instance._dtYamimMeyuchadim.Dispose();
-            if (Instance._dtSugeyYamimMeyuchadim != null)
-                Instance._dtSugeyYamimMeyuchadim.Dispose();
-            if (Instance._dtParameters != null)
-                Instance._dtParameters.Dispose();
-            if (Instance._dtOvdimLechishuv != null)
-                Instance._dtOvdimLechishuv.Dispose();
-            if (Instance._dtMichsaYomitAll != null)
-                Instance._dtMichsaYomitAll.Dispose();
-            if (Instance._dtMeafyeneySugSidurAll != null)
-                Instance._dtMeafyeneySugSidurAll.Dispose();
-            if (Instance._dtSidurimMeyuchRechivAll != null)
-                Instance._dtSidurimMeyuchRechivAll.Dispose();
-            if (Instance._dtSugeySidurRechivAll != null)
-                Instance._dtSugeySidurRechivAll.Dispose();
-            if (Instance._dtSugeySidurAll != null)
-                Instance._dtSugeySidurAll.Dispose();
-            if (Instance._dtPeiluyotFromTnuaAll != null)
-                Instance._dtPremyotAll.Dispose();
-            if (Instance._dtPremyotYadaniyotAll != null)
-                Instance._dtPremyotYadaniyotAll.Dispose();
-            if (Instance._dtBusNumbersAll != null)
-                Instance._dtBusNumbersAll.Dispose();
-            if (Instance._dtYemeyAvodaAll != null)
-                Instance._dtYemeyAvodaAll.Dispose();
-            if (Instance._dtPeiluyotFromTnuaAll != null)
-                Instance._dtPeiluyotFromTnuaAll.Dispose();
-            if (Instance._dtPirteyOvdimAll != null)
-                Instance._dtPirteyOvdimAll.Dispose();
-            if (Instance._dtMutamutAll != null)
-                Instance._dtMutamutAll.Dispose();
-            if (Instance._dtMeafyenyOvedAll != null)
-                Instance._dtMeafyenyOvedAll.Dispose();
-            if (Instance._dtSugeyYechidaAll != null)
-                Instance._dtSugeyYechidaAll.Dispose();
-            if (Instance._dtPeiluyotOvdimAll != null)
-                Instance._dtPeiluyotOvdimAll.Dispose();
-
             _IsCreated = false;
             Instance = null;
+
+            Instance._dtYamimMeyuchadim= null;
+            Instance._dtSugeyYamimMeyuchadim= null;
+            Instance._dtParameters= null;
+            Instance._dtOvdimLechishuv= null;
+            Instance._dtMichsaYomitAll= null;
+            Instance._dtMeafyeneySugSidurAll= null;
+            Instance._dtSidurimMeyuchRechivAll= null;
+            Instance._dtSugeySidurRechivAll= null;
+            Instance._dtSugeySidurAll= null;
+            Instance._dtPremyotAll= null;
+            Instance._dtPremyotYadaniyotAll= null;
+            Instance._dtBusNumbersAll= null;
+            Instance._dtYemeyAvodaAll= null;
+            Instance._dtPeiluyotFromTnuaAll= null;
+            Instance._dtPirteyOvdimAll= null;
+            Instance._dtMutamutAll= null;
+            Instance._dtMeafyenyOvedAll= null;
+            Instance._dtSugeyYechidaAll= null;
+            Instance._dtPeiluyotOvdimAll= null;
+            GC.Collect();
         }
 
 
