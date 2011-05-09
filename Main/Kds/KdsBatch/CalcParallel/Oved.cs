@@ -10,7 +10,7 @@ using KdsLibrary;
 
 namespace KdsBatch
 {
-    public class Oved :IDisposable
+    public class Oved : IDisposable
     {
         public int Mispar_ishi;
         public DateTime Month;
@@ -34,11 +34,11 @@ namespace KdsBatch
         public DataTable DtMutamut { set; get; }
         public DataTable DtSugeySidurRechiv { set; get; }
         public DataTable DtSidurimMeyuchRechiv { set; get; }
-        public List<clMeafyenyOved>  MeafyeneyOved { get; set; }
+        public List<clMeafyenyOved> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyot { set; get; }
         public string sSugYechida { get; set; }
-        public  float fMekademNipuach { set; get; }
+        public float fMekademNipuach { set; get; }
         public DataSet _dsChishuv { set; get; }
         private DataTable _DtMonth; // { set; get; }
         private DataTable _DtDay;// { set; get; }
@@ -56,12 +56,12 @@ namespace KdsBatch
 
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
-            if (BakashaId==0)
+            if (BakashaId == 0)
                 oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-           //  SetNetunimLeOved();
+            //  SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
@@ -70,8 +70,8 @@ namespace KdsBatch
             Month = DateTime.Parse("01/" + dDay.Month + "/" + dDay.Year);
             _dDay = dDay;
             bChishuvYom = true;
-            iBakashaId = BakashaId;   
-         //   SetNetunimLeOved();
+            iBakashaId = BakashaId;
+            //   SetNetunimLeOved();
         }
         public void SetNetunimLeOved()
         {
@@ -109,7 +109,7 @@ namespace KdsBatch
             }
         }
 
-          
+
 
         private void SetNetunimLeOved2()
         {
@@ -125,13 +125,13 @@ namespace KdsBatch
                 DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
                 DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
                 dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;
-              
+
 
                 InitPremyot();
                 InitPirteyOvedList();
                 InitDtYemeyAvoda();
                 InitDtPeiluyotFromTnua();
-                InitDtPeiluyotLeOved();              
+                InitDtPeiluyotLeOved();
                 InitMeafyenim();
                 InitSugeyYechida();
                 InitDataSetChishuv();
@@ -143,16 +143,16 @@ namespace KdsBatch
             }
         }
 
-         
 
-         private void InitPremyotYadaniyot()
+
+        private void InitPremyotYadaniyot()
         {
-           
+
             DataRow[] rows;
             dtPremyotYadaniyot = new DataTable();
             try
             {
-                
+
                 if (oGeneralData._dtPremyotYadaniyotAll != null && oGeneralData._dtPremyotYadaniyotAll.Rows.Count > 0)
                 {
                     rows = oGeneralData._dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
@@ -178,12 +178,12 @@ namespace KdsBatch
         }
         private void InitPremyot()
         {
-           
+
             DataRow[] rows;
             dtPremyot = new DataTable();
             try
             {
-                
+
                 if (oGeneralData._dtPremyotAll != null && oGeneralData._dtPremyotAll.Rows.Count > 0)
                 {
                     rows = oGeneralData._dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
@@ -208,7 +208,7 @@ namespace KdsBatch
             }
         }
         private void InitPirteyOvedList()
-        { 
+        {
             clPirteyOved itemPirteyOved;
             DateTime dTarMe = Month;
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
@@ -218,7 +218,7 @@ namespace KdsBatch
                 PirteyOved = new List<clPirteyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    rows = oGeneralData._dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi  + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                    rows = oGeneralData._dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                     if (rows.Length > 0)
                     {
                         itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
@@ -251,17 +251,17 @@ namespace KdsBatch
                     rows = oGeneralData._dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
-                        DtYemeyAvoda=rows.CopyToDataTable();
+                        DtYemeyAvoda = rows.CopyToDataTable();
                     }
                     else
                     {
                         DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll.Clone();
                     }
                 }
-                 else
-                 {
-                     DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll.Clone();
-                 }
+                else
+                {
+                    DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll.Clone();
+                }
             }
             catch (Exception ex)
             {
@@ -277,7 +277,7 @@ namespace KdsBatch
             DtPeiluyotFromTnua = new DataTable();
             try
             {
-                if (oGeneralData._dtPeiluyotFromTnuaAll != null  && oGeneralData._dtPeiluyotFromTnuaAll.Rows.Count > 0)
+                if (oGeneralData._dtPeiluyotFromTnuaAll != null && oGeneralData._dtPeiluyotFromTnuaAll.Rows.Count > 0)
                 {
                     rows = oGeneralData._dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
@@ -296,7 +296,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotFromTnua: " + ex.Message); 
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotFromTnua: " + ex.Message);
                 throw ex;
             }
         }
@@ -327,7 +327,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotLeOved: " + ex.Message); 
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotLeOved: " + ex.Message);
                 throw ex;
             }
         }
@@ -343,7 +343,7 @@ namespace KdsBatch
             DataTable MeafyenimLeYom = new DataTable();
             try
             {
-               
+
                 MeafyeneyOved = new List<clMeafyenyOved>();
                 while (dTarMe <= TarAd)
                 {
@@ -351,15 +351,15 @@ namespace KdsBatch
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
                     drMeafyn = oGeneralData._dtMeafyenyOvedAll.Select(sQury);
                     MeafyenimLeYom = drMeafyn.CopyToDataTable();
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe,"Calc" ,MeafyenimLeYom);
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }
-                
+
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message); 
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
                 throw ex;
             }
         }
@@ -371,19 +371,19 @@ namespace KdsBatch
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
             try
             {
-               
+
                 MeafyeneyOved = new List<clMeafyenyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe,  oGeneralData._dtMeafyenyOvedAll);
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData._dtMeafyenyOvedAll);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }
-                
+
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message); 
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
                 throw ex;
             }
         }
@@ -402,7 +402,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitSugeyYechida: " + ex.Message); 
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitSugeyYechida: " + ex.Message);
                 throw ex;
             }
         }
@@ -420,7 +420,7 @@ namespace KdsBatch
             //return _dsChishuv; 
         }
 
-        private  void InitDtChishuvPeilut()
+        private void InitDtChishuvPeilut()
         {
             _DtPeilut = new DataTable("CHISHUV_PEILUT");
             _DtPeilut.Columns.Add("mispar_ishi", System.Type.GetType("System.Int32"));
@@ -435,7 +435,7 @@ namespace KdsBatch
             _dsChishuv.Tables.Add(_DtPeilut);
         }
 
-        public  void InitDtChishuvYom()
+        public void InitDtChishuvYom()
         {
             _DtDay = new DataTable("CHISHUV_YOM");
             _DtDay.Columns.Add("mispar_ishi", System.Type.GetType("System.Int32"));
@@ -448,7 +448,7 @@ namespace KdsBatch
             _dsChishuv.Tables.Add(_DtDay);
         }
 
-        private  void InitDtChishuvChodesh()
+        private void InitDtChishuvChodesh()
         {
             _DtMonth = new DataTable("CHISHUV_CHODESH");
             _DtMonth.Columns.Add("mispar_ishi", System.Type.GetType("System.Int32"));
@@ -460,7 +460,7 @@ namespace KdsBatch
             _dsChishuv.Tables.Add(_DtMonth);
         }
 
-        private  void InitDtChishuvSidur()
+        private void InitDtChishuvSidur()
         {
             _DtSidur = new DataTable("CHISHUV_SIDUR");
             _DtSidur.Columns.Add("mispar_ishi", System.Type.GetType("System.Int32"));
@@ -479,53 +479,35 @@ namespace KdsBatch
 
         #region IDisposable Members
 
-       
+
 
         #endregion
 
 
         public void Dispose()
         {
-            if (DtYamimMeyuchadim != null)
-                DtYamimMeyuchadim.Dispose();
-            if (DtSugeyYamimMeyuchadim != null)
-                DtSugeyYamimMeyuchadim.Dispose();
-            if (DtMichsaYomit != null)
-                DtMichsaYomit.Dispose();
-            if (DtBusNumbers != null)
-                DtBusNumbers.Dispose();
-            if (DtMeafyeneySugSidur != null)
-                DtMeafyeneySugSidur.Dispose();
-            if (DtSugeySidur != null)
-                DtSugeySidur.Dispose();
-            if (DtSugeyYechida != null)
-                DtSugeyYechida.Dispose();
-            if (DtYemeyAvoda != null)
-                DtYemeyAvoda.Dispose();
-            if (DtPeiluyotFromTnua != null)
-                DtPeiluyotFromTnua.Dispose();
-            if (DtPeiluyotOved != null)
-                DtPeiluyotOved.Dispose();
-            if (DtMutamut != null)
-                DtMutamut.Dispose();
-            if (DtSugeySidurRechiv != null)
-                DtSugeySidurRechiv.Dispose();
-            if (DtSidurimMeyuchRechiv != null)
-                DtSidurimMeyuchRechiv.Dispose();
-            if (dtPremyotYadaniyot != null)
-                dtPremyotYadaniyot.Dispose();
-            if (dtPremyot != null)
-                dtPremyot.Dispose();
-            if (_dsChishuv != null)
-                _dsChishuv.Dispose();
-              if (_DtMonth != null)
-                 _DtMonth.Dispose();
-             if (_DtDay != null)
-                 _DtDay.Dispose();
-             if (_DtPeilut != null)
-                 _DtPeilut.Dispose();
-             if (_DtPeilut != null)
-                 _DtPeilut.Dispose();
+            DtYamimMeyuchadim = null;
+            DtSugeyYamimMeyuchadim = null;
+            DtMichsaYomit = null;
+            DtBusNumbers = null;
+            DtMeafyeneySugSidur = null;
+            DtSugeySidur = null;
+            DtSugeyYechida = null;
+            DtYemeyAvoda = null;
+            DtPeiluyotFromTnua = null;
+            DtPeiluyotOved = null;
+            DtMutamut = null;
+            DtSugeySidurRechiv = null;
+            DtSidurimMeyuchRechiv = null;
+            dtPremyotYadaniyot = null;
+            dtPremyot = null;
+            _dsChishuv = null;
+            _DtMonth = null;
+            _DtDay = null;
+            _DtPeilut = null;
+            _DtPeilut = null;
+            GC.Collect();
+
         }
     }
 }
