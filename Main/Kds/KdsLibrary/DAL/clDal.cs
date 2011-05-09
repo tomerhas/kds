@@ -333,7 +333,6 @@ namespace KdsLibrary.DAL
          Open();
          CreateCommand(sSPName,CommandType.StoredProcedure);
          cmd.Connection = conn;
-         cmd.CommandTimeout = 8000;
          cmd.ExecuteNonQuery();         
         }
         catch (Exception ex)
