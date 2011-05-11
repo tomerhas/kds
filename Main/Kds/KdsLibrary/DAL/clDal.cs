@@ -33,10 +33,10 @@ namespace KdsLibrary.DAL
         pdReturnValue = ParameterDirection.ReturnValue
     }
 
-    public class clDal
+    public class clDal : IDisposable
     {
 
-        static string strConnectionString = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"];
+        private string strConnectionString = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"];
 
     private OracleConnection conn;// = new OracleConnection(strConnectionString); 
     private OracleCommand cmd = new OracleCommand();
@@ -63,6 +63,8 @@ namespace KdsLibrary.DAL
             {
                 conn.Close();
             }
+            cmd.Dispose();
+            cmd = null;
             conn.Dispose();
         }
         catch (Exception ex)
@@ -421,9 +423,10 @@ namespace KdsLibrary.DAL
             Close();
         }
     }
-    private void Dispose()
+    void IDisposable.Dispose()
     {
         cmd.Dispose();
+        cmd = null;
     }
 
 
@@ -462,7 +465,8 @@ namespace KdsLibrary.DAL
             Close();
         }
     }
-    
-   }
+
+
+    }
 
 }
