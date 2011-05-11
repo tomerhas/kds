@@ -2292,7 +2292,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                         <Image Name="barkod">
                           <Source>External</Source>
                           <Value>=Parameters!P_URL_BARCODE.Value</Value>
-                          <Sizing>Clip</Sizing>
+                          <Sizing>FitProportional</Sizing>
                           <Left>1.41645cm</Left>
                           <Height>2.05866cm</Height>
                           <Width>2.41392cm</Width>
@@ -2433,7 +2433,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
       <DataType>Integer</DataType>
       <DefaultValue>
         <Values>
-          <Value>65099</Value>
+          <Value>74454</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_MISPAR_ISHI</Prompt>
@@ -2442,7 +2442,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>03/08/2010 00:00:00</Value>
+          <Value>06/01/2010 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P_TAARICH</Prompt>
