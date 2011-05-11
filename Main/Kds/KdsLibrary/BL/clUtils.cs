@@ -12,14 +12,14 @@ namespace KdsLibrary.BL
 {
     public class clUtils
     {
-        private static clUtils _Instance;
+        //private static clUtils _Instance;
 
-        public static clUtils GetInstance()
-        {
-            if (_Instance == null)
-                _Instance = new clUtils();
-            return _Instance;
-        }
+        //public static clUtils GetInstance()
+        //{
+        //    if (_Instance == null)
+        //        _Instance = new clUtils();
+        //    return _Instance;
+        //}
 
         public DataTable GetMaamad(int iKodHevra)
         {
@@ -744,7 +744,8 @@ namespace KdsLibrary.BL
 
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetErechParameterByKod, ref dt);
-          
+                oDal = null;
+                GC.Collect();
                 return dt;
 
             }
