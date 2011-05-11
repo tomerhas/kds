@@ -67,7 +67,7 @@ namespace KdsBatch
                
                 /**/
                 // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
-                dtOvdim = oGeneralData._dtOvdimLechishuv;
+                dtOvdim = oGeneralData.dtOvdimLechishuv;
                 clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: After storeProcidure Before inilize Ovdim. Mispar Ovdim:" + dtOvdim.Rows.Count);
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
@@ -97,7 +97,7 @@ namespace KdsBatch
             {
                 _Ovdim = new List<Oved>();
                 oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1);
-                dtOvdim = oGeneralData._dtOvdimLechishuv;
+                dtOvdim = oGeneralData.dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
                     ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), DateTime.Now, DateTime.Now, lBakashaId);

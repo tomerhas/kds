@@ -43,25 +43,25 @@ namespace KdsBatch
         {
       
 
-            Instance._dtYamimMeyuchadim= null;
-            Instance._dtSugeyYamimMeyuchadim= null;
-            Instance._dtParameters= null;
-            Instance._dtOvdimLechishuv= null;
-            Instance._dtMichsaYomitAll= null;
-            Instance._dtMeafyeneySugSidurAll= null;
-            Instance._dtSidurimMeyuchRechivAll= null;
-            Instance._dtSugeySidurRechivAll= null;
-            Instance._dtSugeySidurAll= null;
-            Instance._dtPremyotAll= null;
-            Instance._dtPremyotYadaniyotAll= null;
-            Instance._dtBusNumbersAll= null;
-            Instance._dtYemeyAvodaAll= null;
-            Instance._dtPeiluyotFromTnuaAll= null;
-            Instance._dtPirteyOvdimAll= null;
-            Instance._dtMutamutAll= null;
-            Instance._dtMeafyenyOvedAll= null;
-            Instance._dtSugeyYechidaAll= null;
-            Instance._dtPeiluyotOvdimAll= null;
+            Instance.dtYamimMeyuchadim= null;
+            Instance.dtSugeyYamimMeyuchadim= null;
+            Instance.dtParameters= null;
+            Instance.dtOvdimLechishuv= null;
+            Instance.dtMichsaYomitAll= null;
+            Instance.dtMeafyeneySugSidurAll= null;
+            Instance.dtSidurimMeyuchRechivAll= null;
+            Instance.dtSugeySidurRechivAll= null;
+            Instance.dtSugeySidurAll= null;
+            Instance.dtPremyotAll= null;
+            Instance.dtPremyotYadaniyotAll= null;
+            Instance.dtBusNumbersAll= null;
+            Instance.dtYemeyAvodaAll= null;
+            Instance.dtPeiluyotFromTnuaAll= null;
+            Instance.dtPirteyOvdimAll= null;
+            Instance.dtMutamutAll= null;
+            Instance.dtMeafyenyOvedAll= null;
+            Instance.dtSugeyYechidaAll= null;
+            Instance.dtPeiluyotOvdimAll= null;
            
             _IsCreated = false;
             Instance = null;
@@ -79,28 +79,28 @@ namespace KdsBatch
         private DateTime _TarMe,_TarAd;
         private DataSet dsNetuneyChishuv;
 
-        public DataTable _dtYamimMeyuchadim { get; set; }
-        public DataTable _dtSugeyYamimMeyuchadim { get; set; }
-        public DataTable _dtParameters { get; set; }
+        public DataTable dtYamimMeyuchadim { get; set; }
+        public DataTable dtSugeyYamimMeyuchadim { get; set; }
+        public DataTable dtParameters { get; set; }
 
         public List<clParameters> ListParameters{ get; set; }
         //Me>Ad
-        public DataTable _dtOvdimLechishuv { get; set; }
-        public DataTable _dtMichsaYomitAll { get; set; }
-        public DataTable _dtMeafyeneySugSidurAll { get; set; }
-        public DataTable _dtSidurimMeyuchRechivAll { get; set; }
-        public DataTable _dtSugeySidurRechivAll { get; set; }
-        public DataTable _dtSugeySidurAll { get; set; }
-        public DataTable _dtPremyotAll { get; set; }
-        public DataTable _dtPremyotYadaniyotAll { get; set; }
-        public DataTable _dtBusNumbersAll { get; set; }
-        public DataTable _dtYemeyAvodaAll { get; set; }
-        public DataTable _dtPeiluyotFromTnuaAll { get; set; }
-        public DataTable _dtPirteyOvdimAll { get; set; }
-        public DataTable _dtMutamutAll { get; set; }
-        public DataTable _dtMeafyenyOvedAll { get; set; }
-        public DataTable _dtSugeyYechidaAll { get; set; }
-        public DataTable _dtPeiluyotOvdimAll { get; set; }
+        public DataTable dtOvdimLechishuv { get; set; }
+        public DataTable dtMichsaYomitAll { get; set; }
+        public DataTable dtMeafyeneySugSidurAll { get; set; }
+        public DataTable dtSidurimMeyuchRechivAll { get; set; }
+        public DataTable dtSugeySidurRechivAll { get; set; }
+        public DataTable dtSugeySidurAll { get; set; }
+        public DataTable dtPremyotAll { get; set; }
+        public DataTable dtPremyotYadaniyotAll { get; set; }
+        public DataTable dtBusNumbersAll { get; set; }
+        public DataTable dtYemeyAvodaAll { get; set; }
+        public DataTable dtPeiluyotFromTnuaAll { get; set; }
+        public DataTable dtPirteyOvdimAll { get; set; }
+        public DataTable dtMutamutAll { get; set; }
+        public DataTable dtMeafyenyOvedAll { get; set; }
+        public DataTable dtSugeyYechidaAll { get; set; }
+        public DataTable dtPeiluyotOvdimAll { get; set; }
 
         public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {
@@ -109,15 +109,15 @@ namespace KdsBatch
             _TarAd = TarAd;
             GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
 
-             _dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
+             dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
             if (mis_ishi == -1) //premiot
             {
-                if (_dtOvdimLechishuv.Rows.Count > 0)
+                if (dtOvdimLechishuv.Rows.Count > 0)
                 {
-                    drs = _dtOvdimLechishuv.Select("CHODESH", "CHODESH ASC");
+                    drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH ASC");
                     _TarMe = DateTime.Parse(drs[0]["CHODESH"].ToString());
 
-                    drs = _dtOvdimLechishuv.Select("CHODESH", "CHODESH DESC");
+                    drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH DESC");
                     _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
                 }
             }
@@ -132,28 +132,28 @@ namespace KdsBatch
             clUtils oUtils = new clUtils();
             try
             {
-                _dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-                _dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
-                _dtParameters = oUtils.GetKdsParametrs();
+                dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                dtParameters = oUtils.GetKdsParametrs();
                  InitListParamObject();
                 
-                 _dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; // oCalcDal.getPremyot();
-                 _dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; // oCalcDal.getPremyotYadaniyot();
-                 _dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"]; //oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
-                _dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
-                _dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; // oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
-                _dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; //oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);
-                _dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
-                _dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
-                _dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
+                 dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; // oCalcDal.getPremyot();
+                 dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; // oCalcDal.getPremyotYadaniyot();
+                 dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"]; //oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
+                dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
+                dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; // oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
+                dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; //oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);
+                dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
+                dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
+                dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
                 if (dsNetuneyChishuv.Tables["Kavim_Details"] != null)
-                    _dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
-                else _dtPeiluyotFromTnuaAll = null;
-                _dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
-                _dtMutamutAll = dsNetuneyChishuv.Tables["Ctb_Mutamut"]; 
-                _dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
-                _dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
-                _dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
+                    dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
+                else dtPeiluyotFromTnuaAll = null;
+                dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
+                dtMutamutAll = dsNetuneyChishuv.Tables["Ctb_Mutamut"]; 
+                dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
+                dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
+                dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
             }
             catch (Exception ex)
             {
@@ -172,8 +172,8 @@ namespace KdsBatch
                 ListParameters  = new List<clParameters>();
                 while (dTarMe <= _TarAd)
                 {
-                    sugYom = clGeneral.GetSugYom(_dtYamimMeyuchadim, dTarMe, _dtSugeyYamimMeyuchadim);
-                    itemParams = new clParameters(dTarMe, sugYom,"Calc", _dtParameters);
+                    sugYom = clGeneral.GetSugYom(dtYamimMeyuchadim, dTarMe, dtSugeyYamimMeyuchadim);
+                    itemParams = new clParameters(dTarMe, sugYom,"Calc", dtParameters);
                     ListParameters.Add(itemParams);
                     dTarMe = dTarMe.AddDays(1);
                 }

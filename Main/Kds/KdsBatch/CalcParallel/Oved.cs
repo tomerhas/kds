@@ -14,26 +14,26 @@ namespace KdsBatch
     {
         public int Mispar_ishi;
         public DateTime Month;
-        private GeneralData oGeneralData;
+        public GeneralData oGeneralData;
         public long iBakashaId;
         public bool bChishuvYom { get; set; }
         public DateTime _dDay { get; set; }
 
-        public DataTable DtYamimMeyuchadim { get; set; }
-        public DataTable DtSugeyYamimMeyuchadim { get; set; }
-        public List<clParameters> Parameters { get; set; }
+        //public DataTable DtYamimMeyuchadim { get; set; }
+      //  public DataTable DtSugeyYamimMeyuchadim { get; set; }
+     //   public List<clParameters> Parameters { get; set; }
         public List<clPirteyOved> PirteyOved { get; set; }
-        public DataTable DtMichsaYomit { set; get; }
-        public DataTable DtBusNumbers { set; get; }
-        public DataTable DtMeafyeneySugSidur { set; get; }
-        public DataTable DtSugeySidur { set; get; }
+    //    public DataTable DtMichsaYomit { set; get; }
+    //    public DataTable DtBusNumbers { set; get; }
+   //     public DataTable DtMeafyeneySugSidur { set; get; }
+   //     public DataTable DtSugeySidur { set; get; }
         public DataTable DtSugeyYechida { set; get; }
         public DataTable DtYemeyAvoda { set; get; }
         public DataTable DtPeiluyotFromTnua { set; get; }
         public DataTable DtPeiluyotOved { set; get; }
-        public DataTable DtMutamut { set; get; }
-        public DataTable DtSugeySidurRechiv { set; get; }
-        public DataTable DtSidurimMeyuchRechiv { set; get; }
+   //     public DataTable DtMutamut { set; get; }
+  //      public DataTable DtSugeySidurRechiv { set; get; }
+   //     public DataTable DtSidurimMeyuchRechiv { set; get; }
         public List<clMeafyenyOved> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyot { set; get; }
@@ -46,7 +46,7 @@ namespace KdsBatch
         private DataTable _DtPeilut;// { set; get; }
 
 
-        private DataTable _Meafyenim;
+   //     private DataTable _Meafyenim;
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
         public clMeafyenyOved objMeafyeneyOved { get; set; }
@@ -79,8 +79,7 @@ namespace KdsBatch
             {
                 oGeneralData = SingleGeneralData.GetInstance();//tarMe, tarAd, "", false, mis_ishi);
 
-                DtYamimMeyuchadim = new DataTable();
-                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim.Copy();
+       /*         DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim.Copy();
                 DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim.Copy();
                 Parameters = oGeneralData.ListParameters;
                 DtMichsaYomit = oGeneralData._dtMichsaYomitAll.Copy();
@@ -89,7 +88,7 @@ namespace KdsBatch
                 DtBusNumbers = oGeneralData._dtBusNumbersAll.Copy();
                 DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll.Copy();
                 DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll.Copy();
-                DtMutamut = oGeneralData._dtMutamutAll.Copy();
+                DtMutamut = oGeneralData._dtMutamutAll.Copy();*/
 
                 InitPremyotYadaniyot();
                 InitPremyot();
@@ -115,7 +114,7 @@ namespace KdsBatch
         {
             try
             {
-                DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
+             /*   DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
                 DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
                 Parameters = oGeneralData.ListParameters;
                 DtMichsaYomit = oGeneralData._dtMichsaYomitAll;
@@ -124,7 +123,7 @@ namespace KdsBatch
                 DtBusNumbers = oGeneralData._dtBusNumbersAll;
                 DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
                 DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
-                dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;
+                dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;*/
 
 
                 InitPremyot();
@@ -153,21 +152,21 @@ namespace KdsBatch
             try
             {
 
-                if (oGeneralData._dtPremyotYadaniyotAll != null && oGeneralData._dtPremyotYadaniyotAll.Rows.Count > 0)
+                if (oGeneralData.dtPremyotYadaniyotAll != null && oGeneralData.dtPremyotYadaniyotAll.Rows.Count > 0)
                 {
-                    rows = oGeneralData._dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
+                    rows = oGeneralData.dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         dtPremyotYadaniyot = rows.CopyToDataTable();
                     }
                     else
                     {
-                        dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll.Clone();
+                        dtPremyotYadaniyot = oGeneralData.dtPremyotYadaniyotAll.Clone();
                     }
                 }
                 else
                 {
-                    dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll.Clone();
+                    dtPremyotYadaniyot = oGeneralData.dtPremyotYadaniyotAll.Clone();
                 }
             }
             catch (Exception ex)
@@ -184,21 +183,21 @@ namespace KdsBatch
             try
             {
 
-                if (oGeneralData._dtPremyotAll != null && oGeneralData._dtPremyotAll.Rows.Count > 0)
+                if (oGeneralData.dtPremyotAll != null && oGeneralData.dtPremyotAll.Rows.Count > 0)
                 {
-                    rows = oGeneralData._dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
+                    rows = oGeneralData.dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         dtPremyot = rows.CopyToDataTable();
                     }
                     else
                     {
-                        dtPremyot = oGeneralData._dtPremyotAll.Clone();
+                        dtPremyot = oGeneralData.dtPremyotAll.Clone();
                     }
                 }
                 else
                 {
-                    dtPremyot = oGeneralData._dtPremyotAll.Clone();
+                    dtPremyot = oGeneralData.dtPremyotAll.Clone();
                 }
             }
             catch (Exception ex)
@@ -218,7 +217,7 @@ namespace KdsBatch
                 PirteyOved = new List<clPirteyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    rows = oGeneralData._dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                    rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                     if (rows.Length > 0)
                     {
                         itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
@@ -246,21 +245,21 @@ namespace KdsBatch
             DtYemeyAvoda = new DataTable();
             try
             {
-                if (oGeneralData._dtYemeyAvodaAll != null && oGeneralData._dtYemeyAvodaAll.Rows.Count > 0)
+                if (oGeneralData.dtYemeyAvodaAll != null && oGeneralData.dtYemeyAvodaAll.Rows.Count > 0)
                 {
-                    rows = oGeneralData._dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    rows = oGeneralData.dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         DtYemeyAvoda = rows.CopyToDataTable();
                     }
                     else
                     {
-                        DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll.Clone();
+                        DtYemeyAvoda = oGeneralData.dtYemeyAvodaAll.Clone();
                     }
                 }
                 else
                 {
-                    DtYemeyAvoda = oGeneralData._dtYemeyAvodaAll.Clone();
+                    DtYemeyAvoda = oGeneralData.dtYemeyAvodaAll.Clone();
                 }
             }
             catch (Exception ex)
@@ -277,21 +276,21 @@ namespace KdsBatch
             DtPeiluyotFromTnua = new DataTable();
             try
             {
-                if (oGeneralData._dtPeiluyotFromTnuaAll != null && oGeneralData._dtPeiluyotFromTnuaAll.Rows.Count > 0)
+                if (oGeneralData.dtPeiluyotFromTnuaAll != null && oGeneralData.dtPeiluyotFromTnuaAll.Rows.Count > 0)
                 {
-                    rows = oGeneralData._dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    rows = oGeneralData.dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         DtPeiluyotFromTnua = rows.CopyToDataTable();
                     }
                     else
                     {
-                        DtPeiluyotFromTnua = oGeneralData._dtPeiluyotFromTnuaAll.Clone();
+                        DtPeiluyotFromTnua = oGeneralData.dtPeiluyotFromTnuaAll.Clone();
                     }
                 }
                 else
                 {
-                    DtPeiluyotFromTnua = oGeneralData._dtPeiluyotFromTnuaAll;
+                    DtPeiluyotFromTnua = oGeneralData.dtPeiluyotFromTnuaAll;
                 }
             }
             catch (Exception ex)
@@ -308,21 +307,21 @@ namespace KdsBatch
             DtPeiluyotOved = new DataTable();
             try
             {
-                if (oGeneralData._dtPeiluyotOvdimAll.Rows.Count > 0)
+                if (oGeneralData.dtPeiluyotOvdimAll.Rows.Count > 0)
                 {
-                    rows = oGeneralData._dtPeiluyotOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                    rows = oGeneralData.dtPeiluyotOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         DtPeiluyotOved = rows.CopyToDataTable();
                     }
                     else
                     {
-                        DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll.Clone();
+                        DtPeiluyotOved = oGeneralData.dtPeiluyotOvdimAll.Clone();
                     }
                 }
                 else
                 {
-                    DtPeiluyotOved = oGeneralData._dtPeiluyotOvdimAll.Clone();
+                    DtPeiluyotOved = oGeneralData.dtPeiluyotOvdimAll.Clone();
                 }
             }
             catch (Exception ex)
@@ -349,7 +348,7 @@ namespace KdsBatch
                 {
                     sQury = "mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
-                    drMeafyn = oGeneralData._dtMeafyenyOvedAll.Select(sQury);
+                    drMeafyn = oGeneralData.dtMeafyenyOvedAll.Select(sQury);
                     MeafyenimLeYom = drMeafyn.CopyToDataTable();
                     itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
@@ -375,7 +374,7 @@ namespace KdsBatch
                 MeafyeneyOved = new List<clMeafyenyOved>();
                 while (dTarMe <= TarAd)
                 {
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData._dtMeafyenyOvedAll);
+                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData.dtMeafyenyOvedAll);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
                 }
@@ -394,7 +393,7 @@ namespace KdsBatch
             DtSugeyYechida = new DataTable();
             try
             {
-                rows = oGeneralData._dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and me_tarich <= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich  >= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+                rows = oGeneralData.dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and me_tarich <= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich  >= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                 if (rows.Length > 0)
                 {
                     DtSugeyYechida = rows.CopyToDataTable();
@@ -486,19 +485,19 @@ namespace KdsBatch
 
         public void Dispose()
         {
-            DtYamimMeyuchadim = null;
+         /*   DtYamimMeyuchadim = null;
             DtSugeyYamimMeyuchadim = null;
             DtMichsaYomit = null;
             DtBusNumbers = null;
             DtMeafyeneySugSidur = null;
-            DtSugeySidur = null;
+            DtSugeySidur = null;*/
             DtSugeyYechida = null;
             DtYemeyAvoda = null;
             DtPeiluyotFromTnua = null;
             DtPeiluyotOved = null;
-            DtMutamut = null;
+          /*  DtMutamut = null;
             DtSugeySidurRechiv = null;
-            DtSidurimMeyuchRechiv = null;
+            DtSidurimMeyuchRechiv = null;*/
             dtPremyotYadaniyot = null;
             dtPremyot = null;
             _dsChishuv = null;

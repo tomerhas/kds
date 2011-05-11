@@ -256,12 +256,12 @@ namespace KdsBatch
                  
                  if (sCarNumbers.Length > 0)
                  {
-                     if (objOved.DtBusNumbers == null)
+                     if (objOved.oGeneralData.dtBusNumbersAll == null)
                      {
                          dMeTaarich = DateTime.Parse("01/" + dTaarich.Month + "/" + dTaarich.Year);
-                         objOved.DtBusNumbers = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), objOved.Mispar_ishi);
+                         objOved.oGeneralData.dtBusNumbersAll = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), objOved.Mispar_ishi);
                      }
-                     if (objOved.DtBusNumbers.Rows.Count > 0)
+                     if (objOved.oGeneralData.dtBusNumbersAll.Rows.Count > 0)
                      {
                          for (int J = 0; J < drPeiluyot.Length; J++)
                          {
@@ -279,7 +279,7 @@ namespace KdsBatch
                              if (!string.IsNullOrEmpty(drDetailsPeilut["sug_auto"].ToString()))
                                  iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
 
-                             if ((iSugAuto == 4 || iSugAuto == 5) && objOved.DtBusNumbers.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                             if ((iSugAuto == 4 || iSugAuto == 5) && objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                              {
                                  fHistaglutMifraki = ( objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                              }
@@ -553,14 +553,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if ((drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7" && drPeiluyot[J]["kupai"].ToString() == "1" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701"))
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) ||  clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) ||  clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
@@ -616,14 +616,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701")
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.DtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {

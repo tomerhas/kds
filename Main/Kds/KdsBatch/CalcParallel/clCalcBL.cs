@@ -104,12 +104,12 @@ namespace KdsBatch
         {
             int iSugYom;
             try{
-                if (oOved.DtYamimMeyuchadim == null)
+                if (oOved.oGeneralData.dtYamimMeyuchadim == null)
                 {
-                    oOved.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                    oOved.oGeneralData.dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                 }
 
-                iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.DtYamimMeyuchadim, iKodSectorIsuk, oOved.DtSugeyYamimMeyuchadim, iMeafyen56);
+                iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.oGeneralData.dtYamimMeyuchadim, iKodSectorIsuk, oOved.oGeneralData.dtSugeyYamimMeyuchadim, iMeafyen56);
                 return iSugYom;
              }
             catch (Exception ex)
@@ -174,7 +174,7 @@ namespace KdsBatch
                 { iShvuaAvoda = 6; }
                 else { iShvuaAvoda = 5; }
 
-                drMichsa = oOved.DtMichsaYomit.Select("Kod_Michsa=" + iKodMichsa + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                drMichsa = oOved.oGeneralData.dtMichsaYomitAll.Select("Kod_Michsa=" + iKodMichsa + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                 if (drMichsa.Length > 0)
                 { return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); }
                 else
