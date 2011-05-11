@@ -475,7 +475,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] GetOvdimForPremiot(string prefixText, int count, string contextKey)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1218,7 +1218,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] GetOvdimLeRitza(string prefixText, int count, string contextKey)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1318,7 +1318,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] getMispareiRashamot(string prefixText, int count, string contextKey)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1397,7 +1397,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] GetTeurElements(string prefixText, int count)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1413,7 +1413,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public int GetKodElementByTeur(string teurElemnt)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         int kod;
 
         try
@@ -1430,7 +1430,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string getMigbalaLeErechElement(string kod, string taarichCA)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt;
         DataRow[] drSelect;
         string sSQL = "";
@@ -1462,7 +1462,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] getTeureySidurimWhithOutList(string prefixText, int count, string contextKey)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1480,7 +1480,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public int getKodSidurByTeur(string teur)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         int kod;
 
         try
@@ -1497,7 +1497,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] getKodSidurimWhithOutList(string prefixText, int count, string contextKey)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1515,7 +1515,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string getTeurSidurByKod(int kod)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         string teur;
 
         try
@@ -1714,7 +1714,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string GetDakotPremiya(int misIshi, string taarich, int sugPremia)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {
@@ -1735,7 +1735,7 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod]
     public string[] GetElements(string prefixText, int count)
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
         try
         {

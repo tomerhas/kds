@@ -110,7 +110,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     }
     private void InitializeByReport()
     {
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dtMisRashemet = new DataTable();
         try
         {
