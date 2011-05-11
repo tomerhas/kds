@@ -41,8 +41,7 @@ namespace KdsBatch
         }
         public static void ResetObject()
         {
-            _IsCreated = false;
-            Instance = null;
+      
 
             Instance._dtYamimMeyuchadim= null;
             Instance._dtSugeyYamimMeyuchadim= null;
@@ -63,7 +62,12 @@ namespace KdsBatch
             Instance._dtMeafyenyOvedAll= null;
             Instance._dtSugeyYechidaAll= null;
             Instance._dtPeiluyotOvdimAll= null;
+           
+            _IsCreated = false;
+            Instance = null;
+
             GC.Collect();
+
         }
 
 
