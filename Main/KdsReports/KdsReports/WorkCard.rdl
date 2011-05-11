@@ -1984,7 +1984,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.26541cm</Top>
             <Left>0.33596cm</Left>
-            <Height>0.47547cm</Height>
+            <Height>0.47546cm</Height>
             <Width>4.65305cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
@@ -3403,7 +3403,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
           <Image Name="barkod">
             <Source>External</Source>
             <Value>=Parameters!P_URL_BARCODE.Value</Value>
-            <Sizing>Clip</Sizing>
+            <Sizing>FitProportional</Sizing>
             <Left>1.56388cm</Left>
             <Height>2.05866cm</Height>
             <Width>2.41392cm</Width>
@@ -3416,7 +3416,6 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
           </Image>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>0cm</Top>
         <Height>6.96923cm</Height>
         <Width>19.6764cm</Width>
         <Style>
