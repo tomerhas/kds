@@ -22,7 +22,7 @@ public partial class Modules_Ovdim_HosafatPeilut : KdsPage
     protected void Page_Load(object sender, EventArgs e)
     {
         DataTable dtElements = new DataTable();
-        clUtils oUtils = clUtils.GetInstance();
+        clUtils oUtils = new clUtils();
         DataTable dtParametrim = new DataTable();
         try
         {
