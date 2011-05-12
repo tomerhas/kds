@@ -46,14 +46,16 @@ namespace KdsService
             string sMaamad = args[2].ToString();
             bool bRitzatTest = (bool)args[3];
             bool bRitzaGorefet = (bool)args[4];
-            clCalculation objCalc = new clCalculation();
+//            clCalculation objCalc = new clCalculation();
             clUtils oUtils = new clUtils();
             DateTime dFrom;
             DataTable dtParametrim;
             int iStatus = 0;
             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
             dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
-
+            oUtils = null;
+            dtParametrim = null;
+           
             MainCalc oMainCalc;
             try
             {
@@ -73,6 +75,9 @@ namespace KdsService
                     Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
                                         {
                                             oMainCalc.CalcOved(CurrentOved);
+                                            CurrentOved.Dispose();
+                                            CurrentOved = null;
+                                           
                                         });
                     #endregion
                 }

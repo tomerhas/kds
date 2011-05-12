@@ -56,7 +56,7 @@ namespace KdsBatch
         private void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
         {
             Oved ItemOved;
-            DataTable dtOvdim = new DataTable();
+          //  DataTable dtOvdim = new DataTable();
             clCalcDal oCalcDal = new clCalcDal();
             GeneralData oGeneralData;
             DateTime StartTime;
@@ -67,19 +67,20 @@ namespace KdsBatch
                
                 /**/
                 // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
-                dtOvdim = oGeneralData.dtOvdimLechishuv;
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: After storeProcidure Before inilize Ovdim. Mispar Ovdim:" + dtOvdim.Rows.Count);
-                for (int i = 0; i < dtOvdim.Rows.Count; i++)
+                //dtOvdim = oGeneralData.dtOvdimLechishuv;
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: After storeProcidure Before inilize Ovdim. Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count);
+                for (int i = 0; i < oGeneralData.dtOvdimLechishuv.Rows.Count; i++)
                 {
 
 
                     StartTime = DateTime.Now;
-                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
+                    ItemOved = new Oved(int.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
                     ts = DateTime.Now - StartTime;
                     _Ovdim.Add(ItemOved);
 
                 }
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc:After inilize Ovdim. Mispar Ovdim LeChishuv:  " + dtOvdim.Rows.Count);
+
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc:After inilize Ovdim. Mispar Ovdim LeChishuv:  " + oGeneralData.dtOvdimLechishuv.Rows.Count);
             }
             catch (Exception ex)
             {
@@ -115,32 +116,36 @@ namespace KdsBatch
         {
 
             CalcMonth oMonth;
-            COLL_CHISHUV_SIDUR _collChishuvSidur;
-            COLL_CHISHUV_YOMI _collChishuvYomi;
-            COLL_CHISHUV_CHODESH _collChishuvChodesh;
+
+            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
        
             try
             {
                oOved.SetNetunimLeOved();
-                oMonth = new CalcMonth(oOved);
-                // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
-                oMonth.CalcMonthOved();
+               oMonth = new CalcMonth(oOved);
+               // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
+               oMonth.CalcMonthOved();
                // DataSetTurnIntoUdt(oOved._dsChishuv);
-              
-                //שמירת הנתונים רק אם התהליך התבצע ב-batch
-                if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
-                {
-                    _collChishuvChodesh = DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
-                    _collChishuvYomi = DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"]);
-                    _collChishuvSidur = DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"]);
-                    if (_iTypeCalc == clGeneral.TypeCalc.Batch)
-                    {
-                        SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
-                    }
-                    //שמירת נתוני החישוב לעובד
-                    SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
-                }
-                oOved.Dispose();
+
+               //שמירת הנתונים רק אם התהליך התבצע ב-batch
+               if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
+               {
+                   DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                   DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+                   DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+                   if (_iTypeCalc == clGeneral.TypeCalc.Batch)
+                   {
+                       SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+                   }
+                   //שמירת נתוני החישוב לעובד
+                   SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
+                   _collChishuvChodesh = null;
+                   _collChishuvYomi = null;
+                   _collChishuvSidur = null;
+               }
+               oMonth = null;
             }
             catch (Exception ex)
             {
@@ -155,15 +160,15 @@ namespace KdsBatch
             clUtils oUtils = new clUtils();
             Oved oOved;
             DateTime StartMonth = DateTime.Parse("01/" + dCalcMonth.Month + "/" + dCalcMonth.Year);
-            COLL_CHISHUV_YOMI _collChishuvYomi;
-            COLL_CHISHUV_CHODESH _collChishuvChodesh;
+            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
             try
             {
                 //InsertOvedToTable(iMisparIshi, StartMonth);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
                 CalcOved(oOved);
-                _collChishuvChodesh = DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
-                _collChishuvYomi = DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"]);      
+                DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
                 oOved.Dispose();
@@ -347,14 +352,14 @@ namespace KdsBatch
         //}
 
 
-        private COLL_CHISHUV_CHODESH DataSetTurnIntoUdtChodesh(DataTable dtChishuvChodesh)
+        private void DataSetTurnIntoUdtChodesh(DataTable dtChishuvChodesh,ref COLL_CHISHUV_CHODESH collChishuvChodesh )
         {
             try
             {
                 int I;
                 DataRow drChishuv;
                 OBJ_CHISHUV_CHODESH objChsishuvChodesh;
-                COLL_CHISHUV_CHODESH collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+                //COLL_CHISHUV_CHODESH collChishuvChodesh = new COLL_CHISHUV_CHODESH();
                 for (I = 0; I <= dtChishuvChodesh.Rows.Count - 1; I++)
                 {
                     drChishuv = dtChishuvChodesh.Rows[I];
@@ -366,22 +371,21 @@ namespace KdsBatch
                     objChsishuvChodesh.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
                     collChishuvChodesh.Add(objChsishuvChodesh);
                 }
-
-                return collChishuvChodesh;
+              //  return collChishuvChodesh;
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-        private COLL_CHISHUV_YOMI DataSetTurnIntoUdtYom(DataTable dtChishuvYom)
+        private void DataSetTurnIntoUdtYom(DataTable dtChishuvYom, ref COLL_CHISHUV_YOMI collChishuvYomi)
         {
             try
             {
                 int I;
                 DataRow drChishuv;
                 OBJ_CHISHUV_YOMI objChsishuvYomi;
-                COLL_CHISHUV_YOMI collChishuvYomi = new COLL_CHISHUV_YOMI();
+             //   COLL_CHISHUV_YOMI collChishuvYomi = new COLL_CHISHUV_YOMI();
                 for (I = 0; I <= dtChishuvYom.Rows.Count - 1; I++)
                 {
                     drChishuv = dtChishuvYom.Rows[I];
@@ -394,22 +398,21 @@ namespace KdsBatch
                     objChsishuvYomi.TKUFA = DateTime.Parse(drChishuv["TKUFA"].ToString());
                     collChishuvYomi.Add(objChsishuvYomi);
                 }
-
-                return collChishuvYomi;
+            //    return collChishuvYomi;
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-        private COLL_CHISHUV_SIDUR DataSetTurnIntoUdtSidur(DataTable dtChishuvSidur)
+        private void DataSetTurnIntoUdtSidur(DataTable dtChishuvSidur,ref COLL_CHISHUV_SIDUR collChishuvSidur)
         {
             try
             {
                 int I;
                 DataRow drChishuv;
                 OBJ_CHISHUV_SIDUR objChsishuvSidur;
-                COLL_CHISHUV_SIDUR collChishuvSidur = new COLL_CHISHUV_SIDUR();
+               // COLL_CHISHUV_SIDUR collChishuvSidur = new COLL_CHISHUV_SIDUR();
                 for (I = 0; I <= dtChishuvSidur.Rows.Count - 1; I++)
                 {
                     drChishuv = dtChishuvSidur.Rows[I];
@@ -423,8 +426,7 @@ namespace KdsBatch
                     objChsishuvSidur.SHAT_HATCHALA = DateTime.Parse(drChishuv["SHAT_HATCHALA"].ToString());
                     collChishuvSidur.Add(objChsishuvSidur);
                 }
-
-                return collChishuvSidur;
+            //    return collChishuvSidur;
             }
             catch (Exception ex)
             {

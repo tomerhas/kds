@@ -63,8 +63,6 @@ namespace KdsLibrary.DAL
             {
                 conn.Close();
             }
-            cmd.Dispose();
-            cmd = null;
             conn.Dispose();
         }
         catch (Exception ex)

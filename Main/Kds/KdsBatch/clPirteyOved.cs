@@ -42,6 +42,7 @@ namespace KdsBatch
                 SetMeafyneyOved(dtOvedCardDetails.Rows[0]);
             }
             dtOvedCardDetails.Dispose();
+            dtOvedCardDetails = null;
         }
 
          public clPirteyOved(int iMisparIshi, DateTime dDate,string type)

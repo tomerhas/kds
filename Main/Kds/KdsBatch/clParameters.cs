@@ -231,6 +231,7 @@ namespace KdsBatch
             dtParameters = dtParams;
             SetParameters(dCardDate, iSugYom);
             dtParameters.Dispose();
+            dtParameters = null;
         }
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {

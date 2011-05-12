@@ -141,6 +141,7 @@ namespace KdsBatch
                 SetMeafyneyOved();                
             }
             dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
         }
 
         public clMeafyenyOved(int iMisparIshi, DateTime dDate,string Type)
@@ -153,6 +154,7 @@ namespace KdsBatch
                 SetMeafyneyOved();
             }
             dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
         }
 
         public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type,DataTable dtMeafyenim)
@@ -165,6 +167,7 @@ namespace KdsBatch
                 SetMeafyneyOved();
             }
             dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
         }
 
         public clMeafyenyOved(int iMisparIshi, DateTime dDate,  DataTable dtMeafyenim)
@@ -176,6 +179,7 @@ namespace KdsBatch
                 SetMeafyenim();
             }
             dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
         }
 
         public bool Meafyen1Exists

@@ -35,7 +35,7 @@ namespace KdsBatch
             }
         }
 
-        public DataSet CalcMonthOved() //int Mispar_ishi, DateTime dTarMe, DateTime dTarAd)
+        public void CalcMonthOved() //int Mispar_ishi, DateTime dTarMe, DateTime dTarAd)
         {
             DateTime dTaarich, dTarMe, dTarAd;
            // bool bChishuvYom = false;
@@ -62,9 +62,9 @@ namespace KdsBatch
 
                 dTaarich = dTarMe;
 
+                oDay = new CalcDay(objOved);
                 while (dTaarich <= dTarAd)
                 {
-                    oDay = new CalcDay(objOved);
                     oDay._Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
@@ -85,7 +85,6 @@ namespace KdsBatch
 
                 while (dTaarich <= dTarAd)
                 {
-                    oDay = new CalcDay(objOved);
                     oDay._Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
@@ -103,7 +102,9 @@ namespace KdsBatch
                     CalcRechivimInMonth(dTarMe, dTarAd);
                     ChangingChofeshFromShaotNosafot();
                 }
-                return objOved._dsChishuv;
+
+                oDay = null;
+              //  return objOved._dsChishuv;
             }
             catch (Exception ex)
             {
