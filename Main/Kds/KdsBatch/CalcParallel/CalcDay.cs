@@ -566,6 +566,8 @@ namespace KdsBatch
                 //ימי חופש/היעדרות (רכיב 270) 
                 CalcRechiv270();
 
+             
+
             }
             catch (Exception ex)
             {
@@ -574,6 +576,13 @@ namespace KdsBatch
             }
         }
 
+        public void SetNullObjects()
+        {
+            oPeilut = null;
+            oSidur.SetNillObject();
+            oSidur = null;
+            oCalcBL = null;
+        }
 
 
         private void CalcRechiv1()
@@ -1525,6 +1534,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                drYom = null;
+            }
         }
 
         private void CalcRechiv32()
@@ -1891,6 +1904,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachLina.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                rowLina = null;
+            }
         }
 
         private void CalcRechiv48()
@@ -1914,6 +1931,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachLinaKfula.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
+            }
+            finally
+            {
+                rowLina = null;
             }
         }
 
@@ -1940,6 +1961,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachPitzul.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                rowPitzul=null;
+                rowPitzulKaful=null;
+            }
         }
 
         private void CalcRechiv50()
@@ -1963,6 +1989,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.SachPitzulKaful.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
+            }
+            finally
+            {
+                rowPitzul = null;
             }
         }
 
@@ -2279,6 +2309,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomMachla.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                drRechiv = null;
+            }
+                
         }
 
         private void CalcRechiv61()
@@ -2403,7 +2438,7 @@ namespace KdsBatch
             {
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                 fKizuzMeheadrut = 0;
-                if (!(oCalcBL.GetSugYomLemichsa(objOved , _Taarich, objOved.objPirteyOved.iKodSectorIsuk,objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
+                if (!(oCalcBL.GetSugYomLemichsa(objOved, _Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.ErevYomHatsmaut.GetHashCode()
                     && (objOved.objMeafyeneyOved.sMeafyen63 != "" || objOved.objMeafyeneyOved.sMeafyen63 != "0") && objOved.objMeafyeneyOved.iMeafyen33 == 1))
                 {
                     rowSidur = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur=99801 and Hashlama_Leyom=1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')");
@@ -2477,6 +2512,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomHeadrut.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
+            }
+            finally
+            {
+                rowSidur = null;
             }
         }
 
@@ -2561,6 +2600,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomChofesh.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
+            }
+            finally
+            {
+                rowSidur = null;
             }
         }
 
@@ -2890,6 +2933,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                dr = null;
             }
         }
 
@@ -3372,6 +3419,14 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanHalbasha.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                rowZmanHalbash=null;
+                rowMezakeHalbash=null;
+                rowSidurim=null;
+                RowKodem=null;
+                RowNext=null;
+            }
         }
 
         private void CalcRechiv94()
@@ -3749,6 +3804,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyAvoda.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
+            finally
+            {
+                drRowSidurim = null;
+            }
         }
 
         private void CalcRechiv110()
@@ -4001,7 +4060,7 @@ namespace KdsBatch
                         fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
                     }
 
-                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8) && !oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom)
+                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8) && !oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom)
                             && (objOved.objPirteyOved.iZmanMutamut > 0))
                     {
                         fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
@@ -4064,6 +4123,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), _Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
+            }
+            finally
+            {
+                rowSidurim = null;
             }
         }
 
@@ -4548,6 +4611,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                _drSidurMeyuchad = null;
             }
         }
 
@@ -6496,6 +6563,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                dr = null;
             }
         }
 

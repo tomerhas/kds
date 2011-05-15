@@ -174,6 +174,10 @@ namespace KdsBatch
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyotYadaniyot: " + ex.Message);
                 throw ex;
             }
+            finally
+            {
+                rows = null;
+            }
         }
         private void InitPremyot()
         {
@@ -205,6 +209,10 @@ namespace KdsBatch
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyot: " + ex.Message);
                 throw ex;
             }
+            finally
+            {
+                rows = null;
+            }
         }
         private void InitPirteyOvedList()
         {
@@ -229,6 +237,7 @@ namespace KdsBatch
                         PirteyOved.Add(itemPirteyOved);
                     }
                     dTarMe = dTarMe.AddDays(1);
+                    rows = null;
                 }
             }
             catch (Exception ex)
@@ -267,6 +276,10 @@ namespace KdsBatch
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtYemeyAvoda: " + ex.Message);
                 throw ex;
             }
+            finally
+            {
+                rows = null;
+            }
         }
 
         private void InitDtPeiluyotFromTnua()
@@ -297,6 +310,10 @@ namespace KdsBatch
             {
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotFromTnua: " + ex.Message);
                 throw ex;
+            }
+            finally
+            {
+                rows = null;
             }
         }
 
@@ -329,6 +346,10 @@ namespace KdsBatch
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitDtPeiluyotLeOved: " + ex.Message);
                 throw ex;
             }
+            finally
+            {
+                rows = null;
+            }
         }
 
         public void InitMeafyenyOved()
@@ -353,6 +374,8 @@ namespace KdsBatch
                     itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
+                    drMeafyn = null;
+                    MeafyenimLeYom = null;
                 }
 
             }
@@ -403,6 +426,10 @@ namespace KdsBatch
             {
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitSugeyYechida: " + ex.Message);
                 throw ex;
+            }
+            finally
+            {
+                rows = null;
             }
         }
         #region Initialize
@@ -505,6 +532,8 @@ namespace KdsBatch
             _DtDay = null;
             _DtPeilut = null;
             _DtPeilut = null;
+            MeafyeneyOved = null;
+            PirteyOved = null;
             GC.Collect();
 
         }

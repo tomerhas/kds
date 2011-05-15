@@ -74,7 +74,8 @@ namespace KdsBatch
         public  bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala)
         {
             clUtils objUtils = new clUtils();
-            try{
+            try
+            {
                 if (objUtils.CheckIshurToSidur(iMisparIshi, dTaarich, iKodIshur, iMisparSidur, dShatHatchala) == 1)
                 { return true; }
                 else { return false; }
@@ -82,6 +83,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                objUtils = null;
             }
         }
 
@@ -97,6 +102,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                objUtils = null;
             }
         }
 
@@ -136,6 +145,10 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                objUtils = null;
+            }
         }
 
         public bool CheckMutamut(clPirteyOved objPirteyOved, DataTable dtMutamut)
@@ -157,6 +170,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                objUtils = null;
             }
         }
 

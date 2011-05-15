@@ -447,7 +447,7 @@ namespace KdsBatch
         {
             DataSet ds = new DataSet();
             string names;
-            DataTable dt = new DataTable();
+           // DataTable dt = new DataTable();
             clTxDal dal = new clTxDal();
  
             try

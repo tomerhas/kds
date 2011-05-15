@@ -141,10 +141,11 @@ namespace KdsBatch
                    }
                    //שמירת נתוני החישוב לעובד
                    SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
-                   _collChishuvChodesh = null;
-                   _collChishuvYomi = null;
-                   _collChishuvSidur = null;
+                  
                }
+               _collChishuvChodesh = null;
+               _collChishuvYomi = null;
+               _collChishuvSidur = null;
                oMonth = null;
             }
             catch (Exception ex)

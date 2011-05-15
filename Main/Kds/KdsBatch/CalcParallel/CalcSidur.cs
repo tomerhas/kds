@@ -28,7 +28,11 @@ namespace KdsBatch
             oPeilut.dTaarich = dTaarich;
             oCalcBL = new clCalcBL();
          }
-
+        public void SetNillObject()
+        {
+            oPeilut = null;
+            oCalcBL = null;
+        }
 
         public void CalcRechiv1()
         {
@@ -136,6 +140,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+             finally{
+                _drSidurMeyuchad=null;
+                _drSidurRagil = null; ;
             }
         }
 
@@ -483,6 +491,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null; ;
+            }
         }
 
         public void CalcRechiv3()
@@ -552,6 +565,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null; ;
             }
         }
 
@@ -624,6 +642,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null; ;
+            }
         }
 
         //public void CalcRechiv5()
@@ -693,6 +716,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv10()
@@ -755,6 +782,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
+                drPeiluyot = null;
             }
         }
 
@@ -883,6 +915,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv22()
@@ -983,6 +1019,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+                dr = null;
+            }
         }
 
         public void CalcRechiv23()
@@ -1020,6 +1061,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null; 
             }
         }
 
@@ -1118,6 +1163,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad= null;
+                _drSidurRagil=null;
+            }
         }
 
         public void CalcRechiv28()
@@ -1154,6 +1204,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -1195,6 +1249,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -1295,6 +1353,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
             }
         }
 
@@ -1403,6 +1466,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNehigaShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
+            }
         }
 
         public void CalcRechiv36()
@@ -1476,6 +1544,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNihulTnuaShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
+            }
         }
 
         public void CalcRechiv37()
@@ -1548,6 +1621,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
+            }
         }
 
 
@@ -1588,6 +1666,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelBoker.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -1713,6 +1795,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErev.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv42()
@@ -1755,6 +1841,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -1922,6 +2012,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv44()
@@ -1996,6 +2090,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         private void CalcDakotMachlif(int iKodRechiv)
@@ -2032,6 +2130,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv52()
@@ -2065,6 +2167,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotLepremia.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -2132,6 +2238,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv54()
@@ -2191,6 +2301,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -2302,6 +2416,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public float CalcRechiv62(out int iCount)
@@ -2331,11 +2449,14 @@ namespace KdsBatch
                 }
                 return fErech;
             }
-
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
 
         }
@@ -2367,11 +2488,14 @@ namespace KdsBatch
                 }
                 return fErech;
             }
-
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomAvodaBechul.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
 
         }
@@ -2403,11 +2527,14 @@ namespace KdsBatch
                 }
                 return fErech;
             }
-
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomChofesh.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
 
         }
@@ -2449,6 +2576,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv81()
@@ -2480,6 +2611,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv85()
@@ -2510,6 +2645,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachTosefetRetzifut.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -2543,6 +2682,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -2618,6 +2761,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv89()
@@ -2648,6 +2795,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzBevisa.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -2694,6 +2845,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.Shaot50.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -2865,6 +3020,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         private bool isSidurNehiga(ref DataRow drSidurim)
@@ -2944,6 +3103,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drPeiluyot = null;
             }
         }
 
@@ -3078,6 +3241,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+                drPeiluyot = null;
+            }
         }
 
         public void CalcRechiv125()
@@ -3154,6 +3322,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
+                drSidureyGrira = null;
             }
         }
 
@@ -3273,6 +3446,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanGrirot.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+               drSidurim=null;
+               drSidurimLeyom = null;
             }
         }
 
@@ -3400,6 +3578,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv132()
@@ -3431,6 +3613,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ChofeshZchut.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -3465,6 +3651,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaRegila.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv134()
@@ -3498,6 +3688,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.PremyaNamlak.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv142()
@@ -3529,6 +3723,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.KizuzNochehut.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -3680,6 +3878,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv186()
@@ -3716,6 +3918,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -3754,6 +3960,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaNihulShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -3816,6 +4026,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -3975,6 +4189,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad=null;
+                _drSidurRagil = null;
+            }
         }
 
         public void CalcRechiv191()
@@ -4115,6 +4334,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkid.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv193()
@@ -4232,6 +4455,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
+            }
         }
 
         public void CalcRechiv194()
@@ -4264,6 +4492,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutChol.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4298,6 +4530,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutBeshishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv196()
@@ -4330,6 +4566,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutShabat.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4414,6 +4654,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurMeyuchad=null;
+                _drSidurRagil = null;
+            }
         }
 
         public void CalcRechiv203()
@@ -4454,6 +4699,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+             finally
+            {
+                _drSidurim=null;
+            }
+        
         }
 
         public void CalcRechiv207()
@@ -4493,6 +4743,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv208()
@@ -4531,6 +4785,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.MichutzLamichsaTnuaShishi.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4577,6 +4835,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4663,6 +4925,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMevakrim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4792,6 +5058,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv213()
@@ -4823,6 +5093,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4859,6 +5133,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv215()
@@ -4892,6 +5170,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -4929,6 +5211,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurMeyuchad = null;
             }
         }
 
@@ -4976,6 +5262,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public void CalcRechiv218()
@@ -5009,6 +5299,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -5056,6 +5350,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMachsanKartisim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
 
@@ -5091,6 +5389,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -5138,6 +5440,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLepremyaMenahel.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -5191,6 +5497,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -5298,6 +5608,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
 
@@ -5397,6 +5711,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+                drPeiluyot = null;
+            }
         }
 
 
@@ -5477,6 +5796,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
+                drPeiluyot = null;
             }
         }
 
@@ -5568,6 +5892,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+                drPeiluyot = null;
+            }
         }
 
         public void CalcRechiv263()
@@ -5635,6 +5964,11 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenahagut.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
+                drSidurimLeyom = null;
             }
         }
 
@@ -5704,6 +6038,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBenihulTnua.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+                drSidurimLeyom = null;
+            }
         }
 
         public void CalcRechiv265()
@@ -5772,6 +6111,11 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HashlamaBetafkid.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+                drSidurimLeyom = null;
+            }
         }
 
 
@@ -5805,6 +6149,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.YomMiluimChelki.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
 
         }
@@ -5840,6 +6188,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
 
@@ -5873,6 +6225,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -5956,6 +6312,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public void CalcRechiv931()
@@ -6004,6 +6364,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -6057,6 +6421,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.HalbashaSofYom.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -6147,6 +6515,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public float CalcYemeyHeadrut(int iKodRechiv, out int iCountSidurim, float fMichsaYomit)
@@ -6191,7 +6563,10 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
             }
-
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         private void CalcSachDakot(int iKodRechiv)
@@ -6248,6 +6623,10 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
                 throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
             }
         }
 
@@ -6363,10 +6742,20 @@ namespace KdsBatch
         {   //הפונקציה מקבלת קוד מאפיין,סוג סידור,ערך מאפיין ותאריך ומחזירה האם קיים כזה סוג סידור
 
             DataRow[] dr;
+            try
+            {
+                dr = objOved.oGeneralData.dtMeafyeneySugSidurAll.Select("kod_meafyen=" + iMeafyen.ToString() + " and erech=" + iErech + " and Convert('" + dDate.ToShortDateString() + "','System.DateTime') >= me_taarich and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') <= ad_taarich and sug_sidur=" + iSugSidur.ToString());
 
-            dr = objOved.oGeneralData.dtMeafyeneySugSidurAll.Select("kod_meafyen=" + iMeafyen.ToString() + " and erech=" + iErech + " and Convert('" + dDate.ToShortDateString() + "','System.DateTime') >= me_taarich and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime') <= ad_taarich and sug_sidur=" + iSugSidur.ToString());
-
-            return ((dr.Length > 0) ? true : false);
+                return ((dr.Length > 0) ? true : false);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dr = null;
+            }
         }
 
 
@@ -6642,6 +7031,10 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                _drSidurim = null;
+            }
         }
 
         public string GetSidurimMeyuchRechiv(int iKodRechiv)
@@ -6649,7 +7042,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int I;
             string sSidurim = "";
-
+        
             drSidurim = objOved.oGeneralData.dtSidurimMeyuchRechivAll.Select("kod_rechiv=" + iKodRechiv + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')  and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
             if (drSidurim.Length > 0)
             {
@@ -6712,6 +7105,10 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                drSidurim = null;
+            }
         }
 
         public float GetSumShaotShabat100()
@@ -6756,6 +7153,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                _drSidurim = null;
             }
         }
 
@@ -6849,6 +7250,11 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                drSugSidur=null;
+                drSidurim = null;
+            }
         }
 
         private bool cheakSidurGrirainConenutGrira(DateTime dShatHatchalaGrira, DateTime dShatGmarGrira, DataRow drConenutGrira)
@@ -6894,6 +7300,7 @@ namespace KdsBatch
                 //  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                 throw (ex);
             }
+            
         }
     }
 

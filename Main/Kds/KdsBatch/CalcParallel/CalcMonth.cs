@@ -39,9 +39,9 @@ namespace KdsBatch
         {
             DateTime dTaarich, dTarMe, dTarAd;
            // bool bChishuvYom = false;
-            clUtils oUtils = new clUtils();
-            clOvdim oOvdim = new clOvdim();
-            clKavim oKavim = new clKavim();
+       //    clUtils oUtils = new clUtils();
+          //  clOvdim oOvdim = new clOvdim();
+          //  clKavim oKavim = new clKavim();
             try
             {
                 //iStatusTipul = clGeneral.enStatusTipul.HistayemTipul.GetHashCode();
@@ -104,8 +104,9 @@ namespace KdsBatch
                     CalcRechivimInMonth(dTarMe, dTarAd);
                     ChangingChofeshFromShaotNosafot();
                 }
-
+                oDay.SetNullObjects();
                 oDay = null;
+                oCalcBL = null;
               //  return objOved._dsChishuv;
             }
             catch (Exception ex)
@@ -240,6 +241,14 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "ChangingChofeshFromShaotNosafot: " + ex.Message);
                 throw ex;
             }
+            finally
+            {
+                drSidurimToChange=null;
+                drMichsaYomit=null;
+                drShaot100=null;
+                drChofesh=null;
+                drDakotNochehut = null;
+            }
         }
 
         private int GetSachShabatonimInMonth(DateTime dMonth)
@@ -262,44 +271,7 @@ namespace KdsBatch
             return iSachShabatonim;
         }
 
-        private DataTable SetSidurimMeyuchaRechiv(DateTime dTarMe, DateTime dTarAd)
-        {
-            clDal oDal = new clDal();
-            DataTable dtSidurimMeyuchaRechiv = new DataTable();
-            try
-            {   //מחזיר סידורים מיוחדים רכיב 
-                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetSidurimMeyuchRechiv, ref dtSidurimMeyuchaRechiv);
-
-                return dtSidurimMeyuchaRechiv;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-        private DataTable GetSugeySidurRechiv(DateTime dTarMe, DateTime dTarAd)
-        {
-            DataTable dt = new DataTable();
-            clDal oDal = new clDal();
-
-            try
-            {
-                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetSugeySidurRechiv, ref dt);
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+       
 
         //private void SimunLoLetashlumRetzifut()
         //{
@@ -471,6 +443,13 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                oSidur = null;
+                oPeilut = null;
+                drSidurim = null; 
+                drSidur = null;
+            }
         }
 
         private bool HaveSidurimNosafim(int iMisparSidur, DateTime dTaarich)
@@ -498,81 +477,14 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                drSidurimNosafim = null;
+            }
             return bHaveSidurim;
         }
 
-        //שליפת ימי עבודה לעובד
-        private DataTable GetYemeyAvodaToOved(int Mispar_ishi, DateTime dFromDate, DateTime dToDate)
-        {
-            clDal oDal = new clDal();
-            DataTable dt = new DataTable();
-
-            try
-            {   //מחזיר ימי עבודה לעובד:  
-                //טבלת TB_Yamey_Avoda_Ovdim
-                // Status-יכללו כל כרטיסי העבודה התקינים/הועברו לשכר (ערך 1/2 בשדה  
-                //  Status_Tipul-בחודש הנבחר עבורם הסתיים טיפול – ערך "1" בשדה  
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, objOved.Mispar_ishi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, dFromDate, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, dToDate, ParameterDir.pdInput);
-                //if (iStatusTipul == 0)
-                //{ 
-                oDal.AddParameter("p_status_tipul", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                // }
-                // else
-                // {
-                //     oDal.AddParameter("p_status_tipul", ParameterType.ntOracleInteger, iStatusTipul, ParameterDir.pdInput);
-                //}
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetYemeyAvodaToOved, ref dt);
-
-                return dt;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        private DataTable InitDtPremyot(DateTime dTarMe, int Mispar_ishi)
-        {
-            clDal oDal = new clDal();
-            DataTable dtPremyot = new DataTable();
-            int iTkufa;
-            try
-            {   //מחזיר פרמיות:  
-                iTkufa = int.Parse(dTarMe.Year.ToString() + dTarMe.Month.ToString("00"));
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, objOved.Mispar_ishi, ParameterDir.pdInput);
-                oDal.AddParameter("p_tkufa", ParameterType.ntOracleInteger, iTkufa, ParameterDir.pdInput);
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProGetPremyotView, ref dtPremyot);
-
-                return dtPremyot;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-
-        private string InitSugYechida(int Mispar_ishi, DateTime dTarMonth)
-        {
-            KdsLibrary.BL.clOvdim oOvdim = new KdsLibrary.BL.clOvdim();
-            string sSugYechida;
-            try
-            {
-                sSugYechida = oOvdim.GetSugYechidaLeoved(objOved.Mispar_ishi, dTarMonth);
-                return sSugYechida;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+      
         private void CalcRechivimInMonth(DateTime dTarMe, DateTime dTarAd)
         {
             //יש משמעות לסדר חישוב הרכיבים , אין להזיז מיקום!

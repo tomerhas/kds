@@ -63,6 +63,7 @@ namespace KdsBatch
             Instance.dtSugeyYechidaAll= null;
             Instance.dtPeiluyotOvdimAll= null;
             Instance.dtOvdimShePutru = null;
+            Instance.ListParameters = null;
             _IsCreated = false;
             Instance = null;
 

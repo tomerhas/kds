@@ -46,15 +46,19 @@ namespace KdsBatch
                      iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                      iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
                      fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
-                    
+
                      addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fErech);
                  }
-                 
+
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
              }
 
          }
@@ -156,6 +160,10 @@ namespace KdsBatch
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
+             finally
+             {
+                 drPeiluyot = null;
+             }
            
          }
 
@@ -184,7 +192,10 @@ namespace KdsBatch
              {
                   throw (ex);
              }
-
+             finally
+             {
+                 drPeiluyot = null;
+             }
          }
 
          public float CalcRechiv213(int iMisparSidur, DateTime dShatHatchalaSidur)
@@ -199,36 +210,41 @@ namespace KdsBatch
             clKavim _Kavim = new clKavim();
             int iMakatType; //= _Kavim.GetMakatType(lMakatNesia);
             clKavim.enMakatType oMakatType;
-           
-             try 
-             {
-                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
-               
-                 for (int J = 0; J < drPeiluyot.Length; J++)
-                 {
-                     iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
-                     sMakat = drPeiluyot[J]["makat_nesia"].ToString();
-                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
-                     iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
-                     oMakatType = (clKavim.enMakatType)iMakatType;
-                     if (oMakatType != clKavim.enMakatType.mVisa && oMakatType != clKavim.enMakatType.mEmpty && oMakatType != clKavim.enMakatType.mElement) //(sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
-                     {
-                         fErech+=1;
-                     }
-                     else if (sMakat.Substring(0,3)=="843" && sMakat.Substring(5,3)=="044")
-                     {
-                         fErech += int.Parse(sMakat.Substring(2, 2));
-                     }
-                 }
 
-                 return fErech;
-             }
-             catch (Exception ex)
-             {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
-                 throw (ex);
-             }
+            try
+            {
+                // dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
+
+                for (int J = 0; J < drPeiluyot.Length; J++)
+                {
+                    iMisparKnisa = int.Parse(drPeiluyot[J]["Mispar_Knisa"].ToString());
+                    sMakat = drPeiluyot[J]["makat_nesia"].ToString();
+                    dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                    iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
+                    oMakatType = (clKavim.enMakatType)iMakatType;
+                    if (oMakatType != clKavim.enMakatType.mVisa && oMakatType != clKavim.enMakatType.mEmpty && oMakatType != clKavim.enMakatType.mElement) //(sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
+                    {
+                        fErech += 1;
+                    }
+                    else if (sMakat.Substring(0, 3) == "843" && sMakat.Substring(5, 3) == "044")
+                    {
+                        fErech += int.Parse(sMakat.Substring(2, 2));
+                    }
+                }
+
+                return fErech;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                throw (ex);
+            }
+            finally
+            {
+                _Kavim = null;
+                drPeiluyot = null;
+            }
          }
 
          public void CalcRechiv214(int iMisparSidur,  DateTime dShatHatchalaSidur)
@@ -302,6 +318,11 @@ namespace KdsBatch
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
+             finally
+             {
+                 oKavim = null;
+                 drPeiluyot = null;
+             }
          }
 
          public void CalcRechiv215(int iMisparSidur, DateTime dShatHatchalaSidur)
@@ -363,7 +384,11 @@ namespace KdsBatch
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
-            
+             finally
+             {
+                 oCalcBL = null;
+                 drPeiluyot = null;
+             }
           }
 
 
@@ -406,6 +431,10 @@ namespace KdsBatch
              {
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
              }
          }
 
@@ -478,6 +507,10 @@ namespace KdsBatch
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
+             finally
+             {
+                 drPeiluyot = null;
+             }
          }
 
          public void CalcRechiv218(int iMisparSidur, DateTime dShatHatchalaSidur)
@@ -516,6 +549,10 @@ namespace KdsBatch
              {
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
              }
          }
 
@@ -580,7 +617,10 @@ namespace KdsBatch
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
-
+             finally
+             {
+                 drPeiluyot = null;
+             }
          }
 
          public void CalcRechiv268(int iMisparSidur, DateTime dShatHatchalaSidur)
@@ -647,6 +687,10 @@ namespace KdsBatch
              {
                  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
              }
 
          }
