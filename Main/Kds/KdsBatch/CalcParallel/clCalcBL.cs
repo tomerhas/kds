@@ -225,26 +225,51 @@ namespace KdsBatch
             }
         }
 
-        public   Boolean CheckOvedPutar(int iMispar_ishi, DateTime dTaarich)
+        //public   Boolean CheckOvedPutar(int iMispar_ishi, DateTime dTaarich)
+        //{
+        //    Boolean bPutar = false;
+        //    DateTime dTarMe, dTarAd;
+        //    clDal oDal = new clDal();
+        //    try
+        //    {
+        //        dTarMe = new DateTime(dTaarich.Year, dTaarich.Month, 1);
+        //        dTarAd = dTarMe.AddMonths(1).AddDays(-1);
+        //        oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMispar_ishi, ParameterDir.pdInput);
+        //        oDal.AddParameter("p_tar_chodesh_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+        //        oDal.AddParameter("p_tar_chodesh_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+        //        oDal.AddParameter("p_putar", ParameterType.ntOracleInteger, null, ParameterDir.pdOutput);
+        //        oDal.ExecuteSP(clDefinitions.cProCheckOvedPutar);
+
+        //        if (!string.IsNullOrEmpty(oDal.GetValParam("p_putar")))
+        //        {
+        //            bPutar = (oDal.GetValParam("p_putar") == "1" ? true : false);
+        //        }
+
+        //        return bPutar;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        public Boolean CheckOvedPutar(Oved oved)
         {
             Boolean bPutar = false;
-            DateTime dTarMe, dTarAd;
-            clDal oDal = new clDal();
+            DataRow[] rows;
             try
             {
-                dTarMe = new DateTime(dTaarich.Year, dTaarich.Month, 1);
-                dTarAd = dTarMe.AddMonths(1).AddDays(-1);
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMispar_ishi, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_chodesh_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
-                oDal.AddParameter("p_tar_chodesh_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-                oDal.AddParameter("p_putar", ParameterType.ntOracleInteger, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clDefinitions.cProCheckOvedPutar);
 
-                if (!string.IsNullOrEmpty(oDal.GetValParam("p_putar")))
+                if (oved.oGeneralData.dtOvdimShePutru.Rows.Count > 0)
                 {
-                    bPutar = (oDal.GetValParam("p_putar") == "1" ? true : false);
+                    rows = oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime') >= taarich_me and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime')<= taarich_ad");
+                      //     oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and "+ oved.Taarich.ToShortDateString()  +" >= Convert('taarich_me' , 'System.DateTime') and "+ oved.Taarich.ToShortDateString()  +" <= Convert('taarich_ad' , 'System.DateTime')" );
+                    if (rows.Length > 0)
+                    {
+                        bPutar = true;
+                    }
                 }
-
+              
                 return bPutar;
             }
             catch (Exception ex)
@@ -252,7 +277,6 @@ namespace KdsBatch
                 throw ex;
             }
         }
-
         public string InitSugYechida(Oved oved,DateTime dDay)
         {
             DataRow[] drSugYechida;

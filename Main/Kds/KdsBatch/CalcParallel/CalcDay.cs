@@ -2445,7 +2445,7 @@ namespace KdsBatch
                                 }
                             }
 
-                            if ((SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved.Mispar_ishi, _Taarich) && fMichsaYomit > 0 && fErechRechiv > 0)
+                            if ((SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
@@ -2529,7 +2529,7 @@ namespace KdsBatch
                             }
                         }
 
-                        if ((SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved.Mispar_ishi, _Taarich) && fMichsaYomit > 0 && fErechRechiv > 0)
+                        if ((SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode()) && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                         {
                             fErechRechiv = fErechRechiv * float.Parse("0.6");
                         }

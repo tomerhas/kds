@@ -62,7 +62,7 @@ namespace KdsBatch
             Instance.dtMeafyenyOvedAll= null;
             Instance.dtSugeyYechidaAll= null;
             Instance.dtPeiluyotOvdimAll= null;
-           
+            Instance.dtOvdimShePutru = null;
             _IsCreated = false;
             Instance = null;
 
@@ -101,6 +101,7 @@ namespace KdsBatch
         public DataTable dtMeafyenyOvedAll { get; set; }
         public DataTable dtSugeyYechidaAll { get; set; }
         public DataTable dtPeiluyotOvdimAll { get; set; }
+        public DataTable dtOvdimShePutru { get; set; }
 
         public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
         {
@@ -154,6 +155,7 @@ namespace KdsBatch
                 dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
                 dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
                 dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
+                dtOvdimShePutru = dsNetuneyChishuv.Tables["Ovdim_ShePutru"];
             }
             catch (Exception ex)
             {

@@ -66,6 +66,7 @@ namespace KdsBatch
                 while (dTaarich <= dTarAd)
                 {
                     oDay._Taarich = dTaarich;
+                    objOved.Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
@@ -86,6 +87,7 @@ namespace KdsBatch
                 while (dTaarich <= dTarAd)
                 {
                     oDay._Taarich = dTaarich;
+                    objOved.Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
@@ -3555,7 +3557,7 @@ namespace KdsBatch
                 if ((objOved.objMeafyeneyOved.iMeafyen14 <= 0) && objOved.objMeafyeneyOved.iMeafyen12 > 0)
                 {
                     dTaarich = dTarMe;
-                    bPutar = oCalcBL.CheckOvedPutar(objOved.Mispar_ishi, dTaarich);
+                    bPutar = oCalcBL.CheckOvedPutar(objOved);
                     while (dTaarich <= dTarAd)
                     {
                         fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')"));
