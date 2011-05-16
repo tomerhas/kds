@@ -6194,6 +6194,7 @@ namespace KdsBatch
 
                     clSidur oSidurFirst = new clSidur();
                     clSidur oSidurSecond = new clSidur();
+                    int indexSidurFirst=0;
                     bool flag = true;
                     //שינוי 6
                     for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -6204,6 +6205,7 @@ namespace KdsBatch
                             if ( oSidur.iLoLetashlum == 0)
                             {
                                 oSidurFirst = oSidur;
+                                indexSidurFirst = i;
                                 flag = false;
                             }
                         }
@@ -6219,9 +6221,10 @@ namespace KdsBatch
                                     oObjSidurimOvdimUpd = GetUpdSidurObject(oSidurFirst);
 
                                     FixedPitzulHafsaka06(ref oSidurFirst, i + 1, ref oObjSidurimOvdimUpd);
-                                    htEmployeeDetails[i] = oSidurFirst;
+                                    htEmployeeDetails[indexSidurFirst] = oSidurFirst;
                                 }
                                 oSidurFirst = oSidurSecond;
+                                indexSidurFirst = i + 1;
                             }
                         }
                     }
