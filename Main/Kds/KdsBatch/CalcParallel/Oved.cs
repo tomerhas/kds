@@ -534,6 +534,7 @@ namespace KdsBatch
             _DtPeilut = null;
             MeafyeneyOved = null;
             PirteyOved = null;
+            oGeneralData = null;
             GC.Collect();
 
         }

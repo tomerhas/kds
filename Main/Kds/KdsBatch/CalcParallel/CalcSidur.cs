@@ -118,7 +118,7 @@ namespace KdsBatch
                     //ב.	אם מדובר בסידור היעדרות שאינו מילואים [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 53 )] עם ערך כלשהו <> 3 יש לבצע את החישוב לאחר סיום חישוב רכיב זה לכל שאר הסידורים ביום. יש לחשב את X = סכום ערך הרכיב עבור כלל הסידורים ביום העבודה שאינם סידורי היעדרות (לא כולל מילואים). כלומר אין לכלול בסכימה את הסידורים בעלי מאפיין 53 עם ערך כלשהו השונה מ- 3 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 53 )]  . 
                     //אם X >= ממכסה יומית מחושבת (רכיב 126) אזי אין לפתוח רשומה לרכיב זה לסידור.
                     //אחרת, ערך הרכיב = הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126) פחות X)
-
+                    _drSidurMeyuchad = null; 
                     _drSidurMeyuchad = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and sidur_misug_headrut is not null and sidur_misug_headrut<>3 AND MISPAR_SIDUR IN(" + sSidurim + ") and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "taarich asc");
 
                     for (int I = 0; I < _drSidurMeyuchad.Length; I++)
@@ -6799,11 +6799,11 @@ namespace KdsBatch
 
         private void SetSugSidur(ref DataRow drSidur, DateTime dSidurDate, int iMisparSidur)
         {
-            try
-            {
                 //סידורים רגילים
                 //נבדוק מול התנועה
                 DataRow[] rowSidur;
+            try
+            {
                 if (drSidur["sug_sidur"].ToString() == "0" || drSidur["sug_sidur"].ToString() == "")
                 {
                     drSidur["sug_sidur"] = 0;
@@ -6818,6 +6818,10 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                rowSidur = null;
             }
 
         }
