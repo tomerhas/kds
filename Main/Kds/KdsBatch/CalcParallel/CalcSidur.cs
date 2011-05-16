@@ -7053,7 +7053,7 @@ namespace KdsBatch
                 sSidurim = sSidurim.Substring(0, sSidurim.Length - 1);
 
             }
-
+            drSidurim = null;
             return sSidurim;
         }
 

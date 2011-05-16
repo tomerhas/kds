@@ -996,7 +996,7 @@ namespace KdsBatch
             {
                 sParamVal = dr[0]["erech_param"].ToString();
             }
-
+            dr = null;
             return sParamVal;
         }
 

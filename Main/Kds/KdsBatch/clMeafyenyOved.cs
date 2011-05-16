@@ -446,6 +446,7 @@ namespace KdsBatch
                     bMeafyenExists = int.Parse(drMeafyn[0]["source_meafyen"].ToString()) == 1;
                     sMeafyenValue = drMeafyn[0]["value_erech_ishi"].ToString();
                 }
+                drMeafyn = null;
             }
             catch (Exception ex)
             {
