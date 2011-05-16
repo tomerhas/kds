@@ -371,6 +371,7 @@ namespace KdsBatch
                     objChsishuvChodesh.KOD_RECHIV = int.Parse(drChishuv["KOD_RECHIV"].ToString());
                     objChsishuvChodesh.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
                     collChishuvChodesh.Add(objChsishuvChodesh);
+                    objChsishuvChodesh = null;
                 }
               //  return collChishuvChodesh;
             }
@@ -398,6 +399,7 @@ namespace KdsBatch
                     objChsishuvYomi.ERECH_RECHIV = float.Parse(drChishuv["ERECH_RECHIV"].ToString());
                     objChsishuvYomi.TKUFA = DateTime.Parse(drChishuv["TKUFA"].ToString());
                     collChishuvYomi.Add(objChsishuvYomi);
+                    objChsishuvYomi = null;
                 }
             //    return collChishuvYomi;
             }
@@ -426,6 +428,7 @@ namespace KdsBatch
                     objChsishuvSidur.MISPAR_SIDUR = int.Parse(drChishuv["MISPAR_SIDUR"].ToString());
                     objChsishuvSidur.SHAT_HATCHALA = DateTime.Parse(drChishuv["SHAT_HATCHALA"].ToString());
                     collChishuvSidur.Add(objChsishuvSidur);
+                    objChsishuvSidur = null;
                 }
             //    return collChishuvSidur;
             }

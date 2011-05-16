@@ -6850,6 +6850,7 @@ namespace KdsBatch
                     drChishuv["KOD_RECHIV"] = iKodRechiv;
                     drChishuv["ERECH_RECHIV"] = fErechRechiv;
                     _dtChishuvSidur.Rows.Add(drChishuv);
+                    drChishuv = null;
                 }
             }
             else
@@ -6864,6 +6865,7 @@ namespace KdsBatch
             DataRow drChishuv;
             drChishuv = _dtChishuvSidur.Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
+            drChishuv = null;
         }
 
         private void addRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv, int iOutMichsa)
@@ -6884,6 +6886,7 @@ namespace KdsBatch
                     drChishuv["ERECH_RECHIV"] = fErechRechiv;
                     drChishuv["OUT_MICHSA"] = iOutMichsa;
                     _dtChishuvSidur.Rows.Add(drChishuv);
+                    drChishuv = null;
                 }
             }
             else
@@ -7073,6 +7076,7 @@ namespace KdsBatch
 
             }
             sSugeySidur = "," + sSugeySidur;
+            drSidurim = null;
             return sSugeySidur;
         }
 

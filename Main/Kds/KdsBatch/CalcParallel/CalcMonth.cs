@@ -5516,7 +5516,7 @@ namespace KdsBatch
                     drChishuv["KOD_RECHIV"] = iKodRechiv;
                     drChishuv["ERECH_RECHIV"] = fErechRechiv;
                     _dtChishuvChodesh.Rows.Add(drChishuv);
-
+                    drChishuv = null;
                 }
             }
             else
@@ -5531,7 +5531,7 @@ namespace KdsBatch
             DataRow drChishuv;
             drChishuv = _dtChishuvChodesh.Select("KOD_RECHIV=" + iKodRechiv)[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
-
+            drChishuv = null;
         }
 
 

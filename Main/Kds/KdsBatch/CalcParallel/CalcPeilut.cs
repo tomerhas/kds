@@ -908,6 +908,7 @@ namespace KdsBatch
             drChishuv["KOD_RECHIV"] = iKodRechiv;
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
             _dtChishuvPeilut.Rows.Add(drChishuv);
+            drChishuv = null;
         }
     }
 }

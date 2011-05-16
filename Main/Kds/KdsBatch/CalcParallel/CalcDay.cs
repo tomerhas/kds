@@ -6599,6 +6599,7 @@ namespace KdsBatch
                     drChishuv["ERECH_RECHIV"] = fErechRechiv;
                     drChishuv["ERECH_EZER"] = System.DBNull.Value;
                     _dtChishuvYom.Rows.Add(drChishuv);
+                    drChishuv = null;
                 }
             }
             else
@@ -6624,6 +6625,7 @@ namespace KdsBatch
                     drChishuv["ERECH_RECHIV"] = fErechRechiv;
                     drChishuv["ERECH_EZER"] = fErechEzer;
                     _dtChishuvYom.Rows.Add(drChishuv);
+                    drChishuv = null;
                 }
                 else
                 {
@@ -6641,7 +6643,7 @@ namespace KdsBatch
             {
                 drChishuv["ERECH_EZER"] = fErechEzer;
             }
-
+            drChishuv = null;
         }
 
 
