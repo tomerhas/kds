@@ -10511,11 +10511,14 @@ namespace KdsBatch
                                 oNewSidurim.SidurNew = iMisparSidur;
                                 oNewSidurim.ShatHatchalaNew = oSidur.dFullShatHatchala;
 
+                                //שינוי מקום בעקבות באג 17/05
+                                oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                                
                                 UpdateObjectUpdSidurim(oNewSidurim);
                                 DataRow[] drSidurMeyuchad;
                                 drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
 
-                                oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                              
 
                                 oSidur = new clSidur(oSidur, _dCardDate, iNewMisparSidur, drSidurMeyuchad[0]);
                                 oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
