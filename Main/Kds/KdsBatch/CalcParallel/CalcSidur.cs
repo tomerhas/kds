@@ -987,6 +987,7 @@ namespace KdsBatch
                 }
                 if (sSugeySidur.Length > 0)
                 {
+                    drSidurim = null;
                     drSidurim = GetSidurimRegilim();
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
@@ -1002,6 +1003,7 @@ namespace KdsBatch
                             dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                             dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
                             //fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                            dr = null;
                             dr = objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                             if (dr.Length > 0)
                                 fErech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
@@ -1737,6 +1739,7 @@ namespace KdsBatch
 
             //ד.	קיימת לפחות נסיעה ריקה אחת המזכה באש"ל. תיאור הבדיקה: נסיעות ריקות שדווחו ע"י הרישום הינן בעלות 3 ספרות ראשונות של המק"ט הוא אחד מתוך (791 , 792 , 744 , 785)  וגם [קמ] של נסיעה >=20 [שליפת פרמטר (קוד פרמטר = 33)].כאשר:  [קמ] = [חישוב קמ לפי זמן נסיעה (מק"ט פעילות)]
             //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3) in(791,792,744,785)");
+            drPeiluyot = null;
             drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3) in(791,792,744,785))");
            
             if (drPeiluyot.Length > 0)
@@ -2062,6 +2065,7 @@ namespace KdsBatch
                     sSugeySidur = GetSugeySidurRechiv(iKodRechiv);
                     if (sSugeySidur.Length > 0)
                     {
+                        drSidurim = null;
                         drSidurim = GetSidurimRegilim();
                         for (int I = 0; I < drSidurim.Length; I++)
                         {
@@ -2203,7 +2207,7 @@ namespace KdsBatch
 
 
                 }
-
+                drSidurim = null;
                 drSidurim = GetSidurimRegilim();
                 if (drSidurim.Length > 0)
                 {
@@ -3375,6 +3379,7 @@ namespace KdsBatch
 
                             if (dShatHatchalaSidur >= dShaa && bGriraInConenutGrira && (iMikumKnisa > 0 || iMikumYetzia > 0))
                             {
+                                drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvoda.Select("Lo_letashlum=0  and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
                                 if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur && iMikumKnisa > 0)
                                 {
@@ -3401,7 +3406,7 @@ namespace KdsBatch
                                     fTempY = Math.Min(objOved.objParameters.iTosefetZmanGrira, fTempDakot);
                                 }
 
-
+                                drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null  and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur desc");
                                 if (int.Parse(drSidurimLeyom[0]["mispar_sidur"].ToString()) == iMisparSidur && DateTime.Parse(drSidurimLeyom[0]["shat_hatchala_sidur"].ToString()) == dShatHatchalaSidur && iMikumYetzia > 0)
                                 {
@@ -3438,7 +3443,7 @@ namespace KdsBatch
                         fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) + fTempX + fTempY;
 
                         addRowToTable(clGeneral.enRechivim.ZmanGrirot.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
-
+                        drSidurimLeyom = null;
                     }
                 }
             }
@@ -3488,6 +3493,7 @@ namespace KdsBatch
 
                 if ((fMichsaYomit == 0) && (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode()))
                 {
+                    _drSidurim = null;
                     _drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and MISPAR_SIDUR IN(99703,99202,99701,99010 ,99006)");
                     for (int I = 0; I < _drSidurim.Length; I++)
                     {
@@ -3507,6 +3513,7 @@ namespace KdsBatch
 
                 if (clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom, dTaarich))
                 {
+                    _drSidurim = null;
                     _drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and MISPAR_SIDUR IN(99012)");
                     for (int I = 0; I < _drSidurim.Length; I++)
                     {
@@ -3522,7 +3529,7 @@ namespace KdsBatch
                         }
 
                     }
-
+                    _drSidurim = null;
                     _drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                     fErech = 0;
                     for (int I = 0; I < _drSidurim.Length; I++)
@@ -3996,6 +4003,7 @@ namespace KdsBatch
                 sSugeySidur = GetSugeySidurRechiv(iKodRechiv);
                 if (sSugeySidur.Length > 0)
                 {
+                    drSidurim = null;
                     drSidurim = GetSidurimRegilim();
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
@@ -5240,7 +5248,7 @@ namespace KdsBatch
                     iMisparSidurFirst = int.Parse(_drSidurim[0]["mispar_sidur"].ToString());
                     dShatHatchalaSidurFirst = DateTime.Parse(_drSidurim[0]["shat_hatchala_sidur"].ToString());
                 }
-
+                _drSidurim = null;
                 _drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
 
                 for (int I = 0; I < _drSidurim.Length; I++)
@@ -5933,6 +5941,7 @@ namespace KdsBatch
 
                             if (fErech > 0)
                             {
+                                drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
                                 RowNext = drSidurimLeyom[0];
                                 for (int J = 0; J < drSidurimLeyom.Length; J++)
@@ -6006,6 +6015,7 @@ namespace KdsBatch
 
                             if (fErech > 0)
                             {
+                                drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
                                 RowNext = drSidurimLeyom[0];
                                 for (int J = 0; J < drSidurimLeyom.Length; J++)
@@ -6079,6 +6089,7 @@ namespace KdsBatch
 
                             if (fErech > 0)
                             {
+                                drSidurimLeyom = null;
                                 drSidurimLeyom = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc");
                                 RowNext = drSidurimLeyom[0];
                                 for (int J = 0; J < drSidurimLeyom.Length; J++)
@@ -6598,6 +6609,7 @@ namespace KdsBatch
                 sSugeySidur = GetSugeySidurRechiv(iKodRechiv);
                 if (sSugeySidur.Length > 0)
                 {
+                    drSidurim = null;
                     drSidurim = GetSidurimRegilim();
                     for (int I = 0; I < drSidurim.Length; I++)
                     {

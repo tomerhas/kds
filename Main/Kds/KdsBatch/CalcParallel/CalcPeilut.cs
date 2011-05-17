@@ -137,7 +137,7 @@ namespace KdsBatch
                             
                      }
                  }
-
+                 drPeiluyot = null;
                  drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)=764)");
                  if (drPeiluyot.Length > 0)
                  {
@@ -471,7 +471,7 @@ namespace KdsBatch
                  }
 
                //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1)<>5");
-                
+                 drPeiluyot = null;
                  drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,1)<>5)");
                    
                  for (int J = 0; J < drPeiluyot.Length; J++)

@@ -432,7 +432,7 @@ namespace KdsBatch
                     }
                 }
 
-
+                drSidurim = null;
                 drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=-1", "");
                 for (I = 0; I < drSidurim.Length; I++)
                 {
@@ -5488,11 +5488,13 @@ namespace KdsBatch
             {
                 drRowToRemove[0].Delete();
             }
+            drRowToRemove = null;
             drRowToRemove = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV IN(" + sRechivim + ")");
             for (int i = 0; i < drRowToRemove.Length - 1; i++)
             {
                 drRowToRemove[0].Delete();
             }
+            drRowToRemove = null;
             drRowToRemove = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV IN(" + sRechivim + ")");
             for (int i = 0; i < drRowToRemove.Length - 1; i++)
             {

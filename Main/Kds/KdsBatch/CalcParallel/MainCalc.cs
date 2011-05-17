@@ -264,6 +264,11 @@ namespace KdsBatch
                 oDal.TxRollBack();
                 throw ex;
             }
+            finally
+            {
+                drChanges = null;
+            }
+
         }
 
         private void SaveChishuv(COLL_CHISHUV_CHODESH _collChishuvChodesh,COLL_CHISHUV_YOMI _collChishuvYomi,COLL_CHISHUV_SIDUR _collChishuvSidur)
