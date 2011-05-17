@@ -1,64 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsNetuneyRashemet">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>bb0e8b48-aecf-4da5-9c40-974b46d84a4d</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsIdkuneyRashemet">
-      <Fields>
-        <Field Name="TAARICH_IDKUN">
-          <DataField>TAARICH_IDKUN</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsNetuneyRashemet</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETNETUNEYIDKUNEYRASHEMET</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_MIS_RASHEMET">
-            <Value>=Parameters!P_MIS_RASHEMET.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH_CA">
-            <Value>=Parameters!P_TAARICH_CA.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SHAA">
-            <Value>=Parameters!P_SHAA.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>2.49999cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>2.49999cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.60404in</Width>
+              <Width>4.07426cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -170,7 +129,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -201,7 +160,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -349,7 +307,7 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   לתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
+            <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   מתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
           </Parameter>
         </Parameters>
         <Left>2.3607cm</Left>
@@ -366,6 +324,70 @@
     <Height>1.66303in</Height>
     <Style />
   </Body>
+  <Width>8.01192in</Width>
+  <Page>
+    <PageFooter>
+      <Height>1.11125cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsNetuneyRashemet">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>bb0e8b48-aecf-4da5-9c40-974b46d84a4d</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsIdkuneyRashemet">
+      <Query>
+        <DataSourceName>DsNetuneyRashemet</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_MIS_RASHEMET">
+            <Value>=Parameters!P_MIS_RASHEMET.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH_CA">
+            <Value>=Parameters!P_TAARICH_CA.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SHAA">
+            <Value>=Parameters!P_SHAA.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETNETUNEYIDKUNEYRASHEMET</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="TAARICH_IDKUN">
+          <DataField>TAARICH_IDKUN</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MIS_RASHEMET">
       <DataType>Integer</DataType>
@@ -408,27 +430,6 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>8.01192in</Width>
-  <Page>
-    <PageFooter>
-      <Height>1.11125cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -438,6 +439,6 @@ vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANk
 FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>479aa783-e023-4f04-942e-54ac80f40274</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>479aa783-e023-4f04-942e-54ac80f40274</rd:ReportID>
 </Report>
