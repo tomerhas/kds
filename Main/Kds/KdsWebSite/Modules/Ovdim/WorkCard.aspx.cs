@@ -1544,6 +1544,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.MisparIshiIdkunRashemet = iMisparIshiIdkunRashemet;
         lstSidurim.LoginUserId = (int.Parse(LoginUser.UserInfo.EmployeeNumber));
         lstSidurim.Param98 = oBatchManager.oParam.iMaxMinutsForKnisot;
+        lstSidurim.Param42 = oBatchManager.oParam.fFactor;
+        lstSidurim.Param43 = oBatchManager.oParam.fFactorNesiotRekot;
         lstSidurim.MeasherOMistayeg =  (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
 
     }

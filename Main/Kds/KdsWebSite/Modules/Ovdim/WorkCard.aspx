@@ -550,9 +550,9 @@
          
 //       frmWorkCard.submit =SaveScrollPositionSubmit();
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
-        document.onkeydown = KeyCheck;  
+        document.onkeydown = KeyCheck; 
         function KeyCheck(){  
-          var KeyID = event.keyCode;
+          var KeyID = event.keyCode; 
            switch(KeyID){            
               case 13: //Enter           
                  if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){  
@@ -567,7 +567,7 @@
               case 107:
                  event.keyCode=9;
                  break;
-              case 123: //f12
+              case 110: //. //123-f12
               if (document.getElementById("btnUpdateCard").disabled==false)              
                     document.getElementById("btnUpdateCard").focus();
               

@@ -49,6 +49,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _Param98;
     private DateTime _Param242;
     private DateTime _Param244;
+    private float _Param43;
+    private float _Param42;
     private int _NumOfHashlama;
     private DateTime _CardDate;
     private DateTime _FullShatHatchala;
@@ -1030,11 +1032,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bool bElementTime = false;
      
         try
-        {
-            lKodElement = long.Parse(lMakatNesia.ToString().PadRight(8, (char)48));
-            lKodElement = (lKodElement % 10000000);
-            lKodElement = (lKodElement / 100000);
-            
+        {           
+            lKodElement = GetKodElement(lMakatNesia);
             dr = MeafyeneyElementim.Select("kod_element=" + lKodElement.ToString() + " and kod_meafyen=" + clGeneral.enMeafyenElementim.Meafyen4.GetHashCode().ToString() + " and erech='" + clGeneral.enMeafyenElementim4.ElementTime.GetHashCode().ToString() + "'");
 
             bElementTime = (dr.Length > 0);
@@ -1045,6 +1044,38 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             throw ex;
         }
+    }
+    protected bool IsMeafyenExistsInElement(long lMakatNesia, long lMeafyenNum, string sValue)
+    {
+
+        //מחזיר אמת אם קיים לאלמנט ערך במאפיין נתון
+        DataRow[] dr;
+        long lKodElement;
+        bool bElementExists = false;
+
+        try
+        {
+            lKodElement = GetKodElement(lMakatNesia);
+            dr = MeafyeneyElementim.Select("kod_element=" + lKodElement.ToString() + " and kod_meafyen=" + lMeafyenNum.ToString() + " and erech='" + sValue + "'");
+
+            bElementExists = (dr.Length > 0);
+
+            return bElementExists;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    protected long GetKodElement(long lMakatNesia)
+    {
+        long lKodElement;
+
+        lKodElement = long.Parse(lMakatNesia.ToString().PadRight(8, (char)48));
+        lKodElement = (lKodElement % 10000000);
+        lKodElement = (lKodElement / 100000);
+
+        return lKodElement;
     }
     protected DataView ConvertHashPeilutToDataView(OrderedDictionary htPeilut)
     {
@@ -1374,7 +1405,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 while (!bFound)
                 {
-                    if (_NextSidur != null)
+                    if ((_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text!="1"))
                         bFound = true;
                     else
                     {
@@ -1398,10 +1429,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iPeilutIndex = iPeilutIndex + 1;
             _NextPeilut = _NextSidur.Rows[iPeilutIndex];
         }
-      
-        
-        
-        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) && (_NextSidur != null))
+
+
+
+        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) && (_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
         {
             try
             {
@@ -1452,10 +1483,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                 iSidurIndex = iSidurIndex + 1;
                                 bFound = false;
                                 _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                                while ((_NextSidur != null) && (!bFound))
+                                while ((_NextSidur != null) && (!bFound) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
                                 {
                                     if (_NextSidur != null)
+                                    {
                                         bFound = true;
+                                        _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                                        iPeilutIndex = 0;
+                                    }
                                     else
                                     {
                                         iSidurIndex = iSidurIndex + 1;
@@ -1478,10 +1513,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             iSidurIndex = iSidurIndex + 1;
                             bFound = false;
                             _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                            while ((_NextSidur != null) && (!bFound))
+                            while ((_NextSidur != null) && (!bFound) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
                             {
                                 if (_NextSidur != null)
+                                {
                                     bFound = true;
+                                    _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                                    iPeilutIndex = 0;
+                                }
                                 else
                                 {
                                     iSidurIndex = iSidurIndex + 1;
@@ -4794,6 +4833,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Enabled = ((!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
             oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
+            oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
             //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = oTxt.ID;
             sID = "defMin";
@@ -4847,6 +4887,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iMisparKnisa;
         arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
         iMisparKnisa = int.Parse(arrKnisaVal[0]);
+        int iTime;
         try
         {
             //עבור שירות (מק"ט שירות שאינו כניסה  (mispar_knisa=0, ריקה, נמ"ק לקבלת נתון זה יש לפנות לתנועה:
@@ -4855,28 +4896,47 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             lmakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
-            _MakatType = ((clKavim.enMakatType)oKavim.GetMakatType(lmakat)) ;
-            if ((_MakatType == clKavim.enMakatType.mElement) || (_MakatType == clKavim.enMakatType.mVisut) || (_MakatType == clKavim.enMakatType.mVisa) || (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa != 0))))            
-                e.Row.Cells[_COL_DEF_MINUTES].Text = "0";            
-            else
+            _MakatType = ((clKavim.enMakatType)oKavim.GetMakatType(lmakat));
+           
+            //אם אלמנט זמן מסוג ריקה
+            //אלמנט מסוג ריקה (מאפיין 23 = 1)  - להציג 
+            //בעמודה ערך מפוזיציות 4-6 * פרמטר 43.
+            if (((_MakatType == clKavim.enMakatType.mElement)
+                  && (IsMeafyenExistsInElement(lmakat,clGeneral.enMeafyenElementim.Meafyen23.GetHashCode(), 
+                   clGeneral.enMeafyenElementim23.ElementTimeNesiaReka.GetHashCode().ToString()))))
             {
-                if (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)) || ((_MakatType == clKavim.enMakatType.mEmpty) || (_MakatType == clKavim.enMakatType.mNamak)))
-                {
-                 //   e.Row.Cells[_COL_DEF_MINUTES].Text = e.Row.Cells[_COL_DEF_MINUTES].Text;
-                    e.Row.Cells[_COL_DEF_MINUTES].Width = Unit.Pixel(55);
-                    e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
-                }                                        
+                iTime =int.Parse(lmakat.ToString().Substring(3,3));
+                e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)(iTime * _Param43)).ToString();
+                e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
             }
-            //e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
-            //lmakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
-            //if (((clKavim.enMakatType)oKavim.GetMakatType(lmakat)) == clKavim.enMakatType.mElement)
-            //{
-                //if (IsElementTime(lmakat))
-                //{
-                //    e.Row.Cells[_COL_DEF_MINUTES].Text = lmakat.ToString().Substring(3, 3);
-                //    e.Row.Cells[_COL_DEF_MINUTES].Width = Unit.Pixel(40);
-                //    e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_DEF_MINUTES].Text + " דקות ";
-                //}
+            else{
+                //אם אלמנט זמן מסוג נסיעה מלאה
+                // אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
+                //להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
+
+                if (((_MakatType == clKavim.enMakatType.mElement)
+                      && (IsMeafyenExistsInElement(lmakat,
+                                                   clGeneral.enMeafyenElementim.Meafyen35.GetHashCode(),
+                                                   clGeneral.enMeafyenElementim35.ElementTimeNesiaMelea.GetHashCode().ToString()))))
+                {
+                        iTime =int.Parse(lmakat.ToString().Substring(3,3));
+                        e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)(iTime * _Param42)).ToString();
+                        e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
+                }
+                else{
+                    if ((_MakatType == clKavim.enMakatType.mElement) || (_MakatType == clKavim.enMakatType.mVisut) || (_MakatType == clKavim.enMakatType.mVisa) || (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa != 0))))            
+                     e.Row.Cells[_COL_DEF_MINUTES].Text = "0";     
+       
+                   else
+                      {
+                        if (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)) || ((_MakatType == clKavim.enMakatType.mEmpty) || (_MakatType == clKavim.enMakatType.mNamak)))
+                        {                
+                            e.Row.Cells[_COL_DEF_MINUTES].Width = Unit.Pixel(55);
+                            e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
+                        }                                        
+                    }     
+                }
+            }            
           }       
 
         //}
@@ -5274,7 +5334,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.CausesValidation = true;
             oTxt.ID = e.Row.ClientID + "KisoyTor";
             oTxt.Width = Unit.Pixel(40);
-            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());           
+            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
+            oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
             //AddAttribute(oTxt, "OldV", oTxt.Text);
          //   AddAttribute(oTxt, "OldTorMapV", e.Row.Cells[_COL_KISUY_TOR_MAP].Text);
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
@@ -5679,7 +5740,28 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _dvHashlama;
         }
     }
-   
+    public float Param42
+    {//פקטור נסיעות שירות בין גמר לתכנון,
+        set
+        {
+            _Param42 = value;
+        }
+        get
+        {
+            return _Param42;
+        }
+    }
+    public float Param43
+    {// פקטור נסיעות ריקות בין גמר לתכנון 
+        set
+        {
+            _Param43 = value;
+        }
+        get
+        {
+            return _Param43;
+        }
+    }
     public DateTime Param93
     {//מגבלת התחלה שעת התחלה
         set

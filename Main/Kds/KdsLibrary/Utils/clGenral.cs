@@ -1012,11 +1012,21 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enMeafyenElementim
         {
-            Meafyen4 = 4
+            Meafyen4 = 4,
+            Meafyen23 = 23,
+            Meafyen35 = 35
         }
         public enum enMeafyenElementim4
         {
             ElementTime = 1
+        }
+        public enum enMeafyenElementim23
+        {
+            ElementTimeNesiaReka = 1            
+        }
+        public enum enMeafyenElementim35
+        {
+            ElementTimeNesiaMelea = 1
         }
         public enum enMeasherOMistayeg
         {

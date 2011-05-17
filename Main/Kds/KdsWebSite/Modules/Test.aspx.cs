@@ -343,7 +343,7 @@ public partial class Modules_Test :Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         clCalculation objCalc = new clCalculation();
-        objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+    //    objCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
 
        //MainCalc objMainCalc = new MainCalc();
        //objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
@@ -355,12 +355,12 @@ public partial class Modules_Test :Page
         //clInputData oInputData = new clInputData();
         //oInputData.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
         string[] arrDate;
-        arrDate = clnFromDate.Text.Split(char.Parse("/"));
+       // arrDate = clnFromDate.Text.Split(char.Parse("/"));
         DateTime a;
         a = new DateTime(2010, 10, 03, 19, 20, 0);
-        clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]),int.Parse(arrDate[1]),int.Parse(arrDate[0])));
-        oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
-        oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+       // clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]),int.Parse(arrDate[1]),int.Parse(arrDate[0])));
+        //oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        //oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         
     }
     protected void BtAddSelected_Click(object sender, EventArgs e) 
@@ -380,19 +380,19 @@ public partial class Modules_Test :Page
         {
             //ApprovalFactory.RaiseAllWorkDayApprovalCodes(DateTime.Parse(clnFromDate.Date), 11000);
             Server.ScriptTimeout = 3600;
-            ApprovalFactory.ApprovalsEndOfDayProcess(DateTime.Parse(clnFromDate.Date), false);
+         //   ApprovalFactory.ApprovalsEndOfDayProcess(DateTime.Parse(clnFromDate.Date), false);
         }
-        else
-            ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(DateTime.Parse(clnFromDate.Date),
-                int.Parse(txtId.Text), 10000, chkGarage.Checked);
+        //else
+        //    ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(DateTime.Parse(clnFromDate.Date),
+        //        int.Parse(txtId.Text), 10000, chkGarage.Checked);
     }
     protected void btnInputAndErrorsBatch_click(object sender, EventArgs e)
     {
         long lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(
             clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess,
             "", 0);
-        KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess,
-            KdsBatch.BatchExecutionType.All, DateTime.Parse(clnFromDate.Date), lRequestNum, true);
+      //  KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess,
+           // KdsBatch.BatchExecutionType.All, DateTime.Parse(clnFromDate.Date), lRequestNum, true);
 
     }
 
