@@ -1407,7 +1407,7 @@ namespace KdsBatch
              {
                  if (_dtYemeyAvodaOved.Select("Lo_letashlum=0  and TACHOGRAF=1 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur ASC").Length == 0)
                  {
-                     if (clCalcData.CheckErevChag(clCalcData.iSugYom) && clCalcData.CheckYomShishi(clCalcData.iSugYom) && clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich))
+                     if (clCalcData.CheckErevChag(clCalcData.iSugYom) || clCalcData.CheckYomShishi(clCalcData.iSugYom) || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, _Taarich))
                      {
                          if (_oGeneralData.objPirteyOved.iMutamut != 4 && _oGeneralData.objPirteyOved.iMutamut != 5)
                          {

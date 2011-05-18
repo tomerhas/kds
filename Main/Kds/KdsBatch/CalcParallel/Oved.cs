@@ -109,41 +109,6 @@ namespace KdsBatch
         }
 
 
-
-        private void SetNetunimLeOved2()
-        {
-            try
-            {
-             /*   DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim;
-                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim;
-                Parameters = oGeneralData.ListParameters;
-                DtMichsaYomit = oGeneralData._dtMichsaYomitAll;
-                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll;
-                DtSugeySidur = oGeneralData._dtSugeySidurAll;
-                DtBusNumbers = oGeneralData._dtBusNumbersAll;
-                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll;
-                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll;
-                dtPremyotYadaniyot = oGeneralData._dtPremyotYadaniyotAll;*/
-
-
-                InitPremyot();
-                InitPirteyOvedList();
-                InitDtYemeyAvoda();
-                InitDtPeiluyotFromTnua();
-                InitDtPeiluyotLeOved();
-                InitMeafyenim();
-                InitSugeyYechida();
-                InitDataSetChishuv();
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "SetNetunimLeOved: " + ex.Message);
-                throw ex;
-            }
-        }
-
-
-
         private void InitPremyotYadaniyot()
         {
 
@@ -238,6 +203,7 @@ namespace KdsBatch
                     }
                     dTarMe = dTarMe.AddDays(1);
                     rows = null;
+                    itemPirteyOved = null;
                 }
             }
             catch (Exception ex)
@@ -374,6 +340,7 @@ namespace KdsBatch
                     itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
                     MeafyeneyOved.Add(itemMeafyenyOved);
                     dTarMe = dTarMe.AddDays(1);
+                    itemMeafyenyOved = null;
                     drMeafyn = null;
                     MeafyenimLeYom = null;
                 }
@@ -386,29 +353,29 @@ namespace KdsBatch
             }
         }
 
-        public void InitMeafyenim()
-        {
-            clMeafyenyOved itemMeafyenyOved;
-            DateTime dTarMe = Month;
-            DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
-            try
-            {
+        //public void InitMeafyenim()
+        //{
+        //    clMeafyenyOved itemMeafyenyOved;
+        //    DateTime dTarMe = Month;
+        //    DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
+        //    try
+        //    {
 
-                MeafyeneyOved = new List<clMeafyenyOved>();
-                while (dTarMe <= TarAd)
-                {
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData.dtMeafyenyOvedAll);
-                    MeafyeneyOved.Add(itemMeafyenyOved);
-                    dTarMe = dTarMe.AddDays(1);
-                }
+        //        MeafyeneyOved = new List<clMeafyenyOved>();
+        //        while (dTarMe <= TarAd)
+        //        {
+        //            itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData.dtMeafyenyOvedAll);
+        //            MeafyeneyOved.Add(itemMeafyenyOved);
+        //            dTarMe = dTarMe.AddDays(1);
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
-                throw ex;
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
+        //        throw ex;
+        //    }
+        //}
         private void InitSugeyYechida()
         {
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);

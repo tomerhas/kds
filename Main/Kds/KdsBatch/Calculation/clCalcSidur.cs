@@ -1181,7 +1181,7 @@ namespace KdsBatch
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                    if (dShatHatchalaSidur >=_oGeneralData.objParameters.dKnisatShabat)
+                    if (dShatHatchalaSidur >= _oGeneralData.objParameters.dKnisatShabat || clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                     {
                         iErechElementimReka = oPeilut.CalcElementReka(iMisparSidur, dShatHatchalaSidur);
 

@@ -64,6 +64,7 @@ namespace KdsBatch
             Instance.dtPeiluyotOvdimAll= null;
             Instance.dtOvdimShePutru = null;
             Instance.ListParameters = null;
+            Instance.dsNetuneyChishuv = null;
             _IsCreated = false;
             Instance = null;
 
@@ -76,9 +77,9 @@ namespace KdsBatch
 
     public class GeneralData 
     {
-        private clParameters objParameters;
+       // private clParameters objParameters;
         private DateTime _TarMe,_TarAd;
-        private DataSet dsNetuneyChishuv;
+        public DataSet dsNetuneyChishuv;
 
         public DataTable dtYamimMeyuchadim { get; set; }
         public DataTable dtSugeyYamimMeyuchadim { get; set; }
@@ -162,11 +163,15 @@ namespace KdsBatch
             {
                 throw ex;
             }
+            finally
+            {
+                oCalcDal = null;
+                oUtils = null;
+            }
         }
 
         private  void InitListParamObject()
         {
-            clUtils oUtils = new clUtils();
             clParameters itemParams;
             int sugYom;
             DateTime dTarMe = _TarMe;
@@ -179,6 +184,7 @@ namespace KdsBatch
                     itemParams = new clParameters(dTarMe, sugYom,"Calc", dtParameters);
                     ListParameters.Add(itemParams);
                     dTarMe = dTarMe.AddDays(1);
+                    itemParams = null;
                 }
             }
             catch (Exception ex)
@@ -199,6 +205,10 @@ namespace KdsBatch
             {
                 //   clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
                 throw ex;
+            }
+            finally
+            {
+                oCalcDal = null;
             }
         }
     }
