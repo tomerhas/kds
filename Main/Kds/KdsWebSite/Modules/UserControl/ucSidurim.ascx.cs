@@ -1483,9 +1483,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                 iSidurIndex = iSidurIndex + 1;
                                 bFound = false;
                                 _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                                while ((_NextSidur != null) && (!bFound) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
+                                while ((_NextSidur != null) && (!bFound))
                                 {
-                                    if (_NextSidur != null)
+                                    if (((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
                                     {
                                         bFound = true;
                                         _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
@@ -1513,9 +1513,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             iSidurIndex = iSidurIndex + 1;
                             bFound = false;
                             _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                            while ((_NextSidur != null) && (!bFound) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
+                            while ((_NextSidur != null) && (!bFound))
                             {
-                                if (_NextSidur != null)
+                                if (((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
                                 {
                                     bFound = true;
                                     _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו

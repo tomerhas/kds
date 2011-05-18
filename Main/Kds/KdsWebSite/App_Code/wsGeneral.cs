@@ -132,7 +132,7 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
-
+    [WebMethod(EnableSession = true)]
     private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, 
                                      long lNewMakat, long lOldMakat, ref clPeilut _PeilutElement)
     {
@@ -142,6 +142,7 @@ public class wsGeneral : System.Web.Services.WebService
         DataTable dtElement=new DataTable();
         clKavim.enMakatType oMakatType;
         DataRow[] dr;
+        int iDefMinutesForElement, iDefMinForElemenTWithoutFactor;
         try
         {
             sXML.Append("<MAKAT>");
@@ -153,6 +154,9 @@ public class wsGeneral : System.Web.Services.WebService
 
                 if (oMakatType == clKavim.enMakatType.mElement)
                 {
+                    sXML.Append(string.Concat("<DAKOT_DEF>", "", "</DAKOT_DEF>"));
+                    sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "", "</DAKOT_DEF_TITLE>"));
+
                     long lElementValue;
                     //יכיל את מאפייני האלמנט
                     dtElement = _Kavim.GetMeafyeneyElementByKod(lNewMakat, DateTime.Parse(sTravelDate));
@@ -223,7 +227,30 @@ public class wsGeneral : System.Web.Services.WebService
                             if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
                                 if (lElementValue > long.Parse(dr[0]["erech"].ToString()))
                                     sXML.Append(string.Concat("<MEAFYEN7ERR>", long.Parse(dr[0]["erech"].ToString()), "</MEAFYEN7ERR>"));
-
+                        // אלמנט מסוג ריקה (מאפיין 23 = 1)  - להציג 
+                        //בעמודה ערך מפוזיציות 4-6 * פרמטר 43.
+                        dr = dtElement.Select("kod_meafyen=" + 23);
+                        if (dr.Length > 0)
+                            if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
+                                if (dr[0]["erech"].ToString().Equals("1"))
+                                {
+                                    iDefMinForElemenTWithoutFactor = int.Parse(lNewMakat.ToString().Substring(3, 3));
+                                    iDefMinutesForElement = (int)((((clParameters)Session["Parameters"]).fFactorNesiotRekot) * iDefMinForElemenTWithoutFactor);
+                                    sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
+                                    sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                                }
+                        // אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
+                        //להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
+                        dr = dtElement.Select("kod_meafyen=" + 35);
+                        if (dr.Length > 0)
+                            if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
+                                if (dr[0]["erech"].ToString().Equals("1"))
+                                {
+                                    iDefMinForElemenTWithoutFactor =int.Parse(lNewMakat.ToString().Substring(3, 3));
+                                    iDefMinutesForElement = (int)((((clParameters)Session["Parameters"]).fFactor) * iDefMinForElemenTWithoutFactor);
+                                    sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
+                                    sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                                }
                     }
                     else
                     {   //אין מאפיינים
@@ -316,8 +343,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL>", "", "</DAKOT_BAFOAL>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "0", "</DAKOT_BAFOAL_ENABLED>"));
-                        sXML.Append(string.Concat("<DAKOT_DEF>","", "</DAKOT_DEF>"));
-                        sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "", "</DAKOT_DEF_TITLE>"));
+                        
                         break;
                     case clKavim.enMakatType.mEmpty:
                         sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
