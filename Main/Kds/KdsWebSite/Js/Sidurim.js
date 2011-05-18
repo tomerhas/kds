@@ -57,7 +57,7 @@ function chkMkt(oRow) {
         var sMeafyen6='0';
         var sMeafyen7='999';
         var bMeafyen6,bMeafyen7;
-        var bExist=false;
+        var bExist=false;var bMustCarNum=true;
         var oRId=sArrPrm[0]; 
         var iSidur=sArrPrm[1]; 
         var iSidurVisa=sArrPrm[2]; 
@@ -140,6 +140,7 @@ function chkMkt(oRow) {
                             break;
                         case "OTO_NO_ENABLED":
                             document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                            bMustCarNum = (_FirstChild.text == "1"); 
                             if (_FirstChild.text == "1")
                                 document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
                             break;
@@ -185,13 +186,16 @@ function chkMkt(oRow) {
                     }
                     _FirstChild = _FirstChild.nextSibling;
                 }
-                if ((!bExist)) {
+                if ((!bExist)){
                     document.getElementById(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
                     document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
                     if ((bMeafyen6) || (bMeafyen7)) {
                         alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
-                    }
-                }
+                    } else
+                        //נשתול מספר רכב
+                        if (bMustCarNum)
+                           SetCarNumber(iSidurIndex, oRId);                    
+                } 
             }
             else {
                 var sBehaviorId = 'vldMakatNumBeh'.concat(oRId);
@@ -201,8 +205,28 @@ function chkMkt(oRow) {
         } else {
             document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
             alert('מספר מק"ט לא תקין');
-            } 
-     }                                        
+            }
+    }
+
+    function SetCarNumber(iSidurIndex, oRId){
+         var lCarNumber = 0;
+         var lCurrCarNumber = 0;
+         var bMultiCarNum=false;
+          _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
+          if (_Peilut != null){
+              for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                  lCurrCarNumber=_Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
+                  if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
+                      if (lCarNumber == 0)
+                          lCarNumber = lCurrCarNumber;
+                      else
+                          if (lCurrCarNumber != lCarNumber)
+                              bMultiCarNum = true;               
+              }
+              }
+              if ((!bMultiCarNum) && (lCarNumber != 0))
+                  document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = lCarNumber;
+    }                                        
     function chkHashlama(val,args){
         var id = val.getAttribute("index");   
         var oTxt1 = document.getElementById("lstSidurim_txtSH".concat(id)).value;
