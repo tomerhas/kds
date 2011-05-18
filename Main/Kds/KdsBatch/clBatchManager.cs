@@ -8074,7 +8074,7 @@ namespace KdsBatch
                     oNewSidurim.SidurIndex = iSidurIndex;
                     oNewSidurim.SidurNew = oSidur.iMisparSidur;
                    oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
-
+                  
                    UpdateObjectUpdSidurim(oNewSidurim);
                     //עדכון שעת התחלה סידור של כל הפעילויות לסידור
                     for (int j = 0; j < oSidur.htPeilut.Count; j++)
@@ -8102,7 +8102,7 @@ namespace KdsBatch
                      oSidur.dFullShatHatchala = dShatHatchalaNew;
                     oSidur.sShatHatchala = dShatHatchalaNew.ToString("HH:mm");
                     oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = dShatHatchalaNew;
-                    
+                 
                  }
             }
             catch (Exception ex)
@@ -11993,13 +11993,26 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
 
-                    if (oMeafyeneyOved.Meafyen51Exists)
+                    if (oMeafyeneyOved.Meafyen51Exists && CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                     {
                         iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                        if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                            oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                        if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                            oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                        switch (int.Parse(oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString()))
+                        {
+                            case 1:
+                                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                break;
+                            case 2:
+                                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                break;
+                            case 3:
+                                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                break;
+                        }
                     }
                 }
                 else
@@ -12666,12 +12679,17 @@ namespace KdsBatch
 
         private void SetHourToSidur19(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,bool bIdkunRashShatHatchala,bool bIdkunRashShatGmar)
         {
-            DateTime dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+            DateTime dShatHatchalaLetashlumToUpd; // = oObjSidurimOvdimUpd.SHAT_HATCHALA;
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
 
             //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
             try
             {
+                if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != DateTime.MinValue)
+                    dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                else dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+
+                 
                 //GetSidurCurrentTime(iSidurIndex, ref oSidur, ref dSidurShatHatchala, ref dSidurShatGmar);
                 //אם הסידור הוא מסוג "היעדרות" (סידור מיוחד עם מאפיין 53 בטבלת סידורים מיוחדים) והערך במאפיין הוא 8 (היעדרות בתשלום)  או 9 (ע"ח שעות נוספות)                   
                 SetSidurHeadrut(ref oSidur, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref oObjSidurimOvdimUpd);
@@ -12766,7 +12784,10 @@ namespace KdsBatch
                         //(אין לעדכן שעת התחלה ושעת גמר)
 
                         //ואם הסידור אינו מסוג "היעדרות" (סידור מיוחד עם מאפיין 53 בטבלת סידורים מיוחדים) (וימן 08/10/2009)
-                        dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                        if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != DateTime.MinValue)
+                            dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                        else
+                            dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
                         dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;//oSidur.dFullShatGmar;
                         
                     }
