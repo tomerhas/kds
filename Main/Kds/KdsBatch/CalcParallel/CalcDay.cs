@@ -6593,7 +6593,7 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;
-
+            objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
             if (objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
             {
                 if (fErechRechiv > 0)
@@ -6622,6 +6622,7 @@ namespace KdsBatch
             DataRow drChishuv;
             if (fErechRechiv > 0)
             {
+                objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
                 if (objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
                 {
                     drChishuv = _dtChishuvYom.NewRow();
@@ -6645,6 +6646,7 @@ namespace KdsBatch
         private void UpdateRowInTable(int iKodRechiv, float fErechRechiv, float fErechEzer)
         {
             DataRow drChishuv;
+            _dtChishuvYom.Select(null, "KOD_RECHIV");
             drChishuv = _dtChishuvYom.Select("KOD_RECHIV=" + iKodRechiv + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')")[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
             if (fErechEzer > 0)

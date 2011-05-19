@@ -5506,7 +5506,7 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;
-
+            objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
             if (objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + iKodRechiv.ToString()).Length == 0)
             {
                 if (fErechRechiv > 0)
@@ -5531,6 +5531,7 @@ namespace KdsBatch
         private void UpdateRowInTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;
+            _dtChishuvChodesh.Select(null, "KOD_RECHIV");
             drChishuv = _dtChishuvChodesh.Select("KOD_RECHIV=" + iKodRechiv)[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
             drChishuv = null;
