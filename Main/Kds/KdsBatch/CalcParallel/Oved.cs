@@ -116,9 +116,11 @@ namespace KdsBatch
             dtPremyotYadaniyot = new DataTable();
             try
             {
-
+              
                 if (oGeneralData.dtPremyotYadaniyotAll != null && oGeneralData.dtPremyotYadaniyotAll.Rows.Count > 0)
                 {
+                    oGeneralData.dtPremyotYadaniyotAll.Select(null, "mispar_ishi");
+                  
                     rows = oGeneralData.dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
@@ -151,9 +153,11 @@ namespace KdsBatch
             dtPremyot = new DataTable();
             try
             {
-
+               
                 if (oGeneralData.dtPremyotAll != null && oGeneralData.dtPremyotAll.Rows.Count > 0)
                 {
+                  oGeneralData.dtPremyotAll.Select(null, "mispar_ishi");
+            
                     rows = oGeneralData.dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
@@ -188,6 +192,8 @@ namespace KdsBatch
             try
             {
                 PirteyOved = new List<clPirteyOved>();
+           oGeneralData.dtPirteyOvdimAll.Select(null, "mispar_ishi");
+         
                 while (dTarMe <= TarAd)
                 {
                     rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
@@ -220,8 +226,11 @@ namespace KdsBatch
             DtYemeyAvoda = new DataTable();
             try
             {
+              
                 if (oGeneralData.dtYemeyAvodaAll != null && oGeneralData.dtYemeyAvodaAll.Rows.Count > 0)
                 {
+                 oGeneralData.dtYemeyAvodaAll.Select(null, "mispar_ishi");
+         
                     rows = oGeneralData.dtYemeyAvodaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
@@ -255,8 +264,11 @@ namespace KdsBatch
             DtPeiluyotFromTnua = new DataTable();
             try
             {
+               
                 if (oGeneralData.dtPeiluyotFromTnuaAll != null && oGeneralData.dtPeiluyotFromTnuaAll.Rows.Count > 0)
                 {
+                    oGeneralData.dtPeiluyotFromTnuaAll.Select(null, "mispar_ishi");
+             
                     rows = oGeneralData.dtPeiluyotFromTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and activity_date >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and activity_date <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
@@ -290,8 +302,11 @@ namespace KdsBatch
             DtPeiluyotOved = new DataTable();
             try
             {
+               
                 if (oGeneralData.dtPeiluyotOvdimAll.Rows.Count > 0)
                 {
+                  oGeneralData.dtPeiluyotOvdimAll.Select(null, "mispar_ishi");
+                 
                     rows = oGeneralData.dtPeiluyotOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich >= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and taarich <= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
@@ -327,14 +342,19 @@ namespace KdsBatch
             string sQury = "";
             DataRow[] drMeafyn;
             DataTable MeafyenimLeYom = new DataTable();
+            TimeSpan ts = new TimeSpan();
+            DateTime StartTime;
             try
             {
-
+                StartTime = DateTime.Now;
                 MeafyeneyOved = new List<clMeafyenyOved>();
+              oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
+     
                 while (dTarMe <= TarAd)
                 {
                     sQury = "mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+                
                     drMeafyn = oGeneralData.dtMeafyenyOvedAll.Select(sQury);
                     MeafyenimLeYom = drMeafyn.CopyToDataTable();
                     itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
@@ -344,6 +364,7 @@ namespace KdsBatch
                     drMeafyn = null;
                     MeafyenimLeYom = null;
                 }
+                ts = DateTime.Now - StartTime;
 
             }
             catch (Exception ex)
@@ -383,6 +404,8 @@ namespace KdsBatch
             DtSugeyYechida = new DataTable();
             try
             {
+              oGeneralData.dtSugeyYechidaAll.Select(null, "mispar_ishi");
+    
                 rows = oGeneralData.dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and me_tarich <= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich  >= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
                 if (rows.Length > 0)
                 {
