@@ -6852,7 +6852,7 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv)
         {
             DataRow drChishuv;
-
+            objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
             if ( objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
             {
                 if (fErechRechiv > 0)
@@ -6879,6 +6879,7 @@ namespace KdsBatch
         private void UpdateRowInTable(int iKodRechiv, float fErechRechiv, DateTime dShatHatchala, int iMisparSidur)
         {
             DataRow drChishuv;
+            _dtChishuvSidur.Select(null, "KOD_RECHIV");
             drChishuv = _dtChishuvSidur.Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')")[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
             drChishuv = null;
@@ -6887,7 +6888,7 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv, int iOutMichsa)
         {
             DataRow drChishuv;
-
+            objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
             if (objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
             {
                 if (fErechRechiv > 0)
@@ -7061,7 +7062,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int I;
             string sSidurim = "";
-        
+            objOved.oGeneralData.dtSidurimMeyuchRechivAll.Select(null, "KOD_RECHIV");
             drSidurim = objOved.oGeneralData.dtSidurimMeyuchRechivAll.Select("kod_rechiv=" + iKodRechiv + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')  and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
             if (drSidurim.Length > 0)
             {
@@ -7081,7 +7082,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int I;
             string sSugeySidur = "";
-
+            objOved.oGeneralData.dtSugeySidurRechivAll.Select(null, "KOD_RECHIV");
             drSidurim = objOved.oGeneralData.dtSugeySidurRechivAll.Select("kod_rechiv=" + iKodRechiv + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')  and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
             if (drSidurim.Length > 0)
             {
@@ -7251,6 +7252,7 @@ namespace KdsBatch
             string sSql = "";
             try
             {
+                objOved.oGeneralData.dtSugeySidurAll.Select(null, "sug_sidur");
                 sSql = "sug_sidur=69 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')";
                 drSugSidur = objOved.oGeneralData.dtSugeySidurAll.Select(sSql);
                 if (drSugSidur.Length > 0)
