@@ -2111,6 +2111,43 @@ Public Class ClKds
         End Try
 
     End Sub
+    Public Sub CreateActivitiesAtSdrn()
+        Dim oDal As KdsLibrary.DAL.clDal
+        Dim Status As String
+        Try
+            Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
+            oDal = New KdsLibrary.DAL.clDal
+            oDal.ClearCommand()
+            oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("p_return_code", KdsLibrary.DAL.ParameterType.ntOracleInteger, Status, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.ExecuteSP("KDS.KDS_Driver_Activities_Pack.create_driver_activities@kds2sdrm")
+        Catch ex As Exception
+            Throw New Exception("CreateActivitiesAtSdrn: " & ex.Message)
+        End Try
+
+    End Sub
+    Public Sub ChkControlAtSdrn()
+        Dim Status As String
+        Dim BoolSuccess As Boolean = True
+        Try
+            Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
+            Dim Environment As String = ConfigurationSettings.AppSettings("Environment")
+            If (Environment = "Production") Then
+                If Not (Status = "1") Then
+                    BoolSuccess = False
+                End If
+            Else ' test
+                If Not (Status = "9") Then
+                    BoolSuccess = False
+                End If
+            End If
+            If Not BoolSuccess Then
+                Throw New Exception("ChkControlAtSdrn : Status" & Status & " is not available.")
+            End If
+        Catch ex As Exception
+            Throw New Exception("ChkControlAtSdrn : " & ex.Message)
+        End Try
+    End Sub
     Public Sub RunSdrnYesterday()
         RunSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
     End Sub

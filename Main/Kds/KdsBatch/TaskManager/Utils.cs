@@ -4,11 +4,38 @@ using System.Linq;
 using System.Text;
 using KdsLibrary;
 using KdsLibrary.BL;
+using System.Configuration;
 
 namespace KdsBatch.TaskManager
 {
     public class Utils
     {
+        public void RunShguimOfSdrn()
+        {
+            clBatch oBatch = new clBatch();
+            long lRequestNum = 0;
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
+                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunShguimOfSdrn:" + ex.Message);
+            }
+        }
+        public void RunIshurimOfSdrn()
+        {
+            try
+            {
+                string Environment = ConfigurationSettings.AppSettings["Environment"];
+                KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(DateTime.Now.AddDays(-1), (Environment == "Production"));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunIshurimOfSdrn :" + ex.Message);
+            }
+        }
         public void ShguimHrChanges()
         {
             int iSeqThreadHr, iSeqNum, num;
