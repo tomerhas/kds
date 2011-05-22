@@ -4906,24 +4906,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                    clGeneral.enMeafyenElementim23.ElementTimeNesiaReka.GetHashCode().ToString()))))
             {
                 iTime =int.Parse(lmakat.ToString().Substring(3,3));
-                e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)(iTime * _Param43)).ToString();
+                e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)System.Math.Round((iTime * _Param43))).ToString();
                 e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
             }
             else{
-                //אם אלמנט זמן מסוג נסיעה מלאה
-                // אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
-                //להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
+                ////אם אלמנט זמן מסוג נסיעה מלאה
+                //// אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
+                ////להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
 
-                if (((_MakatType == clKavim.enMakatType.mElement)
-                      && (IsMeafyenExistsInElement(lmakat,
-                                                   clGeneral.enMeafyenElementim.Meafyen35.GetHashCode(),
-                                                   clGeneral.enMeafyenElementim35.ElementTimeNesiaMelea.GetHashCode().ToString()))))
-                {
-                        iTime =int.Parse(lmakat.ToString().Substring(3,3));
-                        e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)(iTime * _Param42)).ToString();
-                        e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
-                }
-                else{
+                //if (((_MakatType == clKavim.enMakatType.mElement)
+                //      && (IsMeafyenExistsInElement(lmakat,
+                //                                   clGeneral.enMeafyenElementim.Meafyen35.GetHashCode(),
+                //                                   clGeneral.enMeafyenElementim35.ElementTimeNesiaMelea.GetHashCode().ToString()))))
+                //{
+                //    iTime = int.Parse(lmakat.ToString().Substring(3, 3));
+                //    e.Row.Cells[_COL_DEF_MINUTES].Text = ((int)(iTime * _Param42)).ToString();
+                //    e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
+                //}
+                //else
+                //{
                     if ((_MakatType == clKavim.enMakatType.mElement) || (_MakatType == clKavim.enMakatType.mVisut) || (_MakatType == clKavim.enMakatType.mVisa) || (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa != 0))))            
                      e.Row.Cells[_COL_DEF_MINUTES].Text = "0";     
        
@@ -4935,8 +4936,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
                         }                                        
                     }     
-                }
-            }            
+                }                       
           }       
 
         //}

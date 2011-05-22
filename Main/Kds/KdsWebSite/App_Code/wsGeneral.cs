@@ -239,18 +239,18 @@ public class wsGeneral : System.Web.Services.WebService
                                     sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
                                     sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                                 }
-                        // אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
-                        //להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
-                        dr = dtElement.Select("kod_meafyen=" + 35);
-                        if (dr.Length > 0)
-                            if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
-                                if (dr[0]["erech"].ToString().Equals("1"))
-                                {
-                                    iDefMinForElemenTWithoutFactor =int.Parse(lNewMakat.ToString().Substring(3, 3));
-                                    iDefMinutesForElement = (int)((((clParameters)Session["Parameters"]).fFactor) * iDefMinForElemenTWithoutFactor);
-                                    sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
-                                    sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
-                                }
+                        //// אלמנט מסוג נסיעה מלאה (מאפיין 35 = 1) - 
+                        ////להציג בעמודה ערך מפוזיציות 4-6 * פרמטר 42.
+                        //dr = dtElement.Select("kod_meafyen=" + 35);
+                        //if (dr.Length > 0)
+                        //    if (!String.IsNullOrEmpty(dr[0]["erech"].ToString()))
+                        //        if (dr[0]["erech"].ToString().Equals("1"))
+                        //        {
+                        //            iDefMinForElemenTWithoutFactor =int.Parse(lNewMakat.ToString().Substring(3, 3));
+                        //            iDefMinutesForElement = (int)((((clParameters)Session["Parameters"]).fFactor) * iDefMinForElemenTWithoutFactor);
+                        //            sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
+                        //            sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
+                        //        }
                     }
                     else
                     {   //אין מאפיינים
