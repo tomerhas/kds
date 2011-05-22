@@ -235,7 +235,7 @@ public class wsGeneral : System.Web.Services.WebService
                                 if (dr[0]["erech"].ToString().Equals("1"))
                                 {
                                     iDefMinForElemenTWithoutFactor = int.Parse(lNewMakat.ToString().Substring(3, 3));
-                                    iDefMinutesForElement = (int)((((clParameters)Session["Parameters"]).fFactorNesiotRekot) * iDefMinForElemenTWithoutFactor);
+                                    iDefMinutesForElement = (int)(System.Math.Round(((clParameters)Session["Parameters"]).fFactorNesiotRekot * iDefMinForElemenTWithoutFactor));
                                     sXML.Append(string.Concat("<DAKOT_DEF>", iDefMinutesForElement.ToString(), "</DAKOT_DEF>"));
                                     sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + iDefMinForElemenTWithoutFactor.ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                                 }
