@@ -19,32 +19,21 @@ namespace KdsBatch
         public bool bChishuvYom { get; set; }
         public DateTime _dDay { get; set; }
 
-        //public DataTable DtYamimMeyuchadim { get; set; }
-      //  public DataTable DtSugeyYamimMeyuchadim { get; set; }
-     //   public List<clParameters> Parameters { get; set; }
         public List<clPirteyOved> PirteyOved { get; set; }
-    //    public DataTable DtMichsaYomit { set; get; }
-    //    public DataTable DtBusNumbers { set; get; }
-   //     public DataTable DtMeafyeneySugSidur { set; get; }
-   //     public DataTable DtSugeySidur { set; get; }
         public DataTable DtSugeyYechida { set; get; }
         public DataTable DtYemeyAvoda { set; get; }
         public DataTable DtPeiluyotFromTnua { set; get; }
         public DataTable DtPeiluyotOved { set; get; }
-   //     public DataTable DtMutamut { set; get; }
-  //      public DataTable DtSugeySidurRechiv { set; get; }
-   //     public DataTable DtSidurimMeyuchRechiv { set; get; }
         public List<clMeafyenyOved> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyot { set; get; }
         public string sSugYechida { get; set; }
         public float fMekademNipuach { set; get; }
         public DataSet _dsChishuv { set; get; }
-        private DataTable _DtMonth; // { set; get; }
-        private DataTable _DtDay;// { set; get; }
-        private DataTable _DtSidur;// { set; get; }
-        private DataTable _DtPeilut;// { set; get; }
-
+        private DataTable _DtMonth; 
+        private DataTable _DtDay;
+        private DataTable _DtSidur;
+        private DataTable _DtPeilut;
 
    //     private DataTable _Meafyenim;
         public clParameters objParameters { get; set; }
@@ -77,18 +66,7 @@ namespace KdsBatch
         {
             try
             {
-                oGeneralData = SingleGeneralData.GetInstance();//tarMe, tarAd, "", false, mis_ishi);
-
-       /*         DtYamimMeyuchadim = oGeneralData._dtYamimMeyuchadim.Copy();
-                DtSugeyYamimMeyuchadim = oGeneralData._dtSugeyYamimMeyuchadim.Copy();
-                Parameters = oGeneralData.ListParameters;
-                DtMichsaYomit = oGeneralData._dtMichsaYomitAll.Copy();
-                DtMeafyeneySugSidur = oGeneralData._dtMeafyeneySugSidurAll.Copy();
-                DtSugeySidur = oGeneralData._dtSugeySidurAll.Copy();
-                DtBusNumbers = oGeneralData._dtBusNumbersAll.Copy();
-                DtSugeySidurRechiv = oGeneralData._dtSugeySidurRechivAll.Copy();
-                DtSidurimMeyuchRechiv = oGeneralData._dtSidurimMeyuchRechivAll.Copy();
-                DtMutamut = oGeneralData._dtMutamutAll.Copy();*/
+                oGeneralData = SingleGeneralData.GetInstance();
 
                 InitPremyotYadaniyot();
                 InitPremyot();

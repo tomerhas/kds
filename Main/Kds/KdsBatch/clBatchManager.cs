@@ -7138,7 +7138,7 @@ namespace KdsBatch
                                         else iMinPaar = _oParameters.iMinHefreshSidurimLepitzulSummer;
                                     }
 
-                                    if (dMinutsPitzul > iMinPaar)
+                                    if (dMinutsPitzul >= iMinPaar)
                                     {
                                          DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
 
