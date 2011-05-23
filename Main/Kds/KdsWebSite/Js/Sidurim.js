@@ -218,21 +218,24 @@ function chkMkt(oRow) {
               if (_Peilut.firstChild.childNodes.length <= 2){
                   //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
                   iCurrSidurNumber = 0;
-                  _Peilut = document.getElementById("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
-                  while (_Peilut != null) {
-                      for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
-                          lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
-                          if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
-                              if (lCarNumber == 0)
-                                  lCarNumber = lCurrCarNumber;
-                              else
-                                  if (lCurrCarNumber != lCarNumber)
-                                      bMultiCarNum = true;
-                          }
-                          iCurrSidurNumber = iCurrSidurNumber + 1;
-                          _Peilut = document.getElementById("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
-                   }
 
+                  _Sidur = document.getElementById("lstSidurim_lblSidur" + iCurrSidurNumber);
+                  while (_Sidur != null) {
+                      _Peilut = document.getElementById("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
+                      if (_Peilut != null) {
+                          for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                              lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
+                              if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
+                                  if (lCarNumber == 0)
+                                      lCarNumber = lCurrCarNumber;
+                                  else
+                                      if (lCurrCarNumber != lCarNumber)
+                                          bMultiCarNum = true;                                          
+                          }
+                        }
+                          iCurrSidurNumber = iCurrSidurNumber + 1;
+                          _Sidur = document.getElementById("lstSidurim_lblSidur" + iCurrSidurNumber);
+                  }
               }
               else{
                   for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
