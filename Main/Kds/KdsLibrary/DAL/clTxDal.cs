@@ -311,10 +311,8 @@ namespace KdsLibrary.DAL
                         adapter.TableMappings.Add(OldName, TablesNamesSplit[i]);
                     }
                 }
-                clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before Fill");
-                adapter.Fill(ds);
-                clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After Fill");
-                adapter.Dispose();
+               adapter.Fill(ds);
+               adapter.Dispose();
             }
             catch (Exception ex)
             {
