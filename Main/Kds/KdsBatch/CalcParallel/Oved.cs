@@ -483,20 +483,12 @@ namespace KdsBatch
 
         public void Dispose()
         {
-         /*   DtYamimMeyuchadim = null;
-            DtSugeyYamimMeyuchadim = null;
-            DtMichsaYomit = null;
-            DtBusNumbers = null;
-            DtMeafyeneySugSidur = null;
-            DtSugeySidur = null;*/
             DtSugeyYechida = null;
             DtYemeyAvoda = null;
             DtPeiluyotFromTnua = null;
             DtPeiluyotOved = null;
-          /*  DtMutamut = null;
-            DtSugeySidurRechiv = null;
-            DtSidurimMeyuchRechiv = null;*/
             dtPremyotYadaniyot = null;
+            DtYemeyAvodaYomi = null;
             dtPremyot = null;
             _dsChishuv = null;
             _DtMonth = null;
