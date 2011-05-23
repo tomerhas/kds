@@ -43,6 +43,8 @@ namespace KdsBatch
         public DateTime Taarich { get; set; }
         public int SugYom { get; set; }
 
+        public DataTable DtYemeyAvodaYomi { set; get; }
+        
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
             if (BakashaId == 0)

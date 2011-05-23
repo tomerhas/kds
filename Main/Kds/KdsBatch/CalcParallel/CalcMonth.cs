@@ -39,9 +39,7 @@ namespace KdsBatch
         {
             DateTime dTaarich, dTarMe, dTarAd;
            // bool bChishuvYom = false;
-       //    clUtils oUtils = new clUtils();
-          //  clOvdim oOvdim = new clOvdim();
-          //  clKavim oKavim = new clKavim();
+            DataRow[] Yamim;
             try
             {
                 //iStatusTipul = clGeneral.enStatusTipul.HistayemTipul.GetHashCode();
@@ -70,8 +68,16 @@ namespace KdsBatch
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
+                   
+                    Yamim = objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                    if (Yamim.Length > 0)
+                        objOved.DtYemeyAvodaYomi = Yamim.CopyToDataTable();
+                    else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
+
                     oDay.CalcRechiv126(dTaarich);
                     dTaarich = dTaarich.AddDays(1);
+                    Yamim = null;
+                    objOved.DtYemeyAvodaYomi = null;
                 }
 
                 CalcMekademNipuach(dTarMe, dTarAd, objOved.Mispar_ishi);
@@ -93,10 +99,15 @@ namespace KdsBatch
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
                     objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
                     oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
-                     
 
+                    Yamim = objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                    if (Yamim.Length > 0)
+                        objOved.DtYemeyAvodaYomi = Yamim.CopyToDataTable();
+                    else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
                     oDay.CalcRechivim();
                     dTaarich = dTaarich.AddDays(1);
+                    Yamim = null;
+                    objOved.DtYemeyAvodaYomi = null;
                 }
 
                 if (!objOved.bChishuvYom)
