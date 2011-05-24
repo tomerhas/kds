@@ -441,6 +441,7 @@ namespace KdsBatch
                                         else
                                         {
                                             //oPeilut.dTaarich = dTaarich;
+                                            SetNetunimLeYom();
                                             fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
                                         }
                                     }
@@ -469,7 +470,7 @@ namespace KdsBatch
                                             else
                                             {
                                                 //oPeilut.dTaarich = dTaarich;
-
+                                                SetNetunimLeYom();
                                                 fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
                                             }
                                         }
