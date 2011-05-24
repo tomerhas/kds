@@ -44,6 +44,8 @@ namespace KdsBatch
         public int SugYom { get; set; }
 
         public DataTable DtYemeyAvodaYomi { set; get; }
+        public DataTable DtPeiluyotYomi { set; get; }
+        public DataTable DtPeiluyotTnuaYomi { set; get; }
         
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
@@ -489,6 +491,8 @@ namespace KdsBatch
             DtPeiluyotOved = null;
             dtPremyotYadaniyot = null;
             DtYemeyAvodaYomi = null;
+            DtPeiluyotYomi = null;
+            DtPeiluyotTnuaYomi = null;
             dtPremyot = null;
             _dsChishuv = null;
             _DtMonth = null;

@@ -39,7 +39,7 @@ namespace KdsBatch
         {
             DateTime dTaarich, dTarMe, dTarAd;
            // bool bChishuvYom = false;
-            DataRow[] Yamim;
+         
             try
             {
                 //iStatusTipul = clGeneral.enStatusTipul.HistayemTipul.GetHashCode();
@@ -63,21 +63,18 @@ namespace KdsBatch
                 oDay = new CalcDay(objOved);
                 while (dTaarich <= dTarAd)
                 {
-                    oDay._Taarich = dTaarich;
                     objOved.Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
-                   
-                    Yamim = objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
-                    if (Yamim.Length > 0)
-                        objOved.DtYemeyAvodaYomi = Yamim.CopyToDataTable();
-                    else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
-
+                    SetNetunimLeYom();
+                    
                     oDay.CalcRechiv126(dTaarich);
                     dTaarich = dTaarich.AddDays(1);
-                    Yamim = null;
+                    
                     objOved.DtYemeyAvodaYomi = null;
+                    objOved.DtPeiluyotYomi = null;
+                    objOved.DtPeiluyotTnuaYomi = null;
                 }
 
                 CalcMekademNipuach(dTarMe, dTarAd, objOved.Mispar_ishi);
@@ -91,23 +88,22 @@ namespace KdsBatch
                 dTaarich = dTarMe;
 
                 while (dTaarich <= dTarAd)
-                {
-                    oDay._Taarich = dTaarich;
+                {                 
                     objOved.Taarich = dTaarich;
+                    objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                     objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
                     objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
-                    oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                   // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                    SetNetunimLeYom();
 
-                    Yamim = objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
-                    if (Yamim.Length > 0)
-                        objOved.DtYemeyAvodaYomi = Yamim.CopyToDataTable();
-                    else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
                     oDay.CalcRechivim();
                     dTaarich = dTaarich.AddDays(1);
-                    Yamim = null;
+
                     objOved.DtYemeyAvodaYomi = null;
+                    objOved.DtPeiluyotYomi = null;
+                    objOved.DtPeiluyotTnuaYomi = null;
                 }
 
                 if (!objOved.bChishuvYom)
@@ -127,6 +123,37 @@ namespace KdsBatch
             }
         }
 
+        private void SetNetunimLeYom()
+        {
+            DataRow[] drs;
+            try
+            {
+                drs = objOved.DtYemeyAvoda.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+                if (drs.Length > 0)
+                    objOved.DtYemeyAvodaYomi = drs.CopyToDataTable();
+                else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
+                drs = null;
+
+                drs = objOved.DtPeiluyotOved.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+                if (drs.Length > 0)
+                    objOved.DtPeiluyotYomi = drs.CopyToDataTable();
+                else objOved.DtPeiluyotYomi = objOved.DtPeiluyotOved.Clone();
+                drs = null;
+
+                if (objOved.DtPeiluyotFromTnua != null)
+                {
+                    drs = objOved.DtPeiluyotFromTnua.Select("activity_date=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+                    if (drs.Length > 0)
+                        objOved.DtPeiluyotTnuaYomi = drs.CopyToDataTable();
+                    else objOved.DtPeiluyotTnuaYomi = objOved.DtPeiluyotFromTnua.Clone();
+                    drs = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }  
+        }
 
         private void CalcMekademNipuach(DateTime dTarMe, DateTime dTarAd, int Mispar_ishi)
         {
@@ -399,7 +426,7 @@ namespace KdsBatch
                             {
                                 dTaarich = DateTime.Parse(drSidur[J]["taarich"].ToString());
                                 dShatHatchala = DateTime.Parse(drSidur[J]["shat_hatchala_sidur"].ToString());
-                                oSidur.dTaarich = dTaarich;
+                                objOved.Taarich = dTaarich;
                                 iOutMichsa = int.Parse(drSidur[J]["out_michsa"].ToString());
 
                                 if (!oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchala, iOutMichsa))
@@ -413,7 +440,7 @@ namespace KdsBatch
                                         }
                                         else
                                         {
-                                            oPeilut.dTaarich = dTaarich;
+                                            //oPeilut.dTaarich = dTaarich;
                                             fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
                                         }
                                     }
@@ -424,7 +451,7 @@ namespace KdsBatch
                                 for (J = 0; J < drSidur.Length; J++)
                                 {
                                     dTaarich = DateTime.Parse(drSidur[J]["taarich"].ToString());
-                                    oSidur.dTaarich = dTaarich;
+                                    //oSidur.dTaarich = dTaarich;
 
                                     dShatHatchala = DateTime.Parse(drSidur[J]["shat_hatchala_sidur"].ToString());
                                     iOutMichsa = int.Parse(drSidur[J]["out_michsa"].ToString());
@@ -441,7 +468,7 @@ namespace KdsBatch
                                             }
                                             else
                                             {
-                                                oPeilut.dTaarich = dTaarich;
+                                                //oPeilut.dTaarich = dTaarich;
 
                                                 fSumDakotNichehut += oSidur.CalcRechiv1BySidur(drSidur[J], 0, oPeilut);
                                             }

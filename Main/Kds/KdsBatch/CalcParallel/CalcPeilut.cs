@@ -13,18 +13,18 @@ namespace KdsBatch
     {
         private Oved objOved;
         private DataTable _dtChishuvPeilut;
-        public DateTime dTaarich { get; set; }
-        public int iSugYom { get; set; }
+       // public DateTime objOved.Taarich { get; set; }
+       // public int iSugYom { get; set; }
         public CalcPeilut(Oved oOved)
         {
             objOved = oOved;
             _dtChishuvPeilut = objOved._dsChishuv.Tables["CHISHUV_PEILUT"];// objOved._DtPeilut;    
         }
-        public void SetNetunim(int SugYom,DateTime Taarich)
-        {
-            dTaarich = Taarich;
-            iSugYom = SugYom;
-        }
+        //public void SetNetunim(int SugYom,DateTime Taarich)
+        //{
+        // //   objOved.Taarich = Taarich;
+        // //   iSugYom = SugYom;
+        //}
          public void CalcRechiv1(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              DataRow[] drPeiluyot;
@@ -53,7 +53,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich , iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -69,16 +69,15 @@ namespace KdsBatch
              string sQury;
              try
              {
-                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
-                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
                  if (sCondition != "")
                      sQury += "and " + sCondition;
-                 drPeiluyot = objOved.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+                 drPeiluyot = objOved.DtPeiluyotYomi.Select(sQury, "shat_yetzia asc");
                  return drPeiluyot;
              }
              catch (Exception ex)
              {
-               //  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+               //  clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
          }
@@ -103,7 +102,7 @@ namespace KdsBatch
                  {
                      for (int J = 0; J < drPeiluyot.Length; J++)
                      {
-                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
+                         drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
                          
                          iHagdaraLegmar = 0;
                          if (!String.IsNullOrEmpty(drDetailsPeilut["Mazan_Tashlum"].ToString()) )
@@ -157,7 +156,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotSikun.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -237,7 +236,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachNesiot.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                 throw (ex);
             }
             finally
@@ -274,7 +273,7 @@ namespace KdsBatch
                  {
                      if (objOved.oGeneralData.dtBusNumbersAll == null)
                      {
-                         dMeTaarich = DateTime.Parse("01/" + dTaarich.Month + "/" + dTaarich.Year);
+                         dMeTaarich = DateTime.Parse("01/" + objOved.Taarich.Month + "/" + objOved.Taarich.Year);
                          objOved.oGeneralData.dtBusNumbersAll = oKavim.GetBusesDetailsLeOvedForMonth(dMeTaarich, dMeTaarich.AddMonths(1).AddDays(-1), objOved.Mispar_ishi);
                      }
                      if (objOved.oGeneralData.dtBusNumbersAll.Rows.Count > 0)
@@ -290,7 +289,7 @@ namespace KdsBatch
                              iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
 
                              iSugAuto = 0;
-                             drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
+                             drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
 
                              if (!string.IsNullOrEmpty(drDetailsPeilut["sug_auto"].ToString()))
                                  iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
@@ -315,7 +314,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHistaglut.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -362,7 +361,7 @@ namespace KdsBatch
                      //א.	אם הספרה הראשונה של מק"ט הפעילות TB_peilut_Ovdim.Makat_nesia <> 5 או 7 (זו נסיעה מקטלוג נסיעות) אזי: ק"מ = Km מקטלוג הנסיעות לפי מק"ט הפעילות ותאריך יום העבודה. 
                      else if (iMakat1 != 5 && iMakat1 != 7)
                      {
-                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
+                         drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString()));
 
                          if (!string.IsNullOrEmpty(drDetailsPeilut["km"].ToString()))
                          {
@@ -381,7 +380,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKM.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -429,7 +428,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -492,7 +491,7 @@ namespace KdsBatch
                          {
                              if (iMakatFirst == iMakat && dShatYetziaFirst == dShatYetzia && iMisparKnisaFirst == iMisparKnisa)
                              {
-                                 if (fHagdaraLetashlum < 7 && dShatYetzia < clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date))
+                                 if (fHagdaraLetashlum < 7 && dShatYetzia < clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date))
                                      bNoCalc = true;
                              }
                          }
@@ -504,7 +503,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotHagdara.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -547,7 +546,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotKisuiTor.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -590,14 +589,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if ((drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7" && drPeiluyot[J]["kupai"].ToString() == "1" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701"))
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) ||  clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
@@ -614,7 +613,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotElementim.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -656,14 +655,14 @@ namespace KdsBatch
                      {//א.	כאשר הפעילות השנייה בסידור הינה נסיעה ריקה 
                          if (drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "6" && drPeiluyot[J - 1]["MAKAT_NESIA"].ToString().Substring(0, 3) == "701")
                          {
-                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) <= clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAdShmone)
                                  {
                                      fErech = 0;
                                  }
                              }
-                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim,  iSugYom, dTaarich))
+                             else if (DateTime.Parse(drPeiluyot[J]["SHAT_YETZIA"].ToString()) > clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date) || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                              {
                                  if (CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa) < objOved.objParameters.iMaxZmanRekaAchreyShmone)
                                  {
@@ -685,7 +684,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(),  objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotNesiaLepremia.GetHashCode(),  objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchla, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
                  throw (ex);
              }
              finally
@@ -719,14 +718,14 @@ namespace KdsBatch
                  //{
                  //    dsSidurim = oKavim.GetKavimDetailsFromTnuaDT(lMakatNesia, dSidurDate, out iResult);
                  //}
-                 drNetunim = objOved.DtPeiluyotFromTnua.Select("MAKAT8=" + lMakatNesia + " AND ACTIVITY_DATE=Convert('" + dSidurDate.ToShortDateString() + "', 'System.DateTime')");
+                 drNetunim = objOved.DtPeiluyotTnuaYomi.Select("MAKAT8=" + lMakatNesia);
                  
                  return  drNetunim[0];
                
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId,  objOved.Mispar_ishi, "E", 0,dTaarich, "CalcPeilut: " + ex.Message);
+                 clLogBakashot.SetError(objOved.iBakashaId,  objOved.Mispar_ishi, "E", 0,objOved.Taarich, "CalcPeilut: " + ex.Message);
                  throw (ex);
              }
          }
@@ -739,7 +738,7 @@ namespace KdsBatch
             try
             {   //מחזיר פעילויות לסידור:  
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger,  objOved.Mispar_ishi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, objOved.Taarich, ParameterDir.pdInput);
                 oDal.AddParameter("p_shat_hatchala_sidur", ParameterType.ntOracleDate, dShatHatchalaSidur, ParameterDir.pdInput);
                 oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, iMisparSidur, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -768,7 +767,7 @@ namespace KdsBatch
                  {
                      if (sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "7" && iMisparKnisa==0)
                      {
-                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(sMakat));
+                         drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(sMakat));
                          if (drDetailsPeilut["Mazan_Tichnun"].ToString().Length > 0)
                          {
                              fHagdara = int.Parse(drDetailsPeilut["Mazan_Tichnun"].ToString());
@@ -803,7 +802,7 @@ namespace KdsBatch
                  {
                      if (sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "7" && iMisparKnisa == 0)
                      {
-                         drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(sMakat));
+                         drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(sMakat));
                          if (drDetailsPeilut["Mazan_Tashlum"].ToString().Length > 0)
                          {
                              fHagdara = int.Parse(drDetailsPeilut["Mazan_Tashlum"].ToString());
@@ -842,8 +841,8 @@ namespace KdsBatch
                   dShatYetzia = DateTime.Parse(drPeiluyot[i]["shat_yetzia"].ToString());
                   iZmanElement = int.Parse(iMakat.ToString().PadLeft(8).Substring(4, 3));
                   
-                  dTempM1 = clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date);
-                  dTempM2 = clGeneral.GetDateTimeFromStringHour("09:30", dTaarich.Date);
+                  dTempM1 = clGeneral.GetDateTimeFromStringHour("08:00", objOved.Taarich.Date);
+                  dTempM2 = clGeneral.GetDateTimeFromStringHour("09:30", objOved.Taarich.Date);
                   fTempY = 0;
 
                   if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
@@ -868,8 +867,8 @@ namespace KdsBatch
                   fZmanAruchatTzharim += fTempY;
 
 
-                  dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", dTaarich.Date);
-                  dTempM2 = clGeneral.GetDateTimeFromStringHour("19:30", dTaarich.Date);
+                  dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", objOved.Taarich.Date);
+                  dTempM2 = clGeneral.GetDateTimeFromStringHour("19:30", objOved.Taarich.Date);
                   fTempY = 0;
                   if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
                   { fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }
@@ -900,7 +899,7 @@ namespace KdsBatch
             drChishuv = _dtChishuvPeilut.NewRow();
             drChishuv["BAKASHA_ID"] = objOved.iBakashaId;
             drChishuv["MISPAR_ISHI"] =  objOved.Mispar_ishi;
-            drChishuv["TAARICH"] = dTaarich;
+            drChishuv["TAARICH"] = objOved.Taarich;
             drChishuv["MISPAR_SIDUR"] = iMisparSidur;
             drChishuv["SHAT_HATCHALA"] = dShatHatchala;
             drChishuv["SHAT_YETZIA"] = dShatYetzia;
