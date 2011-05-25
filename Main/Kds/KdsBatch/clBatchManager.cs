@@ -6209,10 +6209,10 @@ namespace KdsBatch
                                 flag = false;
                             }
                         }
+                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
+                            oSidurFirst.sPitzulHafsaka = "0";
                         if (!flag && i < (htEmployeeDetails.Count-1))
-                        {
-                            if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
-                                 oSidurFirst.sPitzulHafsaka = "0";
+                        {       
                             oSidurSecond = (clSidur)htEmployeeDetails[i + 1];
                             if (oSidurFirst.iLoLetashlum == 0 && oSidurSecond.iLoLetashlum == 0)
                             {
