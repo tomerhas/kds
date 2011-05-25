@@ -32,6 +32,7 @@ namespace KdsBatch
         private const string cProGetSugYechida = "Pkg_Calculation.pro_get_sug_yechida";
         private const string cProGetPeiluyotOvdim = "Pkg_Calculation.pro_get_peiluyot_ovdim";
         private const string cProGetPremiaOvdimLechishuv = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
+        private const string cProGetOvdimShguimLechishuv = "Pkg_Calculation.pro_ovdim_kelet_lechishuv";
 
         private const string cGetNetunryChishuv = "Pkg_Calculation.pro_get_netunim_lechishuv";
         public DataTable GetOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet)
@@ -512,6 +513,23 @@ namespace KdsBatch
             {
                 throw (ex);
             }
+        }
+
+        public DataTable GetOvdimLeRizatShguim()
+        {
+            DataTable dt = new DataTable();
+            clDal dal = new clDal();
+            try
+            {
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(cProGetOvdimShguimLechishuv, ref dt);  
+            }
+            catch (Exception ex)
+            {
+                //dt = null;
+                throw (ex);
+            }
+            return dt;
         }
     }
 }

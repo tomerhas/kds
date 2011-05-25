@@ -5,7 +5,7 @@ using System.Text;
 using KdsLibrary;
 using KdsLibrary.BL;
 using System.Configuration;
-
+using System.Data;
 namespace KdsBatch.TaskManager
 {
     public class Utils
@@ -71,8 +71,35 @@ namespace KdsBatch.TaskManager
             {
                 throw;
             }
+        }
 
-
+        public void RunShguimLechishuv()
+        {
+            clBatchManager oBatchManager = new clBatchManager();
+            DataTable dtOvdim = new DataTable();
+            clCalcDal oCalcDal = new clCalcDal();
+            clBatch oBatch = new clBatch();
+            int lRequestNum = 0;
+            try
+            {
+                lRequestNum = oBatch.InsertProcessLog(77, 0, KdsLibrary.BL.RecordStatus.Wait, "start RunShguimLechishuv", 0);
+                dtOvdim = oCalcDal.GetOvdimLeRizatShguim();
+                for (int i = 0; i < dtOvdim.Rows.Count; i++)
+                {
+                    oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                }
+                oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv", 0);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunShguimLechishuv:" + ex.Message);
+            }
+            finally {
+               oBatchManager = null;
+               dtOvdim =null;
+               oCalcDal =null;
+               oBatch =null;
+            }
         }
     }
 }
