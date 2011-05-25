@@ -80,15 +80,24 @@ namespace KdsBatch.TaskManager
             clCalcDal oCalcDal = new clCalcDal();
             clBatch oBatch = new clBatch();
             int lRequestNum = 0;
+            int numFaild=0;
+            int numSucceeded = 0;
             try
             {
                 lRequestNum = oBatch.InsertProcessLog(77, 0, KdsLibrary.BL.RecordStatus.Wait, "start RunShguimLechishuv", 0);
                 dtOvdim = oCalcDal.GetOvdimLeRizatShguim();
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
-                    oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                    try
+                    {
+                        oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                        numFaild += 1;
+                    }
+                    catch (Exception ex) {
+                        numSucceeded += 1;
+                    }
                 }
-                oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv", 0);
+                oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv numFaild=" + numFaild + ";  numSucceeded" + numSucceeded, 0);
             }
             catch (Exception ex)
             {
