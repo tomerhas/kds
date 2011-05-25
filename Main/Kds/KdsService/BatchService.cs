@@ -63,24 +63,24 @@ namespace KdsService
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Test) :
                                             new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch);
-                if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
-                {
-                    //#region not parallel
-                    //oMainCalc.Ovdim.ForEach(CurrentOved =>
-                    //                    {
-                    //                        oMainCalc.CalcOved(CurrentOved);
-                    //                    });
-                    //#endregion
-                    #region parallel
-                    Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
-                                        {
-                                            oMainCalc.CalcOved(CurrentOved);
-                                            CurrentOved.Dispose();
-                                            CurrentOved = null;
+                //if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
+                //{
+                //    //#region not parallel
+                //    //oMainCalc.Ovdim.ForEach(CurrentOved =>
+                //    //                    {
+                //    //                        oMainCalc.CalcOved(CurrentOved);
+                //    //                    });
+                //    //#endregion
+                //    #region parallel
+                //    Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
+                //                        {
+                //                            oMainCalc.CalcOved(CurrentOved);
+                //                            CurrentOved.Dispose();
+                //                            CurrentOved = null;
                                            
-                                        });
-                    #endregion
-                }
+                //                        });
+                //    #endregion
+                //}
               iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
             }
             catch (Exception ex)

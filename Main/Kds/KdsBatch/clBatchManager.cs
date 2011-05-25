@@ -11976,45 +11976,45 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
                 }
-                else if ((oMeafyeneyOved.Meafyen61Exists || oMeafyeneyOved.Meafyen51Exists) && !bSidurShaon)
-                {
-                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT")){
-                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
+                //else if ((oMeafyeneyOved.Meafyen61Exists || oMeafyeneyOved.Meafyen51Exists) && !bSidurShaon)
+                //{
+                //    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT")){
+                //        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
+                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                //    }
+                //    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                //    {
+                //        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
+                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                //    }
+                //    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                //    {
+                //        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
+                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                //    }
 
-                    if (oMeafyeneyOved.Meafyen51Exists && CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                    {
-                        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                        switch (int.Parse(oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString()))
-                        {
-                            case 1:
-                                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                break;
-                            case 2:
-                                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                break;
-                            case 3:
-                                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                break;
-                        }
-                    }
-                }
+                //    if (oMeafyeneyOved.Meafyen51Exists && CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                //    {
+                //        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                //        switch (int.Parse(oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString()))
+                //        {
+                //            case 1:
+                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                //                break;
+                //            case 2:
+                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                //                break;
+                //            case 3:
+                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                //                break;
+                //        }
+                //    }
+                //}
                 else
                 {
                     //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות
@@ -12039,13 +12039,13 @@ namespace KdsBatch
 
                             bSidurZakaiLnesiot = IsSidurZakaiLeNesiot(drSugSidur, oSidur);
 
-                            if (bSidurZakaiLnesiot)
+                            if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
                             {
                                 bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if (bKnisaValid && iSidurZakaiLenesiaKnisa == -1)
+                                if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && iSidurZakaiLenesiaKnisa == -1))
                                     iSidurZakaiLenesiaKnisa = i;
                                 bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if (bYetizaValid)
+                                if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
                                     iSidurZakaiLenesiaYetzia = i;
                                 else iSidurZakaiLenesiaYetzia = -1;
                             }
@@ -12182,14 +12182,17 @@ namespace KdsBatch
                             if (oMeafyeneyOved.Meafyen51Exists)
                             {
                                 iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                                if ((iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0)) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                // ((iSidurZakaiLenesiaKnisa > -1 || CheckIdkunRashemet("BITUL_ZMAN_NESIOT")) &&
+                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0  && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT < 4) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                if ((iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0)) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT < 4) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
                             }
 
                         }
                     }
+                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 1 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 2 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT !=3)
+                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
                 }
             }
             catch (Exception ex)
