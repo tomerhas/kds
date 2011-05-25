@@ -98,6 +98,7 @@ namespace KdsBatch
         private const string COL_TRIP_KNISA = "כניסה";
         private const string MAKAT_KNISA = "לפי צורך";
 
+
         public enum enPeilutStatus
         {
             enUpdate,

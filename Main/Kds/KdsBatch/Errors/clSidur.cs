@@ -161,6 +161,15 @@ namespace KdsBatch
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
         public int iPremium=0;
+        public enSidurStatus oSidurStatus;
+
+        public enum enSidurStatus
+        {
+            enUpdate,
+            enNew,
+            enDelete
+        }
+
         //נתוני פעילות
         public OrderedDictionary htPeilut = new OrderedDictionary();
 

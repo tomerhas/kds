@@ -198,8 +198,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 BuildSidurim(_DataSource);
                 SetHideParameters();
-
-                
             }
         }
         catch (Exception ex)

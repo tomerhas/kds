@@ -2079,6 +2079,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
     }
+    protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
+    {//הוספת סידור מיוחד
+    }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {
         hidSave.Value = "0";    
