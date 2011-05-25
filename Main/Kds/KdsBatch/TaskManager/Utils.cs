@@ -91,10 +91,10 @@ namespace KdsBatch.TaskManager
                     try
                     {
                         oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
-                        numFaild += 1;
+                        numSucceeded += 1;
                     }
                     catch (Exception ex) {
-                        numSucceeded += 1;
+                        numFaild += 1;
                     }
                 }
                 oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv numFaild=" + numFaild + ";  numSucceeded" + numSucceeded, 0);
