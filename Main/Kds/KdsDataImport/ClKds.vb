@@ -2116,11 +2116,13 @@ Public Class ClKds
         Dim Status As String
         Try
             Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
-            oDal = New KdsLibrary.DAL.clDal
-            oDal.ClearCommand()
-            oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DateTime.Now.AddDays(-1).ToString("yyyyMMdd"), KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_return_code", KdsLibrary.DAL.ParameterType.ntOracleInteger, Status, KdsLibrary.DAL.ParameterDir.pdOutput)
-            oDal.ExecuteSP("KDS.KDS_Driver_Activities_Pack.create_driver_activities@kds2sdrm")
+            If (Status = 8) Then
+                oDal = New KdsLibrary.DAL.clDal
+                oDal.ClearCommand()
+                oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DateTime.Now.AddDays(-1), KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("p_return_code", KdsLibrary.DAL.ParameterType.ntOracleInteger, Status, KdsLibrary.DAL.ParameterDir.pdOutput)
+                oDal.ExecuteSP("KDS.KDS_Driver_Activities_Pack.create_driver_activities@kds2sdrm")
+            End If
         Catch ex As Exception
             Throw New Exception("CreateActivitiesAtSdrn: " & ex.Message)
         End Try
