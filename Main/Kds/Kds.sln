@@ -45,6 +45,16 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "KdsWebSite", "KdsWebSite", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KdsTaskManager", "KdsTaskManager\KdsTaskManager.csproj", "{438301FD-7CC1-40FB-A426-EBC716082965}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48A29641-1B6E-421A-BE5F-E0F9B85F03A1}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+		Performance2.psess = Performance2.psess
+		Performance3.psess = Performance3.psess
+		Performance4.psess = Performance4.psess
+		Performance5.psess = Performance5.psess
+		Performance6.psess = Performance6.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 10

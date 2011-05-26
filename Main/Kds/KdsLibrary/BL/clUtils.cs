@@ -745,7 +745,6 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.ExecuteSP(clGeneral.cProGetErechParameterByKod, ref dt);
                 oDal = null;
-                GC.Collect();
                 return dt;
 
             }

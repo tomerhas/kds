@@ -1527,14 +1527,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public static void LogMessage(string message, EventLogEntryType entryType, bool DisplayFunctionName)
         {
-            string OriginFunction;
             string StrError = message;
             if (DisplayFunctionName)
             {
                 StackTrace st = new StackTrace();
                 StackFrame sf = st.GetFrame(1);
-                OriginFunction = sf.GetMethod().Name;
-                StrError = OriginFunction + " :: " + StrError;
+                StrError = sf.GetMethod().Name + " :: " + StrError;
             }
             LogMessage( StrError,entryType);
         }

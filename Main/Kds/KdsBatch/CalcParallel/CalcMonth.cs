@@ -5559,14 +5559,16 @@ namespace KdsBatch
             {
                 drRowToRemove[0].Delete();
             }
-
+            drRowToRemove = null;
 
         }
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;
-            objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
-            if (objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + iKodRechiv.ToString()).Length == 0)
+//            DataRow[] drChishuvRows;
+//            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
+//            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + iKodRechiv.ToString());
+            if ( CountOfRecords( iKodRechiv)== 0 ) // instead of (drChishuvRows.Length == 0)
             {
                 if (fErechRechiv > 0)
                 {
@@ -5594,6 +5596,19 @@ namespace KdsBatch
             drChishuv = _dtChishuvChodesh.Select("KOD_RECHIV=" + iKodRechiv)[0];
             drChishuv["ERECH_RECHIV"] = fErechRechiv;
             drChishuv = null;
+        }
+        private int CountOfRecords(int iKodRechiv)
+        {
+            try
+            {
+                return (from c in objOved._dsChishuv.Tables["CHISHUV_CHODESH"].AsEnumerable()
+                        where c.Field<int>("KOD_RECHIV").Equals(iKodRechiv)
+                        select c).Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("CountOfRecords:" + ex.Message);
+            }
         }
 
 

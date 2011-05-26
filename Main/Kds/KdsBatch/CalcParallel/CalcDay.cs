@@ -6597,8 +6597,8 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;
-            objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-            if (objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
+//            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+            if (CountOfRecords(iKodRechiv) == 0) // instead of (drChishuvRows.Length == 0)
             {
                 if (fErechRechiv > 0)
                 {
@@ -6618,16 +6618,17 @@ namespace KdsBatch
             {
                 UpdateRowInTable(iKodRechiv, fErechRechiv, 0);
             }
-
         }
 
         private void addRowToTable(int iKodRechiv, float fErechRechiv, float fErechEzer)
         {
-            DataRow drChishuv;
             if (fErechRechiv > 0)
             {
-                objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-                if (objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
+                DataRow drChishuv;
+//                DataRow[] drChishuvRows;
+  //              drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
+    //            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+                if (CountOfRecords(iKodRechiv) == 0) // instead of (drChishuvRows.Length == 0)
                 {
                     drChishuv = _dtChishuvYom.NewRow();
                     drChishuv["BAKASHA_ID"] = objOved.iBakashaId;
@@ -6644,6 +6645,20 @@ namespace KdsBatch
                 {
                     UpdateRowInTable(iKodRechiv, fErechRechiv, fErechEzer);
                 }
+            }
+        }
+        private int CountOfRecords(int iKodRechiv)
+        {
+            try
+            {
+                return (from c in objOved._dsChishuv.Tables["CHISHUV_YOM"].AsEnumerable()
+                        where c.Field<int>("KOD_RECHIV").Equals(iKodRechiv)
+                        && c.Field<DateTime>("taarich").ToShortDateString().Equals(objOved.Taarich.ToShortDateString())
+                        select c).Count();
+            }
+            catch(Exception ex) 
+            {
+                throw new Exception("CountOfRecords:" + ex.Message);
             }
         }
 

@@ -6847,8 +6847,10 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv)
         {
             DataRow drChishuv;
-            objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
-            if ( objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
+//            DataRow[] drChishuvRows;
+//            drChishuvRows= objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
+//            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+            if (CountOfRecords(iKodRechiv,dShatHatchala,iMisparSidur) == 0 )  //instead of (drChishuvRows.Length == 0)
             {
                 if (fErechRechiv > 0)
                 {
@@ -6883,8 +6885,10 @@ namespace KdsBatch
         private void addRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv, int iOutMichsa)
         {
             DataRow drChishuv;
-            objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
-            if (objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length == 0)
+//            DataRow[] drChishuvRows;
+//            drChishuvRows= objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
+//            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+            if (CountOfRecords(iKodRechiv, dShatHatchala, iMisparSidur) == 0)  //instead of (drChishuvRows.Length == 0)
             {
                 if (fErechRechiv > 0)
                 {
@@ -6908,7 +6912,22 @@ namespace KdsBatch
         }
 
 
-
+        private int CountOfRecords(int iKodRechiv , DateTime dShatHatchala  ,int iMisparSidur )
+        {
+            try
+            {
+                return (from c in objOved._dsChishuv.Tables["CHISHUV_SIDUR"].AsEnumerable()
+                        where c.Field<int>("KOD_RECHIV").Equals(iKodRechiv)
+                        && c.Field<int>("mispar_sidur").Equals(iMisparSidur)
+                        && c.Field<DateTime>("SHAT_HATCHALA").ToShortDateString().Equals(dShatHatchala)
+                        && c.Field<DateTime>("taarich").ToShortDateString().Equals(objOved.Taarich.ToShortDateString())
+                        select c).Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("CountOfRecords:" + ex.Message);
+            }
+        }
 
         private bool CheckShabat(int iMisparSidur, int iDay, int iSugYom, DateTime dShatHatchalaSidur, DateTime dShatGmarSidur, ref float fErechChol, ref float fErechShabat, bool bCheckMafil)
         {
