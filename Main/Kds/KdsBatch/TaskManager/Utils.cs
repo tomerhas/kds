@@ -97,7 +97,7 @@ namespace KdsBatch.TaskManager
                         numFaild += 1;
                     }
                 }
-                oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv numFaild=" + numFaild + ";  numSucceeded" + numSucceeded, 0);
+                oBatch.UpdateProcessLog(lRequestNum, KdsLibrary.BL.RecordStatus.Finish, "end RunShguimLechishuv: Total Rows=" + dtOvdim.Rows.Count + "; numFaild=" + numFaild + ";  numSucceeded=" + numSucceeded, 0);
             }
             catch (Exception ex)
             {
