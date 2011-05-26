@@ -82,6 +82,7 @@ namespace KdsBatch.TaskManager
             int lRequestNum = 0;
             int numFaild=0;
             int numSucceeded = 0;
+            bool bInpuDataResult;
             try
             {
                 lRequestNum = oBatch.InsertProcessLog(77, 0, KdsLibrary.BL.RecordStatus.Wait, "start RunShguimLechishuv", 0);
@@ -90,8 +91,15 @@ namespace KdsBatch.TaskManager
                 {
                     try
                     {
-                        oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                        bInpuDataResult = true;
+                        bInpuDataResult = oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString())); 
+
+                        if (bInpuDataResult)
+                        {
+                            bInpuDataResult = oBatchManager.MainOvedErrors(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                        }
                         numSucceeded += 1;
+                    
                     }
                     catch (Exception ex) {
                         numFaild += 1;
