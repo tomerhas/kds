@@ -235,6 +235,7 @@ namespace KdsBatch
         }
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {
+            StringBuilder sHour = new StringBuilder();
             string sTmp;
             try
             {
@@ -987,19 +988,34 @@ namespace KdsBatch
 
         public string GetOneParam(int iParamNum, DateTime dDate)
         {   //הפונקציה מקבלת קוד פרמטר ותאריך ומחזירה את הערך
-            string sParamVal = "";
-            DataRow[] dr;
+//            string sParamVal = "";
+            //DataRow[] dr;
 
-            dr = dtParameters.Select(string.Concat("kod_param=", iParamNum.ToString(), " and Convert('", dDate.ToShortDateString(), "','System.DateTime') >= me_taarich and Convert('", dDate.ToShortDateString(), "', 'System.DateTime') <= ad_taarich"));
-            //dr = dtParameters.Select(string.Concat("kod_param=", iParamNum.ToString()));
-            if (dr.Length > 0)
+            //dr = dtParameters.Select(string.Concat("kod_param=", iParamNum.ToString(), " and Convert('", dDate.ToShortDateString(), "','System.DateTime') >= me_taarich and Convert('", dDate.ToShortDateString(), "', 'System.DateTime') <= ad_taarich"));
+            ////dr = dtParameters.Select(string.Concat("kod_param=", iParamNum.ToString()));
+            //if (dr.Length > 0)
+            //{
+            //    sParamVal = dr[0]["erech_param"].ToString();
+            //}
+            //dr = null;
+//            sParamVal = GetValueOfKod(iParamNum, dDate);
+            //return sParamVal;
+            try
             {
-                sParamVal = dr[0]["erech_param"].ToString();
+                var rows = (from c in dtParameters.AsEnumerable()
+                            where c.Field<int>("kod_param").Equals(iParamNum)
+                            && c.Field<DateTime>("me_taarich") <= dDate
+                            && c.Field<DateTime>("ad_taarich") >= dDate
+                            select c.Field<string>("erech_param"));//.First().ToString();
+                if (rows.Count() > 0)
+                    return rows.First().ToString();
+                else return "";
             }
-            dr = null;
-            return sParamVal;
+            catch (Exception ex)
+            {
+                throw new Exception("GetOneParam:" + ex.Message);
+            }
         }
-
         public void SetShatKnisatShabat(DateTime dTaarich, int iSugYom)
         {
 

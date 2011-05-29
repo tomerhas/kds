@@ -6651,6 +6651,11 @@ namespace KdsBatch
         {
             try
             {
+                //DataRow[] drChishuvRows;
+                //drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
+                //drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + iKodRechiv.ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+
+                //return drChishuvRows.Count();
                 return (from c in objOved._dsChishuv.Tables["CHISHUV_YOM"].AsEnumerable()
                         where c.Field<int>("KOD_RECHIV").Equals(iKodRechiv)
                         && c.Field<DateTime>("taarich").ToShortDateString().Equals(objOved.Taarich.ToShortDateString())
