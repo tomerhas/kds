@@ -35,6 +35,21 @@ namespace KdsBatch
                 return float.Parse(oErech.ToString());
             }
         }
+        public float GetSumErechRechiv(DataTable TableName, int kodRechiv)
+        {
+            try
+            {
+                float Res = (from c in TableName.AsEnumerable()
+                             where c.Field<int>("KOD_RECHIV").Equals(kodRechiv)
+                             select c.Field<float>("ERECH_RECHIV")).Sum();
+                return (Res == null) ? 0 : float.Parse(Res.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetSumErechRechiv :" + ex.Message);
+            }
+        }
+
         public float GetSumErechRechiv(DataTable TableName, int kodRechiv, DateTime dTaarich)
         {
             try
@@ -50,6 +65,22 @@ namespace KdsBatch
                 throw new Exception("GetSumErechRechiv :" + ex.Message);
             }
         }
+        //public Dictionary<int,float> GetSumsOfRechiv(DataTable TableName, DateTime dTaarich)
+        //{
+        //    Dictionary<int, float> ListOfSum = new Dictionary<int, float>();
+        //    try
+        //    {
+        //        var List = from c in TableName.AsEnumerable()
+        //                     where c.Field<DateTime>("taarich").Equals(dTaarich)
+        //                     group c by c.Field<int>("KOD_RECHIV") into g
+        //                     select new { Kod = g.Key , Total = g.Sum(c => c.Field<float>("ERECH_RECHIV"))};
+        //        ListOfSum = List.ToDictionary<int, float>(item => item.Kod, item => item.Total);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("GetSumErechRechiv :" + ex.Message);
+        //    }
+        //}
 
         public  bool CheckYomShishi(int iSugYom)
         {
