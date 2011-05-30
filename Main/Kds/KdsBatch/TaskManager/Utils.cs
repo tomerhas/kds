@@ -92,16 +92,20 @@ namespace KdsBatch.TaskManager
                     try
                     {
                         bInpuDataResult = true;
-                        bInpuDataResult = oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString())); 
+                        bInpuDataResult = oBatchManager.MainInputData(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
 
                         if (bInpuDataResult)
                         {
                             bInpuDataResult = oBatchManager.MainOvedErrors(int.Parse(dtOvdim.Rows[i]["MISPAR_ISHI"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["TAARICH"].ToString()));
+                            numSucceeded += 1;
                         }
-                        numSucceeded += 1;
-                    
+                        else
+                        {
+                            numFaild += 1;
+                        }
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex)
+                    {
                         numFaild += 1;
                     }
                 }

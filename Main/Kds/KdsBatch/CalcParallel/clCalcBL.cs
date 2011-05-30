@@ -84,6 +84,25 @@ namespace KdsBatch
                 throw new Exception("GetSumsOfRechiv :" + ex.Message);
             }
         }
+
+        public Dictionary<int, float> GetSumsOfRechiv(DataTable TableName)
+        {
+            try
+            {
+                var List = from c in TableName.AsEnumerable()
+                           group c by c.Field<int>("KOD_RECHIV") into g
+                           select new
+                           {
+                               Kod = g.Key,
+                               Total = g.Sum(c => c.Field<float>("ERECH_RECHIV"))
+                           };
+                return List.ToDictionary(item => item.Kod, item => item.Total);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetSumsOfRechiv :" + ex.Message);
+            }
+        }
         public float GetSumErechRechiv(Dictionary<int, float> ListOfSum, clGeneral.enRechivim SugRechiv)
         {
             return (ListOfSum.ContainsKey(SugRechiv.GetHashCode())) ? ListOfSum[SugRechiv.GetHashCode()] : 0;

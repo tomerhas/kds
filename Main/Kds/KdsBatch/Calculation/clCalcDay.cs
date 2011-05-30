@@ -3410,7 +3410,7 @@ namespace KdsBatch
             float fDakotRechiv, fNesiotTchilatYom, fNesiotSofYom, fSachNihulTnua, fSachNahagut, fSachTafkid;
             float fDakotTafkidChol, fDakotTafkidShabat, fDakotTafkidShishi, fMichsaYomit;
             DataRow RowKodem, RowNext;
-            int iSugYom;
+            int iSugYom,iLastRowMezake,indexRow;
             bool bLogNahag = false;
             try
             {
@@ -3500,27 +3500,30 @@ namespace KdsBatch
                         rowBitulZmanNesiot = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and (Bitul_Zman_nesiot =2 or Bitul_Zman_nesiot =3) and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc"); ;
                         if (rowBitulZmanNesiot.Length > 0)
                         {
+                            
                             rowMezakeNesia = _dtYemeyAvodaOved.Select("Lo_letashlum=0 and Mezake_nesiot>0 and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "shat_hatchala_sidur asc"); ;
-
+                            iLastRowMezake = rowMezakeNesia.Length - 1;
+                            indexRow = 0;
                             if (rowMezakeNesia.Length > 0)
                             {
                                 RowNext = rowSidurim[0];
                                 for (int I = 0; I < rowSidurim.Length; I++)
                                 {
                                     RowNext = rowSidurim[I];
-                                    if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == rowSidurim[I]["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == rowSidurim[I]["shat_hatchala_sidur"].ToString()))
+                                    if ((rowMezakeNesia[iLastRowMezake]["mispar_sidur"].ToString() != rowSidurim[I]["mispar_sidur"].ToString()) && (rowMezakeNesia[iLastRowMezake]["shat_hatchala_sidur"].ToString() != rowSidurim[I]["shat_hatchala_sidur"].ToString()))
                                     {
                                         if (I < (rowSidurim.Length - 1))
                                         {
                                             RowNext = rowSidurim[I + 1];
+                                            indexRow = I + 1;
                                         }
 
-                                        break;
+                                       // break;
                                     }
                                 }
 
-
-                                if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
+                                if (indexRow ==  rowSidurim.Length-1)
+                               // if ((rowMezakeNesia[iLastRowMezake]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeNesia[iLastRowMezake]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
                                 {
                                     fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
                                     if (bLogNahag)
@@ -3532,10 +3535,11 @@ namespace KdsBatch
                                 }
                                 else
                                 {
-                                    fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
+                                    RowNext = rowSidurim[indexRow + 1];
+                                    fNesiotSofYom = int.Parse(rowMezakeNesia[iLastRowMezake]["Zman_Nesia_Hazor"].ToString());
                                     if (bLogNahag)
                                         fNesiotSofYom = fNesiotSofYom - 45;
-                                    fNesiotSofYom = Math.Min(fNesiotSofYom, float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeNesia[0]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()));
+                                    fNesiotSofYom = Math.Min(fNesiotSofYom, float.Parse((DateTime.Parse(RowNext["shat_hatchala_letashlum"].ToString()) - DateTime.Parse(rowMezakeNesia[iLastRowMezake]["shat_gmar_letashlum"].ToString())).TotalMinutes.ToString()));
                                     if (fNesiotSofYom < 0)
                                     {
                                         fNesiotSofYom = 0;

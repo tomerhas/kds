@@ -192,6 +192,8 @@ namespace KdsBatch
         public DateTime dShatGmarNextDay; //242-שעת גמר לבדיקת יום של שעת יציאה
         public DateTime dShatHatchalaNahagutNihulTnua; //244-התחלה מותרת-טווח עליון-נהגות וניהול תנועה
         public float fHighPremya; //245- פרמיה גבוהה
+        public DateTime dStartAruchatTzaharayim246;//246 - תחילת ארוחת צהריים
+        public DateTime dEndAruchatTzaharayim247;//247 - סיום ארוחת צהריים
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
         
@@ -282,6 +284,7 @@ namespace KdsBatch
                 sTmp = GetOneParam(18, dCardDate);
                 dStartAruchatTzaharayim = GetParamHour(sTmp, dCardDate);
 
+               
                 //19 - סיום ארוחת צהריים
                 sTmp = GetOneParam(19, dCardDate);
                 dEndAruchatTzaharayim = GetParamHour(sTmp, dCardDate);
@@ -932,6 +935,16 @@ namespace KdsBatch
                 sTmp = GetOneParam(245, dCardDate);
                 fHighPremya = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
 
+                //246 - תחילת ארוחת צהריים
+                sTmp = GetOneParam(246, dCardDate);
+                dStartAruchatTzaharayim246 = GetParamHour(sTmp, dCardDate);
+
+
+                //247 - תחילת ארוחת צהריים
+                sTmp = GetOneParam(247, dCardDate);
+                dEndAruchatTzaharayim247 = GetParamHour(sTmp, dCardDate);
+
+                
 
                 //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
                 sTmp = GetOneParam(504, dCardDate);

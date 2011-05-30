@@ -6124,18 +6124,18 @@ namespace KdsBatch
                         oSidur = (clSidur)htEmployeeDetails[i];
                         if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
+                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+
                             if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20))
                             {
-                                oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
-
                                 oSidur.iLoLetashlum = 0;
                                 oSidur.iKodSibaLoLetashlum = 0;
                                 oObjSidurimOvdimUpd.LO_LETASHLUM = 0;
-                                oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;
-                                oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
-                                oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
-                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;                              
                             }
+                            oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
+                            oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                             htEmployeeDetails[i] = oSidur;
                         }
                     }
