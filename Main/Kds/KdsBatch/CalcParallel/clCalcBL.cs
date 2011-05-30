@@ -12,17 +12,17 @@ namespace KdsBatch
 {
     class clCalcBL
     {
- 
+
 
         public clCalcBL()
         {
-             
+
         }
         public float CalcKm(long lMakat, float fGoremChishuvKm)
         {
             int iZmanPeilut;
             iZmanPeilut = int.Parse(lMakat.ToString().PadLeft(8).Substring(3, 3));
-            return (iZmanPeilut /  fGoremChishuvKm);
+            return (iZmanPeilut / fGoremChishuvKm);
         }
         public float GetSumErechRechiv(object oErech)
         {
@@ -55,9 +55,9 @@ namespace KdsBatch
             try
             {
                 float Res = (from c in TableName.AsEnumerable()
-                        where c.Field<int>("KOD_RECHIV").Equals(kodRechiv)
-                        && c.Field<DateTime>("taarich").Equals(dTaarich)
-                        select c.Field<float>("ERECH_RECHIV")).Sum();
+                             where c.Field<int>("KOD_RECHIV").Equals(kodRechiv)
+                             && c.Field<DateTime>("taarich").Equals(dTaarich)
+                             select c.Field<float>("ERECH_RECHIV")).Sum();
                 return (Res == null) ? 0 : float.Parse(Res.ToString());
             }
             catch (Exception ex)
@@ -65,24 +65,32 @@ namespace KdsBatch
                 throw new Exception("GetSumErechRechiv :" + ex.Message);
             }
         }
-        //public Dictionary<int,float> GetSumsOfRechiv(DataTable TableName, DateTime dTaarich)
-        //{
-        //    Dictionary<int, float> ListOfSum = new Dictionary<int, float>();
-        //    try
-        //    {
-        //        var List = from c in TableName.AsEnumerable()
-        //                     where c.Field<DateTime>("taarich").Equals(dTaarich)
-        //                     group c by c.Field<int>("KOD_RECHIV") into g
-        //                     select new { Kod = g.Key , Total = g.Sum(c => c.Field<float>("ERECH_RECHIV"))};
-        //        ListOfSum = List.ToDictionary<int, float>(item => item.Kod, item => item.Total);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("GetSumErechRechiv :" + ex.Message);
-        //    }
-        //}
+        public Dictionary<int, float> GetSumsOfRechiv(DataTable TableName, DateTime dTaarich)
+        {
+            try
+            {
+                var List = from c in TableName.AsEnumerable()
+                           where c.Field<DateTime>("taarich").Equals(dTaarich)
+                           group c by c.Field<int>("KOD_RECHIV") into g
+                           select new
+                           {
+                               Kod = g.Key,
+                               Total = g.Sum(c => c.Field<float>("ERECH_RECHIV"))
+                           };
+                return List.ToDictionary(item => item.Kod, item => item.Total);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetSumsOfRechiv :" + ex.Message);
+            }
+        }
+        public float GetSumErechRechiv(Dictionary<int, float> ListOfSum, clGeneral.enRechivim SugRechiv)
+        {
+            return (ListOfSum.ContainsKey(SugRechiv.GetHashCode())) ? ListOfSum[SugRechiv.GetHashCode()] : 0;
+        }
 
-        public  bool CheckYomShishi(int iSugYom)
+
+        public bool CheckYomShishi(int iSugYom)
         {
             if (iSugYom == clGeneral.enSugYom.Shishi.GetHashCode())
             {
@@ -91,9 +99,10 @@ namespace KdsBatch
             else return false;
         }
 
-        public  bool CheckErevChag(DataTable dtSugeyYamimMeyuchadim,int iSugYom)
+        public bool CheckErevChag(DataTable dtSugeyYamimMeyuchadim, int iSugYom)
         {
-            try{
+            try
+            {
                 if (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom).Length > 0)
                 {
                     return (dtSugeyYamimMeyuchadim.Select("sug_yom=" + iSugYom)[0]["EREV_SHISHI_CHAG"].ToString() == "1") ? true : false;
@@ -107,7 +116,7 @@ namespace KdsBatch
             }
         }
 
-        public  bool CheckOutMichsa(int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala, int iOutMichsa)
+        public bool CheckOutMichsa(int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala, int iOutMichsa)
         {
             bool bOutMichsa = true;
 
@@ -117,7 +126,7 @@ namespace KdsBatch
             return bOutMichsa;
         }
 
-        public  bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala)
+        public bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich, int iMisparSidur, DateTime dShatHatchala)
         {
             clUtils objUtils = new clUtils();
             try
@@ -136,15 +145,15 @@ namespace KdsBatch
             }
         }
 
-        public  bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich)
+        public bool CheckUshraBakasha(int iKodIshur, int iMisparIshi, DateTime dTaarich)
         {
             clUtils objUtils = new clUtils();
             try
             {
                 if (objUtils.CheckIshur(iMisparIshi, dTaarich, iKodIshur) == 1)
                 { return true; }
-                else { return false; } 
-             }
+                else { return false; }
+            }
             catch (Exception ex)
             {
                 throw ex;
@@ -158,7 +167,8 @@ namespace KdsBatch
         public int GetSugYomLemichsa(Oved oOved, DateTime dTaarich, int iKodSectorIsuk, int iMeafyen56)
         {
             int iSugYom;
-            try{
+            try
+            {
                 if (oOved.oGeneralData.dtYamimMeyuchadim == null)
                 {
                     oOved.oGeneralData.dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
@@ -166,21 +176,22 @@ namespace KdsBatch
 
                 iSugYom = clGeneral.GetSugYom(oOved.Mispar_ishi, dTaarich, oOved.oGeneralData.dtYamimMeyuchadim, iKodSectorIsuk, oOved.oGeneralData.dtSugeyYamimMeyuchadim, iMeafyen56);
                 return iSugYom;
-             }
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
 
-        public bool CheckIsurShaotNosafot(clPirteyOved objPirteyOved,DataTable dtMutamut)
+        public bool CheckIsurShaotNosafot(clPirteyOved objPirteyOved, DataTable dtMutamut)
         {
             clUtils objUtils = new clUtils();
-           // DataTable dtMutamut;
-            try{
+            // DataTable dtMutamut;
+            try
+            {
                 if (objPirteyOved.iMutamut > 0)
                 {
-                   // dtMutamut = objUtils.GetCtbMutamut();
+                    // dtMutamut = objUtils.GetCtbMutamut();
                     if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["Isur_Shaot_Nosafot"].ToString() == "1")
                     { return true; }
                     else { return false; }
@@ -199,14 +210,14 @@ namespace KdsBatch
 
         public bool CheckMutamut(clPirteyOved objPirteyOved, DataTable dtMutamut)
         {
-            
+
             clUtils objUtils = new clUtils();
-          //  DataTable dtMutamut;
+            //  DataTable dtMutamut;
             try
             {
                 if (objPirteyOved.iMutamut > 0)
                 {
-                   // dtMutamut = objUtils.GetCtbMutamut();
+                    // dtMutamut = objUtils.GetCtbMutamut();
                     if (dtMutamut.Select("KOD_MUTAMUT=" + objPirteyOved.iMutamut)[0]["MEZAKE_GMUL"].ToString() == "1")
                     { return true; }
                     else { return false; }
@@ -233,7 +244,7 @@ namespace KdsBatch
                 {
                     iSugYom = GetSugYomLemichsa(oOved, dTaarich, iKodSectorIsuk, iMeafyen56);
                 }
-                if ( iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() ||  iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
+                if (iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
                 { iShvuaAvoda = 6; }
                 else { iShvuaAvoda = 5; }
 
@@ -270,10 +281,11 @@ namespace KdsBatch
             }
         }
 
-        public  int GetPremiaChodshit(DataTable dtPremyot,int iSugPremia)
+        public int GetPremiaChodshit(DataTable dtPremyot, int iSugPremia)
         {
             DataRow[] drPremia;
-            try{
+            try
+            {
                 drPremia = dtPremyot.Select("Sug_premia=" + iSugPremia);
                 if (drPremia.Length > 0)
                 { return int.Parse(drPremia[0]["Sum_dakot"].ToString()); }
@@ -326,13 +338,13 @@ namespace KdsBatch
                 if (oved.oGeneralData.dtOvdimShePutru.Rows.Count > 0)
                 {
                     rows = oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime') >= taarich_me and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime')<= taarich_ad");
-                      //     oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and "+ oved.Taarich.ToShortDateString()  +" >= Convert('taarich_me' , 'System.DateTime') and "+ oved.Taarich.ToShortDateString()  +" <= Convert('taarich_ad' , 'System.DateTime')" );
+                    //     oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and "+ oved.Taarich.ToShortDateString()  +" >= Convert('taarich_me' , 'System.DateTime') and "+ oved.Taarich.ToShortDateString()  +" <= Convert('taarich_ad' , 'System.DateTime')" );
                     if (rows.Length > 0)
                     {
                         bPutar = true;
                     }
                 }
-              
+
                 return bPutar;
             }
             catch (Exception ex)
@@ -340,7 +352,7 @@ namespace KdsBatch
                 throw ex;
             }
         }
-        public string InitSugYechida(Oved oved,DateTime dDay)
+        public string InitSugYechida(Oved oved, DateTime dDay)
         {
             DataRow[] drSugYechida;
             try
