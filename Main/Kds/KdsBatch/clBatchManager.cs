@@ -2456,22 +2456,56 @@ namespace KdsBatch
 
         private bool IsHighPremya153(clSidur oSidur, ref DataTable dtErrors, bool bSidurNahagut, ref bool bCheckBoolSidur)
         {
+            DataSet dsSidur;
             bool isValid = true;
             float dSumMazanTashlum = 0;
-            int iTypeMakat, iMoneNesiot;
+            double dSumMazanTichnun = 0;
+            int iTypeMakat;
             clPeilut oPeilut;
             OrderedDictionary htPeilut = new OrderedDictionary();
-            float dSumMazanElementim = 0;
-            float dSumKisuyTor = 0;
             float fZmanSidur = 0;
-            float fPremiyeSidur = 0;
-            // clPeilut oPeilutAchrona;
+            float fZmanSidurMapa = 0;
             bool isSidurValid = true;
+            clKavim oKavim = new clKavim();
+            DateTime dShatGmarMapa, dShaHatchalaMapa;
+            int iResult;
+            string sShaa;
             try
             {
-                iMoneNesiot = 0;
-                // oPeilutAchrona = GetLastPeilutNoElementLeyedia(oSidur);    
-                // fZmanSidur = float.Parse(((oPeilutAchrona.dFullShatYetzia.AddMinutes(oPeilutAchrona.iMazanTichnun)) - oSidur.dFullShatHatchala).TotalMinutes.ToString());
+                //נתונים של הסידור מהמפה
+                dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(oSidur.iMisparSidur, _dCardDate, null, out iResult);
+                if (iResult == 0)
+                {
+                    //שעת התחלה ושעת גמר
+                    if (dsSidur.Tables[1].Rows.Count > 0)
+                    {
+                        sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
+                        dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate);
+                        for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
+                        {
+                            long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
+                            sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
+                            if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
+                                dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
+                            dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, _dCardDate).AddMinutes(dSumMazanTichnun);
+                            fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
+
+                            //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
+
+                            if ((clKavim.enMakatType)(oKavim.GetMakatType(lMakatNesia)) == clKavim.enMakatType.mElement)
+                            {
+                                DataRow drMeafyeneyElements = dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
+                                if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
+                                {
+                                    break;
+                                }
+                            }
+                            else { break; }
+                        }
+
+                    }
+                }
+                // נתונים מהסידור בכרטיס העבודה 
                 fZmanSidur = float.Parse((oSidur.dFullShatGmar - oSidur.dFullShatHatchala).TotalMinutes.ToString());
                 htPeilut = oSidur.htPeilut;
                 for (int i = 0; i < oSidur.htPeilut.Values.Count; i++)
@@ -2481,36 +2515,31 @@ namespace KdsBatch
                     if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
                     {
                         dSumMazanTashlum += oPeilut.iMazanTashlum;
-                        if (iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode())
-                        {
-                            iMoneNesiot += 1;
-                            dSumKisuyTor += oPeilut.iKisuyTor;
-                        }
                     }
                     else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
                     {
                         if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
                         {
-                            dSumMazanElementim += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
-
-                        }
+                           dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                       }
                     }
                 }
 
-                fPremiyeSidur = float.Parse((((dSumMazanTashlum * 1.333) + dSumMazanElementim + dSumKisuyTor + (2.5 * (iMoneNesiot - 1) + 2)) - fZmanSidur).ToString());
-
-                if (oSidur.bSidurMyuhad)
+                if (dSumMazanTashlum >= fZmanSidur)
                 {
-                    if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
-                        if (fPremiyeSidur > (fZmanSidur * 2))
-                            isSidurValid = false;
+                    if (oSidur.bSidurMyuhad)
+                    {
+                        if (dSumMazanTashlum >= (fZmanSidur * 2))
+                                isSidurValid = false;
+                    }
+                    else
+                    {
+                        if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
+                            if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < _oParameters.fHighPremya)
+                              isSidurValid = false;
+                    }
                 }
-                else
-                {
-                    if (oSidur.iPremium > 0)
-                        if ((fPremiyeSidur / oSidur.iPremium) * 10 > _oParameters.fHighPremya)
-                            isSidurValid = false;
-                }
+              
 
                 if (!isSidurValid)
                 {
@@ -2529,6 +2558,7 @@ namespace KdsBatch
 
             return isValid;
         }
+
 
         private bool IsHighPremya153_1(clSidur oSidur, ref DataTable dtErrors, bool bSidurNahagut, ref bool bCheckBoolSidur)
         {
