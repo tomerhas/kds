@@ -44,7 +44,7 @@
           <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!ENDTIME_YAEL.Value)</Value>
         </Field>
         <Field Name="spearTime">
-          <Value>=Fields!ENDTIME_YAEL.Value - Fields!STARTTIME_YAEL.Value</Value>
+          <Value>=iif((Fields!ENDTIME_YAEL.Value &gt; 0) and (Fields!STARTTIME_YAEL.Value &gt; 0 ), Fields!ENDTIME_YAEL.Value - Fields!STARTTIME_YAEL.Value, 0)</Value>
         </Field>
         <Field Name="TimeInMinute">
           <Value>=Code.GetTimeInMinute(Fields!spearTime.Value)</Value>
@@ -87,7 +87,7 @@
               <Width>0.66134in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.15429in</Width>
+              <Width>1.26887in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -533,7 +533,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatDateTime(CDate(Fields!TAARICH.Value), DateFormat.ShortDate)</Value>
+                              <Value>=Format(Fields!TAARICH.Value,"dd/MM")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -809,7 +809,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
         <Top>1.72833cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>13.89733cm</Width>
+        <Width>14.18837cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
