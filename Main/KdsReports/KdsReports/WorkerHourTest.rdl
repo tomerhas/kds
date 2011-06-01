@@ -44,7 +44,7 @@
           <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!ENDTIME_YAEL.Value)</Value>
         </Field>
         <Field Name="spearTime">
-          <Value>=iif((Fields!ENDTIME_YAEL.Value &gt; 0) and (Fields!STARTTIME_YAEL.Value &gt; 0 ), Fields!ENDTIME_YAEL.Value - Fields!STARTTIME_YAEL.Value, 0)</Value>
+          <Value>=CDec(iif((Fields!ENDTIME_YAEL.Value &gt; 0) and (Fields!STARTTIME_YAEL.Value &gt; 0 ), Fields!ENDTIME_YAEL.Value - Fields!STARTTIME_YAEL.Value, 0))</Value>
         </Field>
         <Field Name="TimeInMinute">
           <Value>=Code.GetTimeInMinute(Fields!spearTime.Value)</Value>
@@ -394,7 +394,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -571,9 +570,7 @@
                               <Value>=Sum(Fields!spearTime.Value, "DataSet1")</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>=IIF(
-CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
-"Green","Red")</Color>
+                                <Color>=IIF(Fields!spearTime.Value &gt;= 9 , "Green" , "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -593,6 +590,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -807,7 +805,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
         <Top>1.72833cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>14.18837cm</Width>
+        <Width>14.18836cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1093,7 +1091,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>לא משלמים שעות נופסות !!!  </Value>
+                  <Value>לא משלמים שעות נוספות !!!  </Value>
                   <Style>
                     <FontFamily>Guttman Yad-Brush</FontFamily>
                     <FontSize>11pt</FontSize>
