@@ -372,9 +372,7 @@
                               <Value>=Fields!spearTime.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>=IIF(
-CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
-"Green","Red")</Color>
+                                <Color>=IIF(Fields!spearTime.Value &gt;= 9 , "Green" , "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -396,6 +394,7 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -553,7 +552,6 @@ CDbl(DateDiff("s",Fields!STARTTIME.Value ,Fields!ENDTIME.Value)) &gt; 32400,
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
