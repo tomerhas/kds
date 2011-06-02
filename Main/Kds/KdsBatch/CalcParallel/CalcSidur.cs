@@ -2697,6 +2697,7 @@ namespace KdsBatch
             int iMisparSidur, iHashlama;
             float fErech, fTempX;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
+            DateTime dStartHafsaketZaharim, dEndHafsaketZaharim;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             string sSidurim;
@@ -2724,17 +2725,28 @@ namespace KdsBatch
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                                if ((dShatHatchalaLetashlum <= objOved.objParameters.dEndAruchatTzaharayim) && (dShatGmarLetashlum >= objOved.objParameters.dStartAruchatTzaharayim))
+                                if (objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode() || objOved.objPirteyOved.iMikumYechida == 180)
                                 {
-                                    if ((dShatHatchalaLetashlum <= objOved.objParameters.dStartAruchatTzaharayim) && (dShatGmarLetashlum >= objOved.objParameters.dStartAruchatTzaharayim))
+                                    dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim246;
+                                    dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim247;
+                                }
+                                else
+                                {
+                                    dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim;
+                                    dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim;
+                                }
+
+                                if ((dShatHatchalaLetashlum <= dEndHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
+                                {
+                                    if ((dShatHatchalaLetashlum <= dStartHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
                                     {
-                                        fTempX = float.Parse((dShatGmarLetashlum - objOved.objParameters.dStartAruchatTzaharayim).TotalMinutes.ToString());
+                                        fTempX = float.Parse((dShatGmarLetashlum - dStartHafsaketZaharim).TotalMinutes.ToString());
                                     }
-                                    else if ((dShatHatchalaLetashlum > objOved.objParameters.dStartAruchatTzaharayim) && (dShatHatchalaLetashlum < objOved.objParameters.dEndAruchatTzaharayim) && (dShatGmarLetashlum > objOved.objParameters.dEndAruchatTzaharayim))
+                                    else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatHatchalaLetashlum < dEndHafsaketZaharim) && (dShatGmarLetashlum > dEndHafsaketZaharim))
                                     {
-                                        fTempX = float.Parse((objOved.objParameters.dEndAruchatTzaharayim - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                                        fTempX = float.Parse((dEndHafsaketZaharim - dShatHatchalaLetashlum).TotalMinutes.ToString());
                                     }
-                                    else if ((dShatHatchalaLetashlum > objOved.objParameters.dStartAruchatTzaharayim) && (dShatGmarLetashlum < objOved.objParameters.dEndAruchatTzaharayim))
+                                    else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatGmarLetashlum < dEndHafsaketZaharim))
                                     {
                                         fTempX = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
 
@@ -6919,7 +6931,7 @@ namespace KdsBatch
                 return (from c in objOved._dsChishuv.Tables["CHISHUV_SIDUR"].AsEnumerable()
                         where c.Field<int>("KOD_RECHIV").Equals(iKodRechiv)
                         && c.Field<int>("mispar_sidur").Equals(iMisparSidur)
-                        && c.Field<DateTime>("SHAT_HATCHALA").ToShortDateString().Equals(dShatHatchala)
+                        && c.Field<DateTime>("SHAT_HATCHALA").Equals(dShatHatchala)
                         && c.Field<DateTime>("taarich").ToShortDateString().Equals(objOved.Taarich.ToShortDateString())
                         select c).Count();
             }

@@ -244,7 +244,7 @@ namespace KdsBatch
                      dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
                      iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
                      oMakatType = (clKavim.enMakatType)iMakatType;
-                     if (oMakatType != clKavim.enMakatType.mVisa && oMakatType != clKavim.enMakatType.mEmpty && oMakatType != clKavim.enMakatType.mElement) //(sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "6" && sMakat.Substring(0, 1) != "7") && iMisparKnisa == 0)
+                     if (oMakatType == clKavim.enMakatType.mNamak || (oMakatType == clKavim.enMakatType.mKavShirut && iMisparKnisa == 0))
                      {
                          fErech+=1;
                      }

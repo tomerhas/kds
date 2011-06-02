@@ -87,7 +87,7 @@ namespace KdsBatch.TaskManager
             {
                 lRequestNum = oBatch.InsertProcessLog(77, 0, KdsLibrary.BL.RecordStatus.Wait, "start RunShguimLechishuv", 0);
                 dtOvdim = oCalcDal.GetOvdimLeRizatShguim();
-                for (int i = 0; i < dtOvdim.Rows.Count; i++)
+                for (int i = 0; i <dtOvdim.Rows.Count; i++)
                 {
                     try
                     {

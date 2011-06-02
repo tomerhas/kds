@@ -61,7 +61,8 @@ namespace KdsBatch
                 }
               
                 ////שליפת כרטיסי עבודה לחישוב
-                clCalcData.DtYemeyAvoda = GetYemeyAvodaToOved(_iMisparIshi, dTarMe, dTarAd);
+                 clCalcData.DtYemeyAvoda = GetYemeyAvodaToOved(_iMisparIshi, dTarMe, dTarAd);
+                 AddRowZmanLeloHafsaka();
                  clCalcData.DtPremyot = InitDtPremyot(dTarMe, _iMisparIshi);
                  clCalcData.DtPremyotYadaniyot = oUtils.InitDtPremyotYadaniyot(_iMisparIshi,dTarMe);
                  clCalcData.sSugYechida = InitSugYechida(_iMisparIshi, dTarAd);
@@ -151,8 +152,32 @@ namespace KdsBatch
             }
         }
 
-      
-        private  void CalcMekademNipuach(DateTime dTarMe, DateTime dTarAd, int iMisparIshi)
+        private void AddRowZmanLeloHafsaka()
+        {
+            float zmanHafsaka,zmanSidur;
+            clCalcPeilut oPeilut;
+            try
+            {
+                oPeilut = new clCalcPeilut(_iMisparIshi, _lBakashaId, _oGeneralData);
+
+                clCalcData.DtYemeyAvoda.Columns.Add("ZMAN_LELO_HAFSAKA", System.Type.GetType("System.Single"));
+                for (int i = 0; i < clCalcData.DtYemeyAvoda.Rows.Count; i++)
+                {
+                    if (clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString() != "")
+                    {
+                        zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(clCalcData.DtYemeyAvoda.Rows[i]["mispar_sidur"].ToString()), DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString()));
+                        zmanSidur = float.Parse((DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_gmar_sidur"].ToString()) - DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString())).TotalMinutes.ToString());
+                        clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
+                    }
+                    //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private void CalcMekademNipuach(DateTime dTarMe, DateTime dTarAd, int iMisparIshi)
         {
             float fCountMichsa, fCountYomLeloChag;
             int iSugYom;

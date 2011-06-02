@@ -92,7 +92,7 @@ namespace KdsBatch
         private const int SIDUR_RETIZVUT99501 = 99501;
         private const string SIBA_LE_DIVUCH_YADANI_HALBASHA = "goremet_lebitul_zman_halbasha";
         private const string SIBA_LE_DIVUCH_YADANI_NESIAA = "goremet_lebitul_zman_nesiaa";
-        OrderedDictionary htNewSidurim = new OrderedDictionary();//יכיל את מפתחות הסידורים שהוחלף להם מספר הסידור בעקבות שינוי מספר 1
+        OrderedDictionary htNewSidurim;// = new OrderedDictionary();//יכיל את מפתחות הסידורים שהוחלף להם מספר הסידור בעקבות שינוי מספר 1
         private bool _bHaveShgiotLetzuga = false;
 
         public enum ApprovalCode
@@ -6125,6 +6125,7 @@ namespace KdsBatch
             oCollPeilutOvdimIns = new COLL_OBJ_PEILUT_OVDIM();
             _oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
             _oCollApprovalErrors = new COLL_SHGIOT_MEUSHAROT();
+            htNewSidurim = new OrderedDictionary();
             bUpdateShatHatchala = false;
             bool bIdkunRashShatHatchala = false;
             bool bIdkunRashShatGmar = false;
