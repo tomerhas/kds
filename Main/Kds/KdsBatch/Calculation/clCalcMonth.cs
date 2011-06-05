@@ -85,6 +85,7 @@ namespace KdsBatch
                  
                 while (dTaarich <= dTarAd)
                 {
+                    if (IsDayExist(dTaarich)){
                     _oGeneralData.objMeafyeneyOved = clCalcData.ListMeafyeneyOvedMonth.Find(delegate(clMeafyenyOved Meafyenim)
                                                                                             {
                                                                                                 return (Meafyenim._Taarich == dTaarich);
@@ -101,6 +102,7 @@ namespace KdsBatch
                    // _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom, "Calc");
                     
                     oDay.CalcRechiv126(dTaarich);
+                    }
                     dTaarich = dTaarich.AddDays(1);
                 }
 
@@ -116,25 +118,27 @@ namespace KdsBatch
                                   
                  while (dTaarich <= dTarAd)
                  {
-                     clCalcData.iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);
-                     _oGeneralData.objMeafyeneyOved = clCalcData.ListMeafyeneyOvedMonth.Find(delegate(clMeafyenyOved Meafyenim)
-                     {
-                         return (Meafyenim._Taarich == dTaarich);
-                     });
-                    // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
-                   //  iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
-                     _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
-                     {
-                         return (Params._Taarich == dTaarich);
-                     });
+                     if (IsDayExist(dTaarich)){
+                         clCalcData.iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);
+                         _oGeneralData.objMeafyeneyOved = clCalcData.ListMeafyeneyOvedMonth.Find(delegate(clMeafyenyOved Meafyenim)
+                         {
+                             return (Meafyenim._Taarich == dTaarich);
+                         });
+                        // _oGeneralData.objMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dTaarich);
+                       //  iSugYom = clGeneral.GetSugYom(clCalcData.DtYamimMeyuchadim, dTaarich, clCalcData.DtSugeyYamimMeyuchadim);//, _oGeneralData.objMeafyeneyOved.iMeafyen56);
+                         _oGeneralData.objParameters = clCalcData.ListParametersMonth.Find(delegate(clParameters Params)
+                         {
+                             return (Params._Taarich == dTaarich);
+                         });
                                 
-                   //  clCalcData.iSugYom = iSugYom;
-                    // _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom,"Calc");
-                     _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
-                    // clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
-                   //  clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);
+                       //  clCalcData.iSugYom = iSugYom;
+                        // _oGeneralData.objParameters = new clParameters(dTaarich, iSugYom,"Calc");
+                         _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
+                        // clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
+                       //  clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);
 
-                     oDay.CalcRechivim(dTaarich);
+                         oDay.CalcRechivim(dTaarich);
+                     }
                      dTaarich = dTaarich.AddDays(1);
                  }
 
@@ -151,7 +155,21 @@ namespace KdsBatch
                 throw ex;
             }
         }
-
+        private bool IsDayExist(DateTime dDay)
+        {
+            DataRow[] dr;
+            try
+            {
+                dr = clCalcData.DtYemeyAvoda.Select(" taarich=Convert('" + dDay.ToShortDateString() + "', 'System.DateTime')");
+                if (dr.Length > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+               throw ex;
+            }
+        }
         private void AddRowZmanLeloHafsaka()
         {
             float zmanHafsaka,zmanSidur;

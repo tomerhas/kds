@@ -32,7 +32,7 @@ namespace KdsBatch
                clUtils oUtils = new clUtils();
                try
                {
-                   dTarMe = new DateTime(dCalcMonth.Year, dCalcMonth.Month ,1);
+                   dTarMe = new DateTime(dCalcMonth.Year, dCalcMonth.Month, 1);
                    dTarAd = dTarMe.AddMonths(1).AddDays(-1);
                    clCalcData.DtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
@@ -44,14 +44,15 @@ namespace KdsBatch
 
                    CalcOved(iMisparIshi, lBakashaId, dTarMe, dTarAd);
 
-                   SaveChishuvTemp(iMisparIshi, dCalcMonth,iTzuga,ref  dtHeadrut ,ref  dtRechivimChodshiym,ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31,ref dtAllRikuz);
+                   SaveChishuvTemp(iMisparIshi, dCalcMonth, iTzuga, ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
                    clCalcData.ListParametersMonth = null;
                }
-              catch (Exception ex)
-              {
-                  clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.Message);
-              }
+               catch (Exception ex)
+               {
+                   clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.Message);
+                   clCalcData.ListParametersMonth = null;
+               }
            }
 
          //חישוב לאוכלוסית עובדים דרך batch
