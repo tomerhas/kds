@@ -7,14 +7,23 @@ namespace KdsBatch.CalcParallel
 {
     public class Meafyen
     {
-        public int Kod { get; set; }
         public bool IsExist { get; set; }
         public string Value { get; set; }
-
-        public Meafyen(int kod)
+        public int IntValue
         {
-            Kod = kod;
-            IsExist = false;
+            get
+            {
+                int val = -1;
+                Int32.TryParse(Value, out val);
+                return val;
+            }
+        }
+
+
+        public Meafyen(bool isExist, string Val)
+        {
+            Value = Val;
+            IsExist = isExist;
         }
     }
 }
