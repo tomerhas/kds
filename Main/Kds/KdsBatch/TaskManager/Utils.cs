@@ -17,7 +17,7 @@ namespace KdsBatch.TaskManager
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
-                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcessForChangesInHR, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
             }
             catch (Exception ex)
             {
