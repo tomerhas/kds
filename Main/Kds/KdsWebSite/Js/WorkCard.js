@@ -485,8 +485,8 @@
     
      while (sSH!=null)
      {
-         iSidurNum = document.getElementById(("lstSidurim_lblSidur").concat(i)).innerHTML;
-         if ((iSidurNum == '') && (document.getElementById(("lstSidurim_lblSidur").concat(i)).value == '') && (document.getElementById("lstSidurim_lblSidurCanceled".concat(i)).value != '1')) {
+         iSidurNum = $get(("lstSidurim_lblSidur").concat(i)).innerHTML;
+         if ((iSidurNum == '') && ($get(("lstSidurim_lblSidur").concat(i)).value == '') && ($get("lstSidurim_lblSidurCanceled".concat(i)).value != '1')) {
              sMsg = sMsg.concat('מספר סידור ' + iSidurNum + " אינו תקין \n");
              bValid = false;
          }
