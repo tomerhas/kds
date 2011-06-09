@@ -2018,6 +2018,16 @@ public class wsGeneral : System.Web.Services.WebService
          throw ex;
       }
     }
+    private bool IsSidurMyuhad(string sMisparSidur)
+    {
+        if (sMisparSidur.Length > 1)
+            return (sMisparSidur.Substring(0, 2) == "99");
+        else
+        {
+            return false;
+        }
+    }
+
     [WebMethod(EnableSession=true)]
     public string IsNewSidurNumberValid(int iSidurNumber, int iMeasherMistayeg)
     {
@@ -2029,21 +2039,27 @@ public class wsGeneral : System.Web.Services.WebService
             sReturnCode = "1,לא ניתן לדווח סידור התייצבות";
         else            
             {
-                dtMeafyenim = (DataTable)Session["MeafyeneySidur"];
-                dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27)");
-                if (dr.Length > 0)
-                    sReturnCode = "1,יש לדווח במסך הוסף דיווח היעדרות";
-                else
+                if (!IsSidurMyuhad(iSidurNumber.ToString()))
                 {
-                    dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
-                    if (dr.Length == 0)
-                        sReturnCode = "1, מספר סידור שגוי";
-
-                    if ((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
-                    {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
-                        dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech=1");
+                    sReturnCode = "1, מספר סידור שגוי";
+                }
+                else{
+                    dtMeafyenim = (DataTable)Session["MeafyeneySidur"];
+                    dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27)");
+                    if (dr.Length > 0)
+                        sReturnCode = "1,יש לדווח במסך הוסף דיווח היעדרות";
+                    else
+                    {
+                        dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
                         if (dr.Length == 0)
                             sReturnCode = "1, מספר סידור שגוי";
+
+                        if ((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
+                        {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech=1");
+                            if (dr.Length == 0)
+                                sReturnCode = "1, מספר סידור שגוי";
+                        }
                     }
                 }
             }
