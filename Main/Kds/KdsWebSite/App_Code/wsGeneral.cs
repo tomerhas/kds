@@ -35,6 +35,9 @@ public class wsGeneral : System.Web.Services.WebService
     private const string COL_TRIP_ELEMENT = "אלמנט";
     private const string COL_TRIP_VISUT = "ויסות";
     private const string MAKAT_KNISA = "לפי-צורך";
+    private const int SIDUR_HITYAZVUT_A = 99200;
+    private const int SIDUR_HITYAZVUT_B = 99214;    
+   
     public wsGeneral()
     {
         //Uncomment the following line if using designed components 
@@ -1525,12 +1528,18 @@ public class wsGeneral : System.Web.Services.WebService
     {
         clUtils oUtils = new clUtils();
         DataTable dt = new DataTable();
+        clGeneral.enMeasherOMistayeg _MeasherOMistayeg;
         try
         {
+            //AutoComplete for new sidur
             string[] Params = contextKey.Split(';');
-            dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1]);
-            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);
-            //  return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[1].ColumnName);
+            _MeasherOMistayeg = (clGeneral.enMeasherOMistayeg)int.Parse(Params[2]);
+            if (_MeasherOMistayeg==clGeneral.enMeasherOMistayeg.ValueNull)
+                dt = oUtils.getKodElement(prefixText, Params[0], Params[1]);
+            else                
+                dt = oUtils.getkodSidurimWhithOutList(prefixText, Params[0], Params[1]);
+
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, dt.Columns[0].ColumnName);        
         }
         catch (Exception ex)
         {
@@ -2008,6 +2017,119 @@ public class wsGeneral : System.Web.Services.WebService
       {
          throw ex;
       }
+    }
+    [WebMethod(EnableSession=true)]
+    public string IsNewSidurNumberValid(int iSidurNumber, int iMeasherMistayeg)
+    {
+        string sReturnCode = "0";
+        DataTable dtMeafyenim= new DataTable();
+        DataRow[] dr;
+                
+        if ((iSidurNumber.Equals(SIDUR_HITYAZVUT_A)) || (iSidurNumber.Equals(SIDUR_HITYAZVUT_B)))
+            sReturnCode = "1,לא ניתן לדווח סידור התייצבות";
+        else            
+            {
+                dtMeafyenim = (DataTable)Session["MeafyeneySidur"];
+                dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27)");
+                if (dr.Length > 0)
+                    sReturnCode = "1,יש לדווח במסך הוסף דיווח היעדרות";
+                else
+                {
+                    dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
+                    if (dr.Length == 0)
+                        sReturnCode = "1, מספר סידור שגוי";
+
+                    if ((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
+                    {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
+                        dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech=1");
+                        if (dr.Length == 0)
+                            sReturnCode = "1, מספר סידור שגוי";
+                    }
+                }
+            }
+        if (sReturnCode.Equals("0"))
+            // XML אם מספר סידור תקין, נקרא את המאפיינים שלו וניצור מבנה
+            //שמגדיר אילו מהשדות יינתנו לשינוי ואילו לא
+            sReturnCode = sReturnCode +","  + BuildSidurFieldsDefaults(iSidurNumber, dtMeafyenim);
+
+        return sReturnCode;
+    }
+    public string BuildSidurFieldsDefaults(int iSidurNumber, DataTable dtMeafyenim)
+    {
+        StringBuilder sXML = new StringBuilder();
+        DataRow[] dr;
+        try
+        {
+            sXML.Append("<SIDUR>");
+            sXML.Append(string.Concat("<SHAT_HATCHALA>", "1", "</SHAT_HATCHALA>"));
+            sXML.Append(string.Concat("<SHAT_GMAR>", "1", "</SHAT_GMAR>"));
+            //עבור משתמש שאינו רשמת/רשמת על/מנהל מערכת מותר לעדכן רק בסידורים מיוחדים מסוג החתמת שעון (סידורים מיוחדים עם מאפיין 54 (שעון נוכחות
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=54)");
+            if (dr.Length > 0)
+            {                
+                sXML.Append(string.Concat("<DIVUCH_KNISA>", "1", "</DIVUCH_KNISA>"));
+                sXML.Append(string.Concat("<DIVUCH_YETIZA>", "1", "</DIVUCH_YETIZA>"));
+                sXML.Append(string.Concat("<SHAT_HATCHALA_LETASHLUM>", "1", "</SHAT_HATCHALA_LETASHLUM>"));
+                sXML.Append(string.Concat("<SHAT_GMAR_LETASHLUM>", "1", "</SHAT_GMAR_LETASHLUM>"));                
+            }
+            else
+            {
+                //sXML.Append(string.Concat("<SHAT_HATCHALA>", "0", "</SHAT_HATCHALA>"));
+                //sXML.Append(string.Concat("<SHAT_GMAR>", "0", "</SHAT_GMAR>"));
+                sXML.Append(string.Concat("<DIVUCH_KNISA>", "0", "</DIVUCH_KNISA>"));
+                sXML.Append(string.Concat("<DIVUCH_YETIZA>", "0", "</DIVUCH_YETIZA>"));
+                sXML.Append(string.Concat("<SHAT_HATCHALA_LETASHLUM>", "0", "</SHAT_HATCHALA_LETASHLUM>"));
+                sXML.Append(string.Concat("<SHAT_GMAR_LETASHLUM>", "0", "</SHAT_GMAR_LETASHLUM>"));
+            
+            }
+            //פיצול הפסקה לא יינתן לעדכון עד לאחר שיעבוד שינוי קלט
+            sXML.Append(string.Concat("<PITZUL_HAFSAKA>", "0", "</PITZUL_HAFSAKA>"));
+
+            //רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=34 and erech='1')");
+            if (dr.Length > 0)            
+                sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
+            else
+                sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
+
+
+            //השלמה 
+            //לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=40)");
+            if (dr.Length > 0)
+                sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
+            else
+                sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
+
+            //ניתן לעדכון- סידור מיוחד עם ערך 1 במאפיין  - 25.
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=25 and erech='1')");
+            if (dr.Length > 0)
+                sXML.Append(string.Concat("<OUT_MICHSA>", "1", "</OUT_MICHSA>"));
+            else
+                sXML.Append(string.Concat("<OUT_MICHSA>", "0", "</OUT_MICHSA>"));
+           
+
+            //מיוחד עם מאפיין 45-סידור ויזה            
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=45)");
+            if (dr.Length>0)
+                sXML.Append(string.Concat("<SIDUR_VISA>", "1", "</SIDUR_VISA>"));
+            else
+                sXML.Append(string.Concat("<SIDUR_VISA>", "0", "</SIDUR_VISA>"));
+            
+            //אם קיים מאפיין 46 לא נאפשר הוספת פעילות
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=46)");
+            if (dr.Length==0)
+                sXML.Append(string.Concat("<ADD_PEILUT>", "1", "</ADD_PEILUT>"));
+            else
+                sXML.Append(string.Concat("<ADD_PEILUT>", "0", "</ADD_PEILUT>"));
+
+            sXML.Append("</SIDUR>");
+            return sXML.ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
     //[WebMethod(EnableSession = true)]
     //public string ChkIfSidurNahagut(int iSidurIndex, string sCardDate)

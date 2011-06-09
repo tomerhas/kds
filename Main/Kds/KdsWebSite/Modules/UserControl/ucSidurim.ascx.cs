@@ -112,7 +112,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private const int MAX_LEN_HOUR = 5;
     private const int MAX_LEN_ACTUAL_MINTUES = 4;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
-    public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;    
+    public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
+    public const int SIDUR_HITYAZVUT1 = 99200;
+    public const int SIDUR_HITYAZVUT2 = 99214;
+    public const int MEAFYEN_SIDUR_HADRUT1 = 53;
+    public const int MEAFYEN_SIDUR_HADRUT2 = 27;
+    public const int MEAFYEN_CARD_NULL = 99; //מאפיין שמציין סידור ללא התייחסות
+    public const string FORMAT_NUMERIC_INPUT = "0123456789";
+    public const long MAKAT_VISA = 50000000;
     private const int COL_DATE = 16;
     private bool bSidurContinue;
     private bool bSidurNahagut;  
@@ -442,7 +449,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     protected bool IsSidurVisa(ref clSidur oSidur)
     {
-        return ((oSidur.bSidurMyuhad) && (oSidur.bSidurVisaKodExists));   
+        DataRow[] dr;
+        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+        {
+            dr = MeafyeneySidur.Select("Sidur_Key=" + oSidur.iMisparSidur + " and (kod_meafyen=45)");
+            return dr.Length > 0;
+        }
+        else
+            return ((oSidur.bSidurMyuhad) && (oSidur.bSidurVisaKodExists));   
     }
     //protected bool IsPeilutEilatExistsWithKm(ref clSidur oSidur)
     //{
@@ -652,6 +666,27 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //oImage.CausesValidation = false;
         //oImage.Click += new ImageClickEventHandler(oImage_Click);
         return oImage;
+    }
+    protected AjaxControlToolkit.AutoCompleteExtender AddAutoCompleteCtl(string sId, int iCompletionSetCount, bool UseContextKey,
+                                                                         string sTargetControlId, string sServiceMethod, string sServicePath)
+    {
+    //add dynamicly AjaxControlToolkit.AutoCompleteExtender control
+    AjaxControlToolkit.AutoCompleteExtender _TextBoxAutoComplete = new AjaxControlToolkit.AutoCompleteExtender();
+
+    _TextBoxAutoComplete.ID = sId;
+    _TextBoxAutoComplete.CompletionSetCount = iCompletionSetCount;
+    _TextBoxAutoComplete.UseContextKey = UseContextKey;
+    _TextBoxAutoComplete.TargetControlID = sTargetControlId;
+    _TextBoxAutoComplete.ServiceMethod = sServiceMethod;
+    _TextBoxAutoComplete.ServicePath = sServicePath;
+    _TextBoxAutoComplete.CompletionInterval = 0;
+    _TextBoxAutoComplete.MinimumPrefixLength = 1;
+    _TextBoxAutoComplete.EnableCaching = true;
+    _TextBoxAutoComplete.CompletionListCssClass = "autocomplete_completionListElement";
+    _TextBoxAutoComplete.CompletionListHighlightedItemCssClass = "autocomplete_completionListItemElement_Select";
+    _TextBoxAutoComplete.CompletionListItemCssClass = "autocomplete_completionListItemElement";
+    
+    return _TextBoxAutoComplete;
     }
     protected AjaxControlToolkit.MaskedEditExtender AddTimeMaskedEditExtender(string sTargetControlId, int iIndex, 
                                                                               string sMask, string sMaskId, 
@@ -1323,35 +1358,65 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected bool HasNoPremmisionToAddPeilut(clSidur oSidur)
     {
         bool bNotValid = false;
+        DataRow[] dr;
+        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+        {
+            //אם קיים מאפיין 46 לא נאפשר הוספת פעילות
+            dr = MeafyeneySidur.Select("Sidur_Key=" + oSidur.iMisparSidur + " and (kod_meafyen=46)");
+            bNotValid = dr.Length>0;
+        }
+        else
+        {
 
-        bNotValid = (((((oSidur.bSidurMyuhad) && (oSidur.sNoPeilotKod == clGeneral.enMeafyenSidur46.enAddPeilutNotAllowed.GetHashCode().ToString()))
-        ||
-        ((oSidur.iMisparSidur == SIDUR_CONTINUE_NAHAGUT) || (oSidur.iMisparSidur == SIDUR_CONTINUE_NOT_NAHAGUT))))
-        ||
-        ((oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
-        );
+            bNotValid = (((((oSidur.bSidurMyuhad) && (oSidur.sNoPeilotKod == clGeneral.enMeafyenSidur46.enAddPeilutNotAllowed.GetHashCode().ToString()))
+            ||
+            ((oSidur.iMisparSidur == SIDUR_CONTINUE_NAHAGUT) || (oSidur.iMisparSidur == SIDUR_CONTINUE_NOT_NAHAGUT))))
+            ||
+            ((oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) || (oSidur.iBitulOHosafa == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
+            );
+        }
 
         return bNotValid;
     }
     protected void CreateAddPeilutCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bEnableSidur)
     {
+        bool bHasNoPremmisionToAddPeilut;
         try
         {
             //hCell = CreateTableCell("70px", "", "");
-            if (!(HasNoPremmisionToAddPeilut(oSidur)))
+           // if ((!(HasNoPremmisionToAddPeilut(oSidur))) && (!oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew)))
+            bHasNoPremmisionToAddPeilut =  HasNoPremmisionToAddPeilut(oSidur);
+            if ((!(bHasNoPremmisionToAddPeilut)))
             {
                 ImageButton imgAddPeilut = new ImageButton();
                 imgAddPeilut.ID = "imgAddPeilut" + iIndex;
-                imgAddPeilut.ImageUrl = "~/images/plus.jpg";
-               // imgAddPeilut.Attributes.Add("OnClientClick", "AddPeilut(" + iIndex + "); MovePanel(" + iIndex + ");");
-                //imgAddPeilut.Attributes.Add("onclick", "document.getElementById('lstSidurim_hidScrollPos').value=document.getElementById('lstSidurim_dvS').scrollTop+',' + document.getElementById('lstSidurim_dvS').scrollLeft;  hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
+                imgAddPeilut.ImageUrl = "~/images/plus.jpg";               
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                 imgAddPeilut.CausesValidation = false;
                 imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);
                 if (!bEnableSidur)
-                    imgAddPeilut.Enabled = false; 
-                hCell = CreateTableCell("43px", "", "");
+                    imgAddPeilut.Enabled = false;
+
+                hCell = CreateTableCell("40px", "", "");
+                //אם סידור חדש, נעלים את הוספת פעילות עד אשר יקלידו מספר סידור
+                if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
+                {
+                    if (((oSidur.iMisparSidur > 0) && (bHasNoPremmisionToAddPeilut)) || (oSidur.iMisparSidur == 0))
+                    {
+                        imgAddPeilut.Style.Add("display", "none");
+                        hCell = CreateTableCell("53px", "", "");
+                    }
+                    else
+                    {
+                        imgAddPeilut.Style.Add("display", "block");
+                        hCell = CreateTableCell("40px", "", "");
+                    }
+                }
+                else
+                {
+                    hCell = CreateTableCell("40px", "", "");
+                }
                 hCell.Controls.Add(imgAddPeilut);
             }
             else
@@ -1834,6 +1899,70 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         lbl.Attributes.Add("onclick", sOnClickScript);
         return lbl;
     }
+    private void CreateNewSidurCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
+    {
+        //הכנסת סידור חדש
+        LiteralControl lDummy = new LiteralControl();
+        lDummy.Text = " ";
+        hCell = CreateTableCell("92px", "", "");
+        //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
+        if (oSidur.htPeilut.Count > 0)
+        {
+            hCell.Controls.Add(AddImage("~/images/collapse_blue_big.jpg", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+        }
+
+        hCell.Controls.Add(lDummy);
+
+        TextBox oTextBox = new TextBox();
+        AjaxControlToolkit.AutoCompleteExtender oAutoComplete;
+        AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox;
+        AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
+        CustomValidator vldSidurNumber;
+
+        //add TextBox
+        oTextBox.ID = "lblSidur" + iIndex;        
+        oTextBox.Width = Unit.Pixel(50);
+        oTextBox.MaxLength = 5;
+        oTextBox.Attributes.Add("SidurVisa","0");
+        oTextBox.Attributes.Add("Sidur93", "0");
+        oTextBox.Attributes.Add("Sidur94", "0");
+        oTextBox.Attributes.Add("Sidur95", "0");
+        oTextBox.Attributes.Add("onchange", "chkNewSidur(" + iIndex + ");");
+        oTextBox.Attributes.Add("onclick","MovePanel(" + iIndex + ");");
+        if (oSidur.iMisparSidur > 0)
+            oTextBox.Text = oSidur.iMisparSidur.ToString();
+       // hCell = CreateTableCell("82px", "", "");       
+        hCell.Controls.Add(oTextBox);
+
+        //Add TextBox Format
+        oFilterTextBox = AddFilterTextBoxExtender(oTextBox.ID, "fltSidur" + iIndex, FORMAT_NUMERIC_INPUT, AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers);
+        hCell.Controls.Add(oFilterTextBox);
+
+        //add ajax autocomlete control        
+        oAutoComplete = AddAutoCompleteCtl("ACSidur" + iIndex, 25, true, oTextBox.ID, "getKodSidurimWhithOutList", "~/Modules/WebServices/wsGeneral.asmx");
+       // oAutoComplete.OnClientItemSelected = "chkNewSidur";
+        //ננטרל סידורי התייצבות והיעדרות      
+        if (MeasherOMistayeg==clGeneral.enMeasherOMistayeg.ValueNull)
+            oAutoComplete.ContextKey = MEAFYEN_CARD_NULL +";1;" + MeasherOMistayeg.GetHashCode(); 
+        else
+            oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode(); 
+
+        hCell.Controls.Add(oAutoComplete);
+
+        //custome validator
+        vldSidurNumber = AddCustomValidator(oTextBox.ID, "", "vldSidurNum", "", iIndex.ToString(), iIndex.ToString());        
+        hCell.Controls.Add(vldSidurNumber);
+
+        //Add Ajax CallOutCustomeValidator
+        vldExtenderCallOut = AddCallOutValidator(vldSidurNumber.ID, "vldExSidurNum", iIndex.ToString(), AjaxControlToolkit.ValidatorCalloutPosition.Left);
+        vldExtenderCallOut.BehaviorID = "vldExSidurNumBehv" + iIndex;
+        hCell.Controls.Add(vldExtenderCallOut);
+
+        hCell.Style.Add("valign", "top");
+        hCell.Style.Add("border-left", "solid 1px gray");
+        hCell.Style.Add("border-right", "solid 1px gray");
+                
+    }
     protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
     {
         try
@@ -2107,11 +2236,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Label oLbl;
         HyperLink oHypLnk = new HyperLink();
         TextBox oTxt, oShatGmar, oDayToAdd;
+        TextBox oTxtSidur = new TextBox();
         DropDownList oDDL;
         string sTmp;
         DateTime dSidurDate;
         int iCancelSidur;
         HtmlInputCheckBox oChk;
+        //נעבור על הגריד ונעדכן את השינויים שנעשו במסך ועדיין לא נשמרו
         for (int iIndex = 0; iIndex < this.DataSource.Count; iIndex++)
         {
             try
@@ -2120,14 +2251,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             catch (Exception ex)
             {
-                oHypLnk = (HyperLink)this.FindControl("lblSidur" + iIndex);
                 oLbl = null;
+                try
+                {
+                    oHypLnk = (HyperLink)this.FindControl("lblSidur" + iIndex);
+                }
+                catch (Exception ex1)
+                {
+                    oTxtSidur = ((TextBox)(this.FindControl("lblSidur" + iIndex)));
+                    oHypLnk = null;
+                }                
             }
-            if ((oLbl != null) || (oHypLnk != null))
+            if ((oLbl != null) || (oHypLnk != null) || (oTxtSidur != null))
             {
                 oSidur = (clSidur)((htFullEmployeeDetails)[iIndex]);
 
-                oSidur.iMisparSidur = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
+                oSidur.iMisparSidur = (oLbl == null ? (oHypLnk == null ? (oTxtSidur.Text == string.Empty ? 0 : int.Parse(oTxtSidur.Text)) : int.Parse(oHypLnk.Text)) : int.Parse(oLbl.Text));
                 oTxt = ((TextBox)(this.FindControl("txtSH" + iIndex)));
                 if (oTxt.Text == string.Empty)
                 {
@@ -2137,6 +2276,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 else
                 {
                     oLbl = (Label)this.FindControl("lblDate" + iIndex);
+                    if (oTxt.Text == "__:__") { oTxt.Text = ""; }
                     oSidur.dFullShatHatchala = DateTime.Parse(oLbl.Text + " " + oTxt.Text);
                     oSidur.sShatHatchala = oTxt.Text;
                 }
@@ -2304,7 +2444,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 else
                     dblKisuyTor = 0;
 
-               
+                
                 _Peilut.lOtoNo = ((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text == "" ? 0 : long.Parse(((TextBox)(oGridRow.Cells[COL_CAR_NUMBER].Controls[0])).Text);
                 _Peilut.iKisuyTor = (int)(dblKisuyTor);
                 
@@ -2330,31 +2470,68 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }   
     private void AddEmptyRowToPeilutGrid(int iSidurIndex)
     {
-       // GridView _GridView;
-        //DataTable dt = new DataTable();
+        //הוספת פעילות חדשה
         try
-        {
-            //Update DataTable which bind to grid with new data
-          
-            //_GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-            //if (_GridView != null)
-            //{
-                //בניית עמודות הטבלה               
+        {            
+            //בניית עמודות הטבלה               
             OrderedDictionary hashSidurimPeiluyot = DataSource;
+            //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
             UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-            AddEmptyPeilutToHashTable(iSidurIndex); 
-            //}
+            //נוסיף פעילות חדשה ל- Hash Table
+            AddEmptyPeilutToHashTable(iSidurIndex);           
         }
         catch (Exception ex)
         {
             throw ex;
         }
     }
+    public void AddNewSidur()
+    {
+        
+        //הוספת סידור חדש
+        try
+        {        
+            //בניית עמודות הטבלה               
+            OrderedDictionary hashSidurimPeiluyot = DataSource;
+            //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
+            UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+            //נוסיף סידור חדש ל- Hash Table
+            AddNewSidurToHashTable();
+
+            //נציין כאילו שינוי הקלט עבדו בהצלחה
+            if (btnHandler != null)
+                btnHandler(string.Empty, true);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+    private void AddNewSidurToHashTable()
+    {
+        clSidur _Sidur = new clSidur();
+
+        _DataSource.Add(_DataSource.Count, _Sidur);
+
+        _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
+        _Sidur.dFullShatHatchala = clGeneral.GetDateTimeFromStringHour("00:00", DateTime.Parse(CardDate.ToShortDateString()));
+        _Sidur.dFullShatGmar = _Sidur.dFullShatHatchala;
+        _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
+        _Sidur.dOldFullShatGmar = _Sidur.dFullShatHatchala;
+        _Sidur.dSidurDate = _Sidur.dFullShatHatchala;
+        _Sidur.sSidurDay =(_Sidur.dFullShatHatchala.DayOfWeek.GetHashCode()+1).ToString(); 
+
+        Session["Sidurim"] = _DataSource;
+
+        ClearControl();
+        BuildPage();
+    }
     private int GetSidurKey(int iSidurIndex, ref DateTime dSidurShatHatchala)
     {   GridView _GridView;
         int iSidurNumber=0;
         Label _Lbl;
         TextBox oTxt;
+        TextBox _TxtSidur = new TextBox();
         HyperLink _HypLnk = new HyperLink();       
         if (_DataSource != null)
         {
@@ -2367,11 +2544,19 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     _Lbl = (Label)this.FindControl("lblSidur" + iSidurIndex);
                 }
                 catch (Exception ex)
-                {
-                    _HypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex);
-                    _Lbl = null;
+                {                    
+                    _Lbl = null;                    
+                    try
+                    {
+                        _HypLnk = (HyperLink)this.FindControl("lblSidur" + iSidurIndex); 
+                    }
+                    catch (Exception ex1)
+                    {
+                        _TxtSidur = ((TextBox)(this.FindControl("lblSidur" + iSidurIndex)));
+                        _HypLnk = null;
+                    }     
                 }
-                iSidurNumber = (_Lbl == null ? int.Parse(_HypLnk.Text) : int.Parse(_Lbl.Text));
+                iSidurNumber = (_Lbl == null ? (_HypLnk == null ? int.Parse(_TxtSidur.Text) : int.Parse(_HypLnk.Text)) : int.Parse(_Lbl.Text));
                 oTxt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
                 _Lbl = (Label)this.FindControl("lblDate" + iSidurIndex);
                 dSidurShatHatchala = DateTime.Parse(_Lbl.Text + " " + oTxt.Text);                
@@ -2387,21 +2572,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iSidurNumber=0;
         DateTime dSidurShatHatchala= new DateTime();
 
-        iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);        
-        //for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
-        //{
-        //    _Sidur = (clSidur)(_DataSource[iIndex]);
-        //    if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)) && (_Sidur.iBitulOHosafa!= clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()))
-        //            break;
-        //}
-         _Sidur = (clSidur)(_DataSource[iSidurIndex]);
-         _Sidur.htPeilut.Add(_Sidur.htPeilut.Count+1, _Peilut);
-         _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-         Session["Sidurim"] = _DataSource;
+        iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);                
+        _Sidur = (clSidur)(_DataSource[iSidurIndex]);
+        
+        //אם יש מספר סידור ויש פעילויות לסידור החדש, נבדוק שזה סידור שמאפשר פעילויות, אם לא נמחוק אותם
+        if ((_Sidur.iMisparSidur > 0) && (_Sidur.htPeilut.Count > 0) && (HasNoPremmisionToAddPeilut(_Sidur)))
+            _Sidur.htPeilut.Clear();
+        else
+        {
+            _Sidur.htPeilut.Add(_Sidur.htPeilut.Count + 1, _Peilut);
+            _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
+            _Peilut.lMakatNesia = IsSidurVisa(ref _Sidur) && (_Sidur.htPeilut.Count == 1) ? MAKAT_VISA : 0;
+        }
+        Session["Sidurim"] = _DataSource;
          
-         ClearControl();
-         BuildPage();
+        ClearControl();
+        BuildPage();
     }
+
+   
     //private void GetPeilyotTnuaDetails(ref clPeilut _Peilut)
     //{
     //    string sCacheKey = MisparIshi + CardDate.ToShortDateString();
@@ -3189,6 +3378,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dtUpdatedSidurim.Rows.Add(drSidur);
        
     }
+   
     private HtmlTable BuildOneSidur(ref OrderedDictionary htEmployeeDetails, clSidur oSidur, int iIndex, ref bool bEnableSidur)
     {
         HtmlTable hTable = new HtmlTable();
@@ -3239,8 +3429,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             CreateAddPeilutCell(oSidur, ref hCell, iIndex, bEnableSidur);
             hTable.Rows[0].Cells.Add(hCell);
 
-            //מספר סידור    
-            CreateSidurCell(oSidur, ref hCell, iIndex);          
+            //מספר סידור   
+            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))                
+                CreateNewSidurCell(oSidur, ref hCell, iIndex); //יצירת סידור חדש - txtBox
+            else
+                CreateSidurCell(oSidur, ref hCell, iIndex);          
+
             hTable.Rows[0].Cells.Add(hCell);
             
             //שעת התחלה
@@ -3804,11 +3998,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     }
                 }
                 //סידור מחוץ לשעות מותרות לעובד).
-                if (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode())
-                {
-                    bExceptionAllowed = true;
-                    sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
-                }
+                //if (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode())
+                //{
+                //    bExceptionAllowed = true;
+                //    sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+                //}
                 //}
             }
             else
@@ -3861,6 +4055,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) || (!IsAccessToSidurNotShaon(ref oSidur)) || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+            
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
@@ -4635,7 +4830,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                     iMakatType =  int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
                     oMakatType = (clKavim.enMakatType)iMakatType;
-                    bEnabled = ((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mNamak));
+                    bEnabled =( ((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mNamak)) && (lMakatNumber!=MAKAT_VISA));
                     
                     //הוספת נסיעה ריקה
                     SetAddNesiaRekaColumn(e, bSidurActive, bPeilutActive, bElementHachanatMechona, oMakatType, iSidurIndex);
@@ -4868,7 +5063,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         e.Row.Cells[_COL_LINE_DESCRIPTION].Width = Unit.Pixel(300);
         _MakatType = ((clKavim.enMakatType)oKavim.GetMakatType(lMakatNumber));
-        if ((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa==0))
+        if ((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa==0) && (lMakatNumber!=MAKAT_VISA))
         {
             HyperLink lnkKnisa = new HyperLink();
             lnkKnisa = AddHyperLink("lblKnisa" + iSidurIndex + lMakatNumber, e.Row.Cells[_COL_LINE_DESCRIPTION].Text, "AddHosafatKnisot(" + iSidurIndex + "," + e.Row.ClientID + ");");
@@ -5447,6 +5642,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        
         return oFilterTextBox;
         
+    }
+    protected AjaxControlToolkit.FilteredTextBoxExtender AddFilterTextBoxExtender(
+                                            string sTargetControlId, string sID, string sValidChars,
+                                            AjaxControlToolkit.FilterModes oFilterMode,
+                                            AjaxControlToolkit.FilterTypes oFilterType)
+                                            
+    {
+        AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox = new AjaxControlToolkit.FilteredTextBoxExtender();
+        oFilterTextBox.TargetControlID = sTargetControlId;
+        oFilterTextBox.FilterType = oFilterType;
+        oFilterTextBox.FilterMode = oFilterMode;
+        oFilterTextBox.ValidChars = sValidChars;
+        oFilterTextBox.ID = sID; 
+
+        return oFilterTextBox;
+
     }
     protected AjaxControlToolkit.ValidatorCalloutExtender AddCallOutValidator
                                         (string sTargetControlId,string sID, string eClientId,

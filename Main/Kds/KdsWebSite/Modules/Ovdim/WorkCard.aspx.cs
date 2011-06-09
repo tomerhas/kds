@@ -1509,6 +1509,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.Param242 = oBatchManager.oParam.dShatGmarNextDay;
         lstSidurim.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua; 
         lstSidurim.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
+        
      
         if ((dDateCard.DayOfWeek==System.DayOfWeek.Friday)) 
             lstSidurim.NumOfHashlama = oBatchManager.oParam.iHashlamaMaxShisi; //109
@@ -2081,6 +2082,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
     {//הוספת סידור מיוחד
+        lstSidurim.AddNewSidur();
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {
@@ -2854,6 +2856,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         GridView oGridView;
         TextBox _Txt;
+        TextBox _TxtSidur = new TextBox();
         DropDownList _DDL;
         //HtmlInputCheckBox _Chk;
         Label _Lbl = new Label();
@@ -2867,17 +2870,25 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             try
             {
                 _Lbl = (Label)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
-            }
+            }           
             catch (Exception ex)
             {
-                _HypLnk = (HyperLink)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
                 _Lbl = null;
+                try
+                {
+                    _HypLnk = (HyperLink)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
+                }
+                catch (Exception ex1)
+                {
+                   _TxtSidur = ((TextBox)(this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex)));
+                   _HypLnk = null;
+                }
             }
 
-            if ((_Lbl != null) || (_HypLnk != null))
+            if ((_Lbl != null) || (_HypLnk != null) || (_TxtSidur!=null))
             {
                 _objIdkunRashemet = new OBJ_IDKUN_RASHEMET();
-                iMisarSidur = (_Lbl == null) ? int.Parse(_HypLnk.Text) : int.Parse(_Lbl.Text);
+                iMisarSidur = (_Lbl == null) ? (_HypLnk == null ? (_TxtSidur.Text=="" ? 0 : int.Parse(_TxtSidur.Text)) : int.Parse(_HypLnk.Text)) : int.Parse(_Lbl.Text);
 
                 //שעת התחלה             
                 _Txt = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSH" + iIndex)));
@@ -3779,7 +3790,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             DateTime dSidurDate;
             GridView oGridView;
-            TextBox oTxt, oShatGmar, oDayToAdd;
+            TextBox oTxt, oShatGmar, oDayToAdd ;
+            TextBox oTxtSidur= new TextBox();
             bool bInsert = false;
             clSidur oSidur;
             bool bValid = true;
@@ -3792,20 +3804,28 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     try
                     {
                         oLbl = (Label)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
-                    }
+                    }                  
                     catch (Exception ex)
                     {
-                        oHypLnk = (HyperLink)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex);
                         oLbl = null;
+                        try
+                        {
+                            oHypLnk = (HyperLink)this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex); 
+                        }
+                        catch (Exception ex1)
+                        {
+                            oTxtSidur = ((TextBox)(this.FindControl("lstSidurim").FindControl("lblSidur" + iIndex)));
+                            oHypLnk = null;
+                        }
                     }
-                    if ((oLbl != null) || (oHypLnk != null))
+                    if ((oLbl != null) || (oHypLnk != null) || (oTxtSidur!=null))
                     {
                         //oSidur = (clSidur)(oBatchManager.htEmployeeDetails[iIndex]);                      
                         oSidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iIndex]);    
                         oObjSidurimOvdimUpd = new OBJ_SIDURIM_OVDIM();
                         oObjSidurimOvdimUpd.MISPAR_ISHI = iMisparIshi;
                         oObjSidurimOvdimUpd.TAARICH = dDateCard;
-                        oObjSidurimOvdimUpd.MISPAR_SIDUR = (oLbl == null ? int.Parse(oHypLnk.Text) : int.Parse(oLbl.Text));
+                        oObjSidurimOvdimUpd.MISPAR_SIDUR = (oLbl == null ? (oHypLnk == null ? (oTxtSidur.Text=="" ? 0 : int.Parse(oTxtSidur.Text)) : int.Parse(oHypLnk.Text)) : int.Parse(oLbl.Text)); 
                         oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
                         oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = oSidur.iShayahLeyomKodem;
                         oTxt = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSH" + iIndex)));
@@ -3818,14 +3838,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         }
                         else
                         {//נבדוק אם השתנה התאריך
-                            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = GetSidurNewDate(oObjSidurimOvdimUpd.MISPAR_SIDUR, oTxt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
-                            if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.Second != oObjSidurimOvdimUpd.SHAT_HATCHALA.Second)                                
-                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                            if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oTxt.Text, DateTime.Parse(((Label)(this.FindControl("lstSidurim").FindControl("lbldate1"))).Text));
+                            else
+                            {
+                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = GetSidurNewDate(oObjSidurimOvdimUpd.MISPAR_SIDUR, oTxt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                                if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.Second != oObjSidurimOvdimUpd.SHAT_HATCHALA.Second)
+                                    oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                            }
                             //אם תאריך הסידור גדול מתאריך כרטיס העבודה נסמן בסידור, שייך ליום קודם
                             if ((!oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.ToShortDateString().Equals(dDateCard.ToShortDateString())))
                                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 1;
                             else
                                 oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 0;
+                            
                         }
 
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
@@ -3869,7 +3895,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);
 
                             oDDL = (DropDownList)this.FindControl("lstSidurim").FindControl("ddlPHfsaka" + iIndex);
-                            iPitzulHafsakaOldValue =int.Parse(oSidur.sOldPitzulHafsaka);// int.Parse(oDDL.Attributes["OldV"].ToString());
+                            iPitzulHafsakaOldValue = oSidur.sOldPitzulHafsaka!=string.Empty ? int.Parse(oSidur.sOldPitzulHafsaka): 0;// int.Parse(oDDL.Attributes["OldV"].ToString());
                             oObjSidurimOvdimUpd.PITZUL_HAFSAKA = int.Parse(oDDL.SelectedValue);
                             //במידה והסידור הוא סידור מיוחד עם מאפיין 54 (שעון נוכחות) ובשדה פיצול הפסקה נבחר ערך "הפסקה ע"ח העובד" (KOD_PIZUL_HAFSAKA=3) יש לפצל  
                             // את הסידור 
@@ -3878,8 +3904,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oDDL = (DropDownList)this.FindControl("lstSidurim").FindControl("ddlHashlama" + iIndex);
                             oObjSidurimOvdimUpd.HASHLAMA = int.Parse(oDDL.SelectedValue);
                             if (int.Parse(oDDL.SelectedValue) == clGeneral.enSugHashlama.enNoHashlama.GetHashCode())                            
-                                oObjSidurimOvdimUpd.SUG_HASHLAMA = clGeneral.enSugHashlama.enNoHashlama.GetHashCode();
-                            
+                                oObjSidurimOvdimUpd.SUG_HASHLAMA = clGeneral.enSugHashlama.enNoHashlama.GetHashCode();                            
                             else                            
                                 oObjSidurimOvdimUpd.SUG_HASHLAMA = clGeneral.enSugHashlama.enHashlama.GetHashCode();
                             

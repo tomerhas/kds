@@ -680,7 +680,25 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+        public DataTable getKodElement(string sPrefix,string sKodElementList, string sValue)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
 
+                dal.AddParameter("p_prefix", ParameterType.ntOracleVarchar, sPrefix, ParameterDir.pdInput);
+                dal.AddParameter("p_kod_element", ParameterType.ntOracleVarchar, sKodElementList, ParameterDir.pdInput);
+                dal.AddParameter("p_value", ParameterType.ntOracleVarchar, sValue, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetKodElement, ref dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return dt;
+        }
         public DataTable getkodSidurimWhithOutList(string preFix, string kodMeafyenList, string misSidurList)
         {
             DataTable dt = new DataTable();

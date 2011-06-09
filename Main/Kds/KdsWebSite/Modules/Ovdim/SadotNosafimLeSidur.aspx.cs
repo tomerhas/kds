@@ -111,6 +111,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             BuildPirteySidur();
             BuildPeiluyot();
         }
+
         catch (Exception ex)
         {
             throw ex;

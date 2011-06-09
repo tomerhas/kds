@@ -25,7 +25,7 @@ namespace KdsBatch
         public DateTime dOldFullShatGmar;
         public string sShatHatchala;
         public DateTime  dSidurDate;
-        public string sSidurDay;
+        public string sSidurDay="";
         public string sShatHatchalaLetashlum;
         public String sShatGmarLetashlum;
         public DateTime dFullShatHatchalaLetashlum;
@@ -34,15 +34,15 @@ namespace KdsBatch
         public DateTime dOldFullShatGmarLetashlum;
         public string sVisa;
         public string sChariga;
-        public string sOldChariga;
+        public string sOldChariga="0";
         public string sPitzulHafsaka;
-        public string sOldPitzulHafsaka;
+        public string sOldPitzulHafsaka="0";
 
         public int iZakayLepizul;
         public string sOutMichsa;
-        public string sOldOutMichsa;
+        public string sOldOutMichsa="0";
         public string sHashlama;
-        public string sOldHashlama;
+        public string sOldHashlama="0";
         public int iSugHashlama;
         public int iMivtzaVisa;
         public int iTafkidVisa;
@@ -146,7 +146,8 @@ namespace KdsBatch
         //public int iHalbasha;
         //public int iBitulZmanNeziot;
         //public char cTachograf;
-        public string sShabaton, sErevShishiChag;
+        public string sShabaton="";
+        public string sErevShishiChag="";
         public int iSugYom;
         //public int iKodMatzav;
         //public string sBitulZmanNesiot;

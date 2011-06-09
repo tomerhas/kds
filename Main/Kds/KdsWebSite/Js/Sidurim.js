@@ -46,8 +46,8 @@ function chkMkt(oRow) {
                         wsGeneral.CheckMakat(iMisparIshi,dCardDate, iInx, document.getElementById(oRId).rowIndex - 1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
                     }
                 }                         
-          }                       
-    }
+          }
+        }
     function callBackMkt(result,sArrPrm)
     {   
         var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -207,7 +207,77 @@ function chkMkt(oRow) {
             alert('מספר מק"ט לא תקין');
             }
     }
-
+    function SetNewSidurCtls(iSidurNum, result){
+        //אחרי שמזינים מספר סידור חדש, נאפשר את שאר השדות לפי מאפייני הסידור    
+        var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        xmlDoc.async="false";
+        xmlDoc.loadXML(result);
+        root = xmlDoc.documentElement;
+        if (root != null) {
+            if (root.childNodes.length > 0) {
+                var _FirstChild = root.firstChild;
+                 while (_FirstChild != null){
+                     switch (_FirstChild.nodeName) {
+                         case "SHAT_HATCHALA":
+                              if (document.getElementById("lstSidurim_txtSH" + iSidurNum).disabled==false)
+                                  document.getElementById("lstSidurim_txtSH" + iSidurNum).disabled = (_FirstChild.text == "0");
+                              break;
+                         case "SHAT_GMAR":
+                              if (document.getElementById("lstSidurim_txtSG" + iSidurNum).disabled == false)
+                                  document.getElementById("lstSidurim_txtSG" + iSidurNum).disabled = (_FirstChild.text == "0");
+                              break;
+                          case "SHAT_HATCHALA_LETASHLUM":
+                              if (document.getElementById("lstSidurim_txtSHL" + iSidurNum).disabled == false)
+                                  document.getElementById("lstSidurim_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "SHAT_GMAR_LETASHLUM":
+                             if (document.getElementById("lstSidurim_txtSGL" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_txtSGL" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "DIVUCH_KNISA":
+                             if (document.getElementById("lstSidurim_ddlResonIn" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "DIVUCH_YETIZA":
+                             if (document.getElementById("lstSidurim_ddlResonOut" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_ddlResonOut" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "PITZUL_HAFSAKA":
+                             document.getElementById("lstSidurim_ddlPHfsaka" + iSidurNum).disabled = true;
+                             break;
+                         case "CHARIGA":
+                             if (document.getElementById("lstSidurim_ddlException" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "HASHLAMA":
+                             if (document.getElementById("lstSidurim_ddlHashlama" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_ddlHashlama" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "OUT_MICHSA":
+                             if (document.getElementById("lstSidurim_chkOutMichsa" + iSidurNum).disabled == false)
+                                 document.getElementById("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             break;
+                         case "ADD_PEILUT":
+                             var sPrev = document.getElementById("lstSidurim_imgAddPeilut" + iSidurNum).style.display;
+                             if (_FirstChild.text == "0"){
+                                 document.getElementById("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'none';
+                                 if (sPrev == 'block')
+                                     document.getElementById("lstSidurim_imgAddPeilut" + iSidurNum).click();
+                             }
+                             else
+                                 document.getElementById("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';
+                             break;
+                         case "SIDUR_VISA":
+                            if (_FirstChild.text == "1")
+                             //סידור ויזה   - הוספת פעילות                                 
+                             document.getElementById("lstSidurim_imgAddPeilut" + iSidurNum).click();                             
+                             break;
+                     }                   
+                     _FirstChild = _FirstChild.nextSibling;
+                }
+            }
+        }
+    }
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
@@ -677,6 +747,8 @@ function chkMkt(oRow) {
       document.getElementById("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
       var _ShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
       var iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+      if (iSidur == "")
+          iSidur = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).value;
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
       var sNewSH = _ShatHatchala.value;
       var sCardDate = document.getElementById("clnDate").value;
@@ -837,41 +909,45 @@ function chkMkt(oRow) {
        var iIndex = String(val.id).substr(String(val.id).length-1,1);
        var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
        var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
-       var sSidurDate;
-       
-       var dCardDate = document.getElementById("clnDate").value;
-       if (((IsShatHatchalaInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
-           sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;           
-       }
-       else {
-           sSidurDate = dCardDate;         
-       }
 
-       var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);
-       var ShatGmar = new Date();     
-       var ShatHatchala = new Date();    
-       var sYear=sSidurDate.substr(sSidurDate.length-4,4);
-       var sMonth=Number(sSidurDate.substr(3,2))-1;
-       var sDay=sSidurDate.substr(0,2);                     
-       ShatHatchala.setFullYear(sYear);
-       ShatHatchala.setMonth(sMonth);
-       ShatHatchala.setDate(sDay);
-       ShatHatchala.setHours(sShatHatchala.substr(0,2));
-       ShatHatchala.setMinutes(sShatHatchala.substr(sShatHatchala.length - 2, 2));
-       sYear = dCardDate.substr(dCardDate.length - 4, 4);
-       sMonth = Number(dCardDate.substr(3, 2)) - 1;
-       sDay = dCardDate.substr(0, 2);        
-       ShatGmar.setFullYear(sYear);
-       ShatGmar.setMonth(sMonth);
-       ShatGmar.setDate(sDay);
-       ShatGmar.setHours(sShatGmar.value.substr(0,2));
-       ShatGmar.setMinutes(sShatGmar.value.substr(sShatGmar.value.length-2,2));         
-       if (AddDay == 1){                      
-            ShatGmar.setDate(ShatGmar.getDate() + 1);           
-          }           
-       var dShatHatchala = Date.UTC(ShatHatchala.getFullYear(), ShatHatchala.getMonth()+1, ShatHatchala.getDate(),ShatHatchala.getHours(),ShatHatchala.getMinutes(),0);
-       var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth()+1, ShatGmar.getDate(),ShatGmar.getHours(),ShatGmar.getMinutes(),0);
-       return  (dShatHatchala<dShatGmar);
+       if ((sShatGmar.value == '') || (sShatHatchala == ''))
+           return true;
+       else {
+           var sSidurDate;
+           var dCardDate = document.getElementById("clnDate").value;
+           if (((IsShatHatchalaInNextDay(sShatHatchala)) || (sShatHatchala == '00:00'))) {
+               sSidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+           }
+           else {
+               sSidurDate = dCardDate;
+           }
+
+           var AddDay = Number(document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value);
+           var ShatGmar = new Date();
+           var ShatHatchala = new Date();
+           var sYear = sSidurDate.substr(sSidurDate.length - 4, 4);
+           var sMonth = Number(sSidurDate.substr(3, 2)) - 1;
+           var sDay = sSidurDate.substr(0, 2);
+           ShatHatchala.setFullYear(sYear);
+           ShatHatchala.setMonth(sMonth);
+           ShatHatchala.setDate(sDay);
+           ShatHatchala.setHours(sShatHatchala.substr(0, 2));
+           ShatHatchala.setMinutes(sShatHatchala.substr(sShatHatchala.length - 2, 2));
+           sYear = dCardDate.substr(dCardDate.length - 4, 4);
+           sMonth = Number(dCardDate.substr(3, 2)) - 1;
+           sDay = dCardDate.substr(0, 2);
+           ShatGmar.setFullYear(sYear);
+           ShatGmar.setMonth(sMonth);
+           ShatGmar.setDate(sDay);
+           ShatGmar.setHours(sShatGmar.value.substr(0, 2));
+           ShatGmar.setMinutes(sShatGmar.value.substr(sShatGmar.value.length - 2, 2));
+           if (AddDay == 1) {
+               ShatGmar.setDate(ShatGmar.getDate() + 1);
+           }
+           var dShatHatchala = Date.UTC(ShatHatchala.getFullYear(), ShatHatchala.getMonth() + 1, ShatHatchala.getDate(), ShatHatchala.getHours(), ShatHatchala.getMinutes(), 0);
+           var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth() + 1, ShatGmar.getDate(), ShatGmar.getHours(), ShatGmar.getMinutes(), 0);
+           return (dShatHatchala < dShatGmar);
+       }
     }
     function IsSHGreaterPrvSG(val,args){      
        SetBtnChanges();
@@ -1525,11 +1601,39 @@ function chkMkt(oRow) {
             else if ((lTmpMakat >= 70100000) && (lTmpMakat <= 79900000))
                 iMakatType = MKT_ELEMENT;   //5-Element          
             return iMakatType;
-    }   
-    function isElementMechona(lMakat)
-    {      
+        }   
+    function isElementMechona(lMakat){          
       return ((Number(String(lMakat).substr(0,3))==711) || (Number(String(lMakat).substr(0,3))==712) || (Number(String(lMakat).substr(0,3))==701));
     }
+    function chkNewSidur(iSidurNum){
+        _Sidur = document.getElementById("lstSidurim_lblSidur" + iSidurNum);
+        iMeasherMistayeg = document.getElementById("hidMeasherMistayeg").value;
+        if (_Sidur!=null)
+            if (_Sidur.value!="")
+                wsGeneral.IsNewSidurNumberValid(_Sidur.value, iMeasherMistayeg , callBackSidurVld, null, iSidurNum);
+    }
+    function callBackSidurVld(result, iSidurNum) {
+        var Res = result.split(",");
+        if (Res[0] == "1") {//error
+            var sBehaviorId = 'vldExSidurNumBehv'.concat(iSidurNum);
+            document.getElementById("lstSidurim_vldSidurNum".concat(iSidurNum)).errormessage = Res[1];
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+            document.getElementById("lstSidurim_lblSidur" + iSidurNum).value = "";
+            document.getElementById("lstSidurim_lblSidur" + iSidurNum).select();
+        }
+        else {
+            SetNewSidurCtls(iSidurNum, Res[1]);
+            wsGeneral.getTeurSidurByKod(_Sidur.value, callBackNewSidur, null, iSidurNum);
+        }
+    }
+
+    function callBackNewSidur(result, iSidurNum){
+        if (result != -1) 
+            document.getElementById("lstSidurim_lblSidur" + iSidurNum).title = result;        
+    }
+    
+
     function btnCopyOtoNum(iAction)
     {
      $find("pBehvCopy").hide();

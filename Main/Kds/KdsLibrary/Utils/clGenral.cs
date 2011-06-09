@@ -237,7 +237,8 @@ namespace KdsLibrary
         public const string cProInsUpdSidurimLeoved = "pkg_sidurim.pro_ins_upd_sidurim_ovdim";
         public const string cProGetMeafyeneySidur = "PKG_SIDURIM.pro_get_meafyen_sidur_by_kod";
         public const string cProTeurSidurWhithOutList = "PKG_SIDURIM.pro_get_teur_whithoutlist";
-        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist";
+        public const string cProGetKodElement = "PKG_SIDURIM.pro_get_kod_element";
+        public const string cProKodSidurWhithOutList = "PKG_SIDURIM.pro_get_kod_whithoutlist"; 
         public const string cProGetCtbSidurimWithMeafyen = "PKG_SIDURIM.pro_get_ctb_sidurim_meafyen";
         public const string cProGetMatchingSidurDesc = "PKG_SIDURIM.pro_get_matching_description";
         public const string cProGetMatchingSidurKod = "PKG_SIDURIM.pro_get_matching_kod";
