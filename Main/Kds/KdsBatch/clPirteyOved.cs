@@ -27,13 +27,12 @@ namespace KdsBatch
         public bool bIsInShlila = false;
 
          private DataTable dtOvedCardDetails;
-         public DateTime _Taarich;
+        // public DateTime _Taarich;
 
+         public DateTime _TaarichMe;
+         public DateTime _TaarichAd;
          public clPirteyOved() { }
-         public clPirteyOved(DateTime dDate) 
-         {
-             _Taarich = dDate;
-         }
+       
          public clPirteyOved(int iMisparIshi, DateTime dDate)
         {
             dtOvedCardDetails = GetPirteyOved(iMisparIshi, dDate);
@@ -66,7 +65,7 @@ namespace KdsBatch
          {
              try
              {
-                 _Taarich = dTaarich;
+                // _Taarich = dTaarich;
                
                  SetMeafyneyOved(dr);
              }
@@ -99,7 +98,10 @@ namespace KdsBatch
                 iSnifAv = System.Convert.IsDBNull(drPratim["snif_av"]) ? 0 : int.Parse(drPratim["snif_av"].ToString());
                 bIsInShlila = System.Convert.IsDBNull(drPratim["SHLILAT_RISHAYON"]) ? false : true;
                 iMikumYechida = System.Convert.IsDBNull(drPratim["MIKUM_YECHIDA"]) ? 0 : int.Parse(drPratim["MIKUM_YECHIDA"].ToString());
-                
+
+                _TaarichMe = DateTime.Parse(drPratim["ME_TARICH"].ToString());
+                _TaarichAd = DateTime.Parse(drPratim["AD_TARICH"].ToString());
+
             }
             catch (Exception ex)
             {
