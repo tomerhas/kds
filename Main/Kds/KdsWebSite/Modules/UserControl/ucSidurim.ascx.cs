@@ -2525,6 +2525,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ClearControl();
         BuildPage();
+        hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
     }
     private int GetSidurKey(int iSidurIndex, ref DateTime dSidurShatHatchala)
     {   GridView _GridView;

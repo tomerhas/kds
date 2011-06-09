@@ -369,6 +369,7 @@
                     </table>
            </ContentTemplate>             
          </asp:UpdatePanel>  
+
     <asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
             <table style="width:980px;height:30px" cellpadding="1">
