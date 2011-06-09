@@ -174,25 +174,36 @@ namespace KdsBatch
             try
             {
                 PirteyOved = new List<clPirteyOved>();
-           oGeneralData.dtPirteyOvdimAll.Select(null, "mispar_ishi");
-         
-                while (dTarMe <= TarAd)
+                oGeneralData.dtPirteyOvdimAll.Select(null, "mispar_ishi");
+
+                rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi); // + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                   
+                for(int i=0;i<rows.Length ;i++)
                 {
-                    rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
-                    if (rows.Length > 0)
-                    {
-                        itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
-                        PirteyOved.Add(itemPirteyOved);
-                    }
-                    else
-                    {
-                        itemPirteyOved = new clPirteyOved(dTarMe);
-                        PirteyOved.Add(itemPirteyOved);
-                    }
-                    dTarMe = dTarMe.AddDays(1);
-                    rows = null;
+                    itemPirteyOved = new clPirteyOved(rows[i], dTarMe);
+                    PirteyOved.Add(itemPirteyOved);
                     itemPirteyOved = null;
                 }
+                itemPirteyOved = null;
+                //while (dTarMe <= TarAd)
+                //{
+                //    if (rows.Length > 1)
+                //        rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+               
+                //    if (rows.Length > 0)
+                //    {
+                //        itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
+                //        PirteyOved.Add(itemPirteyOved);
+                //    }
+                //    else
+                //    {
+                //        itemPirteyOved = new clPirteyOved(dTarMe);
+                //        PirteyOved.Add(itemPirteyOved);
+                //    }
+                //    dTarMe = dTarMe.AddDays(1);
+                //    rows = null;
+                //    itemPirteyOved = null;
+                //}
             }
             catch (Exception ex)
             {
@@ -314,7 +325,7 @@ namespace KdsBatch
                 rows = null;
             }
         }
-
+         
         public void InitMeafyenyOved()
         {
             clOvdim oOvdim = new clOvdim();

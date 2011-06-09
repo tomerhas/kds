@@ -65,7 +65,7 @@ namespace KdsBatch
                 {
                     objOved.Taarich = dTaarich;
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
-                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
+                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
                     SetNetunimLeYom();
                     
@@ -92,7 +92,7 @@ namespace KdsBatch
                     objOved.Taarich = dTaarich;
                     objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                     objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
-                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._Taarich == dTaarich));
+                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                     objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
                     objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
                    // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
