@@ -63,18 +63,21 @@ namespace KdsBatch
                 oDay = new CalcDay(objOved);
                 while (dTaarich <= dTarAd)
                 {
-                    objOved.Taarich = dTaarich;
-                    objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
-                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
-                    objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
-                    SetNetunimLeYom();
-                    
-                    oDay.CalcRechiv126(dTaarich);
+                    if (IsDayExist(dTaarich))
+                    {
+                        objOved.Taarich = dTaarich;
+                        objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
+                        objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
+                        objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
+                        SetNetunimLeYom();
+
+                        oDay.CalcRechiv126(dTaarich);
+                       
+                        objOved.DtYemeyAvodaYomi = null;
+                        objOved.DtPeiluyotYomi = null;
+                        objOved.DtPeiluyotTnuaYomi = null;
+                    }
                     dTaarich = dTaarich.AddDays(1);
-                    
-                    objOved.DtYemeyAvodaYomi = null;
-                    objOved.DtPeiluyotYomi = null;
-                    objOved.DtPeiluyotTnuaYomi = null;
                 }
 
                 CalcMekademNipuach(dTarMe, dTarAd, objOved.Mispar_ishi);
@@ -88,22 +91,26 @@ namespace KdsBatch
                 dTaarich = dTarMe;
 
                 while (dTaarich <= dTarAd)
-                {                 
-                    objOved.Taarich = dTaarich;
-                    objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
-                    objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
-                    objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
-                    objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
-                    objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
-                   // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
-                    SetNetunimLeYom();
+                {
+                    if (IsDayExist(dTaarich))
+                    {
+                        objOved.Taarich = dTaarich;
+                        objOved.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                        objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
+                        objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
+                        objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
+                        objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
+                        // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
+                        SetNetunimLeYom();
 
-                    oDay.CalcRechivim();
+                        oDay.CalcRechivim();
+
+                        objOved.DtYemeyAvodaYomi = null;
+                        objOved.DtPeiluyotYomi = null;
+                        objOved.DtPeiluyotTnuaYomi = null;
+                    }
                     dTaarich = dTaarich.AddDays(1);
 
-                    objOved.DtYemeyAvodaYomi = null;
-                    objOved.DtPeiluyotYomi = null;
-                    objOved.DtPeiluyotTnuaYomi = null;
                 }
 
                 if (!objOved.bChishuvYom)
@@ -123,6 +130,21 @@ namespace KdsBatch
             }
         }
 
+        private bool IsDayExist(DateTime dDay)
+        {
+            DataRow[] dr;
+            try
+            {
+                dr = objOved.DtYemeyAvoda.Select(" taarich=Convert('" + dDay.ToShortDateString() + "', 'System.DateTime')");
+                if (dr.Length > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         private void SetNetunimLeYom()
         {
             DataRow[] drs;
