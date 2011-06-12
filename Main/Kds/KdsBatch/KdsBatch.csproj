@@ -95,6 +95,7 @@
     <Compile Include="CalcParallel\GeneralData.cs" />
     <Compile Include="CalcParallel\MainCalc.cs" />
     <Compile Include="CalcParallel\Meafyen.cs" />
+    <Compile Include="CalcParallel\MeafyeneyOved.cs" />
     <Compile Include="Calculation\Ovdim.cs" />
     <Compile Include="CalcParallel\Oved.cs" />
     <Compile Include="Calculation\clCalcData.cs" />

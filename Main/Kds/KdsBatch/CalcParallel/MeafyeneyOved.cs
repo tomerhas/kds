@@ -38,6 +38,7 @@ namespace KdsBatch.CalcParallel
                                                          return new Meafyen((item.exist == 1), item.value);
                                                      }
                                   );
+
             }
             catch (Exception ex)
             {
