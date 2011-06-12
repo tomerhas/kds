@@ -29,13 +29,13 @@ namespace KdsBatch.CalcParallel
                 var List = from c in dtMeafyenyOved.AsEnumerable()
                            select new
                            {
-                               kod = c.Field<int>("kod_meafyen"),
-                               exist = c.Field<int>("source_meafyen"),
+                               kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
+                               exist = c.Field<string>("source_meafyen"),
                                value = c.Field<string>("value_erech_ishi")
                            };
                 Meafyenim = List.ToDictionary(item => item.kod, item =>
                                                      {
-                                                         return new Meafyen((item.exist == 1), item.value);
+                                                         return new Meafyen((item.exist == "1"), item.value);
                                                      }
                                   );
 
