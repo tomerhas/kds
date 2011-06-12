@@ -56,7 +56,7 @@ namespace KdsBatch
             dtMeafyenyOved = null;
         }
 
-       #region Initialize meafyenim
+        #region Initialize meafyenim
         public string sMeafyen1
         {
             get
@@ -277,7 +277,7 @@ namespace KdsBatch
         }
         public string sMeafyen51
         {
-            get 
+            get
             {
                 return Meafyenim[51].Value;
             }
@@ -452,7 +452,7 @@ namespace KdsBatch
         }
         #endregion
 
-       #region Initialize meafyen Exists
+        #region Initialize meafyen Exists
         private bool _bMeafyen1Exists = false;
         private bool _bMeafyen2Exists = false;
         private bool _bMeafyen3Exists = false;
@@ -469,11 +469,11 @@ namespace KdsBatch
         private bool _bMeafyen16Exists = false;
         private bool _bMeafyen17Exists = false;
         private bool _bMeafyen23Exists = false;
-       private bool _bMeafyen24Exists = false;
-       private bool _bMeafyen25Exists = false;
-       private bool _bMeafyen26Exists = false;
-       private bool _bMeafyen27Exists = false;
-       private bool _bMeafyen28Exists = false;
+        private bool _bMeafyen24Exists = false;
+        private bool _bMeafyen25Exists = false;
+        private bool _bMeafyen26Exists = false;
+        private bool _bMeafyen27Exists = false;
+        private bool _bMeafyen28Exists = false;
         private bool _bMeafyen30Exists = false;
         //private bool _bMeafyen31Exists = false;
         private bool _bMeafyen32Exists = false;
@@ -492,7 +492,7 @@ namespace KdsBatch
         private bool _bMeafyen57Exists = false;
         private bool _bMeafyen60Exists = false;
         private bool _bMeafyen61Exists = false;
-        private bool _bMeafyen63Exists = false; 
+        private bool _bMeafyen63Exists = false;
         private bool _bMeafyen64Exists = false;
         private bool _bMeafyen72Exists = false;
         private bool _bMeafyen74Exists = false;
@@ -757,7 +757,7 @@ namespace KdsBatch
         }
         #endregion
 
-      
+
         //public clMeafyenyOved(int iMisparIshi, DateTime dDate,  DataTable dtMeafyenim)
         //{
         //    _Taarich = dDate;
@@ -974,13 +974,13 @@ namespace KdsBatch
                 var List = from c in dtMeafyenyOved.AsEnumerable()
                            select new
                            {
-                               kod = c.Field<int>("kod_meafyen"),
-                               exist = c.Field<int>("source_meafyen"),
+                               kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
+                               exist = c.Field<string>("source_meafyen"),
                                value = c.Field<string>("value_erech_ishi")
                            };
                 Meafyenim = List.ToDictionary(item => item.kod, item =>
                 {
-                    return new Meafyen((item.exist == 1), (item.value == null) ? string.Empty : item.value);
+                    return new Meafyen((item.exist == "1"), item.value);
                 }
                                   );
 
