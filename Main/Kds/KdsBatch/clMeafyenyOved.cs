@@ -14,39 +14,267 @@ namespace KdsBatch
     {
         private List<int> kodMeafyenim = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 , 10 ,11,12,13,14,15,16,17,23,24,25,26,27,28,30,32,33,41,42,43,44,45,47,50,51,53,54,56,57,60,61,63,64,72,74,83,84,85,91,100,101,102,103,104,105,106,107,108,110};
         public Dictionary<int, Meafyen> Meafyenim { get; set; }
-        
-        public string sMeafyen1 = "";
-        public int iMeafyen2 = -1;
-        public string sMeafyen3 = "";
-        public string sMeafyen4 = "";
-        public string sMeafyen5 = "";
-        public string sMeafyen6 = "";
-        public string sMeafyen7 = "";
-        public string sMeafyen8 = "";
-        public string sMeafyen10 = "";
-        public int iMeafyen11 = -1;
-       public int iMeafyen12 = -1;
-        public int iMeafyen13 = -1;
-        public int iMeafyen14 = -1;
-        public int iMeafyen16 = -1;
-        public int iMeafyen17 = -1;
-        public string sMeafyen23 = "";
-        public string sMeafyen24 = "";
-        public string sMeafyen25 = "";
-        public string sMeafyen26 = "";
-        public string sMeafyen27 = "";
-        public string sMeafyen28 = "";
-        public int iMeafyen30 = -1;
+        private DataTable dtMeafyenyOved;
+        private string _Type;
+        public DateTime _Taarich = new DateTime();
+
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate)
+        {
+            GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                PrepareMeafyenim(); //SetMeafyneyOved();
+            }
+            dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
+        }
+
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type)
+        {
+            _Type = Type;
+            _Taarich = dDate;
+            dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                SetMeafyneyOved();
+            }
+            dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
+        }
+
+        public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type, DataTable dtMeafyenim)
+        {
+            _Type = Type;
+            _Taarich = dDate;
+            dtMeafyenyOved = dtMeafyenim;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+            if (dtMeafyenyOved.Rows.Count > 0)
+            {
+                PrepareMeafyenim();
+                //SetMeafyneyOved();
+            }
+            dtMeafyenyOved.Dispose();
+            dtMeafyenyOved = null;
+        }
+
+       #region Initialize meafyenim
+        public string sMeafyen1
+        {
+            get
+            {
+                return Meafyenim[1].Value;
+            }
+        }
+        public int iMeafyen2
+        {
+            get
+            {
+                return Meafyenim[2].IntValue;
+            }
+        }
+        public string sMeafyen3
+        {
+            get
+            {
+                return Meafyenim[3].Value;
+            }
+        }
+        public string sMeafyen4
+        {
+            get
+            {
+                return Meafyenim[4].Value;
+            }
+        }
+        public string sMeafyen5
+        {
+            get
+            {
+                return Meafyenim[5].Value;
+            }
+        }
+        public string sMeafyen6
+        {
+            get
+            {
+                return Meafyenim[6].Value;
+            }
+        }
+        public string sMeafyen7
+        {
+            get
+            {
+                return Meafyenim[7].Value;
+            }
+        }
+        public string sMeafyen8
+        {
+            get
+            {
+                return Meafyenim[8].Value;
+            }
+        }
+        public string sMeafyen10
+        {
+            get
+            {
+                return Meafyenim[10].Value;
+            }
+        }
+        public int iMeafyen11
+        {
+            get
+            {
+                return Meafyenim[11].IntValue;
+            }
+        }
+        public int iMeafyen12
+        {
+            get
+            {
+                return Meafyenim[12].IntValue;
+            }
+        }
+        public int iMeafyen13
+        {
+            get
+            {
+                return Meafyenim[13].IntValue;
+            }
+        }
+        public int iMeafyen14
+        {
+            get
+            {
+                return Meafyenim[14].IntValue;
+            }
+        }
+        public int iMeafyen16
+        {
+            get
+            {
+                return Meafyenim[16].IntValue;
+            }
+        }
+        public int iMeafyen17
+        {
+            get
+            {
+                return Meafyenim[17].IntValue;
+            }
+        }
+        public string sMeafyen23
+        {
+            get
+            {
+                return Meafyenim[23].Value;
+            }
+        }
+        public string sMeafyen24
+        {
+            get
+            {
+                return Meafyenim[24].Value;
+            }
+        }
+        public string sMeafyen25
+        {
+            get
+            {
+                return Meafyenim[25].Value;
+            }
+        }
+        public string sMeafyen26
+        {
+            get
+            {
+                return Meafyenim[26].Value;
+            }
+        }
+        public string sMeafyen27
+        {
+            get
+            {
+                return Meafyenim[27].Value;
+            }
+        }
+        public string sMeafyen28
+        {
+            get
+            {
+                return Meafyenim[28].Value;
+            }
+        }
+        public int iMeafyen30
+        {
+            get
+            {
+                return Meafyenim[30].IntValue;
+            }
+        }
         //public int iMeafyen31 = -1;
-        public string sMeafyen32 = "";
-        public int iMeafyen33 =-1;
-        public string sMeafyen41 = "";
-        public string sMeafyen42 = "";
-        public string sMeafyen43 = "";
-        public string sMeafyen44 = "";
-        public string sMeafyen45 = "";
-        public string sMeafyen47 = "";
-        public string sMeafyen50 = "";
+        public string sMeafyen32
+        {
+            get
+            {
+                return Meafyenim[32].Value;
+            }
+        }
+        public int iMeafyen33
+        {
+            get
+            {
+                return Meafyenim[33].IntValue;
+            }
+        }
+        public string sMeafyen41
+        {
+            get
+            {
+                return Meafyenim[41].Value;
+            }
+        }
+        public string sMeafyen42
+        {
+            get
+            {
+                return Meafyenim[42].Value;
+            }
+        }
+        public string sMeafyen43
+        {
+            get
+            {
+                return Meafyenim[43].Value;
+            }
+        }
+        public string sMeafyen44
+        {
+            get
+            {
+                return Meafyenim[44].Value;
+            }
+        }
+        public string sMeafyen45
+        {
+            get
+            {
+                return Meafyenim[45].Value;
+            }
+        }
+        public string sMeafyen47
+        {
+            get
+            {
+                return Meafyenim[47].Value;
+            }
+        }
+        public string sMeafyen50
+        {
+            get
+            {
+                return Meafyenim[50].Value;
+            }
+        }
         public string sMeafyen51
         {
             get 
@@ -54,32 +282,177 @@ namespace KdsBatch
                 return Meafyenim[51].Value;
             }
         }
-        public int iMeafyen53 = -1;
-        public int iMeafyen54 = -1;
-        public int iMeafyen56 = -1;
-        public string sMeafyen57 = "";
-        public int iMeafyen60 = -1;
-        public string sMeafyen61 = "";
-        public string sMeafyen63 = "";   
-        public string sMeafyen64 = "";
-        public string sMeafyen72 = "";
-        public string sMeafyen74 = "";
-        public int iMeafyen83 = -1;
-        public int iMeafyen84 = -1;
-        public int iMeafyen85 = -1;
-        public string sMeafyen91 = "";
-        public int iMeafyen100 = -1;
-        public int iMeafyen101 = -1;
-        public int iMeafyen102 = -1;
-        public int iMeafyen103 = -1;
-        public int iMeafyen104 = -1;
-        public int iMeafyen105 = -1; 
-       public int iMeafyen106 = -1;
-       public int iMeafyen107 = -1;
-       public int iMeafyen108 = -1;
-       public int iMeafyen110 = -1;
+        public int iMeafyen53
+        {
+            get
+            {
+                return Meafyenim[53].IntValue;
+            }
+        }
+        public int iMeafyen54
+        {
+            get
+            {
+                return Meafyenim[54].IntValue;
+            }
+        }
+        public int iMeafyen56
+        {
+            get
+            {
+                return Meafyenim[56].IntValue;
+            }
+        }
+        public string sMeafyen57
+        {
+            get
+            {
+                return Meafyenim[57].Value;
+            }
+        }
+        public int iMeafyen60
+        {
+            get
+            {
+                return Meafyenim[60].IntValue;
+            }
+        }
+        public string sMeafyen61
+        {
+            get
+            {
+                return Meafyenim[61].Value;
+            }
+        }
+        public string sMeafyen63
+        {
+            get
+            {
+                return Meafyenim[63].Value;
+            }
+        }
+        public string sMeafyen64
+        {
+            get
+            {
+                return Meafyenim[64].Value;
+            }
+        }
+        public string sMeafyen72
+        {
+            get
+            {
+                return Meafyenim[72].Value;
+            }
+        }
+        public string sMeafyen74
+        {
+            get
+            {
+                return Meafyenim[74].Value;
+            }
+        }
+        public int iMeafyen83
+        {
+            get
+            {
+                return Meafyenim[83].IntValue;
+            }
+        }
+        public int iMeafyen84
+        {
+            get
+            {
+                return Meafyenim[84].IntValue;
+            }
+        }
+        public int iMeafyen85
+        {
+            get
+            {
+                return Meafyenim[85].IntValue;
+            }
+        }
+        public string sMeafyen91
+        {
+            get
+            {
+                return Meafyenim[91].Value;
+            }
+        }
+        public int iMeafyen100
+        {
+            get
+            {
+                return Meafyenim[100].IntValue;
+            }
+        }
+        public int iMeafyen101
+        {
+            get
+            {
+                return Meafyenim[101].IntValue;
+            }
+        }
+        public int iMeafyen102
+        {
+            get
+            {
+                return Meafyenim[102].IntValue;
+            }
+        }
+        public int iMeafyen103
+        {
+            get
+            {
+                return Meafyenim[103].IntValue;
+            }
+        }
+        public int iMeafyen104
+        {
+            get
+            {
+                return Meafyenim[104].IntValue;
+            }
+        }
+        public int iMeafyen105
+        {
+            get
+            {
+                return Meafyenim[105].IntValue;
+            }
+        }
+        public int iMeafyen106
+        {
+            get
+            {
+                return Meafyenim[106].IntValue;
+            }
+        }
+        public int iMeafyen107
+        {
+            get
+            {
+                return Meafyenim[107].IntValue;
+            }
+        }
+        public int iMeafyen108
+        {
+            get
+            {
+                return Meafyenim[108].IntValue;
+            }
+        }
+        public int iMeafyen110
+        {
+            get
+            {
+                return Meafyenim[110].IntValue;
+            }
+        }
+        #endregion
 
-        private DataTable dtMeafyenyOved;
+       #region Initialize meafyen Exists
         private bool _bMeafyen1Exists = false;
         private bool _bMeafyen2Exists = false;
         private bool _bMeafyen3Exists = false;
@@ -137,46 +510,254 @@ namespace KdsBatch
         private bool _bMeafyen107Exists = false;
         private bool _bMeafyen108Exists = false;
         private bool _bMeafyen110Exists = false;
-        private string _Type;
-        public DateTime _Taarich= new DateTime();
-        public clMeafyenyOved(int iMisparIshi, DateTime dDate)
+
+
+        public bool Meafyen1Exists
         {
-            GetMeafyeneyOvdim(iMisparIshi, dDate);
-            if (dtMeafyenyOved.Rows.Count > 0)
-            {
-                SetMeafyneyOved();                
-            }
-            dtMeafyenyOved.Dispose();
-            dtMeafyenyOved = null;
+            get { return Meafyenim[1].IsExist; }
+        }
+        public bool Meafyen2Exists
+        {
+            get { return Meafyenim[2].IsExist; }
+        }
+        public bool Meafyen3Exists
+        {
+            get { return Meafyenim[3].IsExist; }
+        }
+        public bool Meafyen4Exists
+        {
+            get { return Meafyenim[4].IsExist; }
+        }
+        public bool Meafyen5Exists
+        {
+            get { return Meafyenim[5].IsExist; }
+        }
+        public bool Meafyen6Exists
+        {
+            get { return Meafyenim[6].IsExist; }
+        }
+        public bool Meafyen7Exists
+        {
+            get { return Meafyenim[7].IsExist; }
+        }
+        public bool Meafyen8Exists
+        {
+            get { return Meafyenim[8].IsExist; }
+        }
+        public bool Meafyen10Exists
+        {
+            get { return Meafyenim[10].IsExist; }
+        }
+        public bool Meafyen11Exists
+        {
+            get { return Meafyenim[11].IsExist; }
+        }
+        public bool Meafyen12Exists
+        {
+            get { return Meafyenim[12].IsExist; }
+        }
+        public bool Meafyen13Exists
+        {
+            get { return Meafyenim[13].IsExist; }
+        }
+        public bool Meafyen14Exists
+        {
+            get { return Meafyenim[14].IsExist; }
+        }
+        public bool Meafyen16Exists
+        {
+            get { return Meafyenim[16].IsExist; }
+        }
+        public bool Meafyen17Exists
+        {
+            get { return Meafyenim[17].IsExist; }
+        }
+        public bool Meafyen23Exists
+        {
+            get { return Meafyenim[23].IsExist; }
+        }
+        public bool Meafyen24Exists
+        {
+            get { return Meafyenim[24].IsExist; }
+        }
+        public bool Meafyen25Exists
+        {
+            get { return Meafyenim[25].IsExist; }
+        }
+        public bool Meafyen26Exists
+        {
+            get { return Meafyenim[26].IsExist; }
+        }
+        public bool Meafyen27Exists
+        {
+            get { return Meafyenim[27].IsExist; }
+        }
+        public bool Meafyen28Exists
+        {
+            get { return Meafyenim[28].IsExist; }
+        }
+        public bool Meafyen30Exists
+        {
+            get { return Meafyenim[30].IsExist; }
         }
 
-        public clMeafyenyOved(int iMisparIshi, DateTime dDate,string Type)
+        //public bool Meafyen31Exists
+        //{
+        //    get { return _bMeafyen31Exists; }
+        //}
+        public bool Meafyen32Exists
         {
-            _Type = Type;
-            _Taarich = dDate;
-            dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
-            if (dtMeafyenyOved.Rows.Count > 0)
-            {
-                SetMeafyneyOved();
-            }
-            dtMeafyenyOved.Dispose();
-            dtMeafyenyOved = null;
+            get { return Meafyenim[32].IsExist; }
+        }
+        public bool Meafyen33Exists
+        {
+            get { return Meafyenim[33].IsExist; }
+        }
+        public bool Meafyen41Exists
+        {
+            get { return Meafyenim[41].IsExist; }
+        }
+        public bool Meafyen42Exists
+        {
+            get { return Meafyenim[42].IsExist; }
+        }
+        public bool Meafyen43Exists
+        {
+            get { return Meafyenim[43].IsExist; }
+        }
+        public bool Meafyen44Exists
+        {
+            get { return Meafyenim[44].IsExist; }
+        }
+        public bool Meafyen45Exists
+        {
+            get { return Meafyenim[45].IsExist; }
         }
 
-        public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type,DataTable dtMeafyenim)
+        public bool Meafyen47Exists
         {
-            _Type = Type;
-            _Taarich = dDate;
-            dtMeafyenyOved = dtMeafyenim;// GetMeafyeneyOvdim(iMisparIshi, dDate);
-            if (dtMeafyenyOved.Rows.Count > 0)
-            {
-                PrepareMeafyenim();
-                //SetMeafyneyOved();
-            }
-            dtMeafyenyOved.Dispose();
-            dtMeafyenyOved = null;
+            get { return Meafyenim[47].IsExist; }
         }
 
+        public bool Meafyen50Exists
+        {
+            get { return Meafyenim[50].IsExist; }
+        }
+
+        public bool Meafyen51Exists
+        {
+            get { return Meafyenim[51].IsExist; }
+        }
+        public bool Meafyen53Exists
+        {
+            get { return Meafyenim[53].IsExist; }
+        }
+        public bool Meafyen54Exists
+        {
+            get { return Meafyenim[54].IsExist; }
+        }
+        public bool Meafyen56Exists
+        {
+            get { return Meafyenim[56].IsExist; }
+        }
+        public bool Meafyen57Exists
+        {
+            get { return Meafyenim[57].IsExist; }
+        }
+        public bool Meafyen60Exists
+        {
+            get { return Meafyenim[60].IsExist; }
+        }
+
+        public bool Meafyen61Exists
+        {
+            get { return Meafyenim[61].IsExist; }
+        }
+
+        public bool Meafyen63Exists
+        {
+            get { return Meafyenim[63].IsExist; }
+        }
+
+        public bool Meafyen64Exists
+        {
+            get { return Meafyenim[64].IsExist; }
+        }
+
+        public bool Meafyen72Exists
+        {
+            get { return Meafyenim[72].IsExist; }
+        }
+        public bool Meafyen74Exists
+        {
+            get { return Meafyenim[74].IsExist; }
+        }
+        public bool Meafyen83Exists
+        {
+            get { return Meafyenim[83].IsExist; }
+        }
+        public bool Meafyen84Exists
+        {
+            get { return Meafyenim[84].IsExist; }
+        }
+        public bool Meafyen85Exists
+        {
+            get { return Meafyenim[85].IsExist; }
+        }
+        public bool Meafyen91Exists
+        {
+            get { return Meafyenim[91].IsExist; }
+        }
+        public bool Meafyen100Exists
+        {
+            get { return Meafyenim[100].IsExist; }
+        }
+        public bool Meafyen101Exists
+        {
+            get { return Meafyenim[101].IsExist; }
+        }
+        public bool Meafyen102Exists
+        {
+            get { return Meafyenim[102].IsExist; }
+        }
+
+        public bool Meafyen103Exists
+        {
+            get { return Meafyenim[103].IsExist; }
+        }
+
+        public bool Meafyen104Exists
+        {
+            get { return Meafyenim[104].IsExist; }
+        }
+
+        public bool Meafyen105Exists
+        {
+            get { return Meafyenim[105].IsExist; }
+        }
+
+        public bool Meafyen106Exists
+        {
+            get { return Meafyenim[106].IsExist; }
+        }
+
+        public bool Meafyen107Exists
+        {
+            get { return Meafyenim[107].IsExist; }
+        }
+
+        public bool Meafyen108Exists
+        {
+            get { return Meafyenim[108].IsExist; }
+        }
+
+        public bool Meafyen110Exists
+        {
+            get { return Meafyenim[110].IsExist; }
+        }
+        #endregion
+
+      
         //public clMeafyenyOved(int iMisparIshi, DateTime dDate,  DataTable dtMeafyenim)
         //{
         //    _Taarich = dDate;
@@ -189,249 +770,7 @@ namespace KdsBatch
         //    dtMeafyenyOved = null;
         //}
 
-        public bool Meafyen1Exists
-        {
-            get { return Meafyenim[1].IsExist; }
-        }
-        public bool Meafyen2Exists
-        {
-            get { return _bMeafyen2Exists; }
-        }
-        public bool Meafyen3Exists
-        {
-            get { return _bMeafyen3Exists; }
-        }
-        public bool Meafyen4Exists
-        {
-            get { return _bMeafyen4Exists; }
-        }
-        public bool Meafyen5Exists
-        {
-            get { return _bMeafyen5Exists; }
-        }
-        public bool Meafyen6Exists
-        {
-            get { return _bMeafyen6Exists; }
-        }
-        public bool Meafyen7Exists
-        {
-            get { return _bMeafyen7Exists; }
-        }
-        public bool Meafyen8Exists
-        {
-            get { return _bMeafyen8Exists; }
-        }
-        public bool Meafyen10Exists
-        {
-            get { return _bMeafyen10Exists; }
-        }
-        public bool Meafyen11Exists
-        {
-            get { return _bMeafyen11Exists; }
-        }
-        public bool Meafyen12Exists
-        {
-            get { return _bMeafyen12Exists; }
-        }
-        public bool Meafyen13Exists
-        {
-            get { return _bMeafyen13Exists; }
-        }
-        public bool Meafyen14Exists
-        {
-            get { return _bMeafyen14Exists; }
-        }
-        public bool Meafyen16Exists
-        {
-            get { return _bMeafyen16Exists; }
-        }
-        public bool Meafyen17Exists
-        {
-            get { return _bMeafyen17Exists; }
-        }
-        public bool Meafyen23Exists
-        {
-            get { return _bMeafyen23Exists; }
-        }
-        public bool Meafyen24Exists
-        {
-            get { return _bMeafyen24Exists; }
-        }
-        public bool Meafyen25Exists
-        {
-            get { return _bMeafyen25Exists; }
-        }
-        public bool Meafyen26Exists
-        {
-            get { return _bMeafyen26Exists; }
-        }
-        public bool Meafyen27Exists
-        {
-            get { return _bMeafyen27Exists; }
-        }
-        public bool Meafyen28Exists
-        {
-            get { return _bMeafyen28Exists; }
-        }
-        public bool Meafyen30Exists
-        {
-            get { return _bMeafyen30Exists; }
-        }
-
-        //public bool Meafyen31Exists
-        //{
-        //    get { return _bMeafyen31Exists; }
-        //}
-        public bool Meafyen32Exists
-        {
-            get { return _bMeafyen32Exists; }
-        }
-        public bool Meafyen33Exists
-        {
-            get { return _bMeafyen33Exists; }
-        }
-        public bool Meafyen41Exists
-        {
-            get { return _bMeafyen41Exists; }
-        }
-        public bool Meafyen42Exists
-        {
-            get { return _bMeafyen42Exists; }
-        }
-        public bool Meafyen43Exists
-        {
-            get { return _bMeafyen43Exists; }
-        }
-        public bool Meafyen44Exists
-        {
-            get { return _bMeafyen44Exists; }
-        }
-        public bool Meafyen45Exists
-        {
-            get { return _bMeafyen45Exists; }
-        }
-
-        public bool Meafyen47Exists
-        {
-            get { return _bMeafyen47Exists; }
-        }
-
-        public bool Meafyen50Exists
-        {
-            get { return _bMeafyen50Exists; }
-        }
-
-        public bool Meafyen51Exists
-        {
-            get { return _bMeafyen51Exists; }
-        }
-        public bool Meafyen53Exists
-        {
-            get { return _bMeafyen53Exists; }
-        }
-        public bool Meafyen54Exists
-        {
-            get { return _bMeafyen54Exists; }
-        }
-        public bool Meafyen56Exists
-        {
-            get { return _bMeafyen56Exists; }
-        }
-        public bool Meafyen57Exists
-        {
-            get { return _bMeafyen57Exists; }
-        }
-        public bool Meafyen60Exists
-        {
-            get { return _bMeafyen60Exists; }
-        }
-
-        public bool Meafyen61Exists
-        {
-            get { return _bMeafyen61Exists; }
-        }
-
-        public bool Meafyen63Exists
-        {
-            get { return _bMeafyen63Exists; }
-        }
-
-        public bool Meafyen64Exists
-        {
-            get { return _bMeafyen64Exists; }
-        }
-
-        public bool Meafyen72Exists
-        {
-            get { return _bMeafyen72Exists; }
-        }
-        public bool Meafyen74Exists
-        {
-            get { return _bMeafyen74Exists; }
-        }
-        public bool Meafyen83Exists
-        {
-            get { return _bMeafyen83Exists; }
-        }
-        public bool Meafyen84Exists
-        {
-            get { return _bMeafyen84Exists; }
-        }
-        public bool Meafyen85Exists
-        {
-            get { return _bMeafyen85Exists; }
-        }
-        public bool Meafyen91Exists
-        {
-            get { return _bMeafyen91Exists; }
-        }
-        public bool Meafyen100Exists
-        {
-            get { return _bMeafyen100Exists; }
-        }
-        public bool Meafyen101Exists
-        {
-            get { return _bMeafyen101Exists; }
-        }
-        public bool Meafyen102Exists
-        {
-            get { return _bMeafyen102Exists; }
-        }
-
-        public bool Meafyen103Exists
-        {
-            get { return _bMeafyen103Exists; }
-        }
-
-        public bool Meafyen104Exists
-        {
-            get { return _bMeafyen104Exists; }
-        }
-
-        public bool Meafyen105Exists
-        {
-            get { return _bMeafyen105Exists; }
-        }
-
-        public bool Meafyen106Exists
-        {
-            get { return _bMeafyen106Exists; }
-        }
-
-        public bool Meafyen107Exists
-        {
-            get { return _bMeafyen107Exists; }
-        }
-
-        public bool Meafyen108Exists
-        {
-            get { return _bMeafyen108Exists; }
-        }
-
-        public bool Meafyen110Exists
-        {
-            get { return _bMeafyen110Exists; }
-        }
+       
 
         public void SetOneMeafyen(string sMeafyenNum, ref bool bMeafyenExists, ref string sMeafyenValue)
         {
