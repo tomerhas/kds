@@ -38,8 +38,7 @@ namespace KdsBatch.Premia
                 scriptProc.StartInfo.Arguments =
                     String.Format("//B //Nologo {0}runmacro.vbs {1}",
                     AppDomain.CurrentDomain.BaseDirectory, filename);
-                System.Diagnostics.EventLog.WriteEntry("KDS",
-                    scriptProc.StartInfo.Arguments);
+              
                 scriptProc.Start();
                 scriptProc.WaitForExit();
                 scriptProc.Close();
