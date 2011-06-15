@@ -48,6 +48,9 @@ namespace KdsBatch.Premia
                 delegate(PremiaItem pItem)
                 { return !String.IsNullOrEmpty(pItem.RechivCode); }))
             {
+                //System.Diagnostics.EventLog.WriteEntry("KDS",
+                //  String.Format("p_taarich={0} bakasha_id={1} p_mispar_ishi={2} p_kod_rechiv={3} p_erech_rechiv={4}",
+                //    item.WorkDate, _btchRequest, item.EmployeeNumber, item.RechivCode, item.MinutesQuantity));
                 clDal dal = new clDal();
                 dal.AddParameter("p_taarich", ParameterType.ntOracleDate, item.WorkDate,
                     ParameterDir.pdInput);
@@ -76,6 +79,8 @@ namespace KdsBatch.Premia
         {
             LoadDictionaryTables();
             DataTable dt = GetDataTableFromExcel();
+            System.Diagnostics.EventLog.WriteEntry("KDS",
+                  String.Format("Found {0} rows in file", dt.Rows.Count));
             FillItems(dt);
             ReloadPeriod(dt);
         }
@@ -119,6 +124,8 @@ namespace KdsBatch.Premia
             }
             if (stationItems.Count > 0)
                 UpdateStationCounters(stationItems, minutesCounter);
+            System.Diagnostics.EventLog.WriteEntry("KDS",
+                  String.Format("{0} items for import", _items.Items.Count()));
 
         }
 
