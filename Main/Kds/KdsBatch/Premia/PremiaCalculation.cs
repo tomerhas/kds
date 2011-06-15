@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsLibrary;
+using System.Diagnostics;
 
 namespace KdsBatch.Premia
 {
@@ -22,7 +23,33 @@ namespace KdsBatch.Premia
         #endregion
 
         #region Methods
-        
+
+        private void RunMacroWithScript()
+        {
+            try
+            {
+                string filename = _settings.GetMacroFullPath(_periodDate);
+                if (!_settings.IsMacroFileExists(_periodDate))
+                    throw new Exception(String.Format("Path {0} does not exist",
+                        filename));
+                Process scriptProc = new Process();
+                
+                scriptProc.StartInfo.FileName = "cscript";
+                scriptProc.StartInfo.Arguments =
+                    String.Format("//B //Nologo {0}runmacro.vbs {1}",
+                    AppDomain.CurrentDomain.BaseDirectory, filename);
+                System.Diagnostics.EventLog.WriteEntry("KDS",
+                    scriptProc.StartInfo.Arguments);
+                scriptProc.Start();
+                scriptProc.WaitForExit();
+                scriptProc.Close();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.EventLog.WriteEntry("KDS", ex.ToString());
+                throw ex;
+            }
+        }
         private void RunMacro()
         {
             var exAdpt = new ExcelAdapter(_settings.GetMacroFullPath(_periodDate));
@@ -67,7 +94,7 @@ namespace KdsBatch.Premia
 
         protected override void RunRoutine()
         {
-            RunMacro();
+            RunMacroWithScript();
         }
 
         #endregion
