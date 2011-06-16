@@ -50,7 +50,7 @@ namespace KdsBatch
             if (dtMeafyenyOved.Rows.Count > 0)
             {
                 PrepareMeafyenim();
-                //SetMeafyneyOved();
+              //  SetMeafyneyOved();
             }
             dtMeafyenyOved.Dispose();
             dtMeafyenyOved = null;
@@ -975,12 +975,12 @@ namespace KdsBatch
                            select new
                            {
                                kod = Int32.Parse(c.Field<string>("kod_meafyen").ToString()),
-                               exist = c.Field<string>("source_meafyen"),
+                               exist = Int32.Parse(c.Field<string>("source_meafyen").ToString()),
                                value = c.Field<string>("value_erech_ishi")
                            };
                 Meafyenim = List.ToDictionary(item => item.kod, item =>
                 {
-                    return new Meafyen((item.exist == "1"), item.value);
+                    return new Meafyen((item.exist == 1), item.value);
                 }
                                   );
 

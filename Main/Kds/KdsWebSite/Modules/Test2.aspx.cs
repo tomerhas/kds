@@ -162,7 +162,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void btnShowTachograf_Click(object sender, EventArgs e)
     {
         KdsBatch.TaskManager.Utils oUtils = new KdsBatch.TaskManager.Utils();
-        oUtils.RunShguimLechishuv();
+        oUtils.RunShguimOfSdrn();// RunShguimLechishuv();
         //MainCalc objMainCalc = new MainCalc(0, DateTime.Parse("01/03/2010"), DateTime.Parse("31/08/2010"), "0,1", false, clGeneral.TypeCalc.Batch);
         //foreach (Oved oOved in objMainCalc.Ovdim)
         //{

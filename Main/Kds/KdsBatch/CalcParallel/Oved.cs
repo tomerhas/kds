@@ -342,6 +342,7 @@ namespace KdsBatch
                 StartTime = DateTime.Now;
                 MeafyeneyOved = new List<clMeafyenyOved>();
             
+                
                 oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
      
                 while (dTarMe <= TarAd)
