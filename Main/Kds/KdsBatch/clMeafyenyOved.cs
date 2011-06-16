@@ -36,7 +36,8 @@ namespace KdsBatch
             dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
             if (dtMeafyenyOved.Rows.Count > 0)
             {
-                SetMeafyneyOved();
+              //  SetMeafyneyOved();
+                PrepareMeafyenim();
             }
             dtMeafyenyOved.Dispose();
             dtMeafyenyOved = null;
