@@ -31,9 +31,18 @@ namespace KdsBatch
 
         public clMeafyenyOved(int iMisparIshi, DateTime dDate, string Type)
         {
+            string sQury = "";
+            DataRow[] drMeafyn;
             _Type = Type;
             _Taarich = dDate;
-            dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+           // dtMeafyenyOved = clCalcData.DtMeafyenyOvedMonth;// GetMeafyeneyOvdim(iMisparIshi, dDate);
+
+            sQury = "Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+            sQury += " and Convert('" + dDate.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
+
+            drMeafyn = clCalcData.DtMeafyenyOvedMonth.Select(sQury);
+            dtMeafyenyOved = drMeafyn.CopyToDataTable();
+
             if (dtMeafyenyOved.Rows.Count > 0)
             {
               //  SetMeafyneyOved();
