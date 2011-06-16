@@ -1976,7 +1976,7 @@ namespace KdsBatch
 
                                 if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
                                (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumBoker) &&
-                               (dShatGmarLetashlum < objOved.objParameters.dZmanHatchalaErev))
+                               (dShatGmarLetashlum < objOved.objParameters.dZmanSiyumTzharayim))
                                 {
                                     addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
                                     addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
@@ -1991,7 +1991,7 @@ namespace KdsBatch
                                 }
 
                                 if ((dShatHatchalaLetashlum <= objOved.objParameters.dZmanSiyumBoker) &&
-                             (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
+                             (dShatGmarLetashlum > objOved.objParameters.dZmanSiyumTzharayim))
                                 {
                                     addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
                                     addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
