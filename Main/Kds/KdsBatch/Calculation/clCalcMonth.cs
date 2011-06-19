@@ -184,7 +184,7 @@ namespace KdsBatch
                     if (clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString() != "")
                     {
                         zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(clCalcData.DtYemeyAvoda.Rows[i]["mispar_sidur"].ToString()), DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString()));
-                        zmanSidur = float.Parse((DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_gmar_sidur"].ToString()) - DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString())).TotalMinutes.ToString());
+                        zmanSidur = float.Parse((DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
                         clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
                     }
                     //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
@@ -695,10 +695,9 @@ namespace KdsBatch
                 //  דקות זיכוי חופש (רכיב 7) 
                 CalcRechiv7();
 
-               // CalcRechiv19();
+             //  CalcRechiv19();
 
-                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
-                CalcRechiv11();
+               
 
                 //  דקות לתוספת משק  (רכיב 12) 
                 CalcRechiv12();
@@ -1104,6 +1103,8 @@ namespace KdsBatch
                 //נוספות 100% לעובד חודשי 
                 CalcRechiv146();
 
+                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
+                CalcRechiv11();
                 // CalcRechiv148();
 
                 // נוספות תנועה חול (רכיב 160)קיזוז
@@ -1543,24 +1544,42 @@ namespace KdsBatch
 
         private void CalcRechiv11()
         {
-            float fSumDakotRechiv,fDakotNosafotNahagut;
-
+            float fSumDakotRechiv, fDakotNosafotNahagut, fDakotNosafot100;
             try
             {
 
                 if (_oGeneralData.objPirteyOved.iDirug != 85 || _oGeneralData.objPirteyOved.iDarga != 30)
                 {
-                    
-                        //if (_oGeneralData.objMeafyeneyOved.iMeafyen54 > 0)
-                        //{
-                            fDakotNosafotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode().ToString()));
-                            if ((fDakotNosafotNahagut / 60) > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
-                            {
-                                fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, (fDakotNosafotNahagut / 60) - 30);
-                                addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
 
-                            }
-                        //}
+                    if (_oGeneralData.objMeafyeneyOved.iMeafyen56 == 52 || _oGeneralData.objMeafyeneyOved.iMeafyen56 == 62)
+                    {
+                        fDakotNosafot100 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot100.GetHashCode().ToString()));
+                        if (fDakotNosafot100 > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
+                        {
+                            fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, fDakotNosafot100 - _oGeneralData.objParameters.iTamrizNosafotLoLetashlum);
+                            addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
+                        }
+                    }
+                    else if (_oGeneralData.objMeafyeneyOved.iMeafyen56 == 51 || _oGeneralData.objMeafyeneyOved.iMeafyen56 == 61)
+                    {
+                        fDakotNosafotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode().ToString()));
+                        if (fDakotNosafotNahagut > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
+                        {
+                            fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, fDakotNosafotNahagut - _oGeneralData.objParameters.iTamrizNosafotLoLetashlum);
+                            addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
+                        }
+
+                    }
+                       ////if (_oGeneralData.objMeafyeneyOved.iMeafyen54 > 0)
+                       // //{
+                       //     fDakotNosafotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode().ToString()));
+                       //     if ((fDakotNosafotNahagut / 60) > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
+                       //     {
+                       //         fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, (fDakotNosafotNahagut / 60) - 30);
+                       //         addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
+
+                       //     }
+                       // //}
                    
                 }
             }

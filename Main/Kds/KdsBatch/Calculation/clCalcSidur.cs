@@ -160,7 +160,7 @@ namespace KdsBatch
                  dShatHatchalaLetashlum = DateTime.Parse(drSidur["shat_hatchala_letashlum"].ToString());
                  dShatGmarLetashlum = DateTime.Parse(drSidur["shat_gmar_letashlum"].ToString());
 
-                 fErechRechiv = float.Parse(drSidur["ZMAN_LELO_HAFSAKA"].ToString()); //(float)((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes);
+                 fErechRechiv = (float)((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes);
 
                 //יוצאי דופן סידורים מיוחדים  
                 if (iMisparSidur == 99707)
@@ -1894,7 +1894,7 @@ namespace KdsBatch
 
                             if ((dShatHatchalaLetashlum <= _oGeneralData.objParameters.dZmanSiyumBoker) &&
                            (dShatGmarLetashlum > _oGeneralData.objParameters.dZmanSiyumBoker)&&
-                           (dShatGmarLetashlum < _oGeneralData.objParameters.dZmanHatchalaErev))
+                           (dShatGmarLetashlum < _oGeneralData.objParameters.dZmanSiyumTzharayim))
                             {
                                 addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
                                 addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
@@ -1909,7 +1909,7 @@ namespace KdsBatch
                             }
 
                             if ((dShatHatchalaLetashlum <= _oGeneralData.objParameters.dZmanSiyumBoker) &&
-                         (dShatGmarLetashlum > _oGeneralData.objParameters.dZmanHatchalaErev))
+                         (dShatGmarLetashlum > _oGeneralData.objParameters.dZmanSiyumTzharayim))
                             {
                                 addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
                                 addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
@@ -2013,7 +2013,7 @@ namespace KdsBatch
             DataRow[] drSidurim;
             int iMisparSidur;
             float fErech;
-            DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur;
+            DateTime dShatHatchalaSidur; //dShatHatchalaLetashlum, dShatGmarLetashlum,
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
             try
@@ -2024,12 +2024,12 @@ namespace KdsBatch
                     drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ") and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
-                        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                        dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
+                       iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                       dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
                        
-                        dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                        dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                       // dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                        //dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+                        fErech = float.Parse(drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString()); //float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
 
                         addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fErech);
 
