@@ -1386,8 +1386,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //hCell = CreateTableCell("70px", "", "");
            // if ((!(HasNoPremmisionToAddPeilut(oSidur))) && (!oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew)))
             bHasNoPremmisionToAddPeilut =  HasNoPremmisionToAddPeilut(oSidur);
-            if ((!(bHasNoPremmisionToAddPeilut)))
-            {
+            //if ((!(bHasNoPremmisionToAddPeilut)))
+            //{
                 ImageButton imgAddPeilut = new ImageButton();
                 imgAddPeilut.ID = "imgAddPeilut" + iIndex;
                 imgAddPeilut.ImageUrl = "~/images/plus.jpg";               
@@ -1399,28 +1399,37 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgAddPeilut.Enabled = false;
 
                 hCell = CreateTableCell("40px", "", "");
-                //אם סידור חדש, נעלים את הוספת פעילות עד אשר יקלידו מספר סידור
-                if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
+                if ((bHasNoPremmisionToAddPeilut) || (oSidur.iMisparSidur == 0))
                 {
-                    if (((oSidur.iMisparSidur > 0) && (bHasNoPremmisionToAddPeilut)) || (oSidur.iMisparSidur == 0))
-                    {
-                        imgAddPeilut.Style.Add("display", "none");
-                        hCell = CreateTableCell("53px", "", "");
-                    }
-                    else
-                    {
-                        imgAddPeilut.Style.Add("display", "block");
-                        hCell = CreateTableCell("40px", "", "");
-                    }
+                    imgAddPeilut.Style.Add("display", "none");
+                    hCell = CreateTableCell("53px", "", "");
                 }
-                else
-                {
+                else{
+                    imgAddPeilut.Style.Add("display", "block");
                     hCell = CreateTableCell("40px", "", "");
                 }
+                //אם סידור חדש, נעלים את הוספת פעילות עד אשר יקלידו מספר סידור
+                //if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
+                //{
+                //    if (((oSidur.iMisparSidur > 0) && (bHasNoPremmisionToAddPeilut)) || (oSidur.iMisparSidur == 0))
+                //    {
+                //        imgAddPeilut.Style.Add("display", "none");
+                //        hCell = CreateTableCell("53px", "", "");
+                //    }
+                //    else
+                //    {
+                //        imgAddPeilut.Style.Add("display", "block");
+                //        hCell = CreateTableCell("40px", "", "");
+                //    }
+                //}
+                //else
+                //{
+                //    hCell = CreateTableCell("40px", "", "");
+                //}
                 hCell.Controls.Add(imgAddPeilut);
-            }
-            else
-                hCell = CreateTableCell("53px", "", "");           
+            //}
+            //else
+            //    hCell = CreateTableCell("53px", "", "");           
         }
         catch (Exception ex)
         {
@@ -2106,7 +2115,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Style.Add("Display", "none");
         Label lbl = new Label();
         lbl.ID = "lblDate" + iIndex;
-        lbl.Text = oSidur.dFullShatHatchala.ToShortDateString();
+        if ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0))
+            lbl.Text = CardDate.ToShortDateString();
+        else
+             lbl.Text = oSidur.dFullShatHatchala.ToShortDateString();
         hCell.Controls.Add(lbl);
     }
     protected void CreateShatHatchalaMutereHiddentCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
@@ -2519,13 +2531,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatGmar = _Sidur.dFullShatHatchala;
         _Sidur.dSidurDate = _Sidur.dFullShatHatchala;
-        _Sidur.sSidurDay =(_Sidur.dFullShatHatchala.DayOfWeek.GetHashCode()+1).ToString(); 
-
+        _Sidur.sSidurDay =(_Sidur.dFullShatHatchala.DayOfWeek.GetHashCode()+1).ToString();
+        _Sidur.iBitulOHosafa = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
+        _Sidur.bSidurMyuhad = true;
         Session["Sidurim"] = _DataSource;
-
+       
         ClearControl();
         BuildPage();
         hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
+
     }
     private int GetSidurKey(int iSidurIndex, ref DateTime dSidurShatHatchala)
     {   GridView _GridView;
@@ -3067,7 +3081,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.ID = "txtSGL" + iIndex;
         oTextBox.Text = oSidur.sShatGmarLetashlum;       
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
-        bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet));
+        bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && (oSidur.oSidurStatus!=clSidur.enSidurStatus.enNew));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnable));
         oTextBox.Width = Unit.Pixel(40);
        // oTextBox.Height = Unit.Pixel(20);
@@ -3121,7 +3135,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        // oTextBox.Height = Unit.Pixel(20);
         oTextBox.CausesValidation = true;
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
-        bOrgEnabled=((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet));
+        bOrgEnabled = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && (oSidur.oSidurStatus != clSidur.enSidurStatus.enNew));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnabled));
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
@@ -3519,10 +3533,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hTable.Rows[0].Cells.Add(hCell);
            
                 //אם הכרטיס הוא ללא התייחסות וגם המספר של הגורם המטפל בכרטיס הוא לא בעל הכרטיס הנוכחי והסידור הוא ללא מאפיין 99, נחסום את הסידור לעריכה
-                if (!bEnableSidur)
+                if ((!bEnableSidur) && (!oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew)))
                     hTable.Disabled = true;
                 
-                
+               
+
             return hTable;
             
         }
@@ -3811,13 +3826,29 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected bool IsOutMichsaAllowed(ref clSidur oSidur)
     {
         bool bOutMichsaAllowed= false;
+        DataRow[] dr;
 
         //לא נאפשר שינוי מחוץ למכסה לעובד מאגד תעבורה
-        //נאפשר עדכון מחוץ למכסה רק לעובדים שהם לא מאגד תעבורה ושהסידור מיוחד ויש לו ערך 1 במאפיין 25
-        if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+        //נאפשר עדכון מחוץ למכסה רק לעובדים שהם לא מאגד תעבורה ושהסידור מיוחד ויש לו ערך 1 במאפיין 25          
+        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
         {
-            bOutMichsaAllowed = true;
-        }        
+            if (oSidur.iMisparSidur > 0)
+            {
+                dr = MeafyeneySidur.Select("Sidur_Key=" + oSidur.iMisparSidur + " and (kod_meafyen=25 and erech='" + clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString() + "')");
+                if ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode()) && (oSidur.bSidurMyuhad) && (dr.Length > 0))
+                    bOutMichsaAllowed = true;
+            }
+            else
+            {
+                if (OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                    bOutMichsaAllowed = true;
+            }
+        }
+        else
+        {
+            if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+                bOutMichsaAllowed = true;
+        }
         
         return bOutMichsaAllowed;
     }
@@ -4055,7 +4086,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //oTextBox.Height = Unit.Pixel(20);
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
-            bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) || (!IsAccessToSidurNotShaon(ref oSidur)) || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+            bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) 
+                                  || (!IsAccessToSidurNotShaon(ref oSidur)) 
+                                  || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
+                                  );
             
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            

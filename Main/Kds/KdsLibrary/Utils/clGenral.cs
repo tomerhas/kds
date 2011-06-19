@@ -250,6 +250,7 @@ namespace KdsLibrary
         public const string cProGetMusach_O_Machsan = "PKG_SIDURIM.ProGetMusach_O_Machsan";
         public const string cGetTbSadotNosafimLesidur = "PKG_SIDURIM.get_tb_sadot_nosafim_lesidur";
         public const string cProGetMeafyeneySidurim = "pkg_sidurim.pro_get_meafyeney_sidur";
+        public const string cProGetMeafyenySidurById = "pkg_sidurim.pro_get_meafyeny_sidur_by_id";
         public const string cProGetSibaLoLetashlum = "pkg_sidurim.pro_get_siba_lo_letashlum";
         public const string cProGetSidurimMeyuchadim = "pkg_sidurim.get_sidurim_meyuchadim_all";
       //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";

@@ -90,7 +90,7 @@
                                             <td style="width: 10%">
                                                 <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>                                                    
                                             </td>
-                                            <td style="width: 1%"><img src="../../Images/ErrorSign.jpg" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"   /></td>
+                                            <td style="width: 1%"><img src="../../Images/ErrorSign.jpg" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                                             <td style="width: 10%">                                                                                      
                                                 <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
                                                     dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1"  ></asp:TextBox>
@@ -99,7 +99,7 @@
                                                     ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
                                                     EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
                                                     FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                    CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID" >
+                                                    CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID">
                                                 </cc1:AutoCompleteExtender>
                                             </td>
                                             <td style="width: 4%">שם:</td>                                                
@@ -360,7 +360,7 @@
                                  CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidurHeadrut();' />
                             </td>  
                             <td align="right"><asp:Button Text="הוסף סידור מפה" ID="btnFindSidur" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
-                            <td align="right"><asp:Button Text="הוסף סידור מיוחד" ID="Button1" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false"  OnClick="btnAddSpecialSidur_Click"/></td>
+                            <td align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false"  OnClick="btnAddSpecialSidur_Click"/></td>
                             <td  style="width: 80%" align="left">                                            
                                 <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="btnMeasherOrMistayeg_onclick(1);" />
                                 <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="btnMeasherOrMistayeg_onclick(0);" />   

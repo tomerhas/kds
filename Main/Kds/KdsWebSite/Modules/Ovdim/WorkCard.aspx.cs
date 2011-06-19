@@ -2890,22 +2890,36 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 _objIdkunRashemet = new OBJ_IDKUN_RASHEMET();
                 iMisarSidur = (_Lbl == null) ? (_HypLnk == null ? (_TxtSidur.Text=="" ? 0 : int.Parse(_TxtSidur.Text)) : int.Parse(_HypLnk.Text)) : int.Parse(_Lbl.Text);
 
+                oSidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iIndex]);
+
                 //שעת התחלה             
                 _Txt = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSH" + iIndex)));
 
-                _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Attributes["OrgShatHatchala"]);
+                if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                {
+                    _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Text);
+                    _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse(_Txt.Text);                   
+                    oSidur.dFullShatHatchalaLetashlum = DateTime.Parse(_Txt.Text);
+                    oSidur.dFullShatGmarLetashlum = DateTime.Parse(_Txt.Text);
+                }
+                else
+                    _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Attributes["OrgShatHatchala"]);
+
                 if (_Txt.Text == string.Empty)
                     _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
                 else
                 {//נבדוק אם השתנה התאריך
-                    _objIdkunRashemet.NEW_SHAT_HATCHALA = GetSidurNewDate(iMisarSidur, _Txt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
-                    if (_objIdkunRashemet.NEW_SHAT_HATCHALA.Second!=_objIdkunRashemet.SHAT_HATCHALA.Second)
-                       _objIdkunRashemet.NEW_SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(_objIdkunRashemet.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));                    
+                    if (oSidur.oSidurStatus != clSidur.enSidurStatus.enNew)
+                    {
+                        _objIdkunRashemet.NEW_SHAT_HATCHALA = GetSidurNewDate(iMisarSidur, _Txt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                        if (_objIdkunRashemet.NEW_SHAT_HATCHALA.Second != _objIdkunRashemet.SHAT_HATCHALA.Second)
+                            _objIdkunRashemet.NEW_SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA.AddSeconds(double.Parse(_objIdkunRashemet.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
+                    }
                 }
                 dNewShatHatchala = _objIdkunRashemet.NEW_SHAT_HATCHALA;
                 dShatHatchala = _objIdkunRashemet.SHAT_HATCHALA;
                
-                oSidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iIndex]);
+                
                 
                 if (FillObjIdkunRashemet(oSidur, "SHAT_HATCHALA", iMisarSidur, dShatHatchala, ref  _objIdkunRashemet))   
                 //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), iMisarSidur, dShatHatchala, DateTime.MinValue, 0, ref _objIdkunRashemet))
@@ -3839,7 +3853,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         else
                         {//נבדוק אם השתנה התאריך
                             if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
-                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = clGeneral.GetDateTimeFromStringHour(oTxt.Text, DateTime.Parse(((Label)(this.FindControl("lstSidurim").FindControl("lbldate1"))).Text));
+                            {
+                                //אם סידור חדש, ניקח את השעה מהאובייקט סידור המעודכן
+                                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oSidur.dFullShatHatchala;
+                                oObjSidurimOvdimUpd.SHAT_HATCHALA = oSidur.dFullShatHatchala;
+                            }
                             else
                             {
                                 oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = GetSidurNewDate(oObjSidurimOvdimUpd.MISPAR_SIDUR, oTxt.Text); //DateTime.Parse(dDateCard.ToShortDateString() + " " + string.Concat(oTxt.Text, ":", oObjSidurimOvdimUpd.SHAT_HATCHALA.Second.ToString().PadLeft(2, (char)48)));
@@ -4022,9 +4040,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                 oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
 
                                 FillSidurimForInsert(ref oObjSidurimOvdimIns, ref oObjSidurimOvdimUpd, ref oSidur);
-                                FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
                                 oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
-                                oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+                                if (!oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew)){
+                                    FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);                                
+                                    oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+                                }
                             }
                         }
                         if (((oObjSidurimOvdimUpd.PITZUL_HAFSAKA == clGeneral.enShowPitzul.enOvedHafsaka.GetHashCode()) && (iPitzulHafsakaOldValue!=clGeneral.enShowPitzul.enOvedHafsaka.GetHashCode()) && (oSidur.bSidurMyuhad)) && (oSidur.bShaonNochachutExists))

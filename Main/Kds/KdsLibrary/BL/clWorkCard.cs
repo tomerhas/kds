@@ -562,6 +562,24 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+        public static DataTable GetMeafyeneySidurById(DateTime dCardDate, int iSidurNumber)
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                oDal.AddParameter("p_sidur_number", ParameterType.ntOracleInteger, iSidurNumber, ParameterDir.pdInput);                
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetMeafyenySidurById, ref dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static DataTable GetMeafyeneySidur()
         {
             DataTable dt = new DataTable();

@@ -1095,6 +1095,7 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
+   
     private void GetPeilyotTnuaDetails(int iMisparIshi, DateTime dCardDate, int iSidurIndex, 
                                        int iPeilutIndex, long lMakatNesia, DataTable dtPeilyotTnuaDetails,
                                        clPeilut _PeilutElement)
@@ -1896,8 +1897,10 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
-    public string SidurStartHourChanged(string sCardDate, int iSidurKey, string sNewStartHour, string sOrgStartHour)
+    public string SidurStartHourChanged(string sCardDate, int iSidurKey, string sNewStartHour, string sOrgStartHour, int iSidurIndex)
     {
+        OrderedDictionary odSidurim;
+        clSidur _Sidur = new clSidur();
         DateTime dSidurStartHour;
         DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0,0,0);
         string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
@@ -1919,28 +1922,80 @@ public class wsGeneral : System.Web.Services.WebService
             if (dr.Length > 0)
             {
                 if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
-                    sResult = "1,1";              
+                    sResult = "1,1";
             }
-           
+            else
+            {
+                odSidurim = (OrderedDictionary)Session["Sidurim"];
+                _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+                _Sidur.dSidurDate = DateTime.Parse(sOrgStartHour);
+                if (IsNewSidurNahagutOrNihul(_Sidur))
+                    sResult = "1,1";
+            }           
         }
 
         if (sResult.Substring(0,1).Equals("0"))
-            UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0);
+            UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0, iSidurIndex);
 
         return sResult;       
     }
+    private bool IsNewSidurNahagutOrNihul(clSidur _Sidur)
+    {
+       // DataRow dr;
+       // DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+        
+       // bool bFound=false;
+        bool bSidurNihulONahagut = false;
+
+        //dr = dtUpdateSidurim.NewRow();
+        //dr["sidur_number"] = iSidurNumber;
+        //dr["sidur_org_start_hour"] = sShatHatchala;
+        //dr["sidur_start_hour"] = sShatHatchala;
+        //dr["sidur_date"] = DateTime.Parse(dSidurDate.ToShortDateString() + " " + sShatHatchala);
+        //odSidurim = (OrderedDictionary)Session["Sidurim"];
+        ////for (int i = 0; i <= odSidurim.Count - 1; i++)
+        ////{
+        //_Sidur = (clSidur)(odSidurim[iSidutIndex]);
+            //if ((_Sidur.iMisparSidur == iSidurNumber) && (_Sidur.oSidurStatus == clSidur.enSidurStatus.enNew))
+            //{
+            //    bFound = true;
+            //    break;
+            //}
+        //}
+
+        //if (bFound)
+        //{
+        if ((_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString()) ||
+            (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString()))
+            bSidurNihulONahagut = true;
+            //if (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+            //{
+            //    dr["sidur_nahagut"] = 1;
+            //    bSidurNihulONahagut = true;
+            //}
+            //if (_Sidur.sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+            //{
+            //    dr["sidur_nihul_tnua"] = 1;
+            //    bSidurNihulONahagut = true;
+            //}
+        //}
+       // dtUpdateSidurim.Rows.Add(dr);
+        return bSidurNihulONahagut;
+    }
     [WebMethod(EnableSession = true)]
-    public void UpdateSidurDate(string sCardDate, int iSidurKey, string sOldStartHour, string sNewStartHour, int iAddDay)
+    public void UpdateSidurDate(string sCardDate, int iSidurKey, string sOldStartHour, string sNewStartHour, int iAddDay, int iSidurIndex)
     {        
         DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         DataRow[] dr;
         DateTime dtOrgDate, dtCardDate;
+        OrderedDictionary odSidurim;
+        clSidur _Sidur;
         dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
         if (dr.Length > 0)
         {
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
-            if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year<clGeneral.cYearNull)
+            if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < clGeneral.cYearNull)
                 //אם שעת ההתחלה ריקה, שנה 0001, נכניס את תאריך הכרטיס
                 dtOrgDate = DateTime.Parse(sCardDate);
             else
@@ -1961,6 +2016,13 @@ public class wsGeneral : System.Web.Services.WebService
                             dr[0]["sidur_date"] = ((DateTime)dr[0]["sidur_date"]).AddDays(-1);
                 }
             }
+        }
+        else
+        {
+            odSidurim = (OrderedDictionary)Session["Sidurim"];
+            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+            _Sidur.dSidurDate = DateTime.Parse(sCardDate).AddDays(iAddDay); //DateTime.Parse(sNewStartHour);
+            _Sidur.dFullShatHatchala = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sNewStartHour); 
         }
     }
     [WebMethod]
@@ -2029,45 +2091,47 @@ public class wsGeneral : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession=true)]
-    public string IsNewSidurNumberValid(int iSidurNumber, int iMeasherMistayeg)
+    public string IsNewSidurNumberValid(int iSidurNumber, int iSidurIndex, string sSidurDate, int iMeasherMistayeg)
     {
         string sReturnCode = "0";
         DataTable dtMeafyenim= new DataTable();
         DataRow[] dr;
                 
         if ((iSidurNumber.Equals(SIDUR_HITYAZVUT_A)) || (iSidurNumber.Equals(SIDUR_HITYAZVUT_B)))
-            sReturnCode = "1,לא ניתן לדווח סידור התייצבות";
+            sReturnCode = "1|לא ניתן לדווח סידור התייצבות";
         else            
             {
                 if (!IsSidurMyuhad(iSidurNumber.ToString()))
                 {
-                    sReturnCode = "1, מספר סידור שגוי";
+                    sReturnCode = "1| מספר סידור שגוי";
                 }
                 else{
                     dtMeafyenim = (DataTable)Session["MeafyeneySidur"];
                     dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=53 or kod_meafyen=27)");
                     if (dr.Length > 0)
-                        sReturnCode = "1,יש לדווח במסך הוסף דיווח היעדרות";
+                        sReturnCode = "1|יש לדווח במסך הוסף דיווח היעדרות";
                     else
                     {
                         dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber);
                         if (dr.Length == 0)
-                            sReturnCode = "1, מספר סידור שגוי";
+                            sReturnCode = "1| מספר סידור שגוי";
 
                         if ((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
-                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech=1");
+                            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1'");
                             if (dr.Length == 0)
-                                sReturnCode = "1, מספר סידור שגוי";
+                                sReturnCode = "1| כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                         }
                     }
                 }
             }
         if (sReturnCode.Equals("0"))
+        {
             // XML אם מספר סידור תקין, נקרא את המאפיינים שלו וניצור מבנה
             //שמגדיר אילו מהשדות יינתנו לשינוי ואילו לא
-            sReturnCode = sReturnCode +","  + BuildSidurFieldsDefaults(iSidurNumber, dtMeafyenim);
-
+            UpdateSidurimCash(iSidurNumber, iSidurIndex, DateTime.Parse(sSidurDate));
+            sReturnCode = sReturnCode + "|" + BuildSidurFieldsDefaults(iSidurNumber, dtMeafyenim);
+        }
         return sReturnCode;
     }
     public string BuildSidurFieldsDefaults(int iSidurNumber, DataTable dtMeafyenim)
@@ -2145,6 +2209,75 @@ public class wsGeneral : System.Web.Services.WebService
         catch (Exception ex)
         {
             throw ex;
+        }
+    }
+    private void UpdateSidurimCash(int iSidurNumber, int iSidurIndex, DateTime dCardDate)
+    {        
+        clSidur _Sidur;
+        DataTable dt;
+        
+        //Get Sidur from session
+        _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+        //Update sidurim cash with new sidur
+        dt = clWorkCard.GetMeafyeneySidurById(dCardDate,iSidurNumber);
+        if (dt.Rows.Count > 0)
+        {
+            _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
+            _Sidur.iMisparSidur = iSidurNumber;
+            _Sidur.iMisparSidurMyuhad = iSidurNumber;
+            _Sidur.dSidurDate = dCardDate;
+            _Sidur.sHalbashKod = dt.Rows[0]["zakay_lezman_halbasha"].ToString();
+            _Sidur.bHalbashKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["zakay_lezman_halbasha"].ToString()));            
+            _Sidur.sShatHatchalaMuteret =dt.Rows[0]["shat_hatchala_muteret"].ToString();             
+            _Sidur.bShatHatchalaMuteretExists = !(String.IsNullOrEmpty( dt.Rows[0]["shat_hatchala_muteret"].ToString()));
+            _Sidur.sShatGmarMuteret =dt.Rows[0]["shat_gmar_muteret"].ToString();             
+            _Sidur.bShatGmarMuteretExists= !(String.IsNullOrEmpty( dt.Rows[0]["shat_gmar_muteret"].ToString()));
+            _Sidur.sZakayMichutzLamichsa =  dt.Rows[0]["zakay_michutz_lamichsa"].ToString(); //מאפיין 25
+            _Sidur.sNoPeilotKod = dt.Rows[0]["sidur_asur_ledaveach_peilut"].ToString();
+            _Sidur.bNoPeilotKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["sidur_asur_ledaveach_peilut"].ToString()));
+            _Sidur.sNoOtoNo = dt.Rows[0]["asur_ledaveach_mispar_rechev"].ToString();
+            _Sidur.bNoOtoNoExists = !(String.IsNullOrEmpty(dt.Rows[0]["asur_ledaveach_mispar_rechev"].ToString()));
+            _Sidur.sSidurVisaKod = dt.Rows[0]["sidur_namlak_visa"].ToString();
+            _Sidur.bSidurVisaKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["sidur_namlak_visa"].ToString()));
+            _Sidur.sSectorAvoda =  dt.Rows[0]["sector_avoda"].ToString();
+            _Sidur.bSectorAvodaExists = !String.IsNullOrEmpty( dt.Rows[0]["sector_avoda"].ToString());
+            _Sidur.iSidurLoNibdakSofShavua = (System.Convert.IsDBNull( dt.Rows[0]["sidur_lo_nivdak_sofash"]) ? 0 : int.Parse( dt.Rows[0]["sidur_lo_nivdak_sofash"].ToString()));
+            _Sidur.sHashlamaKod = dt.Rows[0]["zakay_lehashlama_avur_sidur"].ToString();
+            _Sidur.sZakaiLeChariga =  dt.Rows[0]["zakay_lechariga"].ToString();
+            _Sidur.bZakaiLeCharigaExists = !(String.IsNullOrEmpty( dt.Rows[0]["zakay_lechariga"].ToString()));
+            _Sidur.sZakaiLehamara =  dt.Rows[0]["zakay_lehamara"].ToString();
+            _Sidur.bZakaiLehamaraExists = !(String.IsNullOrEmpty( dt.Rows[0]["zakay_lehamara"].ToString()));
+            _Sidur.sZakayLezamanNesia =  dt.Rows[0]["Zakay_Leaman_Nesia"].ToString();
+            _Sidur.bZakayLezamanNesiaExists = !(String.IsNullOrEmpty( dt.Rows[0]["zakay_leaman_nesia"].ToString()));
+            _Sidur.sPeilutRequiredKod = dt.Rows[0]["hova_ledaveach_peilut"].ToString();
+            _Sidur.bPeilutRequiredKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["hova_ledaveach_peilut"].ToString()));
+            _Sidur.sSidurNotValidKod = dt.Rows[0]["asur_ledivuach_lechevrot_bat"].ToString();
+            _Sidur.bSidurNotValidKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["asur_ledivuach_lechevrot_bat"].ToString()));
+            _Sidur.sSidurNotInShabtonKod = dt.Rows[0]["hukiyut_beshabaton"].ToString();
+            _Sidur.bSidurNotInShabtonKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["hukiyut_beshabaton"].ToString()));
+            _Sidur.sHeadrutTypeKod = dt.Rows[0]["sidur_misug_headrut"].ToString();
+            _Sidur.bHeadrutTypeKodExists = !(String.IsNullOrEmpty(dt.Rows[0]["sidur_misug_headrut"].ToString()));
+            _Sidur.sSugAvoda =  dt.Rows[0]["sug_avoda"].ToString();
+            _Sidur.bSugAvodaExists = !(String.IsNullOrEmpty( dt.Rows[0]["sug_avoda"].ToString()));
+            _Sidur.bHovaMisparMachsan = !(String.IsNullOrEmpty( dt.Rows[0]["hova_ledaveach_mispar_machsan"].ToString())); 
+            _Sidur.sShaonNochachut =  dt.Rows[0]["shaon_nochachut"].ToString();
+            _Sidur.iNitanLedaveachBemachalaAruca = System.Convert.IsDBNull( dt.Rows[0]["nitan_ledaveach_bmachala_aruc"]) ? 0 : int.Parse( dt.Rows[0]["nitan_ledaveach_bmachala_aruc"].ToString());
+            _Sidur.sSidurInSummer = dt.Rows[0]["sidur_kaytanot_veruey_kayiz"].ToString();
+            _Sidur.bSidurInSummerExists = !(String.IsNullOrEmpty(dt.Rows[0]["sidur_kaytanot_veruey_kayiz"].ToString())); 
+            _Sidur.sLoLetashlumAutomati =  dt.Rows[0]["lo_letashlum_automati"].ToString();
+            _Sidur.bLoLetashlumAutomatiExists = !(String.IsNullOrEmpty( dt.Rows[0]["lo_letashlum_automati"].ToString()));
+            _Sidur.iZakayLepizul = (System.Convert.IsDBNull( dt.Rows[0]["zakay_lepizul"]) ? 0 : int.Parse( dt.Rows[0]["zakay_lepizul"].ToString()));
+            _Sidur.sLidroshKodMivtza =  dt.Rows[0]["lidrosh_kod_mivtza"].ToString();
+            _Sidur.sRashaiLedaveach =  dt.Rows[0]["rashai_ledaveach"].ToString();
+            _Sidur.bRashaiLedaveachExists = !(String.IsNullOrEmpty( dt.Rows[0]["rashai_ledaveach"].ToString()));
+		    _Sidur.sKizuzAlPiHatchalaGmar =  dt.Rows[0]["kizuz_al_pi_hatchala_gmar"].ToString();
+            _Sidur.bKizuzAlPiHatchalaGmarExists = !(String.IsNullOrEmpty( dt.Rows[0]["kizuz_al_pi_hatchala_gmar"].ToString()));
+            _Sidur.sNitanLedaveachAdTaarich =  dt.Rows[0]["nitan_ledaveach_ad_taarich"].ToString();
+            _Sidur.bNitanLedaveachAdTaarichExists = !(String.IsNullOrEmpty( dt.Rows[0]["nitan_ledaveach_ad_taarich"].ToString()));
+            _Sidur.iElement1Hova = (System.Convert.IsDBNull( dt.Rows[0]["element1_hova"]) ? 0 : int.Parse( dt.Rows[0]["element1_hova"].ToString()));
+            _Sidur.iElement2Hova = (System.Convert.IsDBNull( dt.Rows[0]["element2_hova"]) ? 0 : int.Parse( dt.Rows[0]["element2_hova"].ToString()));
+            _Sidur.iElement3Hova = (System.Convert.IsDBNull( dt.Rows[0]["element3_hova"]) ? 0 : int.Parse( dt.Rows[0]["element3_hova"].ToString()));
+         
         }
     }
     //[WebMethod(EnableSession = true)]
