@@ -3694,17 +3694,19 @@ namespace KdsBatch
 
         private void CalcRechiv146()
         {
-            float fSumDakotRechiv, fDakotNochehut, fMichsaChodshit;
+            float fSumDakotRechiv;//, fDakotNochehut, fMichsaChodshit;
             try
             {
-                fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString()));
-                fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
+                fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.Nosafot100.GetHashCode().ToString()));
+                addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                //fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString()));
+                //fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
 
-                if (fMichsaChodshit>0 && fDakotNochehut > fMichsaChodshit)
-                {
-                    fSumDakotRechiv = (fDakotNochehut - fMichsaChodshit) / 60;
-                    addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
-                }
+                //if (fMichsaChodshit>0 && fDakotNochehut > fMichsaChodshit)
+                //{
+                //    fSumDakotRechiv = (fDakotNochehut - fMichsaChodshit) / 60;
+                //    addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                //}
             }
             catch (Exception ex)
             {

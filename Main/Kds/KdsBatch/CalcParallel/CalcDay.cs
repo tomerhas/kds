@@ -265,6 +265,7 @@ namespace KdsBatch
                 CalcRechiv140();
                 CalcRechiv141();
                 CalcRechiv145();
+                CalcRechiv146();
                 CalcRechiv185();
 
                 //קיזוז נוכחות ( רכיב 142): 
@@ -4508,6 +4509,25 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv146()
+        {
+            float fMichsaYomit, fDakotNocheut, fSumDakotRechiv;
+            try
+            {
+                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
+                if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                {
+                    fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
+                    addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Nosafot100.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void SetSidureyVaadOvdim()
         {
             float fTempX, fTempY, fShaot150, fShaot50, fTempZ, fTempW, fTempT, fShaot125, fShaot25;

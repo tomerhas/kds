@@ -5196,7 +5196,7 @@ namespace KdsBatch
 
                     if ((!clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich) && (iMisparSidur == 99001 && (_oGeneralData.objPirteyOved.iIsuk==17 || _oGeneralData.objPirteyOved.iIsuk==18 || _oGeneralData.objPirteyOved.iIsuk==19 || _oGeneralData.objPirteyOved.iIsuk==20)) || (sSidurimLerchiv.IndexOf("," + iMisparSidur.ToString() + ",") > -1)))
                     {
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+                        fErech = float.Parse(_drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString());// float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
@@ -5302,7 +5302,7 @@ namespace KdsBatch
 
                     if ((!clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich) && iMisparSidur == 99001 && (_oGeneralData.objPirteyOved.iIsuk==181 || _oGeneralData.objPirteyOved.iIsuk==191)))
                     {
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+                        fErech = float.Parse(_drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString()); // float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                         

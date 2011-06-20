@@ -6232,42 +6232,7 @@ namespace KdsBatch
                     //שינוי 17
                     //SidurNetzer17(ref oSidur);
 
-                    clSidur oSidurFirst = new clSidur();
-                    clSidur oSidurSecond = new clSidur();
-                    int indexSidurFirst=0;
-                    bool flag = true;
-                    //שינוי 6
-                    for (i = 0; i < htEmployeeDetails.Count; i++)
-                    {
-                        if (flag) 
-                        {
-                            oSidur = (clSidur)htEmployeeDetails[i];
-                            if ( oSidur.iLoLetashlum == 0)
-                            {
-                                oSidurFirst = oSidur;
-                                indexSidurFirst = i;
-                                flag = false;
-                            }
-                        }
-                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
-                            oSidurFirst.sPitzulHafsaka = "0";
-                        if (!flag && i < (htEmployeeDetails.Count-1))
-                        {       
-                            oSidurSecond = (clSidur)htEmployeeDetails[i + 1];
-                            if (oSidurFirst.iLoLetashlum == 0 && oSidurSecond.iLoLetashlum == 0)
-                            {
-                                if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
-                                {
-                                    oObjSidurimOvdimUpd = GetUpdSidurObject(oSidurFirst);
-
-                                    FixedPitzulHafsaka06(ref oSidurFirst, i + 1, ref oObjSidurimOvdimUpd);
-                                    htEmployeeDetails[indexSidurFirst] = oSidurFirst;
-                                }
-                                oSidurFirst = oSidurSecond;
-                                indexSidurFirst = i + 1;
-                            }
-                        }
-                    }
+                   
 
                     //שינוי 10
                     for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -6295,6 +6260,44 @@ namespace KdsBatch
                         htEmployeeDetails[i] = oSidur;
                     }
 
+                    //שינוי 6
+                    //צריך לעבוד אחרי שינוי 11
+                    clSidur oSidurFirst = new clSidur();
+                    clSidur oSidurSecond = new clSidur();
+                    int indexSidurFirst = 0;
+                    bool flag = true;
+                    
+                    for (i = 0; i < htEmployeeDetails.Count; i++)
+                    {
+                        if (flag)
+                        {
+                            oSidur = (clSidur)htEmployeeDetails[i];
+                            if (oSidur.iLoLetashlum == 0)
+                            {
+                                oSidurFirst = oSidur;
+                                indexSidurFirst = i;
+                                flag = false;
+                            }
+                        }
+                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
+                            oSidurFirst.sPitzulHafsaka = "0";
+                        if (!flag && i < (htEmployeeDetails.Count - 1))
+                        {
+                            oSidurSecond = (clSidur)htEmployeeDetails[i + 1];
+                            if (oSidurFirst.iLoLetashlum == 0 && oSidurSecond.iLoLetashlum == 0)
+                            {
+                                if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
+                                {
+                                    oObjSidurimOvdimUpd = GetUpdSidurObject(oSidurFirst);
+
+                                    FixedPitzulHafsaka06(ref oSidurFirst, i + 1, ref oObjSidurimOvdimUpd);
+                                    htEmployeeDetails[indexSidurFirst] = oSidurFirst;
+                                }
+                                oSidurFirst = oSidurSecond;
+                                indexSidurFirst = i + 1;
+                            }
+                        }
+                    }
                     ////שינוי 16
                     //FixedMisparSidurToNihulTnua16(ref  oSidur, ref oObjSidurimOvdimUpd);
 
