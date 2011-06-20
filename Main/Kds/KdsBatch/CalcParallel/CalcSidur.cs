@@ -63,7 +63,7 @@ namespace KdsBatch
                         dShatGmarLetashlum = DateTime.Parse(_drSidurRagil[I]["shat_gmar_letashlum"].ToString());
                         fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
 
-                        // SetSugSidur(ref _drSidurRagil[I],objOved.Taarich, iMisparSidur);
+                        // //SetSugSidur(ref _drSidurRagil[I],objOved.Taarich, iMisparSidur);
 
                         //iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         //if (iSugSidur == 69)
@@ -437,7 +437,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
 
@@ -521,7 +521,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -596,7 +596,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Tafkid.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -992,7 +992,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
                         if (sSugeySidur.IndexOf("," + iSugSidur.ToString() + ",") > -1)
@@ -1095,7 +1095,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -1281,7 +1281,7 @@ namespace KdsBatch
                     {
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -1388,7 +1388,7 @@ namespace KdsBatch
                         iMichutzLamichsa = int.Parse(_drSidurRagil[I]["out_michsa"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -1501,7 +1501,7 @@ namespace KdsBatch
 
                         iMichutzLamichsa = int.Parse(oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, iMichutzLamichsa).GetHashCode().ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -1579,7 +1579,7 @@ namespace KdsBatch
 
                         iMichutzLamichsa = int.Parse(oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, iMichutzLamichsa).GetHashCode().ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Tafkid.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -1703,7 +1703,7 @@ namespace KdsBatch
             //ג.	קיים לפחות סידור מפה אחד (סידורים שמס' הסידור שלהם אינו מתחיל ב- "99") עבורו סוג סידור [שליפת נתונים מסידורים-מפה (מס' סידור,תאריך)]  = 02 או 07.
             if (iMisparSidur.ToString().Substring(0, 2) != "99")
             {
-                SetSugSidur(ref drSidur, dShatHatchalaSidur, iMisparSidur);
+                //SetSugSidur(ref drSidur, dShatHatchalaSidur, iMisparSidur);
 
                 iSugSidur = int.Parse(drSidur["sug_sidur"].ToString());
                 if (iSugSidur == 2 || iSugSidur == 7)
@@ -2070,7 +2070,7 @@ namespace KdsBatch
                             iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                            SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                            //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
 
                             iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
@@ -2215,7 +2215,7 @@ namespace KdsBatch
                         iMichutzLamichsa = int.Parse(drSidurim[I]["out_michsa"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
@@ -3056,7 +3056,7 @@ namespace KdsBatch
                     bSidurNehiga = true;
                 else if (iMisparSidur.ToString().Substring(0, 2) != "99")
                 {
-                    SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
+                    //SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
                     iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
 
                     bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -3092,7 +3092,7 @@ namespace KdsBatch
                     bSidurNihulOrTafkid = true;
                 else if (iMisparSidur.ToString().Substring(0, 2) != "99")
                 {
-                    SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
+                    //SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
                     iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
 
                     bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -3162,7 +3162,7 @@ namespace KdsBatch
                         bSidurNihulOrTafkid = true;
                     else if (iMisparSidur.ToString().Substring(0, 2) != "99")
                     {
-                        SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -3195,7 +3195,7 @@ namespace KdsBatch
                                 bSidurMezake = true;
                             else if (iMisparSidurNext.ToString().Substring(0, 2) != "99")
                             {
-                                SetSugSidur(ref drSidurim[J], objOved.Taarich, iMisparSidurNext);
+                                //SetSugSidur(ref drSidurim[J], objOved.Taarich, iMisparSidurNext);
                                 iSugSidur = int.Parse(drSidurim[J]["sug_sidur"].ToString());
 
                                 bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -3297,7 +3297,7 @@ namespace KdsBatch
 
                                 if (drSidureyGrira[J]["mispar_sidur"].ToString().Substring(0, 2) != "99")
                                 {
-                                    SetSugSidur(ref drSidureyGrira[J], dShatHatchalaSidur, iMisparSidur);
+                                    //SetSugSidur(ref drSidureyGrira[J], dShatHatchalaSidur, iMisparSidur);
 
                                     iSugSidur = int.Parse(drSidureyGrira[J]["sug_sidur"].ToString());
 
@@ -4022,7 +4022,7 @@ namespace KdsBatch
                             iMisparSidur = int.Parse(drSidurim[I]["MISPAR_SIDUR"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                            SetSugSidur(ref drSidurim[I], dShatHatchalaSidur, iMisparSidur);
+                            //SetSugSidur(ref drSidurim[I], dShatHatchalaSidur, iMisparSidur);
 
                             iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
@@ -4083,7 +4083,7 @@ namespace KdsBatch
                         fDakotRechiv = 0;
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
 
@@ -4243,7 +4243,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
 
@@ -4385,7 +4385,7 @@ namespace KdsBatch
                     {
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         fDakotRechiv = 0;
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Tafkid.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -4618,7 +4618,7 @@ namespace KdsBatch
                         iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
 
-                        SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref _drSidurRagil[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
                         bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -5688,7 +5688,7 @@ namespace KdsBatch
            
                             if (iMisparSidur.ToString().Substring(0, 2) != "99")
                             {
-                                SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+                                //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
                                 iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
                                 bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -5782,7 +5782,7 @@ namespace KdsBatch
                         drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)='730')");
                         if (iMisparSidur.ToString().Substring(0, 2) != "99")
                         {
-                            SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+                            //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
                             iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
                             bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -5875,7 +5875,7 @@ namespace KdsBatch
 
                             if (iMisparSidur.ToString().Substring(0, 2) != "99")
                             {
-                                SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+                                //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
                                 iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
                                 bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
@@ -6622,7 +6622,7 @@ namespace KdsBatch
                     {
                         iMisparSidur = int.Parse(drSidurim[I]["MISPAR_SIDUR"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-                        SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
 
                         iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
                         if (sSugeySidur.IndexOf("," + iSugSidur.ToString() + ",") > -1)
@@ -6816,34 +6816,34 @@ namespace KdsBatch
             return dr;
         }
 
-        private void SetSugSidur(ref DataRow drSidur, DateTime dSidurDate, int iMisparSidur)
-        {
-                //סידורים רגילים
-                //נבדוק מול התנועה
-                DataRow[] rowSidur;
-            try
-            {
-                if (drSidur["sug_sidur"].ToString() == "0" || drSidur["sug_sidur"].ToString() == "")
-                {
-                    drSidur["sug_sidur"] = 0;
-                    rowSidur = objOved.oGeneralData.dtSugeySidurAll.Select("taarich=Convert('" + dSidurDate.ToShortDateString() + "', 'System.DateTime') and mispar_sidur=" + iMisparSidur);
-                    if (rowSidur.Length > 0)
-                    {
-                        if (rowSidur[0]["SUG_SIDUR"].ToString() != "")
-                            drSidur["sug_sidur"] = int.Parse(rowSidur[0]["SUG_SIDUR"].ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                rowSidur = null;
-            }
+        //private void //SetSugSidur(ref DataRow drSidur, DateTime dSidurDate, int iMisparSidur)
+        //{
+        //        //סידורים רגילים
+        //        //נבדוק מול התנועה
+        //        DataRow[] rowSidur;
+        //    try
+        //    {
+        //        if (drSidur["sug_sidur"].ToString() == "0" || drSidur["sug_sidur"].ToString() == "")
+        //        {
+        //            drSidur["sug_sidur"] = 0;
+        //            rowSidur = objOved.oGeneralData.dtSugeySidurAll.Select("taarich=Convert('" + dSidurDate.ToShortDateString() + "', 'System.DateTime') and mispar_sidur=" + iMisparSidur);
+        //            if (rowSidur.Length > 0)
+        //            {
+        //                if (rowSidur[0]["SUG_SIDUR"].ToString() != "")
+        //                    drSidur["sug_sidur"] = int.Parse(rowSidur[0]["SUG_SIDUR"].ToString());
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        rowSidur = null;
+        //    }
 
-        }
+        //}
 
 
         //private bool CheckSidurMeyuchad(int iMeafyen,int  iErech,DateTime dDate,int iMisparSidur)
@@ -7137,7 +7137,7 @@ namespace KdsBatch
                 }
                 else
                 {
-                    SetSugSidur(ref drSidur, objOved.Taarich, iMisparSidur);
+                    //SetSugSidur(ref drSidur, objOved.Taarich, iMisparSidur);
 
                     iSugSidur = int.Parse(drSidur["sug_sidur"].ToString());
                     bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), iSectorAvoda, objOved.Taarich, iSugSidur);
@@ -7274,23 +7274,25 @@ namespace KdsBatch
 
         private bool IsSidurConenutGriraExist(ref DataRow dr)
         {
-            DataRow[] drSugSidur, drSidurim;
+            DataRow[]  drSidurim;
             string sSql = "";
             try
             {
-                objOved.oGeneralData.dtSugeySidurAll.Select(null, "sug_sidur");
-                sSql = "sug_sidur=69 and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')";
-                drSugSidur = objOved.oGeneralData.dtSugeySidurAll.Select(sSql);
-                if (drSugSidur.Length > 0)
+                //objOved.oGeneralData.dtSugeySidurAll.Select(null, "sug_sidur");
+                //sSql = "sug_sidur=69 and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')";
+                //drSugSidur = objOved.oGeneralData.dtSugeySidurAll.Select(sSql);
+                sSql = "sug_sidur=69 and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') and lo_letashlum=1";// and mispar_sidur=" + drSugSidur[0]["mispar_sidur"];
+                drSidurim = objOved.DtYemeyAvodaYomi.Select(sSql);
+                if (drSidurim.Length > 0)
                 {
-                    sSql = "lo_letashlum=1 and mispar_sidur=" + drSugSidur[0]["mispar_sidur"];
-                    drSidurim = objOved.DtYemeyAvodaYomi.Select(sSql);
-                    if (drSidurim.Length > 0)
-                    {
+                   // sSql = "lo_letashlum=1 and mispar_sidur=" + drSugSidur[0]["mispar_sidur"];
+                   // drSidurim = objOved.DtYemeyAvodaYomi.Select(sSql);
+                    //if (drSidurim.Length > 0)
+                    //{
                         dr = drSidurim[0];
                         return true;
-                    }
-                    else return false;
+                    //}
+                    //else return false;
                 }
                 else return false;
             }
@@ -7300,7 +7302,6 @@ namespace KdsBatch
             }
             finally
             {
-                drSugSidur=null;
                 drSidurim = null;
             }
         }

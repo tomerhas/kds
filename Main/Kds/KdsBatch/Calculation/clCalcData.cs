@@ -21,7 +21,7 @@ namespace KdsBatch
         private static DataTable _dtPremyotYadaniyot;
         private static DataTable _dtPeiluyotFromTnua;
         private static DataTable _dtYemeyAvoda;
-        private static DataTable _dtSugeySidur;
+     //   private static DataTable _dtSugeySidur;
         private static DataTable _dtBusNumbers;
         private static DataTable _dtPeiluyotOved;
         private static DataTable _dtPirteyOvedForMonth;
@@ -78,11 +78,11 @@ namespace KdsBatch
             get { return _dtYemeyAvoda; }
         }
 
-        public static DataTable DtSugeySidur
-        {
-            set { _dtSugeySidur = value; }
-            get { return _dtSugeySidur; }
-        }
+        //public static DataTable DtSugeySidur
+        //{
+        //    set { _dtSugeySidur = value; }
+        //    get { return _dtSugeySidur; }
+        //}
         public static DataTable DtBusNumbers
         {
             set { _dtBusNumbers = value; }

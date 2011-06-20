@@ -483,8 +483,8 @@ namespace KdsBatch
                 names += ",Ovdim_ShePutru";
                 dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Buses_Details";
-                dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                names += ",Sugey_Sidur_Tnua";
+                //dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                //names += ",Sugey_Sidur_Tnua";
                 dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Kavim_Details";
 

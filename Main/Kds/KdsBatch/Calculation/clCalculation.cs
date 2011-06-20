@@ -294,7 +294,7 @@ namespace KdsBatch
                try
                {
                    clCalcData.ResetDataSet();
-                   clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
+                 //  clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
                    clCalcData.DtBusNumbers = null;
                    clCalcData.DtPeiluyotOved = oUtils.GetPeiluyLeovedForMonth( iMisparIshi,dTarMe, dTarAd);
                    oMonth = new clCalcMonth(iMisparIshi, lBakashaId);
@@ -331,7 +331,7 @@ namespace KdsBatch
                    clCalcData.DtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                    clCalcData.DtMichsaYomit = GetMichsaYomitLechodesh(dTarMe, dTarAd);
                    clCalcData.DtMeafyeneySugSidur = oUtils.InitDtMeafyeneySugSidur(dTarMe, dTarAd);
-                   clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
+                  // clCalcData.DtSugeySidur = oUtils.InitDtSugeySidur(dTarMe, dTarAd, iMisparIshi);
                    clCalcData.DtPeiluyotOved = oUtils.GetPeiluyLeovedForMonth(iMisparIshi, dTarMe, dTarAd);
                    clCalcData.DtBusNumbers = null;
                    clCalcData.DtParameters = oUtils.GetKdsParametrs();

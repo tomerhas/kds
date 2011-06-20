@@ -51,7 +51,7 @@ namespace KdsBatch
             Instance.dtMeafyeneySugSidurAll= null;
             Instance.dtSidurimMeyuchRechivAll= null;
             Instance.dtSugeySidurRechivAll= null;
-            Instance.dtSugeySidurAll= null;
+          //  Instance.dtSugeySidurAll= null;
             Instance.dtPremyotAll= null;
             Instance.dtPremyotYadaniyotAll= null;
             Instance.dtBusNumbersAll= null;
@@ -92,7 +92,7 @@ namespace KdsBatch
         public DataTable dtMeafyeneySugSidurAll { get; set; }
         public DataTable dtSidurimMeyuchRechivAll { get; set; }
         public DataTable dtSugeySidurRechivAll { get; set; }
-        public DataTable dtSugeySidurAll { get; set; }
+       // public DataTable dtSugeySidurAll { get; set; }
         public DataTable dtPremyotAll { get; set; }
         public DataTable dtPremyotYadaniyotAll { get; set; }
         public DataTable dtBusNumbersAll { get; set; }
@@ -146,7 +146,7 @@ namespace KdsBatch
                 dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
                 dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; // oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
                 dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; //oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);
-                dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
+               // dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
                 dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
                 dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
                 if (dsNetuneyChishuv.Tables["Kavim_Details"] != null)
