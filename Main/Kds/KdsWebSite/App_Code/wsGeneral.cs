@@ -2143,6 +2143,7 @@ public class wsGeneral : System.Web.Services.WebService
             sXML.Append("<SIDUR>");
             sXML.Append(string.Concat("<SHAT_HATCHALA>", "1", "</SHAT_HATCHALA>"));
             sXML.Append(string.Concat("<SHAT_GMAR>", "1", "</SHAT_GMAR>"));
+
             //עבור משתמש שאינו רשמת/רשמת על/מנהל מערכת מותר לעדכן רק בסידורים מיוחדים מסוג החתמת שעון (סידורים מיוחדים עם מאפיין 54 (שעון נוכחות
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=54)");
             if (dr.Length > 0)
@@ -2150,7 +2151,7 @@ public class wsGeneral : System.Web.Services.WebService
                 sXML.Append(string.Concat("<DIVUCH_KNISA>", "1", "</DIVUCH_KNISA>"));
                 sXML.Append(string.Concat("<DIVUCH_YETIZA>", "1", "</DIVUCH_YETIZA>"));
                 sXML.Append(string.Concat("<SHAT_HATCHALA_LETASHLUM>", "1", "</SHAT_HATCHALA_LETASHLUM>"));
-                sXML.Append(string.Concat("<SHAT_GMAR_LETASHLUM>", "1", "</SHAT_GMAR_LETASHLUM>"));                
+                sXML.Append(string.Concat("<SHAT_GMAR_LETASHLUM>", "1", "</SHAT_GMAR_LETASHLUM>"));              
             }
             else
             {
@@ -2261,6 +2262,7 @@ public class wsGeneral : System.Web.Services.WebService
             _Sidur.bSugAvodaExists = !(String.IsNullOrEmpty( dt.Rows[0]["sug_avoda"].ToString()));
             _Sidur.bHovaMisparMachsan = !(String.IsNullOrEmpty( dt.Rows[0]["hova_ledaveach_mispar_machsan"].ToString())); 
             _Sidur.sShaonNochachut =  dt.Rows[0]["shaon_nochachut"].ToString();
+            _Sidur.bShaonNochachutExists = !(String.IsNullOrEmpty(dt.Rows[0]["shaon_nochachut"].ToString()));
             _Sidur.iNitanLedaveachBemachalaAruca = System.Convert.IsDBNull( dt.Rows[0]["nitan_ledaveach_bmachala_aruc"]) ? 0 : int.Parse( dt.Rows[0]["nitan_ledaveach_bmachala_aruc"].ToString());
             _Sidur.sSidurInSummer = dt.Rows[0]["sidur_kaytanot_veruey_kayiz"].ToString();
             _Sidur.bSidurInSummerExists = !(String.IsNullOrEmpty(dt.Rows[0]["sidur_kaytanot_veruey_kayiz"].ToString())); 

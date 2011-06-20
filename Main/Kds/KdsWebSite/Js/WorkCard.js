@@ -480,8 +480,8 @@
      }  
 
      var i=0, sSH, sSG, oDDL;
-     sSH=document.getElementById("lstSidurim_txtSH".concat(i));
-     sSG=document.getElementById("lstSidurim_txtSG".concat(i));
+     sSH = $get("lstSidurim_txtSH".concat(i));
+     sSG = $get("lstSidurim_txtSG".concat(i));
     
      while (sSH!=null)
      {
@@ -490,59 +490,60 @@
              sMsg = sMsg.concat('מספר סידור ' + iSidurNum + " אינו תקין \n");
              bValid = false;
          }
-         else{
-            oDDL = document.getElementById("lstSidurim_ddlResonIn".concat(i));        
-            if (!IsValidTime(sSH.value))
-            {           
-               sMsg = sMsg.concat('שעת התחלה בסידור ' + iSidurNum + " אינה תקינה \n");   
-               bValid = false; 
-            }
-            if (oDDL != null) {
-                if ((sSH.value != '') && (sSH.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)) {
-                    sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת התחלה, יש לדווח סיבה \n");
-                    bValid = false;
-                }
-                oDDL = document.getElementById("lstSidurim_ddlResonOut".concat(i));
-                if (!IsValidTime(sSG.value)) {
-                    sMsg = sMsg.concat('שעת גמר בסידור ' + iSidurNum + " אינה תקינה \n");
-                    bValid = false;
-                }
-                if ((sSG.value != '') && (sSG.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)) {
-                    sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת גמר, יש לדווח סיבה \n");
-                    bValid = false;
-                }
-                sCallBack = chkPitzulHafsaka(i, true);
-                if ((sCallBack != '') && (sCallBack != undefined)) {
-                    sMsg = sMsg.concat(sCallBack + "\n");
-                    bValid = false;
-                }
-                if ((sSG.value != '') && (sSG.value != "__:__") && (sSH.value != '') && (sSH.value != "__:__")) {
-                    sSidurDate = document.getElementById("lstSidurim_lblDate".concat(i)).innerHTML;
-                    sCardDate = document.getElementById("clnDate").value;
-                    dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(sSH.value.substr(0, 2)), Number(sSH.value.substr(3, 2)));
-                    dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(sSG.value.substr(0, 2)), Number(sSG.value.substr(3, 2)));
-                    if (document.getElementById("lstSidurim_txtDayAdd".concat(i)).value == "1")
-                        dEndHour.setDate(dEndHour.getDate() + 1);
-                    oDDL = document.getElementById("lstSidurim_ddlHashlama".concat(i));
-                    if (oDDL.disabled == false) {
-                        SidurTime = GetSidurTime(dStartHour, dEndHour);
-                        if ((SidurTime >= Number(oDDL.value)) && Number(oDDL.value > 0)) {
-                            sMsg = sMsg.concat('בסידור  ' + iSidurNum + " משך הסידור שווה או גדול מזמן ההשלמה הנבחר \n");
-                            bValid = false;
-                        }
-                    }
-                }
-                //נעבור על פעילויות
-                res = ChkIfPeiluyotValid(i);
-                if (res == false) {
-                    sMsg = sMsg.concat(' בסידור ' + iSidurNum + " קיימת פעילות ללא שעת יציאה/שעה לא חוקית  \n ");
-                    bValid = false;
-                }
-            }
+         else {
+             if ($get("lstSidurim_lblSidurCanceled".concat(i)).value != '1') {
+                 oDDL = $get("lstSidurim_ddlResonIn".concat(i));
+                 if (!IsValidTime(sSH.value)) {
+                     sMsg = sMsg.concat('שעת התחלה בסידור ' + iSidurNum + " אינה תקינה \n");
+                     bValid = false;
+                 }
+                 if (oDDL != null) {
+                     if ((sSH.value != '') && (sSH.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)) {
+                         sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת התחלה, יש לדווח סיבה \n");
+                         bValid = false;
+                     }
+                     oDDL = $get("lstSidurim_ddlResonOut".concat(i));
+                     if (!IsValidTime(sSG.value)) {
+                         sMsg = sMsg.concat('שעת גמר בסידור ' + iSidurNum + " אינה תקינה \n");
+                         bValid = false;
+                     }
+                     if ((sSG.value != '') && (sSG.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)) {
+                         sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת גמר, יש לדווח סיבה \n");
+                         bValid = false;
+                     }
+                     sCallBack = chkPitzulHafsaka(i, true);
+                     if ((sCallBack != '') && (sCallBack != undefined)) {
+                         sMsg = sMsg.concat(sCallBack + "\n");
+                         bValid = false;
+                     }
+                     if ((sSG.value != '') && (sSG.value != "__:__") && (sSH.value != '') && (sSH.value != "__:__")) {
+                         sSidurDate = $get("lstSidurim_lblDate".concat(i)).innerHTML;
+                         sCardDate = $get("clnDate").value;
+                         dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(sSH.value.substr(0, 2)), Number(sSH.value.substr(3, 2)));
+                         dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(sSG.value.substr(0, 2)), Number(sSG.value.substr(3, 2)));
+                         if (document.getElementById("lstSidurim_txtDayAdd".concat(i)).value == "1")
+                             dEndHour.setDate(dEndHour.getDate() + 1);
+                         oDDL = document.getElementById("lstSidurim_ddlHashlama".concat(i));
+                         if (oDDL.disabled == false) {
+                             SidurTime = GetSidurTime(dStartHour, dEndHour);
+                             if ((SidurTime >= Number(oDDL.value)) && Number(oDDL.value > 0)) {
+                                 sMsg = sMsg.concat('בסידור  ' + iSidurNum + " משך הסידור שווה או גדול מזמן ההשלמה הנבחר \n");
+                                 bValid = false;
+                             }
+                         }
+                     }
+                     //נעבור על פעילויות
+                     res = ChkIfPeiluyotValid(i);
+                     if (res == false) {
+                         sMsg = sMsg.concat(' בסידור ' + iSidurNum + " קיימת פעילות ללא שעת יציאה/שעה לא חוקית  \n ");
+                         bValid = false;
+                     }
+                 }
+             }
         }       
         i=i+1;
-        sSH=document.getElementById("lstSidurim_txtSH".concat(i));
-        sSG=document.getElementById("lstSidurim_txtSG".concat(i));
+        sSH=$get("lstSidurim_txtSH".concat(i));
+        sSG=$get("lstSidurim_txtSG".concat(i));
      }    
      if (!bValid){     
         $find("MPClose").hide();

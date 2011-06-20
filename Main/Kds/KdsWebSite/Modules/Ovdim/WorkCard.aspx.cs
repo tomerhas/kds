@@ -2897,10 +2897,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                 if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
                 {
-                    _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Text);
-                    _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse(_Txt.Text);                   
-                    oSidur.dFullShatHatchalaLetashlum = DateTime.Parse(_Txt.Text);
-                    oSidur.dFullShatGmarLetashlum = DateTime.Parse(_Txt.Text);
+                    if (_Txt.Text == string.Empty)
+                    {
+                        _objIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
+                        _objIdkunRashemet.SHAT_HATCHALA = _objIdkunRashemet.NEW_SHAT_HATCHALA;
+                        oSidur.dFullShatHatchalaLetashlum = _objIdkunRashemet.NEW_SHAT_HATCHALA;
+                        oSidur.dFullShatGmarLetashlum = _objIdkunRashemet.NEW_SHAT_HATCHALA;
+                    }
+                    else
+                    {
+                        _objIdkunRashemet.SHAT_HATCHALA = oSidur.dFullShatHatchala;
+                        _objIdkunRashemet.NEW_SHAT_HATCHALA = oSidur.dFullShatHatchala;
+                        //oSidur.dFullShatHatchalaLetashlum = oSidur.dFullShatHatchala;
+                        //oSidur.dFullShatGmarLetashlum = oSidur.dFullShatHatchala;
+                    }
                 }
                 else
                     _objIdkunRashemet.SHAT_HATCHALA = DateTime.Parse(_Txt.Attributes["OrgShatHatchala"]);

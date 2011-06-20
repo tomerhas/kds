@@ -237,14 +237,12 @@ function chkMkt(oRow) {
 //                             $get("lstSidurim_txtSG" + iSidurNum).style.color = 'black';
 //                             $get("lstSidurim_txtSG" + iSidurNum).style.backgroung = 'white';
                               break;
-                          case "SHAT_HATCHALA_LETASHLUM":
-                              if ($get("lstSidurim_txtSHL" + iSidurNum).disabled == false)
-                                  $get("lstSidurim_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
-                             break;
-                         case "SHAT_GMAR_LETASHLUM":
-                             if ($get("lstSidurim_txtSGL" + iSidurNum).disabled == false)
+                          case "SHAT_HATCHALA_LETASHLUM":                             
+                                 $get("lstSidurim_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                break;
+                         case "SHAT_GMAR_LETASHLUM":                             
                                  $get("lstSidurim_txtSGL" + iSidurNum).disabled = (_FirstChild.text == "0");
-                             break;
+                                 break;
                          case "DIVUCH_KNISA":
                                $get("lstSidurim_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");
                                break;
@@ -332,15 +330,15 @@ function chkMkt(oRow) {
                   document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = lCarNumber;
     }                                        
     function chkHashlama(val,args){
-        var id = val.getAttribute("index");   
-        var oTxt1 = document.getElementById("lstSidurim_txtSH".concat(id)).value;
-        var oTxt2 = document.getElementById("lstSidurim_txtSG".concat(id)).value;
-        var sSidurDate = document.getElementById("lstSidurim_lblDate".concat(id)).innerHTML;
-        var sCardDate = document.getElementById("clnDate").value;      
+        var id = val.getAttribute("index");
+        var oTxt1 = $get("lstSidurim_txtSH".concat(id)).value;
+        var oTxt2 = $get("lstSidurim_txtSG".concat(id)).value;
+        var sSidurDate = $get("lstSidurim_lblDate".concat(id)).innerHTML;
+        var sCardDate = $get("clnDate").value;      
         var dStartHour = new Date(Number(sSidurDate.substr(6,4)),Number(sSidurDate.substr(3,2))-1, Number(sSidurDate.substr(0,2)),Number(oTxt1.substr(0,2)),Number(oTxt1.substr(3,2)));
-        var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oTxt2.substr(0, 2)), Number(oTxt2.substr(3, 2))); 
-        var oDDL= document.getElementById("lstSidurim_ddlHashlama".concat(id));
-        var _Add = document.getElementById("lstSidurim_txtDayAdd".concat(id)).value;
+        var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oTxt2.substr(0, 2)), Number(oTxt2.substr(3, 2)));
+        var oDDL = $get("lstSidurim_ddlHashlama".concat(id));
+        var _Add = $get("lstSidurim_txtDayAdd".concat(id)).value;
         if ((Number(_Add)==1))        
             dEndHour.setDate(dEndHour.getDate() + 1);
                        
@@ -635,7 +633,7 @@ function chkMkt(oRow) {
                         dShatYetiza.setDate(dShatYetiza.getDate() - 1);
                   }                  
                   val.errormessage = "שעת היציאה לא יכולה להיות גדולה משעת גמר הסידור";
-                  args.IsValid = (dShatYetiza <= dSidurDate);                                  
+                  args.IsValid = ((dShatYetiza <= dSidurDate) || (sSG==''));                                  
                   document.getElementById(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dShatYetiza);                  
                   var sRes = ChkShatYetizaKisuyT(val.getAttribute("index"));                
                   //אם פעילות מסוג שירות נשנה לכל הכניסות את שעת היציאה בהתאם
@@ -748,7 +746,7 @@ function chkMkt(oRow) {
                 dOrgMapKisuyTor.setHours(sShatYetiza.substr(0, 2));
                 dOrgMapKisuyTor.setMinutes(sShatYetiza.substr(sShatYetiza.length - 2, 2));
                 dOrgMapKisuyTor.setMinutes(dOrgMapKisuyTor.getMinutes() - Number(sMapKisuyTor));
-                document.getElementById(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value = dOrgMapKisuyTor.toLocaleTimeString().substr(0, 5);
+                $get(iIndx).cells[_COL_KISUY_TOR].childNodes[0].value = dOrgMapKisuyTor.toLocaleTimeString().substr(0, 5);
             }
         }   
   }
@@ -766,7 +764,7 @@ function chkMkt(oRow) {
   }
   function callBackStartHour(result, iIndex) {
       var dSidurSHDate = new Date();
-      var sCardDate = document.getElementById("clnDate").value;
+      var sCardDate = $get("clnDate").value;
 
       result = result.split(",");
       if (result[0] == '1') {
@@ -796,8 +794,8 @@ function chkMkt(oRow) {
   function ChkStartHour(val, args){
         SetBtnChanges();
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
-        document.getElementById("lstSidurim_hidCurrIndx").value ="3|" + iIndex;
-        var sShatHatchala = document.getElementById("lstSidurim_txtSH".concat(iIndex));
+        $get("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
+        var sShatHatchala = $get("lstSidurim_txtSH".concat(iIndex));
 
         if (IsValidTime(sShatHatchala.value)){
             if (!IsSHBigSG(val, args)){
@@ -828,14 +826,14 @@ function chkMkt(oRow) {
          SetBtnChanges();
          //נבדוק אם שעת ההתחלה נמצאת בין פרמטרים כללים או פרמטרים של סידור         
          var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
-         var sCardDate = document.getElementById("clnDate").value;
-         var sShatGmar = document.getElementById("lstSidurim_txtSG".concat(iIndex));
+         var sCardDate = $get("clnDate").value;
+         var sShatGmar = $get("lstSidurim_txtSG".concat(iIndex));
          var dShatGmar = new Date();
          
          SetDate(dShatGmar, sCardDate.substr(6, 4), Number(sCardDate.substr(3, 2)) - 1, sCardDate.substr(0, 2), 0, 0); 
          if ((!IsShatGmarInNextDay(sShatGmar.value)) && (sShatGmar.value != '00:00')) {
-             document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
-             document.getElementById("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dShatGmar);
+             $get("lstSidurim_txtDayAdd".concat(iIndex)).value = "0";
+             $get("lstSidurim_txtSG".concat(iIndex)).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dShatGmar);
          }
          if (IsValidTime(sShatGmar.value)) {//             
              if (!IsSHBigSG(val, args)) {
@@ -1393,9 +1391,9 @@ function chkMkt(oRow) {
      var j=0;
      var iNdex=0;
      var arrIndx = new Array();
-     
-     _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
-     _HashlamaDLL = document.getElementById("lstSidurim_ddlHashlama" + i);
+
+     _Sidur = $get("lstSidurim_lblSidur" + i);
+     _HashlamaDLL = $get("lstSidurim_ddlHashlama" + i);
      while ((_Sidur!=null)){
          if(_HashlamaDLL!=null){
              if (_HashlamaDLL.value > 0){
@@ -1404,21 +1402,21 @@ function chkMkt(oRow) {
              } 
          }
          i=++i;
-         _Sidur = document.getElementById("lstSidurim_lblSidur" + i);
-        _HashlamaDLL = document.getElementById("lstSidurim_ddlHashlama" + i); 
-     }    
-     if ((arrIndx.length>0) && (arrIndx.length>=Number(document.getElementById("lstSidurim_hidNumOfHashlama").value))) {        
+         _Sidur = $get("lstSidurim_lblSidur" + i);
+         _HashlamaDLL = $get("lstSidurim_ddlHashlama" + i); 
+     }
+     if ((arrIndx.length > 0) && (arrIndx.length >= Number($get("lstSidurim_hidNumOfHashlama").value))) {        
          var sIndex = arrIndx.join(",");
-         _Sidur = document.getElementById("lstSidurim_lblSidur" + j);
-         _HashlamaDLL = document.getElementById("lstSidurim_ddlHashlama" + j);
+         _Sidur = $get("lstSidurim_lblSidur" + j);
+         _HashlamaDLL = $get("lstSidurim_ddlHashlama" + j);
          while (_Sidur!=null){            
              if (sIndex.toString().indexOf(j)==-1){
                 if (_HashlamaDLL!=null)
                     _HashlamaDLL.disabled = true;
              }         
              j=++j;
-            _Sidur = document.getElementById("lstSidurim_lblSidur" + j);
-            _HashlamaDLL = document.getElementById("lstSidurim_ddlHashlama" + j); 
+             _Sidur = $get("lstSidurim_lblSidur" + j);
+             _HashlamaDLL = $get("lstSidurim_ddlHashlama" + j); 
         }       
      }         
    }

@@ -3081,7 +3081,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.ID = "txtSGL" + iIndex;
         oTextBox.Text = oSidur.sShatGmarLetashlum;       
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
-        bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && (oSidur.oSidurStatus!=clSidur.enSidurStatus.enNew));
+        bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || (((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnable));
         oTextBox.Width = Unit.Pixel(40);
        // oTextBox.Height = Unit.Pixel(20);
@@ -3135,7 +3135,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        // oTextBox.Height = Unit.Pixel(20);
         oTextBox.CausesValidation = true;
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
-        bOrgEnabled = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && (oSidur.oSidurStatus != clSidur.enSidurStatus.enNew));
+        bOrgEnabled = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || (((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur>0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnabled));
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
