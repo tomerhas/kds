@@ -68,7 +68,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
                     Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());
 
-                if (MisSidur.Value.Substring(0, 1) == "9")
+                if (MisSidur.Value.Substring(0,2) == "99")
                 {
                     listMeafyenim = getMeafyenimSadotNosafimLesidurMeyuchad(clnDate.Value, int.Parse(MisSidur.Value));
                     if (listMeafyenim.IndexOf("45") > -1)
@@ -180,22 +180,22 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
     private string getMeafyenimSadotNosafimLesidurRagil(DateTime TaarichCA, int Sidur) 
     {
         DataTable dtMeafyenim = new DataTable();
-        DataSet dsSidur = new DataSet();
+       // DataSet dsSidur = new DataSet();
         clUtils oUtils = new clUtils();
-        clKavim oKavim = new clKavim();
+      //  clKavim oKavim = new clKavim();
         string listMeafyenim = "";
-        int result;
-      //  int sugSidur;
+        int iSugSidur;
         DataRow[] drSelect;
         string sSQL = "";
         try
         {
-            dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(Sidur, TaarichCA,null, out result);
-            if (result == 0)
+            iSugSidur = oUtils.GetSugSidur(int.Parse(txtId.Value), int.Parse(MisSidur.Value), TaarichCA);
+           // dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(Sidur, TaarichCA,null, out result);
+            if (iSugSidur != 0)
             {
              //   sugSidur = int.Parse(dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString());
                 dtMeafyenim = oUtils.InitDtMeafyeneySugSidur(TaarichCA, TaarichCA);
-                sSQL = "SUG_SIDUR ='" + dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString() +"'";
+                sSQL = "SUG_SIDUR ='" + iSugSidur.ToString() + "'";
                 drSelect = dtMeafyenim.Select(sSQL); 
                 foreach (DataRow dr in drSelect)
                     listMeafyenim += dr["KOD_MEAFYEN"] + ",";
@@ -204,7 +204,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
 
                 for (int i = dtMeafyenim.Rows.Count-1; i >= 0; i--)
                 {
-                    if (dtMeafyenim.Rows[i]["SUG_SIDUR"].ToString() != dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString())
+                    if (dtMeafyenim.Rows[i]["SUG_SIDUR"].ToString() != iSugSidur.ToString())
                         dtMeafyenim.Rows.RemoveAt(i);
                 }
                 Session["dtMeafyenim"] = dtMeafyenim;

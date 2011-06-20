@@ -4678,26 +4678,26 @@ namespace KdsBatch
             //בדיקה ברמת סידור 
             try
             {//מספר הסידור לא נמצא במפה (טבלת סידורים) לתאריך הנדרש או בטבלת סידורים מיוחדים. 
-                if (oSidur.bSidurMyuhad)
-                {
-                    if (oSidur.iMisparSidurMyuhad == 0)
+                //if (oSidur.bSidurMyuhad)
+                //{
+                if (oSidur.iMisparSidurMyuhad == 0 ||  oSidur.iMisparSidur.ToString().Length < 4)
                     {
                         drNew = dtErrors.NewRow();
                         InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", enErrors.errSidurNotExists.GetHashCode());
                         dtErrors.Rows.Add(drNew);
                         isValid = false;
                     }
-                }
-                else
-                {
-                    if (!oSidur.bSidurRagilExists)
-                    {
-                        drNew = dtErrors.NewRow();
-                        InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", enErrors.errSidurNotExists.GetHashCode());
-                        dtErrors.Rows.Add(drNew);
-                        isValid = false;
-                    }
-                }
+                //}
+                //else
+                //{
+                //    if (!oSidur.bSidurRagilExists)
+                //    {
+                //        drNew = dtErrors.NewRow();
+                //        InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", enErrors.errSidurNotExists.GetHashCode());
+                //        dtErrors.Rows.Add(drNew);
+                //        isValid = false;
+                //    }
+                //}
 
             }
             catch (Exception ex)
@@ -7942,7 +7942,7 @@ namespace KdsBatch
                         else { bNidrashHityazvut = true; }
                     }
                 }
-                else if (oSidur.bSidurRagilExists)
+                else //if (oSidur.bSidurRagilExists)
                 {
 
                     //- עוברים על הסידורים עד שנתקלים בסידור מפה הראשון ביום. 
@@ -11403,7 +11403,7 @@ namespace KdsBatch
                             //. לסידור מאפיין 40 (לפי מספר סידור או סוג סידור)עם ערך 2 (זכאי אוטומטי) והסידור אינו מבוטל
                             if (oSidur.bSidurMyuhad && oSidur.sHashlamaKod == "2")
                             { bValidHashlama = true; }
-                            else if (oSidur.bSidurRagilExists)
+                            else //if (oSidur.bSidurRagilExists)
                             {
                                 drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, oSidur.dSidurDate, _dtSugSidur);
                                 if (drSugSidur[0]["zakay_lehashlama_avur_sidur"].ToString() == "2")

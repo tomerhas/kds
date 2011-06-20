@@ -111,7 +111,7 @@ namespace KdsBatch
         public bool bElement3HovaExists; //מאפיין 95
         public int iNitanLedaveachBemachalaAruca;
         public int iShayahLeyomKodem;
-        public bool bSidurRagilExists;
+       // public bool bSidurRagilExists;
         public bool bSidurMyuhad;
         public bool bSidurEilat;
         public bool bSidurNotEmpty;
@@ -161,7 +161,7 @@ namespace KdsBatch
         public string sZakayMichutzLamichsa; //מאפיין 25
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
-        public int iPremium=0;
+        //public int iPremium=0;
         public enSidurStatus oSidurStatus;
 
         public enum enSidurStatus
@@ -356,26 +356,26 @@ namespace KdsBatch
                 if (!bSidurNahagut)
                 { bSidurTafkid = IsSidurTafkid(); }
             }
-
+            iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
             //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
             // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
-            bSidurRagilExists = false;
-            if (!bSidurMyuhad && bGetSidurDetails)
-            {
-                dsSidurim = GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
-                if (iResult == 0)
-                {
-                    //if (dsSidurim.Tables[0].Rows.Count > 0)
-                    if (dsSidurim.Rows.Count > 0)
-                    {
-                        bSidurRagilExists = true;
-                        //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
-                        iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                        if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
-                            iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
-                    }
-                }
-            }
+          //  bSidurRagilExists = false;
+            //if (!bSidurMyuhad && bGetSidurDetails)
+            //{
+            //    dsSidurim = GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
+            //    if (iResult == 0)
+            //    {
+            //        //if (dsSidurim.Tables[0].Rows.Count > 0)
+            //        if (dsSidurim.Rows.Count > 0)
+            //        {
+            //         //   bSidurRagilExists = true;
+            //            //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
+            //            iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
+            //         //   if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+            //          //      iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+            //        }
+            //     }
+          //  }
         }
 
         private bool IsSidurNahagut()
@@ -702,27 +702,28 @@ namespace KdsBatch
                 bSidurNahagut = IsSidurNahagut();
                 if (!bSidurNahagut)
                 { bSidurTafkid = IsSidurTafkid(); }
-            
+
             }
+            iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
             //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
             // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
-            bSidurRagilExists = false;
-            if (!bSidurMyuhad)
-            {
-                dsSidurim = GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
-                if (iResult == 0)
-                {
-                    //if (dsSidurim.Tables[0].Rows.Count > 0)
-                    if (dsSidurim.Rows.Count > 0)
-                    {
-                        bSidurRagilExists = true;
-                        //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
-                        iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                        if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
-                             iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
-                    }
-                }
-            }
+            //bSidurRagilExists = false;
+            //if (!bSidurMyuhad)
+            //{
+            //    dsSidurim = GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
+            //    if (iResult == 0)
+            //    {
+            //        //if (dsSidurim.Tables[0].Rows.Count > 0)
+            //        if (dsSidurim.Rows.Count > 0)
+            //        {
+            //            bSidurRagilExists = true;
+            //            //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
+            //            iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
+            //            if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+            //                 iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+            //        }
+            //    }
+            //}
 
             htPeilut = oSidurKodem.htPeilut;
         }
@@ -802,26 +803,27 @@ namespace KdsBatch
                 { bSidurTafkid = IsSidurTafkid(); }
         
         }
+        iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
         //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
         // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
-        bSidurRagilExists = false;
-        if (!bSidurMyuhad)
-        {
-            dsSidurim = 
-                GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
-            if (iResult == 0)
-            {
-                //if (dsSidurim.Tables[0].Rows.Count > 0)
-                if (dsSidurim.Rows.Count > 0)
-                {
-                    bSidurRagilExists = true;
-                    //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
-                    iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
-                    if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
-                        iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
-                }
-            }
-        }
+        //bSidurRagilExists = false;
+        //if (!bSidurMyuhad)
+        //{
+        //    dsSidurim = 
+        //        GetSidurRagilDetails(dSidurDate, iMisparSidur, iShayahLeyomKodem, out iResult);
+        //    if (iResult == 0)
+        //    {
+        //        //if (dsSidurim.Tables[0].Rows.Count > 0)
+        //        if (dsSidurim.Rows.Count > 0)
+        //        {
+        //            bSidurRagilExists = true;
+        //            //iSugSidurRagil = int.Parse(dsSidurim.Tables[0].Rows[0]["SUG_SIDUR"].ToString());
+        //            iSugSidurRagil = int.Parse(dsSidurim.Rows[0]["SUGSIDUR"].ToString());
+        //            if (dsSidurim.Rows[0]["PREMIUM"].ToString() != "")
+        //                iPremium = int.Parse(dsSidurim.Rows[0]["PREMIUM"].ToString());
+        //        }
+        //    }
+        //}
     }
 
 }

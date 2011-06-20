@@ -1065,6 +1065,33 @@ namespace KdsLibrary.BL
                  throw ex;
              }
          }
+
+         public int GetSugSidur(int iMisparIshi, int iMisparSidur, DateTime dTaarich)
+         {
+             
+            clDal oDal = new clDal();
+            int iSugSidur;
+            try
+            {
+                oDal.AddParameter("p_sug_sidur", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue, 60);
+
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_sidur", ParameterType.ntOracleInteger, iMisparSidur, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cFunGetSugSidur);
+
+                iSugSidur = int.Parse(oDal.GetValParam("p_sug_sidur"));
+
+                return iSugSidur;
+                
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+         }
+
+        
         
     } 
 }

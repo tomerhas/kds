@@ -1604,6 +1604,7 @@
         <input type="hidden" id="SidureyEadrut" name="SidureyEadrut"  runat="server"  />
         <input type="hidden" id="HiddenTakin" name="HiddenTakin"  runat="server"  />
         <input type="hidden" id="StatusCard" name="StatusCard"  runat="server"  />
+        <input type="hidden" id="sug_sidur_tnua" name="sug_sidur_tnua"  runat="server"  />
          </ContentTemplate>
     </asp:UpdatePanel>
        <input type="button" ID="btnCopy" runat="server" style="display: none;" />

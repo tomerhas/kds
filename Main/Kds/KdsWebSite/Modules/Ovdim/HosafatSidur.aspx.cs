@@ -196,6 +196,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DateTime shatYezia = new DateTime();
         DateTime shatGmar = new DateTime();
         DateTime shatHatchala = new DateTime();
+      
         try
         {
             dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(int.Parse(lblMisSidur.Text), DateTime.Parse(TaarichCA.Value),1,out result);
@@ -318,6 +319,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 //else
                 dtMeafyeneySidur = oUtils.InitDtMeafyeneySugSidur(DateTime.Parse(TaarichCA.Value), DateTime.Parse(TaarichCA.Value));
                 sSQL = "SUG_SIDUR ='" + dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString() + "' AND KOD_MEAFYEN='3'";
+                sug_sidur_tnua.Value = dsSidur.Tables[0].Rows[0]["SUGSIDUR"].ToString();
                 drSelect = dtMeafyeneySidur.Select(sSQL);
                 txtShatGmar.Attributes.Add("SugGmar", drSelect[0]["ERECH"].ToString());
             }
@@ -1065,6 +1067,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 oObjSidurimOvdimIns.SHAT_GMAR = DateTime.Parse(TaarichGmar.Value.Split(' ')[1] + " " + txtShatGmar.Text + ":00");        
             oObjSidurimOvdimIns.CHARIGA = 0;
             oObjSidurimOvdimIns.HAMARAT_SHABAT = 0;
+            oObjSidurimOvdimIns.SUG_SIDUR = sug_sidur_tnua.Value == "" ? 0 : int.Parse(sug_sidur_tnua.Value); 
             oObjSidurimOvdimIns.BITUL_O_HOSAFA = 2;
             oObjSidurimOvdimIns.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             

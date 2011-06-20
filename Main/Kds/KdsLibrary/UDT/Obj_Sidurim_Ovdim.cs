@@ -161,6 +161,9 @@ namespace KdsLibrary.UDT
         private string m_HACHTAMA_BEATAR_LO_TAKIN;
         private bool m_HACHTAMA_BEATAR_LO_TAKINIsNull;
 
+        private int m_SUG_SIDUR;
+        private bool m_SUG_SIDURIsNull;
+
         public OBJ_SIDURIM_OVDIM() {
             // TODO : Add code to initialise the object
             this.m_MISPAR_SIDURIsNull = true;
@@ -209,6 +212,7 @@ namespace KdsLibrary.UDT
             this.m_PTOR_MEHITIATZVUTIsNull = true;
             this.m_NIDRESHET_HITIATZVUTIsNull = true;
             this.m_HACHTAMA_BEATAR_LO_TAKINIsNull = true;
+            this.m_SUG_SIDURIsNull = true;
             //m_IsNull = false;
           
         }
@@ -1358,6 +1362,33 @@ namespace KdsLibrary.UDT
             }
         }
 
+        [OracleObjectMappingAttribute("SUG_SIDUR")]
+        public int SUG_SIDUR
+        {
+            get
+            {
+                return this.m_SUG_SIDUR;
+            }
+            set
+            {
+                this.m_SUG_SIDUR = value;
+                this.m_SUG_SIDURIsNull = false;
+            }
+        }
+        public bool SUG_SIDURIsNull
+        {
+            get
+            {
+                return this.m_SUG_SIDURIsNull;
+            }
+            set
+            {
+                this.m_SUG_SIDURIsNull = value;
+            }
+        }
+
+       
+
         public virtual void FromCustomObject(Oracle.DataAccess.Client.OracleConnection con, System.IntPtr pUdt) {
             if ((MISPAR_SIDURIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MISPAR_SIDUR", this.MISPAR_SIDUR);
@@ -1530,6 +1561,10 @@ namespace KdsLibrary.UDT
             if ((HACHTAMA_BEATAR_LO_TAKINIsNull == false))
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "HACHTAMA_BEATAR_LO_TAKIN", this.HACHTAMA_BEATAR_LO_TAKIN);
+            }
+            if ((SUG_SIDURIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SUG_SIDUR", this.SUG_SIDUR);
             }
         }
         
@@ -1752,7 +1787,11 @@ namespace KdsLibrary.UDT
             {
                 this.HACHTAMA_BEATAR_LO_TAKIN = (string)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "HACHTAMA_BEATAR_LO_TAKIN"));
             }
-            
+            this.SUG_SIDURIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SUG_SIDUR");
+            if ((SUG_SIDURIsNull == false))
+            {
+                this.SUG_SIDUR = (int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SUG_SIDUR"));
+            }
         }
         
         public virtual void ReadXml(System.Xml.XmlReader reader) {
