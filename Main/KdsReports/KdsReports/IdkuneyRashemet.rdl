@@ -251,10 +251,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>2.64577cm</Top>
-        <Left>4.22487cm</Left>
+        <Top>2.71632cm</Top>
+        <Left>5.89175cm</Left>
         <Height>1.2cm</Height>
-        <Width>9.07425cm</Width>
+        <Width>9.07424cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true )</Hidden>
         </Visibility>
