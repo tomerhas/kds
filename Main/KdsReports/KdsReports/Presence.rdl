@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.72444cm</Width>
+              <Width>20.14236cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -26,7 +26,7 @@
                                     <Width>2.47505cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.47505cm</Width>
+                                    <Width>2.28687cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.57876cm</Width>
@@ -41,7 +41,7 @@
                                     <Width>0.42222cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.69704cm</Width>
+                                    <Width>0.88522cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.93116cm</Width>
@@ -50,7 +50,7 @@
                                     <Width>1.08318cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>4.77688cm</Width>
+                                    <Width>4.5887cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>1.13995cm</Width>
@@ -1113,7 +1113,7 @@ iif((Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing) an
                               <Top>2.61938cm</Top>
                               <Left>0.03239in</Left>
                               <Height>2.35563cm</Height>
-                              <Width>19.90911cm</Width>
+                              <Width>19.72093cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1727,7 +1727,7 @@ iif((Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing) an
                           <KeepTogether>true</KeepTogether>
                           <Top>2.50442cm</Top>
                           <Height>5.62792cm</Height>
-                          <Width>20.72444cm</Width>
+                          <Width>20.09417cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1804,7 +1804,7 @@ iif((Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing) an
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
         <Height>8.13234cm</Height>
-        <Width>20.72444cm</Width>
+        <Width>20.14236cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1856,7 +1856,7 @@ iif((Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing) an
     <Height>3.20171in</Height>
     <Style />
   </Body>
-  <Width>8.23802in</Width>
+  <Width>8.02969in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
