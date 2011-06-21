@@ -107,7 +107,7 @@
             }
         }
         function IsAlowedPeriod(sender, args) {
-       // debugger
+       debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me =  document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]-1), Number(chodesh_me[0]), '00', '00', '00');
@@ -124,6 +124,10 @@
 
             if (FromDate.getTime() < today.getTime()) {
                 alert("לא ניתן להוציא דו''ח לתאריך שנבחר");
+                args.IsValid = false;
+            }
+            else if (FromDate.getTime() > (new Date().getTime())) {
+                alert("לא ניתן להוציא דו''ח מעבר להיום");
                 args.IsValid = false;
             }
             else {
