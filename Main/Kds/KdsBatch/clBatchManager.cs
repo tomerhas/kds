@@ -8979,6 +8979,8 @@ namespace KdsBatch
                         oObjSidurimOvdimIns.NIDRESHET_HITIATZVUT = oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT;
                         oObjSidurimOvdimIns.PTOR_MEHITIATZVUT = oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT;
                         oObjSidurimOvdimIns.HACHTAMA_BEATAR_LO_TAKIN = oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN;
+                        if (oObjSidurimOvdimUpd.SUG_SIDUR != 0)
+                            oObjSidurimOvdimIns.SUG_SIDUR = oObjSidurimOvdimUpd.SUG_SIDUR;
 
                         oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
 
@@ -9039,6 +9041,8 @@ namespace KdsBatch
                 oObjSidurimOvdimIns.ACHUZ_VIZA_BESIKUN = oSidur.iAchuzVizaBesikun;
                 oObjSidurimOvdimIns.ACHUZ_KNAS_LEPREMYAT_VISA = oSidur.iAchuzKnasLepremyatVisa;
                 oObjSidurimOvdimIns.MISPAR_MUSACH_O_MACHSAN = oSidur.iMisparMusachOMachsan;
+                if (oSidur.iSugSidurRagil != 0)
+                    oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
 
                 oObjSidurimOvdimIns.YOM_VISA = string.IsNullOrEmpty(oSidur.sVisa) ? 0 : int.Parse(oSidur.sVisa);
                 oObjSidurimOvdimIns.MEZAKE_NESIOT = oSidur.iMezakeNesiot;
@@ -9130,6 +9134,8 @@ namespace KdsBatch
                 //oObjSidurimOvdimUpd.BUTAL = oSidur.iButal;
                 oObjSidurimOvdimUpd.BITUL_O_HOSAFA = oSidur.iBitulOHosafa;
                 oObjSidurimOvdimUpd.SUG_HAZMANAT_VISA = oSidur.iSugHazmanatVisa;
+                if (oSidur.iSugSidurRagil != 0)
+                 oObjSidurimOvdimUpd.SUG_SIDUR = oSidur.iSugSidurRagil;
                 if (oSidur.bSectorVisaExists)
                 {
                     oObjSidurimOvdimUpd.SECTOR_VISA = oSidur.iSectorVisa;
