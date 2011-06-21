@@ -1,140 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="KdsConnection">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>8003b864-b2b2-4eea-a18d-5b76c18366a2</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsPresence">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="START_TIME_ALLOWED">
-          <DataField>START_TIME_ALLOWED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="END_TIME_ALLOWED">
-          <DataField>END_TIME_ALLOWED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CHARIGA">
-          <DataField>CHARIGA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HASHLAMA">
-          <DataField>HASHLAMA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OUT_MICHSA">
-          <DataField>OUT_MICHSA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SIDUR_MEYCHAD">
-          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD_HR">
-          <DataField>TEUR_MAAMAD_HR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CLOCKENTRY">
-          <DataField>CLOCKENTRY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CLOCKEXIT">
-          <DataField>CLOCKEXIT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DIFFERENCE_HOUR">
-          <Value>=
-iif(
-	(Fields!SHAT_HATCHALA.Value = nothing) or 	(Fields!SHAT_GMAR.Value = nothing) ,
-	nothing,
-	CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value))
-   )</Value>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>KdsConnection</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_PRESENCE</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_WORKERVIEWLEVEL">
-            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_WORKERID">
-            <Value>=Parameters!P_WORKERID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.91109in</Width>
+              <Width>20.72444cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>3.20171in</Height>
+              <Height>8.13234cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -146,42 +23,45 @@ iif(
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>0.97443in</Width>
+                                    <Width>2.47505cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.97443in</Width>
+                                    <Width>2.47505cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.45705in</Width>
+                                    <Width>1.57876cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.41362in</Width>
+                                    <Width>1.28379cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.37542in</Width>
+                                    <Width>0.89292cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.32534in</Width>
+                                    <Width>0.42222cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.3666in</Width>
+                                    <Width>0.69704cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.42645in</Width>
+                                    <Width>0.93116cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.88066in</Width>
+                                    <Width>1.08318cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.4488in</Width>
+                                    <Width>4.77688cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.84768in</Width>
+                                    <Width>1.13995cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.15311cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.55914in</Height>
+                                    <Height>1.42022cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -240,6 +120,41 @@ iif(
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox40</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox2">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>הערה</Value>
+                                                    <Style>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox2</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -565,7 +480,7 @@ iif(
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.13205in</Height>
+                                    <Height>0.33541cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -635,6 +550,40 @@ iif(
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox3">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=iif(Fields!LO_LETASHLUM.Value="1","לא לתשלום",
+iif((Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing) and (Fields!DAYOFWEEK.Value &lt;&gt; "ו") and (Fields!DAYOFWEEK.Value &lt;&gt; "ש") and (Fields!DAYOFWEEK.Value &lt;&gt; "ח") and (Fields!DAYOFWEEK.Value &lt;&gt; "ע") ,"אין דיווח",""))</Value>
+                                                    <Style>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox3</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>1pt</PaddingTop>
+                                              <PaddingBottom>1pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="DIFF">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -642,7 +591,8 @@ iif(
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60="0.00","",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
+                                                    <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0
+,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>0.00;(0.00)</Format>
@@ -907,7 +857,7 @@ iif(
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>= cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!DAYOFWEEK.Value)</Value>
+                                                    <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value ,"",cstr(Fields!TAARICH.Value)+ cstr(" -" &amp; Fields!DAYOFWEEK.Value))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <Format>d</Format>
@@ -936,7 +886,7 @@ iif(
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.23622in</Height>
+                                    <Height>0.6cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -978,6 +928,43 @@ iif(
                                       <TablixCell />
                                       <TablixCell>
                                         <CellContents>
+                                          <Textbox Name="Textbox5">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox5</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BottomBorder>
+                                                <Width>2pt</Width>
+                                              </BottomBorder>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>1pt</PaddingTop>
+                                              <PaddingBottom>1pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
                                           <Textbox Name="Textbox75">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
@@ -985,7 +972,7 @@ iif(
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
+                                                    <Value>=Sum(DateDiff("n",iif( (InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 or Fields!LO_LETASHLUM.Value="1"), Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_HATCHALA.Value = nothing,Fields!SHAT_GMAR.Value,Fields!SHAT_HATCHALA.Value )),iif( InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_GMAR.Value = nothing,Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1079,6 +1066,7 @@ iif(
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
+                                  <TablixMember />
                                 </TablixMembers>
                               </TablixColumnHierarchy>
                               <TablixRowHierarchy>
@@ -1124,8 +1112,8 @@ iif(
                               </SortExpressions>
                               <Top>2.61938cm</Top>
                               <Left>0.03239in</Left>
-                              <Height>2.35562cm</Height>
-                              <Width>19.02587cm</Width>
+                              <Height>2.35563cm</Height>
+                              <Width>19.90911cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1138,33 +1126,33 @@ iif(
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>1.07851in</Width>
+                                        <Width>2.73942cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.97052in</Width>
+                                        <Width>2.46512cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.71654in</Width>
+                                        <Width>1.82001cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.96111in</Width>
+                                        <Width>4.98122cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.55729in</Width>
+                                        <Width>1.41552cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.57025in</Width>
+                                        <Width>1.44844cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.15586in</Width>
+                                        <Width>2.93588cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.76218in</Width>
+                                        <Width>1.93594cm</Width>
                                       </TablixColumn>
                                     </TablixColumns>
                                     <TablixRows>
                                       <TablixRow>
-                                        <Height>0.23622in</Height>
+                                        <Height>0.6cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -1441,7 +1429,7 @@ iif(
                                         </TablixCells>
                                       </TablixRow>
                                       <TablixRow>
-                                        <Height>0.23622in</Height>
+                                        <Height>0.6cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -1716,7 +1704,7 @@ iif(
                                   <DataSetName>DsPresence</DataSetName>
                                   <Top>0.47691cm</Top>
                                   <Height>1.2cm</Height>
-                                  <Width>19.74148cm</Width>
+                                  <Width>19.74155cm</Width>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -1739,7 +1727,7 @@ iif(
                           <KeepTogether>true</KeepTogether>
                           <Top>2.50442cm</Top>
                           <Height>5.62792cm</Height>
-                          <Width>20.09417cm</Width>
+                          <Width>20.72444cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1816,7 +1804,7 @@ iif(
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
         <Height>8.13234cm</Height>
-        <Width>20.09417cm</Width>
+        <Width>20.72444cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1868,13 +1856,152 @@ iif(
     <Height>3.20171in</Height>
     <Style />
   </Body>
+  <Width>8.23802in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="KdsConnection">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>8003b864-b2b2-4eea-a18d-5b76c18366a2</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsPresence">
+      <Query>
+        <DataSourceName>KdsConnection</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERVIEWLEVEL">
+            <Value>=Parameters!P_WORKERVIEWLEVEL.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERID">
+            <Value>=Parameters!P_WORKERID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_PRESENCE</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="START_TIME_ALLOWED">
+          <DataField>START_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="END_TIME_ALLOWED">
+          <DataField>END_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CHARIGA">
+          <DataField>CHARIGA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HASHLAMA">
+          <DataField>HASHLAMA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="OUT_MICHSA">
+          <DataField>OUT_MICHSA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SIDUR_MEYCHAD">
+          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DAYOFWEEK">
+          <DataField>DAYOFWEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD_HR">
+          <DataField>TEUR_MAAMAD_HR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CLOCKENTRY">
+          <DataField>CLOCKENTRY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CLOCKEXIT">
+          <DataField>CLOCKEXIT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LO_LETASHLUM">
+          <DataField>LO_LETASHLUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DIFFERENCE_HOUR">
+          <Value>=
+iif(
+	(Fields!SHAT_HATCHALA.Value = nothing) or 	(Fields!SHAT_GMAR.Value = nothing) ,
+	nothing,
+	CDbl(DateDiff("s",Fields!SHAT_HATCHALA.Value ,Fields!SHAT_GMAR.Value))
+   )</Value>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("01/02/2011")</Value>
+          <Value>=CDate("01/05/2011")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
@@ -1884,7 +2011,7 @@ iif(
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>=CDate("01/02/2011")</Value>
+          <Value>=CDate("31/05/2011")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
@@ -1941,16 +2068,6 @@ iif(
 
     End Function
 </Code>
-  <Width>7.98989in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <BottomMargin>0cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -1961,6 +2078,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>68cbf481-5f9a-4653-8c3e-2965ff438f8d</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>68cbf481-5f9a-4653-8c3e-2965ff438f8d</rd:ReportID>
 </Report>
