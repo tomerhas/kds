@@ -4680,7 +4680,7 @@ namespace KdsBatch
             {//מספר הסידור לא נמצא במפה (טבלת סידורים) לתאריך הנדרש או בטבלת סידורים מיוחדים. 
                 //if (oSidur.bSidurMyuhad)
                 //{
-                if (oSidur.iMisparSidurMyuhad == 0 ||  oSidur.iMisparSidur.ToString().Length < 4)
+                if ((oSidur.bSidurMyuhad && oSidur.iMisparSidurMyuhad == 0) ||  oSidur.iMisparSidur.ToString().Length < 4)
                     {
                         drNew = dtErrors.NewRow();
                         InsertErrorRow(oSidur, ref drNew, "סידור לא קיים", enErrors.errSidurNotExists.GetHashCode());
@@ -10984,7 +10984,7 @@ namespace KdsBatch
 
                     }
                     else
-                    {
+                    { 
                         iKodSibaLoLetashlum = 2;
                     }
 
@@ -11047,11 +11047,14 @@ namespace KdsBatch
             //תנאי רביעי לסעיף 11
             bool bSign = false;
             try{
-                if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)))
-            {
-                bSign = (!oMeafyeneyOved.Meafyen7Exists);
-
-            }
+               // if ((oSidur.bSidurMyuhad) && (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate)))
+                if (clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, iSugYom, oSidur.dSidurDate) &&
+                    (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0"))
+                        //וגם לעובד אין מאפיין 7 ו- 8 ברמה האישית. 
+                        if (!oMeafyeneyOved.Meafyen7Exists && !oMeafyeneyOved.Meafyen8Exists)
+                        {
+                            bSign = true;
+                        }
             }
             catch (Exception ex)
             {
@@ -11065,13 +11068,14 @@ namespace KdsBatch
             //תנאי חמישי לסעיף 11
             bool bSign = false;
             try{
-            if ((oSidur.bSidurMyuhad) && 
-                (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Tafkid.GetHashCode().ToString()) && 
-                ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString())) &&
-                (oSidur.sShaonNochachut == "1" || oSidur.sShaonNochachut == "2" || oSidur.sShaonNochachut == "3"))
-            {
-                bSign = (!oMeafyeneyOved.Meafyen5Exists);
-            }
+
+                if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) &&
+                    (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0"))
+                        //וגם לעובד אין מאפיין 5 ו- 6 ברמה האישית. 
+                        if (!oMeafyeneyOved.Meafyen5Exists && !oMeafyeneyOved.Meafyen6Exists)
+                        {
+                            bSign = true;
+                        }     
             }
             catch (Exception ex)
             {
@@ -11146,7 +11150,7 @@ namespace KdsBatch
             bool bLoLetashlumAutomati = false;
             //אם עיסוק העובד מתחיל ב- 5
              // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
-            if (oOvedYomAvodaDetails.iIsuk.ToString().Substring(0, 1) == "5" && oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1")
+            if (oOvedYomAvodaDetails.iIsuk.ToString().Substring(0, 1) == "5" && oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0")
             {
                 //וגם לעובד אין מאפיין 3 ו- 4 ברמה האישית. 
                 if (!oMeafyeneyOved.Meafyen3Exists && !oMeafyeneyOved.Meafyen4Exists)
@@ -11193,9 +11197,9 @@ namespace KdsBatch
             {
                 if (sMeafyenKizuz == "1")
                 {
-                    if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
-                        bLoLetashlumAutomati = true;
-                    else if ((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala >= dShatGmarLetashlum))
+                    //if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
+                    //    bLoLetashlumAutomati = true;
+                    if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga=="0")
                         bLoLetashlumAutomati = true;
                 }
             }
