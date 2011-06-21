@@ -2138,6 +2138,8 @@ public class wsGeneral : System.Web.Services.WebService
     {
         StringBuilder sXML = new StringBuilder();
         DataRow[] dr;
+        clOvedYomAvoda OvedYomAvoda = (clOvedYomAvoda)Session["OvedYomAvodaDetails"];
+
         try
         {
             sXML.Append("<SIDUR>");
@@ -2185,7 +2187,10 @@ public class wsGeneral : System.Web.Services.WebService
             //ניתן לעדכון- סידור מיוחד עם ערך 1 במאפיין  - 25.
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=25 and erech='1')");
             if (dr.Length > 0)
-                sXML.Append(string.Concat("<OUT_MICHSA>", "1", "</OUT_MICHSA>"));
+                if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                    sXML.Append(string.Concat("<OUT_MICHSA>", "1", "</OUT_MICHSA>"));
+                else
+                    sXML.Append(string.Concat("<OUT_MICHSA>", "0", "</OUT_MICHSA>"));
             else
                 sXML.Append(string.Concat("<OUT_MICHSA>", "0", "</OUT_MICHSA>"));
            

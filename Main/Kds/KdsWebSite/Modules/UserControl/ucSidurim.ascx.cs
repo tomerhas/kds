@@ -2161,7 +2161,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlInputCheckBox chkBox = new HtmlInputCheckBox();
         chkBox.ID = "chkLoLetashlum" + iIndex;
         chkBox.Checked = (oSidur.iLoLetashlum == 1);
-        bEnable = (((IsLoLetashlum(ref oSidur))) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        bEnable = (((IsLoLetashlum(ref oSidur))) 
+                 && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
+                 && (((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
@@ -3826,29 +3828,29 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected bool IsOutMichsaAllowed(ref clSidur oSidur)
     {
         bool bOutMichsaAllowed= false;
-        DataRow[] dr;
+        // DataRow[] dr;
 
         //לא נאפשר שינוי מחוץ למכסה לעובד מאגד תעבורה
         //נאפשר עדכון מחוץ למכסה רק לעובדים שהם לא מאגד תעבורה ושהסידור מיוחד ויש לו ערך 1 במאפיין 25          
-        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
-        {
-            if (oSidur.iMisparSidur > 0)
-            {
-                dr = MeafyeneySidur.Select("Sidur_Key=" + oSidur.iMisparSidur + " and (kod_meafyen=25 and erech='" + clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString() + "')");
-                if ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode()) && (oSidur.bSidurMyuhad) && (dr.Length > 0))
-                    bOutMichsaAllowed = true;
-            }
-            else
-            {
-                if (OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
-                    bOutMichsaAllowed = true;
-            }
-        }
-        else
-        {
+        //if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+        //{
+        //    if (oSidur.iMisparSidur > 0)
+        //    {
+        //        dr = MeafyeneySidur.Select("Sidur_Key=" + oSidur.iMisparSidur + " and (kod_meafyen=25 and erech='" + clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString() + "')");
+        //        if ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode()) && (oSidur.bSidurMyuhad) && (dr.Length > 0))
+        //            bOutMichsaAllowed = true;
+        //    }
+        //    else
+        //    {
+        //        if (OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+        //            bOutMichsaAllowed = true;
+        //    }
+        //}
+        //else
+        //{
             if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
                 bOutMichsaAllowed = true;
-        }
+       // }
         
         return bOutMichsaAllowed;
     }
@@ -4089,9 +4091,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) 
                                   || (!IsAccessToSidurNotShaon(ref oSidur)) 
                                   || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
-                                  );
+                                  || ((oSidur.oSidurStatus==clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0)));
             
-            oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
+          //  oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());

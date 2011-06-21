@@ -451,6 +451,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             oBatchManager.iLoginUserId =int.Parse(LoginUser.UserInfo.EmployeeNumber);
             Session["LoginUserEmp"] = LoginUser.UserInfo.EmployeeNumber;
+            
+
             //שינויי קלט ושגויים
             if (RunBatchFunctions())
             {
@@ -474,6 +476,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))
                 if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))
                 {
+                    Session["OvedYomAvodaDetails"] = oBatchManager.oOvedYomAvodaDetails;
                     Session["Errors"] = oBatchManager.dtErrors;
                     Session["Parameters"] = oBatchManager.oParam;
                     dtIdkuneyRashemet = clWorkCard.GetIdkuneyRashemet(iMisparIshi, dDateCard);

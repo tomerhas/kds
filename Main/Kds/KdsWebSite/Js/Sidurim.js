@@ -65,8 +65,8 @@ function chkMkt(oRow) {
         var oRId=sArrPrm[0]; 
         var iSidur=sArrPrm[1]; 
         var iSidurVisa=sArrPrm[2]; 
-        var lOMkt=sArrPrm[6]; 
-        var lNewMkt=document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value;
+        var lOMkt=sArrPrm[6];
+        var lNewMkt = $get(oRId).cells[_COL_MAKAT].childNodes[0].value;
         var iElementVal = lOMkt.substr(1,2);
         var iSidurIndex = sArrPrm[7];
         //אם לסידור יש מאפיין 93,94,95 אחד מהן לפחות ומשנים אלמנט שהספרות 2-3 שלו שוות לערך המאפיין
@@ -75,8 +75,8 @@ function chkMkt(oRow) {
             if (((sArrPrm[3]==iElementVal) && (Number(sArrPrm[3])!=0)) || ((sArrPrm[4]==iElementVal) && (Number(sArrPrm[4])!=0)) || ((sArrPrm[5]==iElementVal) && (Number(sArrPrm[5])!=0))){                 
                 if (((lOMkt.substr(0,3)==lNewMkt.substr(0,3)))){}
                 else
-                {                    
-                    document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value=lOMkt;
+                {
+                    $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
                     bExist=true;
                     alert((' אלמנט '.concat(lOMkt)).concat(' חובה בסידור זה'));
                 }
@@ -88,78 +88,78 @@ function chkMkt(oRow) {
                 var _FirstChild = root.firstChild;
                 if (GetMakatType(lNewMkt) != MKT_ELEMENT) {
                     var iPeilutIndex;
-                    iPos = String(document.getElementById(oRId).id).indexOf("ctl");
-                    iPeilutIndex = String(document.getElementById(oRId).id).substr(iPos + 3);
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + document.getElementById(oRId).id + "_AddReka" + document.getElementById(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
+                    iPos = String($get(oRId).id).indexOf("ctl");
+                    iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
+                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + document.getElementById(oRId).id + "_AddReka" + document.getElementById(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
                 }
                 else {
-                    if (document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
-                        oReka = document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
+                    if ($get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
+                        oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
                         if ((oReka != null) && (oReka != undefined))
-                            document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
+                            $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
                     }
-                    document.getElementById(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
                 }
                 while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {
                         case "KISUY_TOR":
-                            document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
+                            $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
                             break;
                         case "KISUY_TOR_ENABLED":
-                            document.getElementById(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled = (_FirstChild.text == "0");
+                            $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled = (_FirstChild.text == "0");
                             break;
                         case "KISUY_TOR_MAP":
-                            document.getElementById(oRId).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue = _FirstChild.text;
+                            $get(oRId).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "DESC":
-                            if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue = _FirstChild.text;
+                            if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue = _FirstChild.text;
                             else
-                                document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue = _FirstChild.text;
+                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "SHILUT":
-                            document.getElementById(oRId).cells[_COL_LINE].childNodes[0].nodeValue = _FirstChild.text;
+                            $get(oRId).cells[_COL_LINE].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "SHILUT_NAME":
-                            document.getElementById(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue = _FirstChild.text;
+                            $get(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "MAZAN_TASHLUM":
-                            document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text;
+                            $get(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "DAKOT_DEF":
-                            document.getElementById(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;
+                            $get(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;
                             break;
                         case "DAKOT_DEF_TITLE":
                             document.getElementById(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;
                             break;
                         case "DAKOT_BAFOAL":
-                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
-                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
+                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
+                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat(document.getElementById(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
                             break;
                         case "DAKOT_BAFOAL_ENABLED":
-                            document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled = (_FirstChild.text == "0");
+                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled = (_FirstChild.text == "0");
                             break;
                         case "OTO_NO":
-                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
+                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
                             break;
                         case "OTO_NO_ENABLED":
-                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
                             bMustCarNum = (_FirstChild.text == "1"); 
                             if (_FirstChild.text == "1")
-                                document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
+                                $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
                             break;
                         case "OTO_NO_TITEL":
-                            document.getElementById(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
+                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
                             break;
                         case "SHAT_YETIZA":
-                            document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
+                            $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
                             break;
                         case "SHAT_YETIZA_ENABLED":
-                            document.getElementById(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled = (_FirstChild.text == "0");
+                            $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled = (_FirstChild.text == "0");
                             break;
                         case "MAKAT_NOT_EXIST":
-                            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
-                            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].select();
+                            $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+                            $get(oRId).cells[_COL_MAKAT].childNodes[0].select();
                             bExist = true;
                             alert("אלמנט לא קיים");
                             break;
@@ -173,26 +173,26 @@ function chkMkt(oRow) {
                             break;
                         case "HYPER_LINK":
                             if (_FirstChild.text == "1") {
-                                if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                    document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + document.getElementById(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue + "</a>"; //"<".concat(_FirstChild.text) + "</a>";
+                                if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + document.getElementById(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue + "</a>"; //"<".concat(_FirstChild.text) + "</a>";
                                 else
-                                    document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + document.getElementById(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue + "</a>"; // "<".concat(_FirstChild.text) + "</a>";                            
+                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + document.getElementById(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue + "</a>"; // "<".concat(_FirstChild.text) + "</a>";                            
                             }
                             else
-                                if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML != null) {
-                                    if ((document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML.toUpperCase().indexOf('<A')) > -1)
-                                        if (document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                            document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue;
+                                if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML != null) {
+                                    if (($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML.toUpperCase().indexOf('<A')) > -1)
+                                        if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                            $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue;
                                         else
-                                            document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = document.getElementById(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue;
+                                            $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue;
                                 }
                             break;
                     }
                     _FirstChild = _FirstChild.nextSibling;
                 }
                 if ((!bExist)){
-                    document.getElementById(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
-                    document.getElementById(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
+                    $get(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
+                    $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
                     if ((bMeafyen6) || (bMeafyen7)) {
                         alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
                     } else
@@ -207,7 +207,7 @@ function chkMkt(oRow) {
                 $find(sBehaviorId).show(true);
             }
         } else {
-            document.getElementById(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+            $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
             alert('מספר מק"ט לא תקין');
             }
     }
@@ -219,15 +219,15 @@ function chkMkt(oRow) {
         root = xmlDoc.documentElement;
         if (root != null) {
             if (root.childNodes.length > 0) {
-                var _FirstChild = root.firstChild;
+                 var _FirstChild = root.firstChild;
                  while (_FirstChild != null){
                      switch (_FirstChild.nodeName) {
                          case "SHAT_HATCHALA":
                              $get("lstSidurim_txtSH" + iSidurNum).disabled = false;
-//                             $get("lstSidurim_txtSH" + iSidurNum).readOnly =false;
-//                             $get("lstSidurim_txtSH" + iSidurNum).maxLength = 5;
-//                             $get("lstSidurim_txtSH" + iSidurNum).style.color = 'black';
-//                             $get("lstSidurim_txtSH" + iSidurNum).style.backgroung = 'white';
+                             $get("lstSidurim_txtSH" + iSidurNum).readOnly =false;
+                             $get("lstSidurim_txtSH" + iSidurNum).maxLength = 5;
+                             $get("lstSidurim_txtSH" + iSidurNum).style.color = 'black';
+                             $get("lstSidurim_txtSH" + iSidurNum).style.backgroung = 'white';
                              
                              break;
                          case "SHAT_GMAR":
@@ -243,12 +243,16 @@ function chkMkt(oRow) {
                          case "SHAT_GMAR_LETASHLUM":                             
                                  $get("lstSidurim_txtSGL" + iSidurNum).disabled = (_FirstChild.text == "0");
                                  break;
-                         case "DIVUCH_KNISA":
-                               $get("lstSidurim_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");
-                               break;
-                         case "DIVUCH_YETIZA":
-                                $get("lstSidurim_ddlResonOut" + iSidurNum).disabled = (_FirstChild.text == "0");
-                                break;
+                             case "DIVUCH_KNISA":
+                                 $get("lstSidurim_ddlResonIn" + iSidurNum).selected = "value";
+                                 $get("lstSidurim_ddlResonIn" + iSidurNum).value = "-1";
+                                 $get("lstSidurim_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");                                 
+                                 break;
+                             case "DIVUCH_YETIZA":
+                                 $get("lstSidurim_ddlResonOut" + iSidurNum).selected = "value";
+                                 $get("lstSidurim_ddlResonOut" + iSidurNum).value = -1;
+                                 $get("lstSidurim_ddlResonOut" + iSidurNum).disabled = (_FirstChild.text == "0");                                 
+                                 break;
                          case "PITZUL_HAFSAKA":
                              $get("lstSidurim_ddlPHfsaka" + iSidurNum).disabled = true;
                              break;
@@ -261,11 +265,11 @@ function chkMkt(oRow) {
                                  $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = (_FirstChild.text == "0");
                              break;
                          case "OUT_MICHSA":
-                             if ($get("lstSidurim_chkOutMichsa" + iSidurNum).disabled == false)
-                                 $get("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             $get("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             $get("lstSidurim_chkOutMichsa" + iSidurNum).checked = false;
                              break;
-                         case "ADD_PEILUT":                            
-                             var sPrev = $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display;                                                           
+                         case "ADD_PEILUT":
+                             var sPrev = $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display;
                              if (_FirstChild.text == "0") {
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'none';
                                  if (sPrev == 'block')
@@ -273,6 +277,7 @@ function chkMkt(oRow) {
                              }
                              else
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';
+                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).disabled = false;
                              break;
                          case "SIDUR_VISA":
                             if (_FirstChild.text == "1")
@@ -283,14 +288,15 @@ function chkMkt(oRow) {
                      _FirstChild = _FirstChild.nextSibling;
                 }
             }
-        }
+         }
+         $get("lstSidurim_lblSidurCanceled".concat(iSidurNum)).disabled = false;
     }
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
          var bMultiCarNum = false;
          var iCurrSidurNumber;
-          _Peilut = document.getElementById("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
+         _Peilut = $get("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
           if (_Peilut != null) {
               if (_Peilut.firstChild.childNodes.length <= 2){
                   //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
@@ -1082,11 +1088,11 @@ function chkMkt(oRow) {
         if (bScreenChanged){
             if (!ChkCardVld())
                 return false;
-            var SidurNumber = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
-            var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-            var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
+            var SidurNumber = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+            var SidurDate = $get("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+            var SidurSHour = $get("lstSidurim_txtSH".concat(iIndex)).value;
             $("#hidSave")[0].value = "1";
-            document.getElementById("hidSadotLSidur").value = ("1,".concat(SidurDate + " " + SidurSHour)).concat("," + SidurNumber);            
+            $get("hidSadotLSidur").value = ("1,".concat(SidurDate + " " + SidurSHour)).concat("," + SidurNumber);            
             __doPostBack('btnConfirm', '');
         } else {
             res = ExecSadotLsidur(iIndex, _bScreenChanged);
@@ -1095,33 +1101,33 @@ function chkMkt(oRow) {
     }
     function ExecSadotLsidur(iIndex, bScreenWasChg) {
         var dSidurSGDate = new Date();
-        var id = document.getElementById("txtId").value;
-        var CardDate = document.getElementById("clnDate").value;
-        var SidurDate = document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;
-        var SidurSHour = document.getElementById("lstSidurim_txtSH".concat(iIndex)).value;
-        var SidurEHour = document.getElementById("lstSidurim_txtSG".concat(iIndex)).value;
-        var iSDayToAdd = document.getElementById("lstSidurim_txtDayAdd".concat(iIndex)).value;
+        var id = $get("txtId").value;
+        var CardDate = $get("clnDate").value;
+        var SidurDate = $get("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+        var SidurSHour = $get("lstSidurim_txtSH".concat(iIndex)).value;
+        var SidurEHour = $get("lstSidurim_txtSG".concat(iIndex)).value;
+        var iSDayToAdd = $get("lstSidurim_txtDayAdd".concat(iIndex)).value;
 
-        document.getElementById("hidSadotLSidur").value = "";
+        $get("hidSadotLSidur").value = "";
         SetDate(dSidurSGDate, Number(CardDate.substr(6, 4)), Number(CardDate.substr(3, 2)) - 1, Number(CardDate.substr(0, 2)), "0", "0");
         dSidurSGDate.setDate(dSidurSGDate.getDate() + Number(iSDayToAdd));
-        var SidurId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+        var SidurId = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
         if (SidurSHour == '')
             SidurDate = '01/01/0001';
-                          
-        document.getElementById("divHourglass").style.display = 'block';
+
+        $get("divHourglass").style.display = 'block';
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'none';
         var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:210px;dialogleft:220px;status:no;resizable:yes;");
         if ((bScreenWasChg) || ((res != undefined) && (res != '') && (!bScreenWasChg))) {
-            document.getElementById("hidExecInputChg").value = "1";
+            $get("hidExecInputChg").value = "1";
             bScreenChanged = false;
             RefreshBtn();
-            var oSh = document.getElementById("lstSidurim_txtSH".concat(iIndex));
+            var oSh = $get("lstSidurim_txtSH".concat(iIndex));
             if (!(oSh.disabled))
                 oSh.disabled = true;
 
-            document.getElementById("divHourglass").style.display = 'block';
+            $get("divHourglass").style.display = 'block';
 
             __doPostBack('btnRefreshOvedDetails', '');
             
@@ -1131,15 +1137,15 @@ function chkMkt(oRow) {
     function FixSidurHeadrut(iIndex){         
         var sQueryString;
         sQueryString = "?dt=" + Date();
-        sQueryString = sQueryString + "&MisparIshi=" + document.getElementById("txtId").value;
-        sQueryString = sQueryString + "&DateCard=" + document.getElementById("lstSidurim_lblDate".concat(iIndex)).innerHTML;                
-        sQueryString = sQueryString + "&MisparSidur=" + document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;       
-        sQueryString = sQueryString + "&TimeStart=" + document.getElementById("lstSidurim_txtSH".concat(iIndex)).value; 
-        sQueryString = sQueryString + "&TimeEnd=" + document.getElementById("lstSidurim_txtSG".concat(iIndex)).value;  
+        sQueryString = sQueryString + "&MisparIshi=" + $get("txtId").value;
+        sQueryString = sQueryString + "&DateCard=" + $get("lstSidurim_lblDate".concat(iIndex)).innerHTML;
+        sQueryString = sQueryString + "&MisparSidur=" + $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+        sQueryString = sQueryString + "&TimeStart=" + $get("lstSidurim_txtSH".concat(iIndex)).value;
+        sQueryString = sQueryString + "&TimeEnd=" + $get("lstSidurim_txtSG".concat(iIndex)).value;  
         window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:555px;dialogheight:390px;dialogtop:150px;dialogleft:480px;status:no;resizable:yes;');
     }
     function ChgImg(iInx){
-       var img = document.getElementById("lstSidurim_cImgS".concat(iInx));
+        var img = $get("lstSidurim_cImgS".concat(iInx));
        if ((String(img.nameProp).indexOf("expand_blue_big.jpg"))>-1){
         img.src= "../../images/collapse_blue_big.jpg";
         return;
@@ -1514,25 +1520,25 @@ function chkMkt(oRow) {
            }                    
          }     
         i=++i;
-        _Sidur = document.getElementById("lstSidurim_lblSidur" + i); 
+        _Sidur = $get("lstSidurim_lblSidur" + i); 
      }      
    }
    function chkPitzulHafsaka(iIndex, bUpdateCard){
-     var iPitzulHafsaka=document.getElementById("lstSidurim_ddlPHfsaka".concat(iIndex)).value;           
-     var iSidur=document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;        
-     var iSidurNahagut = document.getElementById("lstSidurim_lblSidurNahagut".concat(iIndex)).innerHTML; 
+     var iPitzulHafsaka = $get("lstSidurim_ddlPHfsaka".concat(iIndex)).value;
+     var iSidur = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+     var iSidurNahagut = $get("lstSidurim_lblSidurNahagut".concat(iIndex)).innerHTML; 
      var bValid=false;             
      if (iPitzulHafsaka==2){
         if (iSidurNahagut=='1'){
-            iIndex=iIndex+1;           
-            var _SidurNext = document.getElementById("lstSidurim_lblSidurNahagut".concat(iIndex));
+            iIndex=iIndex+1;
+            var _SidurNext = $get("lstSidurim_lblSidurNahagut".concat(iIndex));
             if (_SidurNext!=null){
-               var _SidurNextId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+               var _SidurNextId = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
                while (((_SidurNextId==SIDUR_CONTINUE_NAHAGUT) || (_SidurNextId==SIDUR_CONTINUE_NOT_NAHAGUT)) && (_SidurNext!=null)) {
                     iIndex= iIndex+1;
-                    _SidurNext = document.getElementById("lstSidurim_lblSidurNahagut".concat(iIndex));
+                    _SidurNext = $get("lstSidurim_lblSidurNahagut".concat(iIndex));
                     if (_SidurNext!=null){
-                        _SidurNextId = document.getElementById("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+                        _SidurNextId = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
                     }                                       
                }             
                if (_SidurNext!=null){  
@@ -1556,7 +1562,7 @@ function chkMkt(oRow) {
    }
    function ChkCharigaVal(id)
    {
-     var ddlChariga = document.getElementById("lstSidurim_ddlException".concat(id));  
+     var ddlChariga = $get("lstSidurim_ddlException".concat(id));  
      var iSelVal = Number(ddlChariga.value);
      var iCharigaType = Number(ddlChariga.getAttribute("ChrigaType"));
      if ((iSelVal>0) && (iSelVal!=iCharigaType) && (iCharigaType!=3) && (iCharigaType!=0) && (iCharigaType!=4)){
@@ -1570,17 +1576,17 @@ function chkMkt(oRow) {
        var _CurrCarNum = _CarNum.value;
        var _OrgCarNum = _CarNum.getAttribute("OldV");
        var _MustCarNum = _CarNum.getAttribute("MustOtoNum");
-       if (document.getElementById(oId).nextSibling != null) {
-           var _NextPeilut = document.getElementById(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
+       if ($get(oId).nextSibling != null) {
+           var _NextPeilut = $get(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
            var _NextCarNum = _NextPeilut.value;
            if (_NextCarNum != undefined) {
                var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
                if (_NextCarNum == '') { _NextCarNum = '0'; }
                if (_CurrCarNum != '') {
                    if ((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum)) {
-                       document.getElementById("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
-                       document.getElementById("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
-                       document.getElementById("btnCopy").click();
+                       $get("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
+                       $get("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
+                       $get("btnCopy").click();
                    }
                }
            }
@@ -1588,10 +1594,10 @@ function chkMkt(oRow) {
        _CarNum.disabled = false;
    }
    function disableUpdateBtn() {
-        document.getElementById("btnUpdateCard").disabled = true;
+       $get("btnUpdateCard").disabled = true;
     }
-    function SetFocus(id, col) {         
-        document.getElementById(id).cells[col].childNodes[0].select();
+    function SetFocus(id, col) {
+        $get(id).cells[col].childNodes[0].select();
     }
     function GetMakatType(lMakat) {
             var iMakatType = 0;
