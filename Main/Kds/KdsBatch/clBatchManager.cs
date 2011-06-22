@@ -10955,7 +10955,7 @@ namespace KdsBatch
                                                     }
                                                 }
                                                 else{
-                                                    iKodSibaLoLetashlum = 10;
+                                                    iKodSibaLoLetashlum = 17;
                                                 }
                                             }
                                             else
