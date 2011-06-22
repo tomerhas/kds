@@ -356,7 +356,8 @@ namespace KdsBatch
                 if (!bSidurNahagut)
                 { bSidurTafkid = IsSidurTafkid(); }
             }
-            iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+            if (dr["SUG_SIDUR"].ToString() != "")
+                iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
             //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
             // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
           //  bSidurRagilExists = false;
@@ -704,7 +705,8 @@ namespace KdsBatch
                 { bSidurTafkid = IsSidurTafkid(); }
 
             }
-            iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+            if (dr["SUG_SIDUR"].ToString() !="")
+                 iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
             //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
             // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
             //bSidurRagilExists = false;
@@ -803,7 +805,8 @@ namespace KdsBatch
                 { bSidurTafkid = IsSidurTafkid(); }
         
         }
-        iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+        if (dr["SUG_SIDUR"].ToString() != "")
+            iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
         //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
         // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
         //bSidurRagilExists = false;
