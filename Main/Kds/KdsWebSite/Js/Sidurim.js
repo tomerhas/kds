@@ -294,6 +294,7 @@ function chkMkt(oRow) {
             }
          }
          $get("lstSidurim_lblSidurCanceled".concat(iSidurNum)).disabled = false;
+         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;         
     }
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
