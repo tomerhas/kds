@@ -4098,8 +4098,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
                                   || (!IsAccessToSidurNotShaon(ref oSidur))
-                                  || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
-                                  || ((oSidur.oSidurStatus==clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0)));
+                                  || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+                                //  || ((oSidur.oSidurStatus==clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0)));
             
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            

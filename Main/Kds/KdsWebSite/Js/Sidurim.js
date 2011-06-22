@@ -224,10 +224,10 @@ function chkMkt(oRow) {
                      switch (_FirstChild.nodeName) {
                          case "SHAT_HATCHALA":
                              $get("lstSidurim_txtSH" + iSidurNum).disabled = false;
-                             $get("lstSidurim_txtSH" + iSidurNum).readOnly = false;
-                             $get("lstSidurim_txtSH" + iSidurNum).maxLength = 5;
-                             $get("lstSidurim_txtSH" + iSidurNum).style.color = 'black';
-                            
+//                             $get("lstSidurim_txtSH" + iSidurNum).readOnly = false;
+//                             $get("lstSidurim_txtSH" + iSidurNum).maxLength = 5;
+//                             $get("lstSidurim_txtSH" + iSidurNum).style.color = 'black';
+//                            
 
                              //$get("lstSidurim_txtSH" + iSidurNum).style.backgroung = 'white';                            
 
