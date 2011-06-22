@@ -2588,18 +2588,23 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         clPeilut _Peilut = new clPeilut();               
         int iSidurNumber=0;
         DateTime dSidurShatHatchala= new DateTime();
+        bool bHasNoPremmisionToAddPeilut;
 
         iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);                
         _Sidur = (clSidur)(_DataSource[iSidurIndex]);
-        
+
+        bHasNoPremmisionToAddPeilut = HasNoPremmisionToAddPeilut(_Sidur);
         //אם יש מספר סידור ויש פעילויות לסידור החדש, נבדוק שזה סידור שמאפשר פעילויות, אם לא נמחוק אותם
         if ((_Sidur.iMisparSidur > 0) && (_Sidur.htPeilut.Count > 0) && (HasNoPremmisionToAddPeilut(_Sidur)))
             _Sidur.htPeilut.Clear();
         else
         {
-            _Sidur.htPeilut.Add(_Sidur.htPeilut.Count + 1, _Peilut);
-            _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-            _Peilut.lMakatNesia = IsSidurVisa(ref _Sidur) && (_Sidur.htPeilut.Count == 1) ? MAKAT_VISA : 0;
+            if (!bHasNoPremmisionToAddPeilut)
+            {
+                _Sidur.htPeilut.Add(_Sidur.htPeilut.Count + 1, _Peilut);
+                _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
+                _Peilut.lMakatNesia = IsSidurVisa(ref _Sidur) && (_Sidur.htPeilut.Count == 1) ? MAKAT_VISA : 0;
+            }
         }
         Session["Sidurim"] = _DataSource;
          
@@ -2826,7 +2831,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut;
 
         hCell = CreateTableCell("113px", "", "");
-        bEnabled = ((IsHashlamaAllowed(ref oSidur, drSugSidur))  && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "HASHLAMA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        bEnabled = ((clDefinitions.IsHashlamaAllowed(ref oSidur, drSugSidur, OvedYomAvoda)) 
+                    && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, 
+                    clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "HASHLAMA"),
+                    oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
 
         DropDownList ddl;
         
@@ -3673,51 +3681,51 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    protected bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur)       
-    {
-        bool bHashlamaAllowed = true;
+    //protected bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur)       
+    //{
+    //    bool bHashlamaAllowed = true;
 
-        //לחסום את השדה לסידורי מטלה
-        if (oSidur.iMisparSidur < 1000)
-        {
-            bHashlamaAllowed = false;
-        }
-        //לא נאפשר השלמה לעובד מאגד תעבורה
-        if (OvedYomAvoda.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
-        {
-            bHashlamaAllowed = false;
-        }
-        //סידור מיוחד - לסידור מאפיין 40        
-        if (oSidur.bSidurMyuhad)
-        {
-            if (!oSidur.bHashlamaKodExists)
-            {
-                bHashlamaAllowed = false;
-            }
-        }
-        else //סידור רגיל  //40 (זכאי להשלמה עבור הסידור) בטבלת מאפיינים סידורים מיוחדים. 
-        {
-            if ((drSugSidur.Length) > 0)
-            {
-                int iHashlamaAllowed = String.IsNullOrEmpty(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString()) ? 0 : int.Parse(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString());
-                if (!(iHashlamaAllowed > 0))
-                {
-                    bHashlamaAllowed = false;
-                }
-            }
-        }
-        if (bHashlamaAllowed)
-            if (IsSidurTimeBigOrEquallToHashlamaTime(ref oSidur))
-                bHashlamaAllowed = false;
+    //    //לחסום את השדה לסידורי מטלה
+    //    if (oSidur.iMisparSidur < 1000)
+    //    {
+    //        bHashlamaAllowed = false;
+    //    }
+    //    //לא נאפשר השלמה לעובד מאגד תעבורה
+    //    if (OvedYomAvoda.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+    //    {
+    //        bHashlamaAllowed = false;
+    //    }
+    //    //סידור מיוחד - לסידור מאפיין 40        
+    //    if (oSidur.bSidurMyuhad)
+    //    {
+    //        if (!oSidur.bHashlamaKodExists)
+    //        {
+    //            bHashlamaAllowed = false;
+    //        }
+    //    }
+    //    else //סידור רגיל  //40 (זכאי להשלמה עבור הסידור) בטבלת מאפיינים סידורים מיוחדים. 
+    //    {
+    //        if ((drSugSidur.Length) > 0)
+    //        {
+    //            int iHashlamaAllowed = String.IsNullOrEmpty(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString()) ? 0 : int.Parse(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString());
+    //            if (!(iHashlamaAllowed > 0))
+    //            {
+    //                bHashlamaAllowed = false;
+    //            }
+    //        }
+    //    }
+    //    if (bHashlamaAllowed)
+    //        if (IsSidurTimeBigOrEquallToHashlamaTime(ref oSidur))
+    //            bHashlamaAllowed = false;
         
-        ////נבדוק את סוג היום, רגיל, שישי או שבת, לפי סוג היום נבדוק האם זמן הסידור קטן מפרמטרים 101, 103,102 בהתאמה
-        ////רק אם קטן, נאפשר השלמה
-        //if (!SidurTimeIsLessThanParameterHashlama(ref  oSidur))
-        //{
-        //    bHashlamaAllowed = false;
-        //}
-        return bHashlamaAllowed;                      
-    }
+    //    ////נבדוק את סוג היום, רגיל, שישי או שבת, לפי סוג היום נבדוק האם זמן הסידור קטן מפרמטרים 101, 103,102 בהתאמה
+    //    ////רק אם קטן, נאפשר השלמה
+    //    //if (!SidurTimeIsLessThanParameterHashlama(ref  oSidur))
+    //    //{
+    //    //    bHashlamaAllowed = false;
+    //    //}
+    //    return bHashlamaAllowed;                      
+    //}
     protected bool IsSidurTimeBigOrEquallToHashlamaTime(ref clSidur oSidur)
     {
         float fSidurTime;
@@ -4088,12 +4096,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //oTextBox.Height = Unit.Pixel(20);
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
-            bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue) 
-                                  || (!IsAccessToSidurNotShaon(ref oSidur)) 
+            bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
+                                  || (!IsAccessToSidurNotShaon(ref oSidur))
                                   || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
                                   || ((oSidur.oSidurStatus==clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0)));
             
-          //  oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
+            oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
            
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
@@ -4101,6 +4109,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
             oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
+            oTextBox.Attributes.Add("onfocus", "this.select();");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
           
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
@@ -4494,8 +4503,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.ReadOnly = ((!bOrgEnable) || (!bSidurActive));
 
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onChange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
+            oTextBox.Attributes.Add("onchange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+            
             
             //AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
             //AddAttribute(oTextBox, "OldV", oTextBox.Text);

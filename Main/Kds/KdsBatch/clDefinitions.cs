@@ -1001,5 +1001,56 @@ namespace KdsBatch
                 throw ex;
             }
         }
+
+        public static bool IsHashlamaAllowed(ref clSidur oSidur, DataRow[] drSugSidur, clOvedYomAvoda OvedYomAvoda)
+        {
+            bool bHashlamaAllowed = true;
+
+            //לחסום את השדה לסידורי מטלה
+            if (oSidur.iMisparSidur < 1000)            
+                bHashlamaAllowed = false;
+            
+            //לא נאפשר השלמה לעובד מאגד תעבורה
+            if (OvedYomAvoda.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())            
+                bHashlamaAllowed = false;            
+            //סידור מיוחד - לסידור מאפיין 40        
+            if (oSidur.bSidurMyuhad)
+            {
+                if (!oSidur.bHashlamaKodExists)                
+                    bHashlamaAllowed = false;                
+            }
+            else //סידור רגיל  //40 (זכאי להשלמה עבור הסידור) בטבלת מאפיינים סידורים מיוחדים. 
+            {
+                if ((drSugSidur.Length) > 0)
+                {
+                    int iHashlamaAllowed = String.IsNullOrEmpty(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString()) ? 0 : int.Parse(drSugSidur[0]["ZAKAY_LEHASHLAMA_AVUR_SIDUR"].ToString());
+                    if (!(iHashlamaAllowed > 0))                    
+                        bHashlamaAllowed = false;                    
+                }
+            }
+            if (bHashlamaAllowed)
+                if (IsSidurTimeBigOrEquallToHashlamaTime(ref oSidur))
+                    bHashlamaAllowed = false;
+                        
+            return bHashlamaAllowed;
+        }
+        public static bool IsSidurTimeBigOrEquallToHashlamaTime(ref clSidur oSidur)
+        {
+            float fSidurTime;
+            bool bSidurTimeBigger = false;
+
+            if ((oSidur.sShatHatchala == "") || (oSidur.sShatGmar == ""))
+                bSidurTimeBigger = true;
+            else
+            {
+                fSidurTime = clDefinitions.GetSidurTimeInMinuts(oSidur);
+                if (fSidurTime > 0)
+                    bSidurTimeBigger = (fSidurTime / 60 >= clGeneral.enSugHashlama.enHashlama.GetHashCode());
+                else
+                    bSidurTimeBigger = false;
+            }
+
+            return bSidurTimeBigger;
+        }
     }
 }

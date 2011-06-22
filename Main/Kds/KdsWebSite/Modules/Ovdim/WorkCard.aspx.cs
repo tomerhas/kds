@@ -4067,6 +4067,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         }
                         oSidur.dFullShatHatchala = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
                         oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
+                        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                        {
+                            oSidur.dOldFullShatGmar = oSidur.dFullShatGmar;
+                            oSidur.dOldFullShatHatchala = oSidur.dFullShatHatchala;
+                        }
                         oSidur.iKodSibaLedivuchYadaniIn = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
                         oSidur.iKodSibaLedivuchYadaniOut = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
                         oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
@@ -4306,7 +4311,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
             oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
             oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
-
+            oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
             oObjSidurimOvdimIns.UPDATE_OBJECT = 1;
         }
         catch (Exception ex)

@@ -652,8 +652,7 @@ namespace KdsLibrary.BL
             _objPeilutOvdimIns.TAARICH_IDKUN_ACHARON =DateTime.Parse(DateTime.Now.ToShortDateString());
             _objPeilutOvdimIns.MEADKEN_ACHARON = iLoginUser;
             _collPeilutOvdimIns.Add(_objPeilutOvdimIns);
-            clOvdim.InsertPeilutOvdim(_collPeilutOvdimIns);
-            
+            clOvdim.InsertPeilutOvdim(_collPeilutOvdimIns);            
         }       
     }
    

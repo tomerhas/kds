@@ -144,7 +144,8 @@
                                 <Triggers>                                                                                                                                
                                     <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
                                     <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />
-                                    <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                    
+                                    <asp:AsyncPostBackTrigger ControlID="btnAddMyuchad" />
                                     <asp:AsyncPostBackTrigger ControlID="btnApprovalReport" />
                                     <asp:AsyncPostBackTrigger ControlID="btnClock" />
                                     <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/> 

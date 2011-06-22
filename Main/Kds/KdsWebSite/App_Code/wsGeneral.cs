@@ -1936,8 +1936,39 @@ public class wsGeneral : System.Web.Services.WebService
 
         if (sResult.Substring(0,1).Equals("0"))
             UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0, iSidurIndex);
-
+        
+        //שינוי שעת התחלה - נבדוק אם צריך לפתוח/לסגור את שדה השלמה
+        string sRes = (IsHashlamaAllowed(iSidurIndex, sCardDate));
+        sResult = sResult + "," + sRes;
         return sResult;       
+    }
+
+    [WebMethod(EnableSession = true)]
+    public string UpdateShatGmar(int iSidurIndex, string sCardDate, string sShatGmar, int iAddDay)
+    {
+        OrderedDictionary odSidurim;
+        clSidur _Sidur = new clSidur();
+
+        odSidurim = (OrderedDictionary)Session["Sidurim"];
+        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+        _Sidur.dFullShatGmar = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sShatGmar);
+        _Sidur.sShatGmar = sShatGmar;
+        return IsHashlamaAllowed(iSidurIndex, sCardDate);
+    }
+    
+    private string IsHashlamaAllowed(int iSidurIndex, string sCardDate)
+    {       
+        DataTable dtSugSidur;
+        DataRow[] drSugSidur;
+        clOvedYomAvoda OvedYomAvoda = (clOvedYomAvoda)Session["OvedYomAvodaDetails"];
+        OrderedDictionary odSidurim;
+        clSidur _Sidur = new clSidur();
+
+        odSidurim = (OrderedDictionary)Session["Sidurim"];
+        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+        dtSugSidur = clDefinitions.GetSugeySidur();
+        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
+        return clDefinitions.IsHashlamaAllowed(ref _Sidur,drSugSidur, OvedYomAvoda) ? "1" : "0";
     }
     private bool IsNewSidurNahagutOrNihul(clSidur _Sidur)
     {
@@ -2017,12 +2048,14 @@ public class wsGeneral : System.Web.Services.WebService
                 }
             }
         }
-        else
+        else // new sidur
         {
             odSidurim = (OrderedDictionary)Session["Sidurim"];
             _Sidur = (clSidur)(odSidurim[iSidurIndex]);
             _Sidur.dSidurDate = DateTime.Parse(sCardDate).AddDays(iAddDay); //DateTime.Parse(sNewStartHour);
-            _Sidur.dFullShatHatchala = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sNewStartHour); 
+            _Sidur.dFullShatHatchala = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sNewStartHour);
+            _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
+            _Sidur.sShatHatchala = _Sidur.dFullShatHatchala.ToShortTimeString();
         }
     }
     [WebMethod]
@@ -2229,6 +2262,7 @@ public class wsGeneral : System.Web.Services.WebService
         if (dt.Rows.Count > 0)
         {
             _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
+            _Sidur.bSidurMyuhad = true;
             _Sidur.iMisparSidur = iSidurNumber;
             _Sidur.iMisparSidurMyuhad = iSidurNumber;
             _Sidur.dSidurDate = dCardDate;
@@ -2249,6 +2283,7 @@ public class wsGeneral : System.Web.Services.WebService
             _Sidur.bSectorAvodaExists = !String.IsNullOrEmpty( dt.Rows[0]["sector_avoda"].ToString());
             _Sidur.iSidurLoNibdakSofShavua = (System.Convert.IsDBNull( dt.Rows[0]["sidur_lo_nivdak_sofash"]) ? 0 : int.Parse( dt.Rows[0]["sidur_lo_nivdak_sofash"].ToString()));
             _Sidur.sHashlamaKod = dt.Rows[0]["zakay_lehashlama_avur_sidur"].ToString();
+            _Sidur.bHashlamaKodExists = !String.IsNullOrEmpty(dt.Rows[0]["zakay_lehashlama_avur_sidur"].ToString());
             _Sidur.sZakaiLeChariga =  dt.Rows[0]["zakay_lechariga"].ToString();
             _Sidur.bZakaiLeCharigaExists = !(String.IsNullOrEmpty( dt.Rows[0]["zakay_lechariga"].ToString()));
             _Sidur.sZakaiLehamara =  dt.Rows[0]["zakay_lehamara"].ToString();
@@ -2284,7 +2319,7 @@ public class wsGeneral : System.Web.Services.WebService
             _Sidur.iElement1Hova = (System.Convert.IsDBNull( dt.Rows[0]["element1_hova"]) ? 0 : int.Parse( dt.Rows[0]["element1_hova"].ToString()));
             _Sidur.iElement2Hova = (System.Convert.IsDBNull( dt.Rows[0]["element2_hova"]) ? 0 : int.Parse( dt.Rows[0]["element2_hova"].ToString()));
             _Sidur.iElement3Hova = (System.Convert.IsDBNull( dt.Rows[0]["element3_hova"]) ? 0 : int.Parse( dt.Rows[0]["element3_hova"].ToString()));
-         
+            _Sidur.iSugSidurRagil = System.Convert.IsDBNull(dt.Rows[0]["sug_sidur"]) ? 0 : int.Parse(dt.Rows[0]["sug_sidur"].ToString());         
         }
     }
     //[WebMethod(EnableSession = true)]
