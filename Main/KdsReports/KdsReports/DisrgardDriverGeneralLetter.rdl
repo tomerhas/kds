@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Rectangle Name="Rectangle1">
@@ -47,7 +47,7 @@
                 <TextRuns>
                   <TextRun>
                     <Value>="החברים/עובדים הרשומים להלן שובצו לעבודה בחודש " &amp; Parameters!P_PERIOD.Value &amp;
-" אך עד היום היום לא שלחו כ""ע לתאריכים הרשומים בדו""ח."</Value>
+" אך עד היום לא שלחו כ""ע לתאריכים הרשומים בדו""ח."</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
@@ -361,6 +361,18 @@
     <Height>2.3125in</Height>
     <Style />
   </Body>
+  <Width>6.35417in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
   <ReportParameters>
     <ReportParameter Name="p_SNIF">
       <DataType>String</DataType>
@@ -375,18 +387,7 @@
       <Prompt>pERIOD</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.35417in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <Language>he-IL</Language>
-  <rd:ReportID>67b056c0-b3de-434e-b9a0-439039f57bd0</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>67b056c0-b3de-434e-b9a0-439039f57bd0</rd:ReportID>
 </Report>
