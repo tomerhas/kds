@@ -558,7 +558,7 @@
                                                 <TextRuns>
                                                   <TextRun>
                                                     <Value>=iif(Fields!LO_LETASHLUM.Value="1","לא לתשלום",
-iif(((Fields!MISPAR_SIDUR.Value = nothing and Fields!DAYOFWEEK.Value &lt;&gt; "ו" and Fields!DAYOFWEEK.Value &lt;&gt; "ש" and Fields!DAYOFWEEK.Value &lt;&gt; "ח") and (Fields!DAYOFWEEK.Value &lt;&gt; "ע")or Fields!NUM.Value =1 ) ,"אין דיווח",
+iif((Fields!MISPAR_SIDUR.Value = nothing and Fields!DAYOFWEEK.Value &lt;&gt; "ו" and Fields!DAYOFWEEK.Value &lt;&gt; "ש" and Fields!DAYOFWEEK.Value &lt;&gt; "ח" and Fields!DAYOFWEEK.Value &lt;&gt; "ע") ,"אין דיווח",
 iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value= nothing)  ,"חסר דיווח","")))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
@@ -1983,10 +1983,6 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
         </Field>
         <Field Name="LO_LETASHLUM">
           <DataField>LO_LETASHLUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NUM">
-          <DataField>NUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="DIFFERENCE_HOUR">
