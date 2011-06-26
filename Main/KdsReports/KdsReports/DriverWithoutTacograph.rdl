@@ -1,114 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>debb6b90-bfb4-4d2a-9067-d17aa80d38e7</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsDriverWithoutTacograph">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="OTO_NO">
-          <DataField>OTO_NO</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR_DIFF">
-          <DataField>SHAT_GMAR_DIFF</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SUM_KM">
-          <DataField>SUM_KM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="VEHICLE_TYPE_DSCR">
-          <DataField>VEHICLE_TYPE_DSCR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MANUFACTURE_YEAR">
-          <DataField>MANUFACTURE_YEAR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_DRIVERWITHOUTTACOGRAPH</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DsTimeNoTacograph">
-      <Fields>
-        <Field Name="ERECH_PARAM">
-          <DataField>ERECH_PARAM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_MAXTIMENOTACOGRAPH</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix2">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>6.18827in</Width>
+              <Width>15.71821cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>4.78246in</Height>
+              <Height>12.14745cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -121,7 +24,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>בתאריכים המופיעים מטה לא שלחת דיסקית טכוגרף בהתאם להוראות</Value>
+                                  <Value>בתאריכים המופיעים מטה לא שלחת דיסקת טכוגרף בהתאם להוראות</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -132,7 +35,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox117</rd:DefaultName>
                           <Top>6.36382cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.6cm</Height>
                           <Width>15.55414cm</Width>
                           <Style>
@@ -186,18 +88,18 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>2.18409in</Width>
+                                    <Width>5.54759cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.01743in</Width>
+                                    <Width>5.12427cm</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>1.92216in</Width>
+                                    <Width>4.88229cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>0.23622in</Height>
+                                    <Height>0.6cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -304,7 +206,7 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
-                                    <Height>0.23622in</Height>
+                                    <Height>0.6cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -418,7 +320,6 @@
                               </TablixRowHierarchy>
                               <DataSetName>DsDriverNotSigned</DataSetName>
                               <Top>0.69451cm</Top>
-                              <Left>0cm</Left>
                               <Height>1.2cm</Height>
                               <Width>15.55415cm</Width>
                               <ZIndex>1</ZIndex>
@@ -431,7 +332,6 @@
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
                           <Top>3.08348cm</Top>
-                          <Left>0cm</Left>
                           <Height>1.94055cm</Height>
                           <Width>15.55415cm</Width>
                           <ZIndex>1</ZIndex>
@@ -461,7 +361,6 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox117</rd:DefaultName>
                           <Top>5.65799cm</Top>
-                          <Left>0cm</Left>
                           <Height>0.6cm</Height>
                           <Width>15.55414cm</Width>
                           <ZIndex>2</ZIndex>
@@ -482,7 +381,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>מספר עבירות</Value>
+                                  <Value>מספר עבירה</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -511,8 +410,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Top>1.94183cm</Top>
-                          <Left>2.72703cm</Left>
+                          <Top>1.10397cm</Top>
+                          <Left>2.76231cm</Left>
                           <Height>1.01131cm</Height>
                           <Width>3.157cm</Width>
                           <ZIndex>3</ZIndex>
@@ -545,8 +444,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox8</rd:DefaultName>
-                          <Top>1.94183cm</Top>
-                          <Left>0cm</Left>
+                          <Top>1.10397cm</Top>
+                          <Left>0.07056cm</Left>
                           <Height>1.01131cm</Height>
                           <Width>2.69175cm</Width>
                           <ZIndex>4</ZIndex>
@@ -564,14 +463,13 @@
                           <ReportName>GeneralHeader</ReportName>
                           <Parameters>
                             <Parameter Name="P_Title">
-                              <Value>דו"ח על עבירת משמעת</Value>
+                              <Value />
                             </Parameter>
                             <Parameter Name="P_RightTitle">
                               <Value>= "דוח נהגים שלא צרפו טכוגרף עבור תקופה " + Parameters!P_PERIOD.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0cm</Top>
-                          <Height>1.80071cm</Height>
+                          <Height>1.03342cm</Height>
                           <Width>15.62888cm</Width>
                           <ZIndex>5</ZIndex>
                           <Style>
@@ -619,21 +517,21 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.53669in</Width>
+                                <Width>3.90319cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.95805in</Width>
+                                <Width>4.97345cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.37003in</Width>
+                                <Width>3.47988cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.27476in</Width>
+                                <Width>3.23789cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -774,7 +672,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -845,7 +743,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>אדר אייל</Value>
+                                                <Value>=First(Fields!FULL_NAME.Value, "DsMagishTluna")</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -876,7 +774,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>29800</Value>
+                                                <Value>=First(Fields!MISPAR_ISHI.Value, "DsMagishTluna")</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -918,7 +816,6 @@
                           </TablixRowHierarchy>
                           <KeepTogether>true</KeepTogether>
                           <Top>10.94746cm</Top>
-                          <Left>0cm</Left>
                           <Height>1.2cm</Height>
                           <Width>15.59441cm</Width>
                           <ZIndex>7</ZIndex>
@@ -939,18 +836,17 @@
                                   <Style />
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
-                          <Top>2.04766cm</Top>
-                          <Left>12.10186cm</Left>
-                          <Height>0.62646cm</Height>
+                          <Top>1.0687cm</Top>
+                          <Left>13.23536cm</Left>
+                          <Height>0.51771cm</Height>
                           <Width>2.31878cm</Width>
                           <ZIndex>8</ZIndex>
-                          <Visibility>
-                            <Hidden>true</Hidden>
-                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -965,36 +861,36 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.57222in</Width>
+                                <Width>1.45344cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.27014in</Width>
+                                <Width>3.22616cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.59305in</Width>
+                                <Width>1.50635cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.57222in</Width>
+                                <Width>1.45344cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.52722in</Width>
+                                <Width>1.33914cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.57222in</Width>
+                                <Width>1.45344cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.59305in</Width>
+                                <Width>1.50635cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.6243in</Width>
+                                <Width>1.58572cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.86388in</Width>
+                                <Width>2.19426cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1103,7 +999,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.4516in</Height>
+                                <Height>1.14706cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1412,7 +1308,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.26039in</Height>
+                                <Height>0.66139cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1570,7 +1466,6 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1702,7 +1597,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1882,7 +1777,6 @@
                             </SortExpression>
                           </SortExpressions>
                           <Top>6.97714cm</Top>
-                          <Left>0cm</Left>
                           <Height>3.00845cm</Height>
                           <Width>15.71828cm</Width>
                           <ZIndex>9</ZIndex>
@@ -1892,6 +1786,80 @@
                             </Border>
                           </Style>
                         </Tablix>
+                        <Textbox Name="Textbox121">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value EvaluationMode="Constant">אל : המורשה האזורי</Value>
+                                  <Style>
+                                    <TextDecoration>Underline</TextDecoration>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox117</rd:DefaultName>
+                          <Top>0.66623in</Top>
+                          <Left>8.5304cm</Left>
+                          <Height>0.51812cm</Height>
+                          <Width>7.02374cm</Width>
+                          <ZIndex>10</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox128">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>דו"ח על עבירת משמעת</Value>
+                                  <Style>
+                                    <FontSize>16pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>Underline</TextDecoration>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox117</rd:DefaultName>
+                          <Top>0.91189in</Top>
+                          <Left>4.34723cm</Left>
+                          <Height>0.69674cm</Height>
+                          <Width>7.02374cm</Width>
+                          <ZIndex>11</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -1928,7 +1896,6 @@
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DsDriverWithoutTacograph</DataSetName>
-        <Left>0cm</Left>
         <Height>12.14745cm</Height>
         <Width>15.71821cm</Width>
         <Style>
@@ -1941,6 +1908,133 @@
     <Height>4.78246in</Height>
     <Style />
   </Body>
+  <Width>6.18828in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>debb6b90-bfb4-4d2a-9067-d17aa80d38e7</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsDriverWithoutTacograph">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_DRIVERWITHOUTTACOGRAPH</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OTO_NO">
+          <DataField>OTO_NO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR_DIFF">
+          <DataField>SHAT_GMAR_DIFF</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SUM_KM">
+          <DataField>SUM_KM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="VEHICLE_TYPE_DSCR">
+          <DataField>VEHICLE_TYPE_DSCR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MANUFACTURE_YEAR">
+          <DataField>MANUFACTURE_YEAR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsTimeNoTacograph">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_MAXTIMENOTACOGRAPH</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="ERECH_PARAM">
+          <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsMagishTluna">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETMENAHELRISHUM</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
@@ -1970,17 +2064,6 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>6.18828in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -1991,6 +2074,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>4a170b98-3ea8-4f8c-b128-59b85df2eb23</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>4a170b98-3ea8-4f8c-b128-59b85df2eb23</rd:ReportID>
 </Report>
