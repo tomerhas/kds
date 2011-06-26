@@ -1,137 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsPundakim">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>9075a235-6d40-4337-9443-4b0674aeea72</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsTlunotPundakim">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_MISH">
-          <DataField>SHEM_MISH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_PRAT">
-          <DataField>SHEM_PRAT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_EZOR">
-          <DataField>KOD_EZOR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_YETZIA">
-          <DataField>SHAT_YETZIA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_MAAMAD">
-          <DataField>KOD_MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD_HR">
-          <DataField>TEUR_MAAMAD_HR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YOM">
-          <DataField>YOM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="OTO_NO">
-          <DataField>OTO_NO</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MAKAT">
-          <DataField>MAKAT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PUNDAK1">
-          <DataField>PUNDAK1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PUNDAK2">
-          <DataField>PUNDAK2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PUNDAK3">
-          <DataField>PUNDAK3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHILUT">
-          <DataField>SHILUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAA1">
-          <DataField>SHAA1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_NESIA">
-          <DataField>TEUR_NESIA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="AVERA">
-          <DataField>AVERA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PUNDAK4">
-          <DataField>PUNDAK4</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAA2">
-          <DataField>SHAA2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAA3">
-          <DataField>SHAA3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAA4">
-          <DataField>SHAA4</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsPundakim</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_TLUNOTPUNDAKIM</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SUG_REPORT">
-            <Value>1</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Rectangle Name="Rectangle2">
@@ -319,12 +187,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>10.24371in</Width>
+                  <Width>26.01902cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>1.7299in</Height>
+                  <Height>4.39395cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -336,27 +204,27 @@
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.70728in</Width>
+                                        <Width>4.33649cm</Width>
                                       </TablixColumn>
                                     </TablixColumns>
                                     <TablixRows>
                                       <TablixRow>
-                                        <Height>0.21181in</Height>
+                                        <Height>0.538cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -595,7 +463,7 @@
                                         </TablixCells>
                                       </TablixRow>
                                       <TablixRow>
-                                        <Height>0.21181in</Height>
+                                        <Height>0.538cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -838,8 +706,8 @@
                                   <KeepTogether>true</KeepTogether>
                                   <DataSetName>dsTlunotPundakim</DataSetName>
                                   <Left>0.00008cm</Left>
-                                  <Height>1.07599cm</Height>
-                                  <Width>26.01895cm</Width>
+                                  <Height>1.076cm</Height>
+                                  <Width>26.01894cm</Width>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -851,51 +719,51 @@
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>1.78in</Width>
+                                        <Width>4.5212cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.46772in</Width>
+                                        <Width>1.18801cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.68216in</Width>
+                                        <Width>1.73269cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.46772in</Width>
+                                        <Width>1.18801cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.68216in</Width>
+                                        <Width>1.73269cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.46772in</Width>
+                                        <Width>1.18801cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.6996in</Width>
+                                        <Width>1.77698cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.74944in</Width>
+                                        <Width>1.90358cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>1.09172in</Width>
+                                        <Width>2.77297cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.49255in</Width>
+                                        <Width>1.25108cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.54255in</Width>
+                                        <Width>1.37808cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.59255in</Width>
+                                        <Width>1.50508cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.59255in</Width>
+                                        <Width>1.50508cm</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.93532in</Width>
+                                        <Width>2.37571cm</Width>
                                       </TablixColumn>
                                     </TablixColumns>
                                     <TablixRows>
                                       <TablixRow>
-                                        <Height>0.21875in</Height>
+                                        <Height>0.55562cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -1540,7 +1408,7 @@
                                         </TablixCells>
                                       </TablixRow>
                                       <TablixRow>
-                                        <Height>0.21875in</Height>
+                                        <Height>0.55562cm</Height>
                                         <TablixCells>
                                           <TablixCell>
                                             <CellContents>
@@ -2186,8 +2054,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                                   <KeepTogether>true</KeepTogether>
                                   <DataSetName>dsTlunotPundakim</DataSetName>
                                   <Top>1.93792cm</Top>
-                                  <Height>1.11125cm</Height>
-                                  <Width>26.01903cm</Width>
+                                  <Height>1.11124cm</Height>
+                                  <Width>26.01917cm</Width>
                                   <ZIndex>1</ZIndex>
                                   <Style>
                                     <Border>
@@ -2234,9 +2102,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </ReportItems>
                               <KeepTogether>true</KeepTogether>
                               <Top>0.13999cm</Top>
-                              <Left>0cm</Left>
                               <Height>3.135cm</Height>
-                              <Width>26.01903cm</Width>
+                              <Width>26.01917cm</Width>
                               <Style>
                                 <Border>
                                   <Style>Solid</Style>
@@ -2292,7 +2159,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
             <DataSetName>dsTlunotPundakim</DataSetName>
             <Top>2.13341cm</Top>
             <Height>4.39395cm</Height>
-            <Width>26.01903cm</Width>
+            <Width>26.01902cm</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -2411,34 +2278,6 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
     <Height>3.31459in</Height>
     <Style />
   </Body>
-  <ReportParameters>
-    <ReportParameter Name="P_STARTDATE">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>="01/05/2010"</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_STARTDATE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_ENDDATE">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>="01/05/2010"</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P_ENDDATE</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_MISPAR_ISHI">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>P_MISPAR_ISHI</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <Width>10.68833in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
@@ -2450,6 +2289,173 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsPundakim">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>9075a235-6d40-4337-9443-4b0674aeea72</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsTlunotPundakim">
+      <Query>
+        <DataSourceName>DsPundakim</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SUG_REPORT">
+            <Value>1</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_TLUNOTPUNDAKIM</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_MISH">
+          <DataField>SHEM_MISH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_PRAT">
+          <DataField>SHEM_PRAT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_EZOR">
+          <DataField>KOD_EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_YETZIA">
+          <DataField>SHAT_YETZIA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_MAAMAD">
+          <DataField>KOD_MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD_HR">
+          <DataField>TEUR_MAAMAD_HR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YOM">
+          <DataField>YOM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OTO_NO">
+          <DataField>OTO_NO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MAKAT">
+          <DataField>MAKAT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PUNDAK1">
+          <DataField>PUNDAK1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PUNDAK2">
+          <DataField>PUNDAK2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PUNDAK3">
+          <DataField>PUNDAK3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHILUT">
+          <DataField>SHILUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAA1">
+          <DataField>SHAA1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_NESIA">
+          <DataField>TEUR_NESIA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AVERA">
+          <DataField>AVERA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PUNDAK4">
+          <DataField>PUNDAK4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAA2">
+          <DataField>SHAA2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAA3">
+          <DataField>SHAA3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAA4">
+          <DataField>SHAA4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="P_STARTDATE">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>="01/05/2011"</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_STARTDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_ENDDATE">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>="01/05/2011"</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>P_ENDDATE</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_MISPAR_ISHI">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>=3854</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>P_MISPAR_ISHI</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -2459,6 +2465,6 @@ vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANk
 FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>9a99caea-6d75-418c-8e12-cce7d50f8efd</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>9a99caea-6d75-418c-8e12-cce7d50f8efd</rd:ReportID>
 </Report>
