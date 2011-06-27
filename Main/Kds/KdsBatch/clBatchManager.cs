@@ -7097,13 +7097,13 @@ namespace KdsBatch
                     oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
 
                 }
-                    oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse("50000000");
-                    oObjPeilutOvdimUpd.MISPAR_VISA = iOldMisparSidur;
+                oObjPeilutOvdimUpd.MISPAR_VISA = iOldMisparSidur;
+                oObjPeilutOvdimUpd.MAKAT_NESIA = long.Parse("50" + oObjPeilutOvdimUpd.MISPAR_VISA);
                     
-                    clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
-                    oPeilutNew.lMisparVisa = oObjPeilutOvdimUpd.MISPAR_VISA;
-                    oPeilutNew.iPeilutMisparSidur = oSidur.iMisparSidur;
-                    oPeilut = oPeilutNew;
+                clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oPeilut, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
+                oPeilutNew.lMisparVisa = oObjPeilutOvdimUpd.MISPAR_VISA;
+                oPeilutNew.iPeilutMisparSidur = oSidur.iMisparSidur;
+                oPeilut = oPeilutNew;
 
             }
             catch (Exception ex)
