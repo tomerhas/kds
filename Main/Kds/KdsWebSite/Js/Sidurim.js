@@ -1301,8 +1301,8 @@ function chkMkt(oRow) {
         }
 
         if ((arrItems[0] == '1') || (arrItems[0] == '3')){//שעת התחלה וגמר           
-            ValidatorEnable($get('lstSidurim_vldSG'.concat(arrItems[1]), true));
-            ValidatorEnable($get('lstSidurim_vldSHatchala'.concat(arrItems[1]), true));
+            ValidatorEnable($get('lstSidurim_vldSG'.concat(arrItems[1])), true);
+            ValidatorEnable($get('lstSidurim_vldSHatchala'.concat(arrItems[1])), true);
         }        
     }
    function SidurTimeChanged(id)
