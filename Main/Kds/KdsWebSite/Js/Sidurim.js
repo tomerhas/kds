@@ -223,22 +223,11 @@ function chkMkt(oRow) {
                  while (_FirstChild != null){
                      switch (_FirstChild.nodeName) {
                          case "SHAT_HATCHALA":
-                             $get("lstSidurim_txtSH" + iSidurNum).disabled = false;
-//                             $get("lstSidurim_txtSH" + iSidurNum).readOnly = false;
-//                             $get("lstSidurim_txtSH" + iSidurNum).maxLength = 5;
-//                             $get("lstSidurim_txtSH" + iSidurNum).style.color = 'black';
-//                            
-
-                             //$get("lstSidurim_txtSH" + iSidurNum).style.backgroung = 'white';                            
-
+                            $get("lstSidurim_txtSH" + iSidurNum).disabled = false;               
                              break;
                          case "SHAT_GMAR":
-                              $get("lstSidurim_txtSG" + iSidurNum).disabled = false;
-                            // $get("lstSidurim_txtSG" + iSidurNum).readOnly = false;
-//                             $get("lstSidurim_txtSG" + iSidurNum).maxLength = 5;
-//                             $get("lstSidurim_txtSG" + iSidurNum).style.color = 'black';
-//                             $get("lstSidurim_txtSG" + iSidurNum).style.backgroung = 'white';
-                              break;
+                               $get("lstSidurim_txtSG" + iSidurNum).disabled = false;                        
+                               break;
                           case "SHAT_HATCHALA_LETASHLUM":
                                  $get("lstSidurim_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
                                  $get("lstSidurim_txtSHL" + iSidurNum).value = "";
@@ -281,6 +270,7 @@ function chkMkt(oRow) {
                              }
                              else
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';
+                                 //$get("lstSidurim_imgAddPeilut" + iSidurNum).className = "ImgChecked";
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).disabled = false;
                              break;
                          case "SIDUR_VISA":
@@ -294,7 +284,8 @@ function chkMkt(oRow) {
             }
          }
          $get("lstSidurim_lblSidurCanceled".concat(iSidurNum)).disabled = false;
-         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;         
+         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;
+         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).checked = false;       
     }
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
@@ -803,6 +794,8 @@ function chkMkt(oRow) {
      _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
      //השלמה 
      $get("lstSidurim_ddlHashlama" + iIndex).disabled = (result[2] == '0');
+     if (result[2]=='1')
+         HasSidurHashlama();
   }
   function ChkStartHour(val, args){
         SetBtnChanges();
@@ -841,8 +834,10 @@ function chkMkt(oRow) {
         var iAddDay = $get("lstSidurim_txtDayAdd".concat(iSidurIndex)).value;
         wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
     }
-    function callBackHashlama(result, iSidurIndex) {        
+    function callBackHashlama(result, iSidurIndex) {
         $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result == '0');
+        if (result == '1')
+            HasSidurHashlama();
     }
 
     function ISSGValid(val, args){

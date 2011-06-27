@@ -336,6 +336,7 @@
                     <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />
                     <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />           
                     <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                        
+                    <asp:AsyncPostBackTrigger ControlID="btnUpdateCard" />    
                 </Triggers>
             </asp:UpdatePanel>            
             <asp:UpdatePanel ID="upCollpase" runat="server" RenderMode="Inline" UpdateMode="Always">                                

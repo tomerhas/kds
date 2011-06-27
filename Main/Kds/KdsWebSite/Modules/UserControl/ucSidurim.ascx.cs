@@ -1395,9 +1395,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                 imgAddPeilut.CausesValidation = false;
                 imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);
-                if (!bEnableSidur)
-                    imgAddPeilut.Enabled = false;
-
+                if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                    imgAddPeilut.Enabled = true;
+                else
+                {
+                    if (!bEnableSidur)
+                        imgAddPeilut.Enabled = false;
+                }
                 hCell = CreateTableCell("40px", "", "");
                 if ((bHasNoPremmisionToAddPeilut) || (oSidur.iMisparSidur == 0))
                 {
@@ -2146,8 +2150,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Button btnImage = new Button();
         btnImage.ID = "imgCancel" + iIndex;
         btnImage.CssClass = bSidurActive ? "ImgChecked" : "ImgCancel";
-        if ((!_ProfileRashemet) || (!bEnableSidur)){        
-            btnImage.Attributes.Add("disabled", "true");
+        if (oSidur.oSidurStatus==clSidur.enSidurStatus.enNew)
+            btnImage.Attributes.Add("disabled", "false");
+        else
+            if ((!_ProfileRashemet) || (!bEnableSidur)){        
+                btnImage.Attributes.Add("disabled", "true");
         }        
         //btnImage.OnClientClick = "if (!ChangeStatusSidur(this.id)) {return false;} else {return true;} ";
         btnImage.OnClientClick = "return ChangeStatusSidur(this.id);";
@@ -2165,6 +2172,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                  && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
                  && (((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
+        if ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew))
+            chkBox.Disabled = false;
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
         chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");   
@@ -2317,11 +2326,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                     sTmp = ((TextBox)(this.FindControl("txtSHL" + iIndex))).Text;
                     oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
-                    oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
+                    if (sTmp==string.Empty)
+                        oSidur.sShatHatchalaLetashlum = "";
+                    else
+                        oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
 
+                    
                     sTmp = ((TextBox)(this.FindControl("txtSGL" + iIndex))).Text;
                     oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
-                    oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
+                    if (sTmp == string.Empty)
+                        oSidur.sShatGmarLetashlum = "";
+                    else
+                        oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
 
                     oDDL = (DropDownList)this.FindControl("ddlException" + iIndex);
                     oSidur.sChariga = oDDL.SelectedValue;
@@ -2528,13 +2544,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _DataSource.Add(_DataSource.Count, _Sidur);
 
         _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
-        _Sidur.dFullShatHatchala = clGeneral.GetDateTimeFromStringHour("00:00", DateTime.Parse(CardDate.ToShortDateString()));
+        _Sidur.dFullShatHatchala = clGeneral.GetDateTimeFromStringHour("00:00", DateTime.Parse("01/01/0001 00:00"));
         _Sidur.dFullShatGmar = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatGmar = _Sidur.dFullShatHatchala;
         _Sidur.dSidurDate = _Sidur.dFullShatHatchala;
         _Sidur.sSidurDay =(_Sidur.dFullShatHatchala.DayOfWeek.GetHashCode()+1).ToString();
         _Sidur.iBitulOHosafa = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
+        _Sidur.iLoLetashlum = 0;
         _Sidur.bSidurMyuhad = true;
         Session["Sidurim"] = _DataSource;
        
@@ -4099,10 +4116,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
                                   || (!IsAccessToSidurNotShaon(ref oSidur))
                                   || (IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
-                                //  || ((oSidur.oSidurStatus==clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur==0)));
+                                  
             
             oTextBox.ReadOnly = ((bSidurMustDisabled) || (!bSidurActive));
-           
+
+            if ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur == 0))
+            {
+                oTextBox.ReadOnly = false;
+                oTextBox.Enabled = false;
+            }
+
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
@@ -4502,6 +4525,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
             oTextBox.ReadOnly = ((!bOrgEnable) || (!bSidurActive));
 
+            if ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur == 0))
+            {
+                oTextBox.ReadOnly = false;
+                oTextBox.Enabled = false;
+            }
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onchange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");

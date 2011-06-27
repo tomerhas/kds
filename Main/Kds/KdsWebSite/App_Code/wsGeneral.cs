@@ -2054,7 +2054,7 @@ public class wsGeneral : System.Web.Services.WebService
             _Sidur = (clSidur)(odSidurim[iSidurIndex]);
             _Sidur.dSidurDate = DateTime.Parse(sCardDate).AddDays(iAddDay); //DateTime.Parse(sNewStartHour);
             _Sidur.dFullShatHatchala = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sNewStartHour);
-            _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
+            //_Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
             _Sidur.sShatHatchala = _Sidur.dFullShatHatchala.ToShortTimeString();
         }
     }

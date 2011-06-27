@@ -2344,6 +2344,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             hidRefresh.Value = "0";
 
             _StatusCard = oBatchManager.CardStatus;
+            lstSidurim.bAtLeatOneSidurIsNOTNahagutOrTnua = false;
+            lstSidurim.IsAtLeastOneSidurNahagut = false;
             lstSidurim.StatusCard = _StatusCard;
             lstSidurim.Mashar = (oBatchManager.dtMashar == null) ? (DataTable)Session["Mashar"] : oBatchManager.dtMashar;
             lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;
@@ -3887,8 +3889,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
                         //כמו כן נעדכן את שעת התחלת הסידור לפעילויות שמקושרות לסידור
-                        bInsert = ((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
-                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))));
+                        bInsert = (((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
+                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))))
+                                  || (oSidur.oSidurStatus==clSidur.enSidurStatus.enNew));
 
                         oShatGmar = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSG" + iIndex)));
                         //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
@@ -4044,6 +4047,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oObjSidurimOvdimDel.UPDATE_OBJECT = 0;  //^^^^^
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;                            
                             oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+                            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
+                            {//אם ביטלו סידור חדש, נשווה את הערכים הישנים לחדשים כדי שלא ייכנסו רשומות לעדכוני רשמת
+                                oSidur.dOldFullShatHatchala = oSidur.dFullShatHatchala;
+                                oSidur.dOldFullShatGmar = oSidur.dFullShatGmar;
+                                oSidur.iOldKodSibaLedivuchYadaniIn = oSidur.iKodSibaLedivuchYadaniIn;
+                                oSidur.iOldKodSibaLedivuchYadaniOut = oSidur.iKodSibaLedivuchYadaniOut;
+                                oSidur.iOldLoLetashlum = oSidur.iLoLetashlum;
+                                oSidur.dOldFullShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum;
+                                oSidur.dOldFullShatGmarLetashlum = oSidur.dFullShatGmarLetashlum;
+                                oSidur.sChariga = oSidur.sOldChariga;
+                                oSidur.sPitzulHafsaka = oSidur.sOldPitzulHafsaka;
+                                oSidur.sHashlama = oSidur.sOldHashlama;
+                                oSidur.sOutMichsa = oSidur.sOldOutMichsa;
+                                oSidur.iLoLetashlum = oSidur.iOldLoLetashlum;
+                            }
                         }
                         else
                         {
@@ -4067,21 +4085,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         }
                         oSidur.dFullShatHatchala = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
                         oSidur.dFullShatGmar = oObjSidurimOvdimUpd.SHAT_GMAR;
-                        if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
-                        {
-                            oSidur.dOldFullShatGmar = oSidur.dFullShatGmar;
-                            oSidur.dOldFullShatHatchala = oSidur.dFullShatHatchala;
+                        //if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                        //{
+                        //    oSidur.dOldFullShatGmar = oSidur.dFullShatGmar;
+                        //    oSidur.dOldFullShatHatchala = oSidur.dFullShatHatchala;
+                        //}
+                        if (!((iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()) && (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)))
+                        {//במצב של הכנסת סידור חדש וביטולו, לא נעדכן את הערכים
+                            oSidur.iKodSibaLedivuchYadaniIn = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
+                            oSidur.iKodSibaLedivuchYadaniOut = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
+                            oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                            oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                            oSidur.sChariga = oObjSidurimOvdimUpd.CHARIGA.ToString();
+                            oSidur.sPitzulHafsaka = oObjSidurimOvdimUpd.PITZUL_HAFSAKA.ToString();
+                            oSidur.sHashlama = oObjSidurimOvdimUpd.HASHLAMA.ToString();
+                            oSidur.sOutMichsa = oObjSidurimOvdimUpd.OUT_MICHSA.ToString();
+                            oSidur.iLoLetashlum = oObjSidurimOvdimUpd.LO_LETASHLUM;
                         }
-                        oSidur.iKodSibaLedivuchYadaniIn = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
-                        oSidur.iKodSibaLedivuchYadaniOut = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
-                        oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
-                        oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
-                        oSidur.sChariga = oObjSidurimOvdimUpd.CHARIGA.ToString();
-                        oSidur.sPitzulHafsaka = oObjSidurimOvdimUpd.PITZUL_HAFSAKA.ToString();
-                        oSidur.sHashlama = oObjSidurimOvdimUpd.HASHLAMA.ToString();
-                        oSidur.sOutMichsa = oObjSidurimOvdimUpd.OUT_MICHSA.ToString();
-                        oSidur.iLoLetashlum = oObjSidurimOvdimUpd.LO_LETASHLUM;
-
+                      
                         //אם יש פעילויות, נכניס גם אותן
                         oGridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                         if (oGridView != null)
@@ -4290,6 +4311,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_IN = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
             oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_OUT = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
             oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+            oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
             oObjSidurimOvdimIns.CHARIGA = oObjSidurimOvdimUpd.CHARIGA;
             oObjSidurimOvdimIns.PITZUL_HAFSAKA = oObjSidurimOvdimUpd.PITZUL_HAFSAKA;
             oObjSidurimOvdimIns.HAMARAT_SHABAT = oObjSidurimOvdimUpd.HAMARAT_SHABAT;
@@ -4301,7 +4323,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             oObjSidurimOvdimIns.MIKUM_SHAON_KNISA = String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) ? 0 : int.Parse(oSidur.sMikumShaonKnisa);
             oObjSidurimOvdimIns.MIKUM_SHAON_YETZIA = String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) ? 0 : int.Parse(oSidur.sMikumShaonYetzia);
+
             //שדות נוספים
+            oObjSidurimOvdimIns.SUG_HASHLAMA = oObjSidurimOvdimUpd.SUG_HASHLAMA;
             oObjSidurimOvdimIns.ACHUZ_KNAS_LEPREMYAT_VISA=oObjSidurimOvdimUpd.ACHUZ_KNAS_LEPREMYAT_VISA;
             oObjSidurimOvdimIns.ACHUZ_VIZA_BESIKUN = oObjSidurimOvdimUpd.ACHUZ_VIZA_BESIKUN;
             oObjSidurimOvdimIns.YOM_VISA = oObjSidurimOvdimUpd.YOM_VISA;

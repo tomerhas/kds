@@ -1039,7 +1039,7 @@ namespace KdsBatch
             float fSidurTime;
             bool bSidurTimeBigger = false;
 
-            if ((oSidur.sShatHatchala == "") || (oSidur.sShatGmar == ""))
+            if ((oSidur.sShatHatchala == "") || (oSidur.sShatGmar == "") || (oSidur.sShatHatchala == null) || (oSidur.sShatGmar == null))
                 bSidurTimeBigger = true;
             else
             {
