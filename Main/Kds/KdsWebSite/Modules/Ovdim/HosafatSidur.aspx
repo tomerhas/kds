@@ -21,7 +21,7 @@
 
 
 
-<body dir="rtl" onload="return window_onload()" onkeydown=" if (event.keyCode==107) {event.keyCode=9; return event.keyCode }" >
+<body dir="rtl" onload="return window_onload()" onkeydown="return ChangeKeyCode(event.keyCode);">
  <script type="text/javascript">
      var iRowIndexNochehi = 0;
      var col_ShatYetzia = "<%=SHAT_YETZIA %>";
@@ -34,6 +34,20 @@
      var col_Pratim = "<%=PRATIM %>";
      var Col_PeilutChova = "<%=PEILUT_CHOVA %>"
      var Col_txt_shat_yetzia = "<%=TXT_SHAT_YETZIA %>"
+
+
+     function ChangeKeyCode(keyCode) {
+        // debugger;
+         if (keyCode == 107) {
+             event.keyCode = 9;
+             return event.keyCode;
+         }
+         else if (keyCode == 110) {
+         if (document.getElementById("btnHosafa").disabled == false)
+             document.getElementById("btnHosafa").focus();
+         }
+
+     }
      
      function btnMapa_Click() {
          document.getElementById("txtMisSiduri").style.display = "none";
