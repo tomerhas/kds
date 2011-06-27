@@ -15,7 +15,7 @@
               <Width>2.05306cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41008cm</Width>
+              <Width>1.11903cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.23228cm</Width>
@@ -143,7 +143,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>SHILUT</Value>
+                              <Value>שילוט</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -731,7 +731,7 @@
         <Top>3.26286cm</Top>
         <Left>0.29044in</Left>
         <Height>1.53208cm</Height>
-        <Width>19.65916cm</Width>
+        <Width>19.36812cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0 ,false ,true)</Hidden>
         </Visibility>
