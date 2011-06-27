@@ -11156,7 +11156,7 @@ namespace KdsBatch
             bool bLoLetashlumAutomati = false;
             //אם עיסוק העובד מתחיל ב- 5
              // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
-            if (oOvedYomAvodaDetails.iIsuk.ToString().Substring(0, 1) == "5" && oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0")
+            if (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0")
             {
                 //וגם לעובד אין מאפיין 3 ו- 4 ברמה האישית. 
                 if (!oMeafyeneyOved.Meafyen3Exists && !oMeafyeneyOved.Meafyen4Exists)
