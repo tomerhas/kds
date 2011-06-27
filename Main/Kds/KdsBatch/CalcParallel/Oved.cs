@@ -514,7 +514,8 @@ namespace KdsBatch
             MeafyeneyOved = null;
             PirteyOved = null;
             oGeneralData = null;
-            GC.Collect();
+            //GC.Collect();
+            GC.GetTotalMemory(true); 
 
         }
     }

@@ -68,8 +68,8 @@ namespace KdsBatch
             _IsCreated = false;
             Instance = null;
 
-            GC.Collect();
-
+          //  GC.Collect();
+            GC.GetTotalMemory(true); 
         }
 
 
