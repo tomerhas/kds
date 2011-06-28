@@ -253,9 +253,14 @@ function chkMkt(oRow) {
                              if ($get("lstSidurim_ddlException" + iSidurNum).disabled == false)
                                  $get("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
                              break;
-                         case "HASHLAMA":
-                             if ($get("lstSidurim_ddlHashlama" + iSidurNum).disabled == false)
-                                 $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = (_FirstChild.text == "0");
+                         case "HASHLAMA":                           
+                                 if (_FirstChild.text == "0") {
+                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = true;
+                                     $get("lstSidurim_ddlHashlama" + iSidurNum).value = 0;
+                                 }
+                                 else {
+                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = false;
+                                 }
                              break;
                          case "OUT_MICHSA":
                              $get("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
@@ -269,13 +274,12 @@ function chkMkt(oRow) {
                                      $get("lstSidurim_imgAddPeilut" + iSidurNum).click();
                              }
                              else
-                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';
-                                 //$get("lstSidurim_imgAddPeilut" + iSidurNum).className = "ImgChecked";
+                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';                                 
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).disabled = false;
                              break;
                          case "SIDUR_VISA":
                             if (_FirstChild.text == "1")
-                             //סידור ויזה   - הוספת פעילות                                 
+                                //סידור ויזה   - הוספת פעילות                                 
                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).click();                             
                              break;
                      }                   
@@ -283,10 +287,20 @@ function chkMkt(oRow) {
                 }
             }
          }
+         $get("lstSidurim_imgCancel".concat(iSidurNum)).disabled = false;
          $get("lstSidurim_lblSidurCanceled".concat(iSidurNum)).disabled = false;
          $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;
-         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).checked = false;       
-    }
+         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).checked = false;
+         $get("lstSidurim_imgCancel".concat(iSidurNum)).className = "ImgChecked";
+     }
+     function ClearSidurTitle(iSidurIndex){
+         _Sidur = $get("lstSidurim_lblSidur" + iSidurIndex);
+         if (_Sidur != null)
+             if (_Sidur.value == '') {
+                 _Sidur.title = '';                
+             }
+     }
+     
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
@@ -832,7 +846,10 @@ function chkMkt(oRow) {
         var sCardDate = $get("clnDate").value;
         var sShatGmar = $get("lstSidurim_txtSG".concat(iSidurIndex)).value;
         var iAddDay = $get("lstSidurim_txtDayAdd".concat(iSidurIndex)).value;
-        wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
+        if ((sShatGmar == '') || (sShatGmar == "__:__"))
+            $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = true;
+        else
+            wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
     }
     function callBackHashlama(result, iSidurIndex) {
         $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result == '0');

@@ -486,6 +486,7 @@
      while (sSH!=null)
      {
          iSidurNum = $get(("lstSidurim_lblSidur").concat(i)).innerHTML;
+         if (iSidurNum == '') iSidurNum = $get(("lstSidurim_lblSidur").concat(i)).value;
          if ((iSidurNum == '') && ($get(("lstSidurim_lblSidur").concat(i)).value == '') && ($get("lstSidurim_lblSidurCanceled".concat(i)).value != '1')) {
              sMsg = sMsg.concat('מספר סידור ' + iSidurNum + " אינו תקין \n");
              bValid = false;

@@ -2212,7 +2212,7 @@ public class wsGeneral : System.Web.Services.WebService
             //השלמה 
             //לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=40)");
-            if (dr.Length > 0)
+            if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
                 sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
             else
                 sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
