@@ -355,12 +355,12 @@ public partial class Modules_Test :Page
         //clInputData oInputData = new clInputData();
         //oInputData.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
         string[] arrDate;
-       // arrDate = clnFromDate.Text.Split(char.Parse("/"));
+        arrDate = clnFromDate.Text.Split(char.Parse("/"));
         DateTime a;
         a = new DateTime(2010, 10, 03, 19, 20, 0);
-       // clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]),int.Parse(arrDate[1]),int.Parse(arrDate[0])));
-        //oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
-        //oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        clBatchManager oBatchManager = new clBatchManager(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        oBatchManager.MainInputData(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
+        oBatchManager.MainOvedErrors(int.Parse(txtId.Text), new DateTime(int.Parse(arrDate[2]), int.Parse(arrDate[1]), int.Parse(arrDate[0])));
         
     }
     protected void BtAddSelected_Click(object sender, EventArgs e) 
