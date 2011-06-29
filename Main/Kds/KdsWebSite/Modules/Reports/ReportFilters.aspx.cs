@@ -472,7 +472,11 @@ public partial class Modules_Reports_ReportFilters : KdsPage
     {
         get { return (ListBoxExtended)TdFilter.FindControl("P_MAKAT"); }
     }
-    
+
+    //private ListBoxExtended RishuyRechev
+    //{
+    //    get { return (ListBoxExtended)TdFilter.FindControl("P_RISHUYCAR"); }
+    //}
     private DropDownList Premia
     {
         get { return (DropDownList)TdFilter.FindControl("P_KOD_PREMIA"); }

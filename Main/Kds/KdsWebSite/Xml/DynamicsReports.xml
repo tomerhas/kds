@@ -77,6 +77,9 @@
     <Filter ClassName="נתוני HR"  ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
     </Filter>
+    <Filter ClassName="נתוני HR"  ParameterName="P_RISHUYCAR" Caption="רישוי" BoxeType="ListBoxExtended" DataType="System.Int32">
+        <DropDownList QueryType="Select"  Select="select LICENSE_NUMBER from VEHICLE_SPECIFICATIONS" ValueField="LICENSE_NUMBER" TextField="LICENSE_NUMBER" />
+      </Filter>
   </Report>
   <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" IsParent="false" Required="true">
