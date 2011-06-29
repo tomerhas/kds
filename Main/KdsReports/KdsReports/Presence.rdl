@@ -581,7 +581,6 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
