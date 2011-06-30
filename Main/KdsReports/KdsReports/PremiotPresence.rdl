@@ -111,10 +111,14 @@
         </Field>
         <Field Name="MICHSA_YOMIT">
           <DataField>MICHSA_YOMIT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DAKOT_NOCHECHUT">
+          <DataField>DAKOT_NOCHECHUT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="PRESENCE_PREMIYA">
-          <DataField>PRESENCE_PREMIYA</DataField>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -1897,14 +1901,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="PRESENCE_PREMIYA">
+                                      <Textbox Name="DAKOT_NOCHECHUT">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!PRESENCE_PREMIYA.Value</Value>
+                                                <Value>=Fields!DAKOT_NOCHECHUT.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1913,7 +1917,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>PRESENCE_PREMIYA</rd:DefaultName>
+                                        <rd:DefaultName>DAKOT_NOCHECHUT</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
