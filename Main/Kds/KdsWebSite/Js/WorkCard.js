@@ -508,7 +508,7 @@
                          sMsg = sMsg.concat('שעת גמר בסידור ' + iSidurNum + " אינה תקינה \n");
                          bValid = false;
                      }
-                     if ((sSG.value != '') && (sSG.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)) {
+                     if ((sSG.value != '') && (sSG.value != "__:__") && (oDDL.value == -1) && (oDDL.disabled == false)){
                          sMsg = sMsg.concat('בסידור  ' + iSidurNum + " דווחה שעת גמר, יש לדווח סיבה \n");
                          bValid = false;
                      }
@@ -517,7 +517,7 @@
                          sMsg = sMsg.concat(sCallBack + "\n");
                          bValid = false;
                      }
-                     if ((sSG.value != '') && (sSG.value != "__:__") && (sSH.value != '') && (sSH.value != "__:__")) {
+                     if ((sSG.value != '') && (sSG.value != "__:__") && (sSH.value != '') && (sSH.value != "__:__")){
                          sSidurDate = $get("lstSidurim_lblDate".concat(i)).innerHTML;
                          sCardDate = $get("clnDate").value;
                          dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(sSH.value.substr(0, 2)), Number(sSH.value.substr(3, 2)));
@@ -525,9 +525,9 @@
                          if (document.getElementById("lstSidurim_txtDayAdd".concat(i)).value == "1")
                              dEndHour.setDate(dEndHour.getDate() + 1);
                          oDDL = document.getElementById("lstSidurim_ddlHashlama".concat(i));
-                         if (oDDL.disabled == false) {
+                         if (oDDL.disabled == false){
                              SidurTime = GetSidurTime(dStartHour, dEndHour);
-                             if ((SidurTime >= Number(oDDL.value)) && Number(oDDL.value > 0)) {
+                             if ((SidurTime >= Number(oDDL.value)) && Number(oDDL.value > 0)){
                                  sMsg = sMsg.concat('בסידור  ' + iSidurNum + " משך הסידור שווה או גדול מזמן ההשלמה הנבחר \n");
                                  bValid = false;
                              }

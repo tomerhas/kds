@@ -411,7 +411,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enLoLetashlum
         {
-            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission =4, SidurInNonePremissionHours=10
+            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission = 4, SidurInNonePremissionHours = 10, WorkWitoutPremmision = 17 //17 -  עבודה ביום חול ללא הרשאה
         }
         public enum enNetuneyOved
         {
@@ -511,7 +511,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public enum enMeafyenSidur54
         {
             //מאפיין 54 - שעון נוכחות
-
+            enAdministrator =1 //מנהל
         }
         public enum enDynamicFormType
         {
@@ -798,8 +798,13 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enMeafyenim
         {
+            Meafyen25 = 25,
             HamaratShaot = 32,
+            Meafyen40 = 40,
+            Meafyen45 = 45,
+            Meafyen46 = 46,
             SugHeadrut = 53,
+            Meafyen54 = 54,
             EinLeshalemTosLila = 61
         }
 

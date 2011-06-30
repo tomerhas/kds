@@ -1078,14 +1078,17 @@ public class wsGeneral : System.Web.Services.WebService
         {
             if (lNewMakat > 0)
             {
-                //בדיקה אם קיים מקט בתנועה
-                dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sTravelDate));
-                if (dtDetailsFromTnua.Rows.Count > 0)
-                {
-                    sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sTravelDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat, ref _PeilutElement);
-                    //Update cash peilyot details from tnua
-                    GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dtDetailsFromTnua, _PeilutElement);
-                }
+                //if ((sShatYetiza != string.Empty) || (sTravelDate != "01/01/0001"))
+                //{
+                    //בדיקה אם קיים מקט בתנועה
+                    dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sCardDate));
+                    if (dtDetailsFromTnua.Rows.Count > 0)
+                    {
+                        sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sCardDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat, ref _PeilutElement);
+                        //Update cash peilyot details from tnua
+                        GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dtDetailsFromTnua, _PeilutElement);
+                    }
+                //}
             }
             return sResult;
         }
@@ -1210,21 +1213,24 @@ public class wsGeneral : System.Web.Services.WebService
       try
       {
           DataTable dt = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + dCardDate.ToShortDateString());
-          if (dt.Columns.Count > 0)
+          if (dt != null)
           {
-              dr = dt.NewRow();
-              dr["Activity_Date"] = dCardDate;
-              dr["Makat8"] = _Peilut.lMakatNesia;
-              dr["description"] = _Peilut.sMakatDescription;
-              dr["shilut"] = _Peilut.sShilut;
-              dr["kisui_tor"] = _Peilut.iKisuyTorMap;
-              dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
-              dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
-              dr["km"] = _Peilut.fKm;
-              dr["sug_shirut_name"] = _Peilut.sSugShirutName;
-              dr["xy_moked_tchila"] = _Peilut.iXyMokedTchila;
-              dr["xy_moked_siyum"] = _Peilut.iXyMokedSiyum;
-              dt.Rows.Add(dr);
+              if (dt.Columns.Count > 0)
+              {
+                  dr = dt.NewRow();
+                  dr["Activity_Date"] = dCardDate;
+                  dr["Makat8"] = _Peilut.lMakatNesia;
+                  dr["description"] = _Peilut.sMakatDescription;
+                  dr["shilut"] = _Peilut.sShilut;
+                  dr["kisui_tor"] = _Peilut.iKisuyTorMap;
+                  dr["mazan_tichnun"] = _Peilut.iMazanTichnun;
+                  dr["mazan_tashlum"] = _Peilut.iMazanTashlum;
+                  dr["km"] = _Peilut.fKm;
+                  dr["sug_shirut_name"] = _Peilut.sSugShirutName;
+                  dr["xy_moked_tchila"] = _Peilut.iXyMokedTchila;
+                  dr["xy_moked_siyum"] = _Peilut.iXyMokedSiyum;
+                  dt.Rows.Add(dr);
+              }
           }
       }
       catch (Exception ex)
@@ -2163,16 +2169,18 @@ public class wsGeneral : System.Web.Services.WebService
             // XML אם מספר סידור תקין, נקרא את המאפיינים שלו וניצור מבנה
             //שמגדיר אילו מהשדות יינתנו לשינוי ואילו לא
             UpdateSidurimCash(iSidurNumber, iSidurIndex, DateTime.Parse(sSidurDate));
-            sReturnCode = sReturnCode + "|" + BuildSidurFieldsDefaults(iSidurNumber, dtMeafyenim);
+            sReturnCode = sReturnCode + "|" + BuildSidurFieldsDefaults(iSidurNumber,iSidurIndex, dtMeafyenim);
         }
         return sReturnCode;
     }
-    public string BuildSidurFieldsDefaults(int iSidurNumber, DataTable dtMeafyenim)
+    public string BuildSidurFieldsDefaults(int iSidurNumber, int iSidurIndex, DataTable dtMeafyenim)
     {
         StringBuilder sXML = new StringBuilder();
         DataRow[] dr;
         clOvedYomAvoda OvedYomAvoda = (clOvedYomAvoda)Session["OvedYomAvodaDetails"];
-
+        clMeafyenyOved _MeafyenyOved = (clMeafyenyOved)Session["MeafyenyOved"];
+        clSidur _Sidur= (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+      
         try
         {
             sXML.Append("<SIDUR>");
@@ -2202,23 +2210,43 @@ public class wsGeneral : System.Web.Services.WebService
             sXML.Append(string.Concat("<PITZUL_HAFSAKA>", "0", "</PITZUL_HAFSAKA>"));
 
             //רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=34 and erech='1')");
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString() + " and erech='1')");
             if (dr.Length > 0)            
                 sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
             else
-                sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
+                //סידור מיוחד עם מאפיין 54 וערך 1 (מנהל) 
+                //אם קיים מאפיין 54 עם ערך 1 יש לבדוק אם מתקיים אחד מהתנאים הבאים
+                //1.לעובד אין מאפיינים 3 ו- 4 ברמה האישית
+                //ג.  יום חול וערב חג
+                //או
+                // לעובד אין מאפיינים 5 ו- 6 ברמה האישית
+                //ב.  יום שישי (שישי, לא ערב חג)
+                //או 
+                //לעובד אין מאפיינים 7 ו- 8 ברמה האישית
+                //ב.  יום שבת/שבתון
+                
+               
+                dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen54.GetHashCode().ToString() + " and erech='"+ clGeneral.enMeafyenSidur54.enAdministrator.GetHashCode().ToString()+ "')");
+                if (dr.Length > 0)
+                    if  (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.Meafyen5Exists) && (!_MeafyenyOved.Meafyen6Exists))
+                        || (((_Sidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (_Sidur.sShabaton.Equals("1"))) && ((!_MeafyenyOved.Meafyen7Exists) && (!_MeafyenyOved.Meafyen8Exists)))
+                        || (((_Sidur.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.Meafyen4Exists) && (!_MeafyenyOved.Meafyen5Exists))))
+
+                        sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
+                else
+                    sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
 
 
-            //השלמה 
-            //לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=40)");
-            if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
-                sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
-            else
-                sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
+            ////השלמה 
+            ////לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
+            //dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen40.GetHashCode().ToString() + ")");
+            //if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
+            //    sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
+            //else
+            //    sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
 
             //ניתן לעדכון- סידור מיוחד עם ערך 1 במאפיין  - 25.
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=25 and erech='1')");
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen25.GetHashCode().ToString() + " and erech='1')");
             if (dr.Length > 0)
                 if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
                     sXML.Append(string.Concat("<OUT_MICHSA>", "1", "</OUT_MICHSA>"));
@@ -2229,14 +2257,14 @@ public class wsGeneral : System.Web.Services.WebService
            
 
             //מיוחד עם מאפיין 45-סידור ויזה            
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=45)");
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen45.GetHashCode().ToString() + ")");
             if (dr.Length>0)
                 sXML.Append(string.Concat("<SIDUR_VISA>", "1", "</SIDUR_VISA>"));
             else
                 sXML.Append(string.Concat("<SIDUR_VISA>", "0", "</SIDUR_VISA>"));
             
             //אם קיים מאפיין 46 לא נאפשר הוספת פעילות
-            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=46)");
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen46.GetHashCode().ToString() + ")");
             if (dr.Length==0)
                 sXML.Append(string.Concat("<ADD_PEILUT>", "1", "</ADD_PEILUT>"));
             else

@@ -2561,7 +2561,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ClearControl();
         BuildPage();
         hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
-
+       
     }
     private int GetSidurKey(int iSidurIndex, ref DateTime dSidurShatHatchala)
     {   GridView _GridView;
@@ -3345,8 +3345,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         if  (((oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode())
                || (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode())
-               || (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode()))
-                && (oSidur.sChariga.Equals("0")))
+               || (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode())
+               || (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkWitoutPremmision.GetHashCode())
+                && (oSidur.sChariga.Equals("0"))))
         {
             bValid = false;
         }
@@ -4002,70 +4003,85 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                    עבור ערב שבת/שבתון  - מאפיינים 7 ו- 8 
                    1. שעת התחלה קטנה מהערך במאפיין  בשדה שעת התחלה לתשלום או שעת גמר גדולה מהערך בשדה במאפיין שעת גמר לתשלום (המאפיין המתאים לפי סוג היום) - אם שניהם לא מתקיימים, לחסום את השדה.
                 */
+                /*
+                 . בדיקת שדה לא לתשלום (רלוונטי רק לסידור הנשלף מטבלת סידורים)  - 
+                    הסידור לא לתשלום בגלל מאפיינים לא מתאימים ליום עבודה:
+                    ניתן לעדכן חריגה לסידורים המסומנים לא לתשלום    1=Lo_letashlum וגם 
+                    TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4, 5, 10, 17
+                    4  - עבודה בשבתון ללא הרשאה
+                    5 - עבודה בשישי ללא הרשאה
+                    17 -  עבודה ביום חול ללא הרשאה
+                   10 -  סידור מחוץ לשעות מותרות לעובד
+                 */
 
-                //oBatchManager.GetOvedShatHatchalaGmar(oSidur.dFullShatGmar, MeafyenyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
-                if (!String.IsNullOrEmpty(oSidur.sShatHatchala))
+                if ((oSidur.iLoLetashlum.Equals(1))
+                    && ((oSidur.iKodSibaLoLetashlum.Equals(clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode()))
+                    || (oSidur.iKodSibaLoLetashlum.Equals(clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
+                    || (oSidur.iKodSibaLoLetashlum.Equals(clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
+                    || (oSidur.iKodSibaLoLetashlum.Equals(clGeneral.enLoLetashlum.WorkWitoutPremmision.GetHashCode()))
+                    ))
                 {
-                    if (oSidur.dFullShatHatchala < oSidur.dFullShatHatchalaLetashlum)
-                    {
-                        /*אם תנאי 1 מתקיים, בודקים
-                            אם המרווח בין החתמת כניסה/יציאה לשעת התחלה/גמר לתשלום מאפייני שעת התחלה/גמר מותרת שווה או גדול מהערך המוגדר בפרמטר 41 (זמן חריגה התחלה / גמר על חשבון העובד). יש לבדוק את מאפייני שעת התחלה/גמר מותרת בהתאם לסוג היום.
-                            כמובן יש לבדוק שהמרווח הוא מ"הכיוון הנכון", כלומר עבור עובד שאמור להתחיל לעבוד בשעה 07:00, שעת התחלה לתשלום היא 07:20 החתים שעון בשעה 07:20, כמובן שאסור לבקש חריגה משעת התחלה. בדיקה דומה יש לבצע עבור בקשה חריגה משעת גמר. במידה וביקשו ערך שגוי, יש להציג הודעה מתאימה ב- pop-up : "אין חריגה משעת התחלה או משעת גמר 
-                        */
-                        if ((oSidur.dFullShatHatchalaLetashlum - oSidur.dFullShatHatchala).TotalMinutes >= KdsParameters.iZmanChariga)
-                        {
-                            bExceptionAllowed = true;
-                            sCharigaType = clGeneral.enCharigaValue.CharigaKnisa.GetHashCode().ToString();//חריגה רק מהתחלה
-                        }
-                    }
+                    bExceptionAllowed = true;
+                    sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
                 }
-                if (!String.IsNullOrEmpty(oSidur.sShatGmar))
+                else
                 {
-                    if (oSidur.dFullShatGmar > oSidur.dFullShatGmarLetashlum)
+                    //oBatchManager.GetOvedShatHatchalaGmar(oSidur.dFullShatGmar, MeafyenyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum);
+                    if (!String.IsNullOrEmpty(oSidur.sShatHatchala))
                     {
-                        if ((oSidur.dFullShatGmar - oSidur.dFullShatGmarLetashlum).TotalMinutes >= KdsParameters.iZmanChariga)
+                        if (oSidur.dFullShatHatchala < oSidur.dFullShatHatchalaLetashlum)
                         {
-
-                            if (bExceptionAllowed)
-                                sCharigaType = clGeneral.enCharigaValue.CharigaKnisaYetiza.GetHashCode().ToString();  //חריגה  ומגמר מהתחלה                          
-                            else
+                            /*אם תנאי 1 מתקיים, בודקים
+                                אם המרווח בין החתמת כניסה/יציאה לשעת התחלה/גמר לתשלום מאפייני שעת התחלה/גמר מותרת שווה או גדול מהערך המוגדר בפרמטר 41 (זמן חריגה התחלה / גמר על חשבון העובד). יש לבדוק את מאפייני שעת התחלה/גמר מותרת בהתאם לסוג היום.
+                                כמובן יש לבדוק שהמרווח הוא מ"הכיוון הנכון", כלומר עבור עובד שאמור להתחיל לעבוד בשעה 07:00, שעת התחלה לתשלום היא 07:20 החתים שעון בשעה 07:20, כמובן שאסור לבקש חריגה משעת התחלה. בדיקה דומה יש לבצע עבור בקשה חריגה משעת גמר. במידה וביקשו ערך שגוי, יש להציג הודעה מתאימה ב- pop-up : "אין חריגה משעת התחלה או משעת גמר 
+                            */
+                            if ((oSidur.dFullShatHatchalaLetashlum - oSidur.dFullShatHatchala).TotalMinutes >= KdsParameters.iZmanChariga)
                             {
                                 bExceptionAllowed = true;
-                                sCharigaType = clGeneral.enCharigaValue.CharigaYetiza.GetHashCode().ToString();   //חריגה מגמר
+                                sCharigaType = clGeneral.enCharigaValue.CharigaKnisa.GetHashCode().ToString();//חריגה רק מהתחלה
+                            }
+                        }
+                    }
+                    if (!String.IsNullOrEmpty(oSidur.sShatGmar))
+                    {
+                        if (oSidur.dFullShatGmar > oSidur.dFullShatGmarLetashlum)
+                        {
+                            if ((oSidur.dFullShatGmar - oSidur.dFullShatGmarLetashlum).TotalMinutes >= KdsParameters.iZmanChariga)
+                            {
+
+                                if (bExceptionAllowed)
+                                    sCharigaType = clGeneral.enCharigaValue.CharigaKnisaYetiza.GetHashCode().ToString();  //חריגה  ומגמר מהתחלה                          
+                                else
+                                {
+                                    bExceptionAllowed = true;
+                                    sCharigaType = clGeneral.enCharigaValue.CharigaYetiza.GetHashCode().ToString();   //חריגה מגמר
+                                }
                             }
                         }
                     }
                 }
 
-
-                //if (!bExceptionAllowed)
+                
+                ////יום שישי או ערב חג
+                ////ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
+                //if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
                 //{
-                //יום שישי או ערב חג
-                //ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
-                if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
-                {
-                    if ((!MeafyenyOved.Meafyen5Exists) && (!MeafyenyOved.Meafyen6Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
-                    {
-                        bExceptionAllowed = true;
-                        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
-                    }
-                }
-                //ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
-                if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
-                {
-                    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.Meafyen8Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
-                    {
-                        bExceptionAllowed = true;
-                        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
-                    }
-                }
-                //סידור מחוץ לשעות מותרות לעובד).
-                //if (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.SidurInNonePremissionHours.GetHashCode())
+                //    if ((!MeafyenyOved.Meafyen5Exists) && (!MeafyenyOved.Meafyen6Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
+                //    {
+                //        bExceptionAllowed = true;
+                //        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+                //    }
+                //}
+                ////ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
+                //if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
                 //{
-                //    bExceptionAllowed = true;
-                //    sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+                //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.Meafyen8Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
+                //    {
+                //        bExceptionAllowed = true;
+                //        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+                //    }
                 //}
-                //}
+               
             }
             else
             {

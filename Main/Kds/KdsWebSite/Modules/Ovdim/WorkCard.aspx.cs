@@ -479,6 +479,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     Session["OvedYomAvodaDetails"] = oBatchManager.oOvedYomAvodaDetails;
                     Session["Errors"] = oBatchManager.dtErrors;
                     Session["Parameters"] = oBatchManager.oParam;
+                    Session["MeafyenyOved"] = oBatchManager.oMeafyeneyOved;
                     dtIdkuneyRashemet = clWorkCard.GetIdkuneyRashemet(iMisparIshi, dDateCard);
                     if (!Page.IsPostBack)
                     {
@@ -2086,6 +2087,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
     {//הוספת סידור מיוחד
         lstSidurim.AddNewSidur();
+
+        //string sScript = "document.getElementById('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').select();";
+        //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {
@@ -2159,7 +2163,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         try
         {
             bWorkCardWasUpdate = IsWorkCardWasUpdate();
-             key = "*" + iMisparIshi.ToString() + "*" + dDateCard.ToString("yyyyMMdd") + "*";
+             key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
          // urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
             // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;

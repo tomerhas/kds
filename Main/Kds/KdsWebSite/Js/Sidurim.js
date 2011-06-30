@@ -249,19 +249,18 @@ function chkMkt(oRow) {
                          case "PITZUL_HAFSAKA":
                              $get("lstSidurim_ddlPHfsaka" + iSidurNum).disabled = true;
                              break;
-                         case "CHARIGA":
-                             if ($get("lstSidurim_ddlException" + iSidurNum).disabled == false)
-                                 $get("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
-                             break;
-                         case "HASHLAMA":                           
-                                 if (_FirstChild.text == "0") {
-                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = true;
-                                     $get("lstSidurim_ddlHashlama" + iSidurNum).value = 0;
-                                 }
-                                 else {
-                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = false;
-                                 }
-                             break;
+                         case "CHARIGA":                            
+                               $get("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
+                               break;
+//                         case "HASHLAMA":                           
+//                                 if (_FirstChild.text == "0"){
+//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = true;
+//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).value = 0;
+//                                 }
+//                                 else{
+//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = false;
+//                                 }
+//                             break;
                          case "OUT_MICHSA":
                              $get("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
                              $get("lstSidurim_chkOutMichsa" + iSidurNum).checked = false;
@@ -944,10 +943,11 @@ function chkMkt(oRow) {
     function SetDate(oDate, sYear, sMonth, sDay, sHour, sMinutes)
     {
         oDate.setFullYear(sYear);
-        oDate.setMonth(sMonth);
+        oDate.setMonth(sMonth);        
         oDate.setDate(sDay);
-        oDate.setHours(sHour); 
-        oDate.setMinutes(sMinutes);     
+        oDate.setHours(sHour);
+        oDate.setMinutes(sMinutes);
+        oDate.setMonth(sMonth);
         return oDate;
     }
     function IsSHBigSG(val,args)
@@ -996,79 +996,106 @@ function chkMkt(oRow) {
            return (dShatHatchala < dShatGmar);
        }
     }
-    function IsSHGreaterPrvSG(val,args){      
-       SetBtnChanges();
-       var iIndex = String(val.id).substr(String(val.id).length-1,1);
+    function IsSHGreaterPrvSG(val,args){
+        SetBtnChanges();
+        var bNewSidur=false;
+       var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
+       var iSidur = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
+       if (iSidur == "")
+           bNewSidur = true; 
+
        var iPrvIndex = Number(iIndex) - 1;
-       var iPrevSidur = $("#lstSidurim_lblSidur".concat(iPrvIndex)).html();       
-       if ((iPrevSidur != SIDUR_CONTINUE_NAHAGUT) && (iPrevSidur != SIDUR_CONTINUE_NOT_NAHAGUT)) {
-           var sShatHatchala = $get("lstSidurim_txtSH".concat(iIndex));
-           var sPrevShatGmar = $get("lstSidurim_txtSG".concat(iPrvIndex));
-           var sSidurDate = $get("lstSidurim_lblDate".concat(iIndex));
-           var sPrevSidurDate = $get("clnDate").value;           
-           if (sPrevSidurDate != null) {
-               var prvShGmar = new Date();
-               var ShStart = new Date();
-               ShStart.setFullYear(sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length - 4, 4));
-               ShStart.setMonth(Number(sSidurDate.innerHTML.substr(3, 2)) - 1);
-               ShStart.setDate(sSidurDate.innerHTML.substr(0, 2));
-               ShStart.setHours(sShatHatchala.value.substr(0, 2));
-               ShStart.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length - 2, 2));
-               prvShGmar.setFullYear(sPrevSidurDate.substr(sPrevSidurDate.length - 4, 4));
-               prvShGmar.setMonth(Number(sPrevSidurDate.substr(3, 2)) - 1);
-               prvShGmar.setDate(sPrevSidurDate.substr(0, 2));
-               prvShGmar.setHours(sPrevShatGmar.value.substr(0, 2));
-               prvShGmar.setMinutes(sPrevShatGmar.value.substr(sPrevShatGmar.value.length - 2, 2));
-               if ($get("lstSidurim_txtDayAdd".concat(iPrvIndex)).value == "1")
-                   prvShGmar.setDate(prvShGmar.getDate() + 1);
-               var dShatHatchala = Date.UTC(ShStart.getFullYear(), ShStart.getMonth() + 1, ShStart.getDate(), ShStart.getHours(), ShStart.getMinutes(), 0);
-               var dPrevShatGmar = Date.UTC(prvShGmar.getFullYear(), prvShGmar.getMonth() + 1, prvShGmar.getDate(), prvShGmar.getHours(), prvShGmar.getMinutes(), 0);
-               return (dShatHatchala >= dPrevShatGmar);
+       var iLoLetashlum = $("#lstSidurim_chkLoLetashlum".concat(iIndex))[0].checked;
+       var iPrevSidur = $("#lstSidurim_lblSidur".concat(iPrvIndex)).html();
+       if (iPrevSidur!=null){
+           var iPrvLoLetashlum = $("#lstSidurim_chkLoLetashlum".concat(iPrvIndex))[0].checked;
+           var iPrvSidurCancel = $get("lstSidurim_lblSidurCanceled".concat(iPrvIndex)).value;
+           
+           // if ((iPrevSidur != SIDUR_CONTINUE_NAHAGUT) && (iPrevSidur != SIDUR_CONTINUE_NOT_NAHAGUT) && (iLoLetashlum == false) && (iPrevLoLetashlum==false)){
+           if ((iPrevSidur != null) && (iLoLetashlum == false) && (iPrvLoLetashlum == false) && (iPrvSidurCancel != '1') && (!bNewSidur)) {
+               var sShatHatchala = $get("lstSidurim_txtSH".concat(iIndex));
+               var sPrevShatGmar = $get("lstSidurim_txtSG".concat(iPrvIndex));
+               var sSidurDate = $get("lstSidurim_lblDate".concat(iIndex));
+               var sPrevSidurDate = $get("clnDate").value;           
+               if (sPrevSidurDate != null) {
+                   var prvShGmar = new Date();
+                   var ShStart = new Date();
+                   ShStart.setFullYear(sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length - 4, 4));
+                   ShStart.setMonth(Number(sSidurDate.innerHTML.substr(3, 2)) - 1);
+                   ShStart.setDate(sSidurDate.innerHTML.substr(0, 2));
+                   ShStart.setHours(sShatHatchala.value.substr(0, 2));
+                   ShStart.setMinutes(sShatHatchala.value.substr(sShatHatchala.value.length - 2, 2));
+                   prvShGmar.setFullYear(sPrevSidurDate.substr(sPrevSidurDate.length - 4, 4));
+                   prvShGmar.setMonth(Number(sPrevSidurDate.substr(3, 2)) - 1);
+                   prvShGmar.setDate(sPrevSidurDate.substr(0, 2));
+                   prvShGmar.setHours(sPrevShatGmar.value.substr(0, 2));
+                   prvShGmar.setMinutes(sPrevShatGmar.value.substr(sPrevShatGmar.value.length - 2, 2));
+                   if ($get("lstSidurim_txtDayAdd".concat(iPrvIndex)).value == "1")
+                       prvShGmar.setDate(prvShGmar.getDate() + 1);
+                   var dShatHatchala = Date.UTC(ShStart.getFullYear(), ShStart.getMonth() + 1, ShStart.getDate(), ShStart.getHours(), ShStart.getMinutes(), 0);
+                   var dPrevShatGmar = Date.UTC(prvShGmar.getFullYear(), prvShGmar.getMonth() + 1, prvShGmar.getDate(), prvShGmar.getHours(), prvShGmar.getMinutes(), 0);
+                   return (dShatHatchala >= dPrevShatGmar);
+               }
+               else { return true; }
            }
-           else { return true; }
-       }
-       else { return true; }       
+           else { return true; }       
+           }
+           else{ return true;}          
     }
     function IsEHourBigSHour(val,args)
     {//נבדוק ששעת הגמר קטנה משעת ההתחלה של הסידור הבא   
        SetBtnChanges();
+       var bNextNewSidur=false;
        var iIndex = String(val.id).substr(String(val.id).length-1,1);
        var iNextIndex = Number(iIndex) + 1;
-       var iNextSidur = $("#lstSidurim_lblSidur".concat(iNextIndex)).html();
-       if ((iNextSidur != SIDUR_CONTINUE_NAHAGUT) && (iNextSidur != SIDUR_CONTINUE_NOT_NAHAGUT)) {
-           var sNxtStartH = $get("lstSidurim_txtSH".concat(iNextIndex));
-           if (sNxtStartH != null) {
-               var sShatGmar = $get("lstSidurim_txtSG".concat(iIndex));
-               var sSidurDate = $get("lstSidurim_lblDate".concat(iIndex));
-               var AddDay = $get("lstSidurim_txtDayAdd".concat(iIndex)).value;
-               var AddDayNextSidur = $get("lstSidurim_txtDayAdd".concat(iNextIndex)).value;
-               var sNextSidurDate = $get("lstSidurim_lblDate".concat(iNextIndex));
-               var ShatGmar = new Date();
-               var dNxtStartH = new Date();
-               ShatGmar.setFullYear(sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length - 4, 4));
-               ShatGmar.setMonth(Number(sSidurDate.innerHTML.substr(3, 2)) - 1);
-               ShatGmar.setDate(sSidurDate.innerHTML.substr(0, 2));
-               ShatGmar.setHours(sShatGmar.value.substr(0, 2));
-               ShatGmar.setMinutes(sShatGmar.value.substr(sShatGmar.value.length - 2, 2));
-               if (AddDay == "1")
-                   ShatGmar.setDate(ShatGmar.getDate() + 1);
-               dNxtStartH.setFullYear(sNextSidurDate.innerHTML.substr(sNextSidurDate.innerHTML.length - 4, 4));
-               dNxtStartH.setMonth(Number(sNextSidurDate.innerHTML.substr(3, 2)) - 1);
-               dNxtStartH.setDate(sNextSidurDate.innerHTML.substr(0, 2));
-               dNxtStartH.setHours(sNxtStartH.value.substr(0, 2));
-               dNxtStartH.setMinutes(sNxtStartH.value.substr(sNxtStartH.value.length - 2, 2));
+       var iNextSidur = $get("lstSidurim_lblSidur".concat(iNextIndex));
+       if (iNextSidur == null) {
+           iNextSidur = $("#lstSidurim_lblSidur".concat(iNextIndex)).html();
+           bNextNewSidur = true;
+       } else { iNextSidur=iNextSidur.innerHTML; }
+       var iLoLetashlum = $("#lstSidurim_chkLoLetashlum".concat(iIndex))[0].checked;
+       if (iNextSidur != null) {
+           var iNextLoLetashlum = $("#lstSidurim_chkLoLetashlum".concat(iNextIndex))[0].checked;
+           var iNextSidurCancel = $get("lstSidurim_lblSidurCanceled".concat(iNextIndex)).value;       
+           //if ((iNextSidur != SIDUR_CONTINUE_NAHAGUT) && (iNextSidur != SIDUR_CONTINUE_NOT_NAHAGUT)) {
+           if ((iNextSidur != null) && (iLoLetashlum == false) && (iNextLoLetashlum == false) && (iNextSidurCancel != '1') && (!bNextNewSidur)){
+               var sNxtStartH = $get("lstSidurim_txtSH".concat(iNextIndex));
+               if (sNxtStartH != null) {
+                   var sShatGmar = $get("lstSidurim_txtSG".concat(iIndex));
+                   var sSidurDate = $get("lstSidurim_lblDate".concat(iIndex));
+                   var AddDay = $get("lstSidurim_txtDayAdd".concat(iIndex)).value;
+                   var AddDayNextSidur = $get("lstSidurim_txtDayAdd".concat(iNextIndex)).value;
+                   var sNextSidurDate = $get("lstSidurim_lblDate".concat(iNextIndex));
+                   var ShatGmar = new Date();
+                   var dNxtStartH = new Date();
+                   ShatGmar.setFullYear(sSidurDate.innerHTML.substr(sSidurDate.innerHTML.length - 4, 4));
+                   ShatGmar.setMonth(Number(sSidurDate.innerHTML.substr(3, 2)) - 1);
+                   ShatGmar.setDate(sSidurDate.innerHTML.substr(0, 2));
+                   ShatGmar.setHours(sShatGmar.value.substr(0, 2));
+                   ShatGmar.setMinutes(sShatGmar.value.substr(sShatGmar.value.length - 2, 2));
+                   if (AddDay == "1")
+                       ShatGmar.setDate(ShatGmar.getDate() + 1);
+                   dNxtStartH.setFullYear(sNextSidurDate.innerHTML.substr(sNextSidurDate.innerHTML.length - 4, 4));
+                   dNxtStartH.setMonth(Number(sNextSidurDate.innerHTML.substr(3, 2)) - 1);
+                   dNxtStartH.setDate(sNextSidurDate.innerHTML.substr(0, 2));
+                   dNxtStartH.setHours(sNxtStartH.value.substr(0, 2));
+                   dNxtStartH.setMinutes(sNxtStartH.value.substr(sNxtStartH.value.length - 2, 2));
 
-               var dNextShatH = Date.UTC(dNxtStartH.getFullYear(), dNxtStartH.getMonth() + 1, dNxtStartH.getDate(), dNxtStartH.getHours(), dNxtStartH.getMinutes(), 0);
-               var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth() + 1, ShatGmar.getDate(), ShatGmar.getHours(), ShatGmar.getMinutes(), 0);
-               return (dShatGmar <= dNextShatH);
+                   var dNextShatH = Date.UTC(dNxtStartH.getFullYear(), dNxtStartH.getMonth() + 1, dNxtStartH.getDate(), dNxtStartH.getHours(), dNxtStartH.getMinutes(), 0);
+                   var dShatGmar = Date.UTC(ShatGmar.getFullYear(), ShatGmar.getMonth() + 1, ShatGmar.getDate(), ShatGmar.getHours(), ShatGmar.getMinutes(), 0);
+                   return (dShatGmar <= dNextShatH);
+               }
+               else {
+                   return true;
+               }
            }
            else {
                return true;
-           }
-       }
-       else {
-           return true;
-       }   
+           }   
+          }
+           else{
+             return true;
+           }        
     }
     function IsSidurMyuhad(sMisparSidur){//נבדוק אם סידור הוא רגיל או מיוחד    
         if (String(sMisparSidur).length > 1)
@@ -1287,10 +1314,11 @@ function chkMkt(oRow) {
 
         var sYear=sSdDate.substr(sSdDate.length-4,4);
         var sMonth=Number(sSdDate.substr(3,2))-1;
-        var sDay=sSdDate.substr(0,2);             
-        dSdDate.setFullYear(sYear);
-        dSdDate.setMonth(sMonth);
-        dSdDate.setDate(sDay);
+        var sDay = sSdDate.substr(0, 2);
+        SetDate(dSdDate, sYear, sMonth, sDay, '0', '0');         
+//        dSdDate.setFullYear(sYear);
+//        dSdDate.setMonth(sMonth);
+//        dSdDate.setDate(sDay);
         dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));   
          
         if (arrItems[0]=='1'){
@@ -1599,8 +1627,9 @@ function chkMkt(oRow) {
      var ddlChariga = $get("lstSidurim_ddlException".concat(id));  
      var iSelVal = Number(ddlChariga.value);
      var iCharigaType = Number(ddlChariga.getAttribute("ChrigaType"));
-     if ((iSelVal>0) && (iSelVal!=iCharigaType) && (iCharigaType!=3) && (iCharigaType!=0) && (iCharigaType!=4)){
-        alert('אין חריגה משעת התחלה או משעת גמר ');
+     if ((iSelVal > 0) && (iSelVal != iCharigaType) && (iCharigaType != 3) && (iCharigaType != 0) && (iCharigaType != 4)) {
+         ddlChariga.value = -1;
+         alert('אין חריגה משעת התחלה או משעת גמר ');
      }
    }
    function CopyOtoNum(oRow) {
