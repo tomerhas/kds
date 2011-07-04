@@ -11,12 +11,22 @@
       <link id="Link1" runat="server" href="~/StyleSheet.css" type="text/css" rel="stylesheet" />
       <base target="_self" />
 </head>
-<body onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }" >
+<body  onkeydown="return ChangeKeyCode(event.keyCode);"> 
 <script type="text/javascript">
     var selectedSidur;
     var DateCard = "<%=sDateCard %>";
 
-
+    function ChangeKeyCode(keyCode) {
+        // debugger;
+        if (keyCode == 107) {
+            event.keyCode = 9;
+            return event.keyCode;
+        }
+        else if (keyCode == 110) {
+            if (document.getElementById("btnUpdate").disabled == false)
+                document.getElementById("btnUpdate").focus();
+        }
+    }
 //   function window.onload() {
 //        if (window.dialogArguments != undefined) {
 //            if (window.dialogArguments.document.getElementById("divHourglass") != null)
