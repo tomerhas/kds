@@ -3463,6 +3463,7 @@ namespace KdsBatch
             string par = string.Empty;
             clSidur oPrevSidur = null;
             clPeilut tmpPeilut = null;
+            float SachHamtana=0;
             if (oSidur.bSidurEilat && oSidur.IsLongEilatTrip(dCardDate, out tmpPeilut, _oParameters.fOrechNesiaKtzaraEilat))
             {
                 bCurrSidurEilat = true;
@@ -3490,9 +3491,27 @@ namespace KdsBatch
                 { //צריך להיות שעה הפרש בין שני סידורי אילת. מזהים סידור אילת אם יש לו פעילות אילת. מזהים פעילות אילת לפי שדה שחוזר מהפרוצדורה GetKavDetails.
                     if (bPrevSidurEilat && bCurrSidurEilat)
                     {
-                        if ((oSidur.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60
-                             && oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList().Any(peilut => (peilut.bElementHamtanaExists && Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3)) + oSidur.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60))))
+                        SachHamtana = oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList().Sum(peilut =>
                         {
+                            if (peilut.bElementHamtanaExists)
+                                return Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
+                            else return 0;
+                        });
+
+
+
+                        //foreach (clPeilut oPeilut in oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList())
+                        //{
+                        //    if (oPeilut.bElementHamtanaExists)
+                        //    {
+                        //        SachHamtana += Int32.Parse(oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
+                        //    }
+                        //}
+                        if ((oSidur.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60)
+                             && ((SachHamtana + oSidur.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes) < 60))
+                       //    && oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList().Any(peilut => (peilut.bElementHamtanaExists && Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3)) + oSidur.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60))))
+                        {
+                           
                             drNew = dtErrors.NewRow();
                             InsertErrorRow(oSidur, ref drNew, "סידור אילת ללא הפסקה כנדרש לפני הסידור ", enErrors.errSidurEilatNotValid.GetHashCode());
                             dtErrors.Rows.Add(drNew);
@@ -6305,19 +6324,19 @@ namespace KdsBatch
                     //נבצע את הבדיקות לכל הסידורים, מלבד הראשון - שינוי 08
                     FixedSidurHours08();
                    
-
+                    //בוטל 04/07/2011
                     //-שינוי 22
-                    for (i = 0; i < htEmployeeDetails.Count; i++)
-                    {
-                        oSidur = (clSidur)htEmployeeDetails[i];
-                        if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                        {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                    ////for (i = 0; i < htEmployeeDetails.Count; i++)
+                    ////{
+                    ////    oSidur = (clSidur)htEmployeeDetails[i];
+                    ////    if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                    ////    {
+                    ////        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                            FixedEggedTaavura22(ref oSidur, ref oObjSidurimOvdimUpd);
-                            htEmployeeDetails[i] = oSidur;
-                        }
-                    }
+                    ////        FixedEggedTaavura22(ref oSidur, ref oObjSidurimOvdimUpd);
+                    ////        htEmployeeDetails[i] = oSidur;
+                    ////    }
+                    ////}
 
                     //שינוי 23
                     bFirstHayavHityazvut = false;
@@ -10939,29 +10958,39 @@ namespace KdsBatch
                                         bSign = Condition6Saif11(ref oSidur);
                                         if (!bSign)
                                         {
-                                            //תנאי 7
-                                            bSign = Condition7Saif11(drSugSidur, ref oSidur);
+                                            //אגד תעבורה 
+                                            bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
                                             if (!bSign)
                                             {
-                                                //תנאי 8
-                                                bSign = Condition8Saif11(drSugSidur, ref oSidur);
+                                                //תנאי 7
+                                                bSign = Condition7Saif11(drSugSidur, ref oSidur);
                                                 if (!bSign)
                                                 {
-                                                    //תנאי 9
-                                                    bSign = Condition9Saif11(drSugSidur, ref oSidur);
-                                                    if (bSign)
+                                                    //תנאי 8
+                                                    bSign = Condition8Saif11(drSugSidur, ref oSidur);
+                                                    if (!bSign)
                                                     {
-                                                        iKodSibaLoLetashlum = 10; 
+                                                        //תנאי 9
+                                                        bSign = Condition9Saif11(drSugSidur, ref oSidur);
+                                                        if (bSign)
+                                                        {
+                                                            iKodSibaLoLetashlum = 10;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        iKodSibaLoLetashlum = 17;
                                                     }
                                                 }
-                                                else{
-                                                    iKodSibaLoLetashlum = 17;
+                                                else
+                                                {
+                                                    iKodSibaLoLetashlum = 15;
                                                 }
                                             }
                                             else
                                             {
-                                                iKodSibaLoLetashlum = 15;
-                                            }
+                                                iKodSibaLoLetashlum = 12;
+                                            } 
                                         }
                                         else
                                         {
@@ -11123,6 +11152,17 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw ex;
+            }
+            return bSign;
+        }
+
+        private bool Saif5EggedTaavura(DataRow[] drSugSidur, ref clSidur oSidur)
+        {
+            bool bSign = false;
+
+            if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && oSidur.bSidurNotValidKodExists)
+            {
+                bSign = true;
             }
             return bSign;
         }
