@@ -620,7 +620,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);            
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
+
+            //string sScript = "";
+            //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
@@ -2087,9 +2090,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
     {//הוספת סידור מיוחד
         lstSidurim.AddNewSidur();
-
-        //string sScript = "document.getElementById('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').select();";
-        //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {

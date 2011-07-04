@@ -1393,6 +1393,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddPeilut.ImageUrl = "~/images/plus.jpg";               
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
+               // imgAddPeilut.Attributes.Add("AddPeilut","0");
                 imgAddPeilut.CausesValidation = false;
                 imgAddPeilut.Click += new ImageClickEventHandler(imgAddPeilut_Click);
                 if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
@@ -2445,13 +2446,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.dCardDate = _CardDate;
                 _Peilut.iPeilutMisparSidur = _Sidur.iMisparSidur;
 
-                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);                 
                 sShatYetiza = oShatYetiza.Text;
+                //במידה ןיש שעת יציאה אבל אין תאריך, פעילות חדשה, נשתול תאריך של היום
+               
                 if (dShatYetiza.Date.Year < clGeneral.cYearNull)
                     if (oShatYetiza.Text != string.Empty)
                     {
                         if ((DateTime.Parse(oShatYetiza.Text).Hour > 0) || (DateTime.Parse(oShatYetiza.Text).Minute > 0))
-                            oShatYetiza.Attributes["OrgDate"] = _Sidur.dFullShatHatchala.ToShortDateString();
+                            oShatYetiza.Attributes["OrgDate"] = _CardDate.ToShortDateString();
                     }
                     else //שעת יציאה ריקה
                         sShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgShatYetiza"]).ToShortTimeString();
@@ -2607,8 +2610,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         clSidur _Sidur = new clSidur(); 
         clPeilut _Peilut = new clPeilut();               
         int iSidurNumber=0;
+        int iPeilutIndex = 0;
         DateTime dSidurShatHatchala= new DateTime();
         bool bHasNoPremmisionToAddPeilut;
+        bool bSidurVisa;
 
         iSidurNumber = GetSidurKey(iSidurIndex, ref dSidurShatHatchala);                
         _Sidur = (clSidur)(_DataSource[iSidurIndex]);
@@ -2621,18 +2626,73 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             if (!bHasNoPremmisionToAddPeilut)
             {
-                _Sidur.htPeilut.Add(_Sidur.htPeilut.Count + 1, _Peilut);
-                _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-                _Peilut.lMakatNesia = IsSidurVisa(ref _Sidur) && (_Sidur.htPeilut.Count == 1) ? MAKAT_VISA : 0;
+                bSidurVisa = IsSidurVisa(ref _Sidur);
+                if (hidGeneralParam.Value.Equals("1"))
+                { //1- למחוק פעילות ויזה
+                    //אם זה לא סידור ויזה וגם קיימת פעילות 500000  מהסידור הקודם, נמחוק את הפעילות                    
+                    //נחפש פעילות 5000000
+                    DeletePeilutVisa(ref _Sidur);
+                    hidGeneralParam.Value = "0";
+                }
+                else
+                {
+
+                    _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut)+1, _Peilut);
+                    _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
+                    _Peilut.lMakatNesia = ((bSidurVisa) && (!IsPeilutVisaExists(ref _Sidur,ref iPeilutIndex))) ? MAKAT_VISA : 0;
+                }                
             }
         }
-        Session["Sidurim"] = _DataSource;
-         
+        Session["Sidurim"] = _DataSource;         
         ClearControl();
         BuildPage();
     }
 
-   
+    private int FindNextKey(ref OrderedDictionary _SidurPeilut)
+    {
+        int iMaxKey = 0;
+        object[] keys = new object[_SidurPeilut.Keys.Count]; 
+        _SidurPeilut.Keys.CopyTo(keys, 0);
+
+        for (int i = 0; i < _SidurPeilut.Count; i++)
+            if ((int)keys[i] > iMaxKey)
+                iMaxKey = (int)(keys[i]);
+    
+        return iMaxKey;
+    }
+    private bool IsPeilutVisaExists(ref clSidur _Sidur, ref int iPeilutIndex)
+    {
+        bool bExists = false;
+        for (int i = 0; i < _Sidur.htPeilut.Count; i++)
+            if (((clPeilut)_Sidur.htPeilut[i]).lMakatNesia == MAKAT_VISA)
+            {
+                iPeilutIndex = i;
+                bExists = true;                
+                break;
+            }
+        return bExists;
+    }
+    private void DeletePeilutVisa(ref clSidur _Sidur)
+    {
+        //clPeilut[] _Peiluyot;
+        //clPeilut _Peilut;
+        int iPeiluIndex=0;
+
+        if (IsPeilutVisaExists(ref _Sidur,ref  iPeiluIndex))
+        {
+            _Sidur.htPeilut.RemoveAt(iPeiluIndex);
+            //for (int i = iPeiluIndex; i < _Sidur.htPeilut.Count; i++)
+            //{
+            //     _Sidur.htPeilut.
+            //}
+            //for (int i = 0; i < _Sidur.htPeilut.Count; i++)
+            //{                
+            //    _Peiluyot[i] = (clPeilut)_Sidur.htPeilut[i];
+            //}
+            //for (int j = 0; j < _Peiluyot.Length; j++)
+            //    _Sidur.htPeilut.Add(j, _Peiluyot[j]);
+        }
+    }
     //private void GetPeilyotTnuaDetails(ref clPeilut _Peilut)
     //{
     //    string sCacheKey = MisparIshi + CardDate.ToShortDateString();
@@ -2758,7 +2818,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //            drLicenseNumber = Mashar.Select("bus_number=" + drPeilutyot["oto_no"].ToString());
     //            if (drLicenseNumber.Length > 0)                
     //                drPeilutyot["license_number"] = long.Parse(drLicenseNumber[0]["license_number"].ToString());
-                
+
 
     //            //drPeilutyot["PeilutStatus"] = e.Row.Cells[_COL_PEILUT_STATUS];   
     //            dt.Rows.Add(drPeilutyot);

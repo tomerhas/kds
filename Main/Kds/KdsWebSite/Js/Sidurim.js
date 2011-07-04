@@ -272,14 +272,19 @@ function chkMkt(oRow) {
                                  if (sPrev == 'block')
                                      $get("lstSidurim_imgAddPeilut" + iSidurNum).click();
                              }
-                             else
-                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';                                 
+                             else {
+                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).style.display = 'block';
                                  $get("lstSidurim_imgAddPeilut" + iSidurNum).disabled = false;
+                                 if (PeilutVisaExists(iSidurNum)){
+                                     $get("lstSidurim_hidGeneralParam").value="1";
+                                     $get("lstSidurim_imgAddPeilut" + iSidurNum).click();
+                                 }
+                             }
                              break;
                          case "SIDUR_VISA":
-                            if (_FirstChild.text == "1")
-                                //סידור ויזה   - הוספת פעילות                                 
-                                $get("lstSidurim_imgAddPeilut" + iSidurNum).click();                             
+                             if (_FirstChild.text == "1")
+                                 //סידור ויזה   - הוספת פעילות                                 
+                                 $get("lstSidurim_imgAddPeilut" + iSidurNum).click();
                              break;
                      }                   
                      _FirstChild = _FirstChild.nextSibling;
@@ -299,7 +304,19 @@ function chkMkt(oRow) {
                  _Sidur.title = '';                
              }
      }
-     
+     function PeilutVisaExists(iSidurNum){
+         var bExist=false;
+         var _Peilut = $get("lstSidurim_" + padLeft(iSidurNum,'0',3));
+         if (_Peilut != null) {
+             for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
+                 if (_Peilut.firstChild.childNodes[j].cells[_COL_MAKAT].childNodes[0].value == '50000000'){
+                     bExist = true;
+                     break;
+                 }
+             }
+         }
+         return bExist;
+     } 
     function SetCarNumber(iSidurIndex, oRId){
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
@@ -1519,8 +1536,10 @@ function chkMkt(oRow) {
             }
         }       
         i=++i;
-        _Sidur = $get("lstSidurim_lblSidur" + i); 
-     }      
+        _Sidur = $get("lstSidurim_lblSidur" + i);
+    }
+   // if (($get('lstSidurim_lblSidur'.concat(i - 1)) != null) && ($get('lstSidurim_lblSidur'.concat(i - 1)).disabled==false))
+     //    $get('lstSidurim_lblSidur'.concat(i-1)).select();    
    }
    function EnabledSidurimListBtn(bDisabled){
      var _Sidur, _ImgPeilut,_imgCancel,_imgCancelPeilut;
