@@ -61,7 +61,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
  //   private bool bDisabledFrame;
    // private AsyncPostBackTrigger[] TriggerToAdd;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
-    public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;  
+    public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
+    private bool bAddSidur;
     //private WorkCardObj _WorkCardBeforeChanges, _WorkCardAfterChanges;
 
     //private enum ErrorLevel
@@ -620,8 +621,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            if (bAddSidur)               
+                sScript= sScript + "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count-1).ToString() + "').focus();";
+            //if (lstSidurim.AddPeilut)
+            //    sScript = sScript + "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
+            bAddSidur = false;
+            lstSidurim.AddPeilut = false;
             //string sScript = "";
             //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
         }
@@ -2089,7 +2096,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
     {//הוספת סידור מיוחד
-        lstSidurim.AddNewSidur();
+        lstSidurim.AddNewSidur();        
+        string sScript = "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();";
+        ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
+        bAddSidur = true;
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {

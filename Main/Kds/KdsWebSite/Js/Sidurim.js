@@ -1469,8 +1469,8 @@ function chkMkt(oRow) {
         if (!(IsValidTime(sTime)))
            args.IsValid=false;
   
-   }  
-   function HasSidurHashlama(){
+   }
+   function HasSidurHashlama() {     
      var _HashlamaDLL, _Sidur;   
      var i=0;
      var j=0;
@@ -1502,8 +1502,8 @@ function chkMkt(oRow) {
              j=++j;
              _Sidur = $get("lstSidurim_lblSidur" + j);
              _HashlamaDLL = $get("lstSidurim_ddlHashlama" + j); 
-        }       
-     }         
+        }
+     }    
    }
    function SetSidurimCollapseImg(){
      var _Sidur, _Img, _Peilut, stat;
@@ -1661,11 +1661,12 @@ function chkMkt(oRow) {
        if ($get(oId).nextSibling != null) {
            var _NextPeilut = $get(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
            var _NextCarNum = _NextPeilut.value;
+           var _NextPeilutMkt = $get(oId).nextSibling.cells[_COL_MAKAT].childNodes[0];
            if (_NextCarNum != undefined) {
                var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
                if (_NextCarNum == '') { _NextCarNum = '0'; }
                if (_CurrCarNum != '') {
-                   if ((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum)) {
+                   if (((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum)) || (_NextPeilutMkt.value == '') || (_NextPeilutMkt.value == '0')) {
                        $get("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
                        $get("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
                        $get("btnCopy").click();
@@ -1741,18 +1742,19 @@ function chkMkt(oRow) {
      $find("pBehvCopy").hide();
      if (iAction==1){
         var arrKey = $get("hidCarKey").value.split(",");
-        var _NextPeilutCarNum,_MustCarNum;
+        var _NextPeilutCarNum, _MustCarNum, _NextPeilutMakat;
         var oId = arrKey[2];
         var _OrgCarNum = arrKey[0];
         var _CurrCarNum = arrKey[1];
         var _CarNum = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0]; 
         var _NextPeilut = $get(oId).nextSibling;
         while (_NextPeilut!=null){
-            _NextPeilutCarNum=_NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value;
+            _NextPeilutCarNum = _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].value;
+            _NextPeilutMakat = _NextPeilut.cells[_COL_MAKAT].childNodes[0].value;
             if (_NextPeilutCarNum!=undefined){
             _MustCarNum = _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].getAttribute("MustOtoNum");
             
-            if (((_NextPeilutCarNum==_OrgCarNum) || (Number(_NextPeilutCarNum)==0) || (_NextPeilutCarNum==''))  && (_MustCarNum=='1')){
+            if (((((_NextPeilutCarNum==_OrgCarNum) || (Number(_NextPeilutCarNum)==0) || (_NextPeilutCarNum==''))  && (_MustCarNum=='1'))) || (_NextPeilutMakat=='') || (_NextPeilutMakat=='0')){
                 if ((_NextPeilut.cells[_COL_CANCEL_PEILUT].firstChild.value!='1') && (_NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].disabled!=true)) {
                     _CarNum.setAttribute("OldV",_CurrCarNum);
                     _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV",_CurrCarNum);

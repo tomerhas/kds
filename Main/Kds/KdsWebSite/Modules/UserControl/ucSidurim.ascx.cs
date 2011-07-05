@@ -129,6 +129,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private bool _ProfileRashemet;
     private int _MisparIshiIdkunRashemet;
     private const string COL_TRIP_EMPTY = "ריקה";
+    private bool _AddPeilut;
     // Delegate declaration
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
@@ -1878,6 +1879,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {        
         AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));
+        AddPeilut = true;
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
             btnHandler(string.Empty, true);
@@ -6325,6 +6327,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //        return _Param110;
     //    }
     //}
+    public bool AddPeilut
+    {
+        set { _AddPeilut = value; }
+        get { return _AddPeilut;  }
+    }
     public int NumOfHashlama
     {
         set 

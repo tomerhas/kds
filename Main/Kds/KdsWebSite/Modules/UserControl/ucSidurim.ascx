@@ -44,7 +44,7 @@ function SaveScrollPosToHidden()
 function window.onload()
 {    
     SetSidurimCollapseImg();
-    HasSidurHashlama();   
+    HasSidurHashlama(); 
 }
 </script>
 <script src="../../Js/Sidurim.js" type="text/javascript"></script>
