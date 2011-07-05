@@ -12773,11 +12773,14 @@ namespace KdsBatch
         //    }
         //}
 
-        private void SetHourToSidur19(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,bool bIdkunRashShatHatchala,bool bIdkunRashShatGmar)
+         /******************************/
+        private void SetHourToSidur19(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar)
         {
-            DateTime dShatHatchalaLetashlumToUpd; // = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+            DateTime dShatHatchalaLetashlumToUpd;
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
-
+            DateTime dShatHatchalaLetashlum = DateTime.MinValue;
+            DateTime dShatGmarLetashlum = DateTime.MinValue;
+            bool bFromMeafyenHatchala, bFromMeafyenGmar;
             //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
             try
             {
@@ -12785,15 +12788,20 @@ namespace KdsBatch
                     dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
                 else dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
 
-                 
-                //GetSidurCurrentTime(iSidurIndex, ref oSidur, ref dSidurShatHatchala, ref dSidurShatGmar);
-                //אם הסידור הוא מסוג "היעדרות" (סידור מיוחד עם מאפיין 53 בטבלת סידורים מיוחדים) והערך במאפיין הוא 8 (היעדרות בתשלום)  או 9 (ע"ח שעות נוספות)                   
-                SetSidurHeadrut(ref oSidur, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref oObjSidurimOvdimUpd);
-                //4. סידור אינו מסומן במאפיין 78 (רק לסידורים מיוחדים):
-                //5. סידור מסומן במאפיין 78
-                SetSidurKizuz(ref oSidur, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref oObjSidurimOvdimUpd);
+                //אתחול שעת התחלה וגמר לפי מאפיינים וסוגי ימים
+                GetOvedShatHatchalaGmar(oObjSidurimOvdimUpd.SHAT_GMAR, oMeafyeneyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out  bFromMeafyenGmar);
+                //סידור עם מאפיין 78 - קיזוז
+                SetShatHatchalaGmarKizuz(ref oSidur, ref oObjSidurimOvdimUpd, dShatHatchalaLetashlum, dShatGmarLetashlum, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
 
-           //     SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+                //כל סידור מיוחד שלא עודכנו לו שעות התחלה/גמר לתשלום באחד הסעיפים הקודמים, יש לעדכן לו:
+                //שעת התחלה לתשלום לשעת התחלה סידור
+                //שעת גמר לתשלום לשעת גמר סידור
+                if (dShatHatchalaLetashlumToUpd == DateTime.MinValue)
+                    dShatHatchalaLetashlumToUpd = oSidur.dFullShatHatchala;
+
+                if (dShatGmarLetashlumToUpd == DateTime.MinValue)
+                    dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
+
 
                 if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
                 {
@@ -12815,12 +12823,182 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 19, oSidur.iMisparIshi,oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SetHourToSidur19: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 19, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SetHourToSidur19: " + ex.Message, null);
                 _bSuccsess = false;
             }
         }
 
+        private void SetShatHatchalaGmarKizuz(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum, ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
+        {
+            //5. סידור מסומן במאפיין 78
+            //אם הסידור מסומן במאפיין 78 (קיזוז התחלה / גמר)
+            //ואינו מסומן "לא לתשלום", ישנם כמה מקרים:
+            try
+            {
+                if ((oSidur.bKizuzAlPiHatchalaGmarExists) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
+                {
+                    //1 .אם אין סימון "קוד חריגה" (אין = null או 0) ואין סימון "מחוץ למיכסה" (אין = null או 0), שלושה מקרים:                                                                               
+                    if (oObjSidurimOvdimUpd.CHARIGA == 0)
+                    {
+                        SetShaotHatchalaGmar_2(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+                        //אם חריגה=0 וגם עובד עם מאפייני משמרת שניה
+                        SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
 
+                    }
+                    else //chariga>0
+                    {
+                     
+                        //3. אם יש סימון "קוד חריגה" ולא קבענו את הסידור "לא לתשלום", שלושה מקרים:                                                           
+                        if ((oObjSidurimOvdimUpd.CHARIGA != 0) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0))
+                        {
+                            //ראשית יש לבדוק האם החריגה אושרה במנגנון האישורים, רק אם כן יש לבצע את השינוי.
+                            //if (CheckApprovalStatus("2,211,4,5,511,6,10,1011", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
+                            //{
+                            //א. אם מסומן קוד חריגה "1"  (חריגה משעת התחלה) אזי שעת התחלה לתשלום = שעת תחילת הסידור.
+                            //אם שעת הגמר של הסידור גדולה משעת מאפיין הגמר המותר (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים): שעת גמר לתשלום = השעה המוגדרת במאפיין. 
+
+                            if (oObjSidurimOvdimUpd.CHARIGA == 1)
+                            {
+                                dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                                if (oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarLetashlum)
+                                  dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                                else
+                                    dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+                            }
+                            //ב. אם מסומן קוד חריגה "2"  (חריגה משעת גמר) אזי שעת גמר לתשלום = שעת גמר הסידור.
+                            //אם שעת התחלה של הסידור קטנה משעת מאפיין התחלה המותרת (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים) : שעת התחלה לתשלום = השעה המוגדרת במאפיין. 
+                            if (oObjSidurimOvdimUpd.CHARIGA == 2)
+                            {
+                                dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+                                if (oSidur.dFullShatHatchala < dShatHatchalaLetashlum)
+                                    dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
+                                else
+                                    dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                            }
+                            //ג. אם מסומן קוד חריגה "3"  (חריגה משעת התחלה וגמר) אזי :
+                            //שעת התחלה לתשלום = שעת תחילת הסידור.
+                            //שעת גמר לתשלום = שעת גמר הסידור
+                            if (oObjSidurimOvdimUpd.CHARIGA == 3)
+                            {
+                                dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                                dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+                            }
+                       }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void SetShaotHatchalaGmar(ref clSidur oSidur, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
+        {
+            //א. אם שעת הגמר של הסידור לא גדולה משעת מאפיין ההתחלה המותרת (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים): יש לסמן את הסידור "לא לתשלום"
+            //ב. אם שעת ההתחלה של הסידור לא קטנה משעת מאפיין הגמר המותרת (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים) - יש לסמן את הסידור "לא לתשלום                            
+            try
+            {
+                if ((oObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue && (oObjSidurimOvdimUpd.SHAT_GMAR <= dShatHatchalaLetashlum)) || (oObjSidurimOvdimUpd.SHAT_HATCHALA >= dShatGmarLetashlum))
+                {
+                    //oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
+                    //oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 10;
+                    if (dShatHatchalaLetashlum.Year > clGeneral.cYearNull)
+                    {
+                        dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
+                    }
+                    if (dShatGmarLetashlum.Year > clGeneral.cYearNull)
+                    {
+                        dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                    }
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    //oSidur.iLoLetashlum = 1;
+                }
+                else
+                {
+                    //א.ב.ג
+                    if ((oObjSidurimOvdimUpd.SHAT_GMAR<= dShatHatchalaLetashlum)
+                        || (oObjSidurimOvdimUpd.SHAT_HATCHALA >= dShatGmarLetashlum)
+                        ||  (oObjSidurimOvdimUpd.SHAT_HATCHALA < dShatHatchalaLetashlum && oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarLetashlum) )
+                    {
+                        dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
+                        dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                    }
+                    //ד
+                    if (oObjSidurimOvdimUpd.SHAT_HATCHALA < dShatHatchalaLetashlum && oObjSidurimOvdimUpd.SHAT_GMAR <= dShatGmarLetashlum)
+                    {
+                        dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
+                        dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+                    }
+                    //ה
+                    if (oObjSidurimOvdimUpd.SHAT_HATCHALA >= dShatHatchalaLetashlum && oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarLetashlum)
+                    {
+                        dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                        dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                    }
+                    //ו
+                    if (oObjSidurimOvdimUpd.SHAT_HATCHALA >= dShatHatchalaLetashlum && oObjSidurimOvdimUpd.SHAT_GMAR <= dShatGmarLetashlum)
+                    {
+                        dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                        dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+                    }
+                  
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /*************************************/
+        private void SetHourToSidur19_2(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, bool bIdkunRashShatHatchala, bool bIdkunRashShatGmar)
+        {
+            DateTime dShatHatchalaLetashlumToUpd; // = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+            DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
+
+            //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
+            try
+            {
+                if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != DateTime.MinValue)
+                    dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
+                else dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+
+
+                //GetSidurCurrentTime(iSidurIndex, ref oSidur, ref dSidurShatHatchala, ref dSidurShatGmar);
+                //אם הסידור הוא מסוג "היעדרות" (סידור מיוחד עם מאפיין 53 בטבלת סידורים מיוחדים) והערך במאפיין הוא 8 (היעדרות בתשלום)  או 9 (ע"ח שעות נוספות)                   
+                SetSidurHeadrut(ref oSidur, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref oObjSidurimOvdimUpd);
+                //4. סידור אינו מסומן במאפיין 78 (רק לסידורים מיוחדים):
+                //5. סידור מסומן במאפיין 78
+                SetSidurKizuz(ref oSidur, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref oObjSidurimOvdimUpd);
+
+                //     SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+
+                if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
+                {
+                    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                    oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
+                    if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
+                        oSidur.sShatHatchalaLetashlum = "";
+                }
+
+                if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
+                {
+                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                    oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, 19, oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SetHourToSidur19: " + ex.Message, null);
+                _bSuccsess = false;
+            }
+        }
+      
         private void SetSidurHeadrut(ref clSidur oSidur,ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd,ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
         {
             DateTime dShatHatchalaLetashlum = new DateTime();
@@ -12921,7 +13099,7 @@ namespace KdsBatch
             }
         }
 
-        private void SetShatHatchalaGmarKizuz(ref clSidur oSidur,ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum,ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
+        private void SetShatHatchalaGmarKizuz_2(ref clSidur oSidur,ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum,ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
         {
             //5. סידור מסומן במאפיין 78
             //אם הסידור מסומן במאפיין 78 (קיזוז התחלה / גמר)
@@ -12933,7 +13111,7 @@ namespace KdsBatch
                 //1 .אם אין סימון "קוד חריגה" (אין = null או 0) ואין סימון "מחוץ למיכסה" (אין = null או 0), שלושה מקרים:                                                                               
                 if (oObjSidurimOvdimUpd.CHARIGA == 0 )
                 {
-                    SetShaotHatchalaGmar(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd,ref dShatHatchalaLetashlumToUpd,ref dShatGmarLetashlumToUpd);
+                    SetShaotHatchalaGmar_2(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd,ref dShatHatchalaLetashlumToUpd,ref dShatGmarLetashlumToUpd);
                     SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
 
                 }
@@ -13035,7 +13213,7 @@ namespace KdsBatch
             }
         }
        
-        private void SetShaotHatchalaGmar(ref clSidur oSidur, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
+        private void SetShaotHatchalaGmar_2(ref clSidur oSidur, DateTime dShatHatchalaLetashlum, DateTime dShatGmarLetashlum, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
         {
             //א. אם שעת הגמר של הסידור לא גדולה משעת מאפיין ההתחלה המותרת (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים): יש לסמן את הסידור "לא לתשלום"
             //ב. אם שעת ההתחלה של הסידור לא קטנה משעת מאפיין הגמר המותרת (המאפיין תלוי בסוג היום, ראה עמודה  שדות מעורבים) - יש לסמן את הסידור "לא לתשלום                            
