@@ -249,8 +249,10 @@ function chkMkt(oRow) {
                          case "PITZUL_HAFSAKA":
                              $get("lstSidurim_ddlPHfsaka" + iSidurNum).disabled = true;
                              break;
-                         case "CHARIGA":                            
-                               $get("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
+                         case "CHARIGA":
+                             $get("lstSidurim_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
+                             if (_FirstChild.text == "0")
+                                $get("lstSidurim_ddlException" + iSidurNum).value = "-1";
                                break;
 //                         case "HASHLAMA":                           
 //                                 if (_FirstChild.text == "0"){
@@ -531,7 +533,8 @@ function chkMkt(oRow) {
         if (($get(sCtl.concat(iIndex)).getAttribute("OrgEnabled"))=="1"){     
            $get(sCtl.concat(iIndex)).disabled=bFlag;} 
     }
-    function SetSidurStatus(iIndex, bFlag){
+    function SetSidurStatus(iIndex, bFlag) {
+        var _Sidur;
      MovePanel(iIndex);  
      if (bFlag){
         SetLabelColor("lstSidurim_lblSidur",iIndex,"gray");
@@ -541,19 +544,33 @@ function chkMkt(oRow) {
      else{     
        SetLabelColor("lstSidurim_lblSidur",iIndex,"black");
        SetLabelColor("lstSidurim_txtSHL",iIndex,"black");
-       SetLabelColor("lstSidurim_txtSGL",iIndex,"black");    
-     }
+       SetLabelColor("lstSidurim_txtSGL",iIndex,"black");
+   }
+
      $get("lstSidurim_pnlContent".concat(iIndex)).disabled = bFlag;
-     $get("lstSidurim_lblSidur".concat(iIndex)).disabled = bFlag;
+     _Sidur = $get("lstSidurim_lblSidur".concat(iIndex));
+     _Sidur.disabled = bFlag;
      EnableField("lstSidurim_ddlHashlama",iIndex,bFlag);
      EnableField("lstSidurim_ddlPHfsaka",iIndex,bFlag);
      EnableField("lstSidurim_ddlException",iIndex,bFlag);    
      EnableField("lstSidurim_chkOutMichsa",iIndex,bFlag);   
      EnableField("lstSidurim_ddlResonOut",iIndex,bFlag);   
-     EnableField("lstSidurim_ddlResonIn",iIndex,bFlag); 
-     EnableField("lstSidurim_chkLoLetashlum",iIndex,bFlag);        
-     EnableField("lstSidurim_txtSH",iIndex,bFlag);
-     EnableField("lstSidurim_txtSG", iIndex, bFlag);
+     EnableField("lstSidurim_ddlResonIn",iIndex,bFlag);
+     EnableField("lstSidurim_chkLoLetashlum", iIndex, bFlag);
+     if ($get("lstSidurim_lblSidur".concat(iIndex)).value != null) {
+         if (_Sidur.value != '') {
+             EnableField("lstSidurim_txtSH", iIndex, bFlag);
+             EnableField("lstSidurim_txtSG", iIndex, bFlag);
+         }
+         else {
+             EnableField("lstSidurim_txtSH", iIndex, true);
+             EnableField("lstSidurim_txtSG", iIndex, true);
+         }
+     }
+     else {
+         EnableField("lstSidurim_txtSH", iIndex, bFlag);
+         EnableField("lstSidurim_txtSG", iIndex, bFlag);
+     }
      EnableField("lstSidurim_txtSHL", iIndex, bFlag);
      EnableField("lstSidurim_txtSGL", iIndex, bFlag);
      var _AddPeilut = $get("lstSidurim_imgAddPeilut".concat(iIndex));

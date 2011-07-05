@@ -2229,11 +2229,15 @@ public class wsGeneral : System.Web.Services.WebService
                
                 dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen54.GetHashCode().ToString() + " and erech='"+ clGeneral.enMeafyenSidur54.enAdministrator.GetHashCode().ToString()+ "')");
                 if (dr.Length > 0)
-                    if  (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.Meafyen5Exists) && (!_MeafyenyOved.Meafyen6Exists))
+                {
+                    if (((_Sidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) && (!_MeafyenyOved.Meafyen5Exists) && (!_MeafyenyOved.Meafyen6Exists))
                         || (((_Sidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (_Sidur.sShabaton.Equals("1"))) && ((!_MeafyenyOved.Meafyen7Exists) && (!_MeafyenyOved.Meafyen8Exists)))
                         || (((_Sidur.sErevShishiChag.Equals("1") || ((_Sidur.sSidurDay != clGeneral.enDay.Shishi.GetHashCode().ToString()) && (_Sidur.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && ((!_MeafyenyOved.Meafyen4Exists) && (!_MeafyenyOved.Meafyen5Exists))))
 
                         sXML.Append(string.Concat("<CHARIGA>", "1", "</CHARIGA>"));
+                    else
+                        sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
+                }
                 else
                     sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
 

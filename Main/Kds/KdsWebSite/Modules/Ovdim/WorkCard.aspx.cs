@@ -520,11 +520,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
                         if (oBatchManager.dtMashar == null)
                             dtLicenseNumbers = GetMasharData(oBatchManager.htFullEmployeeDetails);
-                        else                        
+                        else
                             dtLicenseNumbers = oBatchManager.dtMashar;
 
                         Session["Mashar"] = dtLicenseNumbers;
                         lstSidurim.Mashar = dtLicenseNumbers;
+                    }
+                    else
+                    {
+                        Session["Mashar"] = oBatchManager.dtMashar;
+                        lstSidurim.Mashar = oBatchManager.dtMashar;
                     }
                     ViewState["LoadNewCard"] = true;
                     lstSidurim.ErrorsList = oBatchManager.dtErrors;
@@ -4086,6 +4091,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                 oSidur.sHashlama = oSidur.sOldHashlama;
                                 oSidur.sOutMichsa = oSidur.sOldOutMichsa;
                                 oSidur.iLoLetashlum = oSidur.iOldLoLetashlum;
+                                //remove fro hashtable
+                                //RemoveSidurFromHashTable(iIndex);
                             }
                         }
                         else
@@ -4149,6 +4156,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             throw ex;
         }
+    }
+    private void RemoveSidurFromHashTable(int iIndex)
+    {
+        oBatchManager.htEmployeeDetails.RemoveAt(iIndex);
+        Session["Sidurim"] = oBatchManager.htEmployeeDetails;
     }
     //private void AddEmptyRowToPeilutGrid(int iSidurIndex)
     //{
