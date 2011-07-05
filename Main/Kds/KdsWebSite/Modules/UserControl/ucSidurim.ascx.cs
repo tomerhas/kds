@@ -129,7 +129,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private bool _ProfileRashemet;
     private int _MisparIshiIdkunRashemet;
     private const string COL_TRIP_EMPTY = "ריקה";
-    private bool _AddPeilut;
+    private string _sAddPeilut="";
     // Delegate declaration
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
@@ -1878,14 +1878,25 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {        
-        AddEmptyRowToPeilutGrid(int.Parse(((ImageButton)sender).Attributes["SdrInd"]));
-        AddPeilut = true;
+        int iSidurIndex = int.Parse(((ImageButton)sender).Attributes["SdrInd"]);
+        AddEmptyRowToPeilutGrid(iSidurIndex);
+        AddPeilut = "1|" + iSidurIndex.ToString();
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
             btnHandler(string.Empty, true);
 
-        //string sScript = "SetScrollPosition();";//"document.getElementById('lstSidurim_dvS').scrollTop= Number(document.getElementById('lstSidurim_hidScrollPos').value) + 600";
-        //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
+        string[] sPeilutDetails;
+        string sScript="";
+        sPeilutDetails = AddPeilut.Split(char.Parse("|"));
+        if (sPeilutDetails[0].Equals("1"))
+           sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
+        ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
+    }
+    public string GetPeilutClientKey(string[] sPeilutDetails)
+    {
+        int iPeilutIndex;
+        iPeilutIndex = ((clSidur)DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1 ;
+        return "lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {
@@ -2448,8 +2459,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 _Peilut.dCardDate = _CardDate;
                 _Peilut.iPeilutMisparSidur = _Sidur.iMisparSidur;
 
-                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);                 
+                dShatYetiza = DateTime.Parse(oShatYetiza.Attributes["OrgDate"]);
+                if (oShatYetiza.Text == "__:__")
+                    oShatYetiza.Text = "";
                 sShatYetiza = oShatYetiza.Text;
+               
                 //במידה ןיש שעת יציאה אבל אין תאריך, פעילות חדשה, נשתול תאריך של היום
                
                 if (dShatYetiza.Date.Year < clGeneral.cYearNull)
@@ -6327,10 +6341,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //        return _Param110;
     //    }
     //}
-    public bool AddPeilut
+    public string AddPeilut
     {
-        set { _AddPeilut = value; }
-        get { return _AddPeilut;  }
+        set { _sAddPeilut = value; }
+        get { return _sAddPeilut;  }
     }
     public int NumOfHashlama
     {

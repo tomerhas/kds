@@ -563,6 +563,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void RenderPage()
     {
+        string[] sPeilutDetails;
         if (bInpuDataResult)
         {
             //מספר אישי
@@ -623,18 +624,28 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
             if (bAddSidur)               
                 sScript= sScript + "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count-1).ToString() + "').focus();";
-            //if (lstSidurim.AddPeilut)
-            //    sScript = sScript + "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();";
+            if (lstSidurim.AddPeilut != null)
+            {
+                sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
+                if (sPeilutDetails[0].Equals("1"))
+                    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+            }
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
             bAddSidur = false;
-            lstSidurim.AddPeilut = false;
+            lstSidurim.AddPeilut = "";
             //string sScript = "";
             //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
     }
+    //private string GetPeilutClientKey(string[] sPeilutDetails)
+    //{
+    //   int iPeilutIndex;
+    //   iPeilutIndex = ((clSidur)lstSidurim.DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1 ;
+    //   return "lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
+    //}
     private bool HasVehicleTypeWithOutTachograph()
     {
         bool HasVehicleType = false;
