@@ -362,7 +362,7 @@
                                  CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidurHeadrut();' />
                             </td>  
                             <td align="right"><asp:Button Text="הוסף סידור מפה" ID="btnFindSidur" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
-                            <td align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false"  OnClick="btnAddSpecialSidur_Click"/></td>
+                            <td align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 150px; height: 25px; " CssClass="ImgButtonUpdate" CausesValidation="false" OnClientClick="$get('hidExecInputChg').value ='0';return true;" OnClick="btnAddSpecialSidur_Click"/></td>
                             <td  style="width: 80%" align="left">                                            
                                 <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="btnMeasherOrMistayeg_onclick(1);" />
                                 <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="btnMeasherOrMistayeg_onclick(0);" />   

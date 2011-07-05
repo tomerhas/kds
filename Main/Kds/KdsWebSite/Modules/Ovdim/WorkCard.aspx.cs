@@ -2106,7 +2106,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.BuildPage();
     }
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
-    {//הוספת סידור מיוחד
+    {   //הוספת סידור מיוחד       
         lstSidurim.AddNewSidur();        
         string sScript = "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();";
         ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);

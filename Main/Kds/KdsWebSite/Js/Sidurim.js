@@ -543,7 +543,8 @@ function chkMkt(oRow) {
        SetLabelColor("lstSidurim_txtSHL",iIndex,"black");
        SetLabelColor("lstSidurim_txtSGL",iIndex,"black");    
      }
-     $get("lstSidurim_pnlContent".concat(iIndex)).disabled=bFlag;  
+     $get("lstSidurim_pnlContent".concat(iIndex)).disabled = bFlag;
+     $get("lstSidurim_lblSidur".concat(iIndex)).disabled = bFlag;
      EnableField("lstSidurim_ddlHashlama",iIndex,bFlag);
      EnableField("lstSidurim_ddlPHfsaka",iIndex,bFlag);
      EnableField("lstSidurim_ddlException",iIndex,bFlag);    

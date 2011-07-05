@@ -140,6 +140,7 @@ public class wsGeneral : System.Web.Services.WebService
                                      long lNewMakat, long lOldMakat, ref clPeilut _PeilutElement)
     {
         StringBuilder sXML = new StringBuilder();
+        if (sShatYetiza.Equals("__:__")) sShatYetiza = "";
         DateTime dActivityDate = DateTime.Parse(sTravelDate + " " + sShatYetiza).AddDays(int.Parse(sDayToAdd));
         clKavim _Kavim = new clKavim();
         DataTable dtElement=new DataTable();
