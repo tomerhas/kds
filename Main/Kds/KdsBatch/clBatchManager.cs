@@ -6024,7 +6024,9 @@ namespace KdsBatch
             string sCarNumbers;
             clDefinitions oDefinition = new clDefinitions();
             clUtils oUtils = new clUtils();
-           
+            OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
+            //Insert Oved Details to Class
+            htEmployeeDetails = new OrderedDictionary();
             // Write an informational entry to the event log.    
             _bSuccsess = true;
             _iMisparIshi = iMisparIshi;
@@ -6088,7 +6090,7 @@ namespace KdsBatch
                         dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
                         if (dtDetails.Rows.Count > 0)
                         {
-                            OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
+                            //OrderedDictionary htFullSidurimDetails = new OrderedDictionary();
                             //Insert Oved Details to Class
                             htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
                             htFullEmployeeDetails = htFullSidurimDetails;
@@ -11504,7 +11506,7 @@ namespace KdsBatch
             {
                 //   בדיקה האם כל הרכבים המדווחים בפעילויות באותו תאריך הם מדגם 64 
                 //.מספיק שיהיה רכב אחד עם דגם שונה כדי שתנאי זה לא יעבוד
-                if (htEmployeeDetails != null)
+                if ((htEmployeeDetails != null) && (htEmployeeDetails.Count>0))
                 {
                     for (int i = 0; i < htEmployeeDetails.Count; i++)
                     {

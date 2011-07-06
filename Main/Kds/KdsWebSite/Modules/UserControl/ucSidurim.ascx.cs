@@ -2571,7 +2571,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
         _Sidur.dOldFullShatGmar = _Sidur.dFullShatHatchala;
         _Sidur.dSidurDate = _Sidur.dFullShatHatchala;
-        _Sidur.sSidurDay =(_Sidur.dFullShatHatchala.DayOfWeek.GetHashCode()+1).ToString();
+        _Sidur.sSidurDay =(CardDate.DayOfWeek.GetHashCode()+1).ToString();
         _Sidur.iBitulOHosafa = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
         _Sidur.iLoLetashlum = 0;
         _Sidur.bSidurMyuhad = true;

@@ -633,7 +633,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
                 if (sPeilutDetails[0].Equals("1"))
-                    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+                    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').select();";
             }
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
