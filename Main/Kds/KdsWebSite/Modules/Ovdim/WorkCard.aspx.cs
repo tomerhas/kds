@@ -627,14 +627,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-            if (bAddSidur)               
-                sScript= sScript + "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count-1).ToString() + "').focus();";
-            if (lstSidurim.AddPeilut != null)
+
+            if (bAddSidur)
             {
-                sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
-                if (sPeilutDetails[0].Equals("1"))
-                    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').select();";
+                sScript = sScript + " if ($get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').isDisabled==false){";
+                sScript = sScript + " $get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();}";
             }
+            //if (lstSidurim.AddPeilut != null)
+            //{
+            //    sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
+            //    if (sPeilutDetails[0].Equals("1"))
+            //        sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+            //}
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
             bAddSidur = false;
@@ -1420,7 +1424,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //4  (נהגות) 5 (ניהול תנועה
 
             //
-            bHamaraAllowed = ((oBatchManager.htFullEmployeeDetails != null) && 
+            bHamaraAllowed = (((oBatchManager.htFullEmployeeDetails != null) && (oBatchManager.htFullEmployeeDetails.Count>0)) && 
                 (oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged.GetHashCode())
                 //&& (oBatchManager.oMeafyeneyOved.Meafyen31Exists)
                 && (

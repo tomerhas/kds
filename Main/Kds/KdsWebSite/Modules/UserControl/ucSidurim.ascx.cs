@@ -858,7 +858,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot["Shirut_type_Name"] = oPeilut.sSugShirutName;
                
                 drPeilutyot["oto_no"] = oPeilut.lOtoNo;
-                drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
+                //אם פעילות חדשה והוכנס ערך למספר רכב, נכניס גם לערך המקורי את 
+                if ((oPeilut.oPeilutStatus==clPeilut.enPeilutStatus.enNew) && (oPeilut.lOtoNo>0))
+                    drPeilutyot["old_oto_no"] = oPeilut.lOtoNo;
+                else
+                    drPeilutyot["old_oto_no"] = oPeilut.lOldOtoNo;
+
                 drPeilutyot["makat_nesia"] = oPeilut.lMakatNesia;
                 drPeilutyot["dakot_bafoal"] = oPeilut.iDakotBafoal == -1 ? "" : oPeilut.iDakotBafoal.ToString();
                 drPeilutyot["imut_netzer"] = oPeilut.bImutNetzer ? "כן" : "לא";

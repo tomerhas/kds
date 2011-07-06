@@ -86,10 +86,10 @@ function chkMkt(oRow) {
         if (root != null) {
             if (root.childNodes.length > 0) {
                 var _FirstChild = root.firstChild;
-                if (GetMakatType(lNewMkt) != MKT_ELEMENT) {
-                    var iPeilutIndex;
-                    iPos = String($get(oRId).id).indexOf("ctl");
-                    iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
+                var iPeilutIndex;
+                iPos = String($get(oRId).id).indexOf("ctl");
+                iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
+                if (GetMakatType(lNewMkt) != MKT_ELEMENT) {                    
                     $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + $get(oRId).id + "_AddReka" + $get(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
                 }
                 else {
@@ -198,7 +198,7 @@ function chkMkt(oRow) {
                     } else
                         //נשתול מספר רכב
                         if (bMustCarNum)
-                           SetCarNumber(iSidurIndex, oRId);                    
+                            SetCarNumber(iSidurIndex, oRId, iPeilutIndex);                    
                 } 
             }
             else {
@@ -318,35 +318,80 @@ function chkMkt(oRow) {
              }
          }
          return bExist;
-     } 
-    function SetCarNumber(iSidurIndex, oRId){
+     }
+     function CheckIfFirstPeilutWithCarNum(_Peilut, iCurrPeilutIndex) {
+         var bFound = false;
+         var sMustOtoNum;
+         for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
+              sMustOtoNum = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].getAttribute("MustOtoNum");
+              if ((sMustOtoNum == '1') && (Number(iCurrPeilutIndex)-1 != j)) 
+                  bFound = true;
+          }
+          return bFound;
+     }
+     function FindCarNumInAllSidurim() {
+         var bMultiCarNum = false;
+         var iCurrSidurNumber = 0;
+         var _Sidur, _Peilut;
+         var lCurrCarNumber = 0;
+         var lCarNumber = 0;
+         _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
+         while (_Sidur != null) {
+             _Peilut = $get("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
+             if (_Peilut != null) {
+                 for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                     lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
+                     if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
+                         if (lCarNumber == 0)
+                             lCarNumber = lCurrCarNumber;
+                         else
+                             if (lCurrCarNumber != lCarNumber)
+                                 bMultiCarNum = true;
+                 }
+             }
+             iCurrSidurNumber = iCurrSidurNumber + 1;
+             _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
+         }
+         return bMultiCarNum + "|" + lCarNumber;
+     }
+     function SetCarNumber(iSidurIndex, oRId, iPeilutIndex) {
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
          var bMultiCarNum = false;
-         var iCurrSidurNumber;
+         var sResult;
+         //var iCurrSidurNumber;
          _Peilut = $get("lstSidurim_" + padLeft(iSidurIndex, '0', 3));
-          if (_Peilut != null) {
-              if (_Peilut.firstChild.childNodes.length <= 2){
-                  //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
-                  iCurrSidurNumber = 0;
+         if (_Peilut != null) {
+             //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
+             //או שיש מספר פעילויות אבל זו הראשונה שדורשת מספר רכב
+             if ((_Peilut.firstChild.childNodes.length <= 2) || (!CheckIfFirstPeilutWithCarNum(_Peilut, iPeilutIndex))) {
+                  sResult = FindCarNumInAllSidurim();
+                  sResult = sResult.split("|");
+                  if (sResult[0]=='false')
+                      bMultiCarNum = false;
+                  else
+                      bMultiCarNum = true;
+                  lCarNumber = sResult[1];
+//                 
+//                  iCurrSidurNumber = 0;
 
-                  _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
-                  while (_Sidur != null) {
-                      _Peilut = $get("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
-                      if (_Peilut != null) {
-                          for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
-                              lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
-                              if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
-                                  if (lCarNumber == 0)
-                                      lCarNumber = lCurrCarNumber;
-                                  else
-                                      if (lCurrCarNumber != lCarNumber)
-                                          bMultiCarNum = true;                                          
-                          }
-                        }
-                          iCurrSidurNumber = iCurrSidurNumber + 1;
-                          _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
-                  }
+//                  _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
+//                  while (_Sidur != null) {
+//                      _Peilut = $get("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
+//                      if (_Peilut != null) {
+//                          for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+//                              lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
+//                              if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
+//                                  if (lCarNumber == 0)
+//                                      lCarNumber = lCurrCarNumber;
+//                                  else
+//                                      if (lCurrCarNumber != lCarNumber)
+//                                          bMultiCarNum = true;                                          
+//                          }
+//                        }
+//                          iCurrSidurNumber = iCurrSidurNumber + 1;
+//                          _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
+//                  }
               }
               else{
                   for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
@@ -360,8 +405,10 @@ function chkMkt(oRow) {
                   }
                 }
               }
-              if ((!bMultiCarNum) && (lCarNumber != 0))
+              if ((!bMultiCarNum) && (lCarNumber != 0)) {
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = lCarNumber;
+                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);
+              }
     }                                        
     function chkHashlama(val,args){
         var id = val.getAttribute("index");
@@ -1521,7 +1568,11 @@ function chkMkt(oRow) {
              _Sidur = $get("lstSidurim_lblSidur" + j);
              _HashlamaDLL = $get("lstSidurim_ddlHashlama" + j); 
         }
-     }    
+     }
+//     if ($get('lstSidurim_lblSidur1') != null) {
+//         if ($get('lstSidurim_lblSidur1').isDisabled == false)
+//             $get('lstSidurim_lblSidur1').focus();
+//     } 
    }
    function SetSidurimCollapseImg(){
      var _Sidur, _Img, _Peilut, stat;
@@ -1671,20 +1722,20 @@ function chkMkt(oRow) {
    }
    function CopyOtoNum(oRow) {
        oId = String(oRow.id).substr(0,oRow.id.length-6);
-       var _CarNum = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0];
-                
+       var _CarNum = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0];                
        var _CurrCarNum = _CarNum.value;
        var _OrgCarNum = _CarNum.getAttribute("OldV");
        var _MustCarNum = _CarNum.getAttribute("MustOtoNum");
        if ($get(oId).nextSibling != null) {
            var _NextPeilut = $get(oId).nextSibling.cells[_COL_CAR_NUMBER].childNodes[0];
            var _NextCarNum = _NextPeilut.value;
-           var _NextPeilutMkt = $get(oId).nextSibling.cells[_COL_MAKAT].childNodes[0];
+           var _CurrPeilutMkt = $get(oId).nextSibling.cells[_COL_MAKAT].childNodes[0];
            if (_NextCarNum != undefined) {
                var _NextMustCarNum = _NextPeilut.getAttribute("MustOtoNum");
-               if (_NextCarNum == '') { _NextCarNum = '0'; }
-               if (_CurrCarNum != '') {
-                   if (((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum)) || (_NextPeilutMkt.value == '') || (_NextPeilutMkt.value == '0')) {
+               if (_NextCarNum == ''){ _NextCarNum = '0'; }
+               if (_CurrCarNum != ''){
+                   if (((_MustCarNum == '1') && (((_NextCarNum == _OrgCarNum) || (Number(_NextCarNum) == 0))) && (_NextMustCarNum == '1')) || (_CurrPeilutMkt.value == '') || (_CurrPeilutMkt.value == '0'))                         
+                       {
                        $get("lblCarNumQ").innerText = "האם להחליף את מספר הרכב בכל הפעילויות בסידור בהן מספר הרכב הוא ריק או ".concat(String(_OrgCarNum));
                        $get("hidCarKey").value = _OrgCarNum + ',' + _CurrCarNum + ',' + oId;
                        $get("btnCopy").click();
@@ -1771,8 +1822,8 @@ function chkMkt(oRow) {
             _NextPeilutMakat = _NextPeilut.cells[_COL_MAKAT].childNodes[0].value;
             if (_NextPeilutCarNum!=undefined){
             _MustCarNum = _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].getAttribute("MustOtoNum");
-            
-            if (((((_NextPeilutCarNum==_OrgCarNum) || (Number(_NextPeilutCarNum)==0) || (_NextPeilutCarNum==''))  && (_MustCarNum=='1'))) || (_NextPeilutMakat=='') || (_NextPeilutMakat=='0')){
+
+            if (((((_NextPeilutCarNum == _OrgCarNum) || (Number(_NextPeilutCarNum) == 0) || (_NextPeilutCarNum == '')) && (((_MustCarNum == '1') || ((_NextPeilutMakat == '') || (_NextPeilutMakat == '0'))))))){
                 if ((_NextPeilut.cells[_COL_CANCEL_PEILUT].firstChild.value!='1') && (_NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].disabled!=true)) {
                     _CarNum.setAttribute("OldV",_CurrCarNum);
                     _NextPeilut.cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV",_CurrCarNum);
