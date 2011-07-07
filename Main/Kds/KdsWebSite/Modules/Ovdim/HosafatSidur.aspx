@@ -50,24 +50,24 @@
      }
      
      function btnMapa_Click() {
-         document.getElementById("txtMisSiduri").style.display = "none";
+         //*    document.getElementById("txtMisSiduri").style.display = "none";
          document.getElementById("txtMisSidurMapa").style.display = "inline";
-         document.getElementById("btnMapa").disabled = "disabled";
-         document.getElementById("btnMeyuchad").disabled = "";
+        //* document.getElementById("btnMapa").disabled = "disabled";
+         //* document.getElementById("btnMeyuchad").disabled = "";
        //  document.getElementById("btnMapa").style.border = '1px solid black';
        //  document.getElementById("btnMeyuchad").style.border = 'none';
 
-         document.getElementById("cbMisSidur").checked = true;
-         document.getElementById("cbTeurSidur").checked = false;
+         //*      document.getElementById("cbMisSidur").checked = true;
+      //*   document.getElementById("cbTeurSidur").checked = false;
 
-         document.getElementById("cbTeurSidur").disabled = "disabled";
-         document.getElementById("txtTeurSidur").disabled = true; //true;
+        //* document.getElementById("cbTeurSidur").disabled = "disabled";
+         //*   document.getElementById("txtTeurSidur").disabled = true; //true;
 
-         document.getElementById("cbMisSidur").disabled = false;
-         document.getElementById("txtMisSiduri").disabled = false;
+         //*    document.getElementById("cbMisSidur").disabled = false;
+         //*  document.getElementById("txtMisSiduri").disabled = false;
 
-         document.getElementById("txtMisSiduri").value = "";
-         document.getElementById("txtTeurSidur").value = "";
+         //*  document.getElementById("txtMisSiduri").value = "";
+         //* document.getElementById("txtTeurSidur").value = "";
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 1;
          document.getElementById("btnShow").disabled = true;
@@ -78,49 +78,49 @@
      }
 
      function btnMeyuchad_Click() {
-         document.getElementById("txtMisSiduri").style.display = "inline";
-         document.getElementById("txtMisSidurMapa").style.display = "none";
-       
+         //*   document.getElementById("txtMisSiduri").style.display = "inline";
+      //*   document.getElementById("txtMisSidurMapa").style.display = "none";
 
-         document.getElementById("btnMeyuchad").disabled = "disabled";
-         document.getElementById("btnMapa").disabled = "";
+
+         //*     document.getElementById("btnMeyuchad").disabled = "disabled";
+         //* document.getElementById("btnMapa").disabled = "";
       //   document.getElementById("btnMeyuchad").style.border = '1px solid black';
       //   document.getElementById("btnMapa").style.border = 'none';
 
-         document.getElementById("cbMisSidur").checked = true;
-         document.getElementById("cbTeurSidur").checked = false;
+         //*       document.getElementById("cbMisSidur").checked = true;
+       //*  document.getElementById("cbTeurSidur").checked = false;
 
-         document.getElementById("cbTeurSidur").disabled = "";
-         document.getElementById("txtTeurSidur").disabled = true;   //false;
+     //*    document.getElementById("cbTeurSidur").disabled = "";
+         //*  document.getElementById("txtTeurSidur").disabled = true;   //false;
 
-         document.getElementById("cbMisSidur").disabled = false;
+         //*      document.getElementById("cbMisSidur").disabled = false;
          document.getElementById("txtMisSiduri").disabled = true; //false;
 
-         document.getElementById("txtMisSiduri").value = "";
-         document.getElementById("txtTeurSidur").value = "";
+         //*document.getElementById("txtMisSiduri").value = "";
+         //*  document.getElementById("txtTeurSidur").value = "";
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 2;
         document.getElementById("btnShow").disabled = true;
          document.getElementById("pirteySidur").style.display = "none";
           $find("vldExSidurMapa").hide();
          cbMis_OnChange();
-         document.getElementById("txtMisSiduri").focus();
+         //*document.getElementById("txtMisSiduri").focus();
          
      }
      function MisSiduri_onChange() {
          var misSidur;
          var sugSidur = document.getElementById("sugSidur").value;
-   
+       
          if (sugSidur == 1) {
              misSidur = document.getElementById("txtMisSidurMapa").value;
            //  document.getElementById("vldMis").controltovalidate = "txtMisSidurMapa";
          }
-         else {
-             misSidur = document.getElementById("txtMisSiduri").value;
-            // document.getElementById("vldMis").controltovalidate = "txtMisSiduri";
-         }
+//*         else {
+//             misSidur = document.getElementById("txtMisSiduri").value;
+//            // document.getElementById("vldMis").controltovalidate = "txtMisSiduri";
+//*         }
          var taarich = document.getElementById("TaarichCA").value;
-         document.getElementById("txtTeurSidur").value = "";
+         //*    document.getElementById("txtTeurSidur").value = "";
          if (misSidur != "") {
              if (IsNumeric(misSidur)) {
                  if (sugSidur == 1 && misSidur.substr(0, 2) == "99") {
@@ -129,28 +129,28 @@
                       document.getElementById("btnShow").disabled = true;
                    
                  }
-                 else if (sugSidur == 2 && misSidur.substr(0, 1) != "9") {
-                     document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי המתחיל בספרה 9 ";
-                     ShowValidatorCalloutExtender("vldExSidur");
-                      document.getElementById("btnShow").disabled = true;
-                 }
+//                 else if (sugSidur == 2 && misSidur.substr(0, 1) != "9") {
+//                     document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי המתחיל בספרה 9 ";
+//                     ShowValidatorCalloutExtender("vldExSidur");
+//                      document.getElementById("btnShow").disabled = true;
+//                 }
                  else {
-                     if (sugSidur == 2) {
-                        // alert(document.getElementById("SidureyEadrut").value);
-                         if (document.getElementById("SidureyEadrut").value.indexOf("," + misSidur + ",") > -1) {
-                             if (misSidur == "99200" || misSidur == "99214")
-                                 document.getElementById("vldMis").errormessage = "לא ניתן לדווח סידור התייצבות";
-                             else document.getElementById("vldMis").errormessage = "יש לדווח במסך הוסף דיווח היעדרות";
-                             ShowValidatorCalloutExtender("vldExSidur");
-                                document.getElementById("btnShow").disabled = true;
-     
-                         }
-                            else
-                                if (document.getElementById("StatusCard").value == -1)
-                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
-                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
-                     }
-                     else {//מפה
+                     if (sugSidur == 1) {
+//                        // alert(document.getElementById("SidureyEadrut").value);
+////                         if (document.getElementById("SidureyEadrut").value.indexOf("," + misSidur + ",") > -1) {
+////                             if (misSidur == "99200" || misSidur == "99214")
+////                                 document.getElementById("vldMis").errormessage = "לא ניתן לדווח סידור התייצבות";
+////                             else document.getElementById("vldMis").errormessage = "יש לדווח במסך הוסף דיווח היעדרות";
+////                             ShowValidatorCalloutExtender("vldExSidur");
+//                                document.getElementById("btnShow").disabled = true;
+//     
+//                         }
+//                            else
+//                                if (document.getElementById("StatusCard").value == -1)
+//                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
+//                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
+//                     }
+//                     else {//מפה
                          if (document.getElementById("StatusCard").value == -1)
                              wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
                          else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
@@ -180,8 +180,8 @@
          var misSidur;  
          if (sugSidur == 1) 
              misSidur = document.getElementById("txtMisSidurMapa").value;
-         else
-             misSidur = document.getElementById("txtMisSiduri").value;
+//*         else
+//*             misSidur = document.getElementById("txtMisSiduri").value;
       
          if (result == 1) {
              if (sugSidur == 2)
@@ -191,11 +191,11 @@
          }
          else if (result == -1) {
 
-             if (sugSidur == 2) {
-                 document.getElementById("vldMis").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
-                 ShowValidatorCalloutExtender("vldExSidur");
+             if (sugSidur == 1) {
+//                 document.getElementById("vldMis").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
+//                 ShowValidatorCalloutExtender("vldExSidur");
 
-             } else {
+//             } else {
                  document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
              }
@@ -205,27 +205,27 @@
 
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
-   
-         if (result != -1 ) {
-             if (sugSidur == 2)
-                 document.getElementById("txtTeurSidur").value = result;
-             else
-                 document.getElementById("txtTeurSidur").value = "";
+
+         if (result != -1) {
+//             if (sugSidur == 2)
+//                 document.getElementById("txtTeurSidur").value = result;
+//             else
+//                 document.getElementById("txtTeurSidur").value = "";
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
          }
          else {
-               document.getElementById("btnShow").disabled = true;
-             if (sugSidur == 2) {
-                 document.getElementById("vldMis").errormessage = "מספר סידור שגוי";
-                 ShowValidatorCalloutExtender("vldExSidur");
-              
-                
-             } else {
-             document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
-             ShowValidatorCalloutExtender("vldExSidurMapa");
-        
-             } 
+             document.getElementById("btnShow").disabled = true;
+             if (sugSidur == 1) {
+//                 document.getElementById("vldMis").errormessage = "מספר סידור שגוי";
+//                 ShowValidatorCalloutExtender("vldExSidur");
+
+
+//             } else {
+                 document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
+                 ShowValidatorCalloutExtender("vldExSidurMapa");
+
+             }
          }
      }
 
@@ -234,56 +234,56 @@
          $find(sBehaviorId).show(true);
      }
  
-     function cbTeur_OnChange() {
-         var sugSidur = document.getElementById("sugSidur").value;
-         if (document.getElementById("cbTeurSidur").checked) {
-             document.getElementById("txtTeurSidur").disabled = false;
-             document.getElementById("cbMisSidur").checked = false;
-             document.getElementById("txtMisSiduri").disabled = true;
-         }
-         else {
-             document.getElementById("txtTeurSidur").disabled = true;
-             document.getElementById("txtTeurSidur").value = "";
-             document.getElementById("txtMisSiduri").value = "";
-            document.getElementById("btnShow").disabled = true;
-         }
-     }
+//     function cbTeur_OnChange() {
+//         var sugSidur = document.getElementById("sugSidur").value;
+//         if (document.getElementById("cbTeurSidur").checked) {
+//             document.getElementById("txtTeurSidur").disabled = false;
+//             document.getElementById("cbMisSidur").checked = false;
+// //*            document.getElementById("txtMisSiduri").disabled = true;
+//         }
+//         else {
+//             document.getElementById("txtTeurSidur").disabled = true;
+//             document.getElementById("txtTeurSidur").value = "";
+//          //*   document.getElementById("txtMisSiduri").value = "";
+//            document.getElementById("btnShow").disabled = true;
+//         }
+//     }
      function cbMis_OnChange() {
          var sugSidur = document.getElementById("sugSidur").value;
-         if (document.getElementById("cbMisSidur").checked) {
-             document.getElementById("txtMisSiduri").disabled = false;
-             document.getElementById("cbTeurSidur").checked = false;
-             document.getElementById("txtTeurSidur").disabled = true;
-            // if (sugSidur == 2)
-            //     document.getElementById("cbTeurSidur").disabled = true;
-         }
-         else {
-             document.getElementById("txtMisSiduri").disabled = true;
-             document.getElementById("txtMisSiduri").value = "";
-             document.getElementById("txtTeurSidur").value = "";
+//         if (document.getElementById("cbMisSidur").checked) {
+//          //*   document.getElementById("txtMisSiduri").disabled = false;
+//            //* document.getElementById("cbTeurSidur").checked = false;
+//          //*    document.getElementById("txtTeurSidur").disabled = true;
+//            // if (sugSidur == 2)
+//            //     document.getElementById("cbTeurSidur").disabled = true;
+//         }
+//         else {
+             //*    document.getElementById("txtMisSiduri").disabled = true;
+             //*   document.getElementById("txtMisSiduri").value = "";
+            //*  document.getElementById("txtTeurSidur").value = "";
            //  if (sugSidur == 2)
            //      document.getElementById("cbTeurSidur").disabled = false;
             document.getElementById("btnShow").disabled = true;
-         }
+//         }
      }
 
-     function txtTeurSidur_OnChange() {
-         var teur = document.getElementById("txtTeurSidur").value;
-         if (teur != "") {
-             wsGeneral.getKodSidurByTeur(teur, CheckKodSucceded);
-         }
-     }
+//     function txtTeurSidur_OnChange() {
+//         var teur = document.getElementById("txtTeurSidur").value;
+//         if (teur != "") {
+//             wsGeneral.getKodSidurByTeur(teur, CheckKodSucceded);
+//         }
+//     }
      function CheckKodSucceded(result) {
          if (result != -1) {
-             document.getElementById("txtMisSiduri").value = result;
+             //*    document.getElementById("txtMisSiduri").value = result;
             // document.getElementById("btnShow").disabled = false;
             MisSiduri_onChange();
          }
          else {
-             document.getElementById("vldTeur").errormessage = "תאור סידור שגוי";
+          //*    document.getElementById("vldTeur").errormessage = "תאור סידור שגוי";
              document.getElementById("btnShow").disabled = true;
-             document.getElementById("txtMisSiduri").value = "";
-             ShowValidatorCalloutExtender("vldExTeur");
+             //*    document.getElementById("txtMisSiduri").value = "";
+          //*   ShowValidatorCalloutExtender("vldExTeur");
          }
      }
      /**************** כפתורים במסך *******************/
@@ -1255,14 +1255,14 @@
                
        }
        function window_onload() {
-           document.getElementById("txtMisSiduri").style.display = "none";
+           //*     document.getElementById("txtMisSiduri").style.display = "none";
            document.getElementById("txtMisSidurMapa").style.display = "inline";
            document.getElementById("txtMisSidurMapa").focus();
-           document.getElementById("txtMisSiduri").disabled = false;
-           document.getElementById("btnMapa").disabled = "disabled";
-           document.getElementById("cbMisSidur").disabled = false;
-           document.getElementById("cbTeurSidur").disabled = "disabled";
-           document.getElementById("btnMapa").style.border = '1px solid black';
+           //*    document.getElementById("txtMisSiduri").disabled = false;
+           //*  document.getElementById("btnMapa").disabled = "disabled";
+           //*        document.getElementById("cbMisSidur").disabled = false;
+          //* document.getElementById("cbTeurSidur").disabled = "disabled";
+           //*   document.getElementById("btnMapa").style.border = '1px solid black';
         
              setBorderBtns();
              load();
@@ -1334,11 +1334,11 @@
                if (document.getElementById('btnShow').disabled == true)
                    document.getElementById(obj).focus();
            }
-           else {
-               if (document.getElementById('btnMapa').disabled == true)
-                   document.getElementById('btnMeyuchad').focus();
-               else document.getElementById('btnMapa').focus();
-           }
+//*           else {
+//               if (document.getElementById('btnMapa').disabled == true)
+//                   document.getElementById('btnMeyuchad').focus();
+//               else document.getElementById('btnMapa').focus();
+//*           }
        }
  </script>
     <form id="form1" runat="server">
@@ -1358,42 +1358,42 @@
                       <tr class="GridHeader"><td > חיפוש והוספת סידור</td></tr>
                       <tr>
                         <td>
-                            <fieldset  style="height:50px" >  <legend   id="LegendFilter" style="background-color:White" >סוג סידור לחיפוש: </legend> 
+                            <fieldset  style="height:50px" >  <legend   id="LegendFilter" style="background-color:White" >הוספת סידור מפה  : </legend> 
                                 
                                      <table>
                                         <tr>
                                             <td>&nbsp;&nbsp;</td>
-                                            <td><input id="btnMapa" type="button" runat="server" value="מפה" class="ImgButtonSearch"  onclick="btnMapa_Click()" style="width:auto;"  tabindex="1" onfocusout="this.style.border ='none';"  /></td>
+                                         <%--   <td><input id="btnMapa" type="button" runat="server" value="מפה" class="ImgButtonSearch"  onclick="btnMapa_Click()" style="width:auto;"  tabindex="1" onfocusout="this.style.border ='none';"  /></td>
                                               <td>&nbsp;&nbsp;</td>        
                                             <td><input id="btnMeyuchad"  type="button"  runat="server" value="מיוחד" class="ImgButtonSearch"  onclick="btnMeyuchad_Click()" style="width:auto;"   tabindex="2"   onfocusout="this.style.border ='none';" /></td>
                                            
-                                              <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>               
+                                              <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>      --%>         
                                             <td >
-                                            <asp:RadioButton  ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"   GroupName="chkDefault" Checked="true" Text="מספר סידור"  tabindex="3"    />
+                                          <%--  <asp:RadioButton  ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"   GroupName="chkDefault" Checked="true" Text="מספר סידור"  tabindex="3"    />--%>
 <%--                                            <asp:CheckBox runat="server" Text="מספר סידור" onclick="cbMis_OnChange()"   ID="cbMisSidur" />--%>
                                            <%--   <input type="checkbox" ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"  style="background-color:red;width:150px"   title="מספר סידורי"   value="מספר סידורי"   />--%>
-           
-                                         <asp:TextBox ID="txtMisSiduri" runat="server" Enabled="false"  onChange="MisSiduri_onChange()"     width="130px" MaxLength="5"  tabindex="4"    ></asp:TextBox>
-                                                 <asp:TextBox ID="txtMisSidurMapa" runat="server"  style="display:none;"  onchange="MisSiduri_onChange()"  width="130px" MaxLength="5"  tabindex="5"  onblur="moveFocus('btnMeyuchad');"     ></asp:TextBox>
-                                                 <asp:CustomValidator runat="server" id="vldMis"   ControlToValidate="txtMisSiduri" ErrorMessage=""   Display="None"    ></asp:CustomValidator>
+                                         <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>
+                                        <%-- <asp:TextBox ID="txtMisSiduri" runat="server" Enabled="false"  onChange="MisSiduri_onChange()"     width="130px" MaxLength="5"  tabindex="4"    ></asp:TextBox>--%>
+                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"   onchange="MisSiduri_onChange()"  width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
+                                             <%--    <asp:CustomValidator runat="server" id="vldMis"   ControlToValidate="txtMisSiduri" ErrorMessage=""   Display="None"    ></asp:CustomValidator>
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExMis" BehaviorID="vldExSidur"   TargetControlID="vldMis" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
-                                                
-                                                 <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""  Display="None"   ></asp:CustomValidator>
+                                                --%>
+                                                 <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""></asp:CustomValidator>
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExMisMapa" BehaviorID="vldExSidurMapa"  TargetControlID="vldMisMapa" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
-                                                 <cc1:AutoCompleteExtender id="AautoKodSidur"  runat="server" CompletionInterval="0"   CompletionSetCount="25" UseContextKey="true"  
+                                                 <%--<cc1:AutoCompleteExtender id="AautoKodSidur"  runat="server" CompletionInterval="0"   CompletionSetCount="25" UseContextKey="true"  
                                                         TargetControlID="txtMisSiduri" MinimumPrefixLength="1" ServiceMethod="getKodSidurimWhithOutList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                                         CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
                                                         CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
-                                                 </cc1:AutoCompleteExtender>  
+                                                 </cc1:AutoCompleteExtender> --%> 
                                             </td>
                                                <td>&nbsp;&nbsp;</td>    
                                             <td>
-                                            <asp:RadioButton  ID="cbTeurSidur" GroupName="chkDefault"  onclick="cbTeur_OnChange()" runat="server" Text="תאור הסידור" tabindex="6"     />
+                                       <%--     <asp:RadioButton  ID="cbTeurSidur" GroupName="chkDefault"  onclick="cbTeur_OnChange()" runat="server" Text="תאור הסידור" tabindex="6"     />--%>
                                      <%--           <asp:CheckBox runat="server" Text="תאור הסידור" onclick="cbTeur_OnChange()" ID="cbTeurSidur" />--%>
                                                  <%-- <input type="checkbox" ID="cbTeurSidur" runat="server" onclick="cbTeur_OnChange()"  value="תאור הסידור"  disabled />
                                     --%>
-                                                <asp:TextBox ID="txtTeurSidur" runat="server" Enabled="false" width="130px" onchange="txtTeurSidur_OnChange()"  tabindex="7"   ></asp:TextBox>
+                                               <%-- <asp:TextBox ID="txtTeurSidur" runat="server" Enabled="false" width="130px" onchange="txtTeurSidur_OnChange()"  tabindex="7"   ></asp:TextBox>
                                                       <cc1:AutoCompleteExtender id="AautoTeurSidur"  runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                                         TargetControlID="txtTeurSidur" MinimumPrefixLength="1" ServiceMethod="getTeureySidurimWhithOutList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
@@ -1401,9 +1401,9 @@
                                                         CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
                                                     </cc1:AutoCompleteExtender>   
                                                      <asp:CustomValidator runat="server" id="vldTeur"   ControlToValidate="txtTeurSidur" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
-                                                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExTeur" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
+                                                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExTeur" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                --%>
                                             </td>
-                                              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  
+                                            <%--  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  --%>
                                             <td><asp:Button ID="btnShow" runat="server" Text="הצג"  style="width:auto;" Enabled="false" OnClick="btnShow_OnClick"   tabindex="8"   CssClass="ImgButtonSearch" onblur="moveFocus('btnShow');" /></td>
                                         </tr>
                                       </table>
@@ -1599,7 +1599,7 @@
                              <asp:Button ID="btnIdkunGridHidden" runat="server" onclick="BtIdkunGrid_Click"  />
                             <input type="button" id="btnHosafatPeilut"  class="ImgButtonSearch"  runat="server" value="הוסף/חפש פעילות" style="width:150px;display:none" onclick="OpenHosefPeilut();"   causesvalidation="false"  />
                             <input id="btnHosafa" runat="server" type="button"  class="ImgButtonSearch" style="width:238px"  value="הוסף את הסידור לכרטיס העבודה"  
-                              onclick="btnHosafa_OnClick();" onblur="document.getElementById('btnMapa').focus();" />
+                              onclick="btnHosafa_OnClick();" />
                  <%--
                              <asp:Button id="btnHosafa" runat="server" Text="הוסף את הסידור לכרטיס העבודה" style="width:238px" class="ImgButtonSearch" OnClientClick="btnHosafa_OnClick();"  OnClick="btnHosafatSidur_OnClick" />
                   --%>    </td> 

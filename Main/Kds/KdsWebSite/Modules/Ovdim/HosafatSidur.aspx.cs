@@ -88,8 +88,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
           //  btnMapa.Style["disabled"] = "disabled";
             SetFixedHeaderGrid(pnlgrdPeiluyot.ClientID, Header);
             sugSidur.Value = "1";
-            AautoTeurSidur.ContextKey = "27,53;99200,99214";
-            AautoKodSidur.ContextKey = "27,53;99200,99214";
+            //AautoTeurSidur.ContextKey = "27,53;99200,99214";
+            //AautoKodSidur.ContextKey = "27,53;99200,99214";
             if (Request.QueryString["CardDate"] != null)
             {
                 TaarichCA.Value = Request.QueryString["CardDate"].ToString(); //"26/05/2009"; //
@@ -130,9 +130,9 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
 
     private void SetFocus()
     {
-        txtMisSiduri.Attributes.Add("onFocus ", "onSadeFocus(txtMisSiduri)");
+        //txtMisSiduri.Attributes.Add("onFocus ", "onSadeFocus(txtMisSiduri)");
         txtMisSidurMapa.Attributes.Add("onFocus ", "onSadeFocus(txtMisSidurMapa)");
-        txtTeurSidur.Attributes.Add("onFocus ", "onSadeFocus(txtTeurSidur)");
+        //txtTeurSidur.Attributes.Add("onFocus ", "onSadeFocus(txtTeurSidur)");
     }
     protected void btnShow_OnClick(object sender, EventArgs e)
     {
@@ -151,25 +151,25 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
               //  btnHosafatPeilut.Disabled = false;
                 if (type == 1)//סידור מפה
                 {
-                    txtTeurSidur.Text = "";
+                    //txtTeurSidur.Text = "";
                     lblMisSidur.Text = txtMisSidurMapa.Text;
                     InitializeSidurMapa(ref dtSource);
                     //   txtMisSidurMapa.Visible = true;
-                    txtMisSiduri.Text = txtMisSidurMapa.Text;
+                    //txtMisSiduri.Text = txtMisSidurMapa.Text;
                    
                 }
                 else //סידור מיוחד
                 {
                     //   txtTeurSidur.Text = txtTeurSidur.Text;
-                    lblMisSidur.Text = txtMisSiduri.Text;
+                  //  lblMisSidur.Text = txtMisSiduri.Text;
                     InitializeSidurMeyucahd(ref dtSource);
                     trMsgNextDay.Style["display"] = "none";
                 }
                 BindGridPeiluyot();
                 pirteySidur.Style["display"] = "inline";
                 txtShatHatchala.Focus();
-                btnMapa.Style["disabled"]="";
-                btnMeyuchad.Style["disabled"] = "";
+              //  btnMapa.Style["disabled"]="";
+             //   btnMeyuchad.Style["disabled"] = "";
                 //if (txtShatHatchala.Attributes["NEXT"].ToString() =="true")
                 //    ScriptManager.RegisterStartupScript(this, this.GetType(), "msg", "alert('" + lblYomHaba.Text + "');", true);
             
