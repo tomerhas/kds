@@ -1804,8 +1804,12 @@ function chkMkt(oRow) {
         if (result != -1) 
             $get("lstSidurim_lblSidur" + iSidurNum).title = result;        
     }
-    
 
+    function SetNewSidurFocus(iSidurIndex){
+        var _Sidur = $get('lstSidurim_lblSidur'.concat(iSidurIndex));
+        if (!((_Sidur.style.visibility == "hidden" || _Sidur.style.display == "none" || _Sidur.disabled == true)))
+            _Sidur.focus();
+    }
     function btnCopyOtoNum(iAction)
     {
      $find("pBehvCopy").hide();

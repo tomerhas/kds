@@ -630,14 +630,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             if (bAddSidur)
             {
-                sScript = sScript + " if ($get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').isDisabled==false){";
-                sScript = sScript + " $get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();}";
+                sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";
+                
+                //sScript = sScript + " if ($get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').isDisabled==false){";
+                //sScript = sScript + " $get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();}";
             }
             //if (lstSidurim.AddPeilut != null)
             //{
             //    sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
             //    if (sPeilutDetails[0].Equals("1"))
-            //        sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+            //         sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+            //        //sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02ShatYetiza').focus();";
             //}
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 

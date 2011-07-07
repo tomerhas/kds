@@ -2113,7 +2113,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Style.Add("Display", "none");
         TextBox txt = new TextBox();
         txt.ID = "txtDayAdd" + iIndex;
-        txt.Text = ((oSidur.dFullShatGmar.ToShortDateString() == oSidur.dSidurDate.ToShortDateString()) || (oSidur.dFullShatGmar.Year<clGeneral.cYearNull)) ? "0" : "1";
+        txt.Text = ((oSidur.dFullShatGmar.ToShortDateString() == CardDate.ToShortDateString()) || (oSidur.dFullShatGmar.Year<clGeneral.cYearNull)) ? "0" : "1";
         hCell.Controls.Add(txt);
     }
     protected void CreateCancelFlagHiddenCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
