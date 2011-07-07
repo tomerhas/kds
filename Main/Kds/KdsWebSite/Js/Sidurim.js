@@ -695,7 +695,7 @@ function chkMkt(oRow) {
                       if (Number(iSDayToAdd) == 0)
                           dSidurDate.setDate(dSidurDate.getDate() - 1);
 
-                  dShatYetiza = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), sActualShatYetiza.substr(0, 2), sActualShatYetiza.substr(sActualShatYetiza.length - 2, 2));
+                  dShatYetiza = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), sActualShatYetiza.substr(0, 2), sActualShatYetiza.substr(sActualShatYetiza.length - 2, 2));
 
                   sParamNxtDay = $get("lstSidurim_hidParam242").value;                 
                   var sYear = sCardDate.substr(sCardDate.length - 4, 4);
@@ -712,14 +712,14 @@ function chkMkt(oRow) {
                   if ((($get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value == "1")) && (utcItemDate == utcCardDate)) {                      
                       dItemDate.setDate(dItemDate.getDate() + 1);
                   }                                
-                  if (((IsShatGmarInNextDay(sActualShatYetiza)) || (sActualShatYetiza == '00:00')) && (dItemDate > dParamDate)) {
-                      iPDayToAdd = "1";
-                      $get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "1";
-                  }
-                  else {
-                      iPDayToAdd = "0";
-                      $get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
-                  }
+//                  if (((IsShatGmarInNextDay(sActualShatYetiza)) || (sActualShatYetiza == '00:00')) && (dItemDate > dParamDate)) {
+//                      iPDayToAdd = "1";
+//                      $get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "1";
+//                  }
+//                  else {
+//                      iPDayToAdd = "0";
+//                      $get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value = "0";
+//                  }
                   utcShatYetiza = Date.UTC(dShatYetiza.getFullYear(), dShatYetiza.getMonth() + 1, dShatYetiza.getDate(), 0, 0, 0);
                   if (utcShatYetiza == utcCardDate) {
                       if (iPDayToAdd == 1)

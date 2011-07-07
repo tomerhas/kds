@@ -666,12 +666,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //יש לבדוק שלפחות אחד הרכבים המדווחים באותו תאריך אינו מדגם 64  (דגם שאינו מכיל טכוגרף). Vehicle_Type =64 במעל"ה.
         try
         {
-           dt = (((DataTable)Session["Mashar"]));
+           dt = lstSidurim.Mashar;
            if (dt != null)
            {
                if (dt.Rows.Count > 0)
                {
-                   dr = ((DataTable)Session["Mashar"]).Select("Vehicle_Type<>" + clGeneral.enVehicleType.NoTachograph.GetHashCode());
+                   dr = dt.Select("Vehicle_Type<>" + clGeneral.enVehicleType.NoTachograph.GetHashCode());
                    HasVehicleType = (dr.Length > 0);
                }
            }

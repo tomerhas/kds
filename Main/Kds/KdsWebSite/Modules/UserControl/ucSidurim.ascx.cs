@@ -1890,12 +1890,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (btnHandler != null)
             btnHandler(string.Empty, true);
 
-        string[] sPeilutDetails;
-        string sScript="";
-        sPeilutDetails = AddPeilut.Split(char.Parse("|"));
-        if (sPeilutDetails[0].Equals("1"))
-           sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
-        ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
+        //string[] sPeilutDetails;
+        //string sScript="";
+        //sPeilutDetails = AddPeilut.Split(char.Parse("|"));
+        //if (sPeilutDetails[0].Equals("1"))
+        //   sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
+        //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
     public string GetPeilutClientKey(string[] sPeilutDetails)
     {
