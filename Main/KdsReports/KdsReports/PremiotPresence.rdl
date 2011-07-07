@@ -1,146 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>22c64c23-8242-48d8-ba94-2daafa8d273c</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsPremiotPresence">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_KOD_GIL">
-          <DataField>TEUR_KOD_GIL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD_HR">
-          <DataField>TEUR_MAAMAD_HR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="WORDING_DATE">
-          <DataField>WORDING_DATE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="START_TIME_ALLOWED">
-          <DataField>START_TIME_ALLOWED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="END_TIME_ALLOWED">
-          <DataField>END_TIME_ALLOWED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PITZUL_HAFSAKA">
-          <DataField>PITZUL_HAFSAKA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CHARIGA">
-          <DataField>CHARIGA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HAMARAT_SHABAT">
-          <DataField>HAMARAT_SHABAT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HASHLAMA">
-          <DataField>HASHLAMA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OUT_MICHSA">
-          <DataField>OUT_MICHSA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="LINA">
-          <DataField>LINA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="BITUL_ZMAN_NESIOT">
-          <DataField>BITUL_ZMAN_NESIOT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HALBASHA">
-          <DataField>HALBASHA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SIDUR_MEYCHAD">
-          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MICHSA_YOMIT">
-          <DataField>MICHSA_YOMIT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DAKOT_NOCHECHUT">
-          <DataField>DAKOT_NOCHECHUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_PREMIOTPRESENCE</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_KOD_PREMIA">
-            <Value>=Parameters!P_KOD_PREMIA.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Textbox Name="Textbox5">
@@ -164,7 +23,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>1.78597cm</Top>
-        <Left>3.2306cm</Left>
+        <Left>3.23821cm</Left>
         <Height>0.89104cm</Height>
         <Width>15.08548cm</Width>
         <Visibility>
@@ -184,13 +43,13 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>= "דוח נוכחות פרמיות"</Value>
+            <Value>="דוח נוכחות לפרמיה "  + reportitems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
           </Parameter>
         </Parameters>
         <Top>0.12672in</Top>
-        <Left>0.66935in</Left>
+        <Left>1.68403in</Left>
         <Height>1.2877cm</Height>
-        <Width>18.36374cm</Width>
+        <Width>12.45264cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -202,12 +61,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.81704in</Width>
+              <Width>23.79994cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.11646in</Height>
+              <Height>5.44188cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -217,39 +76,39 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.59224in</Width>
+                                <Width>1.65561cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.705in</Width>
+                                <Width>1.94202cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.98425in</Width>
+                                <Width>2.65132cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.18106in</Width>
+                                <Width>3.15121cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.84882in</Width>
+                                <Width>2.30733cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.98425in</Width>
+                                <Width>2.65132cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.24418in</Width>
+                                <Width>3.31154cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.55726in</Width>
+                                <Width>1.56676cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.05862in</Width>
+                                <Width>2.84022cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.56059in</Width>
+                                <Width>1.57522cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.40289in</Height>
+                                <Height>1.02334cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -604,7 +463,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -946,24 +805,15 @@
                           </TablixColumnHierarchy>
                           <TablixRowHierarchy>
                             <TablixMembers>
-                              <TablixMember>
-                                <KeepWithGroup>After</KeepWithGroup>
-                              </TablixMember>
-                              <TablixMember>
-                                <Group Name="Details2">
-                                  <GroupExpressions>
-                                    <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
-                                    <GroupExpression>=Fields!FULL_NAME.Value</GroupExpression>
-                                  </GroupExpressions>
-                                </Group>
-                              </TablixMember>
+                              <TablixMember />
+                              <TablixMember />
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>0.26458cm</Top>
-                          <Left>0.06237cm</Left>
+                          <Top>0.3175cm</Top>
+                          <Left>0.14739cm</Left>
                           <Height>1.62334cm</Height>
-                          <Width>22.13931cm</Width>
+                          <Width>23.65255cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -974,62 +824,65 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.50395in</Width>
+                                <Width>1.3159cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.53812in</Width>
+                                <Width>1.19654cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.47108in</Width>
+                                <Width>1.20244cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.4734in</Width>
+                                <Width>1.29756cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.51085in</Width>
+                                <Width>1.16403cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.45828in</Width>
+                                <Width>1.39598cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.5496in</Width>
+                                <Width>1.05682cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.41607in</Width>
+                                <Width>0.90564cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.35655in</Width>
+                                <Width>1.31785cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.51884in</Width>
+                                <Width>0.95728cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.37688in</Width>
+                                <Width>4.7564cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.8726in</Width>
+                                <Width>1.32832cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.52296in</Width>
+                                <Width>1.31589cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.18982in</Width>
+                                <Width>1.34727cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>3.02214cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.54872in</Height>
+                                <Height>1.39375cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox235">
+                                      <Textbox Name="Textbox153">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>שעת גמר</Value>
+                                                <Value>הערה</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1040,42 +893,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox235</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <BackgroundColor>LightGrey</BackgroundColor>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox237">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>שעת התחלה</Value>
-                                                <Style>
-                                                  <FontWeight>Bold</FontWeight>
-                                                </Style>
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox237</rd:DefaultName>
+                                        <rd:DefaultName>Textbox153</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
@@ -1477,6 +1295,76 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="Textbox33">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>שעת גמר</Value>
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox33</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox30">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>שעת התחלה</Value>
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox30</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="Textbox253">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -1513,18 +1401,18 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.62646cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox236">
+                                      <Textbox Name="Textbox151">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!SHAT_GMAR.Value,4)</Value>
+                                                <Value>=iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"אין דיווח","")</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1533,39 +1421,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox236</rd:DefaultName>
-                                        <Style>
-                                          <Border>
-                                            <Color>LightGrey</Color>
-                                            <Style>Solid</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox238">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>=FormatDateTime(Fields!SHAT_HATCHALA.Value,4)</Value>
-                                                <Style />
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox238</rd:DefaultName>
+                                        <rd:DefaultName>Textbox151</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
@@ -1588,8 +1444,11 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=DateDiff("H",FormatDateTime(Fields!SHAT_HATCHALA.Value,4),FormatDateTime(Fields!SHAT_GMAR.Value,4))</Value>
-                                                <Style />
+                                                <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 
+,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
+                                                <Style>
+                                                  <Format>f2</Format>
+                                                </Style>
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
@@ -1908,7 +1767,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!DAKOT_NOCHECHUT.Value</Value>
+                                                <Value>=iif(Fields!DAKOT_NOCHECHUT.Value=0,"",Fields!DAKOT_NOCHECHUT.Value)</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1927,6 +1786,72 @@
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox34">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(Fields!SHAT_GMAR.Value = nothing,"", FormatDateTime(Fields!SHAT_GMAR.Value,4))</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox34</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                          <Direction>RTL</Direction>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox31">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=iif(Fields!SHAT_HATCHALA.Value = nothing,"", FormatDateTime(Fields!SHAT_HATCHALA.Value,4))</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox31</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                          <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
                                     </CellContents>
@@ -1966,6 +1891,95 @@
                                   </TablixCell>
                                 </TablixCells>
                               </TablixRow>
+                              <TablixRow>
+                                <Height>0.6cm</Height>
+                                <TablixCells>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox284">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=Sum(Fields!DAKOT_NOCHECHUT.Value)</Value>
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox284</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                      <ColSpan>12</ColSpan>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell />
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="Textbox296">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>="סה''כ דקות פרמיה:"</Value>
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox296</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                          <Direction>RTL</Direction>
+                                        </Style>
+                                      </Textbox>
+                                      <ColSpan>3</ColSpan>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
+                                </TablixCells>
+                              </TablixRow>
                             </TablixRows>
                           </TablixBody>
                           <TablixColumnHierarchy>
@@ -1984,23 +1998,28 @@
                               <TablixMember />
                               <TablixMember />
                               <TablixMember />
+                              <TablixMember />
                             </TablixMembers>
                           </TablixColumnHierarchy>
                           <TablixRowHierarchy>
                             <TablixMembers>
-                              <TablixMember>
-                                <KeepWithGroup>After</KeepWithGroup>
-                              </TablixMember>
+                              <TablixMember />
                               <TablixMember>
                                 <Group Name="Details3" />
+                                <TablixMembers>
+                                  <TablixMember />
+                                </TablixMembers>
+                              </TablixMember>
+                              <TablixMember>
+                                <KeepWithGroup>Before</KeepWithGroup>
                               </TablixMember>
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>2.69875cm</Top>
-                          <Left>0.14739cm</Left>
-                          <Height>1.99375cm</Height>
-                          <Width>22.24785cm</Width>
+                          <Top>2.67229cm</Top>
+                          <Left>0.17385cm</Left>
+                          <Height>2.62021cm</Height>
+                          <Width>23.58006cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -2033,20 +2052,17 @@
               <Group Name="Details">
                 <GroupExpressions>
                   <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
-                  <GroupExpression>=Fields!FULL_NAME.Value</GroupExpression>
-                  <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
-                  <GroupExpression>=Fields!TEUR_MAAMAD_HR.Value</GroupExpression>
-                  <GroupExpression>=Fields!TEUR_ISUK.Value</GroupExpression>
+                  <GroupExpression>=Format(Fields!TAARICH.Value,"MM/yyyy")</GroupExpression>
                 </GroupExpressions>
               </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>3.40995cm</Top>
-        <Left>0.47949cm</Left>
-        <Height>5.37581cm</Height>
-        <Width>22.39528cm</Width>
+        <Top>2.81051cm</Top>
+        <Left>0.53241cm</Left>
+        <Height>5.44188cm</Height>
+        <Width>23.79994cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -2054,10 +2070,242 @@
           </Border>
         </Style>
       </Tablix>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TEUR_PREMIA">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=First(Fields!TEUR_PREMIA.Value)</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TEUR_PREMIA</rd:DefaultName>
+                      <Visibility>
+                        <Hidden>true</Hidden>
+                      </Visibility>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DsPremiotPresence</DataSetName>
+        <Top>2.13995cm</Top>
+        <Left>0.50595cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
     </ReportItems>
-    <Height>3.73958in</Height>
+    <Height>3.29747in</Height>
     <Style />
   </Body>
+  <Width>9.57967in</Width>
+  <Page>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0.3cm</LeftMargin>
+    <RightMargin>0.3cm</RightMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0.1cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>22c64c23-8242-48d8-ba94-2daafa8d273c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsPremiotPresence">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KOD_PREMIA">
+            <Value>=Parameters!P_KOD_PREMIA.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_PREMIOTPRESENCE</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DAYOFWEEK">
+          <DataField>DAYOFWEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BAKASHA_ID">
+          <DataField>BAKASHA_ID</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_KOD_GIL">
+          <DataField>TEUR_KOD_GIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD_HR">
+          <DataField>TEUR_MAAMAD_HR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="WORDING_DATE">
+          <DataField>WORDING_DATE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="START_TIME_ALLOWED">
+          <DataField>START_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="END_TIME_ALLOWED">
+          <DataField>END_TIME_ALLOWED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PITZUL_HAFSAKA">
+          <DataField>PITZUL_HAFSAKA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CHARIGA">
+          <DataField>CHARIGA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HAMARAT_SHABAT">
+          <DataField>HAMARAT_SHABAT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HASHLAMA">
+          <DataField>HASHLAMA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="OUT_MICHSA">
+          <DataField>OUT_MICHSA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="LINA">
+          <DataField>LINA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SIDUR_MEYCHAD">
+          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BITUL_ZMAN_NESIOT">
+          <DataField>BITUL_ZMAN_NESIOT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HALBASHA">
+          <DataField>HALBASHA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MICHSA_YOMIT">
+          <DataField>MICHSA_YOMIT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DAKOT_NOCHECHUT">
+          <DataField>DAKOT_NOCHECHUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NUM">
+          <DataField>NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_PREMIA">
+          <DataField>TEUR_PREMIA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_KOD_PREMIA">
       <DataType>String</DataType>
@@ -2117,17 +2365,6 @@
     End Function
 
 </Code>
-  <Width>9.06263in</Width>
-  <Page>
-    <PageHeight>21cm</PageHeight>
-    <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>0.3cm</LeftMargin>
-    <RightMargin>0.3cm</RightMargin>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.1cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -2138,6 +2375,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>dffe9c59-497b-45dc-9342-38df28659041</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>dffe9c59-497b-45dc-9342-38df28659041</rd:ReportID>
 </Report>
