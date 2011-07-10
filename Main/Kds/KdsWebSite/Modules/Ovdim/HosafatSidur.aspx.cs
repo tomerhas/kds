@@ -140,15 +140,17 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DataTable dtSource = new DataTable();
         try
         {
+            if (txtMisSidurMapa.Text != "" && wsBack.Value != "0")
+            {
 
-            type = int.Parse(sugSidur.Value);
-           
+                type = int.Parse(sugSidur.Value);
+
                 txtShatHatchala.Text = "";
                 txtShatHatchala.ToolTip = "";
                 txtShatGmar.Text = "";
                 txtShatGmar.ToolTip = "";
                 YeziratDTSource(ref dtSource);
-              //  btnHosafatPeilut.Disabled = false;
+                //  btnHosafatPeilut.Disabled = false;
                 if (type == 1)//סידור מפה
                 {
                     //txtTeurSidur.Text = "";
@@ -156,22 +158,23 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     InitializeSidurMapa(ref dtSource);
                     //   txtMisSidurMapa.Visible = true;
                     //txtMisSiduri.Text = txtMisSidurMapa.Text;
-                   
+
                 }
                 else //סידור מיוחד
                 {
                     //   txtTeurSidur.Text = txtTeurSidur.Text;
-                  //  lblMisSidur.Text = txtMisSiduri.Text;
+                    //  lblMisSidur.Text = txtMisSiduri.Text;
                     InitializeSidurMeyucahd(ref dtSource);
                     trMsgNextDay.Style["display"] = "none";
                 }
                 BindGridPeiluyot();
                 pirteySidur.Style["display"] = "inline";
                 txtShatHatchala.Focus();
-              //  btnMapa.Style["disabled"]="";
-             //   btnMeyuchad.Style["disabled"] = "";
+                //  btnMapa.Style["disabled"]="";
+                //   btnMeyuchad.Style["disabled"] = "";
                 //if (txtShatHatchala.Attributes["NEXT"].ToString() =="true")
                 //    ScriptManager.RegisterStartupScript(this, this.GetType(), "msg", "alert('" + lblYomHaba.Text + "');", true);
+            }
             
         }
         catch (Exception ex)

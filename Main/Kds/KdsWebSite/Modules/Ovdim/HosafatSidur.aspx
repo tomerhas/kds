@@ -70,7 +70,7 @@
          //* document.getElementById("txtTeurSidur").value = "";
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 1;
-         document.getElementById("btnShow").disabled = true;
+         //**//  document.getElementById("btnShow").disabled = true;
          $find("vldExSidur").hide();
          document.getElementById("pirteySidur").style.display = "none";
          document.getElementById("txtMisSidurMapa").focus();
@@ -100,7 +100,7 @@
          //*  document.getElementById("txtTeurSidur").value = "";
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 2;
-        document.getElementById("btnShow").disabled = true;
+        //**//  document.getElementById("btnShow").disabled = true;
          document.getElementById("pirteySidur").style.display = "none";
           $find("vldExSidurMapa").hide();
          cbMis_OnChange();
@@ -110,7 +110,7 @@
      function MisSiduri_onChange() {
          var misSidur;
          var sugSidur = document.getElementById("sugSidur").value;
-       
+       //  debugger;
          if (sugSidur == 1) {
              misSidur = document.getElementById("txtMisSidurMapa").value;
            //  document.getElementById("vldMis").controltovalidate = "txtMisSidurMapa";
@@ -126,31 +126,31 @@
                  if (sugSidur == 1 && misSidur.substr(0, 2) == "99") {
                      document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידורי שאינו מתחיל בספרות 99";
                      ShowValidatorCalloutExtender("vldExSidurMapa");
-                      document.getElementById("btnShow").disabled = true;
-                   
+                     //**//  document.getElementById("btnShow").disabled = true;
+
                  }
-//                 else if (sugSidur == 2 && misSidur.substr(0, 1) != "9") {
-//                     document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי המתחיל בספרה 9 ";
-//                     ShowValidatorCalloutExtender("vldExSidur");
-//                      document.getElementById("btnShow").disabled = true;
-//                 }
+                 //                 else if (sugSidur == 2 && misSidur.substr(0, 1) != "9") {
+                 //                     document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי המתחיל בספרה 9 ";
+                 //                     ShowValidatorCalloutExtender("vldExSidur");
+                 //                      //**//  document.getElementById("btnShow").disabled = true;
+                 //                 }
                  else {
                      if (sugSidur == 1) {
-//                        // alert(document.getElementById("SidureyEadrut").value);
-////                         if (document.getElementById("SidureyEadrut").value.indexOf("," + misSidur + ",") > -1) {
-////                             if (misSidur == "99200" || misSidur == "99214")
-////                                 document.getElementById("vldMis").errormessage = "לא ניתן לדווח סידור התייצבות";
-////                             else document.getElementById("vldMis").errormessage = "יש לדווח במסך הוסף דיווח היעדרות";
-////                             ShowValidatorCalloutExtender("vldExSidur");
-//                                document.getElementById("btnShow").disabled = true;
-//     
-//                         }
-//                            else
-//                                if (document.getElementById("StatusCard").value == -1)
-//                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
-//                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
-//                     }
-//                     else {//מפה
+                         //                        // alert(document.getElementById("SidureyEadrut").value);
+                         ////                         if (document.getElementById("SidureyEadrut").value.indexOf("," + misSidur + ",") > -1) {
+                         ////                             if (misSidur == "99200" || misSidur == "99214")
+                         ////                                 document.getElementById("vldMis").errormessage = "לא ניתן לדווח סידור התייצבות";
+                         ////                             else document.getElementById("vldMis").errormessage = "יש לדווח במסך הוסף דיווח היעדרות";
+                         ////                             ShowValidatorCalloutExtender("vldExSidur");
+                         //                                //**//  document.getElementById("btnShow").disabled = true;
+                         //     
+                         //                         }
+                         //                            else
+                         //                                if (document.getElementById("StatusCard").value == -1)
+                         //                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
+                         //                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
+                         //                     }
+                         //                     else {//מפה
                          if (document.getElementById("StatusCard").value == -1)
                              wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
                          else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
@@ -161,16 +161,20 @@
                  if (sugSidur == 2) {
                      document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי חיובי ושלם בלבד ";
                      ShowValidatorCalloutExtender("vldExSidur");
-           
+
                  } else {
                      document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידורי חיובי ושלם בלבד ";
                      ShowValidatorCalloutExtender("vldExSidurMapa");
-                
-                     
+
+
                  }
 
-               document.getElementById("btnShow").disabled = true;
+                 //**//  document.getElementById("btnShow").disabled = true;
              }
+         }
+         else {
+             document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
+             ShowValidatorCalloutExtender("vldExSidurMapa");
          }
      }
 
@@ -199,7 +203,7 @@
                  document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
              }
-             document.getElementById("btnShow").disabled = true;
+             //**//  document.getElementById("btnShow").disabled = true;
          }
      }
 
@@ -213,9 +217,11 @@
 //                 document.getElementById("txtTeurSidur").value = "";
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
+            // debugger;
+             document.getElementById("wsBack").value = "1";
          }
          else {
-             document.getElementById("btnShow").disabled = true;
+             //**//  document.getElementById("btnShow").disabled = true;
              if (sugSidur == 1) {
 //                 document.getElementById("vldMis").errormessage = "מספר סידור שגוי";
 //                 ShowValidatorCalloutExtender("vldExSidur");
@@ -224,6 +230,7 @@
 //             } else {
                  document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
+                 document.getElementById("wsBack").value = "0";
 
              }
          }
@@ -245,7 +252,7 @@
 //             document.getElementById("txtTeurSidur").disabled = true;
 //             document.getElementById("txtTeurSidur").value = "";
 //          //*   document.getElementById("txtMisSiduri").value = "";
-//            document.getElementById("btnShow").disabled = true;
+//            //**//  document.getElementById("btnShow").disabled = true;
 //         }
 //     }
      function cbMis_OnChange() {
@@ -263,7 +270,7 @@
             //*  document.getElementById("txtTeurSidur").value = "";
            //  if (sugSidur == 2)
            //      document.getElementById("cbTeurSidur").disabled = false;
-            document.getElementById("btnShow").disabled = true;
+            //**//  document.getElementById("btnShow").disabled = true;
 //         }
      }
 
@@ -281,7 +288,7 @@
          }
          else {
           //*    document.getElementById("vldTeur").errormessage = "תאור סידור שגוי";
-             document.getElementById("btnShow").disabled = true;
+             //**//  document.getElementById("btnShow").disabled = true;
              //*    document.getElementById("txtMisSiduri").value = "";
           //*   ShowValidatorCalloutExtender("vldExTeur");
          }
@@ -1340,6 +1347,19 @@
 //               else document.getElementById('btnMapa').focus();
 //*           }
        }
+
+       function btnShow_OnClientClick() {
+         
+           var mis = document.getElementById("txtMisSidurMapa").value;
+           if (mis == "" || document.getElementById("wsBack").value == "0") {
+               if (mis == "")
+                   document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
+                
+               ShowValidatorCalloutExtender("vldExSidurMapa");
+               return false;
+           }
+           else return true;
+       }
  </script>
     <form id="form1" runat="server">
              <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
@@ -1351,7 +1371,7 @@
                         </div>        
                     </ProgressTemplate>
                </asp:UpdateProgress>
-    <asp:UpdatePanel  ID="upSidur" runat="server"  UpdateMode="Always">
+    <asp:UpdatePanel  ID="upsd" runat="server"  UpdateMode="Always">
                    <ContentTemplate>
             <div>
                 <table style="width:100%" >
@@ -1404,7 +1424,7 @@
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExTeur" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                --%>
                                             </td>
                                             <%--  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  --%>
-                                            <td><asp:Button ID="btnShow" runat="server" Text="הצג"  style="width:auto;" Enabled="false" OnClick="btnShow_OnClick"   tabindex="8"   CssClass="ImgButtonSearch" onblur="moveFocus('btnShow');" /></td>
+                                            <td><asp:Button ID="btnShow" runat="server" Text="הצג"  style="width:auto;" OnClick="btnShow_OnClick" OnClientClick="return btnShow_OnClientClick();"   tabindex="8"   CssClass="ImgButtonSearch" onblur="moveFocus('btnShow');" /></td>
                                         </tr>
                                       </table>
                                    
@@ -1414,6 +1434,10 @@
                 </table>
                 <br />          
             </div>
+    </ContentTemplate>
+    </asp:UpdatePanel>
+        <asp:UpdatePanel  ID="UpdatePanel1" runat="server"  UpdateMode="Always">
+        <ContentTemplate>
             <div style="width:100%">
             
              <input type="button" ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click()" style="display: none;" />
@@ -1619,6 +1643,7 @@
         <input type="hidden" id="HiddenTakin" name="HiddenTakin"  runat="server"  />
         <input type="hidden" id="StatusCard" name="StatusCard"  runat="server"  />
         <input type="hidden" id="sug_sidur_tnua" name="sug_sidur_tnua"  runat="server"  />
+        <input type="hidden" id="wsBack" name="wsBack"  runat="server" value="0"  />
          </ContentTemplate>
     </asp:UpdatePanel>
        <input type="button" ID="btnCopy" runat="server" style="display: none;" />
