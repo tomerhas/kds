@@ -106,7 +106,19 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
                
                 SetDefault();
-               
+
+                if (!(LoginUser.IsLimitedUser && arrParams[2].ToString() == "1"))
+                {
+                    divNetunim.Style["overflow-y"] = "hidden";
+                    grdEmployee.AllowPaging = false;
+                }
+                else
+                {
+                    divNetunim.Style["overflow-y"] = "hidden";
+                    divNetunim.Style["height"] = "270px";
+                    grdEmployee.PageSize = 8;
+                    grdEmployee.AllowPaging = true;         
+                }
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
                 if (iSecurity == KdsSecurityLevel.ViewAll)
                 {
@@ -385,7 +397,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
        
             grdEmployee.DataSource = dv;
             grdEmployee.DataBind();
-           
+            divNetunim.Style["overflow-y"] = "scroll";
             
         }
         catch (Exception ex)

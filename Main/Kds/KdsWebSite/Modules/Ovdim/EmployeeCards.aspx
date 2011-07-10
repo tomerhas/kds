@@ -139,7 +139,7 @@
             <td>
                 <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline" >
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server"  style="text-align:right;width:950px">
+                     <div id="divNetunim" runat="server"  style="text-align:right;width:950px;overflow-y:scroll;overflow-x:hidden;height:330px;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" 
@@ -189,6 +189,7 @@
             document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearch";
             document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
         }
+      //  document.getElementById("ctl00_KdsContent_divNetunim").style
        }
        function ClearScreen()
        {
