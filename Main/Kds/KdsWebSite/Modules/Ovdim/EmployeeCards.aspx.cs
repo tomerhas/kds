@@ -88,15 +88,16 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     {
         DataTable dtParametrim = new DataTable();
         clUtils oUtils = new clUtils();
+        MasterPage mp = (MasterPage)Page.Master;
         try
         {
-          
+            
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 PageHeader = "רשימת כרטיסי עבודה לעובד";
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
-
+                SetFixedHeaderGrid(divNetunim.ClientID, mp.HeadPage);
                 txtId.Focus();
                 txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
                 txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
@@ -115,10 +116,11 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 else
                 {
                     divNetunim.Style["overflow-y"] = "hidden";
-                    divNetunim.Style["height"] = "270px";
+                    divNetunim.Style["height"] = "240px";
                     grdEmployee.PageSize = 8;
                     grdEmployee.AllowPaging = true;         
                 }
+               
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
                 if (iSecurity == KdsSecurityLevel.ViewAll)
                 {
@@ -397,8 +399,11 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
        
             grdEmployee.DataSource = dv;
             grdEmployee.DataBind();
-            divNetunim.Style["overflow-y"] = "scroll";
-            
+            if (grdEmployee.Rows.Count >9)
+                divNetunim.Style["overflow-y"] = "scroll";
+            else divNetunim.Style["overflow-y"] = "hidden";
+            grdEmployee.Focus();
+           
         }
         catch (Exception ex)
         {

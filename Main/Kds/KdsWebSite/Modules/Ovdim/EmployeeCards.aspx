@@ -38,7 +38,7 @@
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" /><br /> 
 </div> 
 <div id="divSinun" runat="server" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
-      <fieldset class="FilterFieldSet" style="width:933px;height:80px">
+      <fieldset class="FilterFieldSet" style="width:950px;height:80px">
         <legend>רשימת כרטיסי עבודה עבור</legend> 
         <table cellpadding="2" cellspacing="0" border="0" style="margin-top:4px"  >
             <tr>
@@ -139,17 +139,17 @@
             <td>
                 <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline" >
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server"  style="text-align:right;width:950px;overflow-y:scroll;overflow-x:hidden;height:330px;">
+                     <div id="divNetunim" runat="server"  style="text-align:right;width:950px;overflow-y:scroll;overflow-x:hidden;height:250px;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
-                                 Width="950px" EmptyDataText="לא נמצאו נתונים!" 
+                                 Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            
-                                    <asp:HyperLinkField DataTextField="taarich" ItemStyle-CssClass="ItemRow"  ItemStyle-Font-Size="Larger" HeaderStyle-CssClass="GridHeader"   HeaderText="תאריך" SortExpression="taarich" NavigateUrl="#"  ItemStyle-Width="220px"   />                                          
-                                    <asp:BoundField DataField="status" HeaderText="דרוש עדכון" SortExpression="status"  ItemStyle-Font-Size="Larger"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"   />
-                                    <asp:BoundField DataField="kartis_without_peilut" HeaderText="ללא דיווח"  ItemStyle-Font-Size="Larger" SortExpression="kartis_without_peilut" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                                    <asp:BoundField DataField="measher_o_mistayeg_key" HeaderText="מסתייג/מאשר/ללא התייחסות"  ItemStyle-Font-Size="Larger"  SortExpression="measher_o_mistayeg_key" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                                    <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לאישור"  ItemStyle-Font-Size="Larger" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                                    <asp:HyperLinkField DataTextField="taarich" ItemStyle-CssClass="ItemRow"   ItemStyle-Font-Size="Larger" HeaderStyle-CssClass="GridHeader"  HeaderStyle-Width="250px"  HeaderText="תאריך" SortExpression="taarich" NavigateUrl="#"  />                                          
+                                    <asp:BoundField DataField="status" HeaderText="דרוש עדכון" SortExpression="status"  ItemStyle-Font-Size="Larger"  ItemStyle-CssClass="ItemRow"  HeaderStyle-Width="150px" HeaderStyle-CssClass="GridHeader"   />
+                                    <asp:BoundField DataField="kartis_without_peilut" HeaderText="ללא דיווח"  ItemStyle-Font-Size="Larger" SortExpression="kartis_without_peilut" ItemStyle-CssClass="ItemRow" HeaderStyle-Width="145px"  HeaderStyle-CssClass="GridHeader"  />
+                                    <asp:BoundField DataField="measher_o_mistayeg_key" HeaderText="מסתייג/מאשר/ללא התייחסות"  ItemStyle-Font-Size="Larger"  SortExpression="measher_o_mistayeg_key"  HeaderStyle-Width="250px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                                    <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לאישור"  ItemStyle-Font-Size="Larger" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow"   HeaderStyle-Width="150px" HeaderStyle-CssClass="GridHeader"  />
                                <%--     <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לחישוב שכר" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />                            
                                --%> </Columns>
                                 <AlternatingRowStyle CssClass="GridAltRow" Height="25px" />
