@@ -140,7 +140,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         DataTable dtSource = new DataTable();
         try
         {
-            if (txtMisSidurMapa.Text != "" && wsBack.Value != "0")
+            if (txtMisSidurMapa.Text != "" && wsBack.Value == "1")
             {
 
                 type = int.Parse(sugSidur.Value);

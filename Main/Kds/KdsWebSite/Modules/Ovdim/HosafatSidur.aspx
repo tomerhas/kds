@@ -120,12 +120,14 @@
 //            // document.getElementById("vldMis").controltovalidate = "txtMisSiduri";
 //*         }
          var taarich = document.getElementById("TaarichCA").value;
+         //debugger;
          //*    document.getElementById("txtTeurSidur").value = "";
          if (misSidur != "") {
              if (IsNumeric(misSidur)) {
                  if (sugSidur == 1 && misSidur.substr(0, 2) == "99") {
                      document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידורי שאינו מתחיל בספרות 99";
                      ShowValidatorCalloutExtender("vldExSidurMapa");
+                     document.getElementById("wsBack").value = "-1";
                      //**//  document.getElementById("btnShow").disabled = true;
 
                  }
@@ -165,7 +167,7 @@
                  } else {
                      document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידורי חיובי ושלם בלבד ";
                      ShowValidatorCalloutExtender("vldExSidurMapa");
-
+                     document.getElementById("wsBack").value = "-1";
 
                  }
 
@@ -186,7 +188,7 @@
              misSidur = document.getElementById("txtMisSidurMapa").value;
 //*         else
 //*             misSidur = document.getElementById("txtMisSiduri").value;
-      
+         
          if (result == 1) {
              if (sugSidur == 2)
                 wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
@@ -202,6 +204,7 @@
 //             } else {
                  document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
+                 document.getElementById("wsBack").value = "-1";
              }
              //**//  document.getElementById("btnShow").disabled = true;
          }
@@ -209,7 +212,7 @@
 
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
-
+        
          if (result != -1) {
 //             if (sugSidur == 2)
 //                 document.getElementById("txtTeurSidur").value = result;
@@ -1349,17 +1352,23 @@
        }
 
        function btnShow_OnClientClick() {
-         
+          
            var mis = document.getElementById("txtMisSidurMapa").value;
-           if (mis == "" || document.getElementById("wsBack").value == "0") {
-               if (mis == "")
-                   document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
-                
+           if (mis == "") { 
+               document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
+               return false;
+           }
+           else if (document.getElementById("wsBack").value == "-1") {
                ShowValidatorCalloutExtender("vldExSidurMapa");
                return false;
            }
+           else if (document.getElementById("wsBack").value == "0") {
+               setTimeout('return true;', 1000);
+             //  return false;
+           }
            else return true;
        }
+
  </script>
     <form id="form1" runat="server">
              <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
