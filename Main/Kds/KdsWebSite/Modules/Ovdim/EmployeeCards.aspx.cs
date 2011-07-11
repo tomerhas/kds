@@ -107,8 +107,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
                
                 SetDefault();
-
-                if (!(LoginUser.IsLimitedUser && arrParams[2].ToString() == "1"))
+                hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
+                if (!bool.Parse(hidFromEmda.Value))
                 {
                     divNetunim.Style["overflow-y"] = "hidden";
                     grdEmployee.AllowPaging = false;
@@ -116,8 +116,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 else
                 {
                     divNetunim.Style["overflow-y"] = "hidden";
-                    divNetunim.Style["height"] = "240px";
-                    grdEmployee.PageSize = 8;
+                   // divNetunim.Style["height"] = "240px";
+                   // grdEmployee.PageSize = 8;
                     grdEmployee.AllowPaging = true;         
                 }
                
@@ -255,8 +255,9 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             }
             txtId.Enabled = true;
         }
-        if (flag)
-         btnExecute_Click(sender, e);
+        divNetunim.Visible = false;
+        //if (flag)
+        // btnExecute_Click(sender, e);
       
     }
     protected void txtName_TextChanged(object sender, EventArgs e)
@@ -327,12 +328,12 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             }
             if (flag)
             {
-                btnExecute_Click(sender, e);
+               // btnExecute_Click(sender, e);
                  if (rdoMonth.Checked == true)
                     ddlMonth.Focus();
                 else btnExecute.Focus();
             }
-
+            divNetunim.Visible = false;
         }
         catch (Exception ex)
         { clGeneral.BuildError(Page, ex.Message); }
@@ -399,10 +400,11 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
        
             grdEmployee.DataSource = dv;
             grdEmployee.DataBind();
-            if (grdEmployee.Rows.Count >9)
+            if (!bool.Parse(hidFromEmda.Value) && grdEmployee.Rows.Count > (grdEmployee.PageSize + 1))
                 divNetunim.Style["overflow-y"] = "scroll";
             else divNetunim.Style["overflow-y"] = "hidden";
             grdEmployee.Focus();
+            divNetunim.Visible = true;
            
         }
         catch (Exception ex)

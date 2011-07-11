@@ -6195,6 +6195,7 @@ namespace KdsBatch
                                 oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;                              
                             }
                             oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
+                            oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
                             oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                             htEmployeeDetails[i] = oSidur;
@@ -6300,8 +6301,13 @@ namespace KdsBatch
                                 flag = false;
                             }
                         }
-                        if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
-                            oSidurFirst.sPitzulHafsaka = "0";
+                        //oObjSidurimOvdimUpd = GetUpdSidurObject(oSidurFirst);
+                        //if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidurFirst.iMisparSidur, oSidurFirst.dFullShatHatchala))
+                        //{
+                        //    oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
+                        //    oSidurFirst.sPitzulHafsaka = "0";
+                        //    htEmployeeDetails[indexSidurFirst] = oSidurFirst;
+                        //}
                         if (!flag && i < (htEmployeeDetails.Count - 1))
                         {
                             oSidurSecond = (clSidur)htEmployeeDetails[i + 1];

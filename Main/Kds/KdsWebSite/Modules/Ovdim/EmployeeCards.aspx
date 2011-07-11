@@ -141,7 +141,7 @@
                    <ContentTemplate> 
                      <div id="divNetunim" runat="server"  style="text-align:right;width:950px;overflow-y:scroll;overflow-x:hidden;height:250px;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
-                                 AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
+                                 AllowPaging="true" PageSize="7" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            
@@ -170,12 +170,14 @@
             </td>
         </tr>
      </table>
+       <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />  
      <div id="divHeadruyot_Parent" style="display:none;">
         <div id="divHeadruyot">
             <iframe id="frameHeadruyot" frameborder="0" style="overflow:hidden;"></iframe>
         </div>
      </div>     
-     
+  
+                     
        <script type="text/javascript" language="javascript" >        
        function checkID()
        {
