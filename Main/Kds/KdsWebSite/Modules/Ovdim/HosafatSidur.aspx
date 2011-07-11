@@ -1352,20 +1352,21 @@
        }
 
        function btnShow_OnClientClick() {
-          
+      //     debugger;
            var mis = document.getElementById("txtMisSidurMapa").value;
-           if (mis == "") { 
+           if (mis == "") {
                document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
-               return false;
-           }
-           else if (document.getElementById("wsBack").value == "-1") {
                ShowValidatorCalloutExtender("vldExSidurMapa");
                return false;
            }
-           else if (document.getElementById("wsBack").value == "0") {
-               setTimeout('return true;', 1000);
-             //  return false;
+           else if (document.getElementById("wsBack").value != "1") {
+               ShowValidatorCalloutExtender("vldExSidurMapa");
+               return false;
            }
+//           else if (document.getElementById("wsBack").value == "0") {
+//               setTimeout('return true;', 1000);
+//             //  return false;
+//           }
            else return true;
        }
 
@@ -1403,7 +1404,7 @@
                                            <%--   <input type="checkbox" ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"  style="background-color:red;width:150px"   title="מספר סידורי"   value="מספר סידורי"   />--%>
                                          <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>
                                         <%-- <asp:TextBox ID="txtMisSiduri" runat="server" Enabled="false"  onChange="MisSiduri_onChange()"     width="130px" MaxLength="5"  tabindex="4"    ></asp:TextBox>--%>
-                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"   onchange="MisSiduri_onChange()"  width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
+                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"   onchange="MisSiduri_onChange()"  onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
                                              <%--    <asp:CustomValidator runat="server" id="vldMis"   ControlToValidate="txtMisSiduri" ErrorMessage=""   Display="None"    ></asp:CustomValidator>
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExMis" BehaviorID="vldExSidur"   TargetControlID="vldMis" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
                                                 --%>

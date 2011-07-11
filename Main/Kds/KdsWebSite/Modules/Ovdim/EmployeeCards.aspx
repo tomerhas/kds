@@ -101,13 +101,13 @@
            </table>
            <table border="0"> 
             <tr>
-                <td class="style3"><asp:RadioButton runat="server" ID="rdoMonth" GroupName="grpCardType" Text="חודש" > </asp:RadioButton></td>
+                <td class="style3"><asp:RadioButton runat="server" ID="rdoMonth" GroupName="grpCardType" Text="חודש" onchanged="document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';" > </asp:RadioButton></td>
                 <td class="style2"> 
-                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0';"  TabIndex="3" 
+                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0';document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';"  TabIndex="3" 
                         style="width:103px; margin-right: 15px;"></asp:DropDownList></td>
               
             
-                <td style="width:182px;">&nbsp;&nbsp;<asp:RadioButton runat="server" ID="rdoCards" GroupName="grpCardType" Text="כל כרטיסי העבודה בטיפול" onclick="document.getElementById('ctl00_KdsContent_txtPageIndex').value='0';"> </asp:RadioButton></td>                          
+                <td style="width:182px;">&nbsp;&nbsp;<asp:RadioButton runat="server" ID="rdoCards" GroupName="grpCardType" Text="כל כרטיסי העבודה בטיפול" onclick="document.getElementById('ctl00_KdsContent_txtPageIndex').value='0';document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';"> </asp:RadioButton></td>                          
           
                 <td style="width:60px;">
                 <asp:UpdatePanel ID="upExecute" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
@@ -139,10 +139,10 @@
             <td>
                 <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline" >
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server"  style="text-align:right;width:950px;overflow-y:scroll;overflow-x:hidden;height:250px;">
+                     <div id="divNetunim" runat="server" dir="ltr"  style="text-align:right;width:965px;overflow-y:scroll;overflow-x:hidden;height:250px;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="7" AutoGenerateColumns="false" CssClass="Grid"  
-                                 Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
+                                 Width="935px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            
                                     <asp:HyperLinkField DataTextField="taarich" ItemStyle-CssClass="ItemRow"   ItemStyle-Font-Size="Larger" HeaderStyle-CssClass="GridHeader"  HeaderStyle-Width="250px"  HeaderText="תאריך" SortExpression="taarich" NavigateUrl="#"  />                                          

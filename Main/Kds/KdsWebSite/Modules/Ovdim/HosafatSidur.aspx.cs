@@ -170,6 +170,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 BindGridPeiluyot();
                 pirteySidur.Style["display"] = "inline";
                 txtShatHatchala.Focus();
+               
                 //  btnMapa.Style["disabled"]="";
                 //   btnMeyuchad.Style["disabled"] = "";
                 //if (txtShatHatchala.Attributes["NEXT"].ToString() =="true")
