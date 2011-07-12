@@ -110,7 +110,7 @@
      function MisSiduri_onChange() {
          var misSidur;
          var sugSidur = document.getElementById("sugSidur").value;
-       //  debugger;
+    //  debugger;
          if (sugSidur == 1) {
              misSidur = document.getElementById("txtMisSidurMapa").value;
            //  document.getElementById("vldMis").controltovalidate = "txtMisSidurMapa";
@@ -120,7 +120,7 @@
 //            // document.getElementById("vldMis").controltovalidate = "txtMisSiduri";
 //*         }
          var taarich = document.getElementById("TaarichCA").value;
-         //debugger;
+      
          //*    document.getElementById("txtTeurSidur").value = "";
          if (misSidur != "") {
              if (IsNumeric(misSidur)) {
@@ -212,7 +212,7 @@
 
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
-        
+   
          if (result != -1) {
 //             if (sugSidur == 2)
 //                 document.getElementById("txtTeurSidur").value = result;
@@ -220,8 +220,10 @@
 //                 document.getElementById("txtTeurSidur").value = "";
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
-            // debugger;
+           
              document.getElementById("wsBack").value = "1";
+             document.getElementById("Button1").click();
+        
          }
          else {
              //**//  document.getElementById("btnShow").disabled = true;
@@ -1404,7 +1406,7 @@
                                            <%--   <input type="checkbox" ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"  style="background-color:red;width:150px"   title="מספר סידורי"   value="מספר סידורי"   />--%>
                                          <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>
                                         <%-- <asp:TextBox ID="txtMisSiduri" runat="server" Enabled="false"  onChange="MisSiduri_onChange()"     width="130px" MaxLength="5"  tabindex="4"    ></asp:TextBox>--%>
-                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"   onchange="MisSiduri_onChange()"  onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
+                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"    onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
                                              <%--    <asp:CustomValidator runat="server" id="vldMis"   ControlToValidate="txtMisSiduri" ErrorMessage=""   Display="None"    ></asp:CustomValidator>
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExMis" BehaviorID="vldExSidur"   TargetControlID="vldMis" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
                                                 --%>
@@ -1434,7 +1436,10 @@
                                                  <cc1:ValidatorCalloutExtender runat="server" ID="vldExTeur" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                --%>
                                             </td>
                                             <%--  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  --%>
-                                            <td><asp:Button ID="btnShow" runat="server" Text="הצג"  style="width:auto;" OnClick="btnShow_OnClick" OnClientClick="return btnShow_OnClientClick();"   tabindex="8"   CssClass="ImgButtonSearch" onblur="moveFocus('btnShow');" /></td>
+                                            <td>
+                                              <input type="button" ID="btnShow" runat="server" onclick="MisSiduri_onChange();" value="הצג"  style="width:auto;"  tabindex="8" class="ImgButtonSearch"  onblur="moveFocus('btnShow');" />
+                                              <input type="button" ID="Button1" runat="server" onserverclick="btnShow_OnClick"  style="display: none;" />
+                                                    </td>
                                         </tr>
                                       </table>
                                    
