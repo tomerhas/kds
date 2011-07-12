@@ -298,6 +298,8 @@ function chkMkt(oRow) {
          $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;
          $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).checked = false;
          $get("lstSidurim_imgCancel".concat(iSidurNum)).className = "ImgChecked";
+         if ($get("lstSidurim_txtSH" + iSidurNum).disabled == false)
+             ($get("lstSidurim_txtSH" + iSidurNum)).focus();
      }
      function ClearSidurTitle(iSidurIndex){
          _Sidur = $get("lstSidurim_lblSidur" + iSidurIndex);
@@ -1809,6 +1811,15 @@ function chkMkt(oRow) {
         var _Sidur = $get('lstSidurim_lblSidur'.concat(iSidurIndex));
         if (!((_Sidur.style.visibility == "hidden" || _Sidur.style.display == "none" || _Sidur.disabled == true)))
             _Sidur.focus();
+    }
+    function SetNewPeilutFocus(iPeilutIndex) {       
+        if (iPeilutIndex != undefined) {
+            var _Peilut = $get(iPeilutIndex);          
+            if ((_Peilut != null) && (_Peilut != undefined)){
+                if (!((_Peilut.style.visibility == "hidden" || _Peilut.style.display == "none" || _Peilut.disabled == true)))
+                    _Peilut.focus();
+            }
+        }
     }
     function btnCopyOtoNum(iAction)
     {

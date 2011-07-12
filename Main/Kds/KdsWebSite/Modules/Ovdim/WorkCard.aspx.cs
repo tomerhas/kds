@@ -635,13 +635,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //sScript = sScript + " if ($get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').isDisabled==false){";
                 //sScript = sScript + " $get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();}";
             }
-            //if (lstSidurim.AddPeilut != null)
-            //{
-            //    sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
-            //    if (sPeilutDetails[0].Equals("1"))
-            //         sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
-            //        //sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02ShatYetiza').focus();";
-            //}
+            if (lstSidurim.AddPeilut != null)
+            {
+                sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
+                if (sPeilutDetails[0].Equals("1"))
+                    //    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
+                    //sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02ShatYetiza').focus();";
+                    sScript = sScript + "SetNewPeilutFocus('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "');";
+                    //sScript = sScript + " $get('lstSidurim_000_ctl02_lstSidurim_000_ctl02MakatNumber').focus();";
+            }
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
             bAddSidur = false;
@@ -4379,7 +4381,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
             oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
             oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
-            oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
+            if (!oSidur.bSidurMyuhad) 
+                oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
             oObjSidurimOvdimIns.UPDATE_OBJECT = 1;
         }
         catch (Exception ex)

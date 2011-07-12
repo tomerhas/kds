@@ -43,8 +43,10 @@ function SaveScrollPosToHidden()
 }
 function window.onload()
 {    
+    var iPeilutIndex;
     SetSidurimCollapseImg();
     HasSidurHashlama(); 
+    SetNewPeilutFocus(iPeilutIndex);
 }
 </script>
 <script src="../../Js/Sidurim.js" type="text/javascript"></script>

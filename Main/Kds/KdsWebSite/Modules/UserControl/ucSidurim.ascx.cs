@@ -1890,17 +1890,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (btnHandler != null)
             btnHandler(string.Empty, true);
 
-        //string[] sPeilutDetails;
-        //string sScript="";
-        //sPeilutDetails = AddPeilut.Split(char.Parse("|"));
-        //if (sPeilutDetails[0].Equals("1"))
-        //   sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
-        //ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
+        string[] sPeilutDetails;
+        string sScript = "";
+        sPeilutDetails = AddPeilut.Split(char.Parse("|"));
+        if (sPeilutDetails[0].Equals("1"))
+            //sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
+            sScript = sScript + "SetNewPeilutFocus('" + GetPeilutClientKey(sPeilutDetails) + "');";
+        //  sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02MakatNumber').focus();";
+
+        ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
     public string GetPeilutClientKey(string[] sPeilutDetails)
     {
         int iPeilutIndex;
-        iPeilutIndex = ((clSidur)DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1 ;
+        iPeilutIndex = ((clSidur)DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1;
         return "lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
