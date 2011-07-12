@@ -103,7 +103,7 @@
             <tr>
                 <td class="style3"><asp:RadioButton runat="server" ID="rdoMonth" GroupName="grpCardType" Text="חודש" onchanged="document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';" > </asp:RadioButton></td>
                 <td class="style2"> 
-                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0';document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';"  TabIndex="3" 
+                   <asp:DropDownList runat="server" ID="ddlMonth"  onchange="ddlMonth_onchange();"  TabIndex="3" 
                         style="width:103px; margin-right: 15px;"></asp:DropDownList></td>
               
             
@@ -192,7 +192,12 @@
             document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
         }
       //  document.getElementById("ctl00_KdsContent_divNetunim").style
-       }
+    }
+    function ddlMonth_onchange() {
+        document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0'; 
+        if (document.getElementById('ctl00_KdsContent_divNetunim') != null)
+            document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';
+    }
        function ClearScreen()
        {
             if (document.getElementById("ctl00_KdsContent_grdEmployee")!=null)
