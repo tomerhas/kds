@@ -233,7 +233,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     else TaarichGmar.Value = "";
                     
                 }
-
+                
                 foreach (DataRow dr in dsSidur.Tables[1].Rows)
                 {
                     DataRow drSource = dtSource.NewRow();

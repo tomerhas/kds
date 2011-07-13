@@ -1497,9 +1497,11 @@
                                     <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                               </td>
                         <td>
-                        <asp:Panel ID="pnlgrdPeiluyot"    height="330px" width="808px" runat="server" ScrollBars="Auto">   
+                          <div id="divPeiluyot" runat="server" dir="ltr" style="overflow-y:auto">
+                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  height="330px" width="808px" runat="server" >   
+                      
                         <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="790px"
+                                 AutoGenerateColumns="False" width="790px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
                                  HeaderStyle-CssClass="GridHeaderSecondary"
                                  OnRowDataBound="grdPeiluyot_RowDataBound" >
@@ -1609,9 +1611,12 @@
                                     <AlternatingRowStyle CssClass="GridAltRow" />
                                     <RowStyle CssClass="GridRow" />
                              </asp:GridView>
+                            
+                             
+                            </asp:Panel>
+                             </div>
                              <asp:Panel ID="tsEmpty" runat="server" HorizontalAlign="Center" Font-Bold="true"  visible="false" >
                                 סידור ללא פעילויות</asp:Panel> 
-                            </asp:Panel>
                         </td>
                     </tr>
                      <tr id="trMsgNextDay" runat="server" style="display:none;">
@@ -1621,7 +1626,7 @@
                     </tr>
                     <tr>
                         <td colspan ="4" style="font-size:small" >
-                            ש.גמר תחושב אוטומטית לאחר הוספת הסידור לכ''ע (מלבד סידורי ויזה או סידורים ללא פעילויות)
+                            (ש.גמר תחושב אוטומטית לאחר הוספת הסידור לכ''ע)
                         </td>
                     </tr>
                      <%--<tr id="tsEmpty" runat="server" visible="false" ><td colspan="3"></td>
