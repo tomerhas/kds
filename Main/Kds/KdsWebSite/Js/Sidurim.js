@@ -298,6 +298,7 @@ function chkMkt(oRow) {
          $get("lstSidurim_imgCancel".concat(iSidurNum)).disabled = false;
          $get("lstSidurim_lblSidurCanceled".concat(iSidurNum)).disabled = false;
          $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).disabled = false;
+         $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).setAttribute("OrgEnabled", "1");
          $get("lstSidurim_chkLoLetashlum".concat(iSidurNum)).checked = false;
          $get("lstSidurim_imgCancel".concat(iSidurNum)).className = "ImgChecked";
          if ($get("lstSidurim_txtSH" + iSidurNum).disabled == false)
