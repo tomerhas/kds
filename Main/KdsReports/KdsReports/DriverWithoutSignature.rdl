@@ -1,124 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>0b461b07-96e1-4988-bb18-cdb0c7906233</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="DataSource1">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>2e14265f-4bb9-4fad-a8e1-d7c9b5a2f4cd</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsDriverNotSigned">
-      <Fields>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="NIDRESHET_HITIATZVUT">
-          <DataField>NIDRESHET_HITIATZVUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="STARTTIME1">
-          <DataField>STARTTIME1</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ENDTIME1">
-          <DataField>ENDTIME1</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="STARTTIME2">
-          <DataField>STARTTIME2</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="ENDTIME2">
-          <DataField>ENDTIME2</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource1</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_DRIVERNOTSIGNED</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DsSUMDRIVERNOTSIGNED">
-      <Fields>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="CNT">
-          <DataField>CNT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_SUMDRIVERNOTSIGNED</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TbMatrix">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.29675in</Width>
+              <Width>0.75374cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.17375in</Width>
+              <Width>2.98132cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.18414in</Height>
+              <Height>0.46772cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -197,7 +93,7 @@
                 </GroupExpressions>
               </Group>
               <TablixHeader>
-                <Size>0.31955in</Size>
+                <Size>0.81166cm</Size>
                 <CellContents>
                   <Textbox Name="TAARICH">
                     <KeepTogether>true</KeepTogether>
@@ -231,7 +127,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.31955in</Size>
+                <Size>0.81166cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox36">
                     <KeepTogether>true</KeepTogether>
@@ -287,11 +183,6 @@
                   <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <SortExpressions>
-                <SortExpression>
-                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
-                </SortExpression>
-              </SortExpressions>
               <TablixMembers>
                 <TablixMember />
               </TablixMembers>
@@ -304,12 +195,6 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <SortExpressions>
-          <SortExpression>
-            <Value>=Fields!TAARICH.Value</Value>
-            <Direction>Descending</Direction>
-          </SortExpression>
-        </SortExpressions>
         <Top>2.16941cm</Top>
         <Left>2.26926cm</Left>
         <Height>1.27937cm</Height>
@@ -337,12 +222,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.63048in</Width>
+              <Width>21.92142cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.32055in</Height>
+              <Height>5.8942cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -352,39 +237,39 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.67097in</Width>
+                                <Width>1.70426cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.65612in</Width>
+                                <Width>1.66654cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.65644in</Width>
+                                <Width>1.66736cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.69779in</Width>
+                                <Width>1.77239cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.70821in</Width>
+                                <Width>1.79885cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.70937in</Width>
+                                <Width>1.8018cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.46862in</Width>
+                                <Width>3.73029cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.29154in</Width>
+                                <Width>3.28051cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.83313in</Width>
+                                <Width>2.11615cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.91653in</Width>
+                                <Width>2.32799cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -640,7 +525,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -784,7 +669,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.44455in</Height>
+                                <Height>1.12916cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1127,7 +1012,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.24964in</Height>
+                                <Height>0.63409cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1585,7 +1470,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1847,7 +1732,7 @@
                           <Top>2.28751cm</Top>
                           <Left>0.05523cm</Left>
                           <Height>3.56324cm</Height>
-                          <Width>21.86619cm</Width>
+                          <Width>21.86615cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1861,7 +1746,6 @@
                               <Value>="נהגים ללא החתמת התייצבות בשעון נוכחות לתקופה " + Trim(Parameters!P_PERIOD.Value)</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0cm</Top>
                           <Left>2.09251cm</Left>
                           <Height>1.80071cm</Height>
                           <Width>19.82891cm</Width>
@@ -1937,6 +1821,128 @@
     <Height>4.30681in</Height>
     <Style />
   </Body>
+  <Width>10.64971in</Width>
+  <Page>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <LeftMargin>0.3cm</LeftMargin>
+    <RightMargin>0.3cm</RightMargin>
+    <TopMargin>0.3cm</TopMargin>
+    <BottomMargin>0.3cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>0b461b07-96e1-4988-bb18-cdb0c7906233</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>2e14265f-4bb9-4fad-a8e1-d7c9b5a2f4cd</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsDriverNotSigned">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_DRIVERNOTSIGNED</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="NIDRESHET_HITIATZVUT">
+          <DataField>NIDRESHET_HITIATZVUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="STARTTIME1">
+          <DataField>STARTTIME1</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ENDTIME1">
+          <DataField>ENDTIME1</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="STARTTIME2">
+          <DataField>STARTTIME2</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ENDTIME2">
+          <DataField>ENDTIME2</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsSUMDRIVERNOTSIGNED">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_SUMDRIVERNOTSIGNED</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CNT">
+          <DataField>CNT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
@@ -1968,17 +1974,6 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>10.64971in</Width>
-  <Page>
-    <PageHeight>21cm</PageHeight>
-    <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>0.3cm</LeftMargin>
-    <RightMargin>0.3cm</RightMargin>
-    <TopMargin>0.3cm</TopMargin>
-    <BottomMargin>0.3cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -1989,6 +1984,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>7df9a1dc-8a03-40f4-b3f3-3224fa4c751f</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>7df9a1dc-8a03-40f4-b3f3-3224fa4c751f</rd:ReportID>
 </Report>
