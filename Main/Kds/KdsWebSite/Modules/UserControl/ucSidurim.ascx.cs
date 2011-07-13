@@ -4232,9 +4232,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
             //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
-            oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
-            oTextBox.Attributes.Add("onchange", "changeStartHour("+ iIndex +"); SidurTimeChanged(" + iIndex + ");");
+            oTextBox.Attributes.Add("onclick", "disableUpdateBtn();MovePanel(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeypress", "disableUpdateBtn();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
+            oTextBox.Attributes.Add("onblur", "SetBtnChanges();");
+            oTextBox.Attributes.Add("onchange", "disableUpdateBtn();changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.Attributes.Add("onfocus", "this.select();");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();

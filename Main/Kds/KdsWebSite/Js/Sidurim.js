@@ -883,6 +883,7 @@ function chkMkt(oRow) {
      dSidurSHDate.setDate(dSidurSHDate.getDate() + Number(result[1]));
     // if (result[1] == '0') {//שעת התחלה
      $get("lstSidurim_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(dSidurSHDate);  //$get("clnDate").value;
+     SetBtnChanges();
     // }
 
      var sSdDate = $get("lstSidurim_lblDate".concat(iIndex)).innerHTML; 
@@ -897,7 +898,7 @@ function chkMkt(oRow) {
          HasSidurHashlama();
   }
   function ChkStartHour(val, args){
-        SetBtnChanges();
+       // SetBtnChanges();
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
         $get("lstSidurim_hidCurrIndx").value = "3|" + iIndex;
         var sShatHatchala = $get("lstSidurim_txtSH".concat(iIndex));
@@ -1038,7 +1039,7 @@ function chkMkt(oRow) {
     }
     function IsSHBigSG(val,args)
     {//נבדוק אם שעת ההתחלה קטנה משעת הגמר
-       SetBtnChanges();
+    //   SetBtnChanges();
        var iIndex = String(val.id).substr(String(val.id).length-1,1);
        var sShatHatchala = $get("lstSidurim_txtSH".concat(iIndex)).value; 
        var sShatGmar = $get("lstSidurim_txtSG".concat(iIndex));
@@ -1083,7 +1084,7 @@ function chkMkt(oRow) {
        }
     }
     function IsSHGreaterPrvSG(val,args){
-        SetBtnChanges();
+        //SetBtnChanges();
         var bNewSidur=false;
        var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
        var iSidur = $get("lstSidurim_lblSidur".concat(iIndex)).innerHTML;
