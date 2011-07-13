@@ -640,9 +640,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
                 if (sPeilutDetails[0].Equals("1"))
                     //    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
-                    //sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02ShatYetiza').focus();";
+                    // sScript = sScript + "$get('lstSidurim_000_ctl05_lstSidurim_000_ctl05ShatYetiza').focus();";
                     sScript = sScript + "SetNewPeilutFocus('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "');";
-                    //sScript = sScript + " $get('lstSidurim_000_ctl02_lstSidurim_000_ctl02MakatNumber').focus();";
+
+                //sScript = sScript + " $get('lstSidurim_000_ctl04_lstSidurim_000_ctl04ShatYetiza').focus();";
             }
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 

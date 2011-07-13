@@ -606,14 +606,13 @@
 
         function pageLoaded(sender, args) {
             var updatedPanels = args.get_panelsUpdated();
-            if (typeof(postbackElement) == "undefined") {
+            if (typeof(postbackElement) == "undefined"){
                 return;
             }
             
             $get("lstSidurim_dvS").scrollTop = $get("lstSidurim_hidScrollPos").value;            
-         }
-         
-                 
+         }   
+        
     </script>
 </body>
 </html>

@@ -16,41 +16,42 @@ function chkMkt(oRow) {
        var sArrPrm= new Array(7); 
        var iMktType;
 
-       if (lNMkt<100000){
-          alert('מספר מק"ט לא תקין, יש להקליד מספר בין 6-8 ספרות');
-          oMkt.select();}
-        else{
-                iMktType = GetMakatType(lNMkt);
-                if ((iMktType == MKT_VISA) || ((iMktType == MKT_ELEMENT) && (isElementMechona(lNMkt))) || ((iMktType == MKT_VISUT))) {
-                    oMkt.value = lOMkt;
-                    oMkt.select();
-                    alert('לא ניתן להקליד מק"ט ויזה או ויסות או הכנת מכונה');
-                }
-                else {
-                    var iSidur; 
-                    var iInx = Number(String(oRow.id).substr(String('lstSidurim_').length, 3));
-                    var oDate = $get('lstSidurim_lblDate'.concat(iInx)).firstChild.nodeValue;
-                    if ( $get('lstSidurim_lblSidur'.concat(iInx)).firstChild!=null)
-                        iSidur = $get('lstSidurim_lblSidur'.concat(iInx)).firstChild.nodeValue;
-                    else
-                        iSidur = $get('lstSidurim_lblSidur'.concat(iInx)).value;                    
-                    var iSidurVisa = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("SidurVisa");
-                    SetBtnChanges(); //SetLvlChg(3);
-                    if ((lNMkt != '') && (Number(lNMkt != 0))) {
-                        var oShatYetiza = $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value;
-                        var oDayToAdd = $get(oRId).cells[_COL_DAY_TO_ADD].childNodes[0].value;
-                        sArrPrm[0] = oRId;
-                        sArrPrm[1] = iSidur;
-                        sArrPrm[2] = iSidurVisa;
-                        sArrPrm[3] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur93");
-                        sArrPrm[4] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur94");
-                        sArrPrm[5] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur95");
-                        sArrPrm[6] = lOMkt;
-                        sArrPrm[7] = iInx;
-                        wsGeneral.CheckMakat(iMisparIshi,dCardDate, iInx, $get(oRId).rowIndex - 1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
-                    }
-                }                         
-          }
+           if (lNMkt < 100000) {
+               alert('מספר מק"ט לא תקין, יש להקליד מספר בין 6-8 ספרות');
+               oMkt.select();
+           }
+           else {
+               iMktType = GetMakatType(lNMkt);
+               if ((iMktType == MKT_VISA) || ((iMktType == MKT_ELEMENT) && (isElementMechona(lNMkt))) || ((iMktType == MKT_VISUT))) {
+                   oMkt.value = lOMkt;
+                   oMkt.select();
+                   alert('לא ניתן להקליד מק"ט ויזה או ויסות או הכנת מכונה');
+               }
+               else {
+                   var iSidur;
+                   var iInx = Number(String(oRow.id).substr(String('lstSidurim_').length, 3));
+                   var oDate = $get('lstSidurim_lblDate'.concat(iInx)).firstChild.nodeValue;
+                   if ($get('lstSidurim_lblSidur'.concat(iInx)).firstChild != null)
+                       iSidur = $get('lstSidurim_lblSidur'.concat(iInx)).firstChild.nodeValue;
+                   else
+                       iSidur = $get('lstSidurim_lblSidur'.concat(iInx)).value;
+                   var iSidurVisa = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("SidurVisa");
+                 //  SetBtnChanges(); //SetLvlChg(3);
+                   if ((lNMkt != '') && (Number(lNMkt != 0))) {
+                       var oShatYetiza = $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value;
+                       var oDayToAdd = $get(oRId).cells[_COL_DAY_TO_ADD].childNodes[0].value;
+                       sArrPrm[0] = oRId;
+                       sArrPrm[1] = iSidur;
+                       sArrPrm[2] = iSidurVisa;
+                       sArrPrm[3] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur93");
+                       sArrPrm[4] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur94");
+                       sArrPrm[5] = $get('lstSidurim_lblSidur'.concat(iInx)).getAttribute("Sidur95");
+                       sArrPrm[6] = lOMkt;
+                       sArrPrm[7] = iInx;
+                       wsGeneral.CheckMakat(iMisparIshi, dCardDate, iInx, $get(oRId).rowIndex - 1, lNMkt, lOMkt, oDate, oShatYetiza, oDayToAdd, callBackMkt, null, sArrPrm);
+                   }
+               }
+           }         
         }
     function callBackMkt(result,sArrPrm)
     {   
@@ -198,7 +199,8 @@ function chkMkt(oRow) {
                     } else
                         //נשתול מספר רכב
                         if (bMustCarNum)
-                            SetCarNumber(iSidurIndex, oRId, iPeilutIndex);                    
+                            SetCarNumber(iSidurIndex, oRId, iPeilutIndex);
+                    SetBtnChanges();
                 } 
             }
             else {
@@ -409,7 +411,7 @@ function chkMkt(oRow) {
               }
               if ((!bMultiCarNum) && (lCarNumber != 0)) {
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = lCarNumber;
-                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);
+                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);                 
               }
     }                                        
     function chkHashlama(val,args){
@@ -1812,14 +1814,19 @@ function chkMkt(oRow) {
         if (!((_Sidur.style.visibility == "hidden" || _Sidur.style.display == "none" || _Sidur.disabled == true)))
             _Sidur.focus();
     }
-    function SetNewPeilutFocus(iPeilutIndex) {       
+    function SetNewPeilutFocus(iPeilutIndex) {
+        //iPeilutIndex = "lstSidurim_000_ctl02_lstSidurim_000_ctl02ShatYetiza";       
         if (iPeilutIndex != undefined) {
             var _Peilut = $get(iPeilutIndex);          
             if ((_Peilut != null) && (_Peilut != undefined)){
-                if (!((_Peilut.style.visibility == "hidden" || _Peilut.style.display == "none" || _Peilut.disabled == true)))
-                    _Peilut.focus();
+                if (!((_Peilut.style.visibility == "hidden" || _Peilut.style.display == "none" || _Peilut.disabled == true))) {                    
+                    setTimeout("setFocus('" + iPeilutIndex + "')", 100); 
+                }
             }
         }
+    }
+    function setFocus(focusControlID) {
+        document.getElementById(focusControlID).focus(); 
     }
     function btnCopyOtoNum(iAction)
     {

@@ -669,26 +669,28 @@ public class wsGeneral : System.Web.Services.WebService
 
         try
         {
-            prefixText = string.Concat(prefixText, "%");
-            if (contextKey.Length > 0)
-            {
-                dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
-            }
-            else
-            {
-                dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
-            }
+           
+                prefixText = string.Concat(prefixText, "%");
+                if (contextKey.Length > 0)
+                {
+                    dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
+                }
+                else
+                {
+                    dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
+                }
 
-            List<string> items = new List<string>(count);
+                List<string> items = new List<string>(count);
 
-            int i = 0;
-            foreach (DataRow dr in dt.Rows)
-            {
-                if (i > count) { break; }
-                items.Add(dr["mispar_ishi"].ToString());
-                i++;
-            }
-            return items.ToArray();
+                int i = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (i > count) { break; }
+                    items.Add(dr["mispar_ishi"].ToString());
+                    i++;
+                }
+
+                return items.ToArray();                        
         }
         catch (Exception ex)
         {

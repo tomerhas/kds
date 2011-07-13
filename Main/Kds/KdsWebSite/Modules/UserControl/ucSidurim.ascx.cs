@@ -1864,13 +1864,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             DataTable _NesiaDetails = new DataTable();
             if (AddNesiaReka(iSidurIndexOrg, iPeilutIndexOrg, lMakatEnd, ref lMakat, ref _NesiaDetails))
-            {              
+            {
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
-                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);               
+                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
                 InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails);
                 bOpenUpdateBtn = true;
             }
-            else            
+            else
             {
                 sScript = "alert('לא נמצאה ריקה מתאימה');";
                 ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "GetRekaFromTnua", sScript, true);
@@ -1880,6 +1880,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
             btnHandler(string.Empty, bOpenUpdateBtn);
+
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
     {        
@@ -1896,7 +1897,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (sPeilutDetails[0].Equals("1"))
             //sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
             sScript = sScript + "SetNewPeilutFocus('" + GetPeilutClientKey(sPeilutDetails) + "');";
-        //  sScript = sScript + "$get('lstSidurim_000_ctl02_lstSidurim_000_ctl02MakatNumber').focus();";
+        // sScript = sScript + "$get('lstSidurim_000_ctl05_lstSidurim_000_ctl05ShatYetiza').focus();";
 
         ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
@@ -5410,9 +5411,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
             oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
-            
-            oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
-            oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
+            oTxt.Attributes.Add("onkeypress", " disableUpdateBtn(); ");
+            oTxt.Attributes.Add("onfocus", "disableUpdateBtn(); SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
             oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
@@ -5634,15 +5634,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.ID = e.Row.ClientID + "ShatYetiza";
             //oTxt.Attributes.Add("onblur", "SetDay('" + oTxt.ClientID + "');");
             sTargetControlId = oTxt.ID;
-            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza", 
+            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
                                                 AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+
             e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(oMaskEx);
 
             //Add CustomeValidator
             sMessage = "";//"הוקלד ערך שגוי. יש להקליד שעת יציאה בין " + Param29 + " עד " + Param30 ;
             sID = "vldPeilutShatYetiza";
             sClientScriptFunction = "ChkExitHour";
-            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID, 
+            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID,
                                                     sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
             e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldCustomValidator);
 
