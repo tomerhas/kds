@@ -93,7 +93,7 @@
                                             <td style="width: 1%"><img src="../../Images/ErrorSign.jpg" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                                             <td style="width: 10%">                                                                                      
                                                 <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1" ></asp:TextBox>
+                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
                                                 <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                                                     CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                                                     ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -580,7 +580,7 @@
          }
          function chkIfBarCode(){
             var KeyID = event.keyCode;
-            if (KeyID == 42){ //124
+            if (KeyID == 124){ //42
                iCount=iCount+1;
                if (iCount==3){
                   SetBarCode();
@@ -590,7 +590,7 @@
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value.split("*");                     
+           var sKey = document.getElementById("txtId").value.split("|");                     
            document.getElementById("txtId").value =sKey[1];
            document.getElementById("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
            document.getElementById("btnRefreshOvedDetails").click();          

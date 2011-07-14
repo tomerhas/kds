@@ -2196,7 +2196,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Checked = (oSidur.iLoLetashlum == 1);
         bEnable = (((IsLoLetashlum(ref oSidur))) 
                  && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "LO_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))
-                 && (((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
+                 && (((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         chkBox.Disabled = ((!(bSidurActive)) || (!bEnable));
         if ((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur>0))
             chkBox.Disabled = false;
@@ -2401,6 +2401,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         if ((oSidur.iLoLetashlum == 0) && (iLoLetashlumOrgVal == 1))
                             oSidur.iKodSibaLoLetashlum = 0;
 
+                    //if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                    //    oChk.Attributes["OrgEnabled"] = "1";
                     //DropDownList _DDL;
                     //TextBox _HitTextBox;
                     ////התייצבות                            
