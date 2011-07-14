@@ -1149,7 +1149,7 @@ function chkMkt(oRow) {
            //if ((iNextSidur != SIDUR_CONTINUE_NAHAGUT) && (iNextSidur != SIDUR_CONTINUE_NOT_NAHAGUT)) {
            if ((iNextSidur != null) && (iLoLetashlum == false) && (iNextLoLetashlum == false) && (iNextSidurCancel != '1') && (!bNextNewSidur)){
                var sNxtStartH = $get("lstSidurim_txtSH".concat(iNextIndex));
-               if (sNxtStartH != null) {
+               if ((sNxtStartH != null) && (sNxtStartH.value!='')) {
                    var sShatGmar = $get("lstSidurim_txtSG".concat(iIndex));
                    var sSidurDate = $get("lstSidurim_lblDate".concat(iIndex));
                    var AddDay = $get("lstSidurim_txtDayAdd".concat(iIndex)).value;
