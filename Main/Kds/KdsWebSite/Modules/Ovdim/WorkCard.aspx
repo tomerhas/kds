@@ -93,7 +93,7 @@
                                             <td style="width: 1%"><img src="../../Images/ErrorSign.jpg" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                                             <td style="width: 10%">                                                                                      
                                                 <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1"  ></asp:TextBox>
+                                                    dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1" ></asp:TextBox>
                                                 <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                                                     CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                                                     ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -551,7 +551,7 @@
     <input type="hidden" runat="server" id="hidDriver"/>
     </form>   
     <script language="javascript" type="text/javascript">
-         
+         var iCount=0;
 //       frmWorkCard.submit =SaveScrollPositionSubmit();
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck; 
@@ -565,7 +565,7 @@
                      else{              
                          event.returnValue=false;
                          event.cancel = true;
-                         }
+                      }
                  }                 
                  break;  
               case 107:
@@ -573,14 +573,24 @@
                  break;
               case 110: //. //123-f12
                    if (document.getElementById("btnUpdateCard").disabled==false)
-                     document.getElementById("btnUpdateCard").focus();
+                       document.getElementById("btnUpdateCard").focus();
               
-                 break;
+                   break;
              }                
+         }
+         function chkIfBarCode(){
+            var KeyID = event.keyCode;
+            if (KeyID == 42){ //124
+               iCount=iCount+1;
+               if (iCount==3){
+                  SetBarCode();
+                  iCount=0;
+               }
+            }
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value.split("|");                     
+           var sKey = document.getElementById("txtId").value.split("*");                     
            document.getElementById("txtId").value =sKey[1];
            document.getElementById("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
            document.getElementById("btnRefreshOvedDetails").click();          

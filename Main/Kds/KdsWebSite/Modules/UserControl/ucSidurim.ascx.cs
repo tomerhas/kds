@@ -5412,8 +5412,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
             oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
-            oTxt.Attributes.Add("onkeypress", " disableUpdateBtn(); ");
-            oTxt.Attributes.Add("onfocus", "disableUpdateBtn(); SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
+            oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
+            oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
             oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
