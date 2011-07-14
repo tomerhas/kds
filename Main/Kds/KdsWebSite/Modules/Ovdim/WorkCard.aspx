@@ -572,8 +572,8 @@
                  event.keyCode=9;
                  break;
               case 110: //. //123-f12
-              if (document.getElementById("btnUpdateCard").disabled==false)              
-                    document.getElementById("btnUpdateCard").focus();
+                   if (document.getElementById("btnUpdateCard").disabled==false)
+                     document.getElementById("btnUpdateCard").focus();
               
                  break;
              }                
