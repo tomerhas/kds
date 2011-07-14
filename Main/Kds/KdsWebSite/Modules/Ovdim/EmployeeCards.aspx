@@ -170,7 +170,8 @@
             </td>
         </tr>
      </table>
-       <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />  
+       <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
+        <input type="text" runat="server" id="Hidden1" name="Hidden1" />    
      <div id="divHeadruyot_Parent" style="display:none;">
         <div id="divHeadruyot">
             <iframe id="frameHeadruyot" frameborder="0" style="overflow:hidden;"></iframe>
