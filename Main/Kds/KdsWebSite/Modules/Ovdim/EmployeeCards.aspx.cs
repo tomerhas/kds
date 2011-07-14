@@ -108,18 +108,17 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                
                 SetDefault();
                 hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
-                Hidden1.Value = LoginUser.IsLimitedUser.ToString() +";" + arrParams[0].ToString() + ";" + arrParams[1].ToString() + ";" + arrParams[2].ToString();
-                if (!bool.Parse(hidFromEmda.Value))
+                  if (!bool.Parse(hidFromEmda.Value))
                 {
                     divNetunim.Style["overflow-y"] = "hidden";
                     grdEmployee.AllowPaging = false;
+                     divNetunim.Style["height"] = "250px";
                 }
                 else
                 {
                     divNetunim.Style["overflow-y"] = "hidden";
-                   // divNetunim.Style["height"] = "240px";
-                   // grdEmployee.PageSize = 8;
-                    grdEmployee.AllowPaging = true;         
+                    grdEmployee.PageSize = 8;
+                    grdEmployee.AllowPaging = true;
                 }
                
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
@@ -406,7 +405,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             else divNetunim.Style["overflow-y"] = "hidden";
             grdEmployee.Focus();
             divNetunim.Visible = true;
-           
+
         }
         catch (Exception ex)
         {

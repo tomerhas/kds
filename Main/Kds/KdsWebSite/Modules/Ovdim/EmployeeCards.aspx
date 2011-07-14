@@ -139,9 +139,9 @@
             <td>
                 <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline" >
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server" dir="ltr"  style="text-align:right;width:965px;overflow-y:scroll;overflow-x:hidden;height:250px;">
+                     <div id="divNetunim" runat="server" dir="ltr"  style="text-align:right;width:965px;overflow-y:scroll;overflow-x:hidden;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
-                                 AllowPaging="true" PageSize="7" AutoGenerateColumns="false" CssClass="Grid"  
+                                 AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="935px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            
@@ -171,7 +171,6 @@
         </tr>
      </table>
        <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
-        <input type="text" runat="server" id="Hidden1" name="Hidden1" />    
      <div id="divHeadruyot_Parent" style="display:none;">
         <div id="divHeadruyot">
             <iframe id="frameHeadruyot" frameborder="0" style="overflow:hidden;"></iframe>
