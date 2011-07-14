@@ -256,15 +256,16 @@ function chkMkt(oRow) {
                              if (_FirstChild.text == "0")
                                 $get("lstSidurim_ddlException" + iSidurNum).value = "-1";
                                break;
-//                         case "HASHLAMA":                           
-//                                 if (_FirstChild.text == "0"){
-//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = true;
-//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).value = 0;
-//                                 }
-//                                 else{
-//                                     $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = false;
-//                                 }
-//                             break;
+                           case "HASHLAMA":
+                               if (_FirstChild.text == "0") {
+                                   $get("lstSidurim_ddlHashlama" + iSidurNum).disabled = true;
+                                   $get("lstSidurim_ddlHashlama" + iSidurNum).value = 0;
+                               }
+                               else {
+                                   wsGeneral.IsHashlamaAllowed(iSidurNum, $get("clnDate").value, callBackHashlama, null, iSidurNum);
+
+                               }
+                               break;
                          case "OUT_MICHSA":
                              $get("lstSidurim_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
                              $get("lstSidurim_chkOutMichsa" + iSidurNum).checked = false;

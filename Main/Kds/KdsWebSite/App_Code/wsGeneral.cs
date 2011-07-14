@@ -1964,8 +1964,8 @@ public class wsGeneral : System.Web.Services.WebService
         _Sidur.sShatGmar = sShatGmar;
         return IsHashlamaAllowed(iSidurIndex, sCardDate);
     }
-    
-    private string IsHashlamaAllowed(int iSidurIndex, string sCardDate)
+    [WebMethod(EnableSession = true)]
+    public string IsHashlamaAllowed(int iSidurIndex, string sCardDate)
     {       
         DataTable dtSugSidur;
         DataRow[] drSugSidur;
@@ -2244,13 +2244,7 @@ public class wsGeneral : System.Web.Services.WebService
                     sXML.Append(string.Concat("<CHARIGA>", "0", "</CHARIGA>"));
 
 
-            ////השלמה 
-            ////לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
-            //dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen40.GetHashCode().ToString() + ")");
-            //if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
-            //    sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
-            //else
-            //    sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
+             
 
             //ניתן לעדכון- סידור מיוחד עם ערך 1 במאפיין  - 25.
             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen25.GetHashCode().ToString() + " and erech='1')");
@@ -2277,6 +2271,14 @@ public class wsGeneral : System.Web.Services.WebService
             else
                 sXML.Append(string.Concat("<ADD_PEILUT>", "0", "</ADD_PEILUT>"));
 
+
+            //השלמה 
+            //לסידור מאפיין 40 (לפי מספר סידור או סוג סידור) - ניתן לחסום את השדה אם אין מאפיין
+            dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and (kod_meafyen=" + clGeneral.enMeafyenim.Meafyen40.GetHashCode().ToString() + ")");
+            if ((dr.Length > 0) && ((OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())))
+                sXML.Append(string.Concat("<HASHLAMA>", "1", "</HASHLAMA>"));
+            else
+                sXML.Append(string.Concat("<HASHLAMA>", "0", "</HASHLAMA>"));
             sXML.Append("</SIDUR>");
             return sXML.ToString();
         }

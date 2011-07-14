@@ -580,7 +580,7 @@
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value.split("*");                     
+           var sKey = document.getElementById("txtId").value.split("|");                     
            document.getElementById("txtId").value =sKey[1];
            document.getElementById("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
            document.getElementById("btnRefreshOvedDetails").click();          
