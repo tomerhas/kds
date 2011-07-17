@@ -110,7 +110,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
                   if (!bool.Parse(hidFromEmda.Value))
                 {
-                    divNetunim.Style["overflow-y"] = "hidden";
+                    divNetunim.Style.Add("overflow-y", "hidden");
+                //    divNetunim.Style["overflow-y"] = "hidden";
                     grdEmployee.AllowPaging = false;
                      divNetunim.Style["height"] = "250px";
                 }
