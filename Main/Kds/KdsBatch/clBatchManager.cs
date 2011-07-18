@@ -8039,6 +8039,11 @@ namespace KdsBatch
                                 //else
                                 //{
                                     int iPeletTnua = CheckPtorHityatzvutTnua(oSidur, oSidurHityatvut.sMikumShaonKnisa);
+                                    if (iPeletTnua == 0)
+                                    {
+                                        oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
+                                        break;
+                                    }
                                     if (iPeletTnua == 1)
                                     {
                                         oObjSidurimOvdimUpd.SHAT_HITIATZVUT = oSidurHityatvut.dFullShatHatchala;
