@@ -1277,6 +1277,19 @@
                                               <TextAlign>Center</TextAlign>
                                             </Style>
                                           </Paragraph>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>לפרמיה</Value>
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
                                         </Paragraphs>
                                         <rd:DefaultName>Textbox261</rd:DefaultName>
                                         <Style>
@@ -1949,7 +1962,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>="סה''כ דקות פרמיה:"</Value>
+                                                <Value>="סה''כ דקות נוכחות לפרמיה"</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>

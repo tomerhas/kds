@@ -491,14 +491,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox13">
+                                      <Textbox Name="MISPAR_SIDUR2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Fields!NIDRESHET_HITIATZVUT.Value=2,Fields!MISPAR_SIDUR.Value,"")</Value>
+                                                <Value>=Fields!MISPAR_SIDUR2.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -507,7 +507,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox13</rd:DefaultName>
+                                        <rd:DefaultName>MISPAR_SIDUR2</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -584,14 +584,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="MISPAR_SIDUR">
+                                      <Textbox Name="MISPAR_SIDUR1">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Fields!NIDRESHET_HITIATZVUT.Value=1,Fields!MISPAR_SIDUR.Value,"")</Value>
+                                                <Value>=Fields!MISPAR_SIDUR1.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -600,7 +600,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>MISPAR_SIDUR</rd:DefaultName>
+                                        <rd:DefaultName>MISPAR_SIDUR1</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>Solid</Style>
@@ -698,7 +698,7 @@
                           <DataSetName>DsDriverNotSigned</DataSetName>
                           <Top>6.96382cm</Top>
                           <Left>0.87571cm</Left>
-                          <Height>2.36324cm</Height>
+                          <Height>2.36325cm</Height>
                           <Width>12.91041cm</Width>
                           <Style>
                             <Border>
@@ -1107,7 +1107,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>מספר עבירות</Value>
+                                  <Value>מספר עבירה</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1561,7 +1561,6 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
                         </Border>
                       </Style>
                     </Rectangle>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1589,6 +1588,17 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsDriverNotSigned</DataSetName>
+        <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!TEUR_EZOR.Value</Value>
+          </SortExpression>
+          <SortExpression>
+            <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+          </SortExpression>
+          <SortExpression>
+            <Value>=Fields!MIS_ISHI.Value</Value>
+          </SortExpression>
+        </SortExpressions>
         <Left>0.27794cm</Left>
         <Height>11.81273cm</Height>
         <Width>15.7622cm</Width>
@@ -1688,6 +1698,10 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           <DataField>TEUR_EZOR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="MIS_ISHI">
+          <DataField>MIS_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1696,17 +1710,17 @@ iif(reportitems!TEUR_EZOR.Value = "" ,"" , "איזור " ) + reportitems!TEUR_EZ
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NIDRESHET_HITIATZVUT">
-          <DataField>NIDRESHET_HITIATZVUT</DataField>
+        <Field Name="MISPAR_SIDUR1">
+          <DataField>MISPAR_SIDUR1</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="STARTTIME1">
           <DataField>STARTTIME1</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR2">
+          <DataField>MISPAR_SIDUR2</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ENDTIME1">
           <DataField>ENDTIME1</DataField>

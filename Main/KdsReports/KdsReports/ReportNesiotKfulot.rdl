@@ -15,19 +15,22 @@
               <Width>2.05306cm</Width>
             </TablixColumn>
             <TablixColumn>
+              <Width>2.5cm</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>1.11903cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.23228cm</Width>
+              <Width>1.40075cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.12959cm</Width>
+              <Width>2.55292cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.29972cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.52422cm</Width>
+              <Width>3.21624cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.4765cm</Width>
@@ -132,6 +135,44 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>תאור נסיעה</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Style>Double</Style>
+                        </BottomBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -476,6 +517,37 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox6">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox6</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="SHILUT1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -709,6 +781,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -731,7 +804,7 @@
         <Top>3.26286cm</Top>
         <Left>0.29044in</Left>
         <Height>1.53208cm</Height>
-        <Width>19.36812cm</Width>
+        <Width>20.15195cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -796,8 +869,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.52175cm</Top>
-        <Left>2.21937cm</Left>
+        <Top>2.48676cm</Top>
+        <Left>2.22639cm</Left>
         <Height>0.6cm</Height>
         <Width>9.74748cm</Width>
         <ZIndex>2</ZIndex>
@@ -908,7 +981,7 @@
     <Height>5.05354cm</Height>
     <Style />
   </Body>
-  <Width>20.54209cm</Width>
+  <Width>20.88966cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
