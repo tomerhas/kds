@@ -1346,17 +1346,17 @@ function chkMkt(oRow) {
       var dItemDate = new Date();
       var arrItems = iInx.split("|");
       var sCardDate = $get("clnDate").value;
-      if (arrItems[0] == '1') {//שעת גמר
-            sEndHour = $get("lstSidurim_txtSG" + arrItems[1]).value;
+      if (arrItems[0] == '1') {//שעת גמר           
+            sEndHour = $get("lstSidurim_txtSG" + arrItems[1]).value;                    
             var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
             var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
             var _Add = $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
-            if (sEndHour == '00:00'){
-               _Add = '1'
-               $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value='1';
+            if (sEndHour == '00:00') {
+                _Add = '1'
+                $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value = '1';
             }
-           dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
-           $get("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                  
+            dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+            $get("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                                                       
       }
       else {//שעת יציאה
           sEndHour = $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;
@@ -1405,9 +1405,6 @@ function chkMkt(oRow) {
         var sMonth=Number(sSdDate.substr(3,2))-1;
         var sDay = sSdDate.substr(0, 2);
         SetDate(dSdDate, sYear, sMonth, sDay, '0', '0');         
-//        dSdDate.setFullYear(sYear);
-//        dSdDate.setMonth(sMonth);
-//        dSdDate.setDate(sDay);
         dSdDate.setDate(dSdDate.getDate() + Number(iDayToAdd));   
          
         if (arrItems[0]=='1'){
