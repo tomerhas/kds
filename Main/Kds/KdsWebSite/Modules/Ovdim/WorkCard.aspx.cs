@@ -2199,7 +2199,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         try
         {
             bWorkCardWasUpdate = IsWorkCardWasUpdate();
-             key = "*" + iMisparIshi.ToString() + "*" + dDateCard.ToString("yyyyMMdd") + "*";
+             key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
          // urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
             // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;

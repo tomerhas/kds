@@ -4639,6 +4639,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onchange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
+            //oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "');");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             
             

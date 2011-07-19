@@ -566,6 +566,8 @@
                          event.returnValue=false;
                          event.cancel = true;
                       }
+//                    event.returnValue=false;
+//                    event.cancel = true;
                  }                 
                  break;  
               case 107:
