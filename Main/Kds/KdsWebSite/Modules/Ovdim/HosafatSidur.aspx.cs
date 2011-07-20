@@ -1063,7 +1063,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 oObjSidurimOvdimIns.SHAT_GMAR = DateTime.Parse(TaarichGmar.Value.Split(' ')[1] + " " + txtShatGmar.Text + ":00");        
             oObjSidurimOvdimIns.CHARIGA = 0;
             oObjSidurimOvdimIns.HAMARAT_SHABAT = 0;
-            oObjSidurimOvdimIns.SUG_SIDUR = sug_sidur_tnua.Value == "" ? 0 : int.Parse(sug_sidur_tnua.Value); 
+            if (sug_sidur_tnua.Value != "")
+                oObjSidurimOvdimIns.SUG_SIDUR = int.Parse(sug_sidur_tnua.Value); 
             oObjSidurimOvdimIns.BITUL_O_HOSAFA = 2;
             oObjSidurimOvdimIns.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             

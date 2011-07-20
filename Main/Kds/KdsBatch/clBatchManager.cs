@@ -3132,7 +3132,7 @@ namespace KdsBatch
             int iPeilutMisparSidur;
             DataRow drNew;
             bool isValid = true;
-            
+            bool flag = true;
             try
             {
                 //סידור שאסור לדווח בו פעילויות. נבדק רק מול סידורים מיוחדים.                                   
@@ -3146,12 +3146,21 @@ namespace KdsBatch
                             //sMakatNesia = htEmployeeDetails["MakatNesia"].ToString();
                             if (iPeilutMisparSidur > 0)
                             {
-                                drNew = dtErrors.NewRow();
-                                InsertErrorRow(oSidur, ref drNew, "פעילות אסורה בסדור תפקיד", enErrors.errPeilutForSidurNonValid.GetHashCode());
-                                //drNew["shat_yetzia"] = oPeilut.sShatYetzia;
-                                InsertPeilutErrorRow(oPeilut, ref drNew);
-                                dtErrors.Rows.Add(drNew);
-                                isValid = false;
+                                if (oSidur.htPeilut.Count == 1)
+                                {
+                                    if (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.bMisparSidurMatalotTnuaExists && oPeilut.iMisparSidurMatalotTnua == iPeilutMisparSidur)
+                                        flag = false;
+                                }
+                                if (flag)
+                                {
+                                    drNew = dtErrors.NewRow();
+                                    InsertErrorRow(oSidur, ref drNew, "פעילות אסורה בסדור תפקיד", enErrors.errPeilutForSidurNonValid.GetHashCode());
+                                    //drNew["shat_yetzia"] = oPeilut.sShatYetzia;
+                                    InsertPeilutErrorRow(oPeilut, ref drNew);
+                                    dtErrors.Rows.Add(drNew);
+                                    isValid = false;
+                                }
+                            
                             }
                        // }                        
                     }
@@ -6286,8 +6295,11 @@ namespace KdsBatch
                         htEmployeeDetails[i] = oSidur;
                     }
 
+                    //שינוי 29
+                    SiduryMapaWhithStatusNullLoLetashlum29();
+
                     //שינוי 6
-                    //צריך לעבוד אחרי שינוי 11
+                    //צריך לעבוד אחרי שינויים  29,11
                     clSidur oSidurFirst = new clSidur();
                     clSidur oSidurSecond = new clSidur();
                     int indexSidurFirst = 0;
@@ -6552,9 +6564,6 @@ namespace KdsBatch
                 //שינוי 7
                 if (!CheckIdkunRashemet("LINA"))
                  FixedLina07();
-
-                //שינוי 29
-                SiduryMapaWhithStatusNullLoLetashlum29();
 
                 //עבור שינויים 5,1,2,4,12
                 SetSidurObjects();

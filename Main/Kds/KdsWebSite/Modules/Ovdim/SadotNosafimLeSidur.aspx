@@ -12,7 +12,19 @@
     <script type="text/javascript">
       </script>
 </head>
-<body onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }" >
+<body onkeydown="return ChangeKeyCode(event.keyCode);">
+<script type="text/javascript">
+     function ChangeKeyCode(keyCode) {
+         if (keyCode == 107) {
+             event.keyCode = 9;
+             return event.keyCode;
+         }
+         else if (keyCode == 110) {
+            // if (document.getElementById("btnShow").disabled == false)
+                 document.getElementById("btnShow").focus();
+         }
+     }
+  </script>
     <form id="form1" runat="server">
          <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
                </asp:ScriptManager>
