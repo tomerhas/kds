@@ -1070,7 +1070,7 @@ namespace KdsLibrary.BL
          {
              
             clDal oDal = new clDal();
-            int iSugSidur;
+            int iSugSidur=0;
             try
             {
                 oDal.AddParameter("p_sug_sidur", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue, 60);
@@ -1080,7 +1080,8 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
                 oDal.ExecuteSP(clGeneral.cFunGetSugSidur);
 
-                iSugSidur = int.Parse(oDal.GetValParam("p_sug_sidur"));
+                if (oDal.GetValParam("p_sug_sidur") != null && oDal.GetValParam("p_sug_sidur") != "") 
+                    iSugSidur = int.Parse(oDal.GetValParam("p_sug_sidur"));
 
                 return iSugSidur;
                 
