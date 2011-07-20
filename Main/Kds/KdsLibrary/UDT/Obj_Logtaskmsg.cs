@@ -341,6 +341,15 @@ namespace KdsLibrary.UDT
             // TODO : Add code needed to parse the string and get the object represented by the string
             return new OBJ_LOGTASKMSG();
         }
+
+        #region INullable Members
+
+        bool INullable.IsNull
+        {
+            get { return m_IsNull; }
+        }
+
+        #endregion
     }
 
     // Factory to create an object for the above class
