@@ -863,14 +863,15 @@ function chkMkt(oRow) {
       var sNewSH = _ShatHatchala.value;
       var sCardDate = $get("clnDate").value;
       if (IsValidTime(sNewSH))
-        wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH,iIndex, callBackStartHour, null, iIndex);
+        if (sNewSH.indexOf('_')==-1)
+            wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH,iIndex, callBackStartHour, null, iIndex);
   }
   function callBackStartHour(result, iIndex) {
       var dSidurSHDate = new Date();
       var sCardDate = $get("clnDate").value;
 
       result = result.split(",");
-      if (result[0] == '1') {
+      if ((result[0] == '1') && (GetKeyPressPosition($get("lstSidurim_txtSH".concat(iIndex)))==5)) {
           $get("lstSidurim_lblSidur".concat(iIndex)).disabled = true;
           $get("lstSidurim_btnShowMessage").click();
           $get("lstSidurim_lblSidur".concat(iIndex)).disabled = false;
@@ -1335,60 +1336,73 @@ function chkMkt(oRow) {
       if (IsShatGmarInNextDay(_ShatGmar.value) || (_ShatGmar.value=='00:00'))            
             _Add.value = "1";       
           else      
-            _Add.value = "0";            
-    }
+            _Add.value = "0";
+      }
+     function GetKeyPressPosition(ctrl){          
+          var Sel = document.selection.createRange();
+          Sel.moveStart('character', -ctrl.value.length);
+          return Sel.text.length;
+     }
     function SetDay(iInx){
       $find("pBehvDate").hide();
-      var sEndHour;
-     // var sSidurDate;     
+      var sEndHour;    
       var sParamNxtDay;
       var dParamDate = new Date();
       var dItemDate = new Date();
       var arrItems = iInx.split("|");
       var sCardDate = $get("clnDate").value;
-      if (arrItems[0] == '1') {//שעת גמר           
-            sEndHour = $get("lstSidurim_txtSG" + arrItems[1]).value;                    
-            var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-            var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
-            var _Add = $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
-            if (sEndHour == '00:00') {
-                _Add = '1'
-                $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value = '1';
-            }
-            dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
-            $get("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);                                                       
+      var bRaiseNextDay = false;
+      if (arrItems[0] == '1') {//שעת גמר
+          if (GetKeyPressPosition($get("lstSidurim_txtSG" + arrItems[1])) == 5) {
+              bRaiseNextDay = true;
+              sEndHour = $get("lstSidurim_txtSG" + arrItems[1]).value;
+              var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+              var dSidurTime = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+              var _Add = $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
+              if (sEndHour == '00:00') {
+                  _Add = '1'
+                  $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value = '1';
+              }
+              dSidurTime.setDate(dSidurTime.getDate() + Number(_Add));
+              $get("lstSidurim_txtSG".concat(arrItems[1])).title = "תאריך גמר הסידור הוא: " + GetDateDDMMYYYY(dSidurTime);
+          }
       }
       else {//שעת יציאה
-          sEndHour = $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;
-          sParamNxtDay = $get("lstSidurim_hidParam242").value;
-          var sYear = sCardDate.substr(sCardDate.length - 4, 4);
-          var sMonth = Number(sCardDate.substr(3, 2)) - 1;
-          var sDay = sCardDate.substr(0, 2);
-          var sSidurSG = $get("lstSidurim_txtSG" + arrItems[2]).value;
-          SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
-          SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), Number(sSidurSG.substr(0, 2)), Number(sSidurSG.substr(3, 2)));
-         }
-         if (IsShatGmarInNextDay(sEndHour)){
-             $get("lstSidurim_hidCurrIndx").value = iInx;
-             if (arrItems[0] == '1')//גמר
-                 $get("lstSidurim_btnShowMessage").click();
-             else
-                 if (($get("lstSidurim_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
-                     $get("lstSidurim_btnShowMessage").click();
-         }
-         else
-             if (arrItems[0] == '2')//יציאה    
-             {
-                 var iAdd;
-                 if (sEndHour == '00:00')
-                     iAdd = 1;
-                 else
-                     iAdd = 0;
+          if (GetKeyPressPosition($get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0]) == 5) {
+              bRaiseNextDay = true;
+              sEndHour = $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].value;
+              sParamNxtDay = $get("lstSidurim_hidParam242").value;
+              var sYear = sCardDate.substr(sCardDate.length - 4, 4);
+              var sMonth = Number(sCardDate.substr(3, 2)) - 1;
+              var sDay = sCardDate.substr(0, 2);
+              var sSidurSG = $get("lstSidurim_txtSG" + arrItems[2]).value;
+              SetDate(dParamDate, Number(sYear), Number(sMonth), Number(sDay), Number(sParamNxtDay.substr(0, 2)), Number(sParamNxtDay.substr(3, 2)));
+              SetDate(dItemDate, Number(sYear), Number(sMonth), Number(sDay), Number(sSidurSG.substr(0, 2)), Number(sSidurSG.substr(3, 2)));
+          }
+      }
+      if (bRaiseNextDay) {
+          if (IsShatGmarInNextDay(sEndHour)) {
+              $get("lstSidurim_hidCurrIndx").value = iInx;
+              if (arrItems[0] == '1')//גמר
+                  $get("lstSidurim_btnShowMessage").click();
+              else
+                  if (($get("lstSidurim_txtDayAdd".concat(arrItems[2])).value == "1") || (dItemDate > dParamDate))
+                      $get("lstSidurim_btnShowMessage").click();
+          }
+          else
+              if (arrItems[0] == '2')//יציאה    
+              {
+                  var iAdd;
+                  if (sEndHour == '00:00')
+                      iAdd = 1;
+                  else
+                      iAdd = 0;
 
-                dItemDate.setDate(dItemDate.getDate() + iAdd);
-                $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = iAdd;
-                $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
-             }     
+                  dItemDate.setDate(dItemDate.getDate() + iAdd);
+                  $get(arrItems[1]).cells[_COL_DAY_TO_ADD].childNodes[0].value = iAdd;
+                  $get(arrItems[1]).cells[_COL_SHAT_YETIZA].childNodes[0].title = "תאריך שעת היציאה הוא: " + GetDateDDMMYYYY(dItemDate);
+              }
+         }   
      }   
     function btnDay_click(iDayToAdd){     
         $find("pBehvDate").hide();

@@ -4237,7 +4237,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onclick", "disableUpdateBtn();MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "disableUpdateBtn();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
             oTextBox.Attributes.Add("onblur", "SetBtnChanges();");
-            oTextBox.Attributes.Add("onchange", "disableUpdateBtn();changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
+            oTextBox.Attributes.Add("onchange", "disableUpdateBtn();");
+            oTextBox.Attributes.Add("onkeyup", "changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
             oTextBox.Attributes.Add("onfocus", "this.select();");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
@@ -4638,8 +4639,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Enabled = false;
             }
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onchange", "SetDay('1|" + iIndex + "');SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
-            //oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "');");
+            oTextBox.Attributes.Add("onchange", "SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "');");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             
             
@@ -5089,7 +5090,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         e.Row.Cells[_COL_DAY_TO_ADD].Controls.Add(_TextBox);
         ((TextBox)e.Row.Cells[_COL_DAY_TO_ADD].Controls[0]).ID = "txtDayToAdd";        
-        ((TextBox)e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes.Add("onChange", "SetDay('2|" + e.Row.ClientID + "|" + iSidurIndex + "');");
+        ((TextBox)e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes.Add("onkeyup", "SetDay('2|" + e.Row.ClientID + "|" + iSidurIndex + "');");
         ((TextBox)e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]).ToolTip = "תאריך שעת היציאה הוא: " + dtShatYetiza.ToShortDateString();
         ((TextBox)e.Row.Cells[_COL_DAY_TO_ADD].Controls[0]).Text = ((dtShatYetiza.Date==CardDate.Date) || (dtShatYetiza.Year<clGeneral.cYearNull)) ? "0" : "1";
     
