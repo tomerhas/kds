@@ -33,8 +33,10 @@ namespace KdsBatch
         private const string cProGetPeiluyotOvdim = "Pkg_Calculation.pro_get_peiluyot_ovdim";
         private const string cProGetPremiaOvdimLechishuv = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
         private const string cProGetOvdimShguimLechishuv = "Pkg_Calculation.pro_ovdim_kelet_lechishuv";
+        private const string cProPrepareNetunimLechishuv = "Pkg_Calculation.pro_prepare_netunim_lechishuv";
 
         private const string cGetNetunryChishuv = "Pkg_Calculation.pro_get_netunim_lechishuv";
+        private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
         public DataTable GetOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet)
         {
             DataTable dt = new DataTable();
@@ -443,18 +445,48 @@ namespace KdsBatch
             }
         }
 
+        public int PrepareDataLeChishuv(DateTime dFrom, DateTime dAd, string sMaamad, bool bRitzaGorefet, int NumProcesse)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dFrom, ParameterDir.pdInput);
+                oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dAd, ParameterDir.pdInput);
 
-        public DataSet GetNetuneyChishuvDS(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+                if (sMaamad.IndexOf(",") > 0)
+                {
+                    oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
+                }
+                oDal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, bRitzaGorefet.GetHashCode(), ParameterDir.pdInput);
+
+                oDal.AddParameter("p_num_processe", ParameterType.ntOracleInteger, NumProcesse, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProPrepareNetunimLechishuv);
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw (ex);
+            }
+        }
+
+        public DataSet GetNetuneyChishuvDS(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi,int numProcess)
         {
             DataSet ds = new DataSet();
             string names;
            // DataTable dt = new DataTable();
-            clTxDal dal = new clTxDal();
- 
+         //  clTxDal dal = new clTxDal();
+            clDal dal = new clDal();
             try
             {
 
-                dal.TxBegin();
+             //   dal.TxBegin();
                 dal.AddParameter("p_Cur_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names = "Ovdim";
                 dal.AddParameter("p_Cur_Michsa_Yomit", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -491,22 +523,22 @@ namespace KdsBatch
                 dal.AddParameter("p_tar_me", ParameterType.ntOracleDate, TarMe, ParameterDir.pdInput);
                 dal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, TarAd, ParameterDir.pdInput);
 
-                if (sMaamad.IndexOf(",") > 0)
-                {
-                    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                }
-                else
-                {
-                    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
-                }
-                dal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, rizaGorefet.GetHashCode(), ParameterDir.pdInput);
+                //if (sMaamad.IndexOf(",") > 0)
+                //{
+                //    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                //}
+                //else
+                //{
+                //    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
+                //}
+                //dal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, rizaGorefet.GetHashCode(), ParameterDir.pdInput);
                 dal.AddParameter("p_status_tipul", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
                 dal.AddParameter("p_brerat_mechdal", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput);
                 dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
+                dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, numProcess, ParameterDir.pdInput);
 
-
-                dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
-                dal.TxCommit();
+                dal.ExecuteSP(cGetNetunimLeprocess, ref ds, names);
+              //  dal.TxCommit();
                 return ds;
             }
             catch (Exception ex)

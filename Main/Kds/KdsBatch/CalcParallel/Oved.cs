@@ -50,7 +50,7 @@ namespace KdsBatch
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
             if (BakashaId == 0)
-                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi);
+                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi,1);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
@@ -58,7 +58,7 @@ namespace KdsBatch
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
-            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay, "", false, mis_ishi);
+            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay, "", false, mis_ishi,1);
             Mispar_ishi = mis_ishi;
             Month = DateTime.Parse("01/" + dDay.Month + "/" + dDay.Year);
             _dDay = dDay;
@@ -103,7 +103,7 @@ namespace KdsBatch
                 {
                     oGeneralData.dtPremyotYadaniyotAll.Select(null, "mispar_ishi");
                   
-                    rows = oGeneralData.dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
+                    rows = oGeneralData.dtPremyotYadaniyotAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         dtPremyotYadaniyot = rows.CopyToDataTable();
@@ -140,7 +140,7 @@ namespace KdsBatch
                 {
                   oGeneralData.dtPremyotAll.Select(null, "mispar_ishi");
             
-                    rows = oGeneralData.dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and chodesh = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
+                    rows = oGeneralData.dtPremyotAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
                     if (rows.Length > 0)
                     {
                         dtPremyot = rows.CopyToDataTable();

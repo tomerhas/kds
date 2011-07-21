@@ -14,7 +14,9 @@ using KdsLibrary.DAL;
 using KdsLibrary.BL;
 using System.Threading.Tasks;
 using System.Data;
-
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -38,68 +40,78 @@ namespace KdsService
             }
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
+
         private void RunCalcBatchParallel(object param)
         {
+            clUtils oUtils = new clUtils();
+            clCalcDal oCalcDal = new clCalcDal();
+            DateTime dFrom;
+            DataTable dtParametrim;
+            int iCntProcesses =int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
+                int result;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
             DateTime dAdChodesh = (DateTime)args[1];
             string sMaamad = args[2].ToString();
             bool bRitzatTest = (bool)args[3];
             bool bRitzaGorefet = (bool)args[4];
-//            clCalculation objCalc = new clCalculation();
-            clUtils oUtils = new clUtils();
-            DateTime dFrom;
-            DataTable dtParametrim;
+            string path =ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
+                 string exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString(); 
+                 FileInfo KdsCalcul = new FileInfo(path+ exfile);
             int iStatus = 0;
-            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
-            oUtils = null;
-            dtParametrim = null;
-           
-            MainCalc oMainCalc;
             try
             {
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
-                oMainCalc = (bRitzatTest) ? new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Test) :
-                                            new MainCalc(lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzaGorefet, clGeneral.TypeCalc.Batch);
-                if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
+                result = oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
+                if (result > 0)
                 {
-                    //#region not parallel
-                    //oMainCalc.Ovdim.ForEach(CurrentOved =>
-                    //                    {
-                    //                        oMainCalc.CalcOved(CurrentOved);
-                    //                    });
-                    //#endregion
-                    #region parallel
-                    Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
-                                        {
-                                            oMainCalc.CalcOved(CurrentOved);
-                                            CurrentOved.Dispose();
-                                            CurrentOved = null;
-
-                                        });
-                    #endregion
+                    if (KdsCalcul.Exists)
+                    {
+                        for (int i = 1; i <= iCntProcesses; i++)
+                        {
+                            Process _process = new Process();
+                            _process.StartInfo.RedirectStandardOutput = false;
+                            _process.StartInfo.FileName = KdsCalcul.FullName;
+                            _process.StartInfo.UseShellExecute = false;
+                            _process.StartInfo.WorkingDirectory = path;
+                            _process.StartInfo.RedirectStandardError = true;
+                            _process.StartInfo.Arguments = lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
+                                                          sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString() + " " + i.ToString();
+                            _process.Start();
+                            _process.Dispose();
+                        }
+                        iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                    }
+                    else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
-              iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
             }
             catch (Exception ex)
             {
-                
                 clGeneral.LogError(ex);
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchParallel: " + ex.Message);
                 throw ex;
             }
             finally
             {
-                SingleGeneralData.ResetObject();
-                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
+                Process[] List;
+                do
+                {
+                    List = Process.GetProcessesByName(KdsCalcul.Name.Split('.')[0]);
+                    if (List.Count() == 0)
+                    {
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
+                        clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+                        break;
+                    }
+                    else Thread.Sleep(5000);
+                } while (List.Count() > 0);
             }
-            LogThreadEnd("CalcBatchParallel", lRequestNum);
+             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
-
 
         private void RunCalcBatchThread(object param)
         {

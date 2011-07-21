@@ -27,6 +27,7 @@ namespace KdsBatch
         private bool _bRitzaGorefet;
         private DateTime _dTarMe;
         private DateTime _dTarAd;
+        private int _numProcess;
         private List<Oved> _Ovdim;
         public List<Oved> Ovdim
         {
@@ -41,7 +42,7 @@ namespace KdsBatch
         //   // SetListOvdimLechishuvPremia(iBakashaId);
 
         //}
-        public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc)
+        public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc, int numProcess)
         {
             _iBakashaId = iBakashaId;
             _dTarMe = dTarMe;
@@ -49,11 +50,12 @@ namespace KdsBatch
             _sMaamad = sMaamad;
             _bRitzaGorefet = bRitzaGorefet;
             _iTypeCalc = iTypeCalc;
+            _numProcess = numProcess;
             _Ovdim = new List<Oved>();
-            SetListOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet, iBakashaId);
+            SetListOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet, iBakashaId, numProcess);
         }
 
-        private void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId)
+        private void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId ,int numProcess)
         {
             Oved ItemOved;
           //  DataTable dtOvdim = new DataTable();
@@ -63,24 +65,24 @@ namespace KdsBatch
             TimeSpan ts = new TimeSpan();
             try
             {
-                oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd, sMaamad, bRitzaGorefet, 0);
+                oGeneralData = SingleGeneralData.GetInstance(dTarMe, dTarAd, sMaamad, bRitzaGorefet, 0, numProcess);
                
                 /**/
                 // dtOvdim = oCalcDal.GetOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet);
                 //dtOvdim = oGeneralData.dtOvdimLechishuv;
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc: After storeProcidure Before inilize Ovdim. Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count);
+               // clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc Process Num" + numProcess + ". Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count);
                 for (int i = 0; i < oGeneralData.dtOvdimLechishuv.Rows.Count; i++)
                 {
 
 
                     StartTime = DateTime.Now;
-                    ItemOved = new Oved(int.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["chodesh"].ToString()), dTarMe, dTarAd, iBakashaId);
+                    ItemOved = new Oved(int.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(oGeneralData.dtOvdimLechishuv.Rows[i]["taarich"].ToString()), dTarMe, dTarAd, iBakashaId);
                     ts = DateTime.Now - StartTime;
                     _Ovdim.Add(ItemOved);
 
                 }
 
-                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc:After inilize Ovdim. Mispar Ovdim LeChishuv:  " + oGeneralData.dtOvdimLechishuv.Rows.Count);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "I", 0, dTarMe, "MainCalc Process Num" + numProcess + ". Mispar Ovdim:" + oGeneralData.dtOvdimLechishuv.Rows.Count);
             }
             catch (Exception ex)
             {
@@ -97,7 +99,7 @@ namespace KdsBatch
             try
             {
                 _Ovdim = new List<Oved>();
-                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1);
+                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1,1);
                 dtOvdim = oGeneralData.dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {

@@ -23,7 +23,7 @@ namespace KdsBatch
             return Instance;
         }
 
-        public static GeneralData GetInstance(DateTime TarMe , DateTime TarAd,string sMaamad,bool rizaGorefet,int mis_ishi)
+        public static GeneralData GetInstance(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi, int numProcess)
         {
             objlock = new object();
             if (!_IsCreated)
@@ -32,7 +32,7 @@ namespace KdsBatch
                 {
                     if (!_IsCreated)
                     {
-                        Instance = new GeneralData(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
+                        Instance = new GeneralData(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi, numProcess);
                         _IsCreated = true;
                     }
                 }
@@ -105,12 +105,12 @@ namespace KdsBatch
         public DataTable dtPeiluyotOvdimAll { get; set; }
         public DataTable dtOvdimShePutru { get; set; }
 
-        public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+        public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi,int numProcess)
         {
             DataRow[] drs;
             _TarMe = TarMe;
             _TarAd = TarAd;
-            GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
+            GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi, numProcess);
 
              dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
             if (mis_ishi == -1) //premiot
@@ -124,9 +124,9 @@ namespace KdsBatch
                     _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
                 }
             }
-            clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before InitGeneralData");
+            //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before InitGeneralData");
             InitGeneralData();
-            clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After InitGeneralData");
+            //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After InitGeneralData");
         }
         private void InitGeneralData()
         {
@@ -194,12 +194,12 @@ namespace KdsBatch
             }
         }
 
-        private void GetNetunimLechishuv(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi)
+        private void GetNetunimLechishuv(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi,int numProcess)
         {
             clCalcDal oCalcDal = new clCalcDal();
             try
             {
-                dsNetuneyChishuv = oCalcDal.GetNetuneyChishuvDS(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi);
+                dsNetuneyChishuv = oCalcDal.GetNetuneyChishuvDS(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi, numProcess);
             }
             catch (Exception ex)
             {

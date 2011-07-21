@@ -428,41 +428,73 @@ namespace KdsLibrary.DAL
     }
 
 
-    public void ExecuteSP(string sSPName, ref DataSet ds,string TablesNames)
+    public void ExecuteSP(string sSPName, ref DataSet ds, string TablesNames)
     {
         OracleDataAdapter adapter = new OracleDataAdapter();
-        string OldName="";
+        string OldName = "";
         string[] TablesNamesSplit;
         try
         {
             Open();
             CreateCommand(sSPName, CommandType.StoredProcedure);
             cmd.Connection = conn;
+            cmd.CommandTimeout = 0;
             adapter.SelectCommand = cmd;
             TablesNamesSplit = TablesNames.Split(',');
-            //for (int i = 0; i < cmd.Parameters.Count; i++)
-            //{
-            //    if (cmd.Parameters[i].OracleDbType  == Oracle.DataAccess.Client.OracleDbType.RefCursor)
-            //    {
-            //        OldName="Table";
-            //        if (i>0) OldName += i;
+            for (int i = 0; i < cmd.Parameters.Count; i++)
+            {
+                if (cmd.Parameters[i].OracleDbType == Oracle.DataAccess.Client.OracleDbType.RefCursor)
+                {
+                    OldName = "Table";
+                    if (i > 0) OldName += i;
 
-            //        adapter.TableMappings.Add(OldName, TablesNamesSplit[i]);
-            //    }
-            //}
+                    adapter.TableMappings.Add(OldName, TablesNamesSplit[i]);
+                }
+            }
             adapter.Fill(ds);
-
             adapter.Dispose();
         }
         catch (Exception ex)
         {
             throw ex;
         }
-        finally
-        {
-            Close();
-        }
+
     }
+    //public void ExecuteSP(string sSPName, ref DataSet ds,string TablesNames)
+    //{
+    //    OracleDataAdapter adapter = new OracleDataAdapter();
+    //    string OldName="";
+    //    string[] TablesNamesSplit;
+    //    try
+    //    {
+    //        Open();
+    //        CreateCommand(sSPName, CommandType.StoredProcedure);
+    //        cmd.Connection = conn;
+    //        adapter.SelectCommand = cmd;
+    //        TablesNamesSplit = TablesNames.Split(',');
+    //        //for (int i = 0; i < cmd.Parameters.Count; i++)
+    //        //{
+    //        //    if (cmd.Parameters[i].OracleDbType  == Oracle.DataAccess.Client.OracleDbType.RefCursor)
+    //        //    {
+    //        //        OldName="Table";
+    //        //        if (i>0) OldName += i;
+
+    //        //        adapter.TableMappings.Add(OldName, TablesNamesSplit[i]);
+    //        //    }
+    //        //}
+    //        adapter.Fill(ds);
+
+    //        adapter.Dispose();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw ex;
+    //    }
+    //    finally
+    //    {
+    //        Close();
+    //    }
+    //}
 
 
     }

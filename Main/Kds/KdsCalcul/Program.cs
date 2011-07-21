@@ -9,8 +9,11 @@ namespace KdsCalcul
     {
         static void Main(string[] args)
         {
-            int numOfPacket = 0;
 
+            clCalculMain oCalculMain = new clCalculMain((long)int.Parse(args[0]), DateTime.Parse(args[1]), DateTime.Parse(args[2]), (string)args[3],
+                                                        (int.Parse(args[4]) == 1), (int.Parse(args[5]) == 1), int.Parse(args[6]));
+  
+            oCalculMain.RunCalcBatchProcess();
         }
     }
 }
