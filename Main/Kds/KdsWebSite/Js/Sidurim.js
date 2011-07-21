@@ -1338,7 +1338,8 @@ function chkMkt(oRow) {
           else      
             _Add.value = "0";
       }
-     function GetKeyPressPosition(ctrl){          
+      function GetKeyPressPosition(ctrl) {
+          // return ctrl.value.length;       
           var Sel = document.selection.createRange();
           Sel.moveStart('character', -ctrl.value.length);
           return Sel.text.length;
@@ -1352,8 +1353,8 @@ function chkMkt(oRow) {
       var arrItems = iInx.split("|");
       var sCardDate = $get("clnDate").value;
       var bRaiseNextDay = false;
-      if (arrItems[0] == '1') {//שעת גמר
-          if (GetKeyPressPosition($get("lstSidurim_txtSG" + arrItems[1])) == 5) {
+      if (arrItems[0] == '1') {//שעת גמר         
+          if (GetKeyPressPosition($get("lstSidurim_txtSG" + arrItems[1])) == 5){
               bRaiseNextDay = true;
               sEndHour = $get("lstSidurim_txtSG" + arrItems[1]).value;
               var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
