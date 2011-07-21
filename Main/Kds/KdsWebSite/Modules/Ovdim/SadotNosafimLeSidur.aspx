@@ -21,8 +21,12 @@
          }
          else if (keyCode == 110) {
             // if (document.getElementById("btnShow").disabled == false)
-                 document.getElementById("btnShow").focus();
+             document.getElementById("btnShow").focus();
+           
          }
+     }
+     function onSadeFocus(object) {
+         document.getElementById(object.id).style.border = "1px solid black";
      }
   </script>
     <form id="form1" runat="server">
@@ -93,8 +97,8 @@
            <table width="100%">
                 <tr>
                  <td width="10px"></td>  
-                     <td><input type="button" class="ImgButtonSearch" value="סגור" style="width:80px" onclick="window.close();" /> </td>
-                     <td align="left"><asp:Button ID="btnShow" runat="server" Text="שמור"  style="width:80px;" OnClick="btnShmor_OnClick"   CssClass="ImgButtonSearch" /></td>
+                     <td><input type="button" id="btnClose" runat="server" class="ImgButtonSearch" value="סגור" style="width:80px" onfocus="onSadeFocus(this);"   onclick="window.close();" /> </td>
+                     <td align="left"><asp:Button ID="btnShow" runat="server" Text="שמור"  style="width:80px;" OnClick="btnShmor_OnClick"  onfocus="onSadeFocus(this);"  CssClass="ImgButtonSearch" /></td>
               <td rowspan="2" width="10px"></td>  
                 </tr>
            </table> 
