@@ -40,6 +40,49 @@ namespace KdsService
             }
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
+        private int RunKdsCalcul(FileInfo FileToRun, long BakashaId, DateTime FromDate, DateTime ToDate, string Maamad, bool RitzaTest, bool RitzaGarefet, int CountOfProcesses)
+        {
+            try
+            {
+                for (int i = 1; i <= CountOfProcesses; i++)
+                {
+                    Process _process = new Process();
+                    _process.StartInfo.RedirectStandardOutput = false;
+                    _process.StartInfo.FileName = FileToRun.FullName;
+                    _process.StartInfo.UseShellExecute = false;
+                    _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
+                    _process.StartInfo.RedirectStandardError = true;
+                    _process.StartInfo.Arguments = BakashaId.ToString() + " " + FromDate.ToShortDateString() + " " + ToDate.ToShortDateString() + " " +
+                                                  Maamad + " " + RitzaTest.GetHashCode().ToString() + " " + RitzaGarefet.GetHashCode().ToString() + " " + i.ToString();
+                    _process.Start();
+                    clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, "KdsCalul was run for " + i.ToString() + " time(s)");
+                    _process.Dispose();
+                }
+                return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunCalcBatchParallel: " + ex.Message);
+                return clGeneral.enStatusRequest.Failure.GetHashCode();
+            }
+        }
+        private void CheckKdsCalculTerminated(FileInfo KdsCalcul, long BakashaID, int Status)
+        {
+            Process[] List;
+            do
+            {
+                List = Process.GetProcessesByName(KdsCalcul.Name.Split('.')[0]);
+                if (List.Count() == 0)
+                {
+                    clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
+                    clDefinitions.UpdateLogBakasha(BakashaID, DateTime.Now, Status);
+                    break;
+                }
+                else Thread.Sleep(5000);
+            } while (List.Count() > 0);
+        }
+
 
         private void RunCalcBatchParallel(object param)
         {
@@ -47,44 +90,32 @@ namespace KdsService
             clCalcDal oCalcDal = new clCalcDal();
             DateTime dFrom;
             DataTable dtParametrim;
-            int iCntProcesses =int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
-                int result;
+            int result, iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
             DateTime dAdChodesh = (DateTime)args[1];
             string sMaamad = args[2].ToString();
+            string path, exfile;
             bool bRitzatTest = (bool)args[3];
             bool bRitzaGorefet = (bool)args[4];
-            string path =ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
-                 string exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString(); 
-                 FileInfo KdsCalcul = new FileInfo(path+ exfile);
-            int iStatus = 0;
+            FileInfo KdsCalcul = null;
             try
             {
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
+                path = ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
+                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
+                KdsCalcul = new FileInfo(path + exfile);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from "+KdsCalcul.FullName );
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 result = oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
-                if (result > 0)
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                if (result > 0) 
                 {
                     if (KdsCalcul.Exists)
-                    {
-                        for (int i = 1; i <= iCntProcesses; i++)
-                        {
-                            Process _process = new Process();
-                            _process.StartInfo.RedirectStandardOutput = false;
-                            _process.StartInfo.FileName = KdsCalcul.FullName;
-                            _process.StartInfo.UseShellExecute = false;
-                            _process.StartInfo.WorkingDirectory = path;
-                            _process.StartInfo.RedirectStandardError = true;
-                            _process.StartInfo.Arguments = lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
-                                                          sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString() + " " + i.ToString();
-                            _process.Start();
-                            _process.Dispose();
-                        }
-                        iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                    }
+                        iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
             }
@@ -97,20 +128,9 @@ namespace KdsService
             }
             finally
             {
-                Process[] List;
-                do
-                {
-                    List = Process.GetProcessesByName(KdsCalcul.Name.Split('.')[0]);
-                    if (List.Count() == 0)
-                    {
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END");
-                        clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
-                        break;
-                    }
-                    else Thread.Sleep(5000);
-                } while (List.Count() > 0);
+                CheckKdsCalculTerminated(KdsCalcul, lRequestNum, iStatus);
             }
-             //LogThreadEnd("CalcBatchParallel", lRequestNum);
+            //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
 
         private void RunCalcBatchThread(object param)
