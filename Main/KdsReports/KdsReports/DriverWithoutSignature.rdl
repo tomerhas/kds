@@ -1969,11 +1969,13 @@
   <ReportParameters>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
           <Value>09/2009</Value>
         </Values>
       </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P PERIOD</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_EZOR">
