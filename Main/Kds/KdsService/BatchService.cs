@@ -55,6 +55,7 @@ namespace KdsService
                     _process.StartInfo.Arguments = BakashaId.ToString() + " " + FromDate.ToShortDateString() + " " + ToDate.ToShortDateString() + " " +
                                                   Maamad + " " + RitzaTest.GetHashCode().ToString() + " " + RitzaGarefet.GetHashCode().ToString() + " " + i.ToString();
                     _process.Start();
+                    _process.PriorityClass = ProcessPriorityClass.BelowNormal;
                     clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, "KdsCalul was run for " + i.ToString() + " time(s)");
                     _process.Dispose();
                 }
