@@ -8415,6 +8415,7 @@ namespace KdsBatch
                     oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
                     if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
+                   
                 }
                 else if (oSidur.bSidurVisaKodExists
                          && oSidur.sSidurVisaKod == "1"
@@ -8431,6 +8432,10 @@ namespace KdsBatch
                     if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
+                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR;
+                oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR;
+                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                
             }
             catch (Exception ex)
             {

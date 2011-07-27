@@ -262,7 +262,7 @@ namespace KdsBatch
              int iSugAuto;
              try
              {
-                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(not SUBSTRING(makat_nesia,1,1)in(5,7))");
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur,"");
                   
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
@@ -299,10 +299,10 @@ namespace KdsBatch
                                  fHistaglutMifraki = ( objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                              }
 
-                             if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 1)
+                             if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)
                              { fHistaglutEilat = (float.Parse("20") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
-                             else if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)
-                             { fHistaglutEilat = (float.Parse("50") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
+                             else if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 3)
+                             { fHistaglutEilat = (float.Parse("10") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
 
                              fErech = fHistaglutMifraki + fHistaglutEilat;
 
@@ -768,9 +768,9 @@ namespace KdsBatch
                      if (sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "7" && iMisparKnisa==0)
                      {
                          drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(sMakat));
-                         if (drDetailsPeilut["Mazan_Tichnun"].ToString().Length > 0)
+                         if (drDetailsPeilut["Mazan_Tashlum"].ToString().Length > 0)
                          {
-                             fHagdara = int.Parse(drDetailsPeilut["Mazan_Tichnun"].ToString());
+                             fHagdara = int.Parse(drDetailsPeilut["Mazan_Tashlum"].ToString());
                          }
 
                      }

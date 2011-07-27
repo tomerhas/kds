@@ -78,7 +78,7 @@ namespace KdsBatch
              int  iMakat;
              try
              {
-                 sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                 sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dShatHatchalaSidur.ToShortDateString() + "', 'System.DateTime') and ";
                  sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
                  drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                  for (int J = 0; J < drPeiluyot.Length; J++)
@@ -282,7 +282,7 @@ namespace KdsBatch
                  //dtPeiluyot = GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
                  //drPeiluyot = dtPeiluyot.Select("not SUBSTRING(makat_nesia,1,1)in(5,7)");
                  sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
-                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (not SUBSTRING(makat_nesia,1,1)in(5,7))";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') ";
                  drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
 
                  for (int J = 0; J < drPeiluyot.Length; J++)
@@ -320,10 +320,10 @@ namespace KdsBatch
                                  fHistaglutMifraki = (_oGeneralData.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                              }
 
-                             if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 1)
+                             if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)
                              { fHistaglutEilat = (float.Parse("20") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
-                             else if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)
-                             { fHistaglutEilat = (float.Parse("50") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
+                             else if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 3)
+                             { fHistaglutEilat = (float.Parse("10") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
 
                              fErech = fHistaglutMifraki + fHistaglutEilat;
 
@@ -773,9 +773,9 @@ namespace KdsBatch
                      if (sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "7" && iMisparKnisa==0)
                      {
                          drDetailsPeilut = GetDetailsFromCatalaog(dTaarich, long.Parse(sMakat));
-                         if (drDetailsPeilut["Mazan_Tichnun"].ToString().Length > 0)
+                         if (drDetailsPeilut["Mazan_Tashlum"].ToString().Length > 0)
                          {
-                             fHagdara = int.Parse(drDetailsPeilut["Mazan_Tichnun"].ToString());
+                             fHagdara = int.Parse(drDetailsPeilut["Mazan_Tashlum"].ToString());
                          }
 
                      }
