@@ -132,18 +132,20 @@ namespace KdsBatch
                // DataSetTurnIntoUdt(oOved._dsChishuv);
 
                //שמירת הנתונים רק אם התהליך התבצע ב-batch
-               if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
+               if (oOved.DtYemeyAvoda.Rows.Count > 0)
                {
-                   DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
-                   DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
-                   DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                   if (_iTypeCalc == clGeneral.TypeCalc.Batch)
+                   if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
                    {
-                       SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+                       DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                       DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+                       DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+                       if (_iTypeCalc == clGeneral.TypeCalc.Batch)
+                       {
+                           SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+                       }
+                       //שמירת נתוני החישוב לעובד
+                       SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
                    }
-                   //שמירת נתוני החישוב לעובד
-                   SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
-
                }
                _collChishuvChodesh = null;
                _collChishuvYomi = null;

@@ -107,7 +107,7 @@
             }
         }
         function IsAlowedPeriod(sender, args) {
-       debugger
+    //   debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me =  document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1]-1), Number(chodesh_me[0]), '00', '00', '00');

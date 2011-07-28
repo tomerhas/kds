@@ -12,6 +12,9 @@ namespace KdsCalcul
 
             clCalculMain oCalculMain = new clCalculMain((long)int.Parse(args[0]), DateTime.Parse(args[1]), DateTime.Parse(args[2]), (string)args[3],
                                                         (int.Parse(args[4]) == 1), (int.Parse(args[5]) == 1), int.Parse(args[6]));
+
+            //clCalculMain oCalculMain = new clCalculMain(0, DateTime.Parse("01/09/2010"), DateTime.Parse("01/09/2010"), "",
+            //                                          true, false,1);
   
             oCalculMain.RunCalcBatchProcess();
         }
