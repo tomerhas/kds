@@ -202,12 +202,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(instr(Fields!TAARICH_IDKUN.Value,"AM")&gt;0 or cint(Format(Fields!TAARICH_IDKUN.Value,"hh"))=12 ,
-  Format(Fields!TAARICH_IDKUN.Value,"dd/MM/yyyy hh:mm:ss"),
-  Format(Fields!TAARICH_IDKUN.Value,"dd/MM/yyyy") &amp; " " &amp; 
-  cint(Format(Fields!TAARICH_IDKUN.Value,"hh"))+12  &amp; ":" &amp; 
-  Format(Fields!TAARICH_IDKUN.Value,"mm:ss")
-  )</Value>
+                              <Value>=cstr(Fields!TAARICH_IDKUN.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -251,8 +246,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>2.71632cm</Top>
-        <Left>5.89175cm</Left>
+        <Top>2.73305cm</Top>
+        <Left>3.77507cm</Left>
         <Height>1.2cm</Height>
         <Width>9.07424cm</Width>
         <Visibility>
@@ -285,8 +280,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.01049cm</Top>
-        <Left>3.82799cm</Left>
+        <Top>1.87008cm</Top>
+        <Left>3.10183cm</Left>
         <Height>0.6cm</Height>
         <Width>9.74748cm</Width>
         <ZIndex>1</ZIndex>
@@ -310,9 +305,8 @@
             <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   מתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
           </Parameter>
         </Parameters>
-        <Left>2.3607cm</Left>
         <Height>1.69369cm</Height>
-        <Width>15.62888cm</Width>
+        <Width>14.16159cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -321,21 +315,11 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.66303in</Height>
+    <Height>1.54845in</Height>
     <Style />
   </Body>
-  <Width>8.01192in</Width>
+  <Width>5.60335in</Width>
   <Page>
-    <PageFooter>
-      <Height>1.11125cm</Height>
-      <PrintOnFirstPage>true</PrintOnFirstPage>
-      <PrintOnLastPage>true</PrintOnLastPage>
-      <Style>
-        <Border>
-          <Style>None</Style>
-        </Border>
-      </Style>
-    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
