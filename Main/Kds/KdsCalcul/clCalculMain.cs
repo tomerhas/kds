@@ -70,20 +70,22 @@ namespace KdsCalcul
                 if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
                 {
                     #region not parallel
-                    //oMainCalc.Ovdim.ForEach(CurrentOved =>
-                    //                    {
-                    //                        oMainCalc.CalcOved(CurrentOved);
-                    //                    });
+                    oMainCalc.Ovdim.ForEach(CurrentOved =>
+                                        {
+                                            oMainCalc.CalcOved(CurrentOved);
+                                            CurrentOved.Dispose();
+                                            CurrentOved = null;
+                                        });
                     #endregion
-                    #region parallel
-                    Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
-                    {
-                        oMainCalc.CalcOved(CurrentOved);
-                        CurrentOved.Dispose();
-                        CurrentOved = null;
+                    //#region parallel
+                    //Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
+                    //{
+                    //    oMainCalc.CalcOved(CurrentOved);
+                    //    CurrentOved.Dispose();
+                    //    CurrentOved = null;
 
-                    });
-                    #endregion
+                    //});
+                    //#endregion
                 }
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "END PROCESS " + iNumProcess);
 
