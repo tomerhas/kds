@@ -84,28 +84,29 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
     public const string NBSP ="&nbsp;";
     public const int _COL_DUMMY =0;
-    public const int _COL_ADD_NESIA_REKA = 1;
-    public const int _COL_KISUY_TOR = 2;
-    public const int _COL_SHAT_YETIZA = 3;
-    public const int _COL_LINE_DESCRIPTION = 4;
-    public const int _COL_LINE = 5;
-    public const int _COL_LINE_TYPE = 6;
-    public const int _COL_MAKAT = 7;
-    public const int _COL_DEF_MINUTES = 8; //MaazanTichnun
-    public const int _COL_ACTUAL_MINUTES = 9;
+    public const int _COL_ADD_NESIA_REKA_UP = 1;
+    public const int _COL_ADD_NESIA_REKA = 2;
+    public const int _COL_KISUY_TOR = 3;
+    public const int _COL_SHAT_YETIZA = 4;
+    public const int _COL_LINE_DESCRIPTION = 5;
+    public const int _COL_LINE = 6;
+    public const int _COL_LINE_TYPE = 7;
+    public const int _COL_MAKAT = 8;
+    public const int _COL_DEF_MINUTES = 9; //MaazanTichnun
+    public const int _COL_ACTUAL_MINUTES = 10;
 
-    public const int _COL_CAR_NUMBER = 10;
+    public const int _COL_CAR_NUMBER = 11;
     //public const int _COL_CAR_LICESNCE_NUMBER = 10;
    
-    public const int _COL_NETZER = 11;
-    public const int _COL_CANCEL = 12;
-    public const int _COL_LAST_UPDATE = 13;
-    public const int _COL_MAZAN_TASHLUM = 14;
-    public const int _COL_CANCEL_PEILUT = 15;
-    public const int _COL_KNISA = 16;
-    public const int _COL_DAY_TO_ADD = 17;
-    public const int _COL_KISUY_TOR_MAP = 18;
-    public const int _COL_PEILUT_STATUS = 19; //מציין אם ברמת פעילות יש שגיאה או אישור או תקין  ללא אישורים. 
+    public const int _COL_NETZER = 12;
+    public const int _COL_CANCEL = 13;
+    public const int _COL_LAST_UPDATE = 14;
+    public const int _COL_MAZAN_TASHLUM = 15;
+    public const int _COL_CANCEL_PEILUT = 16;
+    public const int _COL_KNISA = 17;
+    public const int _COL_DAY_TO_ADD = 18;
+    public const int _COL_KISUY_TOR_MAP = 19;
+    public const int _COL_PEILUT_STATUS = 20; //מציין אם ברמת פעילות יש שגיאה או אישור או תקין  ללא אישורים. 
     
     private const int MAX_LEN_LINE_NUMBER = 8;
     private const int MAX_LEN_CAR_NUMBER = 5;
@@ -136,6 +137,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     // Event declaration
     public event OnButtonClick btnHandler;
     //public event OnButtonClick btnReka;
+
+    private enum enRekaMapaDirection {enUp,enDown}
 
     private enum enDayType
     {
@@ -734,6 +737,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _COL_KISUY_TOR;
         }
     }
+    public int COL_ADD_NESIA_REKA_UP{    
+        get { return _COL_ADD_NESIA_REKA_UP; }
+    }
     public int COL_ADD_NESIA_REKA {
         get { return _COL_ADD_NESIA_REKA; }       
     }
@@ -847,6 +853,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drPeilutyot = dtPeilutyot.NewRow();
                 oPeilut = (clPeilut)htPeilut[i];
                 //מציין האם מותר לבטל פעילות
+                drPeilutyot["Add_Nesia_reka_up"] = "1";
                 drPeilutyot["Add_Nesia_reka"] = "1";//oPeilut.iKisuyTor;
                 drPeilutyot["cancel_peilut_flag"] = oPeilut.iMisparKnisa == 0 ? 1 : oPeilut.bKnisaNeeded ? 1 : 0;
                 drPeilutyot["Kisuy_Tor"] = oPeilut.iKisuyTor;
@@ -941,6 +948,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public void BuildDataTableColumns(ref DataTable dtPeilutyot)
     {
         DataColumn dcPeilut;
+
+        dcPeilut = new DataColumn();
+        dcPeilut.ColumnName = "Add_Nesia_reka_up";
+        dcPeilut.DataType = System.Type.GetType("System.Int32");
+        dtPeilutyot.Columns.Add(dcPeilut);
+
         dcPeilut = new DataColumn();
         dcPeilut.ColumnName = "Add_Nesia_reka";
         dcPeilut.DataType = System.Type.GetType("System.Int32");
@@ -1156,7 +1169,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.AllowPaging = false;
             grdPeiluyot.AutoGenerateColumns = false;
             grdPeiluyot.AllowSorting = true;
-            grdPeiluyot.Width = Unit.Pixel(915);
+            grdPeiluyot.Width = Unit.Pixel(975);
             grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_AltItemRow";
             grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"WCard_GridRow";//"GridRow";
             grdPeiluyot.ShowFooter = false;
@@ -1169,14 +1182,23 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrControlToAdd[iArrControlSize] = enControlToAdd.TextBox;
             oGridControls = new GridControls(arrControlToAdd, "", "", "", "", ListItemType.Item, "cancel_peilut_flag", iIndex);
             tGridField.ItemTemplate = new GridViewTemplate(oGridControls);
-            tGridField.ItemStyle.Width = Unit.Pixel(230);
+            tGridField.ItemStyle.Width = Unit.Pixel(120);
             tGridField.ItemStyle.BackColor = System.Drawing.Color.White;
             grdPeiluyot.Columns.Add(tGridField);
 
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "ריקה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "ריקה למעלה");
+            tGridField.HeaderStyle.CssClass = "wcard_header";
+            tGridField.FooterStyle.CssClass = "wcard_footer_left";
+            // tGridField.ItemStyle.Width = Unit.Pixel(30);
+            grdPeiluyot.Columns.Add(tGridField);
+
+            //הוספת נסיעה ריקה
+            iArrControlSize = 0;
+            tGridField = new TemplateField();
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "ריקה למטה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1478,7 +1500,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //DateTime dPeilutDate = DateTime.Parse(((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes["OrgDate"] + " " + sShatYetiza);
 
         if (bLastPeilut)
-        {
+        {   //אם פעילות אחרונה בסידור נעבור לסידור הבא
             iSidurIndex = iSidurIndex + 1;            
             _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
             _txt = ((TextBox)(this.FindControl("txtSH" + iSidurIndex)));
@@ -1488,7 +1510,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 while (!bFound)
                 {
-                    if ((_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text!="1"))
+                    if ((_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
                         bFound = true;
                     else
                     {
@@ -1515,7 +1537,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
 
 
-        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) && (_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
+        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) && (_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
         {
             try
             {
@@ -1568,7 +1590,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                 _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
                                 while ((_NextSidur != null) && (!bFound))
                                 {
-                                    if (((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
+                                    if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
                                     {
                                         bFound = true;
                                         _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
@@ -1598,7 +1620,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
                             while ((_NextSidur != null) && (!bFound))
                             {
-                                if (((((TextBox)_NextSidur.Rows[0].Cells[15].Controls[0])).Text != "1"))
+                                if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
                                 {
                                     bFound = true;
                                     _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
@@ -1618,6 +1640,108 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
         return lMakatEnd;
     }
+
+
+    long GetMakatStartForReaka(ref int iSidurIndex, ref int iPeilutIndex)
+    {
+        //הפונקציה מביאה את המק"ט הראשון בין שתי נסיעות שאפשר להכניס ביניהם נסיעה ריקה
+        GridView _PrevSidur = new GridView();        
+        GridViewRow _PrevPeilut;       
+        bool bExists = false;
+        bool bCanAddReka = false;
+        
+        long lMakatStart = 0;
+        long lMakat = 0;
+        string sPrevSidurStatus="";
+        string sCancelPeilut = "";
+        TextBox _txt;
+        clKavim _Kavim = new clKavim();
+        string[] arrKnisa;
+
+        
+        //הסריקה תתבצע רק עבור הסידור הקודם, אם הוא מבוטל נעבור סידור אחד אחורה
+        //אם לא מצאנו לא נמשיך לסידור הקודם
+        iSidurIndex = iSidurIndex - 1;
+       
+
+        //_PrevSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
+        //if (_PrevSidur!=null)
+        //   if (_PrevSidur.Rows.Count>0)
+        //        sPrevSidurStatus = ((TextBox)_PrevSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0]).Text;
+
+          
+        //נחפש את הסידור הקודם שהוא לא מבוטל 
+        sPrevSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;     
+        while ((sPrevSidurStatus == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode().ToString()) && (iSidurIndex>=1))//מבוטל
+        {
+            iSidurIndex = iSidurIndex - 1;
+            sPrevSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;
+            //_PrevSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
+            //if (_PrevSidur != null)
+            //    sPrevSidurStatus = ((TextBox)_PrevSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0]).Text;
+        }
+        if (sPrevSidurStatus!="1")
+        {
+            _PrevSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
+            //מצאנו סידור שהוא לא מבוטל, נחפש בו את הפעילות האחרונה עם אפשרות להוספת ריקה, אם לא מצאנו נעצור ולא נמשיך לסידור הקודם
+            if (_PrevSidur != null)
+            {
+                if (_PrevSidur.Rows.Count > 0)
+                {
+                    iPeilutIndex = _PrevSidur.Rows.Count - 1;
+                    _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
+                    while ((_PrevPeilut != null) && (lMakatStart == 0) && (bExists == false) && (sCancelPeilut != "1"))
+                    {
+                        try
+                        {
+                            bCanAddReka = ((ImageButton)_PrevPeilut.Cells[_COL_ADD_NESIA_REKA].Controls[0]).Attributes["NesiaReka"].Equals("1");
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                bCanAddReka = _PrevPeilut.Cells[_COL_ADD_NESIA_REKA].Attributes["NesiaReka"].Equals("1");
+                            }
+                            catch (Exception exx)
+                            {
+                                bCanAddReka = false;
+                            }
+                        }
+
+                        sCancelPeilut = ((TextBox)(_PrevPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text;
+                        if ((bCanAddReka) && (!sCancelPeilut.Equals("1")))
+                        {
+                            lMakatStart = long.Parse(((TextBox)_PrevPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
+                            //if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
+                            //    lCarNum = 0;
+                        }
+                        else
+                        {
+                            _txt = ((TextBox)(_PrevPeilut.Cells[_COL_MAKAT].Controls[0]));
+                            if ((_txt.Text != String.Empty) && (!sCancelPeilut.Equals("1")))
+                            {
+                                lMakat = long.Parse(_txt.Text);
+                                arrKnisa = _PrevPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+                                // 3אלמנט ללא מאפיין 9                   
+                                if (((_Kavim.GetMakatType(lMakat)) == clKavim.enMakatType.mElement.GetHashCode()) && ((arrKnisa[3]) == "0"))
+                                    bExists = true;
+                                else
+                                {
+                                    iPeilutIndex = iPeilutIndex - 1;
+                                    if (iPeilutIndex >= 0)
+                                        _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
+                                    else
+                                        _PrevPeilut = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return lMakatStart;
+    }
     bool IsLastPeilutInSidur(int iSidurIndex, int iPeilutIndex)
     {
         bool bLastPeilut = false;
@@ -1636,7 +1760,76 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    private void InsertPeilutReaka(int iSidurIndex, int iPeilutIndex, long lMakat, long lCarNum,
+    private void InsertPeilutRekaFromMapa(int iSidurIndex, int iPeilutIndex, clPeilut _PeilutReka,
+                            enRekaMapaDirection _Direction, ref int iNewPeilutIndex)
+    {
+        clSidur  _Sidur = (clSidur)_DataSource[iSidurIndex];
+        clPeilut _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex];
+        clPeilut _NewPeilut = new clPeilut();
+        clKavim _Kavim = new clKavim();
+        DateTime dPeilutShatYetiza;
+
+
+        _NewPeilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
+        dPeilutShatYetiza = DateTime.Parse(_Sidur.dFullShatHatchala.ToShortDateString() + " " + _PeilutReka.sShatYetzia);
+        if (_PeilutReka.sShatYetzia.Equals(""))
+        {
+            _NewPeilut.dFullShatYetzia = DateTime.Parse("01/01/0001 00:00");
+            _NewPeilut.sShatYetzia = "";
+        }
+        else
+        {
+            _NewPeilut.dFullShatYetzia = dPeilutShatYetiza;
+            _NewPeilut.sShatYetzia = dPeilutShatYetiza.ToShortTimeString();
+        }
+        
+        _NewPeilut.dOldFullShatYetzia = _NewPeilut.dFullShatYetzia;
+        _NewPeilut.lMakatNesia = _PeilutReka.lMakatNesia;
+        _NewPeilut.lOldOtoNo = _Peilut.lOtoNo;
+        _NewPeilut.lOtoNo = _Peilut.lOtoNo;
+        _NewPeilut.iMakatType = clKavim.enMakatType.mEmpty.GetHashCode();
+        _NewPeilut.iMazanTashlum = _PeilutReka.iMazanTashlum;
+        _NewPeilut.iMazanTichnun = _PeilutReka.iMazanTichnun;
+        _NewPeilut.sMakatDescription = _PeilutReka.sMakatDescription;
+        _NewPeilut.sSugShirutName = COL_TRIP_EMPTY;
+
+        if (_Direction == enRekaMapaDirection.enDown)
+            _Sidur.htPeilut.Add(_Sidur.htPeilut.Count + 1, _NewPeilut);
+        else
+            InsertPeilutInFirstPos(ref _Sidur, _NewPeilut, iNewPeilutIndex);
+       
+        Session["Sidurim"] = _DataSource;
+
+        ClearControl();
+        BuildPage();
+    }
+    private void InsertPeilutInFirstPos(ref clSidur _Sidur, clPeilut _NewPeilut, int iNewPeilutIndex)
+    {
+        //הכנסת פעילות ראשונה בסידור
+        //או שניה אם הראשונה היא הכנת מכונה
+        OrderedDictionary _TempPeilyut = new OrderedDictionary();
+        for (int i = 0; i < _Sidur.htPeilut.Count; i++)
+            _TempPeilyut.Add(i, _Sidur.htPeilut[i]);
+
+        _Sidur.htPeilut.Clear();
+
+        if (iNewPeilutIndex == 0)
+        {//הכנסת הריקה במקום הראשון
+            _Sidur.htPeilut.Add(iNewPeilutIndex, _NewPeilut);
+
+            for (int j = iNewPeilutIndex + 1; j < _TempPeilyut.Count; j++)
+                _Sidur.htPeilut.Add(j, _TempPeilyut[j]);
+        }
+        else //iNewPeilutIndex==1
+        {//במקרה ויש הכנת מכונה, נכניס את הריקה במקום השני
+            _Sidur.htPeilut.Add(0, _TempPeilyut[0]);
+            _Sidur.htPeilut.Add(1, _NewPeilut);
+            for (int j = iNewPeilutIndex + 1; j < _TempPeilyut.Count; j++)
+                _Sidur.htPeilut.Add(j, _TempPeilyut[j]);
+        }
+
+    }
+    private void InsertPeilutReaka(int iSidurIndexStart,int iSidurIndex, int iPeilutIndex, long lMakat, long lCarNum,
                                    DataTable _NesiaDetails)
     {
         int iMazanTichnun, iPos;
@@ -1651,7 +1844,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DateTime dPeilutShatYetiza;
         try
         {
-            _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+            _CurrSidur = ((GridView)this.FindControl(iSidurIndexStart.ToString().PadLeft(3, char.Parse("0"))));
             _NextPeilut = _CurrSidur.Rows[iPeilutIndex];
             iMazanTichnun = int.Parse(_NextPeilut.Cells[_COL_DEF_MINUTES].Text);
             string sShatYetiza = ((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
@@ -1664,7 +1857,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     dPeilutDate=dPeilutDate.AddDays(1);
 
                 dPeilutShatYetiza = DateTime.Parse(dPeilutDate.ToShortDateString() + " " + sShatYetiza);
-
                 dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
                 }
             //_CurrSidur = ((GridView)this.FindControl(iSidurIndexNew.ToString().PadLeft(3, char.Parse("0"))));
@@ -1677,7 +1869,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if ((_Sidur.iMisparSidur.Equals(iSidurNumber)) && (_Sidur.dFullShatHatchala.Equals(dSidurShatHatchala)))
                     break;
             }
-           
+            
             _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
             _Peilut.dFullShatYetzia = dPeilutShatYetiza;
             _Peilut.dOldFullShatYetzia = dPeilutShatYetiza;
@@ -1840,42 +2032,98 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    void imgAddReka_Click(object sender, ImageClickEventArgs e)
+    protected bool ChkIfAddRekaFromMapaUp(int iSidurIndex, int iPeilutIndex ,ref int iNewPeilutIndex)
     {
-        long lMakatEnd;
-        long lMakat = 0;
-        long lCarNum = 0;
+        clSidur _Sidur = new clSidur();
+        clPeilut _PrevPeilut = new clPeilut();
+        bool bAddMapa = false;
+        //נחזיר אמת אם הסידור הוא ראשון בכרטיס והוא מסוג נהגות מפה והפעילות היא ראשונה בסידור
+        if (iSidurIndex  == 0)
+        {
+            _Sidur = (clSidur)_DataSource[iSidurIndex];
+            if ((!_Sidur.bSidurMyuhad) && (_Sidur.bSidurNahagut))
+            {
+                if (iPeilutIndex == 0)
+                {
+                    iNewPeilutIndex = 0;
+                    //נבדוק אם סידור נהגות
+                    bAddMapa = true;
+                }
+                else
+                    //אם זו הפעילות השניה, נבדוק את הראשונה, אם הראשונה היא מסוג הכנת מכונה, נתייחס לשניה כראשונה בסידור
+                    if (iPeilutIndex == 1)
+                    {
+                        iNewPeilutIndex = 1;
+                        _PrevPeilut = (clPeilut)_Sidur.htPeilut[0];
+                        if (IsElementHachanatMechona((clKavim.enMakatType)_PrevPeilut.iMakatType, _PrevPeilut.lMakatNesia))
+                            bAddMapa = true;
+                    }
+
+            }
+        }
+        return bAddMapa;
+    }
+    protected bool ChkIfAddRekaFromMapaDown(int iSidurIndex, int iPeilutIndex)
+    {
+        clSidur _Sidur = new clSidur();        
+        bool bAddMapa= false;
+        //נחזיר אמת אם הסידור הוא אחרון בכרטיס והוא מסוג נהגות מפה והפעילות היא האחרונה בסידור
+        if (iSidurIndex + 1 == _DataSource.Count)
+        {
+            _Sidur = (clSidur)_DataSource[iSidurIndex];
+            if ((!_Sidur.bSidurMyuhad) && (_Sidur.bSidurNahagut))
+            {
+                if (iPeilutIndex + 1 == _Sidur.htPeilut.Count)               
+                    //נבדוק אם סידור נהגות
+                    bAddMapa = true;                
+            }
+        }
+        return bAddMapa;
+    }
+    void imgAddRekaUp_Click(object sender, ImageClickEventArgs e)
+    {
+        string sScript = "";
         int iSidurIndex = int.Parse(((ImageButton)sender).Attributes["SdrInd"]);
         int iPeilutIndex = int.Parse(((ImageButton)sender).Attributes["PeilutInd"]);
-        int iSidurIndexOrg = iSidurIndex;
-        int iPeilutIndexOrg = iPeilutIndex;
-        string sScript;
+        int iNewPeilutIndex = 0;
         bool bOpenUpdateBtn = false;
-        
-
-        //נמצא את מספר המק"ט הבא שביניהם תכנס הנסיעה הריקה
-        lMakatEnd = GetMakatEndForReaka(ref iSidurIndex, ref iPeilutIndex, ref lCarNum);
-        if (lMakatEnd == 0)
-        {
-            sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";
-            ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "AddReka", sScript, true);
-        }
+        //הוספת נסיעה ריקה למעלה קיימים שני מקרים:        
+        //במידה והסידור הוא ראשון ביום והוא מסוג מפה - נהגות וגם הפעילות היא ראשונה ביום או שניה (שלפניה יש פעילות של הכנת מכונה)
+        //נוסיף פעילות ריקה מהמפה, 
+        //מקרה שני - הוספת פעילות למעלה כאשר אנחנו לא עומדים על הסידור הראשון
+        if (ChkIfAddRekaFromMapaUp(iSidurIndex, iPeilutIndex, ref iNewPeilutIndex))
+            sScript = AddRekaFromMapa(iSidurIndex, iPeilutIndex, enRekaMapaDirection.enUp, ref bOpenUpdateBtn,ref iNewPeilutIndex);
         else
-        {
-            DataTable _NesiaDetails = new DataTable();
-            if (AddNesiaReka(iSidurIndexOrg, iPeilutIndexOrg, lMakatEnd, ref lMakat, ref _NesiaDetails))
-            {
-                OrderedDictionary hashSidurimPeiluyot = DataSource;
-                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-                InsertPeilutReaka(iSidurIndexOrg, iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails);
-                bOpenUpdateBtn = true;
-            }
-            else
-            {
-                sScript = "alert('לא נמצאה ריקה מתאימה');";
-                ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "GetRekaFromTnua", sScript, true);
-            }
-        }
+            sScript = AddRekaByXYUP(iSidurIndex, iPeilutIndex, ref bOpenUpdateBtn); //מקרה שני 
+
+
+        if (!sScript.Equals(""))
+            ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "AddReka", sScript, true);
+
+        //נציין כאילו שינוי הקלט עבדו בהצלחה
+        if (btnHandler != null)
+            btnHandler(string.Empty, bOpenUpdateBtn);
+    }
+    void imgAddReka_Click(object sender, ImageClickEventArgs e)
+    {
+        //הוספת נסיעה ריקה למטה קיימים שני מקרים:        
+        //1. הוספת נסיעה ריקה לסידור אחרון ביום שהוא גם סידור נהגות 
+        //   וגם הפעילות שלחצו עליה היא האחרונה בסידור
+        //2. הוספת נסיעה ריקה בשאר הסידורים
+        string sScript="";       
+        int iSidurIndex = int.Parse(((ImageButton)sender).Attributes["SdrInd"]);
+        int iPeilutIndex = int.Parse(((ImageButton)sender).Attributes["PeilutInd"]);       
+        bool bOpenUpdateBtn = false;
+        int iNewPeilutIndex=0;
+               
+        if (ChkIfAddRekaFromMapaDown(iSidurIndex, iPeilutIndex)) //מקרה ראשון
+            sScript = AddRekaFromMapa(iSidurIndex, iPeilutIndex, enRekaMapaDirection.enDown, ref bOpenUpdateBtn, ref iNewPeilutIndex);
+        else
+            sScript = AddRekaByXY(iSidurIndex, iPeilutIndex, ref bOpenUpdateBtn); //מקרה שני
+                                                
+                
+        if (!sScript.Equals(""))
+            ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "AddReka", sScript, true);
 
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
@@ -1900,6 +2148,152 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         // sScript = sScript + "$get('lstSidurim_000_ctl05_lstSidurim_000_ctl05ShatYetiza').focus();";
 
         ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
+    }
+    private bool FindPeilutInMapa(clSidur _Sidur, clPeilut _Peilut,enRekaMapaDirection _Direction,  ref clPeilut _PeilutReka)
+    {
+        clKavim _Kavim = new clKavim();
+        bool bFound = false;
+        int iResult;
+        DataSet dsSidurim;       
+        int iHour;
+        long lMakat=0;
+        string sMapHour="";
+        int iDirection = 0;
+
+        //נפנה למפה ונבדוק אם קיימת פעילות כמו זו שממנה אנחנו רוצים  להוסיף ריקה(לפי מק"ט ושעת יציאה
+        //אם קיימת פעילות זהה, נבדוק שהפעילות העוקבת לה היא ריקה, במידה וכן נחזיר אמת         
+        dsSidurim = _Kavim.GetSidurAndPeiluyotFromTnua(_Sidur.iMisparSidur, DateTime.Parse(_Sidur.dFullShatHatchala.ToShortDateString()), 0, out iResult);
+        if (dsSidurim.Tables[1]!=null)
+        {
+            iHour =  int.Parse(_Peilut.sShatYetzia.Replace(":",""));
+            for (int i = 0; i < dsSidurim.Tables[1].Rows.Count; i++)
+            {
+                if ((long.Parse(dsSidurim.Tables[1].Rows[i]["makat8"].ToString()) == _Peilut.lMakatNesia)                
+                    && (int.Parse(dsSidurim.Tables[1].Rows[i]["shaa"].ToString()) == iHour))
+                {
+                    if (_Direction == Modules_UserControl_ucSidurim.enRekaMapaDirection.enDown)
+                        iDirection = i + 1;
+                    else
+                        iDirection = i - 1;
+
+                    if ((iDirection) < dsSidurim.Tables[1].Rows.Count)
+                    {   //נבדוק אם הפעילות הבאה היא ריקה
+                            lMakat = (long.Parse(dsSidurim.Tables[1].Rows[iDirection]["makat8"].ToString()));
+                            bFound = _Kavim.GetMakatType(lMakat) == clKavim.enMakatType.mEmpty.GetHashCode();
+                            sMapHour = dsSidurim.Tables[1].Rows[iDirection]["shaa"].ToString().PadLeft(4, char.Parse("0"));
+                            _PeilutReka.sShatYetzia = sMapHour.Substring(0, 2) + ":" + sMapHour.Substring(2, 2);
+                            _PeilutReka.lMakatNesia = lMakat;
+                            _PeilutReka.sMakatDescription = dsSidurim.Tables[1].Rows[iDirection]["teurnesiaa"].ToString();
+                            _PeilutReka.sShilut = dsSidurim.Tables[1].Rows[iDirection]["shilut"].ToString();
+                            _PeilutReka.iMazanTashlum = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantashlum"].ToString());
+                            _PeilutReka.iMazanTichnun = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantichnun"].ToString());
+                            _PeilutReka.iKisuyTor = String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString()) ? 0 : int.Parse(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString());
+                            _PeilutReka.iKisuyTorMap = _PeilutReka.iKisuyTor;
+                            break;
+                    }
+                }
+            }
+        }
+        return bFound;
+    }
+    private string AddRekaFromMapa(int iSidurIndex, int iPeilutIndex, enRekaMapaDirection _Direction, 
+                                   ref bool bOpenUpdateBtn, ref int iNewPeilutIndex)
+    {
+        string sScript = "";        
+        clSidur _Sidur = (clSidur)_DataSource[iSidurIndex];
+        clPeilut _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex];
+        clPeilut _PeilutReka = new clPeilut();
+        //יש לפנות למפה (GetSidurDetails) ולבדוק 
+        // האם קיימת בסידור המקורי פעילות זהה  לפעילות בכרטיס:
+        // TB_peilut_Ovdim.Makat_nesia =  GetSidurDetails.Makat8
+        // TB_peilut_Ovdim.Shat_yetzia =  GetSidurDetails.Shaa
+        // אם קיימת פעילות זהה, יש לחפש
+        // את הפעילות העוקבת (במידה והכיוון הוא למטה, או  
+        //יש לבדוק אם אחרי הפעילות קיימת פעילות מסוג ריקה.
+        //אם לא נמצאה ריקה, יש להציג הודעה:"לא נמצאה נסיעה ריקה שתוכננה במפה". 
+
+        if (FindPeilutInMapa(_Sidur, _Peilut, _Direction, ref _PeilutReka))
+        {
+            OrderedDictionary hashSidurimPeiluyot = DataSource;
+            UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+            InsertPeilutRekaFromMapa(iSidurIndex, iPeilutIndex, _PeilutReka, _Direction, ref iNewPeilutIndex);
+            bOpenUpdateBtn = true;
+        }
+        else
+            sScript = "alert('לא נמצאה נסיעה ריקה שתוכננה במפה');";        
+
+        return sScript;
+    }
+    protected string AddRekaByXYUP(int iSidurIndex, int iPeilutIndex, ref bool bOpenUpdateBtn)
+    {
+        long lMakatEnd;
+        long lMakatStart;
+        long lMakat = 0;
+        long lCarNum = 0;
+        string sScript = "";
+        int iSidurIndexOrg = iSidurIndex;
+        int iPeilutIndexOrg = iPeilutIndex;
+        GridView _CurrSidur= new GridView();
+        GridViewRow _CurrPeilut;
+       
+         //המק"ט של הפעילות שנלחצה        
+         _CurrSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
+         _CurrPeilut = _CurrSidur.Rows[iPeilutIndex];
+         lMakatEnd = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
+         lCarNum = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
+        //נמצא את מספר המק"ט הקודם שביניהם תכנס הנסיעה הריקה
+        //למעשה במקרה זה מה שחשוב זה האינדקס של הסידור והפעילות של מק"ט ההתחלה
+        lMakatStart = GetMakatStartForReaka(ref iSidurIndex, ref iPeilutIndex);
+        if (lMakatStart == 0)        
+            sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";                
+        else
+        {
+            DataTable _NesiaDetails = new DataTable();
+            if (AddNesiaReka(iSidurIndex, iPeilutIndex, lMakatEnd, ref lMakat, ref _NesiaDetails))
+            {
+                OrderedDictionary hashSidurimPeiluyot = DataSource;
+                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+                InsertPeilutReaka(iSidurIndex, iSidurIndexOrg, iPeilutIndex, lMakat, lCarNum, _NesiaDetails);
+                bOpenUpdateBtn = true;
+            }
+            else            
+                sScript = "alert('לא נמצאה ריקה מתאימה');";                          
+        }
+        return sScript;
+    }
+    protected string AddRekaByXY(int iSidurIndex, int iPeilutIndex,  ref bool bOpenUpdateBtn)
+    {
+        long lMakatEnd;
+        long lMakat = 0;       
+        long lCarNum = 0;
+        string sScript="";
+        int iSidurIndexOrg = iSidurIndex;
+        int iPeilutIndexOrg = iPeilutIndex;
+
+        //נמצא את מספר המק"ט הבא שביניהם תכנס הנסיעה הריקה
+        lMakatEnd = GetMakatEndForReaka(ref iSidurIndex, ref iPeilutIndex, ref lCarNum);
+        if (lMakatEnd == 0)
+        {
+            sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";
+           // ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "AddReka", sScript, true);
+        }
+        else
+        {
+            DataTable _NesiaDetails = new DataTable();
+            if (AddNesiaReka(iSidurIndexOrg, iPeilutIndexOrg, lMakatEnd, ref lMakat, ref _NesiaDetails))
+            {
+                OrderedDictionary hashSidurimPeiluyot = DataSource;
+                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+                InsertPeilutReaka(iSidurIndexOrg,iSidurIndexOrg, iPeilutIndexOrg, lMakat, lCarNum, _NesiaDetails);
+                bOpenUpdateBtn = true;
+            }
+            else
+            {
+                sScript = "alert('לא נמצאה ריקה מתאימה');";
+               // ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "GetRekaFromTnua", sScript, true);
+            }
+        }
+        return sScript;
     }
     public string GetPeilutClientKey(string[] sPeilutDetails)
     {
@@ -2663,7 +3057,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
                 else
                 {
-
                     _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut)+1, _Peilut);
                     _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
                     _Peilut.lMakatNesia = ((bSidurVisa) && (!IsPeilutVisaExists(ref _Sidur,ref iPeilutIndex))) ? MAKAT_VISA : 0;
@@ -4000,6 +4393,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if (drSugSidur.Length > 0)            
                 bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());                                           
         }
+        oSidur.bSidurNahagut = bSidurNahagut;
         return bSidurNahagut;
     }
     //protected bool IsSidurNahagutOrTnua(ref clSidur oSidur, DataRow[] drSugSidur)
@@ -5015,8 +5409,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     iMakatType =  int.Parse(DataBinder.Eval(e.Row.DataItem, "makat_type").ToString());
                     oMakatType = (clKavim.enMakatType)iMakatType;
                     bEnabled =( ((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType==clKavim.enMakatType.mNamak)) && (lMakatNumber!=MAKAT_VISA));
-                    
-                    //הוספת נסיעה ריקה
+
+                    //הוספת נסיעה ריקה למעלה
+                    SetAddNesiaRekaUpColumn(e, bSidurActive, bPeilutActive, bElementHachanatMechona, oMakatType, iSidurIndex);
+
+                    //הוספת נסיעה ריקה למטה
                     SetAddNesiaRekaColumn(e, bSidurActive, bPeilutActive, bElementHachanatMechona, oMakatType, iSidurIndex);
 
                     //כיסוי תור
@@ -5322,6 +5719,66 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
+    protected bool IsElementHachanatMechona(clKavim.enMakatType _MakatType, long lMakat)
+    {
+        string sElementPrefix="";
+        bool bFound = false;
+        //מחזיר אמת אם אלמנט מסוג הכנת מכונה
+        if (_MakatType == clKavim.enMakatType.mElement)
+        {
+            sElementPrefix = lMakat.ToString().Substring(0, 3);
+            if ((sElementPrefix == clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sElementPrefix == clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) || (sElementPrefix == clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString()))
+                bFound = true;
+        }
+        return bFound;
+    }
+    protected void SetAddNesiaRekaUpColumn(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, bool bElementHachanatMechona, clKavim.enMakatType oMakatType, int iSidurIndex)
+    {
+        try
+        {
+            long lPrevMakat=0;
+            int iMisparKnisa;
+            string[] arrKnisaVal;
+            arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+            iMisparKnisa = int.Parse(arrKnisaVal[0]);
+            int iRowCount =  ((System.Data.DataRowView)(e.Row.DataItem)).Row.Table.Rows.Count;
+            int iFirstRow = (e.Row.RowIndex == 0 ? 1 : 0);
+            clKavim _Kavim = new clKavim();
+            clKavim.enMakatType _MakatType;
+                     
+
+            //אם הגענו לפעילות השניה, נבדוק אם את הפעילות הקודמת, אם היא הקודמת היתה הכנת מכונה, נתייחס לנוכחית כאילו היתה ראשונה
+            if (e.Row.RowIndex == 1){
+                //נקרא את המק"ט של הפעילות הראשונה
+                lPrevMakat = String.IsNullOrEmpty(((DataRowView)(e.Row.DataItem)).Row.Table.Rows[0].ItemArray[_COL_MAKAT+1].ToString()) ? 0 : long.Parse(((DataRowView)(e.Row.DataItem)).Row.Table.Rows[0].ItemArray[_COL_MAKAT+1].ToString());
+                _MakatType = ((clKavim.enMakatType)_Kavim.GetMakatType(lPrevMakat));
+                if (IsElementHachanatMechona(_MakatType, lPrevMakat))                
+                    iFirstRow = 1;                                
+           }            
+
+            ImageButton imgAddRekaUp = new ImageButton();
+            imgAddRekaUp.Click += new ImageClickEventHandler(imgAddRekaUp_Click);
+            if ((iFirstRow==1) && (((oMakatType == clKavim.enMakatType.mEmpty)) || (oMakatType == clKavim.enMakatType.mNamak) || ((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0))))
+            {
+                imgAddRekaUp.Attributes.Add("NesiaRekaUp", "1");
+                imgAddRekaUp.Attributes.Add("SdrInd", iSidurIndex.ToString());
+                imgAddRekaUp.Attributes.Add("PeilutInd", e.Row.RowIndex.ToString());
+            }
+            else
+                imgAddRekaUp.Style.Add("visibility", "hidden");
+
+            imgAddRekaUp.CausesValidation = false;
+            imgAddRekaUp.ImageUrl = "~/images/plus.jpg";
+            imgAddRekaUp.ID = "AddRekaUp" + e.Row.ClientID;
+
+            e.Row.Cells[_COL_ADD_NESIA_REKA_UP].Controls.Add(imgAddRekaUp);
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     protected void SetAddNesiaRekaColumn(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, bool bElementHachanatMechona, clKavim.enMakatType oMakatType, int iSidurIndex)
     {
         try
@@ -5330,7 +5787,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             string[] arrKnisaVal;
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
-            int iLastRow =((System.Data.DataRowView)(e.Row.DataItem)).Row.Table.Rows.Count==e.Row.RowIndex+1 ? 1 :0;
+            //int iLastRow =((System.Data.DataRowView)(e.Row.DataItem)).Row.Table.Rows.Count==e.Row.RowIndex+1 ? 1 :0;
             //if (((oMakatType == clKavim.enMakatType.mEmpty)) || (oMakatType == clKavim.enMakatType.mNamak) || ((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)))
             //{
                 //Image imgAddReka = new Image();
