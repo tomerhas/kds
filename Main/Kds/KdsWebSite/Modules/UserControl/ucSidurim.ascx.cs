@@ -1189,7 +1189,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "ריקה למעלה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "למעלה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1198,7 +1198,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "ריקה למטה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header,  "למטה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -2227,7 +2227,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected string AddRekaByXYUP(int iSidurIndex, int iPeilutIndex, ref bool bOpenUpdateBtn)
     {
         long lMakatEnd;
-        long lMakatStart;
+        long lMakatStart=0;
         long lMakat = 0;
         long lCarNum = 0;
         string sScript = "";
@@ -2243,8 +2243,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
          lCarNum = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
         //נמצא את מספר המק"ט הקודם שביניהם תכנס הנסיעה הריקה
         //למעשה במקרה זה מה שחשוב זה האינדקס של הסידור והפעילות של מק"ט ההתחלה
-        lMakatStart = GetMakatStartForReaka(ref iSidurIndex, ref iPeilutIndex);
-        if (lMakatStart == 0)        
+         if (iSidurIndexOrg != 0)
+            lMakatStart = GetMakatStartForReaka(ref iSidurIndex, ref iPeilutIndex);
+
+        if ((lMakatStart == 0) || (iSidurIndexOrg==0))       
             sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";                
         else
         {
@@ -5745,8 +5747,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             int iFirstRow = (e.Row.RowIndex == 0 ? 1 : 0);
             clKavim _Kavim = new clKavim();
             clKavim.enMakatType _MakatType;
-                     
-
+            
             //אם הגענו לפעילות השניה, נבדוק אם את הפעילות הקודמת, אם היא הקודמת היתה הכנת מכונה, נתייחס לנוכחית כאילו היתה ראשונה
             if (e.Row.RowIndex == 1){
                 //נקרא את המק"ט של הפעילות הראשונה
