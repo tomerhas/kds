@@ -1842,61 +1842,61 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
-    [WebMethod(EnableSession = true)]
-    public string AddNesiaReka(int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala, long lMakatStart, long lMakatEnd, string sShatYetiza,
-                               string sPeilutDate, int iMazanTichnun, long lCarNum, string sPeilutShatYetiza)
-    {       
-        DataTable _NesiaDetails;
-        DataTable _Peiluyot;
-        DataRow[] dr;
-        long xPosStart=0;
-        long xPosEnd = 0;
-        clKavim _Kavim = new clKavim();
-        int iResult = 0;
-        long lMakat=0;
-        long lRepresentMakat8=0;
-        DateTime dPeilutShatYetiza = DateTime.Parse(sPeilutDate + " " + sShatYetiza);
+    //[WebMethod(EnableSession = true)]
+    //public string AddNesiaReka(int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala, long lMakatStart, long lMakatEnd, string sShatYetiza,
+    //                           string sPeilutDate, int iMazanTichnun, long lCarNum, string sPeilutShatYetiza)
+    //{       
+    //    DataTable _NesiaDetails;
+    //    DataTable _Peiluyot;
+    //    DataRow[] dr;
+    //    long xPosStart=0;
+    //    long xPosEnd = 0;
+    //    clKavim _Kavim = new clKavim();
+    //    int iResult = 0;
+    //    long lMakat=0;
+    //    long lRepresentMakat8=0;
+    //    DateTime dPeilutShatYetiza = DateTime.Parse(sPeilutDate + " " + sShatYetiza);
         
-        try
-        {
-            dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
+    //    try
+    //    {
+    //        dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(iMazanTichnun);
             
-            _Peiluyot = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + sCardDate);
-            dr = _Peiluyot.Select("makat8=" + lMakatStart);
-            if (dr.Length > 0)
-                xPosStart = String.IsNullOrEmpty(dr[0]["xy_moked_siyum"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_siyum"].ToString());
-            dr = _Peiluyot.Select("makat8=" + lMakatEnd);
-            if (dr.Length > 0)
-                xPosEnd = String.IsNullOrEmpty(dr[0]["xy_moked_tchila"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_tchila"].ToString());
+    //        _Peiluyot = (DataTable)HttpRuntime.Cache.Get(iMisparIshi.ToString() + sCardDate);
+    //        dr = _Peiluyot.Select("makat8=" + lMakatStart);
+    //        if (dr.Length > 0)
+    //            xPosStart = String.IsNullOrEmpty(dr[0]["xy_moked_siyum"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_siyum"].ToString());
+    //        dr = _Peiluyot.Select("makat8=" + lMakatEnd);
+    //        if (dr.Length > 0)
+    //            xPosEnd = String.IsNullOrEmpty(dr[0]["xy_moked_tchila"].ToString()) ? 0 : long.Parse(dr[0]["xy_moked_tchila"].ToString());
 
 
-            _NesiaDetails = _Kavim.GetRekaDetailsByXY(DateTime.Parse(sCardDate), xPosStart, xPosEnd, out iResult);
+    //        _NesiaDetails = _Kavim.GetRekaDetailsByXY(DateTime.Parse(sCardDate), xPosStart, xPosEnd, out iResult);
 
-            //נמצאה ריקה מתאימה
-            if (_NesiaDetails.Rows.Count > 0)
-            {
-                if (iResult == 0)
-                {
-                    lMakat = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["makat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["makat8"].ToString()));
-                    lRepresentMakat8 = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["representmakat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["representmakat8"].ToString()));
-                    if ((lMakat == 0) && (lRepresentMakat8 > 0))
-                        lMakat = lRepresentMakat8;
+    //        //נמצאה ריקה מתאימה
+    //        if (_NesiaDetails.Rows.Count > 0)
+    //        {
+    //            if (iResult == 0)
+    //            {
+    //                lMakat = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["makat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["makat8"].ToString()));
+    //                lRepresentMakat8 = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["representmakat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["representmakat8"].ToString()));
+    //                if ((lMakat == 0) && (lRepresentMakat8 > 0))
+    //                    lMakat = lRepresentMakat8;
 
-                    InsertNesiaRekaToDB(int.Parse(Session["LoginUserEmp"].ToString()), iMisparIshi, sCardDate, iMisparSidur, sSidurShatHatchala, lMakat, lCarNum, dPeilutShatYetiza, sPeilutShatYetiza);
-                    HttpRuntime.Cache.Remove(iMisparIshi.ToString() + DateTime.Parse(sCardDate).ToShortDateString());
-                }
-            }
-            else
-            {
-                iResult = 1;
-            }
-            return iResult.ToString();
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-    }
+    //                InsertNesiaRekaToDB(int.Parse(Session["LoginUserEmp"].ToString()), iMisparIshi, sCardDate, iMisparSidur, sSidurShatHatchala, lMakat, lCarNum, dPeilutShatYetiza, sPeilutShatYetiza);
+    //                HttpRuntime.Cache.Remove(iMisparIshi.ToString() + DateTime.Parse(sCardDate).ToShortDateString());
+    //            }
+    //        }
+    //        else
+    //        {
+    //            iResult = 1;
+    //        }
+    //        return iResult.ToString();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw ex;
+    //    }
+    //}
 
     public void InsertNesiaRekaToDB(int iLoginUser, int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala, long lMakat, long lCarNum, DateTime dPeilutShatYetiza, string sPeilutShatYetiza)
     {
