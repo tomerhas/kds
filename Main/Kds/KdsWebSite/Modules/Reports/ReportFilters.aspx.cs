@@ -184,6 +184,20 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     //Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
 
                     break;
+                //case ReportName.IdkuneyRashemetMasach4:
+                //    Auto_P_MIS_RASHEMET.ContextKey = "6,0133," + CtrlTaarichCa.ToShortDateString(); //kod_natun=6; Erech=0133=רשם
+                //    Shaa.Items[0].Text = "00:01";
+                //    Shaa.Items[0].Value = "00:01";
+                //    dtMisRashemet = oUtils.getMispareiRashamot(6, "0133", CtrlTaarichCa, "");
+                //    if (dtMisRashemet.Rows.Count > 0)
+                //    {
+                //        MisRashamot.Value = ",";
+                //        for (int i = 0; i < dtMisRashemet.Rows.Count; i++)
+                //            MisRashamot.Value = MisRashamot.Value + dtMisRashemet.Rows[i]["MISPAR_ISHI"].ToString() + ",";
+                //    }
+
+                //    break;
+                    
             }
             SetAutoCompleteExtender();
         }
