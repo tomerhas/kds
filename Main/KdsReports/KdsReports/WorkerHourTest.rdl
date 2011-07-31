@@ -15,7 +15,7 @@
         </Field>
         <Field Name="TAARICH">
           <DataField>TAARICH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="STARTTIME">
           <DataField>STARTTIME</DataField>
@@ -43,12 +43,6 @@
         <Field Name="end_realtime">
           <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!ENDTIME_YAEL.Value)</Value>
         </Field>
-        <Field Name="spearTime">
-          <Value>=CDec(iif((Fields!ENDTIME_YAEL.Value &gt; 0) and (Fields!STARTTIME_YAEL.Value &gt; 0 ), Fields!ENDTIME_YAEL.Value - Fields!STARTTIME_YAEL.Value, 0))</Value>
-        </Field>
-        <Field Name="TimeInMinute">
-          <Value>=Code.GetTimeInMinute(Fields!spearTime.Value)</Value>
-        </Field>
       </Fields>
       <Query>
         <DataSourceName>Ds</DataSourceName>
@@ -75,12 +69,6 @@
               <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96342in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.04675in</Width>
-            </TablixColumn>
-            <TablixColumn>
               <Width>0.66134in</Width>
             </TablixColumn>
             <TablixColumn>
@@ -103,7 +91,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>שעות נוספות/חסרות</Value>
+                              <Value>סה"כ</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -117,108 +105,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox25</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox29">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>שעת יציאה </Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <LeftIndent>0cm</LeftIndent>
-                          <HangingIndent>0cm</HangingIndent>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>(יעל תוכנה)</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <LeftIndent>0cm</LeftIndent>
-                          <HangingIndent>0cm</HangingIndent>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox27</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox35">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>שעת כניסה </Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <LeftIndent>0cm</LeftIndent>
-                          <HangingIndent>0cm</HangingIndent>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>(יעל תוכנה)</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <LeftIndent>0cm</LeftIndent>
-                          <HangingIndent>0cm</HangingIndent>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox30</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -369,10 +255,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!spearTime.Value</Value>
+                              <Value>=Fields!DELTA.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>=IIF(Fields!spearTime.Value &gt;= 9 , "Green" , "Red")</Color>
+                                <Color>=IIF(CInt(Mid(Fields!DELTA.Value.ToString(),1,InStr(Fields!DELTA.Value.ToString(),":")-1))&gt;= 9 , "Green" , "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -384,68 +270,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>DELTA</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="MAAMAD3">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!ENDTIME_YAEL.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>MAAMAD</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="WORKDAY3">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!STARTTIME_YAEL.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>WORKDAY</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -560,17 +384,16 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox4">
+                    <Textbox Name="Textbox5">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!spearTime.Value, "DataSet1")</Value>
+                              <Value />
                               <Style>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>=IIF(Fields!spearTime.Value &gt;= 9 , "Green" , "Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -579,70 +402,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox3</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                    <rd:Selected>true</rd:Selected>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox8">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>סה"כ שעות יעל</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox8</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox9">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox9</rd:DefaultName>
+                      <rd:DefaultName>Textbox5</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -758,8 +518,6 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
-            <TablixMember />
-            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -802,10 +560,10 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
-        <Top>1.72833cm</Top>
+        <Top>2.99833cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>14.18836cm</Width>
+        <Width>9.08253cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -835,7 +593,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Left>4.04198cm</Left>
+        <Top>1.5875cm</Top>
+        <Left>0.54948cm</Left>
         <Height>0.635cm</Height>
         <Width>9.54808cm</Width>
         <ZIndex>1</ZIndex>
@@ -853,8 +612,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>0.05194cm</Top>
-        <Left>13.66062cm</Left>
+        <Left>8.87309cm</Left>
         <Height>1.5cm</Height>
         <Width>1.5cm</Width>
         <ZIndex>2</ZIndex>
@@ -900,8 +658,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.70583cm</Top>
-        <Left>4.03049cm</Left>
+        <Top>2.29333cm</Top>
+        <Left>0.53799cm</Left>
         <Height>0.635cm</Height>
         <Width>9.54808cm</Width>
         <ZIndex>4</ZIndex>
@@ -916,7 +674,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>1.55578in</Height>
+    <Height>2.18077in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1042,7 +800,7 @@
         Return Hour
 
     End Function</Code>
-  <Width>6.07028in</Width>
+  <Width>4.15361in</Width>
   <Page>
     <PageFooter>
       <Height>1.29153cm</Height>
@@ -1073,7 +831,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
           <Top>0.08819cm</Top>
-          <Left>6.59695cm</Left>
+          <Left>3.10445cm</Left>
           <Height>0.50271cm</Height>
           <Width>4.41516cm</Width>
           <Style>
@@ -1109,7 +867,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox12</rd:DefaultName>
           <Top>0.62618cm</Top>
-          <Left>4.03049cm</Left>
+          <Left>0.53799cm</Left>
           <Height>0.59972cm</Height>
           <Width>8.8826cm</Width>
           <ZIndex>1</ZIndex>
