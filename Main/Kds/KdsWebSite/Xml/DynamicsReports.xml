@@ -272,8 +272,8 @@
   </Report>
 
   <Report  RdlName="IdkuneyRashemetMasach4" Roles="kds_administrators" FilterByLine="3" PageHeader="מסך 4 - דוח עדכוני רשמת">
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
-      <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32" Required="true">
+      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
     </Filter>
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
