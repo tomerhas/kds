@@ -1670,6 +1670,14 @@ function chkMkt(oRow) {
                    if (_imgAddNesiaReka.childNodes[0].disabled)
                        _imgAddNesiaReka.childNodes[0].src = "../../images/plus-disable.jpg";                                 
                }
+               //reka up
+               _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
+               if (_imgAddNesiaRekaUp.childNodes[0].disabled != undefined) {
+                   if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
+                       _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
+                   if (_imgAddNesiaRekaUp.childNodes[0].disabled)
+                       _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus-disable.jpg";
+               }
 
                if (_imgCancelPeilut.firstChild.disabled!=undefined)
                {

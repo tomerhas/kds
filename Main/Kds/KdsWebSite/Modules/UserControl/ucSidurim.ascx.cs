@@ -2067,15 +2067,54 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         clSidur _Sidur = new clSidur();        
         bool bAddMapa= false;
+        bool bFound = false;
+        GridView _CurrSidur;
+        GridViewRow _CurrPeilut;
+        long lMakat=0;
+        int iMisparKnisa=0;
+
+        clKavim _Kavim = new clKavim();
+        clKavim.enMakatType _MakatType;
+        string[] arrKnisaVal;
+     
         //נחזיר אמת אם הסידור הוא אחרון בכרטיס והוא מסוג נהגות מפה והפעילות היא האחרונה בסידור
+        //או סידור אחרון והפעילות היא לא אחרונה אבל אחריה קיימים רק כניסות וויסותים
         if (iSidurIndex + 1 == _DataSource.Count)
         {
             _Sidur = (clSidur)_DataSource[iSidurIndex];
+            //נבדוק אם סידור מפה נהגות
             if ((!_Sidur.bSidurMyuhad) && (_Sidur.bSidurNahagut))
             {
-                if (iPeilutIndex + 1 == _Sidur.htPeilut.Count)               
-                    //נבדוק אם סידור נהגות
-                    bAddMapa = true;                
+                if (iPeilutIndex + 1 == _Sidur.htPeilut.Count)
+                    bAddMapa = true;
+                else
+                {
+                    _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+
+                    //lMakatEnd = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
+                    //נבדוק את הפעילויות שבאות אחריה, אם יש רק כניסות וויסותים נחזיר אמת
+                    for (int i = iPeilutIndex + 1; i < _Sidur.htPeilut.Count; i++)
+                    {
+                        _CurrPeilut = _CurrSidur.Rows[i];
+                        if (((TextBox)_CurrPeilut.Cells[_COL_MAKAT].Controls[0]).Text != "")
+                            lMakat = long.Parse(((TextBox)_CurrPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
+
+                        //סוג הקו
+                        _MakatType = (clKavim.enMakatType)_Kavim.GetMakatType(lMakat);
+
+                        //כניסות
+                        arrKnisaVal = _CurrPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+                        iMisparKnisa = int.Parse(arrKnisaVal[0]);
+                        //אם מצאנו פעילות שהיא לא כניסה או ויסות, נחזיר false
+                        if ((_MakatType != clKavim.enMakatType.mVisut) && (!(_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
+                        {
+                            bFound = true;
+                            break;
+                        }
+                    }
+                    if (!bFound)
+                        bAddMapa = true;
+                }
             }
         }
         return bAddMapa;
@@ -2152,13 +2191,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private bool FindPeilutInMapa(clSidur _Sidur, clPeilut _Peilut,enRekaMapaDirection _Direction, long lMakat, string sShatYetiza, ref clPeilut _PeilutReka)
     {
         clKavim _Kavim = new clKavim();
-        bool bFound = false;
+        bool bFound = false;        
         int iResult;
         DataSet dsSidurim;       
         int iHour;
         long lMakatTnua=0;
         string sMapHour="";
         int iDirection = 0;
+        clKavim.enMakatType _MakatType;
 
         //נפנה למפה ונבדוק אם קיימת פעילות כמו זו שממנה אנחנו רוצים  להוסיף ריקה(לפי מק"ט ושעת יציאה
         //אם קיימת פעילות זהה, נבדוק שהפעילות העוקבת לה היא ריקה, במידה וכן נחזיר אמת         
@@ -2177,31 +2217,85 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         iDirection = i - 1;
 
                     if ((iDirection) < dsSidurim.Tables[1].Rows.Count)
-                    {   //נבדוק אם הפעילות הבאה היא ריקה
+                    {
+                        //נבדוק אם הפעילות הבאה/הקודמת היא ריקה
                         lMakatTnua = (long.Parse(dsSidurim.Tables[1].Rows[iDirection]["makat8"].ToString()));
-                            bFound = _Kavim.GetMakatType(lMakat) == clKavim.enMakatType.mEmpty.GetHashCode();
-                            sMapHour = dsSidurim.Tables[1].Rows[iDirection]["shaa"].ToString().PadLeft(4, char.Parse("0"));
-                            if (int.Parse(sMapHour.Substring(0, 2)) > 23)
-                                _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala.AddDays(1);
-                            else
-                                _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala;
+                        _MakatType = (clKavim.enMakatType)_Kavim.GetMakatType(lMakatTnua);
+                        bFound = (_MakatType == clKavim.enMakatType.mEmpty);
+                        if (bFound)
+                        {
+                            FillPeilutReka(iDirection, lMakatTnua, dsSidurim,  _Sidur, ref  _PeilutReka);
+                            //sMapHour = dsSidurim.Tables[1].Rows[iDirection]["shaa"].ToString().PadLeft(4, char.Parse("0"));
+                            //if (int.Parse(sMapHour.Substring(0, 2)) > 23)
+                            //    _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala.AddDays(1);
+                            //else
+                            //    _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala;
 
-                            sMapHour = sMapHour.Substring(0, 2) + ":" + sMapHour.Substring(2, 2);
-                            _PeilutReka.sShatYetzia = clGeneral.ConvertFromEggedTime(sMapHour);
-                            _PeilutReka.dFullShatYetzia = DateTime.Parse(_PeilutReka.dFullShatYetzia.ToShortDateString() + " " + _PeilutReka.sShatYetzia);
-                            _PeilutReka.lMakatNesia = lMakatTnua;
-                            _PeilutReka.sMakatDescription = dsSidurim.Tables[1].Rows[iDirection]["teurnesiaa"].ToString();
-                            _PeilutReka.sShilut = dsSidurim.Tables[1].Rows[iDirection]["shilut"].ToString();
-                            _PeilutReka.iMazanTashlum = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantashlum"].ToString());
-                            _PeilutReka.iMazanTichnun = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantichnun"].ToString());
-                            _PeilutReka.iKisuyTor = String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString()) ? 0 : int.Parse(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString());
-                            _PeilutReka.iKisuyTorMap = _PeilutReka.iKisuyTor;
+                            //sMapHour = sMapHour.Substring(0, 2) + ":" + sMapHour.Substring(2, 2);
+                            //_PeilutReka.sShatYetzia = clGeneral.ConvertFromEggedTime(sMapHour);
+                            //_PeilutReka.dFullShatYetzia = DateTime.Parse(_PeilutReka.dFullShatYetzia.ToShortDateString() + " " + _PeilutReka.sShatYetzia);
+                            //_PeilutReka.lMakatNesia = lMakatTnua;
+                            //_PeilutReka.sMakatDescription = dsSidurim.Tables[1].Rows[iDirection]["teurnesiaa"].ToString();
+                            //_PeilutReka.sShilut = dsSidurim.Tables[1].Rows[iDirection]["shilut"].ToString();
+                            //if (!String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["mazantashlum"].ToString()))
+                            //    _PeilutReka.iMazanTashlum = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantashlum"].ToString());
+                            //if (!String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["mazantichnun"].ToString()))
+                            //    _PeilutReka.iMazanTichnun = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["mazantichnun"].ToString());
+                            //_PeilutReka.iKisuyTor = String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString()) ? 0 : int.Parse(dsSidurim.Tables[1].Rows[iDirection]["kisuitor"].ToString());
+                            //_PeilutReka.iKisuyTorMap = _PeilutReka.iKisuyTor;
+                        }
+                        if (_Direction == Modules_UserControl_ucSidurim.enRekaMapaDirection.enUp)
                             break;
+                        else //Down - נבדוק אם הפעילויות שבאות אח"כ הם לא כניסות או ויסותים
+                        {
+                        //אם הפעילות היא כניסה או ויסות, נבדוק את שאר הפעילויות, אם כל הבאות הן ויסותים ו=או כניסות ואח"כ יש ריקה ניקח אותה
+                        if ((_MakatType==clKavim.enMakatType.mVisut) || ((_MakatType==clKavim.enMakatType.mKavShirut) && (int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString())>0)))
+                            for (int j = iDirection + 1; j < dsSidurim.Tables[1].Rows.Count; j++)
+                            {
+                                lMakatTnua = (long.Parse(dsSidurim.Tables[1].Rows[j]["makat8"].ToString()));
+                                _MakatType = (clKavim.enMakatType)_Kavim.GetMakatType(lMakatTnua);
+                                if ((_MakatType != clKavim.enMakatType.mVisut) && (!((_MakatType == clKavim.enMakatType.mKavShirut) && (int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString())) > 0)))
+                                {
+                                    if (_MakatType == clKavim.enMakatType.mEmpty)
+                                    {
+                                        bFound = true;
+                                        FillPeilutReka(j, lMakatTnua, dsSidurim, _Sidur, ref  _PeilutReka);
+                                        break;
+                                    }
+                                    else
+                                        break;
+                                }
+                            }
+                        break;
+                        }
                     }
                 }
             }
         }
         return bFound;
+    }
+    private void FillPeilutReka(int iIndex,long lMakatTnua,DataSet dsSidurim, clSidur _Sidur, ref clPeilut _PeilutReka)
+    {
+        string sMapHour = "";
+
+        sMapHour = dsSidurim.Tables[1].Rows[iIndex]["shaa"].ToString().PadLeft(4, char.Parse("0"));
+        if (int.Parse(sMapHour.Substring(0, 2)) > 23)
+            _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala.AddDays(1);
+        else
+            _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala;
+
+        sMapHour = sMapHour.Substring(0, 2) + ":" + sMapHour.Substring(2, 2);
+        _PeilutReka.sShatYetzia = clGeneral.ConvertFromEggedTime(sMapHour);
+        _PeilutReka.dFullShatYetzia = DateTime.Parse(_PeilutReka.dFullShatYetzia.ToShortDateString() + " " + _PeilutReka.sShatYetzia);
+        _PeilutReka.lMakatNesia = lMakatTnua;
+        _PeilutReka.sMakatDescription = dsSidurim.Tables[1].Rows[iIndex]["teurnesiaa"].ToString();
+        _PeilutReka.sShilut = dsSidurim.Tables[1].Rows[iIndex]["shilut"].ToString();
+        if (!String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iIndex]["mazantashlum"].ToString()))
+            _PeilutReka.iMazanTashlum = int.Parse(dsSidurim.Tables[1].Rows[iIndex]["mazantashlum"].ToString());
+        if (!String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iIndex]["mazantichnun"].ToString()))
+            _PeilutReka.iMazanTichnun = int.Parse(dsSidurim.Tables[1].Rows[iIndex]["mazantichnun"].ToString());
+        _PeilutReka.iKisuyTor = String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iIndex]["kisuitor"].ToString()) ? 0 : int.Parse(dsSidurim.Tables[1].Rows[iIndex]["kisuitor"].ToString());
+        _PeilutReka.iKisuyTorMap = _PeilutReka.iKisuyTor;
     }
     private string AddRekaFromMapa(int iSidurIndex, int iPeilutIndex, enRekaMapaDirection _Direction, 
                                    ref bool bOpenUpdateBtn, ref int iNewPeilutIndex)
