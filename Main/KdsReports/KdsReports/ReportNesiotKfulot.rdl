@@ -29,18 +29,6 @@
           <DataField>MISPAR_SIDUR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHILUT_NETZER">
-          <DataField>SHILUT_NETZER</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_SNIF_AV">
-          <DataField>KOD_SNIF_AV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="SHILUT">
           <DataField>SHILUT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -53,16 +41,20 @@
           <DataField>TEUR_YOM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
+        <Field Name="KOD_EZOR_MIYUN">
+          <DataField>KOD_EZOR_MIYUN</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
+        <Field Name="TEUR_SNIF_AV_MIYUN">
+          <DataField>TEUR_SNIF_AV_MIYUN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR_MIYUN">
+          <DataField>TEUR_EZOR_MIYUN</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TEUR_NESIA">
@@ -1073,8 +1065,8 @@
                           <LayoutDirection>RTL</LayoutDirection>
                           <DataSetName>DsNesiotKfulot</DataSetName>
                           <Top>2.5608cm</Top>
-                          <Height>2.73208cm</Height>
-                          <Width>20.65832cm</Width>
+                          <Height>2.73207cm</Height>
+                          <Width>20.6583cm</Width>
                           <Visibility>
                             <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
                           </Visibility>
@@ -1183,7 +1175,7 @@
         </TablixRowHierarchy>
         <DataSetName>DsNesiotKfulot</DataSetName>
         <Height>5.29288cm</Height>
-        <Width>20.65832cm</Width>
+        <Width>20.65833cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1222,7 +1214,7 @@
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>20.65832cm</Width>
+  <Width>20.65833cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
