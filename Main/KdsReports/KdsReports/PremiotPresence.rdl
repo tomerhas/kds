@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>23.89912cm</Width>
+              <Width>24.00705cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.46643cm</Height>
+              <Height>6.54287cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -755,10 +755,13 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>1.53458cm</Top>
-                          <Left>0.02972cm</Left>
+                          <Top>2.02775cm</Top>
+                          <Left>0.18783cm</Left>
                           <Height>1.62334cm</Height>
                           <Width>23.65255cm</Width>
+                          <Visibility>
+                            <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2055,73 +2058,108 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>3.59833cm</Top>
-                          <Left>0.02972cm</Left>
+                          <Top>3.84328cm</Top>
+                          <Left>0.13066cm</Left>
                           <Height>2.62021cm</Height>
                           <Width>23.62609cm</Width>
                           <ZIndex>1</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
                         </Tablix>
-                        <Subreport Name="SubReportHeader">
-                          <ReportName>GeneralHeader</ReportName>
-                          <Parameters>
-                            <Parameter Name="P_Title">
-                              <Value>="דוח נוכחות לפרמיה "  + reportitems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
-                            </Parameter>
-                          </Parameters>
-                          <Top>0.04164in</Top>
-                          <Left>1.4181in</Left>
-                          <Height>1.2877cm</Height>
-                          <Width>12.45264cm</Width>
+                        <Tablix Name="Tablix1">
+                          <TablixBody>
+                            <TablixColumns>
+                              <TablixColumn>
+                                <Width>2.5cm</Width>
+                              </TablixColumn>
+                            </TablixColumns>
+                            <TablixRows>
+                              <TablixRow>
+                                <Height>0.6cm</Height>
+                                <TablixCells>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Textbox Name="TEUR_PREMIA">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=First(Fields!TEUR_PREMIA.Value)</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style />
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>TEUR_PREMIA</rd:DefaultName>
+                                        <Visibility>
+                                          <Hidden>true</Hidden>
+                                        </Visibility>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                </TablixCells>
+                              </TablixRow>
+                            </TablixRows>
+                          </TablixBody>
+                          <TablixColumnHierarchy>
+                            <TablixMembers>
+                              <TablixMember />
+                            </TablixMembers>
+                          </TablixColumnHierarchy>
+                          <TablixRowHierarchy>
+                            <TablixMembers>
+                              <TablixMember />
+                            </TablixMembers>
+                          </TablixRowHierarchy>
+                          <DataSetName>DsPremiotPresence</DataSetName>
+                          <Top>0.39926cm</Top>
+                          <Left>0.38286cm</Left>
+                          <Height>0.6cm</Height>
+                          <Width>2.5cm</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
-                        </Subreport>
-                        <Textbox Name="Textbox5">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
-                                  <Style>
-                                    <FontSize>14pt</FontSize>
-                                    <Color>Red</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.07591cm</Top>
-                          <Left>2.61459cm</Left>
-                          <Height>0.89104cm</Height>
-                          <Width>15.08548cm</Width>
+                        </Tablix>
+                        <Subreport Name="SubReportHeader2">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="דוח נוכחות לפרמיה " + ReportItems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.15719in</Top>
+                          <Left>1.34271in</Left>
+                          <Height>1.2877cm</Height>
+                          <Width>12.45264cm</Width>
                           <ZIndex>3</ZIndex>
-                          <Visibility>
-                            <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,true ,false)</Hidden>
-                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
                           </Style>
-                        </Textbox>
+                        </Subreport>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -2154,58 +2192,90 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>0.35715cm</Top>
-        <Left>0.14579cm</Left>
-        <Height>6.46643cm</Height>
-        <Width>23.89912cm</Width>
+        <Top>2.67639cm</Top>
+        <Left>0.15831cm</Left>
+        <Height>6.54287cm</Height>
+        <Width>24.00705cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
-      <Tablix Name="Tablix1">
+      <Tablix Name="Tablix2">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>15.35954cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>2.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="TEUR_PREMIA">
-                      <CanGrow>true</CanGrow>
+                    <Rectangle Name="Rectangle2">
+                      <ReportItems>
+                        <Subreport Name="SubReportHeader">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="דוח נוכחות לפרמיה "  + First(Fields!TEUR_PREMIA.Value, "DsPirteyPremiya") + " לחודש " + Parameters!P_PERIOD.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Left>0.1079in</Left>
+                          <Height>1.2877cm</Height>
+                          <Width>12.45264cm</Width>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
+                                  <Style>
+                                    <FontSize>14pt</FontSize>
+                                    <Color>Red</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Top>1.46409cm</Top>
+                          <Left>2.22836cm</Left>
+                          <Height>0.89104cm</Height>
+                          <Width>10.00911cm</Width>
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
                       <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=First(Fields!TEUR_PREMIA.Value)</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>TEUR_PREMIA</rd:DefaultName>
-                      <Visibility>
-                        <Hidden>true</Hidden>
-                      </Visibility>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Textbox>
+                    </Rectangle>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2219,15 +2289,19 @@
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
           <TablixMembers>
-            <TablixMember />
+            <TablixMember>
+              <Group Name="Details1" />
+            </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>0.32187cm</Top>
-        <Left>0.50595cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
+        <DataSetName>DsPirteyPremiya</DataSetName>
+        <Left>1.34043cm</Left>
+        <Height>2.5cm</Height>
+        <Width>15.35954cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,true ,false)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2235,10 +2309,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.76622in</Height>
+    <Height>3.76992in</Height>
     <Style />
   </Body>
-  <Width>9.50413in</Width>
+  <Width>9.59845in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
@@ -2392,6 +2466,52 @@
         <Field Name="NUM">
           <DataField>NUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_PREMIA">
+          <DataField>TEUR_PREMIA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsPirteyPremiya">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KOD_PREMIYA">
+            <Value>=Parameters!P_KOD_PREMIA.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_PIRTEY_PREMIYA</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="KOD_PREMIA">
+          <DataField>KOD_PREMIA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RACHIV_NOCHECHUT">
+          <DataField>KOD_RACHIV_NOCHECHUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PAIL">
+          <DataField>PAIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RACHIV_PREMIA">
+          <DataField>KOD_RACHIV_PREMIA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MEADKEN_ACHARON">
+          <DataField>MEADKEN_ACHARON</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH_IDKUN_ACHARON">
+          <DataField>TAARICH_IDKUN_ACHARON</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="EXCEL_FILE_COLUMN">
+          <DataField>EXCEL_FILE_COLUMN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TEUR_PREMIA">
           <DataField>TEUR_PREMIA</DataField>
