@@ -128,9 +128,6 @@
                       </Paragraphs>
                       <rd:DefaultName>Textbox2</rd:DefaultName>
                       <ZIndex>1</ZIndex>
-                      <Visibility>
-                        <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,true ,false)</Hidden>
-                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -142,7 +139,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>18</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1372,15 +1368,24 @@
               <KeepTogether>true</KeepTogether>
             </TablixMember>
             <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,true ,false)</Hidden>
+              </Visibility>
               <KeepWithGroup>After</KeepWithGroup>
               <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
               <KeepWithGroup>After</KeepWithGroup>
               <RepeatOnNewPage>true</RepeatOnNewPage>
             </TablixMember>
             <TablixMember>
               <Group Name="Details" />
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
@@ -1400,9 +1405,6 @@
         <Top>0.39652cm</Top>
         <Height>4.51666cm</Height>
         <Width>19.34558cm</Width>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true )</Hidden>
-        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
