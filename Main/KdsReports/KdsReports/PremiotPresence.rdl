@@ -2,61 +2,6 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox5">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.78597cm</Top>
-        <Left>3.23821cm</Left>
-        <Height>0.89104cm</Height>
-        <Width>15.08548cm</Width>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,true ,false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Subreport Name="SubReportHeader">
-        <ReportName>GeneralHeader</ReportName>
-        <Parameters>
-          <Parameter Name="P_Title">
-            <Value>="דוח נוכחות לפרמיה "  + reportitems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
-          </Parameter>
-        </Parameters>
-        <Top>0.12672in</Top>
-        <Left>1.68403in</Left>
-        <Height>1.2877cm</Height>
-        <Width>12.45264cm</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Subreport>
       <Tablix Name="Tablix4">
         <TablixBody>
           <TablixColumns>
@@ -66,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>5.44188cm</Height>
+              <Height>6.46643cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -810,8 +755,8 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>0.3175cm</Top>
-                          <Left>0.14739cm</Left>
+                          <Top>1.53458cm</Top>
+                          <Left>0.02972cm</Left>
                           <Height>1.62334cm</Height>
                           <Width>23.65255cm</Width>
                           <Style>
@@ -2110,8 +2055,8 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>2.67229cm</Top>
-                          <Left>0.17385cm</Left>
+                          <Top>3.59833cm</Top>
+                          <Left>0.02972cm</Left>
                           <Height>2.62021cm</Height>
                           <Width>23.62609cm</Width>
                           <ZIndex>1</ZIndex>
@@ -2121,6 +2066,62 @@
                             </Border>
                           </Style>
                         </Tablix>
+                        <Subreport Name="SubReportHeader">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>="דוח נוכחות לפרמיה "  + reportitems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.04164in</Top>
+                          <Left>1.4181in</Left>
+                          <Height>1.2877cm</Height>
+                          <Width>12.45264cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
+                                  <Style>
+                                    <FontSize>14pt</FontSize>
+                                    <Color>Red</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Top>1.07591cm</Top>
+                          <Left>2.61459cm</Left>
+                          <Height>0.89104cm</Height>
+                          <Width>15.08548cm</Width>
+                          <ZIndex>3</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,true ,false)</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -2153,11 +2154,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>2.81051cm</Top>
-        <Left>0.53241cm</Left>
-        <Height>5.44188cm</Height>
+        <Top>0.35715cm</Top>
+        <Left>0.14579cm</Left>
+        <Height>6.46643cm</Height>
         <Width>23.89912cm</Width>
-        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2223,11 +2223,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>2.13995cm</Top>
+        <Top>0.32187cm</Top>
         <Left>0.50595cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2235,10 +2235,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.29747in</Height>
+    <Height>2.76622in</Height>
     <Style />
   </Body>
-  <Width>9.64996in</Width>
+  <Width>9.50413in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
