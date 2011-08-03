@@ -1144,15 +1144,14 @@ a
     border:none;
     border-top: none;
     padding: 0px;
-    padding-top: 0px; 
-   
+    padding-top: 0px;    
 }
 
 .CollapseHeader
 {
  background-color:White;
  color: black;
- font-family:Arial; 
+ font-family:Arial;
  border-top:solid 1px #3F3F3F; 
  border-left:solid 1px #3F3F3F; 
  border-bottom:solid 1px #3F3F3F;
@@ -1243,9 +1242,7 @@ a
 }
 .WCard_GridRow
 {
- background-color :#E1FFE1
- 
- ;
+ background-color :#E1FFE1; 
  padding-right:4px;
  font-size:14px;
  font-family:Arial;
