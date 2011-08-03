@@ -2040,20 +2040,24 @@
   <ReportParameters>
     <ReportParameter Name="P_EZOR">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>1</Value>
+          <Value />
         </Values>
       </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P EZOR</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>05/2009</Value>
+          <Value />
         </Values>
       </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P PERIOD</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_DT">

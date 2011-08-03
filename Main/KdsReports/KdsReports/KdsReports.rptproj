@@ -147,6 +147,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>IdkuneyRashemetMasach4.rdl</Name>
+      <FullPath>IdkuneyRashemetMasach4.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>

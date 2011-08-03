@@ -61,7 +61,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>23.79994cm</Width>
+              <Width>23.89912cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -824,49 +824,52 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.3159cm</Width>
+                                <Width>1.26836cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.19654cm</Width>
+                                <Width>1.149cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.20244cm</Width>
+                                <Width>1.1549cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.29756cm</Width>
+                                <Width>1.25002cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.16403cm</Width>
+                                <Width>1.11649cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.39598cm</Width>
+                                <Width>1.34844cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.05682cm</Width>
+                                <Width>1.00928cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.90564cm</Width>
+                                <Width>0.8581cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.31785cm</Width>
+                                <Width>1.27031cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.95728cm</Width>
+                                <Width>0.90974cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>4.7564cm</Width>
+                                <Width>4.70886cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.32832cm</Width>
+                                <Width>1.28078cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.31589cm</Width>
+                                <Width>1.26835cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.34727cm</Width>
+                                <Width>1.29973cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.02214cm</Width>
+                                <Width>0.75913cm</Width>
+                              </TablixColumn>
+                              <TablixColumn>
+                                <Width>2.9746cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -1378,6 +1381,41 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="Textbox6">
+                                        <CanGrow>true</CanGrow>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value />
+                                                <Style>
+                                                  <FontWeight>Bold</FontWeight>
+                                                </Style>
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Center</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>Textbox6</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>Solid</Style>
+                                          </Border>
+                                          <BackgroundColor>LightGrey</BackgroundColor>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="Textbox253">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -1871,6 +1909,41 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
+                                      <Textbox Name="DAYOFWEEK">
+                                        <KeepTogether>true</KeepTogether>
+                                        <Paragraphs>
+                                          <Paragraph>
+                                            <TextRuns>
+                                              <TextRun>
+                                                <Value>=Fields!DAYOFWEEK.Value</Value>
+                                                <Style />
+                                              </TextRun>
+                                            </TextRuns>
+                                            <Style>
+                                              <TextAlign>Right</TextAlign>
+                                            </Style>
+                                          </Paragraph>
+                                        </Paragraphs>
+                                        <rd:DefaultName>DAYOFWEEK</rd:DefaultName>
+                                        <Style>
+                                          <Border>
+                                            <Color>LightGrey</Color>
+                                            <Style>None</Style>
+                                          </Border>
+                                          <TopBorder>
+                                            <Style>Solid</Style>
+                                          </TopBorder>
+                                          <PaddingLeft>2pt</PaddingLeft>
+                                          <PaddingRight>2pt</PaddingRight>
+                                          <PaddingTop>2pt</PaddingTop>
+                                          <PaddingBottom>2pt</PaddingBottom>
+                                          <Direction>RTL</Direction>
+                                        </Style>
+                                      </Textbox>
+                                    </CellContents>
+                                  </TablixCell>
+                                  <TablixCell>
+                                    <CellContents>
                                       <Textbox Name="TAARICH">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
@@ -1878,7 +1951,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>= Format(Fields!TAARICH.Value,"dd/MM/yyyy") + "  " + Fields!DAYOFWEEK.Value</Value>
+                                                <Value>=Format(Fields!TAARICH.Value,"dd/MM/yyyy")</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1891,8 +1964,14 @@
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
-                                            <Style>Solid</Style>
+                                            <Style>None</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Style>Solid</Style>
+                                          </TopBorder>
+                                          <RightBorder>
+                                            <Style>Solid</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -1986,9 +2065,10 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>3</ColSpan>
+                                      <ColSpan>4</ColSpan>
                                     </CellContents>
                                   </TablixCell>
+                                  <TablixCell />
                                   <TablixCell />
                                   <TablixCell />
                                 </TablixCells>
@@ -1997,6 +2077,7 @@
                           </TablixBody>
                           <TablixColumnHierarchy>
                             <TablixMembers>
+                              <TablixMember />
                               <TablixMember />
                               <TablixMember />
                               <TablixMember />
@@ -2032,7 +2113,7 @@
                           <Top>2.67229cm</Top>
                           <Left>0.17385cm</Left>
                           <Height>2.62021cm</Height>
-                          <Width>23.58006cm</Width>
+                          <Width>23.62609cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -2075,7 +2156,7 @@
         <Top>2.81051cm</Top>
         <Left>0.53241cm</Left>
         <Height>5.44188cm</Height>
-        <Width>23.79994cm</Width>
+        <Width>23.89912cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -2157,7 +2238,7 @@
     <Height>3.29747in</Height>
     <Style />
   </Body>
-  <Width>9.57967in</Width>
+  <Width>9.64996in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>

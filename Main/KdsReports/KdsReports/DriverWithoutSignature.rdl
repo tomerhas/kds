@@ -1698,11 +1698,8 @@
                               <TablixMember>
                                 <Group Name="GrpByEzor">
                                   <GroupExpressions>
-                                    <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
+                                    <GroupExpression>=Fields!EZOR.Value</GroupExpression>
                                   </GroupExpressions>
-                                  <PageBreak>
-                                    <BreakLocation>End</BreakLocation>
-                                  </PageBreak>
                                 </Group>
                                 <SortExpressions>
                                   <SortExpression>
@@ -1741,7 +1738,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <Top>2.28751cm</Top>
-                          <Left>0.05523cm</Left>
+                          <Left>0.05528cm</Left>
                           <Height>3.56325cm</Height>
                           <Width>21.86614cm</Width>
                           <Style>
@@ -1791,9 +1788,12 @@
             <TablixMember>
               <Group Name="Details1">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
+                  <GroupExpression>=Fields!EZOR.Value</GroupExpression>
                   <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>End</BreakLocation>
+                </PageBreak>
               </Group>
             </TablixMember>
           </TablixMembers>
@@ -1801,14 +1801,14 @@
         <DataSetName>DsDriverNotSigned</DataSetName>
         <SortExpressions>
           <SortExpression>
-            <Value>=Fields!TEUR_EZOR.Value</Value>
+            <Value>=Fields!EZOR.Value</Value>
           </SortExpression>
           <SortExpression>
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Top>4.36073cm</Top>
-        <Left>1.32965cm</Left>
+        <Top>3.71729cm</Top>
+        <Left>0.99668cm</Left>
         <Height>5.8942cm</Height>
         <Width>21.92142cm</Width>
         <ZIndex>2</ZIndex>
@@ -1837,17 +1837,17 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>4.30681in</Height>
+    <Height>4.0028in</Height>
     <Style />
   </Body>
   <Width>10.64971in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
-    <LeftMargin>0.3cm</LeftMargin>
-    <RightMargin>0.3cm</RightMargin>
-    <TopMargin>0.3cm</TopMargin>
-    <BottomMargin>0.3cm</BottomMargin>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -1900,6 +1900,10 @@
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TAARICH">
           <DataField>TAARICH</DataField>
