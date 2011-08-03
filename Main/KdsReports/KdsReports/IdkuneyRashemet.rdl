@@ -6,16 +6,87 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.49999cm</Width>
+              <Width>4cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.49999cm</Width>
+              <Width>4cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.07426cm</Width>
+              <Width>5.16787cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
+            <TablixRow>
+              <Height>2.5cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="SubReportHeader">
+                      <ReportName>GeneralHeader</ReportName>
+                      <Parameters>
+                        <Parameter Name="P_Title">
+                          <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   מתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <RightBorder>
+                          <Style>None</Style>
+                        </RightBorder>
+                      </Style>
+                    </Subreport>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
+                              <Style>
+                                <FontSize>14pt</FontSize>
+                                <Color>Red</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <ZIndex>1</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
             <TablixRow>
               <Height>0.6cm</Height>
               <TablixCells>
@@ -36,7 +107,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -71,7 +142,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -108,7 +179,7 @@
                           <LeftIndent>0cm</LeftIndent>
                           <HangingIndent>0cm</HangingIndent>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -145,7 +216,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -176,7 +247,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -207,7 +278,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -241,84 +312,41 @@
               <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,true ,false)</Hidden>
+              </Visibility>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
               <Group Name="Details" />
+              <Visibility>
+                <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
-        <Top>2.73305cm</Top>
-        <Left>3.77507cm</Left>
-        <Height>1.2cm</Height>
-        <Width>9.07424cm</Width>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,false ,true )</Hidden>
-        </Visibility>
+        <Top>0.47625cm</Top>
+        <Height>4.3cm</Height>
+        <Width>13.16787cm</Width>
         <Style>
           <Border>
-            <Style>Solid</Style>
+            <Style>None</Style>
           </Border>
           <TextAlign>Right</TextAlign>
         </Style>
       </Tablix>
-      <Textbox Name="Textbox2">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.87008cm</Top>
-        <Left>3.10183cm</Left>
-        <Height>0.6cm</Height>
-        <Width>9.74748cm</Width>
-        <ZIndex>1</ZIndex>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsIdkuneyRashemet")&gt;0 ,true ,false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Subreport Name="SubReportHeader">
-        <ReportName>GeneralHeader</ReportName>
-        <Parameters>
-          <Parameter Name="P_Title">
-            <Value>= "   עדכוני רשם:   " &amp; Parameters!P_MIS_RASHEMET.Value &amp; "   מתאריך   " &amp; Parameters!P_TAARICH_CA.Value</Value>
-          </Parameter>
-        </Parameters>
-        <Height>1.69369cm</Height>
-        <Width>14.16159cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Subreport>
     </ReportItems>
-    <Height>1.54845in</Height>
+    <Height>2.01294in</Height>
     <Style />
   </Body>
-  <Width>5.60335in</Width>
+  <Width>5.1842in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
