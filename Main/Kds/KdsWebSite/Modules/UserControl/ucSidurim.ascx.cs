@@ -1171,7 +1171,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.AllowSorting = true;
             grdPeiluyot.Width = Unit.Pixel(975);
             grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_AltItemRow";
-            grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"WCard_GridRow";//"GridRow";
+            grdPeiluyot.RowStyle.CssClass = "WCard_AltItemRow";//"WCard_GridRow";//"GridRow";
             grdPeiluyot.ShowFooter = false;
             
             //רווח
@@ -1642,7 +1642,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
 
 
-    long GetMakatStartForReaka(ref int iSidurIndex, ref int iPeilutIndex)
+    long GetMakatStartForReaka(ref long lCarNum, ref int iSidurIndex, ref int iPeilutIndex)
     {
         //הפונקציה מביאה את המק"ט הראשון בין שתי נסיעות שאפשר להכניס ביניהם נסיעה ריקה
         GridView _PrevSidur = new GridView();        
@@ -1712,8 +1712,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         if ((bCanAddReka) && (!sCancelPeilut.Equals("1")))
                         {
                             lMakatStart = long.Parse(((TextBox)_PrevPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
-                            //if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
-                            //    lCarNum = 0;
+                            if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
+                                lCarNum = 0;
                         }
                         else
                         {
@@ -2106,7 +2106,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         arrKnisaVal = _CurrPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
                         iMisparKnisa = int.Parse(arrKnisaVal[0]);
                         //אם מצאנו פעילות שהיא לא כניסה או ויסות, נחזיר false
-                        if ((_MakatType != clKavim.enMakatType.mVisut) && (!(_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
+                        if ((_MakatType != clKavim.enMakatType.mVisut) || (!(_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
                         {
                             bFound = true;
                             break;
@@ -2188,7 +2188,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
-    private bool FindPeilutInMapa(clSidur _Sidur, clPeilut _Peilut,enRekaMapaDirection _Direction, long lMakat, string sShatYetiza, ref clPeilut _PeilutReka)
+    private bool FindPeilutInMapa(clSidur _Sidur, clPeilut _Peilut,enRekaMapaDirection _Direction,
+                                  long lMakat, string sShatYetiza, int iAddDay, ref clPeilut _PeilutReka)
     {
         clKavim _Kavim = new clKavim();
         bool bFound = false;        
@@ -2196,7 +2197,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DataSet dsSidurim;       
         int iHour;
         long lMakatTnua=0;
-        string sMapHour="";
+        int iSidurKnisa = 0;
         int iDirection = 0;
         clKavim.enMakatType _MakatType;
 
@@ -2205,6 +2206,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dsSidurim = _Kavim.GetSidurAndPeiluyotFromTnua(_Sidur.iMisparSidur, DateTime.Parse(_Sidur.dFullShatHatchala.ToShortDateString()), 0, out iResult);
         if (dsSidurim.Tables[1]!=null)
         {
+            if (iAddDay == 1) //היום הבא לכן נחזיר לפורמט של היום הבא בתנועה
+                sShatYetiza = clGeneral.ConvertToEggedTime(sShatYetiza);
             iHour = int.Parse(sShatYetiza.Replace(":", ""));
             for (int i = 0; i < dsSidurim.Tables[1].Rows.Count; i++)
             {
@@ -2248,8 +2251,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             break;
                         else //Down - נבדוק אם הפעילויות שבאות אח"כ הם לא כניסות או ויסותים
                         {
+                            if (!String.IsNullOrEmpty(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString()))
+                                iSidurKnisa = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString());
+
                         //אם הפעילות היא כניסה או ויסות, נבדוק את שאר הפעילויות, אם כל הבאות הן ויסותים ו=או כניסות ואח"כ יש ריקה ניקח אותה
-                        if ((_MakatType==clKavim.enMakatType.mVisut) || ((_MakatType==clKavim.enMakatType.mKavShirut) && (int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString())>0)))
+                        if ((_MakatType==clKavim.enMakatType.mVisut) || ((_MakatType==clKavim.enMakatType.mKavShirut) && (iSidurKnisa>0)))
                             for (int j = iDirection + 1; j < dsSidurim.Tables[1].Rows.Count; j++)
                             {
                                 lMakatTnua = (long.Parse(dsSidurim.Tables[1].Rows[j]["makat8"].ToString()));
@@ -2303,6 +2309,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         string sScript = "";
         string sShatYetiza = "";
         long lMakat = 0;
+        int iAddDay = 0;
         clSidur _Sidur = (clSidur)_DataSource[iSidurIndex];
         clPeilut _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex];
         clPeilut _PeilutReka = new clPeilut();
@@ -2320,10 +2327,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         _GridView = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
         _GridRow = _GridView.Rows[iPeilutIndex];
         sShatYetiza = ((TextBox)_GridRow.Cells[COL_SHAT_YETIZA].Controls[0]).Text;
+
+        if (((TextBox)_GridRow.Cells[COL_DAY_TO_ADD].Controls[0]).Text != String.Empty)
+            iAddDay = int.Parse(((TextBox)_GridRow.Cells[COL_DAY_TO_ADD].Controls[0]).Text);
+
         if (!String.IsNullOrEmpty(((TextBox)_GridRow.Cells[COL_MAKAT].Controls[0]).Text))
             lMakat = long.Parse(((TextBox)_GridRow.Cells[COL_MAKAT].Controls[0]).Text);
 
-        if (FindPeilutInMapa(_Sidur, _Peilut, _Direction, lMakat,  sShatYetiza, ref _PeilutReka))
+        if (FindPeilutInMapa(_Sidur, _Peilut, _Direction, lMakat,  sShatYetiza,iAddDay, ref _PeilutReka))
         {
             OrderedDictionary hashSidurimPeiluyot = DataSource;
             UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
@@ -2355,7 +2366,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //נמצא את מספר המק"ט הקודם שביניהם תכנס הנסיעה הריקה
         //למעשה במקרה זה מה שחשוב זה האינדקס של הסידור והפעילות של מק"ט ההתחלה
          if (iSidurIndexOrg != 0)
-            lMakatStart = GetMakatStartForReaka(ref iSidurIndex, ref iPeilutIndex);
+            lMakatStart = GetMakatStartForReaka(ref lCarNum,ref iSidurIndex, ref iPeilutIndex);
 
         if ((lMakatStart == 0) || (iSidurIndexOrg==0))       
             sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";                
@@ -5709,6 +5720,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.MaxLength = MAX_LEN_ACTUAL_MINTUES;
             oTxt.Width = Unit.Pixel(40);
             oTxt.ID = e.Row.ClientID + "ActualMinutes";
+            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);//int.Parse(e.Row.Cells[_COL_KNISA].Text);
@@ -5987,6 +5999,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
             oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
             oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
+            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
@@ -6073,16 +6086,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             sTargetControlId = oTxt.ID;
             oTxt.MaxLength = MAX_LEN_CAR_NUMBER;
             oTxt.Width = Unit.Pixel(60);
-            //oTxt.Attributes.Add("onclick", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
-
-            //oTxt.Attributes.Add("onkeypress", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
-           // oTxt.Attributes.Add("onkeyup", "CarKeyUp(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
-            //oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            
             oTxt.Attributes.Add("onchange", "SetBtnChanges();");
-            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");
-          //  oTxt.Attributes.Add("onchange", "CopyOtoNum(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ")");
+            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");          
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
+            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
 
             sID = "vldFilCarNum";
@@ -6126,10 +6135,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))
-                    {
+                    if (SetOneError(oTxt, hCell, MisparIshi, CardDate, MisparSidur, _FullOldShatHatchala, dOldShatYetiza, iMisparKnisa, sPeilutKey, "Oto_no"))                   
                         ((TextBox)e.Row.Cells[_COL_PEILUT_STATUS].Controls[0]).Text = enPeilutStatus.enError.GetHashCode().ToString();
-                    }
+                    
                     break;
             }
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
@@ -6167,7 +6175,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
-
+            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
@@ -6282,8 +6290,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(40);
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
-            //AddAttribute(oTxt, "OldV", oTxt.Text);
-         //   AddAttribute(oTxt, "OldTorMapV", e.Row.Cells[_COL_KISUY_TOR_MAP].Text);
+            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             //Add MaskTextBox
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).ID;

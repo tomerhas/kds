@@ -1238,15 +1238,21 @@ a
  padding-right:4px;
  font-size:14px;
  font-family:Arial;
- color:black;
+ font-weight:normal; 
 }
 .WCard_GridRow
 {
  background-color :#E1FFE1; 
  padding-right:4px;
- font-size:14px;
+ font-size:14;
+ font-weight:normal;
  font-family:Arial;
- color:black;
+}
+.WCard_GridRowTextBox
+{
+ font-size :12px;
+ font-family :Arial;
+ font-weight:normal;
 }
 .lstSidurDiv
 {

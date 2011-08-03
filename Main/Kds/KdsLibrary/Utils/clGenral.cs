@@ -1678,6 +1678,31 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                 throw ex;
             }
         }
+        public static string ConvertToEggedTime(string sHour)
+        {
+            string[] arr;
+            int iHour;
+            string sNewHour = sHour;
+            //הפונקציה מקבלת שעה בפורמט 00:00-08:00 ןמחזירה 24:00-32:00
+            try
+            {
+                arr = sHour.Split(char.Parse(":"));
+                if (arr.Length > 1)
+                {
+                    iHour = int.Parse(arr[0]);
+                    if ((iHour >= 0) && (iHour <= 4))
+                    {
+                        iHour = iHour + 24;
+                    }
+                    sNewHour = iHour.ToString() + ":" + arr[1];
+                }
+                return sNewHour;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public static string ConvertFromEggedTime(string sHour)
         {
