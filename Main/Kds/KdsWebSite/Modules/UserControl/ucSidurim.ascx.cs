@@ -1486,7 +1486,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         TextBox _txt;
         clKavim _Kavim= new clKavim();
         string[] arrKnisa;
-
+        string sNextSidurStatus;
         
         _CurrSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
         _NextPeilut = _CurrSidur.Rows[iPeilutIndex];
@@ -1494,7 +1494,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text == string.Empty)
             lCarNum = 0;
         else
-           lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
+            lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
 
         //string sShatYetiza = ((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
         //DateTime dPeilutDate = DateTime.Parse(((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes["OrgDate"] + " " + sShatYetiza);
@@ -1508,15 +1508,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 return 0;
             else
             {
+                //נמצא את הסידור הבא הפעיל
                 while (!bFound)
                 {
-                    if ((_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                        bFound = true;
-                    else
+                    if (_NextSidur != null)
                     {
-                        iSidurIndex = iSidurIndex + 1;
-                        _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                    }
+                        sNextSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;
+                        if (!sNextSidurStatus.Equals("1"))
+                            bFound = true;
+                        else
+                        {
+                            iSidurIndex = iSidurIndex + 1;
+                            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                        }
+                    }                                       
                 }
             }
         }
@@ -1527,7 +1532,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (bLastPeilut)
         {
             iPeilutIndex = 0;
-            _NextPeilut = _NextSidur.Rows[0];
+            if ((_NextSidur != null) && (_NextSidur.Rows.Count > 0))
+                _NextPeilut = _NextSidur.Rows[0];
+            else
+                _NextPeilut = null;
         }
         else
         {
@@ -1583,26 +1591,26 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             else
                                 _NextPeilut = null;
 
-                            if (_NextPeilut == null)
-                            {   //אם הגענו לסוף הסידור נעבור לסידור הבא
-                                iSidurIndex = iSidurIndex + 1;
-                                bFound = false;
-                                _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                                while ((_NextSidur != null) && (!bFound))
-                                {
-                                    if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                                    {
-                                        bFound = true;
-                                        _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
-                                        iPeilutIndex = 0;
-                                    }
-                                    else
-                                    {
-                                        iSidurIndex = iSidurIndex + 1;
-                                        _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                                    }
-                                }
-                            }
+                            //if (_NextPeilut == null)
+                            //{   //אם הגענו לסוף הסידור נעבור לסידור הבא
+                            //    iSidurIndex = iSidurIndex + 1;
+                            //    bFound = false;
+                            //    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                            //    while ((_NextSidur != null) && (!bFound))
+                            //    {
+                            //        if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+                            //        {
+                            //            bFound = true;
+                            //            _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                            //            iPeilutIndex = 0;
+                            //        }
+                            //        else
+                            //        {
+                            //            iSidurIndex = iSidurIndex + 1;
+                            //            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                            //        }
+                            //    }
+                            //}
                         }
                     }
                     else
@@ -1613,26 +1621,26 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         else
                             _NextPeilut = null;
 
-                        if (_NextPeilut == null)
-                        {   //אם הגענו לסוף הסידור נעבור לסידור הבא
-                            iSidurIndex = iSidurIndex + 1;
-                            bFound = false;
-                            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                            while ((_NextSidur != null) && (!bFound))
-                            {
-                                if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                                {
-                                    bFound = true;
-                                    _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
-                                    iPeilutIndex = 0;
-                                }
-                                else
-                                {
-                                    iSidurIndex = iSidurIndex + 1;
-                                    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                                }
-                            }
-                        }
+                        //if (_NextPeilut == null)
+                        //{   //אם הגענו לסוף הסידור נעבור לסידור הבא
+                        //    iSidurIndex = iSidurIndex + 1;
+                        //    bFound = false;
+                        //    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                        //    while ((_NextSidur != null) && (!bFound))
+                        //    {
+                        //        if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+                        //        {
+                        //            bFound = true;
+                        //            _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                        //            iPeilutIndex = 0;
+                        //        }
+                        //        else
+                        //        {
+                        //            iSidurIndex = iSidurIndex + 1;
+                        //            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                        //        }
+                        //    }
+                        //}
                     }
                 
             }
