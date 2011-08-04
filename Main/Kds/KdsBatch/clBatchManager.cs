@@ -8432,9 +8432,12 @@ namespace KdsBatch
                     if (oSidur.dFullShatHatchalaLetashlum.Year < clGeneral.cYearNull)
                         oSidur.sShatHatchalaLetashlum = "";
                 }
-                oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR;
-                oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR;
-                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                if (oSidur.bSidurVisaKodExists)
+                {
+                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR;
+                    oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                }
                 
             }
             catch (Exception ex)
@@ -11225,7 +11228,7 @@ namespace KdsBatch
         private bool Condition8Saif11(DataRow[] drSugSidur, ref clSidur oSidur)
         {
             bool bLoLetashlumAutomati = false;
-            //אם עיסוק העובד מתחיל ב- 5
+   
              // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
             if (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0")
             {

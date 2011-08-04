@@ -2779,8 +2779,8 @@ namespace KdsBatch
 
                 if (fMichsaYomit == 0 && _oGeneralData.GetSugYomLemichsa(_iMisparIshi, dTaarich) == clGeneral.enSugYom.Shishi.GetHashCode())
                 {
-                    if ((_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 120)
-                        fErech = Math.Min(120, fNochehutBeshishi-120);
+                    if ((_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fDakotNochehut > 120)
+                        fErech = Math.Min(120, fDakotNochehut);
                     else if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
                         fErech = Math.Min(240, fDakotNochehut);
                 }
