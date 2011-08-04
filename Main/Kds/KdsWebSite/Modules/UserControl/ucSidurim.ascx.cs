@@ -84,8 +84,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
     public const string NBSP ="&nbsp;";
     public const int _COL_DUMMY =0;
-    public const int _COL_ADD_NESIA_REKA_UP = 1;
-    public const int _COL_ADD_NESIA_REKA = 2;
+    public const int _COL_ADD_NESIA_REKA_UP = 2;
+    public const int _COL_ADD_NESIA_REKA = 1;
     public const int _COL_KISUY_TOR = 3;
     public const int _COL_SHAT_YETIZA = 4;
     public const int _COL_LINE_DESCRIPTION = 5;
@@ -1189,7 +1189,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "למעלה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "למטה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1198,7 +1198,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header,  "למטה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header,  "למעלה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1670,23 +1670,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //הסריקה תתבצע רק עבור הסידור הקודם, אם הוא מבוטל נעבור סידור אחד אחורה
         //אם לא מצאנו לא נמשיך לסידור הקודם
         iSidurIndex = iSidurIndex - 1;
-       
-
-        //_PrevSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
-        //if (_PrevSidur!=null)
-        //   if (_PrevSidur.Rows.Count>0)
-        //        sPrevSidurStatus = ((TextBox)_PrevSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0]).Text;
-
-          
+  
         //נחפש את הסידור הקודם שהוא לא מבוטל 
         sPrevSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;     
         while ((sPrevSidurStatus == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode().ToString()) && (iSidurIndex>=1))//מבוטל
         {
             iSidurIndex = iSidurIndex - 1;
-            sPrevSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;
-            //_PrevSidur = ((GridView)this.FindControl((iSidurIndex).ToString().PadLeft(3, char.Parse("0"))));
-            //if (_PrevSidur != null)
-            //    sPrevSidurStatus = ((TextBox)_PrevSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0]).Text;
+            sPrevSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;          
         }
         if (sPrevSidurStatus!="1")
         {
@@ -1698,7 +1688,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 {
                     iPeilutIndex = _PrevSidur.Rows.Count - 1;
                     _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
-                    while ((_PrevPeilut != null) && (lMakatStart == 0) && (bExists == false) && (sCancelPeilut != "1"))
+                    sCancelPeilut = ((TextBox)(_PrevPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text;
+                    while ((_PrevPeilut != null) && (lMakatStart == 0) && (bExists == false))
                     {
                         try
                         {
@@ -1717,29 +1708,40 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         }
 
                         sCancelPeilut = ((TextBox)(_PrevPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text;
-                        if ((bCanAddReka) && (!sCancelPeilut.Equals("1")))
+                        if (sCancelPeilut.Equals("1")) //אם פעילות מבוטלת, נמשיל הלאה
                         {
-                            lMakatStart = long.Parse(((TextBox)_PrevPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
-                            if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
-                                lCarNum = 0;
+                            iPeilutIndex = iPeilutIndex - 1;
+                            if (iPeilutIndex >= 0)
+                                _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
+                            else
+                                _PrevPeilut = null;
                         }
                         else
                         {
-                            _txt = ((TextBox)(_PrevPeilut.Cells[_COL_MAKAT].Controls[0]));
-                            if ((_txt.Text != String.Empty) && (!sCancelPeilut.Equals("1")))
+                            if (bCanAddReka)
                             {
-                                lMakat = long.Parse(_txt.Text);
-                                arrKnisa = _PrevPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
-                                // 3אלמנט ללא מאפיין 9                   
-                                if (((_Kavim.GetMakatType(lMakat)) == clKavim.enMakatType.mElement.GetHashCode()) && ((arrKnisa[3]) == "0"))
-                                    bExists = true;
-                                else
+                                lMakatStart = long.Parse(((TextBox)_PrevPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
+                                if (lCarNum != long.Parse(((TextBox)_PrevPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
+                                    lCarNum = 0;
+                            }
+                            else
+                            {
+                                _txt = ((TextBox)(_PrevPeilut.Cells[_COL_MAKAT].Controls[0]));
+                                if (_txt.Text != String.Empty)
                                 {
-                                    iPeilutIndex = iPeilutIndex - 1;
-                                    if (iPeilutIndex >= 0)
-                                        _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
+                                    lMakat = long.Parse(_txt.Text);
+                                    arrKnisa = _PrevPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+                                    // 3אלמנט ללא מאפיין 9                   
+                                    if (((_Kavim.GetMakatType(lMakat)) == clKavim.enMakatType.mElement.GetHashCode()) && ((arrKnisa[3]) == "0"))
+                                        bExists = true;
                                     else
-                                        _PrevPeilut = null;
+                                    {
+                                        iPeilutIndex = iPeilutIndex - 1;
+                                        if (iPeilutIndex >= 0)
+                                            _PrevPeilut = _PrevSidur.Rows[iPeilutIndex];
+                                        else
+                                            _PrevPeilut = null;
+                                    }
                                 }
                             }
                         }
