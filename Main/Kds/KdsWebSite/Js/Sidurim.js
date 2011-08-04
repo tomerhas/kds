@@ -1672,13 +1672,19 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if (_imgAddNesiaRekaUp.childNodes[0].disabled != undefined) {
-                   if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
-                       _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
-                   if (_imgAddNesiaRekaUp.childNodes[0].disabled)
-                       _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus-disable.jpg";
+               if (i == 0)//אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
+               {
+                   _imgAddNesiaRekaUp.childNodes[0].disabled = false;
+                   _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus.jpg";
                }
-
+               else {
+                   if (_imgAddNesiaRekaUp.childNodes[0].disabled != undefined) {
+                       if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
+                           _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
+                       if (_imgAddNesiaRekaUp.childNodes[0].disabled)
+                           _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus-disable.jpg";
+                   }
+               }
                if (_imgCancelPeilut.firstChild.disabled!=undefined)
                {
                if (!_imgCancelPeilut.firstChild.disabled){

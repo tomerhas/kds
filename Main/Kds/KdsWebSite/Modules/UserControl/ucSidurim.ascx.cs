@@ -5897,6 +5897,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddRekaUp.Attributes.Add("NesiaRekaUp", "1");
                 imgAddRekaUp.Attributes.Add("SdrInd", iSidurIndex.ToString());
                 imgAddRekaUp.Attributes.Add("PeilutInd", e.Row.RowIndex.ToString());
+                if (iSidurIndex == 0)
+                    imgAddRekaUp.Enabled = true;
             }
             else
                 imgAddRekaUp.Style.Add("visibility", "hidden");
