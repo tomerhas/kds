@@ -1672,7 +1672,8 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if (i == 0)//אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
+               if ((i == 0) && (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1'))))
+               //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;
                    _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus.jpg";
@@ -1707,20 +1708,24 @@ function chkMkt(oRow) {
     }
     //נאפשר הוספת ריקה ממפה תמיד 
     //סידור אחרון בפעילות האחרונה שיש חץ למטה
-    i = i - 1;
-    _Sidur = $get("lstSidurim_lblSidur" + i);
-    _Peilut = $get("lstSidurim_" + padLeft(i,'0',3));
-    if (_Peilut!=null){
-        for (var j = _Peilut.firstChild.childNodes.length-1; j >=0 ; j--) {
-            _imgCancelPeilut = _Peilut.firstChild.childNodes[j].cells[_COL_CANCEL];
-            _imgAddNesiaReka = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA];
-            if ((_imgAddNesiaReka.firstChild.getAttribute("NesiaReka") == "1") && (_imgCancelPeilut.firstChild.value!="1")) {
-                _imgAddNesiaReka.childNodes[0].disabled = false;
-                _imgAddNesiaReka.childNodes[0].src = "../../images/plus.jpg";
-                break;
-            }            
+    //במידה והגענו מעמדת נהג(גם אם הכרטיס הוא ללא התייחסות), או
+    //שלא הגענו מעמדת נהג, אבל רק במידה והכרטיס הוא עם התייחסות
+    if (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1'))){
+        i = i - 1;
+        _Sidur = $get("lstSidurim_lblSidur" + i);
+        _Peilut = $get("lstSidurim_" + padLeft(i, '0', 3));
+        if (_Peilut != null) {
+            for (var j = _Peilut.firstChild.childNodes.length - 1; j >= 0; j--) {
+                _imgCancelPeilut = _Peilut.firstChild.childNodes[j].cells[_COL_CANCEL];
+                _imgAddNesiaReka = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA];
+                if ((_imgAddNesiaReka.firstChild.getAttribute("NesiaReka") == "1") && (_imgCancelPeilut.firstChild.value != "1")){
+                    _imgAddNesiaReka.childNodes[0].disabled = false;
+                    _imgAddNesiaReka.childNodes[0].src = "../../images/plus.jpg";
+                    break;
+                }
+            }
         }
-      }    
+     }
    }
    function chkPitzulHafsaka(iIndex, bUpdateCard){
      var iPitzulHafsaka = $get("lstSidurim_ddlPHfsaka".concat(iIndex)).value;
