@@ -35,6 +35,179 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
+              <Height>2.5cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="SubReportHeader">
+                      <ReportName>GeneralHeader</ReportName>
+                      <Parameters>
+                        <Parameter Name="P_Title">
+                          <Value>= " חפיפה בסידורי ניהול תנועה מ- " &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value)
+&amp; " עד " &amp; Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value)</Value>
+                        </Parameter>
+                      </Parameters>
+                      <ZIndex>4</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                    <ColSpan>9</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.635cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=iif(Parameters!P_EZOR.Value=-1, "  אזור: הכל   ",iif(Parameters!P_EZOR.Value=1,"  אזור: דרום   ",iif(Parameters!P_EZOR.Value=2,"  אזור: צפון   ","  אזור: ירושלים   ")))</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <LeftBorder>
+                          <Style>None</Style>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Style>None</Style>
+                        </RightBorder>
+                        <BackgroundColor>White</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>5</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox19">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=iif(Parameters!P_SNIF.Value=-1, "  סניף: הכל   ","  סניף: " &amp; First(Fields!TEUR_SNIF.Value, "DsSnif") &amp; "  (" &amp; First(Fields!KOD_SNIF_AV.Value, "DsSnif") &amp;")" )</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox19</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Style>None</Style>
+                        </BottomBorder>
+                        <BackgroundColor>White</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>4</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.635cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
+                              <Style>
+                                <FontSize>14pt</FontSize>
+                                <Color>Red</Color>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <ZIndex>3</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>9</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
               <Height>0.86751cm</Height>
               <TablixCells>
                 <TablixCell>
@@ -66,7 +239,7 @@
                           <Style>Double</Style>
                         </BottomBorder>
                         <LeftBorder>
-                          <Style>None</Style>
+                          <Style>Solid</Style>
                         </LeftBorder>
                         <RightBorder>
                           <Style>None</Style>
@@ -414,6 +587,12 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Style>Solid</Style>
+                        </LeftBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -445,6 +624,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -475,6 +657,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -506,6 +691,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -536,6 +724,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <LeftBorder>
                           <Style>Solid</Style>
                         </LeftBorder>
@@ -575,6 +766,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <LeftBorder>
                           <Style>Solid</Style>
                         </LeftBorder>
@@ -611,6 +805,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <LeftBorder>
                           <Style>Solid</Style>
                         </LeftBorder>
@@ -650,6 +847,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <LeftBorder>
                           <Style>Solid</Style>
                         </LeftBorder>
@@ -686,6 +886,9 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <LeftBorder>
                           <Style>Solid</Style>
                         </LeftBorder>
@@ -720,6 +923,21 @@
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember />
+            <TablixMember />
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,true ,false)</Hidden>
+              </Visibility>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
+              <KeepWithGroup>After</KeepWithGroup>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </TablixMember>
             <TablixMember>
               <TablixMembers>
                 <TablixMember>
@@ -729,154 +947,30 @@
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,false ,true)</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <LayoutDirection>RTL</LayoutDirection>
         <DataSetName>DsChafifotSidurim</DataSetName>
-        <Top>3.08364cm</Top>
-        <Height>1.53208cm</Height>
-        <Width>18.13387cm</Width>
+        <Height>5.30208cm</Height>
+        <Width>18.13389cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,false ,true)</Hidden>
         </Visibility>
         <Style>
           <Border>
-            <Style>Solid</Style>
+            <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="Textbox33">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=iif(Parameters!P_SNIF.Value=-1, "  סניף: הכל   ","  סניף: " &amp; First(Fields!TEUR_SNIF.Value, "DsSnif") &amp; "  (" &amp; First(Fields!KOD_SNIF_AV.Value, "DsSnif") &amp;")" )</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox33</rd:DefaultName>
-        <Top>0.63059in</Top>
-        <Left>0.87377in</Left>
-        <Height>0.25in</Height>
-        <Width>3.02892in</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox34">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=iif(Parameters!P_EZOR.Value=-1, "  אזור: הכל   ",iif(Parameters!P_EZOR.Value=1,"  אזור: דרום   ",iif(Parameters!P_EZOR.Value=2,"  אזור: צפון   ","  אזור: ירושלים   ")))</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox33</rd:DefaultName>
-        <Top>0.6167in</Top>
-        <Left>4.06414in</Left>
-        <Height>0.25in</Height>
-        <Width>1.74034in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox3">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>2.30725cm</Top>
-        <Left>2.21937cm</Left>
-        <Height>0.6cm</Height>
-        <Width>9.74748cm</Width>
-        <ZIndex>3</ZIndex>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,true ,false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Subreport Name="SubReportHeader">
-        <ReportName>GeneralHeader</ReportName>
-        <Parameters>
-          <Parameter Name="P_Title">
-            <Value>= " חפיפה בסידורי ניהול תנועה מ- " &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value)
-&amp; " עד " &amp; Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value)</Value>
-          </Parameter>
-        </Parameters>
-        <Top>0.03528cm</Top>
-        <Height>1.49586cm</Height>
-        <Width>18.1339cm</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Subreport>
     </ReportItems>
-    <Height>2.15292in</Height>
+    <Height>2.17884in</Height>
     <Style />
   </Body>
-  <Width>7.22855in</Width>
+  <Width>7.18099in</Width>
   <Page>
     <PageHeight>29.7in</PageHeight>
     <PageWidth>21in</PageWidth>
