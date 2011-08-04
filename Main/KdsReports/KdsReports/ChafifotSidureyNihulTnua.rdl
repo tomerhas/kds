@@ -124,7 +124,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Parameters!P_SNIF.Value=-1, "  סניף: הכל   ","  סניף: " &amp; First(Fields!TEUR_SNIF.Value, "DsSnif") &amp; "  (" &amp; First(Fields!KOD_SNIF_AV.Value, "DsSnif") &amp;")" )</Value>
+                              <Value>=iif(Parameters!P_SNIF.Value=-1, "  סניף: הכל   ","  סניף: " &amp; First(Fields!TEUR_SNIF_AV.Value, "DsChafifotSidurim"))</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
