@@ -101,7 +101,15 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 case ReportName.ReportNesiotKfulot:
                     Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
                     break;
+                //case ReportName.FindWorkerCard:
+                //case ReportName.Presence:
+                //case ReportName.Average:
+                //    ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);
+                //    break;
             }
+            if (TdFilter.FindControl("P_STARTDATE") != null && TdFilter.FindControl("P_STARTDATE").GetType().Name == "TextBox")
+                ((TextBox)TdFilter.FindControl("P_STARTDATE")).TextChanged += new EventHandler(EndDate_OnChanged);
+                 
         }
         catch (Exception ex)
         {
@@ -129,7 +137,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                     if (!Page.IsPostBack)
                     {
                         CtrlStartDate = "01/" + DateTime.Now.ToString("MM/yyyy");
-                        CtrlEndDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
+                        CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");// DateTime.Parse("01/" + DateTime.Now.AddMonths(1).ToString("MM/yyyy")).AddDays(-1).ToString("dd/MM/yyyy");
                     }
                     SetWorkerViewLevel();
                     break;
@@ -160,28 +168,23 @@ public partial class Modules_Reports_ReportFilters : KdsPage
 
                     break;
                 case ReportName.HityazvutBePundakimHitchashbenut:
-                    if (!Page.IsPostBack)
-                    {
-                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
-                        CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
-                    }
-                    break;
                 case ReportName.HityazvutBePundakimTlunot:
                 case ReportName.HityazvutBePundakimKalkalit:
-                    if (!Page.IsPostBack)
-                    {
-                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
-                        CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
-                    }
-                    break;
                 case ReportName.ChafifotSidureyNihulTnua:
                 case ReportName.ReportNesiotKfulot:
                     if (!Page.IsPostBack)
                     {
-                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
-                        CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+                        CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                        CtrlEndDate = DateTime.Now.ToString("dd/MM/yyyy");
                     }
-                    //Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
+                    break;
+                
+                    //if (!Page.IsPostBack)
+                    //{
+                    //    CtrlStartDate = DateTime.Parse("01/" + DateTime.Now.AddMonths(-1).Month + "/" + DateTime.Now.Year).ToString("dd/MM/yyyy");
+                    //    CtrlEndDate = DateTime.Parse(CtrlStartDate).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+                    //}
+                    ////Region.SelectedIndexChanged += new EventHandler(ddlEzor_SelectedIndexChanged);
 
                     break;
                 //case ReportName.IdkuneyRashemetMasach4:
@@ -245,6 +248,24 @@ public partial class Modules_Reports_ReportFilters : KdsPage
         }
     }
 
+    private void EndDate_OnChanged(object sender, EventArgs e)
+    {
+        DateTime tarMe;
+        try
+        {
+            if (CtrlStartDate != "")
+            {
+                tarMe =  DateTime.Parse(CtrlStartDate);
+                if (tarMe >= DateTime.Parse("01/" + DateTime.Now.ToString("MM/yyyy")))
+                    CtrlEndDate =  DateTime.Now.ToString("dd/MM/yyyy");
+                else CtrlEndDate = DateTime.Parse("01/" + tarMe.ToString("MM/yyyy")).AddMonths(1).AddDays(-1).ToString("dd/MM/yyyy");
+            }
+        }
+        catch (Exception ex)
+        {
+            KdsLibrary.clGeneral.BuildError(Page, ex.Message, true);
+        }
+    }
     private void ddlEzor_SelectedIndexChanged(object sender, EventArgs e)
     {
         DataTable dt = new DataTable();

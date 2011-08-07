@@ -193,7 +193,7 @@
         }
 
         function IsAlowedDate(sender, args) {
-          //  debugger
+        // debugger
             var CurrentObj = sender.controltovalidate;
             var chodesh_me = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
             var FromDate = new Date(Number(chodesh_me[2]), Number(chodesh_me[1] - 1), Number(chodesh_me[0]), '00', '00', '00');
@@ -206,14 +206,27 @@
             today.setSeconds(0);
             today.setMilliseconds(0);
 
-            if (FromDate.getTime() < today.getTime())
+            if (FromDate.getTime() < today.getTime()) 
                 args.IsValid = false;
             else {
                 args.IsValid = true;
 //                if (mis != "")
 //                    checkRashemet(mis, args);
             }
+        }
 
+        function IsAlowedEndDate(sender, args) {
+            //  debugger
+            var CurrentObj = sender.controltovalidate;
+            var chodesh_ad = document.getElementById(CurrentObj).value.split('/'); //ValidatorName.substr(0, ValidatorName.length - 2) + "ME").value;
+            var AdDate = new Date(Number(chodesh_ad[2]), Number(chodesh_ad[1] - 1), Number(chodesh_ad[0]), '00', '00', '00');
+            var today = new Date();
+
+            if (AdDate > today)
+                args.IsValid = false;
+            else {
+                args.IsValid = true;
+            }
         }
     </script>
 

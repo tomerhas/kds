@@ -30,6 +30,7 @@
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter   ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true"  >
+      <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidIshurimAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter  ParameterName="P_KOD_ISHUR" Caption="מקרה לאישור" BoxeType="DropDown" DataType="System.Int32" >
@@ -51,11 +52,12 @@
     </Filter>
   </Report>
     <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="4" PageHeader="איתור כרטיס עבודה" Orientation="Landscape" ProductionType="Heavy">
-      <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005" Required="true">
+      <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005"  RunAtServer="true" Required="true">
         <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
         <FilterValidator ValidatorName="ValidFindMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
       </Filter> 
-    <Filter  ClassName="כללי" ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" >
+    <Filter  ClassName="כללי" ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidFindAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter  ClassName="כללי" ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
@@ -82,11 +84,12 @@
       </Filter>
   </Report>
   <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" IsParent="false" Required="true">
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidPresenceMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
-    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" IsParent="false" >
+    <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true">
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidPresenceAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter> 
     <Filter  ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
@@ -280,12 +283,12 @@
         <ParameterOfFunction Type="ByValue" Value="DisregardDrivers" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
-      </DropDownList>
+      </DropDownList> 
     </Filter>  
   </Report>
   
   <Report  RdlName="Average" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים וסיכומים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מחודש " BoxeType="DropDown" DataType="System.String"  >
+    <Filter ParameterName="P_STARTDATE" Caption="מחודש " BoxeType="DropDown"  RunAtServer="true" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
@@ -299,6 +302,7 @@
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
       </DropDownList>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
@@ -339,6 +343,7 @@
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
       </DropDownList>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
     <Filter ParameterName="P_COMPANYID" Caption="קוד חברה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_CompanyId" ValueField="Kod_Hevra" TextField="Teur_Hevra" />
@@ -347,25 +352,27 @@
   </Report>
 
   <Report  RdlName="HityazvutBePundakimHitchashbenut" Roles="kds_administrators" FilterByLine="2" PageHeader="התייצבות בפונדקים - התחשבנות" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  Required="true" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true"  Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidHityazvutMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidHityazvutAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
   </Report>
 
   <Report  RdlName="HityazvutBePundakimTlunot" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - תלונות" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidTlunotMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidTlunotAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter  ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
@@ -374,13 +381,14 @@
     </Filter>
   </Report>
   <Report  RdlName="HityazvutBePundakimKalkalit" Roles="kds_administrators" FilterByLine="3" PageHeader="התייצבות בפונדקים - כלכלית" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="יש להזין תאריך מ קטן מתאריך עד" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidKalkalitMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidKalkalitAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter  ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
@@ -404,12 +412,13 @@
   </Resources>
                       
   <Report  RdlName="ChafifotSidureyNihulTnua" Roles="kds_administrators" FilterByLine="3" PageHeader="חפיפות בסידורי ניהול תנועה" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidChafifotMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidChafifotAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32">
@@ -421,12 +430,13 @@
   </Report>
 
   <Report  RdlName="ReportNesiotKfulot" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נסיעות כפולות " ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime" Required="true" >
+    <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar"  DataType="System.DateTime"  RunAtServer="true" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichMe" ErrorMessageValidator="יש להזין תאריך מ" ValidationFunction="IsEmpty"/>
       <FilterValidator ValidatorName="ValidKfulotMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
     <Filter ParameterName="P_ENDDATE" Caption="עד תאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true" >
       <FilterValidator ValidatorName="ValidateTaarichAd" ErrorMessageValidator="יש להזין תאריך עד" ValidationFunction="IsEmpty"/>
+      <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
       <!--<FilterValidator ValidatorName="ValidKfulotAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown"   RunAtServer="true"  DataType="System.Int32">
