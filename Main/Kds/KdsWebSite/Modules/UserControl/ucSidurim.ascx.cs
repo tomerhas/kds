@@ -2213,7 +2213,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //נפנה למפה ונבדוק אם קיימת פעילות כמו זו שממנה אנחנו רוצים  להוסיף ריקה(לפי מק"ט ושעת יציאה
         //אם קיימת פעילות זהה, נבדוק שהפעילות העוקבת לה היא ריקה, במידה וכן נחזיר אמת         
-        dsSidurim = _Kavim.GetSidurAndPeiluyotFromTnua(_Sidur.iMisparSidur, DateTime.Parse(_Sidur.dFullShatHatchala.ToShortDateString()), 0, out iResult);
+        dsSidurim = _Kavim.GetSidurAndPeiluyotFromTnua(_Sidur.iMisparSidur, DateTime.Parse(_Sidur.dSidurDate.ToShortDateString()), 0, out iResult);
         if (dsSidurim.Tables[1]!=null)
         {
             if (iAddDay == 1) //היום הבא לכן נחזיר לפורמט של היום הבא בתנועה
