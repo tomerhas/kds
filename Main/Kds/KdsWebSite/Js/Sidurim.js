@@ -1632,7 +1632,9 @@ function chkMkt(oRow) {
    function EnabledSidurimListBtn(bDisabled){
      var _Sidur, _ImgPeilut,_imgCancel,_imgCancelPeilut;
      var i=0;
-     
+     var dId = $get("txtId").value;
+     var GoremMEasger = $get("hidGoremMeasher").value;
+
      _Sidur = $get("lstSidurim_lblSidur" + i);
      while  (_Sidur!=null){
         _ImgPeilut = $get("lstSidurim_imgAddPeilut" + i);
@@ -1672,7 +1674,9 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if ((i == 0) && (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1'))))
+               if ((i == 0) && (($get("hidDriver").value == '1') ||
+                 (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1')))
+                 || (GoremMEasger == dId))
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;
@@ -1710,7 +1714,11 @@ function chkMkt(oRow) {
     //סידור אחרון בפעילות האחרונה שיש חץ למטה
     //במידה והגענו מעמדת נהג(גם אם הכרטיס הוא ללא התייחסות), או
     //שלא הגענו מעמדת נהג, אבל רק במידה והכרטיס הוא עם התייחסות
-    if (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1'))){
+    // גם אם הכרטיס הוא ללא התייחסות)או שמספר האישי של הכרטיס שווה לגורם שפתח את הכרטיס
+   
+    if (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+        && ($get("hidDriver").value != '1'))
+        || (GoremMEasger == dId)) {
         i = i - 1;
         _Sidur = $get("lstSidurim_lblSidur" + i);
         _Peilut = $get("lstSidurim_" + padLeft(i, '0', 3));
