@@ -5343,12 +5343,15 @@ namespace KdsBatch
                         fErech = float.Parse(_drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString()); // float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
-                        
-                        CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
-                       
-                        fZmanAruchatBoker += fZmanAruchatBokerSidur;
-                        fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
-                        fZmanAruchatErev += fZmanAruchatErevSidur;
+
+                        if (!clCalcData.CheckYomShishi(clCalcData.iSugYom))
+                        {
+                            CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
+
+                            fZmanAruchatBoker += fZmanAruchatBokerSidur;
+                            fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
+                            fZmanAruchatErev += fZmanAruchatErevSidur;
+                        }
 
                     }
                 }

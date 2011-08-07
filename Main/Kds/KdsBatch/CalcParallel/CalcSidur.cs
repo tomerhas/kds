@@ -5522,11 +5522,14 @@ namespace KdsBatch
 
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
-                        CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
+                        if (!oCalcBL.CheckYomShishi(objOved.SugYom))
+                        {
+                            CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
 
-                        fZmanAruchatBoker += fZmanAruchatBokerSidur;
-                        fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
-                        fZmanAruchatErev += fZmanAruchatErevSidur;
+                            fZmanAruchatBoker += fZmanAruchatBokerSidur;
+                            fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
+                            fZmanAruchatErev += fZmanAruchatErevSidur;
+                        }
 
                     }
                 }
@@ -5632,11 +5635,14 @@ namespace KdsBatch
 
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
-                        CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
+                        if (!oCalcBL.CheckYomShishi(objOved.SugYom))
+                        {
+                            CalcZmaneyAruchot(dShatHatchalaLetaslum, dShatGmarLetashlum, out fZmanAruchatBokerSidur, out fZmanAruchatTzharimSidur, out fZmanAruchatErevSidur);
 
-                        fZmanAruchatBoker += fZmanAruchatBokerSidur;
-                        fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
-                        fZmanAruchatErev += fZmanAruchatErevSidur;
+                            fZmanAruchatBoker += fZmanAruchatBokerSidur;
+                            fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
+                            fZmanAruchatErev += fZmanAruchatErevSidur;
+                        }
 
                     }
                 }
