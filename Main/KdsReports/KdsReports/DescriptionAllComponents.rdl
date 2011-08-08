@@ -1,349 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsComponents">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>aee22b9f-cb3e-4bd8-b79b-76da79341f20</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsNetunim">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD_HR">
-          <DataField>TEUR_MAAMAD_HR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsComponents</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETDESCRIPTIONCOMPONENTS</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_COMPANYID">
-            <Value>=Parameters!P_COMPANYID.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Rectangle Name="Rectangle2">
-        <ReportItems>
-          <Textbox Name="Textbox231">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>מחודש:</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>Underline</TextDecoration>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Left>15.20805cm</Left>
-            <Height>0.42333cm</Height>
-            <Width>1.4552cm</Width>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox232">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!P_STARTDATE.Value</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <LeftIndent>0cm</LeftIndent>
-                <HangingIndent>0cm</HangingIndent>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Left>11.90957cm</Left>
-            <Height>0.42333cm</Height>
-            <Width>2.96334cm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox227">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>עד חודש:</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>Underline</TextDecoration>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Left>9.00599cm</Left>
-            <Height>0.42333cm</Height>
-            <Width>2.24895cm</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox228">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Parameters!P_ENDDATE.Value</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <LeftIndent>0cm</LeftIndent>
-                <HangingIndent>0cm</HangingIndent>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Left>5.01077cm</Left>
-            <Height>0.42333cm</Height>
-            <Width>3.88938cm</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox229">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>חברה:</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <TextDecoration>Underline</TextDecoration>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <LeftIndent>0cm</LeftIndent>
-                <HangingIndent>0cm</HangingIndent>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Left>3.10444cm</Left>
-            <Height>0.42333cm</Height>
-            <Width>1.29645cm</Width>
-            <ZIndex>4</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox230">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=iif(Parameters!P_COMPANYID.Value=580,"אגד",iif(Parameters!P_COMPANYID.Value=4895,"אגד תעבורה","אגד, אגד תעבורה"))</Value>
-                    <Style>
-                      <FontWeight>Bold</FontWeight>
-                      <Language>he-IL</Language>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox223</rd:DefaultName>
-            <Top>0.46771cm</Top>
-            <Height>0.42333cm</Height>
-            <Width>2.96333cm</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-              <Direction>RTL</Direction>
-            </Style>
-          </Textbox>
-          <Textbox Name="Textbox3">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
-                    <Style>
-                      <FontSize>14pt</FontSize>
-                      <Color>Red</Color>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Right</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>1.36411cm</Top>
-            <Left>3.56197cm</Left>
-            <Height>0.6cm</Height>
-            <Width>9.74748cm</Width>
-            <ZIndex>6</ZIndex>
-            <Visibility>
-              <Hidden>=iif(CountRows("dsNetunim")&gt;0 ,true ,false)</Hidden>
-            </Visibility>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-        </ReportItems>
-        <KeepTogether>true</KeepTogether>
-        <Top>1.94182cm</Top>
-        <Left>0.62183cm</Left>
-        <Height>2.12661cm</Height>
-        <Width>16.87142cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Rectangle>
       <Tablix Name="Tablix18">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>6.61242in</Width>
+              <Width>16.66525cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>1.51307in</Height>
+              <Height>4.98967cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -353,12 +21,12 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>6.53125in</Width>
+                                <Width>16.58938cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>1.4068in</Height>
+                                <Height>3.28223cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -368,15 +36,15 @@
                                             <TablixBody>
                                               <TablixColumns>
                                                 <TablixColumn>
-                                                  <Width>1.25033in</Width>
+                                                  <Width>3.17584cm</Width>
                                                 </TablixColumn>
                                                 <TablixColumn>
-                                                  <Width>1.68964in</Width>
+                                                  <Width>4.29169cm</Width>
                                                 </TablixColumn>
                                               </TablixColumns>
                                               <TablixRows>
                                                 <TablixRow>
-                                                  <Height>0.23622in</Height>
+                                                  <Height>0.6cm</Height>
                                                   <TablixCells>
                                                     <TablixCell>
                                                       <CellContents>
@@ -455,7 +123,7 @@
                                                   </TablixCells>
                                                 </TablixRow>
                                                 <TablixRow>
-                                                  <Height>0.23622in</Height>
+                                                  <Height>0.6cm</Height>
                                                   <TablixCells>
                                                     <TablixCell>
                                                       <CellContents>
@@ -533,7 +201,10 @@
                                             </TablixColumnHierarchy>
                                             <TablixRowHierarchy>
                                               <TablixMembers>
-                                                <TablixMember />
+                                                <TablixMember>
+                                                  <KeepWithGroup>After</KeepWithGroup>
+                                                  <RepeatOnNewPage>true</RepeatOnNewPage>
+                                                </TablixMember>
                                                 <TablixMember>
                                                   <Group Name="Details2">
                                                     <GroupExpressions>
@@ -544,7 +215,7 @@
                                               </TablixMembers>
                                             </TablixRowHierarchy>
                                             <DataSetName>dsNetunim</DataSetName>
-                                            <Top>2.08223cm</Top>
+                                            <Top>1.9411cm</Top>
                                             <Left>3.84118cm</Left>
                                             <Height>1.2cm</Height>
                                             <Width>7.46752cm</Width>
@@ -602,7 +273,7 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox145</rd:DefaultName>
-                                            <Top>0.77639cm</Top>
+                                            <Top>0.63527cm</Top>
                                             <Left>0.23812cm</Left>
                                             <Height>0.6cm</Height>
                                             <Width>16.21896cm</Width>
@@ -692,7 +363,7 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox144</rd:DefaultName>
-                                            <Top>0.21168cm</Top>
+                                            <Top>0.07056cm</Top>
                                             <Left>0.23812cm</Left>
                                             <Height>0.6cm</Height>
                                             <Width>16.21896cm</Width>
@@ -825,7 +496,7 @@
                                               </Paragraph>
                                             </Paragraphs>
                                             <rd:DefaultName>Textbox145</rd:DefaultName>
-                                            <Top>1.37639cm</Top>
+                                            <Top>1.23527cm</Top>
                                             <Left>0.23812cm</Left>
                                             <Height>0.6cm</Height>
                                             <Width>16.21896cm</Width>
@@ -873,9 +544,9 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>dsNetunim</DataSetName>
-                          <Top>0.1625cm</Top>
-                          <Left>0.20617cm</Left>
-                          <Height>3.57327cm</Height>
+                          <Top>1.70744cm</Top>
+                          <Left>0.07587cm</Left>
+                          <Height>3.28223cm</Height>
                           <Width>16.58938cm</Width>
                           <Style>
                             <Border>
@@ -883,8 +554,204 @@
                             </Border>
                           </Style>
                         </Tablix>
+                        <Subreport Name="SubReportHeader2">
+                          <ReportName>GeneralHeader</ReportName>
+                          <Parameters>
+                            <Parameter Name="P_Title">
+                              <Value>דוח פירוט כל הרכיבים</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.02139cm</Top>
+                          <Left>0.07587cm</Left>
+                          <Height>1.08634cm</Height>
+                          <Width>16.45708cm</Width>
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Textbox Name="Textbox237">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!P_STARTDATE.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21356cm</Top>
+                          <Left>11.19786cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>2.96334cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox238">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>עד חודש:</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>Underline</TextDecoration>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21356cm</Top>
+                          <Left>8.29428cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>2.24895cm</Width>
+                          <ZIndex>3</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox239">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!P_ENDDATE.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21356cm</Top>
+                          <Left>4.29906cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>3.88938cm</Width>
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox240">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>חברה:</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>Underline</TextDecoration>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21356cm</Top>
+                          <Left>2.39273cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>1.29645cm</Width>
+                          <ZIndex>5</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox242">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>מחודש:</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>Underline</TextDecoration>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21356cm</Top>
+                          <Left>14.26703cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>1.37582cm</Width>
+                          <ZIndex>6</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
                       </ReportItems>
-                      <KeepTogether>true</KeepTogether>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -909,43 +776,361 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsNetunim</DataSetName>
-        <Top>4.08232cm</Top>
-        <Left>0.62183cm</Left>
-        <Height>3.8432cm</Height>
-        <Width>16.79555cm</Width>
-        <ZIndex>1</ZIndex>
+        <Top>3.57786cm</Top>
+        <Left>0.04524cm</Left>
+        <Height>4.98967cm</Height>
+        <Width>16.66525cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
-      <Subreport Name="SubReportHeader">
-        <ReportName>GeneralHeader</ReportName>
-        <Parameters>
-          <Parameter Name="P_Title">
-            <Value>דוח פירוט כל הרכיבים</Value>
-          </Parameter>
-        </Parameters>
-        <Left>0.62183cm</Left>
-        <Height>1.80071cm</Height>
-        <Width>16.79555cm</Width>
-        <ZIndex>2</ZIndex>
+      <Rectangle Name="Rectangle1">
+        <ReportItems>
+          <Textbox Name="Textbox233">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!P_STARTDATE.Value</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <LeftIndent>0cm</LeftIndent>
+                <HangingIndent>0cm</HangingIndent>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.9771cm</Top>
+            <Left>10.87238cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>2.96334cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox234">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>עד חודש:</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <TextDecoration>Underline</TextDecoration>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.9771cm</Top>
+            <Left>8.154cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>2.24895cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox235">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Parameters!P_ENDDATE.Value</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <LeftIndent>0cm</LeftIndent>
+                <HangingIndent>0cm</HangingIndent>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.9771cm</Top>
+            <Left>4.15879cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>3.88938cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox236">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>חברה:</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <TextDecoration>Underline</TextDecoration>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <LeftIndent>0cm</LeftIndent>
+                <HangingIndent>0cm</HangingIndent>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.94182cm</Top>
+            <Left>2.38475cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>1.29645cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox4">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>2.57682cm</Top>
+            <Left>3.13332cm</Left>
+            <Height>0.6cm</Height>
+            <Width>9.74748cm</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=iif(CountRows() &gt; 0, True, False)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Subreport Name="SubReportHeader">
+            <ReportName>GeneralHeader</ReportName>
+            <Parameters>
+              <Parameter Name="P_Title">
+                <Value>דוח פירוט כל הרכיבים</Value>
+              </Parameter>
+            </Parameters>
+            <Left>0.16225cm</Left>
+            <Height>1.80071cm</Height>
+            <Width>16.36272cm</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Textbox Name="Textbox241">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>מחודש:</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <TextDecoration>Underline</TextDecoration>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.9771cm</Top>
+            <Left>13.94155cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>1.37582cm</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.143cm</Top>
+        <Left>0.05322cm</Left>
+        <Height>3.29375cm</Height>
+        <Width>16.52497cm</Width>
+        <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CountRows() &gt; 0, True, False)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
-      </Subreport>
+      </Rectangle>
     </ReportItems>
-    <Height>3.12028in</Height>
+    <Height>3.37304in</Height>
     <Style />
   </Body>
+  <Width>6.57893in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.5cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0.5cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsComponents">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>aee22b9f-cb3e-4bd8-b79b-76da79341f20</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsNetunim">
+      <Query>
+        <DataSourceName>DsComponents</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_COMPANYID">
+            <Value>=Parameters!P_COMPANYID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETDESCRIPTIONCOMPONENTS</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD_HR">
+          <DataField>TEUR_MAAMAD_HR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>String</DataType>
@@ -988,17 +1173,6 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.03472in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
-    <RightMargin>0.5cm</RightMargin>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.5cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -1008,6 +1182,6 @@ vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANk
 FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>e040eb33-9282-418b-a72c-54e1a8f857ce</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>e040eb33-9282-418b-a72c-54e1a8f857ce</rd:ReportID>
 </Report>
