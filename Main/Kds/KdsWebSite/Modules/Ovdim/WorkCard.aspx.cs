@@ -485,6 +485,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (!Page.IsPostBack)
                     {
                         btnUpdateCard.Attributes.Add("disabled", "true");
+                        hidUpdateBtn.Value = "true";
                         BindTachograph();
                         SetLookUpDDL();
                         ShowOvedCardDetails(iMisparIshi, dDateCard);
@@ -2498,7 +2499,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     void lstSidurim_btnHandler(string strValue, bool bOpenUpdateBtn)
     {
         bInpuDataResult = true;
-        if (bOpenUpdateBtn)
+        if ((bOpenUpdateBtn) ||  (hidUpdateBtn.Value == "false"))
         {
             string sScript = "SetBtnChanges();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "OpenUpdBtn", sScript, true);

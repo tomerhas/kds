@@ -1674,9 +1674,9 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if ((i == 0) && (($get("hidDriver").value == '1') ||
+               if (($get("tbSidur").disabled==false) && (i == 0) && ((($get("hidDriver").value == '1') ||
                  (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1')))
-                 || (GoremMEasger == dId))
+                 || (GoremMEasger == dId)))
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;
@@ -1715,10 +1715,10 @@ function chkMkt(oRow) {
     //במידה והגענו מעמדת נהג(גם אם הכרטיס הוא ללא התייחסות), או
     //שלא הגענו מעמדת נהג, אבל רק במידה והכרטיס הוא עם התייחסות
     // גם אם הכרטיס הוא ללא התייחסות)או שמספר האישי של הכרטיס שווה לגורם שפתח את הכרטיס
-   
-    if (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+
+    if (($get("tbSidur").disabled == false) && (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
         && ($get("hidDriver").value != '1'))
-        || (GoremMEasger == dId)) {
+        || (GoremMEasger == dId))) {
         i = i - 1;
         _Sidur = $get("lstSidurim_lblSidur" + i);
         _Peilut = $get("lstSidurim_" + padLeft(i, '0', 3));

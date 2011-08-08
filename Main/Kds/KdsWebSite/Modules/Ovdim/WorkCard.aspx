@@ -549,6 +549,7 @@
     <input type="hidden" runat="server" id="hidFromEmda" />  
     <input type="hidden" runat="server" id="hidSadotLSidur" />
     <input type="hidden" runat="server" id="hidDriver"/>
+    <input type="hidden" runat="server" id="hidUpdateBtn"/>
     </form>   
     <script language="javascript" type="text/javascript">
          var iCount=0;
