@@ -8,12 +8,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>26.14839cm</Width>
+                  <Width>26.15871cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>6.4147cm</Height>
+                  <Height>9.81385cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1242,8 +1242,16 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </TablixRowHierarchy>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>dsTlunotPundakim</DataSetName>
-                              <Top>5.30346cm</Top>
-                              <Left>0.12945cm</Left>
+                              <SortExpressions>
+                                <SortExpression>
+                                  <Value>=Fields!TAARICH.Value</Value>
+                                </SortExpression>
+                                <SortExpression>
+                                  <Value>=Fields!SHAT_YETZIA.Value</Value>
+                                </SortExpression>
+                              </SortExpressions>
+                              <Top>6.20304cm</Top>
+                              <Left>0.08638cm</Left>
                               <Height>1.11124cm</Height>
                               <Width>26.01917cm</Width>
                               <Style>
@@ -1272,8 +1280,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
-                              <Top>4.70374cm</Top>
-                              <Left>23.41619cm</Left>
+                              <Top>5.60332cm</Top>
+                              <Left>23.37312cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>2.64582cm</Width>
                               <ZIndex>1</ZIndex>
@@ -1793,8 +1801,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </TablixRowHierarchy>
                               <KeepTogether>true</KeepTogether>
                               <DataSetName>dsTlunotPundakim</DataSetName>
-                              <Top>3.32087cm</Top>
-                              <Left>0.08638cm</Left>
+                              <Top>4.03526cm</Top>
+                              <Left>0.06792cm</Left>
                               <Height>1.076cm</Height>
                               <Width>26.01894cm</Width>
                               <ZIndex>2</ZIndex>
@@ -1813,7 +1821,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                                 </Parameter>
                               </Parameters>
                               <Top>0.06134in</Top>
-                              <Left>2.55311in</Left>
+                              <Left>2.55708in</Left>
                               <Height>1.4729cm</Height>
                               <Width>19.57711cm</Width>
                               <ZIndex>3</ZIndex>
@@ -1843,7 +1851,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>1.84038cm</Top>
-                              <Left>17.54309cm</Left>
+                              <Left>17.55318cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>1.4552cm</Width>
                               <ZIndex>4</ZIndex>
@@ -1879,7 +1887,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>1.8051cm</Top>
-                              <Left>14.88843cm</Left>
+                              <Left>14.89852cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>2.61938cm</Width>
                               <ZIndex>5</ZIndex>
@@ -1914,7 +1922,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>1.8051cm</Top>
-                              <Left>10.83429cm</Left>
+                              <Left>10.84438cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>1.90499cm</Width>
                               <ZIndex>6</ZIndex>
@@ -1950,7 +1958,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>1.84038cm</Top>
-                              <Left>8.4763cm</Left>
+                              <Left>8.48639cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>2.34917cm</Width>
                               <ZIndex>7</ZIndex>
@@ -1985,7 +1993,7 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>2.43011cm</Top>
-                              <Left>15.691cm</Left>
+                              <Left>15.70109cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>2.48707cm</Width>
                               <ZIndex>8</ZIndex>
@@ -2024,13 +2032,480 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                               </Paragraphs>
                               <rd:DefaultName>Textbox222</rd:DefaultName>
                               <Top>2.43011cm</Top>
-                              <Left>6.96458cm</Left>
+                              <Left>6.97467cm</Left>
                               <Height>0.42333cm</Height>
                               <Width>8.60295cm</Width>
                               <ZIndex>9</ZIndex>
                               <Visibility>
                                 <Hidden>=iif(Len(Parameters!P_MISPAR_ISHI.Value) = 0, True, False)</Hidden>
                               </Visibility>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                                <Direction>RTL</Direction>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox117">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>פרטי מגיש התלונה :</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>Underline</TextDecoration>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <LeftIndent>0cm</LeftIndent>
+                                  <HangingIndent>0cm</HangingIndent>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox117</rd:DefaultName>
+                              <Top>7.97857cm</Top>
+                              <Left>21.52876cm</Left>
+                              <Height>0.52944cm</Height>
+                              <Width>4.40751cm</Width>
+                              <ZIndex>10</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                                <Direction>RTL</Direction>
+                              </Style>
+                            </Textbox>
+                            <Tablix Name="Tablix3">
+                              <TablixBody>
+                                <TablixColumns>
+                                  <TablixColumn>
+                                    <Width>2.63447cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>4.9868cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.80888cm</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.5669cm</Width>
+                                  </TablixColumn>
+                                </TablixColumns>
+                                <TablixRows>
+                                  <TablixRow>
+                                    <Height>0.6cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox27">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>חתימה</Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox27</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox1">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>תפקיד</Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox1</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox3">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>שם </Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox3</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox5">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>מספר אישי</Value>
+                                                    <Style>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox5</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>LightGrey</BackgroundColor>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
+                                    <Height>0.6cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox28">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox28</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox4">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>מנהל משרד אגף התנועה</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox2</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox6">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=First(Fields!FULL_NAME.Value, "DsMagishTluna")</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox4</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                          <rd:Selected>true</rd:Selected>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox7">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=First(Fields!MISPAR_ISHI.Value, "DsMagishTluna")</Value>
+                                                    <Style />
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox7</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                </TablixRows>
+                              </TablixBody>
+                              <TablixColumnHierarchy>
+                                <TablixMembers>
+                                  <TablixMember />
+                                  <TablixMember />
+                                  <TablixMember />
+                                  <TablixMember />
+                                </TablixMembers>
+                              </TablixColumnHierarchy>
+                              <TablixRowHierarchy>
+                                <TablixMembers>
+                                  <TablixMember />
+                                  <TablixMember />
+                                </TablixMembers>
+                              </TablixRowHierarchy>
+                              <Top>8.61385cm</Top>
+                              <Left>13.05044cm</Left>
+                              <Height>1.2cm</Height>
+                              <Width>12.99705cm</Width>
+                              <ZIndex>11</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                              </Style>
+                            </Tablix>
+                            <Textbox Name="Textbox23">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value />
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <LeftIndent>0cm</LeftIndent>
+                                  <HangingIndent>0cm</HangingIndent>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox8</rd:DefaultName>
+                              <Top>0.61739cm</Top>
+                              <Height>1.01131cm</Height>
+                              <Width>2.69175cm</Width>
+                              <ZIndex>12</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox15">
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>מספר עבירה</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <LeftIndent>0cm</LeftIndent>
+                                  <HangingIndent>0cm</HangingIndent>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>(לשימוש המורשה)</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <LeftIndent>0cm</LeftIndent>
+                                  <HangingIndent>0cm</HangingIndent>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox8</rd:DefaultName>
+                              <Top>0.61739cm</Top>
+                              <Left>2.69175cm</Left>
+                              <Height>1.01131cm</Height>
+                              <Width>3.157cm</Width>
+                              <ZIndex>13</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>Solid</Style>
+                                </Border>
+                                <BackgroundColor>LightGrey</BackgroundColor>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox240">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>פרטי מבצע העבירה:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>Underline</TextDecoration>
+                                        <Language>he-IL</Language>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox222</rd:DefaultName>
+                              <Top>3.43554cm</Top>
+                              <Left>22.76458cm</Left>
+                              <Height>0.42333cm</Height>
+                              <Width>3.25436cm</Width>
+                              <ZIndex>14</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2080,6 +2555,12 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
                       </Group>
                       <SortExpressions>
                         <SortExpression>
+                          <Value>=Fields!KOD_EZOR.Value</Value>
+                        </SortExpression>
+                        <SortExpression>
+                          <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                        </SortExpression>
+                        <SortExpression>
                           <Value>=Fields!MISPAR_ISHI.Value</Value>
                         </SortExpression>
                       </SortExpressions>
@@ -2092,10 +2573,21 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsTlunotPundakim</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!KOD_EZOR.Value</Value>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!MISPAR_ISHI.Value</Value>
+              </SortExpression>
+            </SortExpressions>
             <Top>4.40841cm</Top>
             <Left>0.24046cm</Left>
-            <Height>6.4147cm</Height>
-            <Width>26.14839cm</Width>
+            <Height>9.81385cm</Height>
+            <Width>26.15871cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2392,8 +2884,8 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
           </Rectangle>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Height>10.83083cm</Height>
-        <Width>27.19142cm</Width>
+        <Height>14.22226cm</Height>
+        <Width>26.39917cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2401,10 +2893,10 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>4.32501in</Height>
+    <Height>5.59931in</Height>
     <Style />
   </Body>
-  <Width>10.70528in</Width>
+  <Width>10.39337in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
@@ -2544,6 +3036,31 @@ Format(Fields!SHAT_YETZIA.Value,"hh:mm"),  Hour(Fields!SHAT_YETZIA.Value) &amp; 
         </Field>
         <Field Name="SHAA4">
           <DataField>SHAA4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsMagishTluna">
+      <Query>
+        <DataSourceName>DsPundakim</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_ISUK">
+            <Value>36</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TACHANA">
+            <Value>83774</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETPIRTEYOVED</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
