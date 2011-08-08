@@ -6221,19 +6221,15 @@ namespace KdsBatch
 
         private void CalcRechiv256()
         {
-            float fSumRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
+            float fSumRechiv, fZmanAruchatTzharayim;
             int iErevRechiv;
             try
             {
 
-                oSidur.CalcRechiv256(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iErevRechiv);
+                oSidur.CalcRechiv256( out fZmanAruchatTzharayim, out  iErevRechiv);
 
-                //if (fZmanAruchatBoker > 20)
-                //{ fZmanAruchatBoker = 20; }
                 if (fZmanAruchatTzharayim > 30)
                 { fZmanAruchatTzharayim = 30; }
-                //if (fZmanAruchatErev > 20)
-                //{ fZmanAruchatErev = 20; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Taarich);
 
@@ -6253,19 +6249,15 @@ namespace KdsBatch
 
         private void CalcRechiv257()
         {
-            float fSumRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
+            float fSumRechiv, fZmanAruchatTzharayim;
             int iErevRechiv;
             try
             {
 
-                oSidur.CalcRechiv257(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iErevRechiv);
+                oSidur.CalcRechiv257( out fZmanAruchatTzharayim, out  iErevRechiv);
 
-                //if (fZmanAruchatBoker > 20)
-                //{ fZmanAruchatBoker = 20; }
                 if (fZmanAruchatTzharayim > 30)
                 { fZmanAruchatTzharayim = 30; }
-                //if (fZmanAruchatErev > 20)
-                //{ fZmanAruchatErev = 20; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Taarich);
 
@@ -6285,23 +6277,19 @@ namespace KdsBatch
 
         private void CalcRechiv258()
         {
-            float fSumRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
+            float fSumRechiv, fZmanAruchatTzharayim;
             int iErevRechiv;
             try
             {
 
-                oSidur.CalcRechiv258(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iErevRechiv);
+                oSidur.CalcRechiv258( out fZmanAruchatTzharayim, out  iErevRechiv);
 
-                if (fZmanAruchatBoker > 20)
-                { fZmanAruchatBoker = 20; }
                 if (fZmanAruchatTzharayim > 30)
                 { fZmanAruchatTzharayim = 30; }
-                if (fZmanAruchatErev > 20)
-                { fZmanAruchatErev = 20; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Taarich);
 
-                fSumRechiv = fSumRechiv - fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), fSumRechiv);
@@ -6318,23 +6306,19 @@ namespace KdsBatch
 
         private void CalcRechiv259()
         {
-            float fSumRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
+            float fSumRechiv, fZmanAruchatTzharayim;
             int iErevRechiv;
             try
             {
 
-                oSidur.CalcRechiv259(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iErevRechiv);
+                oSidur.CalcRechiv259( out fZmanAruchatTzharayim, out  iErevRechiv);
 
-                if (fZmanAruchatBoker > 20)
-                { fZmanAruchatBoker = 20; }
                 if (fZmanAruchatTzharayim > 30)
                 { fZmanAruchatTzharayim = 30; }
-                if (fZmanAruchatErev > 20)
-                { fZmanAruchatErev = 20; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Taarich);
 
-                fSumRechiv = fSumRechiv - fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), fSumRechiv);
@@ -6350,23 +6334,20 @@ namespace KdsBatch
 
         private void CalcRechiv260()
         {
-            float fSumRechiv, fZmanAruchatBoker, fZmanAruchatTzharayim, fZmanAruchatErev;
+            float fSumRechiv, fZmanAruchatTzharayim;
             int iErevRechiv;
             try
             {
 
-                oSidur.CalcRechiv260(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iErevRechiv);
+                oSidur.CalcRechiv260( out fZmanAruchatTzharayim, out  iErevRechiv);
 
-                if (fZmanAruchatBoker > 20)
-                { fZmanAruchatBoker = 20; }
                 if (fZmanAruchatTzharayim > 30)
                 { fZmanAruchatTzharayim = 30; }
-                if (fZmanAruchatErev > 20)
-                { fZmanAruchatErev = 20; }
+  
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Taarich);
 
-                fSumRechiv = fSumRechiv - fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), fSumRechiv);

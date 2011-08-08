@@ -827,36 +827,34 @@ namespace KdsBatch
              }
          }
 
-         public void CalcZmaneyAruchot(DataRow[] drPeiluyot, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum, out float fZmanAruchatBoker, out float fZmanAruchatTzharim, out float fZmanAruchatErev)
+         public void CalcZmaneyAruchot(DataRow[] drPeiluyot, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum,  out float fZmanAruchatTzharim)
         { 
             float fTempY = 0;
             DateTime dTempM1, dTempM2,dShatHatchla,dShatYetzia;
           //  DataRow[] drPeiluyot;
              int iMakat,iZmanElement;
             try
-            {
-                fZmanAruchatBoker=0;
+            { 
                 fZmanAruchatTzharim = 0;
-                fZmanAruchatErev = 0;
                // drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,3)='" + iMakatLerechiv+ "'","");
               for (int i = 0; i < drPeiluyot.Length; i++)
               {
                   iMakat = int.Parse(drPeiluyot[i]["MAKAT_NESIA"].ToString());
                   dShatHatchla = DateTime.Parse(drPeiluyot[i]["shat_hatchala_sidur"].ToString());
                   dShatYetzia = DateTime.Parse(drPeiluyot[i]["shat_yetzia"].ToString());
-                  iZmanElement = int.Parse(iMakat.ToString().PadLeft(8).Substring(4, 3));
+                  iZmanElement = int.Parse(iMakat.ToString().PadLeft(8).Substring(3, 3));
                   
-                  dTempM1 = clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date);
-                  dTempM2 = clGeneral.GetDateTimeFromStringHour("09:30", dTaarich.Date);
-                  fTempY = 0;
+                  //dTempM1 = clGeneral.GetDateTimeFromStringHour("08:00", dTaarich.Date);
+                  //dTempM2 = clGeneral.GetDateTimeFromStringHour("09:30", dTaarich.Date);
+                  //fTempY = 0;
 
-                  if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
-                  { fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }
-                  else if (dShatYetzia >= dTempM1 && dShatYetzia <= dTempM2 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM2)
-                  { fTempY = float.Parse((dTempM2 - dShatYetzia).TotalMinutes.ToString()); }
-                  else if (dShatYetzia >= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) <= dTempM2)
-                  { fTempY = iZmanElement; }
-                  fZmanAruchatBoker += fTempY;
+                  //if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
+                  //{ fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }
+                  //else if (dShatYetzia >= dTempM1 && dShatYetzia <= dTempM2 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM2)
+                  //{ fTempY = float.Parse((dTempM2 - dShatYetzia).TotalMinutes.ToString()); }
+                  //else if (dShatYetzia >= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) <= dTempM2)
+                  //{ fTempY = iZmanElement; }
+                  //fZmanAruchatBoker += fTempY;
 
 
                   dTempM1 = _oGeneralData.objParameters.dStartAruchatTzaharayim;
@@ -872,25 +870,22 @@ namespace KdsBatch
                   fZmanAruchatTzharim += fTempY;
 
 
-                  dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", dTaarich.Date);
-                  dTempM2 = clGeneral.GetDateTimeFromStringHour("19:30", dTaarich.Date);
-                  fTempY = 0;
-                  if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
-                  { fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }
-                  else if (dShatYetzia >= dTempM1 && dShatYetzia <= dTempM2 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM2)
-                  { fTempY = float.Parse((dTempM2 - dShatYetzia).TotalMinutes.ToString()); }
-                  else if (dShatYetzia >= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) <= dTempM2)
-                  { fTempY = iZmanElement; }
-                  fZmanAruchatErev += fTempY;
+                  //dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", dTaarich.Date);
+                  //dTempM2 = clGeneral.GetDateTimeFromStringHour("19:30", dTaarich.Date);
+                  //fTempY = 0;
+                  //if (dShatYetzia <= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM1)
+                  //{ fTempY = float.Parse((dShatYetzia.AddMinutes(iZmanElement) - dTempM1).TotalMinutes.ToString()); }
+                  //else if (dShatYetzia >= dTempM1 && dShatYetzia <= dTempM2 && dShatYetzia.AddMinutes(iZmanElement) >= dTempM2)
+                  //{ fTempY = float.Parse((dTempM2 - dShatYetzia).TotalMinutes.ToString()); }
+                  //else if (dShatYetzia >= dTempM1 && dShatYetzia.AddMinutes(iZmanElement) <= dTempM2)
+                  //{ fTempY = iZmanElement; }
+                  //fZmanAruchatErev += fTempY;
 
               }
 
-              if (fZmanAruchatBoker > 20)
-              { fZmanAruchatBoker = 20; }
               if (fZmanAruchatTzharim > 30)
               { fZmanAruchatTzharim = 30; }
-              if (fZmanAruchatErev > 20)
-              { fZmanAruchatErev = 20; }
+      
             }
             catch (Exception ex)
             {

@@ -7760,7 +7760,7 @@ namespace KdsBatch
                             //if (!CheckIdkunRashemet("MAKAT_NESIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oElement.iMisparKnisa, oElement.dFullShatYetzia))
                             //{
                                 oObjPeilutOvdimUpd = GetUpdPeilutObject(I, oElement, out SourceObject, oObjSidurimOvdimUpd);
-                                oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(4, 3), sZmanElement));
+                                oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
                                 oObjPeilutOvdimUpd.MAKAT_NESIA = oElement.lMakatNesia;
                                 oElement = new clPeilut(_iMisparIshi, _dCardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
                                 oSidur.htPeilut[j] = oElement;
