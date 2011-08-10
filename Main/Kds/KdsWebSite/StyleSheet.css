@@ -1236,7 +1236,7 @@ a
 {
  background-color :white;
  padding-right:4px;
- font-size:18px;
+ font-size:14px;
  font-family:Arial;
  font-weight:normal; 
 }
@@ -1244,13 +1244,13 @@ a
 {
  background-color :#E1FFE1; 
  padding-right:4px;
- font-size:18px;
+ font-size:14px;
  font-weight:normal;
  font-family:Arial;
 }
 .WCard_GridRowTextBox
 {
- font-size :15px;
+ font-size :14px;
  font-family :Arial;
  font-weight:normal;
 }

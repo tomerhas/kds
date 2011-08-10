@@ -482,10 +482,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     Session["Parameters"] = oBatchManager.oParam;
                     Session["MeafyenyOved"] = oBatchManager.oMeafyeneyOved;
                     dtIdkuneyRashemet = clWorkCard.GetIdkuneyRashemet(iMisparIshi, dDateCard);
+                    btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
+                   
                     if (!Page.IsPostBack)
                     {
                         btnUpdateCard.Attributes.Add("disabled", "true");
                         hidUpdateBtn.Value = "true";
+                       // lstSidurim.HasSaveCard = false;
                         BindTachograph();
                         SetLookUpDDL();
                         ShowOvedCardDetails(iMisparIshi, dDateCard);
@@ -551,6 +554,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.MeafyeneySidur = (DataTable)Session["MeafyeneySidur"];
                     lstSidurim.dtPakadim = (DataTable)Session["Pakadim"];
                     lstSidurim.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];
+                    //btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);                    
                 }
             }            
         }
@@ -650,6 +654,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
+            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
+           // lstSidurim.HasSaveCard = (!bool.Parse(hidUpdateBtn.Value));
+            //btnUpdateCard.Enabled = (!bool.Parse(hidUpdateBtn.Value));
             //string sScript = "";
             //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
         }
@@ -2499,10 +2506,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     void lstSidurim_btnHandler(string strValue, bool bOpenUpdateBtn)
     {
         bInpuDataResult = true;
-        if ((bOpenUpdateBtn) ||  (hidUpdateBtn.Value == "false"))
-        {
+        if ((bOpenUpdateBtn) || (hidUpdateBtn.Value=="false"))
+        {            
             string sScript = "SetBtnChanges();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "OpenUpdBtn", sScript, true);
+            hidUpdateBtn.Value = "true";
+          //  lstSidurim.HasSaveCard = false;
         }
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
         //lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
@@ -2564,6 +2573,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                                    oCollIdkunRashemet, oCollPeluyotOvdimIns);
                         bResult = true;
                         ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value = "";
+                        hidUpdateBtn.Value = "true";
+                       // lstSidurim.HasSaveCard = false;
                     }
                     else
                     {

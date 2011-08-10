@@ -52,6 +52,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private float _Param43;
     private float _Param42;
     private int _NumOfHashlama;
+   
     private DateTime _CardDate;
     private DateTime _FullShatHatchala;
     private DateTime _FullOldShatHatchala;
@@ -332,6 +333,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hidParam242.Value = Param242.ToShortTimeString();
         hidParam244.Value = Param244.ToShortTimeString(); 
         hidNumOfHashlama.Value = NumOfHashlama.ToString();
+        
     }
     protected Panel CreatePanel(int iIndex, string sID, string sClass)
     {
@@ -1885,6 +1887,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _Peilut.dOldFullShatYetzia = dPeilutShatYetiza;
             _Peilut.sShatYetzia = (sShatYetiza==string.Empty) ? "" : dPeilutShatYetiza.ToShortTimeString(); 
             _Peilut.lMakatNesia = lMakat;
+            _Peilut.lOldMakatNesia = lMakat;
             _Peilut.lOldOtoNo = lCarNum;
             _Peilut.lOtoNo = lCarNum;
             _Peilut.iMakatType = _Kavim.GetMakatType(lMakat);
@@ -2116,7 +2119,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         arrKnisaVal = _CurrPeilut.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
                         iMisparKnisa = int.Parse(arrKnisaVal[0]);
                         //אם מצאנו פעילות שהיא לא כניסה או ויסות, נחזיר false
-                        if ((_MakatType != clKavim.enMakatType.mVisut) || (!(_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
+                        if ((_MakatType != clKavim.enMakatType.mVisut) && (!((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0))))
                         {
                             bFound = true;
                             break;
@@ -2176,7 +2179,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
-            btnHandler(string.Empty, bOpenUpdateBtn);
+            btnHandler(string.Empty, (bOpenUpdateBtn ));
 
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
@@ -2295,7 +2298,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         string sMapHour = "";
 
         sMapHour = dsSidurim.Tables[1].Rows[iIndex]["shaa"].ToString().PadLeft(4, char.Parse("0"));
-        if (int.Parse(sMapHour.Substring(0, 2)) > 23)
+        if ((int.Parse(sMapHour.Substring(0, 2)) > 23) && (CardDate.ToShortDateString()==_Sidur.dFullShatHatchala.ToShortDateString()))
             _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala.AddDays(1);
         else
             _PeilutReka.dFullShatYetzia = _Sidur.dFullShatHatchala;
@@ -6948,6 +6951,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         set { _sAddPeilut = value; }
         get { return _sAddPeilut;  }
     }
+    
     public int NumOfHashlama
     {
         set 

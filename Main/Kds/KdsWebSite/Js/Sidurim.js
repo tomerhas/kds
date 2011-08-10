@@ -1230,6 +1230,8 @@ function chkMkt(oRow) {
                 bScreenChanged = false;
                 RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
+                if (_bScreenChanged)
+                   $get("btnUpdateCard").disabled = false;                    
             }
             return res;    
         }           
