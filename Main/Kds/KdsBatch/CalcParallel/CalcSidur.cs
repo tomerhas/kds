@@ -5506,6 +5506,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5614,6 +5615,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5672,6 +5674,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5772,6 +5775,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5853,6 +5857,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());

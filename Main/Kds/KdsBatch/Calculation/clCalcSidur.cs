@@ -5220,6 +5220,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5322,6 +5323,7 @@ namespace KdsBatch
                 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5378,6 +5380,7 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    fZmanAruchatTzharimSidur = 0;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5472,6 +5475,7 @@ namespace KdsBatch
 
                  for (int I = 0; I < _drSidurim.Length; I++)
                  {
+                     fZmanAruchatTzharimSidur = 0;
                      iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                      dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                      dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5480,7 +5484,7 @@ namespace KdsBatch
                      fErech = 0;
                      if (!clDefinitions.CheckShaaton(clCalcData.DtSugeyYamimMeyuchadim, clCalcData.iSugYom, dTaarich))
                      {
-                        
+                     
                              sIsuk = ",401, 402, 403,421, 422 ,404,412,420,";
                              oPeilut.dTaarich = dTaarich;
                           //   dtPeiluyot = oPeilut.GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
@@ -5550,6 +5554,7 @@ namespace KdsBatch
 
                  for (int I = 0; I < _drSidurim.Length; I++)
                  {
+                     fZmanAruchatTzharimSidur = 0;
                      iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                      dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                      dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
@@ -5627,6 +5632,7 @@ namespace KdsBatch
                   drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and Hashlama>0 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                 for (int I = 0; I < drSidurim.Length; I++)
                 {
+
                     iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
                     iSugHashlama = int.Parse(drSidurim[I]["sug_Hashlama"].ToString());
