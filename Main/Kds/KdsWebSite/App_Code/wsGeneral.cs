@@ -135,9 +135,16 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+    private bool IsElementHachanatMechona(long lMakatMesia)
+    {
+        string sMakatPrefix =  lMakatMesia.ToString().Substring(0,3);
+        return ((sMakatPrefix == clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString()) || (sMakatPrefix == clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                             || (sMakatPrefix == clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString()));
+
+    }
     [WebMethod(EnableSession = true)]
     private string BuildMakatDetails(DataTable dtMakat, string sTravelDate, string sShatYetiza, string sDayToAdd, 
-                                     long lNewMakat, long lOldMakat, ref clPeilut _PeilutElement)
+                                     long lNewMakat, long lOldMakat, int iSidurIndex, int iPeilutIndex, ref clPeilut _PeilutElement)
     {
         StringBuilder sXML = new StringBuilder();
         if (sShatYetiza.Equals("__:__")) sShatYetiza = "";
@@ -146,9 +153,14 @@ public class wsGeneral : System.Web.Services.WebService
         DataTable dtElement=new DataTable();
         clKavim.enMakatType oMakatType;
         DataRow[] dr;
+        clSidur _Sidur;
+        clPeilut _Peilut;
         int iDefMinutesForElement, iDefMinForElemenTWithoutFactor;
         try
         {
+            _Sidur = (clSidur)(((OrderedDictionary)Session["Sidurim"])[iSidurIndex]);
+            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex];
+
             sXML.Append("<MAKAT>");
 
 
@@ -306,7 +318,14 @@ public class wsGeneral : System.Web.Services.WebService
                         }
 
                         sXML.Append(string.Concat("<KISUY_TOR_MAP>", dtMakat.Rows[0]["kisuitor"].ToString(), "</KISUY_TOR_MAP>"));
-                        
+                        if (iPeilutIndex==0)//נאפשר הוספת ריקה למעלה
+                            sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
+                        {
+                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            if (IsElementHachanatMechona(_Peilut.lMakatNesia))
+                                sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        }
                         break;
                     case clKavim.enMakatType.mNamak:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
@@ -334,6 +353,14 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ","</DAKOT_DEF_TITLE>")) ;
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
+                        if (iPeilutIndex==0)//נאפשר הוספת ריקה למעלה
+                            sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
+                        {
+                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            if (IsElementHachanatMechona(_Peilut.lMakatNesia))
+                                sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        }
                         break;
                     case clKavim.enMakatType.mElement:
                         sXML.Append(string.Concat("<HYPER_LINK>", "0", "</HYPER_LINK>"));
@@ -362,6 +389,14 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<KISUY_TOR_ENABLED>", "0", "</KISUY_TOR_ENABLED>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                         sXML.Append(string.Concat("<OTO_NO_ENABLED>", "1", "</OTO_NO_ENABLED>"));
+                        if (iPeilutIndex==0)//נאפשר הוספת ריקה למעלה
+                            sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        if (iPeilutIndex == 1) //נבדוק את הפעילות הקודמת, אם היא הכנת מכונה, נאפשר הוספת ריקה למעלה
+                        {
+                            _Peilut = (clPeilut)_Sidur.htPeilut[iPeilutIndex-1];
+                            if (IsElementHachanatMechona(_Peilut.lMakatNesia))
+                                sXML.Append(string.Concat("<REKA_UP>", "1", "</REKA_UP>"));
+                        }
                         break;
                     case clKavim.enMakatType.mVisa:
                         sXML.Append(string.Concat("<MAZAN_TASHLUM>", dtMakat.Rows[0]["mazantashlum"].ToString(), "</MAZAN_TASHLUM>"));
@@ -1087,7 +1122,8 @@ public class wsGeneral : System.Web.Services.WebService
                     dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sCardDate));
                     if (dtDetailsFromTnua.Rows.Count > 0)
                     {
-                        sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sCardDate).ToShortDateString(), sShatYetiza, sDayToAdd, lNewMakat, lOldMakat, ref _PeilutElement);
+                        sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sCardDate).ToShortDateString(),
+                                                    sShatYetiza, sDayToAdd, lNewMakat, lOldMakat,  iSidurIndex,  iPeilutIndex, ref _PeilutElement);
                         //Update cash peilyot details from tnua
                         GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dtDetailsFromTnua, _PeilutElement);
                     }

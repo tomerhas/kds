@@ -99,7 +99,13 @@ function chkMkt(oRow) {
                         if ((oReka != null) && (oReka != undefined))
                             $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
                     }
+                    if ($get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes.length > 0) {
+                        oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute;
+                        if ((oReka != null) && (oReka != undefined))
+                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute("NesiaRekaUp", "0");
+                    }
                     $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+                    $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "";
                 }
                 while ((_FirstChild != null) && (!bExist)) {                    
                     switch (_FirstChild.nodeName) {
@@ -172,6 +178,9 @@ function chkMkt(oRow) {
                             sMeafyen7 = _FirstChild.text;
                             bMeafyen7 = true;
                             break;
+                        case "REKA_UP":
+                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUplstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/plus.jpg' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
+                             break;
                         case "HYPER_LINK":
                             if (_FirstChild.text == "1") {
                                 if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
