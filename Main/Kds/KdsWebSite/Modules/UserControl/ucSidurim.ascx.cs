@@ -5733,7 +5733,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.MaxLength = MAX_LEN_ACTUAL_MINTUES;
             oTxt.Width = Unit.Pixel(40);
             oTxt.ID = e.Row.ClientID + "ActualMinutes";
-            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+           // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);//int.Parse(e.Row.Cells[_COL_KNISA].Text);
@@ -6014,7 +6014,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
             oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
             oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
-            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+           // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
@@ -6106,7 +6106,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");          
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
-            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+           // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
 
             sID = "vldFilCarNum";
@@ -6190,7 +6190,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
-            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+          //  oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
@@ -6305,7 +6305,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(40);
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
-            oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+         //   oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             //Add MaskTextBox
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).ID;

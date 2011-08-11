@@ -1250,9 +1250,11 @@ a
 }
 .WCard_GridRowTextBox
 {
- font-size :14px;
- font-family :Arial;
+ background-color :#E1FFE1; 
+ padding-right:4px;
+ font-size:14px;
  font-weight:normal;
+ font-family:Arial;
 }
 .lstSidurDiv
 {
