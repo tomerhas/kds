@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>24.00705cm</Width>
+              <Width>19.85523cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -21,34 +21,34 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.65561cm</Width>
+                                <Width>1.53459cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.94202cm</Width>
+                                <Width>1.55197cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.65132cm</Width>
+                                <Width>1.8977cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.15121cm</Width>
+                                <Width>2.97824cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.30733cm</Width>
+                                <Width>1.60568cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.65132cm</Width>
+                                <Width>1.86996cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.31154cm</Width>
+                                <Width>2.6704cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.56676cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.84022cm</Width>
+                                <Width>2.52272cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.57522cm</Width>
+                                <Width>1.46939cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -758,7 +758,7 @@
                           <Top>2.02775cm</Top>
                           <Left>0.18783cm</Left>
                           <Height>1.62334cm</Height>
-                          <Width>23.65255cm</Width>
+                          <Width>19.6674cm</Width>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
                           </Visibility>
@@ -772,52 +772,52 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.26836cm</Width>
+                                <Width>1.30939cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.149cm</Width>
+                                <Width>1.19003cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.1549cm</Width>
+                                <Width>0.72801cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.25002cm</Width>
+                                <Width>0.77033cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.11649cm</Width>
+                                <Width>0.71045cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.34844cm</Width>
+                                <Width>0.76138cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.00928cm</Width>
+                                <Width>0.81911cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.8581cm</Width>
+                                <Width>0.70959cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.27031cm</Width>
+                                <Width>0.84213cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.90974cm</Width>
+                                <Width>0.76252cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>4.70886cm</Width>
+                                <Width>3.86307cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.28078cm</Width>
+                                <Width>1.29535cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.26835cm</Width>
+                                <Width>1.23cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.29973cm</Width>
+                                <Width>1.23493cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.75913cm</Width>
+                                <Width>0.80016cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.9746cm</Width>
+                                <Width>2.69813cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -903,7 +903,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>מחוץ למכסה</Value>
+                                                <Value>מל</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -938,7 +938,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>השלמה</Value>
+                                                <Value>הש</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -973,7 +973,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>המרה</Value>
+                                                <Value>המ</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1008,7 +1008,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>הלבשה</Value>
+                                                <Value>הל</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1043,7 +1043,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>חריגה</Value>
+                                                <Value>חר</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1078,7 +1078,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>לינה</Value>
+                                                <Value>לי</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1113,7 +1113,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>נסיעות</Value>
+                                                <Value>נס</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1148,7 +1148,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>פיצול</Value>
+                                                <Value>פי</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -2061,7 +2061,7 @@
                           <Top>3.84328cm</Top>
                           <Left>0.13066cm</Left>
                           <Height>2.62021cm</Height>
-                          <Width>23.62609cm</Width>
+                          <Width>19.72457cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
@@ -2187,6 +2187,9 @@
                   <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                   <GroupExpression>=Format(Fields!TAARICH.Value,"MM/yyyy")</GroupExpression>
                 </GroupExpressions>
+                <PageBreak>
+                  <BreakLocation>Between</BreakLocation>
+                </PageBreak>
               </Group>
             </TablixMember>
           </TablixMembers>
@@ -2195,7 +2198,7 @@
         <Top>2.67639cm</Top>
         <Left>0.15831cm</Left>
         <Height>6.54287cm</Height>
-        <Width>24.00705cm</Width>
+        <Width>19.85523cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2312,14 +2315,14 @@
     <Height>3.76992in</Height>
     <Style />
   </Body>
-  <Width>9.59845in</Width>
+  <Width>7.87935in</Width>
   <Page>
-    <PageHeight>21cm</PageHeight>
-    <PageWidth>29.7cm</PageWidth>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
     <LeftMargin>0.3cm</LeftMargin>
     <RightMargin>0.3cm</RightMargin>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.1cm</BottomMargin>
+    <TopMargin>0.3cm</TopMargin>
+    <BottomMargin>0.3cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
