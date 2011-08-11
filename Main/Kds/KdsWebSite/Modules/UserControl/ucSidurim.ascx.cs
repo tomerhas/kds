@@ -1173,7 +1173,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.AllowSorting = true;
             grdPeiluyot.Width = Unit.Pixel(975);
             grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_AltItemRow";
-            grdPeiluyot.RowStyle.CssClass = "WCard_AltItemRow";//"WCard_GridRow";//"GridRow";
+            grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"GridRow";
             grdPeiluyot.ShowFooter = false;
             
             //רווח
