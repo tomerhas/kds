@@ -1225,6 +1225,7 @@ public class wsGeneral : System.Web.Services.WebService
                         _Peilut.sShilut = "";
                         _Peilut.sSugShirutName = "";
                         _Peilut.iKisuyTorMap = 0;
+                        _Peilut.iKisuyTor = 0;
                         _Peilut.iMazanTichnun = 0;//(!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTichnun"])) ? int.Parse(_PeilyotDetails[0]["MazanTichnun"].ToString()) : 0;
                         _Peilut.iMazanTashlum =0 ;//(!System.Convert.IsDBNull(_PeilyotDetails[0]["MazanTashlum"])) ? int.Parse(_PeilyotDetails[0]["MazanTashlum"].ToString()) : 0;
                         _Peilut.iXyMokedTchila = 0;//(System.Convert.IsDBNull(_PeilyotDetails[0]["xymokedtchila"]) ? 0 : int.Parse(_PeilyotDetails[0]["xymokedtchila"].ToString()));
