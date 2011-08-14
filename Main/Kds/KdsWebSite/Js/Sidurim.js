@@ -1685,7 +1685,7 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if (($get("tbSidur").disabled==false) && (i == 0) && ((($get("hidDriver").value == '1') ||
+               if (($get("hidMeasherMistayeg").value != '-1') && (i == 0) && ((($get("hidDriver").value == '1') ||
                  (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1')))
                  || (GoremMEasger == dId)))
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
@@ -1721,13 +1721,13 @@ function chkMkt(oRow) {
         i=++i;
         _Sidur = $get("lstSidurim_lblSidur" + i);
     }
-    //נאפשר הוספת ריקה ממפה תמיד 
+    //נאפשר הוספת ריקה ממפה במקרים הבאים 
     //סידור אחרון בפעילות האחרונה שיש חץ למטה
     //במידה והגענו מעמדת נהג(גם אם הכרטיס הוא ללא התייחסות), או
     //שלא הגענו מעמדת נהג, אבל רק במידה והכרטיס הוא עם התייחסות
     // גם אם הכרטיס הוא ללא התייחסות)או שמספר האישי של הכרטיס שווה לגורם שפתח את הכרטיס
 
-    if (($get("tbSidur").disabled == false) && (($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+    if ((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
         && ($get("hidDriver").value != '1'))
         || (GoremMEasger == dId))) {
         i = i - 1;

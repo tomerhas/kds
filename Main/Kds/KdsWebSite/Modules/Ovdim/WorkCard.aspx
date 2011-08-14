@@ -133,6 +133,7 @@
                                                 <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 80px;"> </asp:TextBox>
                                             </td>                                           
                                             <td>
+                                              <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
                                               <input type="hidden" id="hidRefresh" runat="server"/>
                                               <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
                                                     CausesValidation="false" CssClass="ImgButtonShow" Height="25px" TabIndex="2"/>
@@ -153,7 +154,8 @@
                                     <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
                                     <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
                                     <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
-                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />                                                                                                                                                                                                                                                                                     
+                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />
+                                                                                                                                                                                                                                                                                                                                                     
                                 </Triggers>
                             </asp:UpdatePanel>
                         </fieldset>
@@ -544,7 +546,7 @@
     <input type="hidden" runat="server" id="hidLvl1Chg" />
     <input type="hidden" runat="server" id="hidLvl2Chg" />
     <input type="hidden" runat="server" id="hidLvl3Chg" />
-    <input type="hidden" runat="server" id="hidMeasherMistayeg" />   
+     
     <input type="hidden" runat="server" id="hidRashemet" />  
     <input type="hidden" runat="server" id="hidFromEmda" />  
     <input type="hidden" runat="server" id="hidSadotLSidur" />
