@@ -14,20 +14,21 @@ namespace KdsBatch
     {
        long _lBakashaId;
 
-        private clEruaDataEt oDataEt;
-       private clEruaBakaraEt oBakaraEt;
-       private clErua462 oErua462;
-       private clErua589 oErua589;
-       private clErua413 oErua413;
-       private clErua415 oErua415;
-       private clErua416 oErua416;
-       private clErua417 oErua417;
-       private  clErua418 oErua418;
-       private clErua419 oErua419;
-       private clErua460 oErua460;
+       // private clEruaDataEt oDataEt;
+       //private clEruaBakaraEt oBakaraEt;
+       //private clErua462 oErua462;
+       //private clErua589 oErua589;
+       //private clErua413 oErua413;
+       //private clErua415 oErua415;
+       //private clErua416 oErua416;
+       //private clErua417 oErua417;
+       //private  clErua418 oErua418;
+       //private clErua419 oErua419;
+       //private clErua460 oErua460;
        private StreamWriter sFileStrCh, sFileStrS, sFileStrC, sFileStrEt, sFileStrEtBakara;
        private StreamWriter _sFileToWrite;
 
+       private List<PirteyOved> _PirteyOved;
        private enum enFileType
        {
            Friends = 1, 
@@ -60,6 +61,7 @@ namespace KdsBatch
 
            try
            {
+               sChodeshIbud = string.Empty;
                sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.Default);
                sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim,false, Encoding.Default);
                sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.Default);
@@ -74,10 +76,11 @@ namespace KdsBatch
                    dtRechivim = dsNetunim.Tables[1];
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "count:" + dtOvdim.Rows.Count);
-
+                   _PirteyOved = new List<PirteyOved>();
                   
                    for (i = 0; i <= dtOvdim.Rows.Count - 1; i++)
                    {
+                      
                         iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                         dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
                        
@@ -87,63 +90,28 @@ namespace KdsBatch
                            iMaamadRashi = int.Parse(dtOvdim.Rows[i]["maamad_rashi"].ToString());
                            iDirug = int.Parse(dtOvdim.Rows[i]["dirug"].ToString());
                            iDarga = int.Parse(dtOvdim.Rows[i]["darga"].ToString());
-                           sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString(); 
-                        
-                               if (iDirug == 85 && iDarga == 30)
-                               {
-                                   if (sFileStrEt==null)
-                                   {
-                                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
-                                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
-                                    }
+                           if (i==0)
+                            sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                                   oDataEt = new clEruaDataEt(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-
-                                   oBakaraEt = new clEruaBakaraEt(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                }
-                               else
-                               {
-                                   oErua462 = new clErua462(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                   oErua589 = new clErua589(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                       
-                                   if (iDirug != 82 && iDirug != 83)
-                                   {
-                                       oErua413 = new clErua413(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                   }
-
-                                   if (iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
-                                   {
-                                       oErua415 = new clErua415(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                    }
-                                   oErua416 = new clErua416(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                   oErua417 = new clErua417(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                   if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
-                                   {
-                                       if ((iDirug != 82 && iDirug != 83 && iDirug != 85) || !(iDirug == 84 && iDarga == 1) || !(iDirug == 85 && (iDarga == 80 || iDarga == 30)))
-                                       {
-                                           oErua418 = new clErua418(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                       }
-                                   }
-
-                                   if (iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
-                                   {
-                                       oErua419 = new clErua419(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                       oErua460 = new clErua460(lBakashaId, dtOvdim.Rows[i], dtRechivim);
-                                       
-                                   }
-                               }
-
-                               WriteToFile(iMaamad,iMaamadRashi,iDirug,iDarga);
-                     
-
+                           _PirteyOved.Add(new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, dtOvdim.Rows[i], dtRechivim));
+                             
                        }
                        catch (Exception ex)
                        {
                            clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
                        }
 
-                       ClearObject();
+                      // ClearObject();
                     }
+
+                   if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
+                   {
+                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                   }
+
+                   _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
+                  // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
 
                    //DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
@@ -198,49 +166,85 @@ namespace KdsBatch
            }
        }
 
-       private void ClearObject()
-       {
-           oErua413 = null;
-           oErua415 = null;
-           oErua416 = null;
-           oErua417 = null;
-           oErua418 = null;
-           oErua419 = null;
-           oErua589 = null;
-           oErua460 = null;
-           oErua462 = null;
-           oDataEt = null;
-           oBakaraEt = null;
-       }
+       //private void ClearObject()
+       //{
+       //    oErua413 = null;
+       //    oErua415 = null;
+       //    oErua416 = null;
+       //    oErua417 = null;
+       //    oErua418 = null;
+       //    oErua419 = null;
+       //    oErua589 = null;
+       //    oErua460 = null;
+       //    oErua462 = null;
+       //    oDataEt = null;
+       //    oBakaraEt = null;
+       //}
 
-       private void WriteToFile(int iMaamad, int iMaamadRashi, int iDirug, int iDarga)
+       private void WriteEruimToFile(PirteyOved oOved)
        {
 
-           if (iDirug == 85 && iDarga == 30)
+           if (oOved.iDirug == 85 && oOved.iDarga == 30)
            {
-               _sFileToWrite = GetFileToWrite(enFileType.EtBakara.GetHashCode(), iMaamadRashi, iDirug, iDarga);
-
-               WriteErua(oBakaraEt);
-
-               _sFileToWrite = GetFileToWrite(enFileType.EtData.GetHashCode(), iMaamadRashi, iDirug, iDarga);
-
-               WriteErua(oDataEt);
+               WriteEruaToFile(sFileStrEtBakara, oOved.oBakaraEt);
+               WriteEruaToFile(sFileStrEt, oOved.oDataEt);
            }
            else
            {
-               _sFileToWrite = GetFileToWrite(iMaamad, iMaamadRashi, iDirug, iDarga);
+               _sFileToWrite = GetFileToWrite(oOved.iMaamad, oOved.iMaamadRashi, oOved.iDirug, oOved.iDarga);
 
-               WriteErua(oErua413);
-               WriteErua(oErua415);
-               WriteErua(oErua416);
-               WriteErua(oErua417);
-               WriteErua(oErua418);
-               WriteErua(oErua419);
-               WriteErua(oErua460);
-               WriteErua(oErua462);
-               WriteErua(oErua589);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua413);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua415);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua416);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua417);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua418);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua419);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua460);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua462);
+               WriteEruaToFile(_sFileToWrite, oOved.oErua589);
            }
        }
+       private void WriteEruaToFile(StreamWriter oFile, clErua oErua)
+       {
+           if (oErua != null)
+           {
+               oErua.Lines.ForEach(delegate(string Line)
+               {
+                   oFile.WriteLine(Line);
+                   oFile.Flush();
+               });
+           }
+       }
+
+
+       //private void WriteToFile(int iMaamad, int iMaamadRashi, int iDirug, int iDarga)
+       //{
+
+       //    if (iDirug == 85 && iDarga == 30)
+       //    {
+       //        _sFileToWrite = GetFileToWrite(enFileType.EtBakara.GetHashCode(), iMaamadRashi, iDirug, iDarga);
+
+       //        WriteErua(oBakaraEt);
+
+       //        _sFileToWrite = GetFileToWrite(enFileType.EtData.GetHashCode(), iMaamadRashi, iDirug, iDarga);
+
+       //        WriteErua(oDataEt);
+       //    }
+       //    else
+       //    {
+       //        _sFileToWrite = GetFileToWrite(iMaamad, iMaamadRashi, iDirug, iDarga);
+
+       //        WriteErua(oErua413);
+       //        WriteErua(oErua415);
+       //        WriteErua(oErua416);
+       //        WriteErua(oErua417);
+       //        WriteErua(oErua418);
+       //        WriteErua(oErua419);
+       //        WriteErua(oErua460);
+       //        WriteErua(oErua462);
+       //        WriteErua(oErua589);
+       //    }
+       //}
 
        private void WriteErua(clErua oErua)
        {
@@ -254,6 +258,7 @@ namespace KdsBatch
            }
        }
 
+     
        private StreamWriter GetFileToWrite(int iFileType, int iMaamadRashi, int iDirug, int iDarga)
        {
            StreamWriter sFileToWrite;
