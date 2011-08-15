@@ -18,12 +18,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8731/KdsService/BatchService/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://kdscalc01:8731/KdsService/BatchService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="f29057d1-df59-44f9-aa40-f0e9e6cd147e" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a8b4a6d1-4d2b-4e26-a6c8-b0e795f8f7b4" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="c05eee0e-a3ac-4fb5-9877-d765e8899b46" SourceId="1" SourceUrl="http://localhost:8731/KdsService/BatchService/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="0e646672-3915-4e24-8cf9-1160d58ebd40" SourceId="1" SourceUrl="http://kdscalc01:8731/KdsService/BatchService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="767bf2ed-73b3-4f81-b51a-0ff361ddd40c" SourceId="1" SourceUrl="http://kdscalc01:8731/KdsService/BatchService/mex" />
+    <MetadataFile FileName="service12.xsd" MetadataType="Schema" ID="33802b42-4f25-45dd-bd2d-ab0ac636cf9f" SourceId="1" SourceUrl="http://kdscalc01:8731/KdsService/BatchService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
