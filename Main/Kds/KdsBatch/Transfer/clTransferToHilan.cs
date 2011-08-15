@@ -69,9 +69,10 @@ namespace KdsBatch
 
                try
                {
-
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before GetOvdimToTransfer");
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
-
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after GetOvdimToTransfer");
+                  
                    dtOvdim = dsNetunim.Tables[0];
                    dtRechivim = dsNetunim.Tables[1];
 
@@ -95,6 +96,8 @@ namespace KdsBatch
 
                            _PirteyOved.Add(new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, dtOvdim.Rows[i], dtRechivim));
                              
+                           if (i%50 ==0)
+                               clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
                        }
                        catch (Exception ex)
                        {
@@ -109,10 +112,10 @@ namespace KdsBatch
                        sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                        sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                    }
-
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
-
+                   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    //DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);
@@ -1433,8 +1436,10 @@ namespace KdsBatch
                 oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur_list", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-              
+
+                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after ExecuteSP");
                 oDal.ExecuteSP(clDefinitions.cProGetOvdimToTransfer, ref ds);
+                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after ExecuteSP");
 
               return ds;
             }
