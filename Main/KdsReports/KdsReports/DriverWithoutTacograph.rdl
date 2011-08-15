@@ -2022,8 +2022,16 @@
     <DataSet Name="DsMagishTluna">
       <Query>
         <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_ISUK">
+            <Value>=Parameters!P_ISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TACHANA">
+            <Value>=Parameters!P_TACHANA.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETMENAHELRISHUM</CommandText>
+        <CommandText>PKG_REPORTS.PRO_GETPIRTEYOVED</CommandText>
       </Query>
       <Fields>
         <Field Name="MISPAR_ISHI">
@@ -2068,6 +2076,14 @@
         </Values>
       </DefaultValue>
       <Prompt>P_DT</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_ISUK">
+      <DataType>String</DataType>
+      <Prompt>P ISUK</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_TACHANA">
+      <DataType>String</DataType>
+      <Prompt>P TACHANA</Prompt>
     </ReportParameter>
   </ReportParameters>
   <EmbeddedImages>
