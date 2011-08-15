@@ -6,13 +6,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.05305cm</Width>
+              <Width>2.20638cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.33583cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.37756cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.55532cm</Width>
@@ -1158,7 +1158,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!GOREM_MEADKEN.Value</Value>
+                              <Value>=iif(Fields!HAMARAT_SHABAT.Value="0","", Fields!HAMARAT_SHABAT.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -1367,7 +1367,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1474,8 +1473,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>0.39652cm</Top>
-        <Height>4.6754cm</Height>
-        <Width>19.7903cm</Width>
+        <Height>4.67542cm</Height>
+        <Width>19.82119cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1484,7 +1483,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.99682in</Height>
+    <Height>1.99683in</Height>
     <Style />
   </Body>
   <Width>7.80362in</Width>
