@@ -546,6 +546,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.CardDate = dDateCard;
                     lstSidurim.DataSource = (OrderedDictionary)Session["Sidurim"];
                     lstSidurim.Mashar = (DataTable)Session["Mashar"];
+                    
                     oBatchManager.dtErrors = (DataTable)Session["Errors"];
                     oBatchManager.oParam = (clParameters)Session["Parameters"];
                     dtPakadim = (DataTable)Session["Pakadim"];
@@ -677,7 +678,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //יש לבדוק שלפחות אחד הרכבים המדווחים באותו תאריך אינו מדגם 64  (דגם שאינו מכיל טכוגרף). Vehicle_Type =64 במעל"ה.
         try
         {
-           dt = lstSidurim.Mashar;
+            dt =  GetMasharData(oBatchManager.htFullEmployeeDetails); //lstSidurim.Mashar;
            if (dt != null)
            {
                if (dt.Rows.Count > 0)
@@ -2193,11 +2194,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         if (SaveCard())
         {
             RunBatchFunctions();
+            PrintCard(sender, e);  
             lstSidurim.DataSource = oBatchManager.htFullEmployeeDetails;        
             lstSidurim.ErrorsList = oBatchManager.dtErrors;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();          
-            PrintCard(sender, e);           
+                     
         }
         MPEPrintMsg.Hide();
     }
