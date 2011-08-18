@@ -16,7 +16,8 @@ function chkMkt(oRow) {
        var sArrPrm= new Array(7); 
        var iMktType;
 
-           if (lNMkt < 100000) {
+       if (lNMkt < 100000) {
+               oMkt.value = lOMkt;
                alert('מספר מק"ט לא תקין, יש להקליד מספר בין 6-8 ספרות');
                oMkt.select();
            }
