@@ -132,6 +132,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private int _MisparIshiIdkunRashemet;
     private const string COL_TRIP_EMPTY = "ריקה";
     private string _sAddPeilut="";
+    private int iPeilutSize = 0;
     // Delegate declaration
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
@@ -538,6 +539,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ShatHatchala = oSidur.sShatHatchala;
             FullShatHatchala = oSidur.dFullShatHatchala;
             FullOldShatHatchala = oSidur.dOldFullShatHatchala;
+            iPeilutSize = 0;
             //Create Sidur
             hTable = BuildOneSidur(ref htFullEmployeeDetails, oSidur, iIndex, ref bEnableSidur);
 
@@ -577,7 +579,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             // If Peilyot exists for sidur add collapsible panel                   
             if (oSidur.htPeilut.Count > 0)
             {
-                Ax = CreateCollapsiblePanelExtender(iIndex, pnlHeader.ID, pnlContent.ID, oSidur.htPeilut.Count);
+                Ax = CreateCollapsiblePanelExtender(iIndex, pnlHeader.ID, pnlContent.ID, oSidur.htPeilut.Count, iPeilutSize);
                 tCell.Controls.Add(Ax);
             }                           
         }
@@ -605,13 +607,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //}
     protected AjaxControlToolkit.CollapsiblePanelExtender CreateCollapsiblePanelExtender(int iIndex,
                                                                                          string sPnlHeader, string sPnlContent,
-                                                                                         int iPeilutNumber)
+                                                                                         int iPeilutNumber,
+                                                                                         int iPeilutSize)
     {
         AjaxControlToolkit.CollapsiblePanelExtender Ax = new AjaxControlToolkit.CollapsiblePanelExtender();
         Ax.ID = "Ax" + iIndex;
         Ax.Collapsed = false;
         Ax.CollapsedSize = 0;
-        Ax.ExpandedSize = (iPeilutNumber * 35)+25;
+        Ax.ExpandedSize = (iPeilutSize)+25 ;
         Ax.AutoCollapse = false;
         Ax.AutoExpand = false;
         Ax.ScrollContents = false;
@@ -5786,8 +5789,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             HyperLink lnkKnisa = new HyperLink();
             lnkKnisa = AddHyperLink("lblKnisa" + iSidurIndex + lMakatNumber, e.Row.Cells[_COL_LINE_DESCRIPTION].Text, "AddHosafatKnisot(" + iSidurIndex + "," + e.Row.ClientID + ");");
-            e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(lnkKnisa);
+            e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(lnkKnisa);            
         }
+        if (e.Row.Cells[_COL_LINE_DESCRIPTION].Text.Length > 35)
+            iPeilutSize = iPeilutSize + 45;
+        else
+            iPeilutSize = iPeilutSize + 25;
         //e.Row.Cells[_COL_LINE_DESCRIPTION].ToolTip = e.Row.Cells[_COL_LINE_DESCRIPTION].Text;
     }
     protected void SetDefMinutes(GridViewRowEventArgs e, ref clKavim oKavim)

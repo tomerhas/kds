@@ -2274,13 +2274,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     
    
     protected void btnPrint_click(object sender, EventArgs e)
-    {
+    {        
         if (hidChanges.Value.ToLower() == "true")       
             btnShowPrintMsg_Click(sender, e);                    
         else
             PrintCard(sender, e);
-
-
 
         string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
         ScriptManager.RegisterStartupScript(btnPrint, this.GetType(), "PrintCard", sScript, true);  
@@ -3977,7 +3975,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             if (sTmp==string.Empty)
                                 oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse("01/01/0001 00:00:00"));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
                             else
-                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmar.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
+                             oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));//DateTime.Parse(dDateCard.ToShortDateString() + " " + sTmp); //TODO:
 
                             oDDL = (DropDownList)this.FindControl("lstSidurim").FindControl("ddlException" + iIndex);
                             oObjSidurimOvdimUpd.CHARIGA = int.Parse(oDDL.SelectedValue);
