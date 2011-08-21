@@ -200,7 +200,7 @@ namespace KdsBatch
           sStart.Append(_drPirteyOved["sifrat_bikoret"].ToString());
           sStart.Append(_drPirteyOved["shem_mish"].ToString().PadLeft(10).Substring(0, 10));
           sStart.Append(_drPirteyOved["shem_prat"].ToString().PadLeft(7).Substring(0, 7));
-          sStart.Append("00000");
+          sStart.Append("0000");
           sStart.Append(GetBlank(2));
           sStart.Append(GetBlank(1));
           sStart.Append("011");
