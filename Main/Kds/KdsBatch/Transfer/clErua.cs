@@ -52,15 +52,35 @@ namespace KdsBatch
             {
                 sHeader.Append(_iKodErua.ToString());
                 sHeader.Append(_drPirteyOved["mifal"].ToString().PadLeft(4, char.Parse("0")));
-                sHeader.Append(_drPirteyOved["maamad"].ToString().PadLeft(2, char.Parse("0")));
+                sHeader.Append("00"); //-maamad  --sHeader.Append(_drPirteyOved["maamad"].ToString().PadLeft(2, char.Parse("0")));
                 sHeader.Append("0");
                 sHeader.Append(_drPirteyOved["mispar_ishi"].ToString().PadLeft(5, char.Parse("0")));
                 sHeader.Append(_drPirteyOved["sifrat_bikoret"].ToString());
                 sHeader.Append(_drPirteyOved["shem_mish"].ToString().PadLeft(10).Substring(0,10));
                 sHeader.Append(_drPirteyOved["shem_prat"].ToString().PadLeft(7).Substring(0,7));
-                sHeader.Append("0000");
+                sHeader.Append("0001");
                 sHeader.Append("00");
                 sHeader.Append("000000000");
+                //switch (_iKodErua)
+                //{
+                //    case 413:
+                //            sHeader.Append("000000");
+                //            sHeader.Append(GetBlank(6));
+                //        break;
+                //    case 589:
+                //            sHeader.Append("00000");
+                //            sHeader.Append(GetBlank(2));
+                //            sHeader.Append(GetBlank(1));
+                //            sHeader.Append("011");
+                //            sHeader.Append("01");
+                //        break;
+                //    default: 
+                //            sHeader.Append("0001");
+                //            sHeader.Append("00");
+                //            sHeader.Append("000000000");
+                //        break;
+                //}
+            
 
                 _sHeader = sHeader.ToString();
                                 
@@ -94,6 +114,14 @@ namespace KdsBatch
         {
             //double dErech;
             string sFormat="";
+            ////int iSfarot;
+            ////if (fErech.ToString().IndexOf(".") > -1)
+            ////    iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
+            ////else
+            ////    iSfarot = fErech.ToString().Length;
+            ////if (iSfarot > (iLen - iNumDigit))
+            ////    throw new Exception("num digits of value above the permitted. wrong value=" + fErech);
+
             if (iNumDigit > 0)
             {
                 sFormat = "." + sFormat.PadRight(iNumDigit, char.Parse("0"));
@@ -102,9 +130,17 @@ namespace KdsBatch
             else { sFormat = sFormat.PadLeft(iLen , char.Parse("0")); }
 
             //dErech = clGeneral.TrimDoubleToXDigits(double.Parse(fErech.ToString()), iNumDigit);
-            return fErech.ToString(sFormat).Replace(".", "");
+            if (fErech == 0)
+                return fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
+            else return fErech.ToString(sFormat).Replace(".", "");
         }
 
+        protected bool IsEmptyErua(string sErua)
+        {
+            if (sErua.Replace("0", "").Replace(" ", "") == "")
+                return true;
+            else return false;
+        }
         protected string FormatNumberWithPoint(float fErech, int iLen, int iNumDigit)
         {
             //double dErech;

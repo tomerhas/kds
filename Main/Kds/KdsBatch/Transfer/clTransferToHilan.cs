@@ -85,8 +85,8 @@ namespace KdsBatch
                         iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                         dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
                        
-                       try
-                       {
+                       //try
+                       //{
                            iMaamad = int.Parse(dtOvdim.Rows[i]["maamad"].ToString());
                            iMaamadRashi = int.Parse(dtOvdim.Rows[i]["maamad_rashi"].ToString());
                            iDirug = int.Parse(dtOvdim.Rows[i]["dirug"].ToString());
@@ -98,11 +98,11 @@ namespace KdsBatch
                              
                            if (i%50 ==0)
                                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
-                       }
-                       catch (Exception ex)
-                       {
-                           clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
-                       }
+                       //}
+                       //catch (Exception ex)
+                       //{
+                       //    clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
+                       //}
 
                       // ClearObject();
                     }
@@ -1437,7 +1437,7 @@ namespace KdsBatch
                 oDal.AddParameter("p_Cur_list", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
-                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after ExecuteSP");
+                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before ExecuteSP");
                 oDal.ExecuteSP(clDefinitions.cProGetOvdimToTransfer, ref ds);
                 clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after ExecuteSP");
 

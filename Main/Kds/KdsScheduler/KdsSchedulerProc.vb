@@ -51,7 +51,9 @@ Module KdsSchedulerProc
     Sub Refresh_N_Sdrn()
         Dim oKDs As KdsDataImport.ClKds = New KdsDataImport.ClKds
         Dim oCalc As KdsBatch.clCalculation = New KdsBatch.clCalculation
+        Dim oCalcul As KdsBatch.MainCalc = New KdsBatch.MainCalc
         Dim oDal As KdsLibrary.DAL.clDal
+        'Dim oWsBatch As wsBatch
         Dim dt As DataTable
         Dim WhrStr As String
         Dim RetSql As String = ""
@@ -165,7 +167,9 @@ Module KdsSchedulerProc
             End If
             ''  oKDs.KdsWriteProcessLog(98, 0, 1, "check PremiaCalc: " + Now.Hour.ToString())
             If Now.Hour = 21 Then
-               oCalc.PremiaCalc()
+
+                oCalcul.PremiaCalc()
+                'oCalc.PremiaCalc()
             End If
             ''רענון טבלאות של התנועה
             If Now.Hour > 21 Then

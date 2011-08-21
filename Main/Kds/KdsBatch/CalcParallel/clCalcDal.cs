@@ -34,6 +34,7 @@ namespace KdsBatch
         private const string cProGetPremiaOvdimLechishuv = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
         private const string cProGetOvdimShguimLechishuv = "Pkg_Calculation.pro_ovdim_kelet_lechishuv";
         private const string cProPrepareNetunimLechishuv = "Pkg_Calculation.pro_prepare_netunim_lechishuv";
+        private const string cProPrepareNetunimLechishuvPremiyot = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
 
         private const string cGetNetunryChishuv = "Pkg_Calculation.pro_get_netunim_lechishuv";
         private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
@@ -340,19 +341,19 @@ namespace KdsBatch
             }
         }
 
-        public void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
-        {
+        //public void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
+        //{
 
-            clDal dal = new clDal();
-            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
-                ParameterDir.pdInput);
-            dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi,
-                ParameterDir.pdInput);
-            dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
-                ParameterDir.pdInput);
-            dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
+        //    clDal dal = new clDal();
+        //    dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
+        //        ParameterDir.pdInput);
+        //    dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi,
+        //        ParameterDir.pdInput);
+        //    dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
+        //        ParameterDir.pdInput);
+        //    dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
 
-        }
+        //}
 
         public DataTable GetPremiaCalcPopulation(ref DateTime dTarMe, ref DateTime dTarAd)
         {
@@ -562,6 +563,36 @@ namespace KdsBatch
                 throw (ex);
             }
             return dt;
+        }
+
+        public int PrepareDataLeChishuvPremiyot(int numProcess)
+        {
+             clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_num_process", ParameterType.ntOracleInteger, numProcess, ParameterDir.pdInput);
+                oDal.ExecuteSP(cProPrepareNetunimLechishuvPremiyot);
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw (ex);
+            }
+        }
+
+        public void UpdatePremiaBakashaID(int iMisparIshi, long lBakashaId, DateTime startMonth)
+        {
+
+            clDal dal = new clDal();
+            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
+                ParameterDir.pdInput);
+            dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi,
+                ParameterDir.pdInput);
+            dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
+                ParameterDir.pdInput);
+            dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
+
         }
     }
 }

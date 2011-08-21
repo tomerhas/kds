@@ -13,6 +13,7 @@ namespace KdsBatch
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,419)
       {
           _sBody = SetBody();
+          if (_sBody != null)
           PrepareLines();
       }
 
@@ -54,9 +55,12 @@ namespace KdsBatch
               sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode()), 4, 2));
               sErua419.Append(GetBlank(5));
 
-             
-           ListErua.Add(sErua419.ToString());
-           return ListErua;
+              if (!IsEmptyErua(sErua419.ToString()))
+              {
+                  ListErua.Add(sErua419.ToString());
+                  return ListErua;
+              }
+              else return null;
            }
            catch (Exception ex)
            {

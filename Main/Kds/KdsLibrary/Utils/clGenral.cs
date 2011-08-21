@@ -883,6 +883,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Treated = 1
         }
 
+        public enum enCalcType
+        {
+            MonthlyCalc = 1, PremiotCalc = 2
+        }
         public enum enYechidaIrgunit
         {
             RishumArtzi = 63321,

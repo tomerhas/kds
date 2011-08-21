@@ -13,7 +13,8 @@ namespace KdsBatch
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
       {
            _sBody = SetBody();
-          PrepareLines();
+          if (_sBody!=null)
+            PrepareLines();
       }
 
       protected override List<string> SetBody()
@@ -33,9 +34,11 @@ namespace KdsBatch
 
               sErua462.Append(GetBlank(60));
 
-
-           ListErua.Add(sErua462.ToString());
-           return ListErua;
+              if (!IsEmptyErua(sErua462.ToString()))
+              {
+                  ListErua.Add(sErua462.ToString());
+                  return ListErua;
+              }else return null;
            }
            catch (Exception ex)
            {

@@ -113,17 +113,17 @@ namespace KdsBatch
             GetNetunimLechishuv(TarMe, TarAd, sMaamad, rizaGorefet, mis_ishi, numProcess);
 
              dtOvdimLechishuv = dsNetuneyChishuv.Tables["Ovdim"]; 
-            if (mis_ishi == -1) //premiot
-            {
-                if (dtOvdimLechishuv.Rows.Count > 0)
-                {
-                    drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH ASC");
-                    _TarMe = DateTime.Parse(drs[0]["CHODESH"].ToString());
+            ////if (mis_ishi == -1) //premiot
+            ////{
+            ////    if (dtOvdimLechishuv.Rows.Count > 0)
+            ////    {
+            ////        drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH ASC");
+            ////        _TarMe = DateTime.Parse(drs[0]["CHODESH"].ToString());
 
-                    drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH DESC");
-                    _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
-                }
-            }
+            ////        drs = dtOvdimLechishuv.Select("CHODESH", "CHODESH DESC");
+            ////        _TarAd = DateTime.Parse(drs[0]["CHODESH"].ToString()).AddMonths(1).AddDays(-1);
+            ////    }
+            ////}
             //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before InitGeneralData");
             InitGeneralData();
             //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After InitGeneralData");

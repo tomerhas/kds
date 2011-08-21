@@ -15,7 +15,8 @@ namespace KdsBatch
             : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
       {
            _sBody = SetBody();
-          PrepareLines();
+           if (_sBody != null)
+            PrepareLines();
       }
 
       protected override void SetHeader()
@@ -137,7 +138,9 @@ namespace KdsBatch
                  
               }
           
-           return _ListErua;
+            if (_ListErua.Count>0)
+                return _ListErua;
+            return null;
            }
            catch (Exception ex)
            {
@@ -168,8 +171,11 @@ namespace KdsBatch
               sDataEt.Append(sSimanKamut);
               sDataEt.Append(FormatNumber(fMechir, 10, 2));
               sDataEt.Append(sSimanMechir);
-             
-              _ListErua.Add(sDataEt.ToString());
+
+              if (!IsEmptyErua(sDataEt.ToString()))
+              {
+                  _ListErua.Add(sDataEt.ToString());
+              }
             
           }
           catch (Exception ex)

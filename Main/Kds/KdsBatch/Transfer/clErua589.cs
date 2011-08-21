@@ -14,7 +14,8 @@ namespace KdsBatch
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,589)
       {
           _sBody = SetBody();
-          PrepareLines();
+          if (_sBody != null)
+            PrepareLines();
       }
 
       protected override List<string> SetBody()
@@ -171,10 +172,14 @@ namespace KdsBatch
               }
               while (dTarMe <= dTarAd);
 
-           sErua589.Append(GetBlank(74-iCountDays)); 
-
-           ListErua.Add(sErua589.ToString());
-           return ListErua;
+              sErua589.Append(GetBlank(31));
+        //   sErua589.Append(GetBlank(74-iCountDays));
+           if (!IsEmptyErua(sErua589.ToString()))
+           {
+               ListErua.Add(sErua589.ToString());
+               return ListErua;
+           }
+           else return null;
            }
            catch (Exception ex)
            {
@@ -182,6 +187,36 @@ namespace KdsBatch
                throw ex;
            }
 
+      }
+
+      protected override void SetHeader()
+      {
+          StringBuilder sStart = new StringBuilder();
+
+          sStart.Append("589");
+          sStart.Append(_drPirteyOved["mifal"].ToString().PadLeft(4, char.Parse("0")));
+          sStart.Append("000");
+          sStart.Append(_drPirteyOved["mispar_ishi"].ToString().PadLeft(5, char.Parse("0")));
+          sStart.Append(_drPirteyOved["sifrat_bikoret"].ToString());
+          sStart.Append(_drPirteyOved["shem_mish"].ToString().PadLeft(10).Substring(0, 10));
+          sStart.Append(_drPirteyOved["shem_prat"].ToString().PadLeft(7).Substring(0, 7));
+          sStart.Append("00000");
+          sStart.Append(GetBlank(2));
+          sStart.Append(GetBlank(1));
+          sStart.Append("011");
+          sStart.Append("01");
+          _sHeader = sStart.ToString();
+
+      }
+
+      protected override void SetFooter()
+      {
+          StringBuilder sEnd = new StringBuilder();
+ 
+       //   sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+        //  sEnd.Append(_dMonth.Year.ToString());
+          sEnd.Append(GetBlank(5));
+          _sFooter = sEnd.ToString();
       }
 
       private DataTable GetChishuvYomiToOved(long lBakashaId, int iMisparIshi)

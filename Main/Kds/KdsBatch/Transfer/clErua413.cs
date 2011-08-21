@@ -15,6 +15,7 @@ namespace KdsBatch
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,413)
       {
           _sBody = SetBody();
+          if (_sBody != null)
           PrepareLines();
       }
 
@@ -39,7 +40,6 @@ namespace KdsBatch
       {
           StringBuilder sEnd = new StringBuilder();
 
-          sEnd.Append(GetBlank(12));
           sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
           sEnd.Append(_dMonth.Year.ToString());
           sEnd.Append(GetBlank(37));
@@ -103,7 +103,9 @@ namespace KdsBatch
 
               }
 
-              return _ListErua;
+              if (_ListErua.Count > 0)
+                  return _ListErua;
+              else return null;
 
           }
            catch (Exception ex)
@@ -125,8 +127,9 @@ namespace KdsBatch
               sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
               sErua413.Append(GetBlank(17));
               sErua413.Append(FormatNumber(fErech, iLen, iNumDigit));
-              
-              _ListErua.Add(sErua413.ToString());
+              sErua413.Append(GetBlank(12));
+              if (!IsEmptyErua(sErua413.ToString()))
+                _ListErua.Add(sErua413.ToString());
           }
       }
     }

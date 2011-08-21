@@ -18,6 +18,10 @@ namespace KdsService
         [OperationContract]
         void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad,
             bool bRitzatTest, bool bRitzaGorefet);
+
+        [OperationContract]
+        void CalcBatchPremiyot(long lRequestNum);
+
         [OperationContract]
         void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, 
             bool bRitzatTest, bool bRitzaGorefet);

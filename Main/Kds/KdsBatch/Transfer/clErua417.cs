@@ -13,7 +13,8 @@ namespace KdsBatch
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,417)
       {
           _sBody = SetBody();
-          PrepareLines();
+          if (_sBody != null)
+            PrepareLines();
       }
 
       protected override List<string> SetBody()
@@ -73,10 +74,14 @@ namespace KdsBatch
                 sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode()),4,0));
                 sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaShabat.GetHashCode()),4,0));
 
-              sErua417.Append("-----");
+              sErua417.Append("     ");
 
-               ListErua.Add(sErua417.ToString());
-               return ListErua;
+              if (!IsEmptyErua(sErua417.ToString()))
+              {
+                  ListErua.Add(sErua417.ToString());
+                  return ListErua;
+              }
+              else return null;
            }
            catch (Exception ex)
            {

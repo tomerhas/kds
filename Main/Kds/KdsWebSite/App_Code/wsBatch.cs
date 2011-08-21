@@ -53,8 +53,15 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
         return "OK";
     }
-
-
+    
+    [WebMethod(EnableSession = true)]
+    public string CalcBatchPremiyot(long lRequestNum)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.CalcBatchPremiyot(lRequestNum);
+        client.Close();
+        return "OK";
+    }
     [WebMethod(EnableSession = true)]
     public string CalcBatch(long lRequestNum, string sAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
     {

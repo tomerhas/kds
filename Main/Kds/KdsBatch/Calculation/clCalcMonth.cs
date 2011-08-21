@@ -174,6 +174,7 @@ namespace KdsBatch
         {
             float zmanHafsaka,zmanSidur;
             clCalcPeilut oPeilut;
+            DateTime taarich = DateTime.Now;
             try
             {
                 oPeilut = new clCalcPeilut(_iMisparIshi, _lBakashaId, _oGeneralData);
@@ -182,14 +183,22 @@ namespace KdsBatch
                 clCalcData.DtYemeyAvoda.Columns.Add("ZMAN_HAFSAKA_BESIDUR", System.Type.GetType("System.Single"));
                 for (int i = 0; i < clCalcData.DtYemeyAvoda.Rows.Count; i++)
                 {
-                    if (clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString() != "")
+                    try
                     {
-                        zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(clCalcData.DtYemeyAvoda.Rows[i]["mispar_sidur"].ToString()), DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString()));
-                        zmanSidur = float.Parse((DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
-                        clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
-                        clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_HAFSAKA_BESIDUR"] = zmanHafsaka;
+                        if (clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString() != "")
+                        {
+                            taarich = DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["taarich"].ToString());
+                            zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(clCalcData.DtYemeyAvoda.Rows[i]["mispar_sidur"].ToString()), DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_sidur"].ToString()));
+                            zmanSidur = float.Parse((DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_gmar_letashlum"].ToString()) - DateTime.Parse(clCalcData.DtYemeyAvoda.Rows[i]["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                            clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
+                            clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_HAFSAKA_BESIDUR"] = zmanHafsaka;
+                        }
+                        //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
                     }
-                    //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
+                    catch (Exception ex)
+                    {
+                        clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", 0, taarich, "AddRowZmanLeloHafsaka: " + ex.Message);
+                    }
                 }
             }
             catch (Exception ex)

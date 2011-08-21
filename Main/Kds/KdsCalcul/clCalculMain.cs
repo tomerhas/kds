@@ -6,7 +6,7 @@ using System.Text;
 using KdsBatch;
 using KdsLibrary;
 //using System.Threading;
-
+using KdsLibrary.BL;
 using System.Threading.Tasks;
 using System.Data;
 namespace KdsCalcul
@@ -58,6 +58,12 @@ namespace KdsCalcul
             bRitzaGorefet = RitzaGorefet;
             iNumProcess = numProcess;
         }
+
+        public clCalculMain(long RequestNum, int numProcess)
+        {
+            lRequestNum = RequestNum;
+            iNumProcess = numProcess;
+        }
         public void RunCalcBatchProcess()
         {
            
@@ -100,6 +106,53 @@ namespace KdsCalcul
                 SingleGeneralData.ResetObject();
             }
          
+        }
+
+        public void RunCalcBatchProcessPremiyot()
+        {
+            MainCalc oMainCalc;
+            clBatch obatch = new clBatch();
+            int numFailed = 0;
+            int numSucceed = 0;
+           //  int seq = 0;
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PREMIYOT START PROCESS " + iNumProcess);
+                oMainCalc = new MainCalc(lRequestNum, iNumProcess);
+                                           
+                if ((oMainCalc != null) && (oMainCalc.Ovdim != null) && (oMainCalc.Ovdim.Count > 0))
+                {
+                    #region not parallel
+                    oMainCalc.Ovdim.ForEach(CurrentOved =>
+                    {
+                        try
+                        {
+                            oMainCalc.CalcOvedPremiya(CurrentOved);
+                            CurrentOved.Dispose();
+                            CurrentOved = null;
+                            numSucceed += 1;
+                        }
+                        catch (Exception ex)
+                        {
+                            numFailed += 1;
+                            clLogBakashot.InsertErrorToLog(lRequestNum, CurrentOved.Mispar_ishi, "E", 0,CurrentOved.Taarich, "RunCalcBatchProcessPremiyot: " + ex.Message);
+                        }
+                    });
+                    #endregion
+                }
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PREMIYOT END PROCESS " + iNumProcess);
+
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchProcessPremiyot " + iNumProcess + ": " + ex.Message);
+            }
+            finally
+            {
+                SingleGeneralData.ResetObject();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed);
+            }
         }
 
     }

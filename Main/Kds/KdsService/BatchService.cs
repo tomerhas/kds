@@ -40,7 +40,9 @@ namespace KdsService
             }
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
-        private int RunKdsCalcul(FileInfo FileToRun, long BakashaId, DateTime FromDate, DateTime ToDate, string Maamad, bool RitzaTest, bool RitzaGarefet, int CountOfProcesses)
+
+       //private int RunKdsCalcul(FileInfo FileToRun, long BakashaId, DateTime FromDate, DateTime ToDate, string Maamad, bool RitzaTest, bool RitzaGarefet, int CountOfProcesses)
+        private int RunKdsCalcul(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
         {
             try
             {
@@ -52,8 +54,7 @@ namespace KdsService
                     _process.StartInfo.UseShellExecute = false;
                     _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
                     _process.StartInfo.RedirectStandardError = true;
-                    _process.StartInfo.Arguments = BakashaId.ToString() + " " + FromDate.ToShortDateString() + " " + ToDate.ToShortDateString() + " " +
-                                                  Maamad + " " + RitzaTest.GetHashCode().ToString() + " " + RitzaGarefet.GetHashCode().ToString() + " " + i.ToString();
+                    _process.StartInfo.Arguments = sArguments + " " + i.ToString();
                     _process.Start();
                     _process.PriorityClass = ProcessPriorityClass.BelowNormal;
                     clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, "KdsCalul was run for " + i.ToString() + " time(s)");
@@ -64,10 +65,11 @@ namespace KdsService
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunCalcBatchParallel: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunKdsCalcul: " + ex.Message);
                 return clGeneral.enStatusRequest.Failure.GetHashCode();
             }
         }
+
         private void CheckKdsCalculTerminated(FileInfo KdsCalcul, long BakashaID, int Status)
         {
             Process[] List;
@@ -91,6 +93,7 @@ namespace KdsService
             clCalcDal oCalcDal = new clCalcDal();
             DateTime dFrom;
             DataTable dtParametrim;
+            string sArguments = "";
             int result, iStatus = 0;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
@@ -116,7 +119,12 @@ namespace KdsService
                 if (result > 0) 
                 {
                     if (KdsCalcul.Exists)
-                        iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
+                    {
+                        sArguments = clGeneral.enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
+                                                 sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
+                        iStatus = RunKdsCalcul(lRequestNum,KdsCalcul, sArguments, iCntProcesses);
+                      //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
+                    }
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }
             }
@@ -134,6 +142,48 @@ namespace KdsService
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
 
+        private void RunCalcBatchPremiyot(object param)
+        {
+            clUtils oUtils = new clUtils();
+            clCalcDal oCalcDal = new clCalcDal();
+            int result, iStatus = 0;
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            string path, exfile, sArguments;
+            FileInfo KdsCalcul = null;
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
+                path = ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
+                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
+                KdsCalcul = new FileInfo(path + exfile);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+                result = oCalcDal.PrepareDataLeChishuvPremiyot(iCntProcesses);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                if (result > 0)
+                {
+                    if (KdsCalcul.Exists)
+                    {
+                        sArguments = clGeneral.enCalcType.PremiotCalc.GetHashCode() + " "+ lRequestNum.ToString();
+                        iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                    }
+                    else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                }
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunCalcBatchPremiyot: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                CheckKdsCalculTerminated(KdsCalcul, lRequestNum, iStatus);
+            }
+            //LogThreadEnd("CalcBatchParallel", lRequestNum);
+        }
         private void RunCalcBatchThread(object param)
         {
             object[] args = param as object[];
@@ -360,6 +410,12 @@ namespace KdsService
                 bRitzatTest, bRitzaGorefet });
         }
 
+        public void CalcBatchPremiyot(long lRequestNum)
+        {
+            Thread runThread = new Thread(new ParameterizedThreadStart(RunCalcBatchPremiyot));
+            LogThreadStart("CalcBatchPremiyot", lRequestNum);
+            runThread.Start(new object[] { lRequestNum });
+        }
         public void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
         {
             Thread runThread = new Thread(

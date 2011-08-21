@@ -36,12 +36,13 @@ namespace KdsBatch
         public MainCalc()
         {
         }
-        //public MainCalc(long iBakashaId)
-        //{
-        //    //_Ovdim = new List<Oved>();
-        //   // SetListOvdimLechishuvPremia(iBakashaId);
-
-        //}
+        public MainCalc(long iBakashaId, int numProcess)
+        {
+            _Ovdim = new List<Oved>();
+            _iBakashaId = iBakashaId;
+            _numProcess = numProcess;
+            SetListOvdimLechishuvPremia(iBakashaId, numProcess);
+        }
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc, int numProcess)
         {
             _iBakashaId = iBakashaId;
@@ -90,7 +91,7 @@ namespace KdsBatch
             }
         }
 
-        private void SetListOvdimLechishuvPremia(long lBakashaId)
+        private void SetListOvdimLechishuvPremia(long lBakashaId,int numProcess)
         {
             Oved ItemOved;
             DataTable dtOvdim = new DataTable();
@@ -98,12 +99,12 @@ namespace KdsBatch
             GeneralData oGeneralData;
             try
             {
-                _Ovdim = new List<Oved>();
-                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1,1);
+
+                oGeneralData = SingleGeneralData.GetInstance(DateTime.Now, DateTime.Now, "", false, -1, numProcess);
                 dtOvdim = oGeneralData.dtOvdimLechishuv;
                 for (int i = 0; i < dtOvdim.Rows.Count; i++)
                 {
-                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["chodesh"].ToString()), DateTime.Now, DateTime.Now, lBakashaId);
+                    ItemOved = new Oved(int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString()), DateTime.Now, DateTime.Now, lBakashaId);
                     _Ovdim.Add(ItemOved);
                 }
 
@@ -496,69 +497,175 @@ namespace KdsBatch
             }
         }
 
+        public void CalcOvedPremiya(Oved oOved)
+        {
+            clCalcDal oCalcDal = new clCalcDal();
 
-        //public void PremiaCalc()
-        //{
-        //    clBatch obatch = new clBatch();
-        //    clCalcDal oCalcDal = new clCalcDal();
-        //    List<Oved> ListOvdim = new List<Oved>();
-        //    CalcMonth oMonth;
-        //    long lBakashaId = 0;
-        //    int numFailed = 0;
-        //    int numSucceed = 0;
-        //    int seq = 0;
+            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
 
-        //    try
-        //    {
+            try
+            {
+                CalcOved(oOved);
+                SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
 
-        //        seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
-        //        lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
-        //        SetListOvdimLechishuvPremia(lBakashaId);
-        //        clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
+                //שמירת נתוני החישוב לעובד
+                DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+                DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+                SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
 
-        //        if (_Ovdim != null)
-        //        {
-        //            foreach (Oved oOved in _Ovdim)
-        //            {
-        //                try
-        //                {
-        //                    oMonth = new CalcMonth(oOved);
-        //                    oMonth.CalcMonthOved();
+                oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
 
-        //                    SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
-        //                    //שמירת נתוני החישוב לעובד
-        //                    SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
+                _collChishuvChodesh = null;
+                _collChishuvYomi = null;
+                _collChishuvSidur = null;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+                oOved.Dispose();
+            }
+        }
 
-        //                    oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
-        //                    numSucceed += 1;
-        //                }
-        //                catch (Exception ex)
-        //                {
-        //                    numFailed += 1;
-        //                    clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
-        //                        (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-        //                        oOved.Month, ex.Message);
-        //                    clLogBakashot.InsertErrorToLog();
-        //                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;
-        //                }
-        //            }
-        //        }
-        //        else status = clGeneral.enBatchExecutionStatus.Failed;
-        //        KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
-        //        obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        clLogBakashot.SetError(lBakashaId, null, "E",
-        //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-        //                    DateTime.Now, ex.Message);
-        //        clLogBakashot.InsertErrorToLog();
-        //    }
-        //    finally
-        //    {
-        //        SingleGeneralData.ResetObject();
-        //    }
-        //}
+        public void PremiaCalc()
+        {
+           clBatch obatch = new clBatch();
+            clCalcDal oCalcDal = new clCalcDal();
+            long lBakashaId = 0;
+            int numFailed = 0;
+            int numSucceed = 0;
+            int seq = 0;
+            int result=0;
+            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+       
+            try
+            {
+
+                seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
+                lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
+               // result = oCalcDal.PrepareDataLeChishuvPremiyot();
+                clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
+                if (result > 0)
+                {
+                    try
+                    {
+                        SetListOvdimLechishuvPremia(lBakashaId,1);
+
+                        if (Ovdim != null && Ovdim.Count > 0)
+                        {
+                            #region not parallel
+                            Ovdim.ForEach(CurrentOved =>
+                            {
+                                try
+                                {
+                                    CalcOved(CurrentOved);
+                                    SaveSidurim(CurrentOved.Mispar_ishi, CurrentOved.DtYemeyAvoda);
+
+                                    //שמירת נתוני החישוב לעובד
+                                    DataSetTurnIntoUdtChodesh(CurrentOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                                    DataSetTurnIntoUdtYom(CurrentOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+                                    DataSetTurnIntoUdtSidur(CurrentOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+                                    SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
+
+                                    oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, lBakashaId, CurrentOved.Month);
+
+                                    numSucceed += 1;
+                                    CurrentOved.Dispose();
+                                    CurrentOved = null;
+                                }
+                                catch (Exception ex)
+                                {
+                                    numFailed += 1;
+                                    clLogBakashot.SetError(lBakashaId, CurrentOved.Mispar_ishi, "E",
+                                        (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+                                        CurrentOved.Month, ex.Message);
+                                    clLogBakashot.InsertErrorToLog();
+                                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;
+                                    CurrentOved.Dispose();
+                                    CurrentOved = null;
+                                }
+                                
+                            });
+                            #endregion
+                            //#region parallel
+                            //Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
+                            //{
+                            //    oMainCalc.CalcOved(CurrentOved);
+                            //    CurrentOved.Dispose();
+                            //    CurrentOved = null;
+
+                            //});
+                            //#endregion
+                        }
+                      
+                    }
+                    catch (Exception ex)
+                    {
+                        status = clGeneral.enBatchExecutionStatus.Failed;
+                        clGeneral.LogError(ex);
+                    }
+                    finally
+                    {
+                        SingleGeneralData.ResetObject();
+                    }
+                }
+                else status = clGeneral.enBatchExecutionStatus.Failed;
+
+                KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+                obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+
+            //    if (_Ovdim != null)
+            //    {
+            //        foreach (Oved oOved in _Ovdim)
+            //        {
+            //            try
+            //            {
+            //                oMonth = new CalcMonth(oOved);
+            //                oMonth.CalcMonthOved();
+
+            //                SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+            //                //שמירת נתוני החישוב לעובד
+            //                SaveChishuv(oOved.iBakashaId, oOved.Mispar_ishi);
+
+            //                oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
+            //                numSucceed += 1;
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                numFailed += 1;
+            //                clLogBakashot.SetError(lBakashaId, oOved.Mispar_ishi, "E",
+            //                    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+            //                    oOved.Month, ex.Message);
+            //                clLogBakashot.InsertErrorToLog();
+            //                status = clGeneral.enBatchExecutionStatus.PartialyFinished;
+            //            }
+            //        }
+            //    }
+            //    else status = clGeneral.enBatchExecutionStatus.Failed;
+            //    KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+            //    obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
+            //}
+            //catch (Exception ex)
+            //{
+            //    clLogBakashot.SetError(lBakashaId, null, "E",
+            //                (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+            //                DateTime.Now, ex.Message);
+            //    clLogBakashot.InsertErrorToLog();
+            //}
+            //finally
+            //{
+            //    SingleGeneralData.ResetObject();
+            //}
+        }
 
         private DateTime GetEndOfMonth(DateTime date)
         {
