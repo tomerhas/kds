@@ -13,13 +13,13 @@ namespace KdsService
         /// </summary>
         static void Main()
         {
-#if DEBUG
-            var service = new Listener();
-            service.StartListener();
-            System.Windows.Forms.Application.Run(new System.Windows.Forms.Form());
-            service.StopListener();
-            return;
-#endif
+//#if DEBUG
+//            var service = new Listener();
+//            service.StartListener();
+//            System.Windows.Forms.Application.Run(new System.Windows.Forms.Form());
+//            service.StopListener();
+//            return;
+//#endif
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
 			{ 
