@@ -3441,11 +3441,13 @@ namespace KdsBatch
             float fSumDakotRechiv, fPremiaShabat, fPremiaYomit,fMichsaChodshit, fPremiaShishi, fDakotNochehut;
             try
             {
+                fSumDakotRechiv = 0;
                 if (_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30)
                 {
                     fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode().ToString()));
                     fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
-                    fSumDakotRechiv = Math.Min(fDakotNochehut * _oGeneralData.objParameters.fBasisLechishuvPremia, fMichsaChodshit * _oGeneralData.objParameters.fMaxPremiatNehiga);
+                    if (fMichsaChodshit>0)
+                        fSumDakotRechiv = Math.Min((fDakotNochehut / fMichsaChodshit) * _oGeneralData.objParameters.fBasisLechishuvPremia, _oGeneralData.objParameters.fMaxPremiatNehiga);
                 }
                 else
                 {

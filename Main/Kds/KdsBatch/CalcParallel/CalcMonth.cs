@@ -3431,12 +3431,13 @@ namespace KdsBatch
             try
             {
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
-
+                fSumDakotRechiv = 0;
                 if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
                 {
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutBefoal); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode());
                     fMichsaChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
-                    fSumDakotRechiv = Math.Min(fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia, fMichsaChodshit * objOved.objParameters.fMaxPremiatNehiga);
+                    if (fMichsaChodshit>0)
+                        fSumDakotRechiv = Math.Min((fDakotNochehut /fMichsaChodshit) * objOved.objParameters.fBasisLechishuvPremia,  objOved.objParameters.fMaxPremiatNehiga);
                 }
                 else
                 {

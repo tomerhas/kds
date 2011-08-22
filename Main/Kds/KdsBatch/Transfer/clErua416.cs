@@ -146,7 +146,7 @@ namespace KdsBatch
                {
                    sErua416.Append(GetBlank(4));
                }
-               sErua416.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode())/60),5,1));
+               sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode()),5,1));
            }
            else 
            {
