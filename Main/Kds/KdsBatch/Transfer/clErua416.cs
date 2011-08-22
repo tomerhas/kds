@@ -89,7 +89,20 @@ namespace KdsBatch
 
            if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
            {
-               sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ChofeshZchut.GetHashCode()),4,2));
+               fErech= GetErechRechiv(clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode());
+               switch (_iGil)
+               {
+                   case 1: //clGeneral.enKodGil.enKashish.GetHashCode():
+                        fErech= fErech/444;
+                       break;
+                   case 2: //clGeneral.enKodGil.enKshishon.GetHashCode():
+                        fErech= fErech/480;
+                       break;
+                   case 0: //clGeneral.enKodGil.enTzair.GetHashCode():
+                        fErech= fErech/516;
+                       break;
+               }
+               sErua416.Append(FormatNumber(fErech, 4, 2));//ChofeshZchut
                sErua416.Append(GetBlank(4));
                sErua416.Append(GetBlank(4));
                if (_iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode())

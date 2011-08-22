@@ -68,7 +68,7 @@ namespace KdsBatch
                   sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode()) / 60), 4, 1));
 
                   fErech = GetErechRechiv(clGeneral.enRechivim.SachLina.GetHashCode());
-                  fErech += GetErechRechiv(clGeneral.enRechivim.SachLinaKfula.GetHashCode()) * 6;
+                  fErech += GetErechRechiv(clGeneral.enRechivim.SachLinaKfula.GetHashCode());
                   sErua415.Append(FormatNumber(fErech, 4, 1));
 
                   if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() &&

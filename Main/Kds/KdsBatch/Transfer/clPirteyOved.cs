@@ -12,6 +12,7 @@ namespace KdsBatch
         public int iMaamadRashi { get; set; }
         public int iDirug { get; set; }
         public int iDarga { get; set; }
+        public int iGil { get; set; }
         public long iBakashaId { get; set; }
         public string sChodeshIbud { get; set; }
 
@@ -38,7 +39,7 @@ namespace KdsBatch
             iBakashaId= BakashaId;
             _drPirteyOved = drPirteyOved;
             _dtRechivim = dtDetailsChishuv;
-
+          //  iGil =int.Parse(drPirteyOved["gil"].ToString());
             InitializeErueyOved();
         }
 
