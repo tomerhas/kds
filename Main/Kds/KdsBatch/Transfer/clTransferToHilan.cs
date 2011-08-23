@@ -94,7 +94,7 @@ namespace KdsBatch
                            if (i==0)
                             sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                           _PirteyOved.Add(new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, dtOvdim.Rows[i], dtRechivim));
+                           _PirteyOved.Add(new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i], dtRechivim));
                              
                            if (i%50 ==0)
                                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);

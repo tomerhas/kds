@@ -9,9 +9,11 @@ namespace KdsBatch
 {
   public  class clErua462:clErua
     {
-      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      private DataTable dtChishuvYomi;
+      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
       {
+          dtChishuvYomi = dtChishuv;
            _sBody = SetBody();
           if (_sBody!=null)
             PrepareLines();
@@ -21,16 +23,17 @@ namespace KdsBatch
       { 
           List<string> ListErua=new List<string>();
           StringBuilder sErua462 = new StringBuilder();
-          float fErech = 0;
+          DataRow[] drYamim;
+        //  float fErech = 0;
           try
           {
-              
-              fErech = clCalcData.GetSumErechRechiv(_dtDetailsChishuv.Compute("count(MISPAR_ISHI)", "MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')"));
 
-              sErua462.Append(FormatNumber(fErech, 4, 2));
+            //  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("count(TAARICH)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')"));
+              drYamim = dtChishuvYomi.Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
+              sErua462.Append(FormatNumber(drYamim.Length, 4, 2));
 
               sErua462.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode())/60), 4, 1));
-              sErua462.Append(FormatNumber((GetErechRechiv( clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 0));
+              sErua462.Append(FormatNumber((GetErechRechiv( clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 1));
 
               sErua462.Append(GetBlank(61));
 

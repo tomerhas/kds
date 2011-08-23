@@ -136,7 +136,7 @@
             </table>
             <br />
                <span class="TitleLable">ריכוז עבודה חודשי:</span><br />                            
-               <asp:Panel ID="pnlTotalMonthly"  height="129px" width="950px" dir="ltr"  runat="server" ScrollBars="Vertical">   
+               <asp:Panel ID="pnlTotalMonthly"  height="230px" width="950px" dir="ltr"  runat="server" ScrollBars="Vertical">   
                  <asp:GridView ID="grdTotalMonthly" runat="server"  GridLines="none" 
                        CssClass="Grid"   AllowPaging="false" AutoGenerateColumns="false"  
                        Width="930px"  onrowdatabound="grdTotalMonthly_RowDataBound" EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-CssClass="GridHeader">

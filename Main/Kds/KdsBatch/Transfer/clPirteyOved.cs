@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using KdsLibrary;
+using KdsLibrary.DAL;
 namespace KdsBatch
 {
     public class PirteyOved
@@ -14,6 +15,7 @@ namespace KdsBatch
         public int iDarga { get; set; }
         public int iGil { get; set; }
         public long iBakashaId { get; set; }
+        public long iBakashaIdRizatChishuv { get; set; }
         public string sChodeshIbud { get; set; }
 
         public clEruaDataEt oDataEt { get; set; }
@@ -30,7 +32,8 @@ namespace KdsBatch
 
         private DataRow _drPirteyOved;
         private DataTable _dtRechivim;
-        public PirteyOved(int Maamad, int MaamadRashi, int Dirug, int Darga, long BakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+        private DataTable _dtChishuv;
+        public PirteyOved(int Maamad, int MaamadRashi, int Dirug, int Darga, long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved, DataTable dtDetailsChishuv)
         {
             iMaamad = Maamad;
             iMaamadRashi = MaamadRashi;
@@ -39,6 +42,7 @@ namespace KdsBatch
             iBakashaId= BakashaId;
             _drPirteyOved = drPirteyOved;
             _dtRechivim = dtDetailsChishuv;
+            iBakashaIdRizatChishuv = lRequestNumToTransfer;
           //  iGil =int.Parse(drPirteyOved["gil"].ToString());
             InitializeErueyOved();
         }
@@ -54,8 +58,9 @@ namespace KdsBatch
                 }
                 else
                 {
-                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim);
-                    oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim);
+                    _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
+                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                    oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
 
                     if (iDirug != 82 && iDirug != 83)
                     {
@@ -87,6 +92,28 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw(ex);
+            }
+        }
+
+        private DataTable GetChishuvYomiToOved(int iMisparIshi)
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, iBakashaIdRizatChishuv, ParameterDir.pdInput);
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+                oDal.ExecuteSP(clDefinitions.cProGetChishuvYomiToOved, ref  dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                throw ex;
             }
         }
     }
