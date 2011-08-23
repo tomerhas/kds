@@ -212,11 +212,12 @@ namespace KdsBatch
       protected override void SetFooter()
       {
           StringBuilder sEnd = new StringBuilder();
+          DateTime startDate =DateTime.Parse("01/"+_dMonth.Month.ToString()+"/" + _dMonth.Year.ToString());
 
-          sEnd.Append("01");
-          sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
-          sEnd.Append(_dMonth.Year.ToString());
+          sEnd.Append(startDate.ToString("ddMMyyyy"));
+          sEnd.Append(startDate.AddMonths(1).AddDays(-1).ToString("ddMMyyyy"));
           sEnd.Append(GetBlank(5));
+
           _sFooter = sEnd.ToString();
       }
 

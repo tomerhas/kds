@@ -40,8 +40,8 @@ namespace KdsBatch
                }
                else { sErua417.Append(GetBlank(4)); }
 
-               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,1));
-               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,1));
+               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,0));
+               sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));          //sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));            // sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));            // sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErev.GetHashCode()),4,0));
@@ -73,8 +73,8 @@ namespace KdsBatch
                 sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremyaNamlak.GetHashCode()),4,0));
                 sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode()),4,0));
                 sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaShabat.GetHashCode()),4,0));
-
-              sErua417.Append("     ");
+                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremyaRegila.GetHashCode()), 5, 0));
+              //sErua417.Append("     ");
 
               if (!IsEmptyErua(sErua417.ToString()))
               {

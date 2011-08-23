@@ -62,9 +62,9 @@ namespace KdsBatch
            try
            {
                sChodeshIbud = string.Empty;
-               sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.UTF8);
-               sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim, false, Encoding.UTF8);
-               sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.UTF8);
+               sFileStrS = new StreamWriter(sPathFile + sFileNameSchirim, false, Encoding.Default);
+               sFileStrCh = new StreamWriter(sPathFile + sFileNameChaverim, false, Encoding.Default);
+               sFileStrC = new StreamWriter(sPathFile + sFileNameChozim, false, Encoding.Default);
                
 
                try
@@ -109,8 +109,8 @@ namespace KdsBatch
 
                    if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
                    {
-                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.UTF8);
-                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.UTF8);
+                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                    }
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });

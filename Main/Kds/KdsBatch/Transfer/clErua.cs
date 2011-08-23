@@ -118,13 +118,13 @@ namespace KdsBatch
         {
             //double dErech;
             string sFormat="";
-            ////int iSfarot;
-            ////if (fErech.ToString().IndexOf(".") > -1)
-            ////    iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
-            ////else
-            ////    iSfarot = fErech.ToString().Length;
-            ////if (iSfarot > (iLen - iNumDigit))
-            ////    throw new Exception("num digits of value above the permitted. wrong value=" + fErech);
+            int iSfarot;
+            if (fErech.ToString().IndexOf(".") > -1)
+                iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
+            else
+                iSfarot = fErech.ToString().Length;
+            if (iSfarot > (iLen - iNumDigit))
+                throw new Exception("num digits of value above the permitted. wrong value=" + fErech);
 
             if (iNumDigit > 0)
             {

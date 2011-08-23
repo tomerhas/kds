@@ -49,11 +49,11 @@ namespace KdsBatch
                   sErua419.Append(FormatNumber(fErech, 4, 2));
               }
               else { sErua419.Append(GetBlank(4)); }
-
-              sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode()), 4, 2));
+              sErua419.Append(GetBlank(4));
+              sErua419.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode()), 4, 2));
               sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode()), 4, 2));
-              sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode()), 4, 2));
-              sErua419.Append(GetBlank(5));
+              sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode()), 5, 2));
+             // sErua419.Append(GetBlank(5));
 
               if (!IsEmptyErua(sErua419.ToString()))
               {
