@@ -25,23 +25,9 @@
           <DataField>ENDTIME</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="STARTTIME_YAEL">
-          <DataField>STARTTIME_YAEL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DELTA">
-          <DataField>DELTA</DataField>
-          <rd:TypeName>System.TimeSpan</rd:TypeName>
-        </Field>
-        <Field Name="ENDTIME_YAEL">
-          <DataField>ENDTIME_YAEL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="start_realtime">
-          <Value>=Code.GetRealTime(CDate(Fields!TAARICH.Value),Fields!STARTTIME_YAEL.Value)</Value>
-        </Field>
-        <Field Name="end_realtime">
-          <Value>=Code.GetRealTime(Fields!TAARICH.Value,Fields!ENDTIME_YAEL.Value)</Value>
+        <Field Name="DELTATIME">
+          <DataField>DELTATIME</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
       <Query>
@@ -72,7 +58,7 @@
               <Width>0.66134in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66134in</Width>
+              <Width>0.96268in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.26887in</Width>
@@ -255,10 +241,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DELTA.Value</Value>
+                              <Value>=Fields!DELTATIME.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>=IIF(CInt(Mid(Fields!DELTA.Value.ToString(),1,InStr(Fields!DELTA.Value.ToString(),":")-1))&gt;= 9 , "Green" , "Red")</Color>
+                                <Color>=iif(Fields!DELTATIME.Value&gt; 9 , "Green","Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -391,9 +377,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Sum(Fields!DELTATIME.Value, "DataSet1")</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
+                                <Color>=iif( CountRows() * 9 &lt; Sum(Fields!ROWNUM.Value, "DataSet1")  , "Green","Red")</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -424,12 +411,14 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style />
+                              <Value>="מתוך " &amp; CountRows() * 9 &amp; " שעות , בוצעו"</Value>
+                              <Style>
+                                <Language>he-IL</Language>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -444,70 +433,12 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <ColSpan>3</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox11">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox11</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox12">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox12</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
+                <TablixCell />
+                <TablixCell />
               </TablixCells>
             </TablixRow>
           </TablixRows>
@@ -560,10 +491,10 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DataSet1</DataSetName>
-        <Top>2.99833cm</Top>
+        <Top>2.36333cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>9.08253cm</Width>
+        <Width>9.84793cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -593,7 +524,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>1.5875cm</Top>
+        <Top>0.9525cm</Top>
         <Left>0.54948cm</Left>
         <Height>0.635cm</Height>
         <Width>9.54808cm</Width>
@@ -608,27 +539,14 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Image Name="Logo">
-        <Source>Embedded</Source>
-        <Value>logo1</Value>
-        <Sizing>FitProportional</Sizing>
-        <Left>8.87309cm</Left>
-        <Height>1.5cm</Height>
-        <Width>1.5cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
-      </Image>
       <Image Name="Image2">
         <Source>Embedded</Source>
         <Value>YaelSoftlogo</Value>
         <Sizing>FitProportional</Sizing>
+        <Left>3.20224cm</Left>
         <Height>0.88125cm</Height>
         <Width>3.99521cm</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -658,11 +576,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>2.29333cm</Top>
+        <Top>1.65833cm</Top>
         <Left>0.53799cm</Left>
         <Height>0.635cm</Height>
         <Width>9.54808cm</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -806,81 +724,6 @@
       <Height>1.29153cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
-      <ReportItems>
-        <Textbox Name="Textbox16">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>אל תשכח </Value>
-                  <Style>
-                    <FontFamily>Guttman Yad-Brush</FontFamily>
-                    <FontSize>11pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <HangingIndent>0cm</HangingIndent>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.08819cm</Top>
-          <Left>3.10445cm</Left>
-          <Height>0.50271cm</Height>
-          <Width>4.41516cm</Width>
-          <Style>
-            <Border />
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox15">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>לא משלמים שעות נוספות !!!  </Value>
-                  <Style>
-                    <FontFamily>Guttman Yad-Brush</FontFamily>
-                    <FontSize>11pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
-                    <Color>Red</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <HangingIndent>0cm</HangingIndent>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox12</rd:DefaultName>
-          <Top>0.62618cm</Top>
-          <Left>0.53799cm</Left>
-          <Height>0.59972cm</Height>
-          <Width>8.8826cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border />
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-            <Direction>RTL</Direction>
-          </Style>
-        </Textbox>
-      </ReportItems>
       <Style>
         <Border>
           <Style>None</Style>
