@@ -175,7 +175,7 @@
         var id = document.getElementById("txtId").value;
         var date = String(document.getElementById("clnDate").value).substr(3);
         var sQuryString="?id=" + id + "&month=" + date;        
-        var ReturnWin=window.showModalDialog('NetuneyOvedModal.aspx' + sQuryString , window , "dialogwidth:970px;dialogheight:580px;dialogtop:130px;dialogleft:25px;status:no;resizable:yes;scroll:0;");                          
+        var ReturnWin=window.showModalDialog('NetuneyOvedModal.aspx' + sQuryString , window , "dialogwidth:970px;dialogheight:600px;dialogtop:130px;dialogleft:25px;status:no;resizable:yes;scroll:0;");                          
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
     }  

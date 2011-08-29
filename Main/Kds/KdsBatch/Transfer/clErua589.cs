@@ -147,7 +147,7 @@ namespace KdsBatch
                                                                           }
                                                                           if (iSugYom == 10)
                                                                           { sErua589.Append("ו"); }
-                                                                          else if (iSugYom == 10)
+                                                                          else if (iSugYom == 20)
                                                                           { sErua589.Append("ש"); }
                                                                           else if (iSugYom > 20)
                                                                           { sErua589.Append("ג"); }

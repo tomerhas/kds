@@ -1283,7 +1283,7 @@ namespace KdsBatch
 
          private void CalcRechiv26()
          {
-             float fSumDakotRechiv, fNuchehutLepremia, fTosefetRetzifut, fZmanRetzifut, fDakotKisuyTor;
+             float fSumDakotRechiv, fNuchehutLepremia, fTosefetRetzifut, fDakotKisuyTor;
              float fTosefetGil, fDakotHagdara, fDakotHistaglut, fSachNesiot, fDakotLepremia;
              fTosefetGil = 0;
              int iSugYom;
@@ -1302,14 +1302,14 @@ namespace KdsBatch
 
                                  fNuchehutLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaShabat.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                  fTosefetRetzifut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                                 fZmanRetzifut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                 fDakotLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                  fNuchehutLepremia += fTosefetRetzifut;
-                                 //ג.	אם תוספת רציפות 1-1 (רכיב 96) > 60 וגם דקות 1-1 (רכיב 52) >= תוספת רציפות 1-1 (רכיב 96) אזי: [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) + 60 פחות -  תוספת רציפות 1-1 (רכיב 96).  אחרת, [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) 
-                                 if (fTosefetRetzifut > 60 && fZmanRetzifut >= fTosefetRetzifut)
-                                 {
-                                     fDakotLepremia = fZmanRetzifut + 60 - fTosefetRetzifut;
-                                 }
-                                 else { fDakotLepremia = fZmanRetzifut; }
+                                 ////ג.	אם תוספת רציפות 1-1 (רכיב 96) > 60 וגם דקות 1-1 (רכיב 52) >= תוספת רציפות 1-1 (רכיב 96) אזי: [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) + 60 פחות -  תוספת רציפות 1-1 (רכיב 96).  אחרת, [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) 
+                                 //if (fTosefetRetzifut > 60 && fZmanRetzifut >= fTosefetRetzifut)
+                                 //{
+                                 //    fDakotLepremia = fZmanRetzifut + 60 - fTosefetRetzifut;
+                                 //}
+                                 //else { fDakotLepremia = fZmanRetzifut; }
 
                                  fTosefetGil = 0;
                                  fDakotHagdara = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotHagdara.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
@@ -1440,7 +1440,7 @@ namespace KdsBatch
 
          private void CalcRechiv30()
          {
-             float fSumDakotRechiv,fMichsaYomit, fNuchehutLepremia, fTosefetRetzifut, fZmanRetzifut;
+             float fSumDakotRechiv,fMichsaYomit, fNuchehutLepremia, fTosefetRetzifut;
              float fTosefetGil, fDakotHagdara, fDakotHistaglut, fSachNesiot, fDakotLepremia, fDakotKisuyTor;
              Boolean bShish,bErevChag;
              DateTime dShatHatchalaYom,dShatHatchalaShabaton;
@@ -1449,10 +1449,10 @@ namespace KdsBatch
              fTosefetGil = 0;
              fDakotHagdara = 0;
              fTosefetRetzifut = 0;
-             fZmanRetzifut = 0;
              fDakotHistaglut = 0;
              fDakotKisuyTor = 0;
              fSachNesiot = 0;
+             fDakotLepremia = 0;
              try
              {
                  if (_dtYemeyAvodaOved.Select("Lo_letashlum=0  and TACHOGRAF=1  and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')", "").Length == 0)
@@ -1480,17 +1480,7 @@ namespace KdsBatch
                                       
                                      fNuchehutLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaYomit.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                      fNuchehutLepremia += fTosefetRetzifut;
-                                     if (sMispareySidur.Length > 0)
-                                     {
-                                          fZmanRetzifut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR IN (" + sMispareySidur + ") AND KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                                     }
-                                     //ג.	אם תוספת רציפות 1-1 (רכיב 96) > 60 וגם דקות 1-1 (רכיב 52) >= תוספת רציפות 1-1 (רכיב 96) אזי: [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) + 60 פחות -  תוספת רציפות 1-1 (רכיב 96).  אחרת, [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) 
-                                     if (fTosefetRetzifut > 60 && fZmanRetzifut >= fTosefetRetzifut)
-                                     {
-                                         fDakotLepremia = fZmanRetzifut + 60 - fTosefetRetzifut;
-                                     }
-                                     else { fDakotLepremia = fZmanRetzifut; }
-
+                                
                                      bShish = clCalcData.CheckYomShishi(clCalcData.iSugYom);
                                      bErevChag = clCalcData.CheckErevChag(clCalcData.iSugYom);
 
@@ -1513,6 +1503,8 @@ namespace KdsBatch
                                          fDakotHistaglut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR IN (" + sMispareySidur + ") AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHistaglut.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                          fSachNesiot = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR IN (" + sMispareySidur + ") AND KOD_RECHIV=" + clGeneral.enRechivim.SachNesiot.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                          fDakotKisuyTor = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR IN (" + sMispareySidur + ") AND KOD_RECHIV=" + clGeneral.enRechivim.DakotKisuiTor.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                         fDakotLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR IN (" + sMispareySidur + ") AND KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                    
                                      }
                                      fSumDakotRechiv = (fDakotHagdara / float.Parse("0.75")) + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + fTosefetRetzifut + (2 + (fSachNesiot - 1) * _objParameters.fElementZar) + (fTosefetGil - fNuchehutLepremia);
 
@@ -5232,7 +5224,7 @@ namespace KdsBatch
 
           private void CalcRechiv202()
           {
-              float fSumDakotRechiv, fMichsaYomit, fNuchehutLepremia, fTosefetRetzifut, fZmanRetzifut;
+              float fSumDakotRechiv, fMichsaYomit, fNuchehutLepremia, fTosefetRetzifut;
               float fDakotHagdara, fDakotHistaglut, fSachNesiot, fDakotLepremia, fTosefetGil, fDakotKisuyTor;
              
               try
@@ -5251,14 +5243,14 @@ namespace KdsBatch
 
                                   fNuchehutLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                   fTosefetRetzifut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                                  fZmanRetzifut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                  fDakotLepremia = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                   fNuchehutLepremia += fTosefetRetzifut;
-                                  //ג.	אם תוספת רציפות 1-1 (רכיב 96) > 60 וגם דקות 1-1 (רכיב 52) >= תוספת רציפות 1-1 (רכיב 96) אזי: [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) + 60 פחות -  תוספת רציפות 1-1 (רכיב 96).  אחרת, [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) 
-                                  if (fTosefetRetzifut > 60 && fZmanRetzifut >= fTosefetRetzifut)
-                                  {
-                                      fDakotLepremia = fZmanRetzifut + 60 - fTosefetRetzifut;
-                                  }
-                                  else { fDakotLepremia = fZmanRetzifut; }
+                                  ////ג.	אם תוספת רציפות 1-1 (רכיב 96) > 60 וגם דקות 1-1 (רכיב 52) >= תוספת רציפות 1-1 (רכיב 96) אזי: [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) + 60 פחות -  תוספת רציפות 1-1 (רכיב 96).  אחרת, [דקות 1-1 לפרמיה]  = דקות 1-1 (רכיב 52) 
+                                  //if (fTosefetRetzifut > 60 && fZmanRetzifut >= fTosefetRetzifut)
+                                  //{
+                                  //    fDakotLepremia = fZmanRetzifut + 60 - fTosefetRetzifut;
+                                  //}
+                                  //else { fDakotLepremia = fZmanRetzifut; }
                                   fTosefetGil = 0;
 
                                   fDakotHagdara = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotHagdara.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));

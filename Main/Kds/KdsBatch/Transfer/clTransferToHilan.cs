@@ -51,9 +51,9 @@ namespace KdsBatch
            DateTime dChodesh;
            int iDirug, iDarga;
 
-           sFileNameChaverim = "EGD3NOCH.txt";
-           sFileNameSchirim = "EGD6NOCH.txt";
-           sFileNameChozim = "EGB2NOCH.txt";
+           sFileNameChaverim = "EGD3TEST.txt"; //"EGD3NOCH.txt";
+           sFileNameSchirim = "EGD6TEST.txt"; //"EGD6NOCH.txt";
+           sFileNameChozim = "EGB2TEST.txt"; //"EGB2NOCH.txt";
            sFileNameETBTashlum = "QDIVyymm.162";
            sFileNameETBakara = "REGLyymm.162";
 

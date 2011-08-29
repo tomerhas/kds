@@ -37,7 +37,7 @@
             <asp:UpdatePanel ID="UpdatePanel4" runat="server" RenderMode="Inline" UpdateMode="Conditional">
                 <ContentTemplate> 
                      <span class="TitleLable">מאפייני ביצוע:</span><br />
-                     <div runat="server" ID="pnlContainer" style="Height:120px;Width:947px;overflow:auto;direction:ltr; position: relative;">
+                     <div runat="server" ID="pnlContainer" style="Height:185px;Width:947px;overflow:auto;direction:ltr; position: relative;">
                         <asp:GridView ID="grdMeafyeneyBitzua" runat="server"  GridLines="None"  ShowHeader="true"
                                CssClass="Grid"   AllowPaging="false" AutoGenerateColumns="false"   AllowSorting="true"
                                Width="930px"   EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-CssClass="GridHeader" 

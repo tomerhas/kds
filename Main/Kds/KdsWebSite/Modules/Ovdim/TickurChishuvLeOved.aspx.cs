@@ -287,7 +287,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                 for (int i = 1; i < drErrors.Length; i++)
                 {
                     sdate = DateTime.Parse(drErrors[i]["taarich"].ToString()).ToShortDateString();
-                    sError += ", " + sdate;
+                    if (sError.IndexOf(sdate)==-1)
+                        sError += ", " + sdate;
                 }
 
                 if (sError.Length > 0)

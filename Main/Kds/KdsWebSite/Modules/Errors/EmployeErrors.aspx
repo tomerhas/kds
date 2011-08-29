@@ -93,7 +93,7 @@ function ChangeKeyCode()
                 </td>
                 <td align="right" dir="ltr"  style="width:160px">  
                   <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate" CalenderTabIndex="4"  AutoPostBack="false" OnChangeCalScript="onChange_FromDate();"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
-                   <asp:CustomValidator runat="server" id="vldFrom"   ControlToValidate="clnFromDate" ErrorMessage="לא ניתן להזין תאריך מעבר ל 10 חודשים אחורה"   Display="None"    ></asp:CustomValidator>
+                   <asp:CustomValidator runat="server" id="vldFrom"   ControlToValidate="clnFromDate" ErrorMessage=""  Display="None"    ></asp:CustomValidator>
                    <cc1:ValidatorCalloutExtender runat="server" ID="vldExFrom" BehaviorID="vldExFromDate"   TargetControlID="vldFrom" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
                   <%--<wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                      
                 </td>  
@@ -292,7 +292,12 @@ function ChangeKeyCode()
      var EndDate = new Date  (EndDateSplit[2],EndDateSplit[1],EndDateSplit[0],0,0,0,0);
      
      args.IsValid = (StartDate <= EndDate);
-    }
+ }
+ function getMassege() {
+     var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
+     return "jjj";
+   //  
+ }
     function onChange_FromDate() {
       
         var Param100 = document.getElementById("ctl00_KdsContent_Params").attributes("Param100").value;
@@ -302,6 +307,7 @@ function ChangeKeyCode()
         minDate.setMonth(minDate.getMonth() - Param100);
         if (StartDate < minDate) {
             var sBehaviorId = 'vldExFromDate';
+            document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100  + " חודשים אחורה";
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);
             document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
