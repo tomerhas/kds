@@ -2592,93 +2592,92 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 sToolTip = String.Concat(sToolTip, "  משך הסידור: ", String.Format("{0:0.##}", fSidurTime), " שעות");
             }
 
-                    //נבדוק אם לסידור יש אפשרות להוסיף שדות, אם כן נציג אותו כלינק
-                    if (IsSadotNosafimLSidur(ref oSidur, MeafyeneySidur, SadotNosafim))
-                    {
-                        HyperLink lnkSidur = new HyperLink();
-                        lnkSidur = AddHyperLink("lblSidur" + iIndex, oSidur.iMisparSidur.ToString(), "AddSadotLsidur(" + iIndex + ");");
-                        // lnkSidur.Attributes.Add("OnClick", "RefreshBtn();");
-                        lnkSidur.ToolTip = sToolTip;// oSidur.sSidurDescription;
-                        //if (!fSidurTime.Equals(0))
-                        //    lnkSidur.ToolTip = String.Concat(oSidur.sSidurDescription, " משך הסידור:", String.Format("{0:0.##}", fSidurTime)); 
-                        lnkSidur.Attributes.Add("SidurVisa", IsSidurVisa(ref oSidur) ? "1" : "0");
-                        lnkSidur.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
-                        lnkSidur.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
-                        lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
+            //נבדוק אם לסידור יש אפשרות להוסיף שדות, אם כן נציג אותו כלינק
+            if (IsSadotNosafimLSidur(ref oSidur, MeafyeneySidur, SadotNosafim))
+            {
+                HyperLink lnkSidur = new HyperLink();
+                lnkSidur = AddHyperLink("lblSidur" + iIndex, oSidur.iMisparSidur.ToString(), "AddSadotLsidur(" + iIndex + ");");
+                // lnkSidur.Attributes.Add("OnClick", "RefreshBtn();");
+                lnkSidur.ToolTip = sToolTip;// oSidur.sSidurDescription;
+                //if (!fSidurTime.Equals(0))
+                //    lnkSidur.ToolTip = String.Concat(oSidur.sSidurDescription, " משך הסידור:", String.Format("{0:0.##}", fSidurTime)); 
+                lnkSidur.Attributes.Add("SidurVisa", IsSidurVisa(ref oSidur) ? "1" : "0");
+                lnkSidur.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
+                lnkSidur.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
+                lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
 
-                        hCell.Controls.Add(lnkSidur);
+                hCell.Controls.Add(lnkSidur);
 
-                        switch (_StatusCard)
+                switch (_StatusCard)
+                {
+                    case clGeneral.enCardStatus.Error:
+                        if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
-                            case clGeneral.enCardStatus.Error:
-                                if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
-                                {
-                                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
-                                    imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                            imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                            imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
 
-                                    hCell.Controls.Add(lDummy);
-                                    hCell.Controls.Add(imgErr);
-                                    hCell.Style.Add("background-color", "white");
-                                    hCell.Style.Add("color", "black");
-                                }
-                                else
-                                {
-                                    //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
-                                    if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
-                                        lnkSidur.Style.Add("color", "white");
-
-                                }
-
-                                //נבדוק שגם אין שגיאות ברמת שדות נוספים
-                                if (IsErrorInAdditionFields(ErrorsList, ref oSidur))
-                                    lnkSidur.Style.Add("color", "red");
-
-                                break;
-                            case clGeneral.enCardStatus.Valid:
-                                //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
-                                CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
-                                break;
+                            hCell.Controls.Add(lDummy);
+                            hCell.Controls.Add(imgErr);
+                            hCell.Style.Add("background-color", "white");
+                            hCell.Style.Add("color", "black");
                         }
-                    }
-                    else
-                    {
-                        Label lbl = new Label();
-                        lbl = AddLabel("lblSidur" + iIndex, oSidur.iMisparSidur.ToString(), "MovePanel(" + iIndex + ");", 40);
-                        lbl.ToolTip = sToolTip;// oSidur.sSidurDescription;
-                        //if (!fSidurTime.Equals(0))
-                        //    lbl.ToolTip = String.Concat(oSidur.sSidurDescription, " משך הסידור:", String.Format("{0:0.##}", fSidurTime)); 
-                        lbl.Attributes.Add("SidurVisa", IsSidurVisa(ref oSidur) ? "1" : "0");
-                        lbl.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
-                        lbl.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
-                        lbl.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
-
-                        hCell.Controls.Add(lbl);
-
-                        // DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
-
-                        switch (_StatusCard)
+                        else
                         {
-                            case clGeneral.enCardStatus.Error:
-                                if (SetOneError(lbl, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
-                                {
-                                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
-                                    imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
-                                    hCell.Controls.Add(lDummy);
-                                    hCell.Controls.Add(imgErr);
-                                    hCell.Style.Add("background-color", "white");
-                                    hCell.Style.Add("color", "black");
-                                }
-                                else
-                                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
-                                break;
-                            case clGeneral.enCardStatus.Valid:
-                                //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
-                                CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
-                                break;
+                            //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
+                            if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
+                                lnkSidur.Style.Add("color", "white");
                         }
-                    }            
+
+                        //נבדוק שגם אין שגיאות ברמת שדות נוספים
+                        if (IsErrorInAdditionFields(ErrorsList, ref oSidur))
+                            lnkSidur.Style.Add("color", "red");
+
+                        break;
+                    case clGeneral.enCardStatus.Valid:
+                        //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
+                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        break;
+                }
+            }
+            else
+            {
+                Label lbl = new Label();
+                lbl = AddLabel("lblSidur" + iIndex, oSidur.iMisparSidur.ToString(), "MovePanel(" + iIndex + ");", 40);
+                lbl.ToolTip = sToolTip;// oSidur.sSidurDescription;
+                //if (!fSidurTime.Equals(0))
+                //    lbl.ToolTip = String.Concat(oSidur.sSidurDescription, " משך הסידור:", String.Format("{0:0.##}", fSidurTime)); 
+                lbl.Attributes.Add("SidurVisa", IsSidurVisa(ref oSidur) ? "1" : "0");
+                lbl.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
+                lbl.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
+                lbl.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
+
+                hCell.Controls.Add(lbl);
+
+                // DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
+
+                switch (_StatusCard)
+                {
+                    case clGeneral.enCardStatus.Error:
+                        if (SetOneError(lbl, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
+                        {
+                            imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                            imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                            hCell.Controls.Add(lDummy);
+                            hCell.Controls.Add(imgErr);
+                            hCell.Style.Add("background-color", "white");
+                            hCell.Style.Add("color", "black");
+                        }
+                        else
+                            CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        break;
+                    case clGeneral.enCardStatus.Valid:
+                        //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
+                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        break;
+                }
+            }            
             hCell.Style.Add("valign", "top");
             hCell.Style.Add("border-left", "solid 1px gray");
             hCell.Style.Add("border-right", "solid 1px gray");            
