@@ -81,7 +81,11 @@ namespace KdsBatch
               //}
               //else { sErua415.Append(GetBlank(36)); }
 
-              sErua415.Append(GetBlank(5));
+                  if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                  {
+                      sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode()),5, 1));
+                  }
+                  else  sErua415.Append(GetBlank(5));
 
               if (!IsEmptyErua(sErua415.ToString()))
               {

@@ -671,13 +671,14 @@ namespace KdsBatch
         {
             //  דקות זיכוי חופש (רכיב 7)  
             //הרכיב רלוונטי רק כאשר לעובד יש מאפיין המרה, מאפיין ביצוע קוד= 31 עם ערך = 1. אחרת, אין לפתוח רשומה עבור הרכיב בכל הרמות.
-            int iMisparSidur;
+            int iMisparSidur, iSugSidur;
             int iDay, iSugYom, iMichutzLamichsa;
             DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur;
             DataRow[] _drSidurim;
             iMisparSidur = 0;
             float fZmanHafsaka;
             dShatHatchalaSidur = DateTime.MinValue;
+            bool bSidurZakay;
             try
             {
 
@@ -685,16 +686,27 @@ namespace KdsBatch
 
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
+                    bSidurZakay = false;
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
-                    iMichutzLamichsa = int.Parse(_drSidurim[I]["out_michsa"].ToString());
-                    dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
-                    fZmanHafsaka = float.Parse(_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
-                    iDay = int.Parse(_drSidurim[I]["day_taarich"].ToString());
-                    iSugYom = clCalcData.iSugYom;
-                    dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                    dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
+                    if (iMisparSidur.ToString().Substring(0,2) =="99")
+                        bSidurZakay = int.Parse(_drSidurim[I]["zakay_lehamara"].ToString()) != 2;
+                    else{
+                        iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
+                        bSidurZakay = CheckSugSidur(clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), 2, dTaarich, iSugSidur);
+                        bSidurZakay = !bSidurZakay;             
+                    }
+                     if (bSidurZakay)
+                     {
+                        iMichutzLamichsa = int.Parse(_drSidurim[I]["out_michsa"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        fZmanHafsaka = float.Parse(_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
+                        iDay = int.Parse(_drSidurim[I]["day_taarich"].ToString());
+                        iSugYom = clCalcData.iSugYom;
+                        dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                        dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                    CheckSidurShabatToAdd(clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), iMisparSidur, iDay, iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur, iMichutzLamichsa, false, fZmanHafsaka);
+                        CheckSidurShabatToAdd(clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), iMisparSidur, iDay, iSugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur, iMichutzLamichsa, false, fZmanHafsaka);
+                    }
                 }
 
             }
@@ -2113,7 +2125,7 @@ namespace KdsBatch
             try
             {
 
-                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and hamarat_shabat=1 and zakay_lehamara=1 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                drSidurim = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and hamarat_shabat=1 and zakay_lehamara<>2 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
                         iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
@@ -2144,8 +2156,8 @@ namespace KdsBatch
 
                             iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
-                                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), 1, dTaarich, iSugSidur);
-                                    if (bYeshSidur)
+                                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), 2, dTaarich, iSugSidur);
+                                    if (!bYeshSidur)
                                     {
                                         iDay = int.Parse(drSidurim[I]["day_taarich"].ToString());
                                         iSugYom = clCalcData.iSugYom;

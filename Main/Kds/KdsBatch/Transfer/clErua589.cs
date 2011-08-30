@@ -136,22 +136,23 @@ namespace KdsBatch
                                                                       }
                                                                       else
                                                                       {
-                                                                          switch ((dTarMe.DayOfWeek.GetHashCode() + 1))
-                                                                          {
-                                                                              case 7:
-                                                                                  { iSugYom = 20; break; }
-                                                                              case 6:
-                                                                                  { iSugYom = 10; break; }
-                                                                              default:
-                                                                                  { iSugYom = 1; break; }
-                                                                          }
-                                                                          if (iSugYom == 10)
-                                                                          { sErua589.Append("ו"); }
-                                                                          else if (iSugYom == 20)
-                                                                          { sErua589.Append("ש"); }
-                                                                          else if (iSugYom > 20)
-                                                                          { sErua589.Append("ג"); }
-                                                                          else if (_iMushhe > 0)
+                                                                          //switch ((dTarMe.DayOfWeek.GetHashCode() + 1))
+                                                                          //{
+                                                                          //    case 7:
+                                                                          //        { iSugYom = 20; break; }
+                                                                          //    case 6:
+                                                                          //        { iSugYom = 10; break; }
+                                                                          //    default:
+                                                                          //        { iSugYom = 1; break; }
+                                                                          //}
+                                                                          //if (iSugYom == 10)
+                                                                          //{ sErua589.Append("ו"); }
+                                                                          //else if (iSugYom == 20)
+                                                                          //{ sErua589.Append("ש"); }
+                                                                          //else if (iSugYom > 20)
+                                                                          //{ sErua589.Append("ג"); }
+                                                                          //else 
+                                                                          if (_iMushhe > 0)
                                                                           { sErua589.Append("ד"); }
                                                                           else { sErua589.Append("."); }
                                                                       }
