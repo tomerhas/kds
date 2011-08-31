@@ -139,7 +139,7 @@ namespace KdsBatch
             else { sFormat = sFormat.PadLeft(iLen , char.Parse("0")); }
 
             //dErech = clGeneral.TrimDoubleToXDigits(double.Parse(fErech.ToString()), iNumDigit);
-            if (fErech == 0)
+            if (fErech == 0 && _iKodErua !=162 ) 
                 return fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
             else return fErech.ToString(sFormat).Replace(".", "");
         }

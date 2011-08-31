@@ -51,22 +51,18 @@ namespace KdsBatch
         {
             try
             {
+                _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
                 if (iDirug == 85 && iDarga == 30)
                 {
-                    oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim);
+                    oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, _dtRechivim);
                 }
                 else
                 {
-                    _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
                     oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-
-                    if (iDirug != 82 && iDirug != 83)
-                    {
-                        oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim);
-                    }
-
+                    oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim);
+                
                     if (iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
                     {
                         oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
@@ -75,10 +71,7 @@ namespace KdsBatch
                     oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim);
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
-                        if ((iDirug != 82 && iDirug != 83 && iDirug != 85) || !(iDirug == 84 && iDarga == 1) || !(iDirug == 85 && (iDarga == 80 || iDarga == 30)))
-                        {
-                            oErua418 = new clErua418(iBakashaId, _drPirteyOved, _dtRechivim);
-                        }
+                        oErua418 = new clErua418(iBakashaId, _drPirteyOved, _dtRechivim);
                     }
 
                     if (iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())

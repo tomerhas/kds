@@ -113,7 +113,7 @@ namespace KdsBatch
                //  drPeiluyot = dtPeiluyot.Select("SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9)");
 
                  sQury = "MISPAR_SIDUR=" + iMisparSidur + " AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
-                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9))";
+                 sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and mispar_knisa=0 and (SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9))";
                  drPeiluyot = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
                
                  if (drPeiluyot.Length > 0)

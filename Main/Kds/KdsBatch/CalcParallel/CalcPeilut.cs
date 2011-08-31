@@ -96,7 +96,7 @@ namespace KdsBatch
              
              try
              {
-                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9))");
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "mispar_knisa=0 and(SUBSTRING(makat_nesia,1,1) in(0,1,2,3,4,8,9))");
                 
                  if (drPeiluyot.Length > 0)
                  {
