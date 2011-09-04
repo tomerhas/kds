@@ -39,10 +39,10 @@ namespace KdsBatch
           try
           {
                sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.YemeyAvoda.GetHashCode()), 3, 0) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.ShaotShabat100.GetHashCode())/60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60), 6, 2) + ";");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
