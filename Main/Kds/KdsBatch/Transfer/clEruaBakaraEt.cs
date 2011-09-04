@@ -39,10 +39,10 @@ namespace KdsBatch
           try
           {
                sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.YemeyAvoda.GetHashCode()), 3, 0) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode()), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode()), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode()), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode()), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.ShaotShabat100.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv((clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60), 6, 2) + ";");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
@@ -52,7 +52,7 @@ namespace KdsBatch
               sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()), 2, 0) + ";");
               fErech = GetErechRechiv( clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
               fErech += GetErechRechiv( clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
-              sBakaraEt.Append(FormatNumber(fErech, 4, 0) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(fErech, 5, 1) + ";");
               sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode()), 2, 0) + ";");
 
               if (!IsEmptyErua(sBakaraEt.ToString()))

@@ -59,7 +59,7 @@ namespace KdsBatch
                
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode());
+              fErech = (GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode()))/60;
               if (fErech > 0)
               {
                    CreateDataEtToRechiv("001", fErech, 0);
@@ -71,7 +71,7 @@ namespace KdsBatch
                   fErech = GetErechRechiv( clGeneral.enRechivim.PremyaRegila.GetHashCode());
                   if (fErech > 0)
                   {
-                      if (fErech > 500) { fErech = 500; }
+                   //   if (fErech > 500) { fErech = 500; }
                     CreateDataEtToRechiv( "020", 1, fErech);
                      
                   }
@@ -115,7 +115,7 @@ namespace KdsBatch
 
               if (fErech > 0)
               {
-                   CreateDataEtToRechiv( "078", fErech, 0);
+                   CreateDataEtToRechiv( "078", fErech/60, 0);
                  
               }
 
@@ -128,21 +128,21 @@ namespace KdsBatch
               }
 
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode());
+              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60;
               if (fErech > 0)
               {
                  CreateDataEtToRechiv( "007", fErech, 0);
                  
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode());
+              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60;
               if (fErech > 0)
               {
                   CreateDataEtToRechiv( "008", fErech, 0);
                  
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot200Letashlum.GetHashCode());
+              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60;
               if (fErech > 0)
               {
                  CreateDataEtToRechiv( "048", fErech, 0);

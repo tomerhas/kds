@@ -83,7 +83,7 @@ namespace KdsBatch
 
                   if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                   {
-                      sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode()),5, 1));
+                      sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode())/60),5, 1));
                   }
                   else  sErua415.Append(GetBlank(5));
 

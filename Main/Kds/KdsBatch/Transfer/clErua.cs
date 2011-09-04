@@ -128,7 +128,7 @@ namespace KdsBatch
             else
                 iSfarot = fErech.ToString().Length;
             if (iSfarot > (iLen - iNumDigit))
-                throw new Exception("num digits of value above the permitted. wrong value=" + fErech);
+                throw new Exception("num digits of value above the permitted.wrong value=" + fErech);
 
           
             if (iNumDigit > 0)
@@ -154,6 +154,19 @@ namespace KdsBatch
         {
             //double dErech;
              string sFormat = "";
+             int iSfarot;
+             if (fErech.ToString().IndexOf(".") > -1)
+             {
+                 iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
+                 if (iNumDigit == 0) //dakot
+                     fErech = float.Parse(fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")));
+             }
+             else
+                 iSfarot = fErech.ToString().Length;
+
+             if (iSfarot > (iLen - (iNumDigit+1)))
+                 throw new Exception("num digits of value above the permitted.wrong value=" + fErech);
+
              if (iNumDigit > 0)
              {
               sFormat = "." + sFormat.PadRight(iNumDigit, char.Parse("0"));

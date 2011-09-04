@@ -12818,9 +12818,11 @@ namespace KdsBatch
             //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
             try
             {
-                if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != DateTime.MinValue)
+                if (oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString())
                     dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
-                else dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                else if (oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString())
+                    dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                else dShatHatchalaLetashlumToUpd = DateTime.MinValue;
 
                 //אתחול שעת התחלה וגמר לפי מאפיינים וסוגי ימים
                 GetOvedShatHatchalaGmar(oObjSidurimOvdimUpd.SHAT_GMAR, oMeafyeneyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out  bFromMeafyenGmar);
@@ -12831,7 +12833,14 @@ namespace KdsBatch
                 //שעת התחלה לתשלום לשעת התחלה סידור
                 //שעת גמר לתשלום לשעת גמר סידור
                 if (dShatHatchalaLetashlumToUpd == DateTime.MinValue)
-                    dShatHatchalaLetashlumToUpd = oSidur.dFullShatHatchala;
+                {
+                    if (oSidur.dFullShatHatchala.ToShortDateString() == DateTime.MinValue.ToShortDateString())
+                    {
+                        dShatHatchalaLetashlumToUpd = DateTime.MinValue;
+                        oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = DateTime.MinValue; 
+                    }
+                    else dShatHatchalaLetashlumToUpd = oSidur.dFullShatHatchala;
+                }
 
                 if (dShatGmarLetashlumToUpd == DateTime.MinValue)
                     dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
@@ -13269,12 +13278,12 @@ namespace KdsBatch
             }
             else
             {
-                if (oObjSidurimOvdimUpd.SHAT_HATCHALA != DateTime.MinValue && oObjSidurimOvdimUpd.SHAT_HATCHALA < dShatHatchalaLetashlum)
+                if (oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString() && oObjSidurimOvdimUpd.SHAT_HATCHALA < dShatHatchalaLetashlum)
                 {
                     //ג. אם שעת ההתחלה של הסידור קטנה משעת מאפיין ההתחלה המותרת (תלוי בסוג היום, ראה עמודה שדות מעורבים): שעת התחלה לתשלום = השעה המוגדרת במאפיין. 
                    dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
                 }
-                else if (oObjSidurimOvdimUpd.SHAT_HATCHALA != DateTime.MinValue)
+                else if (oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() != DateTime.MinValue.ToShortDateString())
                 {   //ד. אם שעת ההתחלה של הסידור אינה קטנה משעת מאפיין ההתחלה המותרת (תלוי בסוג היום, ראה עמודה שדות מעורבים): שעת התחלה לתשלום = שעת התחלת הסידור. 
                     dShatHatchalaLetashlumToUpd= oObjSidurimOvdimUpd.SHAT_HATCHALA;
                 }

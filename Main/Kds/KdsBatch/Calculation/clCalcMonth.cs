@@ -5015,8 +5015,9 @@ namespace KdsBatch
                 {
                     if (_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(0,1)=="1")
                     {
-                        fYemeyAvoda = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YemeyAvoda.GetHashCode().ToString()));
-                        fSumDakotRechiv = (fYemeyAvoda * int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length-4, 3))) / 100;
+                      //  fYemeyAvoda = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YemeyAvoda.GetHashCode().ToString()));
+                       // fSumDakotRechiv = (fYemeyAvoda * int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length-4, 3))) / 100;
+                        fSumDakotRechiv = int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length - 4, 3));
                     }
                     else if (_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(0, 1) == "2")
                     {

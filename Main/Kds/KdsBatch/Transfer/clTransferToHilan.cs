@@ -54,8 +54,8 @@ namespace KdsBatch
            sFileNameChaverim = "EGD3TEST.txt"; //"EGD3NOCH.txt";
            sFileNameSchirim = "EGD6TEST.txt"; //"EGD6NOCH.txt";
            sFileNameChozim = "EGB2TEST.txt"; //"EGB2NOCH.txt";
-           sFileNameETBTashlum = "QDIVyymm.162";
-           sFileNameETBakara = "REGLyymm.162";
+           sFileNameETBTashlum = "QDIVmmyy.162";
+           sFileNameETBakara = "REGLmmyy.162";
 
            _lBakashaId = lBakashaId;
 
@@ -109,8 +109,8 @@ namespace KdsBatch
 
                    if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
                    {
-                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
-                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("yymm", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                       sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
                    }
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
