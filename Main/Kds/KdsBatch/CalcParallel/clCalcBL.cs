@@ -253,7 +253,7 @@ namespace KdsBatch
             }
         }
 
-        public int GetMichsaYomit(Oved oOved, int iKodMichsa, ref int iSugYom, DateTime dTaarich, int iKodSectorIsuk, int iMeafyen56)
+        public int GetMichsaYomit(Oved objOved, ref int iSugYom)//int iKodMichsa, ref int iSugYom, DateTime dTaarich, int iKodSectorIsuk, int iMeafyen56)
         {
             DataRow[] drMichsa;
             int iShvuaAvoda;
@@ -261,13 +261,13 @@ namespace KdsBatch
             {
                 if (iSugYom == 0)
                 {
-                    iSugYom = GetSugYomLemichsa(oOved, dTaarich, iKodSectorIsuk, iMeafyen56);
+                    iSugYom = GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                 }
-                if (iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
+                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek2.GetHashCode())
                 { iShvuaAvoda = 6; }
                 else { iShvuaAvoda = 5; }
 
-                drMichsa = oOved.oGeneralData.dtMichsaYomitAll.Select("Kod_Michsa=" + iKodMichsa + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                drMichsa = objOved.oGeneralData.dtMichsaYomitAll.Select("Kod_Michsa=" + int.Parse(objOved.objMeafyeneyOved.sMeafyen1) + " and SHAVOA_AVODA=" + iShvuaAvoda + " and sug_yom=" + iSugYom + " and me_taarich<=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')" + " and ad_taarich>=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
                 if (drMichsa.Length > 0)
                 { return int.Parse((float.Parse(drMichsa[0]["michsa"].ToString()) * 60).ToString()); }
                 else

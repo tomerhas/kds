@@ -415,6 +415,9 @@ namespace KdsBatch
 
                 UpdateRechiv1();
 
+                //שעות % 100 לתשלום (רכיב 100
+                CalcRechiv100();
+
                 //שעות 25% (רכיב 91
                 CalcRechiv91();
 
@@ -3276,6 +3279,29 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv100()
+        {
+            float fSumDakotRechiv, fMichsaYomit, fDakotNochehut;
+            try
+            {
+                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
+
+                if (fMichsaYomit > 0 && fDakotNochehut > 0)
+                {
+                    if (fMichsaYomit <= fDakotNochehut)
+                        fSumDakotRechiv = fMichsaYomit;
+                    else fSumDakotRechiv = fDakotNochehut;
+
+                    addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv91()
         {
             float fMichsaYomit, fDakotRechiv;
@@ -3959,7 +3985,7 @@ namespace KdsBatch
             try
             {
 
-                fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa); //int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
 
 
                 iSugYom = iSugYomLemichsa;
@@ -3968,19 +3994,19 @@ namespace KdsBatch
                     if (!oCalcBL.CheckYomShishi(iSugYom))
                     {
                         iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa ); //int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                     }
                     else
                     {
                         iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa); // int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                     }
                 }
 
                 if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
                 {
                     iSugYomLemichsa = clGeneral.enSugYom.Purim.GetHashCode();
-                    fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                    fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);//int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                 }
 
                 if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor != clGeneral.enEzor.Yerushalim.GetHashCode())
@@ -3988,12 +4014,12 @@ namespace KdsBatch
                     if (!oCalcBL.CheckYomShishi(iSugYom))
                     {
                         iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);// int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                     }
                     else
                     {
                         iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
+                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);//int.Parse(objOved.objMeafyeneyOved.sMeafyen1), ref iSugYomLemichsa, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                     }
                 }
 

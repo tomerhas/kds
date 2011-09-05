@@ -2879,18 +2879,11 @@ namespace KdsBatch
         }
         private void CalcRechiv100()
         {
-            float fSumDakotRechiv, fMichsaChodshit, fDakotNochehut;
+            float fSumDakotRechiv;
             try
             {
-                fMichsaChodshit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
-                fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode());
-
-                if (fMichsaChodshit < fDakotNochehut)
-                    fSumDakotRechiv =  fMichsaChodshit;
-                else fSumDakotRechiv = fDakotNochehut;
-  
-                addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
-                
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);    
             }
             catch (Exception ex)
             {
