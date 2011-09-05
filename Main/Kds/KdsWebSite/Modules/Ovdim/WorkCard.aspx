@@ -369,6 +369,7 @@
                                 <input type="button"  value="מאשר" ID="btnApprove" runat="server" width="70px" height="35px"  onclick="btnMeasherOrMistayeg_onclick(1);" />
                                 <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" width="70px" height="30px"  onclick="btnMeasherOrMistayeg_onclick(0);" />   
                             </td>                            
+                            <td align="right"><asp:Button ID="btnResonOutIn" runat="server" Style="display:none"  CausesValidation="false" OnClick="btnResonOutIn_Click"/></td>
                        </tr>
                     </table>
            </ContentTemplate>             
@@ -545,13 +546,13 @@
     <input type="hidden" runat="server" id="hidSource" />
     <input type="hidden" runat="server" id="hidLvl1Chg" />
     <input type="hidden" runat="server" id="hidLvl2Chg" />
-    <input type="hidden" runat="server" id="hidLvl3Chg" />
-     
+    <input type="hidden" runat="server" id="hidLvl3Chg" />     
     <input type="hidden" runat="server" id="hidRashemet" />  
     <input type="hidden" runat="server" id="hidFromEmda" />  
     <input type="hidden" runat="server" id="hidSadotLSidur" />
     <input type="hidden" runat="server" id="hidDriver"/>
     <input type="hidden" runat="server" id="hidUpdateBtn"/>
+    <input type="hidden" runat="server" id="hidSdrInd"/>
     </form>   
     <script language="javascript" type="text/javascript">
          var iCount=0;

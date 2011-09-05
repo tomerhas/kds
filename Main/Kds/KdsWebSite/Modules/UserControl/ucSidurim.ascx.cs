@@ -141,6 +141,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //public event OnButtonClick btnReka;
 
     private enum enRekaMapaDirection {enUp,enDown}
+    private enum enGmarHatchala { enHatchala=1, enGmar=2 }
 
     private enum enDayType
     {
@@ -3124,13 +3125,111 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
+    private void FindSidurShaon(int iSidurIndex, enGmarHatchala _TypeToSwitch, ref OrderedDictionary htFullEmployeeDetails)
+    {
+       clSidur _Sidur = new clSidur();
+       clSidur _CurrSidur = new clSidur();
+       bool bSidurHasChanged = false;
+       int iCurrSidurIndex = iSidurIndex;
+
+      //יכיל את הסידור שעליו לחצנו את הסיבה
+       _CurrSidur = (clSidur)htFullEmployeeDetails[iSidurIndex];
+       //קיימת שעת התחלה שצריכה להפוך להיות שעת גמר של סידור נוכחות אחר
+       //שדה סיבת אי החתמת יציאה - אם לסידור קיים ערך בשדה שעת התחלה + קיים ערך בשדה מיקום שעון כניסה וגם בשדה סיבת אי החתמה יציאה נבחרה 
+       //         הסיבה  "שינוי כניסה/יציאה", מבצעים את השלבים הבאים:
+       //1.	מחפשים סידור אחר ביום הוא מיוחד מסוג החתמת שעון (מיוחד עם מאפיין 54 (שעון נוכחות) עם ערך 1) ששעת ההתחלה שלו קטנה משעת ההתחלה של הסידור בו בחרנו את הסיבה וששעת היציאה שלו תהיה ריקה/null. אם נמצא יותר מסידור אחד יש לבחור את הסידור הקרוב יותר בשעה.
+       //2.	מעדכנים את שעת היציאה של הסידור שמצאנו בסעיף 1 לשעת ההתחלה של הסידור בו בחרנו את הסיבה.
+       //3.	מעדכנים את מיקום שעון יציאה  של הסידור שמצאנו בסעיף 1 למיקום שעון כניסה של הסידור בו בחרנו את הסיבה.
+       //4.	מבטלים את הסידור בו בחרנו את הסיבה  Bitul_O_Hosafa=3 (ביטול אוטומטי).
+
+
+       if (_TypeToSwitch == enGmarHatchala.enGmar)
+       {
+           while (iCurrSidurIndex > 0)
+           {
+               iCurrSidurIndex = iCurrSidurIndex - 1; //מכיל את הסידור שאותו משנים
+               _Sidur = (clSidur)htFullEmployeeDetails[iCurrSidurIndex];
+               if ((IsSidurShaon(ref _Sidur)) && (_Sidur.sShatGmar.Equals("")))
+               {
+                   _Sidur.sShatGmar = _CurrSidur.sShatHatchala;
+                   _Sidur.dFullShatGmar = _CurrSidur.dFullShatHatchala;
+                   _Sidur.sMikumShaonYetzia = _CurrSidur.sMikumShaonKnisa;
+                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();                  
+                   Session["Sidurim"] = DataSource;                   
+                   ClearControl();
+                   BuildPage();
+                   bSidurHasChanged = true;
+                   //iSidurIndexThatChanged = iCurrSidurIndex;
+                   break;
+               }
+           }
+       }
+       else
+       {
+       //     א. שדה סיבת אי החתמת כניסה - אם לסידור קיים ערך בשדה שעת גמר + קיים ערך בשדה מיקום שעון יציאה וגם בשדה סיבת אי החתמה כניסה נבחרה 
+       //     הסיבה  "שינוי כניסה/יציאה", מבצעים את השלבים הבאים:
+       //1.	מחפשים סידור אחר ביום שהוא מיוחד מסוג החתמת שעון (מיוחד עם מאפיין 54 (שעון נוכחות) עם ערך 1) ששעת הגמר שלו תהיה גדולה משעת הגמר של הסידור בו בחרנו את הסיבה וששעת ההתחלה שלו תהיה ריקה/null. אם נמצא יותר מסידור אחד יש לבחור את הסידור הקרוב יותר בשעה.
+       //2.	מעדכנים את שעת ההתחלה של הסידור שמצאנו בסעיף 1 לשעת הגמר של הסידור בו בחרנו את הסיבה.
+       //3.	מעדכנים את מיקום שעון כניסה  של הסידור שמצאנו בסעיף 1 למיקום שעון יציאה של הסידור בו בחרנו את הסיבה.
+       //4.	מבטלים את הסידור בו בחרנו את הסיבה  Bitul_O_Hosafa=3 (ביטול אוטומטי).
+
+           while (iCurrSidurIndex < DataSource.Count-1)
+           {
+               iCurrSidurIndex = iCurrSidurIndex + 1;
+               _Sidur = (clSidur)htFullEmployeeDetails[iCurrSidurIndex];
+               if ((IsSidurShaon(ref _Sidur)) && (_Sidur.sShatHatchala.Equals("")))
+               {
+                   _Sidur.sShatHatchala = _CurrSidur.sShatGmar;
+                   _Sidur.dFullShatHatchala = _CurrSidur.dFullShatGmar;
+                   _Sidur.sMikumShaonKnisa = _CurrSidur.sMikumShaonYetzia;
+                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();                                                       
+                   Session["Sidurim"] = DataSource;
+                   ClearControl();
+                   BuildPage();
+                   bSidurHasChanged = true;
+                   //iSidurIndexThatChanged = iCurrSidurIndex;
+                   break;
+               }
+           }
+       }
+        if (bSidurHasChanged){
+            string sScript = "SetLvlChg(2," + iCurrSidurIndex + ");SetSidurStatus(" + iSidurIndex + ", true); $get('lstSidurim_imgCancel" + iSidurIndex + "').disabled = true;  $get('lstSidurim_imgCancel" + iSidurIndex + "').className='ImgCancelDisable';";
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "SwitchHour", sScript, true);
+      }
+            
+    
+    }
+    public void SwitchShatGmatHatchala(int iSidurIndex, int iTypeToSwitch, ref int iSidurIndexThatChanged)
+    {
+        enGmarHatchala _TypeToSwitch = (enGmarHatchala)iTypeToSwitch;
+       // bool bSidurHasChanged;
+
+        //שינוי שעת היציאה או הכניסה
+        //הפונקציה תחזיר אמת אם השתנתה רשומת הסידור
+        try
+        {
+            OrderedDictionary htFullEmployeeDetails = DataSource;
+            //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
+            UpdateHashTableWithGridChanges(ref htFullEmployeeDetails);
+            FindSidurShaon(iSidurIndex, _TypeToSwitch, ref htFullEmployeeDetails);
+           
+            //נציין כאילו שינוי הקלט עבדו בהצלחה
+            if (btnHandler != null)
+                btnHandler(string.Empty, true);
+
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
     public void AddNewSidur()
     {
         
         //הוספת סידור חדש
         try
-        {        
-            //בניית עמודות הטבלה               
+        {                    
             OrderedDictionary hashSidurimPeiluyot = DataSource;
             //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
             UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
@@ -3230,7 +3329,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             if (!bHasNoPremmisionToAddPeilut)
             {
                 bSidurVisa = IsSidurVisa(ref _Sidur);
-                if (hidGeneralParam.Value.Equals("1"))
+                if ((hidGeneralParam.Value.Equals("1")) && (!bSidurVisa))
                 { //1- למחוק פעילות ויזה
                     //אם זה לא סידור ויזה וגם קיימת פעילות 500000  מהסידור הקודם, נמחוק את הפעילות                    
                     //נחפש פעילות 5000000
@@ -3238,10 +3337,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     hidGeneralParam.Value = "0";
                 }
                 else
-                {
+                {  //רק אם אנחנו מגיעים מהוספת סידור נוסיף פעילות עם מקט 5000000 אחרת נוסיף פעילות ריקה-hidGeneralParam.Value.Equals("1")
                     _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut)+1, _Peilut);
                     _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-                    _Peilut.lMakatNesia = ((bSidurVisa) && (!IsPeilutVisaExists(ref _Sidur,ref iPeilutIndex))) ? MAKAT_VISA : 0;
+                    _Peilut.lMakatNesia = ((hidGeneralParam.Value.Equals("1")) && (bSidurVisa) && (!IsPeilutVisaExists(ref _Sidur, ref iPeilutIndex))) ? MAKAT_VISA : 0;
+                    hidGeneralParam.Value = "0";
                 }                
             }
         }
@@ -3882,8 +3982,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Items.Insert(0, Item);
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
-        ddl.Style.Add("width", "75px");        
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
+        ddl.Style.Add("width", "75px");
+        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
@@ -4093,7 +4193,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlTableRow hRow = new HtmlTableRow();
         HtmlTableCell hCell = new HtmlTableCell();            
         DataRow[] drSugSidur;
-        bool bSidurNahagutOrTnua;
+       // bool bSidurNahagutOrTnua=false;
         try
         {
             //נשלוף את מאפייני סוג הסידור ( סידורים רגילים(
@@ -4114,11 +4214,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //אם לסידור אין מאפיין 99 והסידור הוא ללא התייחסות, לא נאפשר  את עידכון הסידור
             bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
 
-            bSidurNahagutOrTnua=(IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)));//IsSidurNahagutOrTnua(ref oSidur, drSugSidur);
-            //נבדוק אם אחד מהסידורים הוא סידור נהגות או ניהול תנועה
-            if (!bAtLeatOneSidurIsNOTNahagutOrTnua){
-                bAtLeatOneSidurIsNOTNahagutOrTnua = (!bSidurNahagutOrTnua);
-            }
+            //יהיה אמת אם לפחות אחד מהסידורים יהיה תנועה או נהגות 
+            if (IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)))
+                bAtLeatOneSidurIsNOTNahagutOrTnua = true;
+            //bSidurNahagutOrTnua=(IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)));//IsSidurNahagutOrTnua(ref oSidur, drSugSidur);
+            ////נבדוק אם אחד מהסידורים הוא סידור נהגות או ניהול תנועה
+            //if (!bAtLeatOneSidurIsNOTNahagutOrTnua){
+            //    bAtLeatOneSidurIsNOTNahagutOrTnua = (!bSidurNahagutOrTnua);
+            //}
 
             if ((oSidur.sErevShishiChag.Equals("1")) || (oSidur.sSidurDay.Equals(clGeneral.enDay.Shishi.GetHashCode().ToString())))
             {

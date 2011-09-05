@@ -333,7 +333,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");
         btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
         btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");
-        
+       
+
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
         ErrorImage(imgLinaErr, false);
@@ -1450,7 +1451,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //&& ((iKodMaamad == clGeneral.enHrMaamad.PermanentSalariedEmployee.GetHashCode())
                 //    || (iKodMaamad == clGeneral.enHrMaamad.SalariedEmployee12.GetHashCode())
                 //    || (iKodMaamad.ToString().Substring(0, 1).Equals("1")))
-                && ((!lstSidurim.bAtLeatOneSidurIsNOTNahagutOrTnua))
+                && ((lstSidurim.bAtLeatOneSidurIsNOTNahagutOrTnua))
 
                 && ((!(oBatchManager.oOvedYomAvodaDetails.bMutamutExists)) && (oBatchManager.oOvedYomAvodaDetails.iZmanMutamut == 0))
                 && (!((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))))
@@ -2116,7 +2117,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
            
         }
     }
+    protected void btnResonOutIn_Click(object sender, EventArgs e)
+    {
+        string[] arrSidurDetails;
+        int iSidurIndexThatChanged=0;
+        arrSidurDetails = hidSdrInd.Value.Split(char.Parse(","));
+        int iSidurIndex = int.Parse(arrSidurDetails[0]);
+        int iKnisaYetiza = int.Parse(arrSidurDetails[1]);
 
+        lstSidurim.SwitchShatGmatHatchala(iSidurIndex, iKnisaYetiza, ref iSidurIndexThatChanged);
+            
+    }
     protected void btnAddHeadrut_Click(object sender, EventArgs e)
     {
         hidSave.Value = "0";
@@ -2558,7 +2569,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                         ref oCollPeluyotOvdimDel, ref oCollPeluyotOvdimIns))
                 {
                     //נמצאו פעילויות זהות
-                    string sScript = "alert('קיימות פעילויות זהות, לא ניתן לשמור נתונים' )";
+                    string sScript = "alert('קיימת פעילות בשעת היציאה שדיווחת, יש לתקן את השעה' )";
                     ScriptManager.RegisterStartupScript(btnUpdateCard, this.GetType(), "Save", sScript, true);
                 }
                 else
