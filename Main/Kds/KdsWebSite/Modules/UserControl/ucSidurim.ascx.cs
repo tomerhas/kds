@@ -3158,8 +3158,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                    Session["Sidurim"] = DataSource;                   
                    ClearControl();
                    BuildPage();
-                   bSidurHasChanged = true;
-                   //iSidurIndexThatChanged = iCurrSidurIndex;
+                   bSidurHasChanged = true;                  
                    break;
                }
            }
@@ -3186,8 +3185,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                    Session["Sidurim"] = DataSource;
                    ClearControl();
                    BuildPage();
-                   bSidurHasChanged = true;
-                   //iSidurIndexThatChanged = iCurrSidurIndex;
+                   bSidurHasChanged = true;                  
                    break;
                }
            }
