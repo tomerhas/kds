@@ -48,6 +48,7 @@ namespace KdsBatch
          
           StringBuilder sDataEt = new StringBuilder();
           float fErech;
+          int isuk=0;
           string sMeafyen53;
           DataRow[] drYamim;
           try
@@ -59,14 +60,16 @@ namespace KdsBatch
                
               }
 
-              fErech = (GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode()))/60;
+              fErech = GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
               if (fErech > 0)
               {
-                   CreateDataEtToRechiv("001", fErech, 0);
+                   CreateDataEtToRechiv("001", (fErech/60), 0);
                  
               }
-
-              if (_drPirteyOved["isuk"].ToString().Substring(0, 1) == "5")
+              if (_drPirteyOved["isuk"].ToString() != "")
+                  isuk =int.Parse(_drPirteyOved["isuk"].ToString());
+              if (isuk>= 500 && isuk<600)
               {
                   fErech = GetErechRechiv( clGeneral.enRechivim.PremyaRegila.GetHashCode());
                   if (fErech > 0)

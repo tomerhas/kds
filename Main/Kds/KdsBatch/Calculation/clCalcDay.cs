@@ -3084,7 +3084,7 @@ namespace KdsBatch
                          if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                          {
                              //ב.	עיסוק ראשי של העובד (התו הראשון בקוד העיסוק [שליפת פרטי עובד (קוד נתון HR=6, מ.א., תאריך)]) <> 5
-                             if ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
+                             if (_oGeneralData.objPirteyOved.iIsuk>=500 && _oGeneralData.objPirteyOved.iIsuk<600) // ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
                              {
 
                                  if (_oGeneralData.objMeafyeneyOved.iMeafyen30 == 1)

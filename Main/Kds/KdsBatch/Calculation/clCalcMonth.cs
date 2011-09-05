@@ -2921,19 +2921,14 @@ namespace KdsBatch
         {
             float fSumDakotRechiv, fMichsaChodshit, fDakotNochehut;
             try{
-          
-                if (_oGeneralData.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
-                {
-                       fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
-                    fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString()));
+                fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
+                fDakotNochehut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString()));
 
-                    if (fMichsaChodshit < fDakotNochehut)
-                    {
-                        fSumDakotRechiv = fDakotNochehut - fMichsaChodshit;
-                        addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
-                    }
-                }
-           
+                if (fMichsaChodshit <= fDakotNochehut)
+                    fSumDakotRechiv = fMichsaChodshit;
+                else fSumDakotRechiv = fDakotNochehut;
+                    
+                addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {

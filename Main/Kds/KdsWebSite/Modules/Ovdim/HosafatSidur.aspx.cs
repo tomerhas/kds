@@ -165,6 +165,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 InitializeSidurMeyucahd(ref dtSource);
                 trMsgNextDay.Style["display"] = "none";
             }
+            txtMisSidurMapa.Text = "";
             BindGridPeiluyot();
             pirteySidur.Style["display"] = "inline";
             txtShatHatchala.Focus();
