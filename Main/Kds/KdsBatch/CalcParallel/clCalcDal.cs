@@ -482,12 +482,12 @@ namespace KdsBatch
             DataSet ds = new DataSet();
             string names;
            // DataTable dt = new DataTable();
-         //  clTxDal dal = new clTxDal();
-            clDal dal = new clDal();
+           clTxDal dal = new clTxDal();
+          //  clDal dal = new clDal();
             try
             {
 
-             //   dal.TxBegin();
+              dal.TxBegin();
                 dal.AddParameter("p_Cur_Ovdim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names = "Ovdim";
                 dal.AddParameter("p_Cur_Michsa_Yomit", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
@@ -516,23 +516,12 @@ namespace KdsBatch
                 names += ",Ovdim_ShePutru";
                 dal.AddParameter("p_Cur_Buses_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Buses_Details";
-                //dal.AddParameter("p_Cur_Sugey_Sidur_Tnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                //names += ",Sugey_Sidur_Tnua";
                 dal.AddParameter("p_Cur_Kavim_Details", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Kavim_Details";
 
                 dal.AddParameter("p_tar_me", ParameterType.ntOracleDate, TarMe, ParameterDir.pdInput);
                 dal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, TarAd, ParameterDir.pdInput);
 
-                //if (sMaamad.IndexOf(",") > 0)
-                //{
-                //    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
-                //}
-                //else
-                //{
-                //    dal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
-                //}
-                //dal.AddParameter("p_ritza_gorefet", ParameterType.ntOracleInteger, rizaGorefet.GetHashCode(), ParameterDir.pdInput);
                 dal.AddParameter("p_status_tipul", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
                 dal.AddParameter("p_brerat_mechdal", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput);
                 dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
@@ -542,7 +531,7 @@ namespace KdsBatch
                     dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
                 else 
                     dal.ExecuteSP(cGetNetunimLeprocess, ref ds, names);
-              //  dal.TxCommit();
+                dal.TxCommit();
                 return ds;
             }
             catch (Exception ex)

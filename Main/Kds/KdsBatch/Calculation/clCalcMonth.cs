@@ -5007,11 +5007,11 @@ namespace KdsBatch
                     {
                       //  fYemeyAvoda = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YemeyAvoda.GetHashCode().ToString()));
                        // fSumDakotRechiv = (fYemeyAvoda * int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length-4, 3))) / 100;
-                        fSumDakotRechiv = int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length - 4, 3));
+                        fSumDakotRechiv = float.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length - 3, 3))/10;
                     }
                     else if (_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(0, 1) == "2")
                     {
-                        fSumDakotRechiv = int.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length - 3, 3));
+                        fSumDakotRechiv = float.Parse(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Substring(_oGeneralData.objMeafyeneyOved.iMeafyen53.ToString().Length - 3, 3));
                     }
                     addRowToTable(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), fSumDakotRechiv);
                     

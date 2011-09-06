@@ -333,6 +333,7 @@ namespace KdsBatch
             DateTime dTarMe = Month;
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
             string sQury = "";
+            string sQuryMI = "";
             DataRow[] drMeafyn;
             DataTable MeafyenimLeYom = new DataTable();
             TimeSpan ts = new TimeSpan();
@@ -342,12 +343,15 @@ namespace KdsBatch
                 StartTime = DateTime.Now;
                 MeafyeneyOved = new List<clMeafyenyOved>();
             
+                if ( iBakashaId != 0){
+                    oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
+                    sQuryMI = "mispar_ishi= " + Mispar_ishi + " and ";
+                }
                 
-                oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
      
                 while (dTarMe <= TarAd)
                 {
-                    sQury = "mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
+                    sQury = sQuryMI + " Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')>= ME_TAARICH";
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
                 
                     drMeafyn = oGeneralData.dtMeafyenyOvedAll.Select(sQury);

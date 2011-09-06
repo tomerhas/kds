@@ -47,7 +47,7 @@ namespace KdsBatch
           _ListErua = new List<string>();
          
           StringBuilder sDataEt = new StringBuilder();
-          float fErech;
+          float fErech, fKamut;
           int isuk=0;
           string sMeafyen53;
           DataRow[] drYamim;
@@ -97,8 +97,9 @@ namespace KdsBatch
                       if (fErech > 0)
                       {
                         //  fKamut = float.Parse(dtChishuvYomi.Compute("count(MISPAR_ISHI)", "MISPAR_ISHI=" + _iMisparIshi + " AND ERECH_RECHIV>0 AND KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')").ToString());
-                          drYamim = dtChishuvYomi.Select("ERECH_RECHIV>0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
-                          CreateDataEtToRechiv("004", drYamim.Length, fErech);
+                       //   drYamim = dtChishuvYomi.Select("ERECH_RECHIV>0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
+                          fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyAvoda.GetHashCode());
+                          CreateDataEtToRechiv("004", fKamut, fErech);
 
                       }
                   }
