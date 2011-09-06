@@ -2567,7 +2567,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         try
         {
-            float fSidurTime = (clDefinitions.GetSidurTimeInMinuts(oSidur) / 60); //משך הסידור בשעות
+            float fSidurTime = (clDefinitions.GetSidurTimeInMinuts(oSidur)); //משך הסידור בדקות
             
             Image imgErr = new Image();
             imgErr.ID = "imgSdr" + iIndex;
@@ -2590,7 +2590,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (!oSidur.sSidurDescription.Equals(""))
                     sToolTip = String.Concat(oSidur.sSidurDescription, "\n");
 
-                sToolTip = String.Concat(sToolTip, "  משך הסידור: ", String.Format("{0:0.##}", fSidurTime), " שעות");
+                sToolTip = String.Concat(sToolTip, "  משך הסידור: ", String.Format("{0:0.##}", fSidurTime), " דקות");
             }
 
             //נבדוק אם לסידור יש אפשרות להוסיף שדות, אם כן נציג אותו כלינק
