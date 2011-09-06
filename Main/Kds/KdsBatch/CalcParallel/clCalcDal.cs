@@ -36,7 +36,7 @@ namespace KdsBatch
         private const string cProPrepareNetunimLechishuv = "Pkg_Calculation.pro_prepare_netunim_lechishuv";
         private const string cProPrepareNetunimLechishuvPremiyot = "Pkg_Calculation.pro_get_ovdim_lehishuv_premiot";
 
-        private const string cGetNetunryChishuv = "Pkg_Calculation.pro_get_netunim_lechishuv";
+        private const string cGetNetunryChishuv = "Pkg_Calc_worker.pro_get_netunim_lechishuv";
         private const string cGetNetunimLeprocess = "Pkg_Calculation.pro_get_netunim_leprocess";
         public DataTable GetOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet)
         {
@@ -538,7 +538,10 @@ namespace KdsBatch
                 dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, numProcess, ParameterDir.pdInput);
 
-                dal.ExecuteSP(cGetNetunimLeprocess, ref ds, names);
+                if (mis_ishi>0)
+                    dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
+                else 
+                    dal.ExecuteSP(cGetNetunimLeprocess, ref ds, names);
               //  dal.TxCommit();
                 return ds;
             }

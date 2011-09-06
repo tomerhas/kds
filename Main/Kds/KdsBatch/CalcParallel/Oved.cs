@@ -50,7 +50,7 @@ namespace KdsBatch
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
             if (BakashaId == 0)
-                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi,1);
+                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi,0);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
