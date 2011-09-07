@@ -3149,7 +3149,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            {
                iCurrSidurIndex = iCurrSidurIndex - 1; //מכיל את הסידור שאותו משנים
                _Sidur = (clSidur)htFullEmployeeDetails[iCurrSidurIndex];
-               if ((IsSidurShaon(ref _Sidur)) && (_Sidur.sShatGmar.Equals("")))
+               if ((IsSidurShaonHachtamatShaon(ref _Sidur)) && (_Sidur.sShatGmar.Equals("")))
                {
                    _Sidur.sShatGmar = _CurrSidur.sShatHatchala;
                    _Sidur.dFullShatGmar = _CurrSidur.dFullShatHatchala;
@@ -3176,12 +3176,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            {
                iCurrSidurIndex = iCurrSidurIndex + 1;
                _Sidur = (clSidur)htFullEmployeeDetails[iCurrSidurIndex];
-               if ((IsSidurShaon(ref _Sidur)) && (_Sidur.sShatHatchala.Equals("")))
+               if ((IsSidurShaonHachtamatShaon(ref _Sidur)) && (_Sidur.sShatHatchala.Equals("")))
                {
+                   string _sOldShatHatchala = _Sidur.dOldFullShatHatchala.ToShortTimeString();
                    _Sidur.sShatHatchala = _CurrSidur.sShatGmar;
                    _Sidur.dFullShatHatchala = _CurrSidur.dFullShatGmar;
                    _Sidur.sMikumShaonKnisa = _CurrSidur.sMikumShaonYetzia;
-                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();                                                       
+                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();
+                   UpdateSidurimUpdateDT(_Sidur.iMisparSidur, _sOldShatHatchala, _Sidur.sShatHatchala, DateTime.Parse(_CurrSidur.dSidurDate.ToShortDateString() + " " + _Sidur.sShatHatchala));
                    Session["Sidurim"] = DataSource;
                    ClearControl();
                    BuildPage();
@@ -3193,9 +3195,43 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (bSidurHasChanged){
             string sScript = "SetLvlChg(2," + iCurrSidurIndex + ");SetSidurStatus(" + iSidurIndex + ", true); $get('lstSidurim_imgCancel" + iSidurIndex + "').disabled = true;  $get('lstSidurim_imgCancel" + iSidurIndex + "').className='ImgCancelDisable';";
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "SwitchHour", sScript, true);
-      }
-            
-    
+      }    
+    }
+    private void UpdateSidurimUpdateDT(int iSidurKey, string sOldStartHour, string sNewStartHour, DateTime dSidurDate)
+    {
+        DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+        DataRow[] dr;
+        DateTime dtOrgDate, dtCardDate;
+        OrderedDictionary odSidurim;
+        clSidur _Sidur;
+        dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
+        if (dr.Length > 0)
+        {
+            dr[0]["sidur_number"] = iSidurKey;
+            dr[0]["sidur_start_hour"] = sNewStartHour;
+            dr[0]["sidur_date"] = dSidurDate;
+            //if (DateTime.Parse(dr[0]["sidur_date"].ToString()).Year < clGeneral.cYearNull)
+            //    //אם שעת ההתחלה ריקה, שנה 0001, נכניס את תאריך הכרטיס
+            //    dtOrgDate = DateTime.Parse(sCardDate);
+            //else
+            //    dtOrgDate = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString());
+
+            //if (sNewStartHour.Equals(string.Empty))
+            //    dr[0]["sidur_date"] = DateTime.Parse("01/01/001 00:00:00");
+            //else
+            //{
+            //    dtCardDate = DateTime.Parse(sCardDate);
+            //    if (dtOrgDate == dtCardDate)
+            //        dr[0]["sidur_date"] = DateTime.Parse(dtOrgDate.ToShortDateString() + " " + sNewStartHour).AddDays(iAddDay);
+            //    else
+            //    {
+            //        dr[0]["sidur_date"] = DateTime.Parse(DateTime.Parse(dr[0]["sidur_date"].ToString()).ToShortDateString() + " " + sNewStartHour);
+            //        if (dtOrgDate > dtCardDate)
+            //            if (iAddDay == 0)
+            //                dr[0]["sidur_date"] = ((DateTime)dr[0]["sidur_date"]).AddDays(-1);
+            //    }
+            //}
+        }
     }
     public void SwitchShatGmatHatchala(int iSidurIndex, int iTypeToSwitch, ref int iSidurIndexThatChanged)
     {
@@ -4049,7 +4085,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             
             ddl.Style.Add("width", "78px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
-            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
@@ -4139,8 +4175,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        return ((oSidur.bSidurMyuhad) && (oSidur.bNitanLedaveachAdTaarichExists));
     }
     private bool IsSidurShaon(ref clSidur oSidur)
-    {
+    {        
         return ((oSidur.bSidurMyuhad) && (oSidur.bShaonNochachutExists));
+    }
+    private bool IsSidurShaonHachtamatShaon(ref clSidur oSidur)
+    {
+        return ((oSidur.bSidurMyuhad) && (oSidur.bShaonNochachutExists) && (oSidur.sShaonNochachut.Equals("1")));
     }
     private bool IsMikumShaonEmpty(string sMikumShaon)
     {
