@@ -25,6 +25,29 @@ namespace KdsBatch
         // //   objOved.Taarich = Taarich;
         // //   iSugYom = SugYom;
         //}
+
+        public float getZmanHafsakaBesidur(int iMisparSidur, DateTime dShatHatchalaSidur)
+        {
+            float fZmanHafsaka = 0;
+            DataRow[] drPeiluyot;
+            int iMakat;
+            try
+            {
+                drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, " (SUBSTRING(makat_nesia,1,3)='790')");
+                for (int J = 0; J < drPeiluyot.Length; J++)
+                {
+                    iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+
+                    fZmanHafsaka += int.Parse(iMakat.ToString().Substring(3, 3));
+                }
+                return fZmanHafsaka;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
          public void CalcRechiv1(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              DataRow[] drPeiluyot;
@@ -71,7 +94,7 @@ namespace KdsBatch
              {
                  sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
                  if (sCondition != "")
-                     sQury += "and " + sCondition;
+                     sQury += " and " + sCondition;
                  drPeiluyot = objOved.DtPeiluyotYomi.Select(sQury, "shat_yetzia asc");
                  return drPeiluyot;
              }

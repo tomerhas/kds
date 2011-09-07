@@ -273,6 +273,7 @@ namespace KdsBatch
                        //שמירת נתוני החישוב לעובד
                     SaveChishuv(0, iMisparIshi);
                       iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                     
                }
                catch (Exception ex)
                {
@@ -281,6 +282,7 @@ namespace KdsBatch
                }
                finally
                {
+                   clCalcData.ListParametersMonth = null;
                    clDefinitions.UpdateLogBakasha(lBakashaId, DateTime.Now, iStatus);
                }
            }

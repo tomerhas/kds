@@ -175,6 +175,7 @@ namespace KdsBatch
                     else objOved.DtPeiluyotTnuaYomi = objOved.DtPeiluyotFromTnua.Clone();
                     drs = null;
                 }
+                AddRowZmanLeloHafsaka();
             }
             catch (Exception ex)
             {
@@ -182,6 +183,45 @@ namespace KdsBatch
             }  
         }
 
+        private void AddRowZmanLeloHafsaka()
+        {
+            float zmanHafsaka, zmanSidur;
+            CalcPeilut oPeilut;
+            DateTime taarich = DateTime.Now;
+            DataRow dr;
+            try
+            {
+                oPeilut = new CalcPeilut(objOved);
+
+                objOved.DtYemeyAvodaYomi.Columns.Add("ZMAN_LELO_HAFSAKA", System.Type.GetType("System.Single"));
+                objOved.DtYemeyAvodaYomi.Columns.Add("ZMAN_HAFSAKA_BESIDUR", System.Type.GetType("System.Single"));
+                for (int i = 0; i < objOved.DtYemeyAvodaYomi.Rows.Count; i++)
+                {
+                    try
+                    {
+                        dr = objOved.DtYemeyAvodaYomi.Rows[i];
+                        if (dr["shat_hatchala_sidur"].ToString() != "")
+                        {
+
+                            taarich = DateTime.Parse(dr["taarich"].ToString());
+                            zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(dr["mispar_sidur"].ToString()), DateTime.Parse(dr["shat_hatchala_sidur"].ToString()));
+                            zmanSidur = float.Parse((DateTime.Parse(dr["shat_gmar_letashlum"].ToString()) - DateTime.Parse(dr["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
+                            objOved.DtYemeyAvodaYomi.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
+                            objOved.DtYemeyAvodaYomi.Rows[i]["ZMAN_HAFSAKA_BESIDUR"] = zmanHafsaka;
+                        }
+                        //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         private void CalcMekademNipuach(DateTime dTarMe, DateTime dTarAd, int Mispar_ishi)
         {
             float fCountMichsa, fCountYomLeloChag;

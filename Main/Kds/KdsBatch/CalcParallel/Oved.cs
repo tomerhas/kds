@@ -49,7 +49,7 @@ namespace KdsBatch
         
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
-            if (BakashaId == 0)
+            if (BakashaId == 0 || BakashaId == 1)
                 oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi,0);
             Mispar_ishi = mis_ishi;
             Month = month;
@@ -343,7 +343,7 @@ namespace KdsBatch
                 StartTime = DateTime.Now;
                 MeafyeneyOved = new List<clMeafyenyOved>();
             
-                if ( iBakashaId != 0){
+                if ( iBakashaId > 1){
                     oGeneralData.dtMeafyenyOvedAll.Select(null, "mispar_ishi");
                     sQuryMI = "mispar_ishi= " + Mispar_ishi + " and ";
                 }

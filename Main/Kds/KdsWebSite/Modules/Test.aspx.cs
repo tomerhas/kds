@@ -323,8 +323,8 @@ public partial class Modules_Test :Page
     {
         //pnlHeader.Controls.Clear();
         //BuildPage();
-        clKavim oKavim = new clKavim();
-        int iRes;
+      //  clKavim oKavim = new clKavim();
+      //  int iRes;
         //clCardErrors oErr = new clCardErrors();
         //clInputData oInputData = new clInputData();
        // oKavim.GetSidurAndPeiluyotFromTnua(12417, DateTime.Parse("03/08/2009"), out iRes);
@@ -338,6 +338,10 @@ public partial class Modules_Test :Page
         //oKavim.GetSidurDetailsFromTnua(62063, DateTime.Parse("04/05/2009"), out iRes);
         //oInputData.MainInputData(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
         //oErr.MainOvedErrors(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
+
+        MainCalc objMainCalc = new MainCalc();
+        objMainCalc.MainCalcTest(DateTime.Parse(clnFromDate.Text), int.Parse(txtId.Text));
+             
     }
 
     protected void Button1_Click(object sender, EventArgs e)

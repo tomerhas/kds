@@ -82,7 +82,7 @@
             <tr>
                 <td>
                  <asp:Button ID="Button2" runat="server" onclick="Button2_Click" 
-                        Text="רוטינת שגויים" />
+                        Text="חישוב חדש" />
                  </td>       
             
                 <td>

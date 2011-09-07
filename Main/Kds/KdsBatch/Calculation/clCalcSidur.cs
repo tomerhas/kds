@@ -4126,7 +4126,7 @@ namespace KdsBatch
                         {
                             fDakotRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
                         }
-                        fDakotRechiv -= fDakotRechiv;
+                        fDakotRechiv -= fZmanHafsaka;
                         addRowToTable(clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fDakotRechiv);
                     }
 

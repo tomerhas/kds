@@ -209,39 +209,40 @@ namespace KdsBatch
             }
         }
 
-        //public void MainCalcTest(DateTime dTarMe, int iMisparIshi)
-        //{
-        //    long lBakashaId = 0;
-        //    DateTime dTarAd;
-        //    int iStatus = 0;
-        //    clUtils oUtils = new clUtils();
-        //    Oved oOved;
-        //    COLL_CHISHUV_SIDUR _collChishuvSidur;
-        //    COLL_CHISHUV_YOMI _collChishuvYomi;
-        //    COLL_CHISHUV_CHODESH _collChishuvChodesh;
-        //    try
-        //    {
-        //        dTarAd = dTarMe.AddMonths(1).AddDays(-1);
-
-        //        //   InsertOvedToTable(iMisparIshi, dTarMe);
-        //        oOved = new Oved(iMisparIshi, dTarMe, dTarMe, dTarAd, lBakashaId);
-        //        CalcOved(oOved);
-
-        //        SaveSidurim(iMisparIshi, oOved.DtYemeyAvoda);
-        //        //שמירת נתוני החישוב לעובד
-        //        SaveChishuv(0, iMisparIshi);
-        //        iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-        //        clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dTarMe, "MainCalcTest: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        clDefinitions.UpdateLogBakasha(lBakashaId, DateTime.Now, iStatus);
-        //    }
-        //}
+        public void MainCalcTest(DateTime dTarMe, int iMisparIshi)
+        {
+            long lBakashaId = 1;
+            clUtils oUtils = new clUtils();
+            Oved oOved;
+            CalcMonth oMonth;
+            DateTime StartMonth = DateTime.Parse("01/" + dTarMe.Month + "/" + dTarMe.Year);
+            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+            try
+            {
+                //InsertOvedToTable(iMisparIshi, StartMonth);
+                oOved = new Oved(iMisparIshi, StartMonth, StartMonth, StartMonth.AddMonths(1).AddDays(-1), lBakashaId);
+                oOved.SetNetunimLeOved();
+                oMonth = new CalcMonth(oOved);
+                // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
+                oMonth.CalcMonthOved();
+                DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+                DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+                DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+                       
+                SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+                      
+                SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
+                oOved.Dispose();
+                SingleGeneralData.ResetObject();
+            }
+            catch (Exception ex)
+            {
+                SingleGeneralData.ResetObject();
+                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, StartMonth, "MainCalc: " + ex.Message);
+            }
+        }
 
         private void SaveSidurim(int iMisparIshi, DataTable dtYemeyAvoda)
         {
