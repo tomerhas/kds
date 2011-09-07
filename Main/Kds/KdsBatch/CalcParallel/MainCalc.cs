@@ -191,11 +191,15 @@ namespace KdsBatch
         {
             bStatus = false;
             Oved oOved;
+            CalcMonth oMonth;
             try
             {
                 //  InsertOvedToTable(iMisparIshi, dCalcDay);
                 oOved = new Oved(iMisparIshi, dCalcDay, lBakashaId);
-                CalcOved(oOved);
+                oOved.SetNetunimLeOved();
+                oMonth = new CalcMonth(oOved);
+                oMonth.CalcMonthOved();
+                //CalcOved(oOved);
                 SingleGeneralData.ResetObject();
 
                 bStatus = true;

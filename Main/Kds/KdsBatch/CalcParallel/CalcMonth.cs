@@ -44,10 +44,16 @@ namespace KdsBatch
                 //iStatusTipul = clGeneral.enStatusTipul.HistayemTipul.GetHashCode();
                 if (objOved.DtYemeyAvoda.Rows.Count > 0)
                 {
-                    dTarMe = objOved.Month;
-                    dTarAd = objOved.Month.AddMonths(1).AddDays(-1);
-                    // dTarChishuv = objOved.Month;
-
+                    if (objOved.bChishuvYom)
+                    {
+                        dTarMe = objOved._dDay;
+                        dTarAd = objOved._dDay;
+                    }
+                    else
+                    {
+                        dTarMe = objOved.Month;
+                        dTarAd = objOved.Month.AddMonths(1).AddDays(-1);
+                    }
 
                     _dTaarichChishuv = objOved.Month;
 
@@ -58,10 +64,9 @@ namespace KdsBatch
                         //SimunLoLetashlumRetzifut();
                     }
 
-                    dTaarich = dTarMe;
-
+                    
                     oDay = new CalcDay(objOved);
-                  
+                    dTaarich = dTarMe;
                     while (dTaarich <= dTarAd)
                     {
                         if (IsDayExist(dTaarich))
@@ -81,18 +86,9 @@ namespace KdsBatch
                         dTaarich = dTaarich.AddDays(1);
                     }
                     
-                 
                     CalcMekademNipuach(dTarMe, dTarAd, objOved.Mispar_ishi);
 
-                    if (objOved.bChishuvYom)
-                    {
-                        dTarMe = objOved._dDay;
-                        dTarAd = objOved._dDay;
-                    }
-
                     dTaarich = dTarMe;
-
-
                     while (dTaarich <= dTarAd)
                     {
                         if (IsDayExist(dTaarich))

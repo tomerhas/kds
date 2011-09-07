@@ -62,11 +62,11 @@ public partial class Modules_Ovdim_Rechivim : KdsLibrary.UI.KdsPage
 
         DataTable dtRechivim = oOvdim.GetRechivim();
 
-        clCalculation objCalc = new clCalculation();
-        dsRechivim = objCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
+        //clCalculation objCalc = new clCalculation();
+        //dsRechivim = objCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
 
-        //MainCalc objMainCalc = new MainCalc();
-        //dsRechivim = objMainCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
+        MainCalc objMainCalc = new MainCalc();
+        dsRechivim = objMainCalc.CalcDayInMonth(iMisparIshi, dTarich, 0, out bValid);
              
 
         if (!bValid)
