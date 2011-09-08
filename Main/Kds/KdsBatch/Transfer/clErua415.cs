@@ -36,7 +36,7 @@ namespace KdsBatch
                   sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 1));
                   sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotRegilot.GetHashCode()) / 60), 4, 1));
                   sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ShaotHeadrut.GetHashCode()), 4, 1));
-                  sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode()) / 60), 4, 1));
+                  sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.Nosafot100.GetHashCode()) / 60), 4, 1));
               //}
               //else { sErua415.Append(GetBlank(16)); }
 

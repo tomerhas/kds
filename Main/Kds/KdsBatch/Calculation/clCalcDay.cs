@@ -276,7 +276,7 @@ namespace KdsBatch
                 CalcRechiv140();
                 CalcRechiv141();
                 CalcRechiv145();
-                CalcRechiv146();
+             
                 CalcRechiv185();
 
                 //קיזוז נוכחות ( רכיב 142): 
@@ -426,6 +426,7 @@ namespace KdsBatch
 
                 UpdateRechiv1();
 
+                CalcRechiv146();
                 //שעות % 100 לתשלום (רכיב 100
                 CalcRechiv100();
 
