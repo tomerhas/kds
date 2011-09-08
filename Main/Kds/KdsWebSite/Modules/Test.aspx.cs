@@ -354,6 +354,12 @@ public partial class Modules_Test :Page
              
     }
 
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        MainCalc objMainCalc = new MainCalc(456,1);
+        objMainCalc.PremiaCalc();
+
+    }
     protected void Button3_Click(object sender, EventArgs e)
     {
         //clInputData oInputData = new clInputData();

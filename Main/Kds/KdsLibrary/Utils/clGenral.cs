@@ -786,7 +786,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             TosefetGrirotSofSidur=1282
         }
         public enum TypeCalc
-        { Batch = 1, OnLine = 2, Test = 3 }
+        { Batch = 1, OnLine = 2, Test = 3 ,Premiya = 4}
         public enum enSectorAvoda
         {
             Nahagut = 5, //סידור נהגות

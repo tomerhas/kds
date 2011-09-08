@@ -21,7 +21,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" AutoPostBack="true" 
-                                Width="55px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" ></asp:TextBox>                            
+                                Width="55px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"

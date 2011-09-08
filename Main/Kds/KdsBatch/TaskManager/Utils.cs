@@ -24,6 +24,22 @@ namespace KdsBatch.TaskManager
                 throw new Exception("RunShguimOfSdrn:" + ex.Message);
             }
         }
+        public void RunCalcPremiyotMusachim()
+        {
+            MainCalc oCalc;// = new MainCalc(
+            clBatch oBatch = new clBatch();
+            long lRequestNum = 0;
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
+                oCalc = new MainCalc(lRequestNum, 1);
+                oCalc.PremiaCalc();//KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunCalcPremiyotMusachim:" + ex.Message);
+            }
+        }
         public void RunIshurimOfSdrn()
         {
             try

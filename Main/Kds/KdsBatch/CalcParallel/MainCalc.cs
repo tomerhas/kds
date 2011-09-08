@@ -41,7 +41,8 @@ namespace KdsBatch
             _Ovdim = new List<Oved>();
             _iBakashaId = iBakashaId;
             _numProcess = numProcess;
-            SetListOvdimLechishuvPremia(iBakashaId, numProcess);
+            _iTypeCalc = clGeneral.TypeCalc.Premiya;
+           // SetListOvdimLechishuvPremia(iBakashaId, numProcess);
         }
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc, int numProcess)
         {
@@ -135,12 +136,12 @@ namespace KdsBatch
                //שמירת הנתונים רק אם התהליך התבצע ב-batch
                if (oOved.DtYemeyAvoda.Rows.Count > 0)
                {
-                   if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test)
+                   if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Test || _iTypeCalc == clGeneral.TypeCalc.Premiya)
                    {
                        DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                        DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
                        DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                       if (_iTypeCalc == clGeneral.TypeCalc.Batch)
+                       if (_iTypeCalc == clGeneral.TypeCalc.Batch || _iTypeCalc == clGeneral.TypeCalc.Premiya)
                        {
                            SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
                        }
@@ -155,9 +156,9 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-
                 clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc: " + ex.Message);
                 oOved.Dispose();
+                throw(ex);
             }
         }
 
@@ -502,63 +503,61 @@ namespace KdsBatch
             }
         }
 
-        public void CalcOvedPremiya(Oved oOved)
-        {
-            clCalcDal oCalcDal = new clCalcDal();
+        //public void CalcOvedPremiya(Oved oOved)
+        //{
+        //    clCalcDal oCalcDal = new clCalcDal();
 
-            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
-            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
-            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+        //    COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
+        //    COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
+        //    COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
 
-            try
-            {
-                CalcOved(oOved);
-                SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
+        //    try
+        //    {
+        //        CalcOved(oOved);
+        //        SaveSidurim(oOved.Mispar_ishi, oOved.DtYemeyAvoda);
 
-                //שמירת נתוני החישוב לעובד
-                DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
-                DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
-                DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
+        //        //שמירת נתוני החישוב לעובד
+        //        DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
+        //        DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
+        //        DataSetTurnIntoUdtSidur(oOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
+        //        SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
 
-                oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
+        //        oCalcDal.UpdatePremiaBakashaID(oOved.Mispar_ishi, oOved.iBakashaId, oOved.Month);
 
-                _collChishuvChodesh = null;
-                _collChishuvYomi = null;
-                _collChishuvSidur = null;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-                oOved.Dispose();
-            }
-        }
+        //        _collChishuvChodesh = null;
+        //        _collChishuvYomi = null;
+        //        _collChishuvSidur = null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw (ex);
+        //        oOved.Dispose();
+        //    }
+        //}
 
         public void PremiaCalc()
         {
            clBatch obatch = new clBatch();
             clCalcDal oCalcDal = new clCalcDal();
-            long lBakashaId = 0;
+            //long lBakashaId = 0;
             int numFailed = 0;
             int numSucceed = 0;
             int seq = 0;
             int result=0;
-            COLL_CHISHUV_SIDUR _collChishuvSidur = new COLL_CHISHUV_SIDUR();
-            COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
-            COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
-       
             try
             {
 
                 seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
-                lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
-               // result = oCalcDal.PrepareDataLeChishuvPremiyot();
+               // lBakashaId = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.CalculationForPremiaPopulation, "KdsScheduler", -12);
+                result = oCalcDal.PrepareDataLeChishuvPremiyot(_numProcess);
                 clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
+               
                 if (result > 0)
                 {
+                    
                     try
                     {
-                        SetListOvdimLechishuvPremia(lBakashaId,1);
+                        SetListOvdimLechishuvPremia(_iBakashaId, _numProcess);
 
                         if (Ovdim != null && Ovdim.Count > 0)
                         {
@@ -568,43 +567,29 @@ namespace KdsBatch
                                 try
                                 {
                                     CalcOved(CurrentOved);
-                                    SaveSidurim(CurrentOved.Mispar_ishi, CurrentOved.DtYemeyAvoda);
-
-                                    //שמירת נתוני החישוב לעובד
-                                    DataSetTurnIntoUdtChodesh(CurrentOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
-                                    DataSetTurnIntoUdtYom(CurrentOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);
-                                    DataSetTurnIntoUdtSidur(CurrentOved._dsChishuv.Tables["CHISHUV_SIDUR"], ref _collChishuvSidur);
-                                    SaveChishuv(_collChishuvChodesh, _collChishuvYomi, _collChishuvSidur);
-
-                                    oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, lBakashaId, CurrentOved.Month);
+                         
+                                    oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, _iBakashaId, CurrentOved.Month);
 
                                     numSucceed += 1;
                                     CurrentOved.Dispose();
-                                    CurrentOved = null;
                                 }
                                 catch (Exception ex)
                                 {
                                     numFailed += 1;
-                                    clLogBakashot.SetError(lBakashaId, CurrentOved.Mispar_ishi, "E",
+                                    clLogBakashot.SetError(_iBakashaId, CurrentOved.Mispar_ishi, "E",
                                         (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
                                         CurrentOved.Month, ex.Message);
                                     clLogBakashot.InsertErrorToLog();
-                                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;
+                                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;  
+                                }
+                                finally
+                                {
                                     CurrentOved.Dispose();
                                     CurrentOved = null;
                                 }
                                 
                             });
                             #endregion
-                            //#region parallel
-                            //Parallel.ForEach(oMainCalc.Ovdim, CurrentOved =>
-                            //{
-                            //    oMainCalc.CalcOved(CurrentOved);
-                            //    CurrentOved.Dispose();
-                            //    CurrentOved = null;
-
-                            //});
-                            //#endregion
                         }
                       
                     }
@@ -620,7 +605,7 @@ namespace KdsBatch
                 }
                 else status = clGeneral.enBatchExecutionStatus.Failed;
 
-                KdsLibrary.clGeneral.CloseBatchRequest(lBakashaId, status);
+                KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
                 obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
             }
             catch (Exception ex)

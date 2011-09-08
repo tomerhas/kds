@@ -127,7 +127,7 @@ namespace KdsCalcul
                     {
                         try
                         {
-                            oMainCalc.CalcOvedPremiya(CurrentOved);
+                         //   oMainCalc.CalcOvedPremiya(CurrentOved);
                             CurrentOved.Dispose();
                             CurrentOved = null;
                             numSucceed += 1;

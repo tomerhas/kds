@@ -52,7 +52,7 @@
             <tr>               
                <td>תאריך</td>
                 <td>
-                 <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                            
+                 <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  AutoPostBack="false"  dir="rtl" onfocus="this.select();" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                            
                 
 <%--                  <wccEgged:wccCalendar runat="server" ID="clnFromDate" BasePath="../EggedFramework" AutoPostBack="false" Width="110px" dir="rtl"></wccEgged:wccCalendar>                                                                      --%>
                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
@@ -134,6 +134,10 @@
                 <td>           
                     
                 </td>
+                 <td>
+                 <asp:Button ID="Button6" runat="server" onclick="Button6_Click" 
+                        Text="חישוב פרימיות" />
+                 </td>      
             </tr>
          </table>  
           <asp:RadioButton runat="server" AutoPostBack="true" ID="rdoTst" Text="בדיקה" 
