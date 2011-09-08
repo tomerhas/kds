@@ -5214,7 +5214,7 @@ namespace KdsBatch
 
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
 
-                fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode());
+                fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.SachNosafotTnuaCholVeshishi);
 
                 fNosafotMichutz = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua);
                 fSumDakotRechiv208 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichutzLamichsaTnuaShishi);
