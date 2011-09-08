@@ -54,9 +54,9 @@ namespace KdsLibrary.UI
             {
                 SetHeader(PageHeader);
                 SetDateHeader(DateHeader);
-                SetServiceRefference();
-                Page.Title = "מערכת קדם שכר";
+                SetServiceRefference();                
             }
+            Page.Title = "מערכת קדם שכר";
 
         }
 
