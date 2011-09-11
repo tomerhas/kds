@@ -21,13 +21,19 @@ namespace KdsLibrary.Utils
         private string _host;
         private string _DisplayNameServer;
         private DirectionType _Direction;
+        private SmtpClient client;
+        private string username, password;
         private void Init(string To, string Subject, string Body)
         {
-            _FromMail = ConfigurationSettings.AppSettings["NoRep"];
-            _host = ConfigurationSettings.AppSettings["SmtpHost"];
-            _DisplayNameServer = ConfigurationSettings.AppSettings["DisplayNameServer"];
-            _mailFromAddress = new MailAddress(_FromMail, _DisplayNameServer);
+            username = ConfigurationManager.AppSettings["UserMail"].ToString();
+            password = ConfigurationManager.AppSettings["PasswordMail"].ToString();
+            _host = ConfigurationManager.AppSettings["SmtpHost"];
+            _DisplayNameServer = ConfigurationManager.AppSettings["DisplayNameServer"];
+            _FromMail = _DisplayNameServer + "<" + ConfigurationManager.AppSettings["NoRep"].ToString() + ">";
+            _mailFromAddress = new MailAddress(_FromMail);
             _mailToAddress = new MailAddress(To);
+            SmtpClient client = new SmtpClient(_host);
+            client.Credentials = new System.Net.NetworkCredential(username, password);
             message = new MailMessage(_mailFromAddress, _mailToAddress);
             message.Subject = Subject;
             message.IsBodyHtml = true;
@@ -69,8 +75,6 @@ namespace KdsLibrary.Utils
 
         public void SendMail()
         {
-            SmtpClient client = new SmtpClient(_host);
-            client.UseDefaultCredentials = true;
             client.Send(message);
         }
         public void IsHtmlBody(bool isHtml)
