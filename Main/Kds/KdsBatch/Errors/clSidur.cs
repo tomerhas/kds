@@ -128,6 +128,7 @@ namespace KdsBatch
         public string sKizuzAlPiHatchalaGmar;
         public bool bKizuzAlPiHatchalaGmarExists;
         public int iBitulOHosafa;
+        public bool bCancelSidurDisabled;
         public int iTosefetGrira;
         public int iAchuzKnasLepremyatVisa;
         public int iAchuzVizaBesikun;

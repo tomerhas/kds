@@ -1452,8 +1452,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //    || (iKodMaamad == clGeneral.enHrMaamad.SalariedEmployee12.GetHashCode())
                 //    || (iKodMaamad.ToString().Substring(0, 1).Equals("1")))
                 && ((lstSidurim.bAtLeatOneSidurIsNOTNahagutOrTnua))
-
-                && ((!(oBatchManager.oOvedYomAvodaDetails.bMutamutExists)) && (oBatchManager.oOvedYomAvodaDetails.iZmanMutamut == 0))
+                //אם יש ערך במותאם וגם הזמן גדול מאפס לא נאפשר המרה
+                && (!(((oBatchManager.oOvedYomAvodaDetails.bMutamutExists)) && (oBatchManager.oOvedYomAvodaDetails.iZmanMutamut > 0)))
                 && (!((clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet))))
                 );
 

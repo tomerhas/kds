@@ -493,6 +493,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //        throw ex;
     //    }
     //}
+    protected double CalcTimeDiffMinuts(DateTime dDate,string sHourA, string sHourB)
+    {
+        DateTime dDateA = DateTime.Parse(dDate.ToShortDateString() + " " + sHourA);
+        DateTime dDateB = DateTime.Parse(dDate.ToShortDateString() + " " + sHourB);
+        if ((!sHourA.Equals("")) &&  (!sHourB.Equals("")))
+            return (dDateA - dDateB).TotalMinutes;
+        else
+           return 0;
+    }
     protected void BuildSidurim(OrderedDictionary htFullEmployeeDetails)
     {            
         try
@@ -1485,12 +1494,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         GridViewRow _NextPeilut;
         bool bFound = false;
         bool bExists = false;
+        bool bLastSidurToSearch = false; //נחפש רק בסידור הנוכחי והבא אחריו שאינו מבוטל, המשתנה מציין אם הגענו לסידור הבא אחרי הסידור הנוכחי
         bool bCanAddReka = false;
         bool bLastPeilut = IsLastPeilutInSidur(iSidurIndex,iPeilutIndex);
         long lMakatEnd=0;
-        long lMakat = 0;
-        
-        //int iMazanTichnun;
+        long lMakat = 0;      
         TextBox _txt;
         clKavim _Kavim= new clKavim();
         string[] arrKnisa;
@@ -1503,9 +1511,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             lCarNum = 0;
         else
             lCarNum = long.Parse(((TextBox)_NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text);
-
-        //string sShatYetiza = ((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Text;
-        //DateTime dPeilutDate = DateTime.Parse(((TextBox)_NextPeilut.Cells[_COL_SHAT_YETIZA].Controls[0]).Attributes["OrgDate"] + " " + sShatYetiza);
+     
 
         if (bLastPeilut)
         {   //אם פעילות אחרונה בסידור נעבור לסידור הבא
@@ -1523,7 +1529,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     {
                         sNextSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;
                         if (!sNextSidurStatus.Equals("1"))
+                        {
                             bFound = true;
+                            bLastSidurToSearch = true;
+                        }
                         else
                         {
                             iSidurIndex = iSidurIndex + 1;
@@ -1553,7 +1562,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
 
 
-        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) && (_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+        while ((_NextPeilut != null) && (lMakatEnd == 0) && (bExists == false) &&
+            (_NextSidur != null) && ((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
         {
             try
             {
@@ -1573,8 +1583,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             string sCancelPeilut = ((TextBox)(_NextPeilut.Cells[_COL_CANCEL_PEILUT].Controls[0])).Text;
             if ((bCanAddReka) && (!sCancelPeilut.Equals("1")))
-            {
-                //sPeilutShatYetiza = sPeilutShatYetiza.concat(NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].getAttribute("OrgDate") + ' ' + NextRow.cells[_COL_SHAT_YETIZA].childNodes[0].value) + '|';
+            {                
                 lMakatEnd = long.Parse(((TextBox) _NextPeilut.Cells[_COL_MAKAT].Controls[0]).Text);
                 if (lCarNum != long.Parse(((TextBox) _NextPeilut.Cells[_COL_CAR_NUMBER].Controls[0]).Text))
                     lCarNum = 0;
@@ -1599,26 +1608,27 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             else
                                 _NextPeilut = null;
 
-                            //if (_NextPeilut == null)
-                            //{   //אם הגענו לסוף הסידור נעבור לסידור הבא
-                            //    iSidurIndex = iSidurIndex + 1;
-                            //    bFound = false;
-                            //    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                            //    while ((_NextSidur != null) && (!bFound))
-                            //    {
-                            //        if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                            //        {
-                            //            bFound = true;
-                            //            _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
-                            //            iPeilutIndex = 0;
-                            //        }
-                            //        else
-                            //        {
-                            //            iSidurIndex = iSidurIndex + 1;
-                            //            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                            //        }
-                            //    }
-                            //}
+                            if ((_NextPeilut == null) && !(bLastSidurToSearch))
+                            {   //אם הגענו לסוף הסידור נעבור לסידור הבא
+                                iSidurIndex = iSidurIndex + 1;
+                                bFound = false;
+                                _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                while ((_NextSidur != null) && (!bFound))
+                                {
+                                    if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+                                    {
+                                        bFound = true;
+                                        _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                                        iPeilutIndex = 0;
+                                        bLastSidurToSearch = true; //במידה ומצאנו את הסידור הבא שלא מבוטל נחפש בו את המק"ט , במידה ולא נמצא בסידור הזה, לא נעבור לסידור הבא
+                                    }
+                                    else
+                                    {
+                                        iSidurIndex = iSidurIndex + 1;
+                                        _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                    }
+                                }
+                            }
                         }
                     }
                     else
@@ -1629,26 +1639,27 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         else
                             _NextPeilut = null;
 
-                        //if (_NextPeilut == null)
-                        //{   //אם הגענו לסוף הסידור נעבור לסידור הבא
-                        //    iSidurIndex = iSidurIndex + 1;
-                        //    bFound = false;
-                        //    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                        //    while ((_NextSidur != null) && (!bFound))
-                        //    {
-                        //        if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                        //        {
-                        //            bFound = true;
-                        //            _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
-                        //            iPeilutIndex = 0;
-                        //        }
-                        //        else
-                        //        {
-                        //            iSidurIndex = iSidurIndex + 1;
-                        //            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
-                        //        }
-                        //    }
-                        //}
+                        if (_NextPeilut == null)
+                        {   //אם הגענו לסוף הסידור נעבור לסידור הבא
+                            iSidurIndex = iSidurIndex + 1;
+                            bFound = false;
+                            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                            while ((_NextSidur != null) && (!bFound))
+                            {
+                                if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+                                {
+                                    bFound = true;
+                                    _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                                    iPeilutIndex = 0;
+                                    bLastSidurToSearch = true; //במידה ומצאנו את הסידור הבא שלא מבוטל נחפש בו את המק"ט , במידה ולא נמצא בסידור הזה, לא נעבור לסידור הבא
+                                }
+                                else
+                                {
+                                    iSidurIndex = iSidurIndex + 1;
+                                    _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                }
+                            }
+                        }
                     }
                 
             }
@@ -1851,7 +1862,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                    long lMakat, long lCarNum,
                                    DataTable _NesiaDetails, enRekaMapaDirection _Direction)
     {
-        int iMazanTichnun, iPos;
+        int iMazanTichnun, iPos ;
+        double dKisuyTor;
         GridView _CurrSidur;
         GridViewRow _NextPeilut, _CurrPeilutUp;
         clSidur _Sidur = new clSidur();
@@ -1892,9 +1904,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 {
                     if (((TextBox)_CurrPeilutUp.Cells[_COL_DAY_TO_ADD].Controls[0]).Text.Equals("1"))
                         dPeilutDate = dPeilutDate.AddDays(1);
-
+                    dKisuyTor = CalcTimeDiffMinuts(dPeilutDate, sShatYetiza, ((TextBox)_CurrPeilutUp.Cells[_COL_KISUY_TOR].Controls[0]).Text);
                     dPeilutShatYetiza = DateTime.Parse(dPeilutDate.ToShortDateString() + " " + sShatYetiza);
-                    dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-int.Parse((_CurrPeilutUp.Cells[_COL_KISUY_TOR_MAP]).Text));
+                    dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-dKisuyTor);
                     iMazanTichnun = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["mazantichnun"].ToString()) ? 0 : int.Parse(_NesiaDetails.Rows[0]["mazantichnun"].ToString());
                     dPeilutShatYetiza = dPeilutShatYetiza.AddMinutes(-iMazanTichnun);
                 }
@@ -2751,14 +2763,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell = CreateTableCell("35px", "", "");
         Button btnImage = new Button();
         btnImage.ID = "imgCancel" + iIndex;
-        btnImage.CssClass = bSidurActive ? "ImgChecked" : "ImgCancel";
+        btnImage.CssClass = bSidurActive ? "ImgChecked" : oSidur.bCancelSidurDisabled ? "ImgCancelDisable" : "ImgCancel";
         if (oSidur.oSidurStatus==clSidur.enSidurStatus.enNew){            
             btnImage.Enabled = true;
         }
         else
             if ((!_ProfileRashemet) || (!bEnableSidur)){        
                 btnImage.Attributes.Add("disabled", "true");
-        }        
+        }
+        if (oSidur.bCancelSidurDisabled)
+            btnImage.Enabled = false;
         //btnImage.OnClientClick = "if (!ChangeStatusSidur(this.id)) {return false;} else {return true;} ";
         btnImage.OnClientClick = "return ChangeStatusSidur(this.id);";
         btnImage.ToolTip = bSidurActive ? "" : oSidur.dTaarichIdkunAcharon.ToLongDateString();
@@ -2961,7 +2975,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     iCancelSidur = int.Parse(((TextBox)this.FindControl("lblSidurCanceled" + iIndex)).Text);
 
                     oSidur.iBitulOHosafa = iCancelSidur;
-
+                   
                     //לא לתשלום - במידה וסידור בוטל נעדכן בערך המקורי - ישאר ללא שינוי
                     oChk = (HtmlInputCheckBox)this.FindControl("chkLoLetashlum" + iIndex);
 
@@ -3152,9 +3166,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                if ((IsSidurShaonHachtamatShaon(ref _Sidur)) && (_Sidur.sShatGmar.Equals("")))
                {
                    _Sidur.sShatGmar = _CurrSidur.sShatHatchala;
-                   _Sidur.dFullShatGmar = _CurrSidur.dFullShatHatchala;
+                   _Sidur.dFullShatGmar = _CurrSidur.dFullShatHatchala;                   
                    _Sidur.sMikumShaonYetzia = _CurrSidur.sMikumShaonKnisa;
-                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();                  
+                   _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();
+                   _CurrSidur.bCancelSidurDisabled = true;
                    Session["Sidurim"] = DataSource;                   
                    ClearControl();
                    BuildPage();
@@ -3180,14 +3195,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                {
                    string _sOldShatHatchala = _Sidur.dOldFullShatHatchala.ToShortTimeString();
                    _Sidur.sShatHatchala = _CurrSidur.sShatGmar;
-                   _Sidur.dFullShatHatchala = _CurrSidur.dFullShatGmar;
+                   _Sidur.dFullShatHatchala = _CurrSidur.dFullShatGmar;                  
                    _Sidur.sMikumShaonKnisa = _CurrSidur.sMikumShaonYetzia;
                    _CurrSidur.iBitulOHosafa = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode();
+                   _CurrSidur.bCancelSidurDisabled = true;
                    UpdateSidurimUpdateDT(_Sidur.iMisparSidur, _sOldShatHatchala, _Sidur.sShatHatchala, DateTime.Parse(_CurrSidur.dSidurDate.ToShortDateString() + " " + _Sidur.sShatHatchala));
                    Session["Sidurim"] = DataSource;
                    ClearControl();
                    BuildPage();
-                   bSidurHasChanged = true;                  
+                   bSidurHasChanged = true;
+                   _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
                    break;
                }
            }
@@ -3201,9 +3218,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
         DataRow[] dr;
-        DateTime dtOrgDate, dtCardDate;
-        OrderedDictionary odSidurim;
-        clSidur _Sidur;
+       
         dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
         if (dr.Length > 0)
         {
@@ -4231,7 +4246,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlTableRow hRow = new HtmlTableRow();
         HtmlTableCell hCell = new HtmlTableCell();            
         DataRow[] drSugSidur;
-       // bool bSidurNahagutOrTnua=false;
+        bool bSidurNahagut=false;
+        bool bSidurTnua = false;
         try
         {
             //נשלוף את מאפייני סוג הסידור ( סידורים רגילים(
@@ -4253,18 +4269,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
 
             //יהיה אמת אם לפחות אחד מהסידורים יהיה תנועה או נהגות 
-            if (IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)))
-                bAtLeatOneSidurIsNOTNahagutOrTnua = true;
-            //bSidurNahagutOrTnua=(IsSidurNahagut(ref oSidur, drSugSidur) || (IsSidurNihul(ref oSidur, drSugSidur)));//IsSidurNahagutOrTnua(ref oSidur, drSugSidur);
-            ////נבדוק אם אחד מהסידורים הוא סידור נהגות או ניהול תנועה
-            //if (!bAtLeatOneSidurIsNOTNahagutOrTnua){
-            //    bAtLeatOneSidurIsNOTNahagutOrTnua = (!bSidurNahagutOrTnua);
-            //}
-
-            if ((oSidur.sErevShishiChag.Equals("1")) || (oSidur.sSidurDay.Equals(clGeneral.enDay.Shishi.GetHashCode().ToString())))
+            bSidurNahagut = IsSidurNahagut(ref oSidur, drSugSidur);
+            bSidurTnua = IsSidurNihul(ref oSidur, drSugSidur);
+            if (bSidurNahagut || (bSidurTnua))
             {
-                if (!bAtLeastOneSidurInShabat){                
-                   bAtLeastOneSidurInShabat = IsSidurInShabat(ref oSidur);
+                bAtLeatOneSidurIsNOTNahagutOrTnua = true;
+
+                if ((oSidur.sErevShishiChag.Equals("1")) || (oSidur.sSidurDay.Equals(clGeneral.enDay.Shishi.GetHashCode().ToString())))
+                {
+                    if (!bAtLeastOneSidurInShabat)                    
+                        bAtLeastOneSidurInShabat = IsSidurInShabat(ref oSidur);                    
                 }
             }
            
@@ -5356,8 +5370,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Enabled = false;
             }
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onchange", "SidurTimeChanged(" + iIndex + ");MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "');");
+            oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             
             

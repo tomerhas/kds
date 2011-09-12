@@ -1477,11 +1477,12 @@ function chkMkt(oRow) {
     var dSGL = new Date();
     var oSH = $get("lstSidurim_txtSH".concat(id)).value;
     var oSG = $get("lstSidurim_txtSG".concat(id)).value;
+    var iSDayToAdd;
     if ($get("lstSidurim_txtSHL".concat(id)) != null) {
         var oSHL = $get("lstSidurim_txtSHL".concat(id)).value;
         var oSGL = $get("lstSidurim_txtSGL".concat(id)).value;
         var oZmanChariga = $get("lstSidurim_hidParam41").value;
-        var iSDayToAdd = $get("lstSidurim_txtDayAdd".concat(id)).value;
+        iSDayToAdd = $get("lstSidurim_txtDayAdd".concat(id)).value;
         var bRes = false;
 
         if ((oSH == '__:__') || (oSG == '__:__')) {
@@ -1529,7 +1530,16 @@ function chkMkt(oRow) {
             }
             ddlChariga.disabled = (!bRes);
         }
-    }
+        if ((oSH != '') && (oSG != '')) {
+            var sCardDate = $get("clnDate").value;  
+            iSDayToAdd = $get("lstSidurim_txtDayAdd".concat(id)).value;
+            var dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(oSH.substr(0, 2)), Number(oSH.substr(3, 2)));
+            var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(oSG.substr(0, 2)), Number(oSG.substr(3, 2)));
+           
+            dEndHour.setDate(dEndHour.getDate() + Number(iSDayToAdd));
+            $get("lstSidurim_lblSidur".concat(id)).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";          
+        }
+     }
    }
    function GetSidurTime(dStartHour,dEndHour)
    {

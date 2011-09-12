@@ -218,7 +218,15 @@ function GetDateDDMMYYYY(dDate){
            }
        }
        return pd + n.toString();
-   } 
+   }
+   function GetTimeInMinuts(dStartHour, dEndHour) {
+       var diff = new Date();
+       var timediff = new Date();
+       //חישוב הפרש דקות בין שעת גמר  לשעת התחלת 
+       diff.setTime(Math.abs(dStartHour.getTime() - dEndHour.getTime()));
+       timediff = diff.getTime();
+       return (Math.floor(timediff / (1000 * 60 )));
+   }
 
 if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
 
