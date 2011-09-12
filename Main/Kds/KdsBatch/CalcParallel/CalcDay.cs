@@ -1560,7 +1560,7 @@ namespace KdsBatch
 
         private void CalcRechiv32()
         {
-            float fSumDakotRechiv, fMichsaYomit126, fDakotNochehut1;
+            float fSumDakotRechiv, fMichsaYomit126, fDakotNochehut1, fAruchatZaharim88;
             try
             {
                 //החישוב היומי רלוונטי רק אם העובד הוא עובד יומי [שליפת מאפיין ביצוע (קוד מאפיין = 56, מ.א., תאריך)] ערך = 51 או 61.
@@ -1575,19 +1575,12 @@ namespace KdsBatch
                     {
 
                         fMichsaYomit126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
-                        fDakotNochehut1 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
-
+                        fDakotNochehut1 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                        fAruchatZaharim88 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Taarich);
                         fSumDakotRechiv = 0;
-                        if (fMichsaYomit126 > 0)
+                        if (fMichsaYomit126 > 0 && fDakotNochehut1>0)
                         {
-                            if (fDakotNochehut1 > fMichsaYomit126)
-                            {
-                                fSumDakotRechiv = fMichsaYomit126;
-                            }
-                            else if (fDakotNochehut1 <= fMichsaYomit126)
-                            {
-                                fSumDakotRechiv = fDakotNochehut1;
-                            }
+                            fSumDakotRechiv = Math.Min(fMichsaYomit126, fDakotNochehut1 - fAruchatZaharim88);  
                         }
                     }
 
@@ -3166,7 +3159,7 @@ namespace KdsBatch
                         if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                         {
                             //ב.	עיסוק ראשי של העובד (התו הראשון בקוד העיסוק [שליפת פרטי עובד (קוד נתון HR=6, מ.א., תאריך)]) <> 5
-                            if( objOved.objPirteyOved.iIsuk >= 500 && objOved.objPirteyOved.iIsuk < 600)// ((objOved.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
+                            if( objOved.objPirteyOved.iIsuk < 500 || objOved.objPirteyOved.iIsuk >= 600)// ((objOved.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
                             {
 
                                 if (objOved.objMeafyeneyOved.iMeafyen30 == 1)

@@ -1536,7 +1536,7 @@ namespace KdsBatch
 
          private void CalcRechiv32()
          {
-             float fSumDakotRechiv, fMichsaYomit126, fDakotNochehut1;
+             float fSumDakotRechiv, fMichsaYomit126, fDakotNochehut1, fAruchatZaharim88;
              try{
                  //החישוב היומי רלוונטי רק אם העובד הוא עובד יומי [שליפת מאפיין ביצוע (קוד מאפיין = 56, מ.א., תאריך)] ערך = 51 או 61.
 
@@ -1551,22 +1551,16 @@ namespace KdsBatch
                           
                          fMichsaYomit126 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
                          fDakotNochehut1 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                         fAruchatZaharim88 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
                          fSumDakotRechiv = 0;
-                         if (fMichsaYomit126 > 0)
+                         if (fMichsaYomit126 > 0 && fDakotNochehut1 > 0)
                          {
-                             if (fDakotNochehut1 > fMichsaYomit126)
-                             {
-                                 fSumDakotRechiv = fMichsaYomit126;
-                             }
-                             else if (fDakotNochehut1 <= fMichsaYomit126)
-                             {
-                                 fSumDakotRechiv = fDakotNochehut1;
-                             }
+                             fSumDakotRechiv = Math.Min(fMichsaYomit126, fDakotNochehut1 - fAruchatZaharim88);  
                          }
                      }
-                   
-                     if (fSumDakotRechiv > 0)
+
+                     if (fSumDakotRechiv > 0 )
                      {
                          addRowToTable(clGeneral.enRechivim.DakotRegilot.GetHashCode(), fSumDakotRechiv);
                      }
@@ -3094,7 +3088,7 @@ namespace KdsBatch
                          if (!(_oGeneralData.objPirteyOved.iDirug == 85 && _oGeneralData.objPirteyOved.iDarga == 30))
                          {
                              //ב.	עיסוק ראשי של העובד (התו הראשון בקוד העיסוק [שליפת פרטי עובד (קוד נתון HR=6, מ.א., תאריך)]) <> 5
-                             if (_oGeneralData.objPirteyOved.iIsuk>=500 && _oGeneralData.objPirteyOved.iIsuk<600) // ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
+                             if (_oGeneralData.objPirteyOved.iIsuk<500 || _oGeneralData.objPirteyOved.iIsuk>=600) // ((_oGeneralData.objPirteyOved.iIsuk.ToString()).Substring(0, 1) != "5")
                              {
 
                                  if (_oGeneralData.objMeafyeneyOved.iMeafyen30 == 1)

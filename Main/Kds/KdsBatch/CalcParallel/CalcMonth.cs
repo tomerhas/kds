@@ -5241,7 +5241,7 @@ namespace KdsBatch
             {
                 fSumDakotRechiv = 0;
 
-                fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode()); // clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode().ToString())) / 60;
+                fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode()); // clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode().ToString())) / 60;
 
                 if (objOved.objMeafyeneyOved.iMeafyen11 == -1)
                 {
@@ -5249,7 +5249,7 @@ namespace KdsBatch
                 }
 
                 iMichsatDakotNosafot = objOved.objMeafyeneyOved.iMeafyen11;
-                fSumDakotRechiv = Math.Min(fTempX, iMichsatDakotNosafot) * 60;
+                fSumDakotRechiv = Math.Min(fTempX, iMichsatDakotNosafot * 60);
                 addRowToTable(clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode(), fSumDakotRechiv);
             
             }
