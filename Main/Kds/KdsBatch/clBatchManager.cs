@@ -3502,7 +3502,7 @@ namespace KdsBatch
                     {
                         SachHamtana = oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList().Sum(peilut =>
                         {
-                            if (peilut.bElementHamtanaExists)
+                            if (peilut.bElementHamtanaExists && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3)=="735")
                                 return Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
                             else return 0;
                         });
@@ -12390,8 +12390,8 @@ namespace KdsBatch
             try
             {
                 //הלבשה
-              
-                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+
+                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() )
                 {
                     //עובד של אגד תעבורה לא זכאי אף פעם, גם אם הכרטיס שגוי וגם אם לא
                     if (!CheckIdkunRashemet("HALBASHA"))
@@ -12425,10 +12425,10 @@ namespace KdsBatch
                                 if (bSidurZakaiLHalbash)
                                 {
                                     bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1)
+                                    if ((bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) || (oSidur.sHalbashKod == "1" && iSidurZakaiLehalbashaKnisa == -1))
                                         iSidurZakaiLehalbashaKnisa = i;
                                     bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if (bYetizaValid)
+                                    if (bYetizaValid || oSidur.sHalbashKod == "1")
                                         iSidurZakaiLehalbashaYetzia = i;
                                     else iSidurZakaiLehalbashaYetzia = -1;
                                 }

@@ -56,7 +56,7 @@ namespace KdsBatch
         public bool bShatHatchalaMuteretExists;
         public string sShatGmarMuteret;
         public bool bShatGmarMuteretExists;
-        public string sHalbashKod;
+        public string sHalbashKod;//מאפיין 15
         public bool bHalbashKodExists;
         public string sNoPeilotKod;
         public bool bNoPeilotKodExists;

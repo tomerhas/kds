@@ -139,9 +139,9 @@
     <Compile Include="Reports\clReport.cs" />
     <Compile Include="Reports\clReportParam.cs" />
     <Compile Include="Reports\clDestinationReport.cs" />
-    <Compile Include="SystemCompare\CompareScope.cs" />
-    <Compile Include="SystemCompare\ImportColumn.cs" />
-    <Compile Include="SystemCompare\ImportStructure.cs" />
+    <Compile Include="Premia\SystemCompare\CompareScope.cs" />
+    <Compile Include="Premia\SystemCompare\ImportColumn.cs" />
+    <Compile Include="Premia\SystemCompare\ImportStructure.cs" />
     <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />
