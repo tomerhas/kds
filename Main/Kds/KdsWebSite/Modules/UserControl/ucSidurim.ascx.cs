@@ -3204,7 +3204,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                    ClearControl();
                    BuildPage();
                    bSidurHasChanged = true;
-                   _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
+                  // _Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
                    break;
                }
            }

@@ -1461,7 +1461,16 @@ function chkMkt(oRow) {
             }
         }
 
-        if ((arrItems[0] == '1') || (arrItems[0] == '3')){//שעת התחלה וגמר           
+        if ((arrItems[0] == '1') || (arrItems[0] == '3')) {//שעת התחלה וגמר  
+            //נחשב את משך הסידור בדקות             
+            iSDayToAdd = $get("lstSidurim_txtDayAdd".concat(arrItems[1])).value;
+            var _SH = $get("lstSidurim_txtSH".concat(arrItems[1])).value;
+            var _SG = $get("lstSidurim_txtSG" + arrItems[1]).value;
+            var sSidurDate = $get("lstSidurim_lblDate".concat(arrItems[1])).innerHTML; 
+            var dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(_SH.substr(0, 2)), Number(_SH.substr(3, 2)));
+            var dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(_SG.substr(0, 2)), Number(_SG.substr(3, 2)));
+            dEndHour.setDate(dEndHour.getDate() + Number(iSDayToAdd));
+            $get("lstSidurim_lblSidur".concat(arrItems[1])).title = "  משך הסידור: " + GetTimeInMinuts(dStartHour, dEndHour) + " דקות";  
             ValidatorEnable($get('lstSidurim_vldSG'.concat(arrItems[1])), true);
             ValidatorEnable($get('lstSidurim_vldSHatchala'.concat(arrItems[1])), true);
         }        
