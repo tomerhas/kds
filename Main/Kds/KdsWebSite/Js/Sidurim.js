@@ -952,9 +952,11 @@ function chkMkt(oRow) {
             wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
     }
     function callBackHashlama(result, iSidurIndex) {
-        $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result == '0');
-        if (result == '1')
-            HasSidurHashlama();
+        if (($get("lstSidurim_ddlHashlama" + iSidurIndex))!=null){
+            $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result == '0');
+            if (result == '1')
+                HasSidurHashlama();
+            }
     }
 
     function ISSGValid(val, args){
@@ -1908,8 +1910,9 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
     }
 
     function callBackNewSidur(result, iSidurNum){
-        if (result != -1) 
-            $get("lstSidurim_lblSidur" + iSidurNum).title = result;        
+        if (result != -1)
+            if ($get("lstSidurim_lblSidur" + iSidurNum)!=null)
+                $get("lstSidurim_lblSidur" + iSidurNum).title = result;        
     }
 
     function SetNewSidurFocus(iSidurIndex){

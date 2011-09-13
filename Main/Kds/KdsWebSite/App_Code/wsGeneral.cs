@@ -2011,10 +2011,15 @@ public class wsGeneral : System.Web.Services.WebService
         clSidur _Sidur = new clSidur();
 
         odSidurim = (OrderedDictionary)Session["Sidurim"];
-        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
-        dtSugSidur = clDefinitions.GetSugeySidur();
-        drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
-        return clDefinitions.IsHashlamaAllowed(ref _Sidur,drSugSidur, OvedYomAvoda) ? "1" : "0";
+        if (odSidurim.Count > 0)
+        {
+            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+            dtSugSidur = clDefinitions.GetSugeySidur();
+            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
+            return clDefinitions.IsHashlamaAllowed(ref _Sidur, drSugSidur, OvedYomAvoda) ? "1" : "0";
+        }
+        else
+            return "0";
     }
     private bool IsNewSidurNahagutOrNihul(clSidur _Sidur)
     {
