@@ -5249,7 +5249,7 @@ namespace KdsBatch
                 }
 
                 iMichsatDakotNosafot = objOved.objMeafyeneyOved.iMeafyen11;
-                fSumDakotRechiv = Math.Min(fTempX, iMichsatDakotNosafot * 60);
+                fSumDakotRechiv = Math.Min(fTempX,( iMichsatDakotNosafot * 60));
                 addRowToTable(clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode(), fSumDakotRechiv);
             
             }
