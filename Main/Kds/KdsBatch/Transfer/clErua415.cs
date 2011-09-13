@@ -23,8 +23,10 @@ namespace KdsBatch
           StringBuilder sErua415;
           float fErech;
           sErua415 = new StringBuilder();
+          string sMeafyen83 = "";
           try
           {
+              sMeafyen83 = _drPirteyOved["meafyen83"].ToString(); 
               //if (_iDirug != 61)
               //{
                   //if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
@@ -32,7 +34,7 @@ namespace KdsBatch
                   //    sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 1));
                   //}
                   //else { sErua415.Append(GetBlank(4)); }
-                 
+               
                   sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode()) / 60), 4, 1));
                   sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotRegilot.GetHashCode()) / 60), 4, 1));
                   sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ShaotHeadrut.GetHashCode()), 4, 1));
@@ -40,8 +42,16 @@ namespace KdsBatch
               //}
               //else { sErua415.Append(GetBlank(16)); }
 
-              sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60 ), 4, 1));
-              sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60), 4, 1));
+             // 
+              fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode());
+              if (sMeafyen83.Trim() == "1")
+                  fErech = 0;
+              sErua415.Append(FormatNumber((fErech / 60), 4, 1));
+
+              fErech = GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode());
+              if (sMeafyen83.Trim() == "1")
+                  fErech = 0;
+              sErua415.Append(FormatNumber((fErech/60), 4, 1));
               sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60), 4, 1));
 
               if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())

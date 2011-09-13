@@ -852,7 +852,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                                     flagHosefRow = true;
                                 break;
                             case enKodSade.Mispar_Siduri_Oto:
-                                if (bKavSherut && iOnatyut==71)
+                                if (bKavSherut && iOnatyut == 71 && flagElatTrip)
                                     flagHosefRow = true;
                                 break;
 
