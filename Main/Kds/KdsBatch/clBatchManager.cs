@@ -3602,7 +3602,8 @@ namespace KdsBatch
             try
             {
                 //בסידור המכיל נסיעת שירות עבורה קיים 71=Onatiut  - חובה שידווח מספר סידורי של רכב  - גדול או שווה ל- 1, אחרת - שגוי.
-                if (oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && oPeilut.iMisparKnisa==0 && oPeilut.iOnatiyut==71 && oPeilut.lMisparSiduriOto == 0)
+                if (oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() && oPeilut.iMisparKnisa==0 &&
+                    oPeilut.iOnatiyut == 71 && oPeilut.lMisparSiduriOto == 0 && oPeilut.bPeilutEilat)
                 {                    
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "  נסיעה ללא רכב סידורי ", enErrors.errMisparSiduriOtoNotExists.GetHashCode());
