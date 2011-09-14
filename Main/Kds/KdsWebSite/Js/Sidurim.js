@@ -1708,9 +1708,9 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-               if (($get("hidMeasherMistayeg").value != '-1') && (i == 0) && ((($get("hidDriver").value == '1') ||
-                 (($get("hidMeasherMistayeg").value != '-1') && ($get("hidDriver").value != '1')))
-                 || (GoremMEasger == dId)))
+                if ((((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+                    && ($get("hidDriver").value != '1'))
+                    || (GoremMEasger == dId)))) && (i==0))
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;
