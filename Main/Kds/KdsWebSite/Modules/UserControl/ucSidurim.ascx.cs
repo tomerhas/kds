@@ -3387,9 +3387,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
                 else
                 {  //רק אם אנחנו מגיעים מהוספת סידור נוסיף פעילות עם מקט 5000000 אחרת נוסיף פעילות ריקה-hidGeneralParam.Value.Equals("1")
-                    _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut)+1, _Peilut);
-                    _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-                    _Peilut.lMakatNesia = ((hidGeneralParam.Value.Equals("1")) && (bSidurVisa) && (!IsPeilutVisaExists(ref _Sidur, ref iPeilutIndex))) ? MAKAT_VISA : 0;
+                    bool bPeilutVisaExists = (IsPeilutVisaExists(ref _Sidur, ref iPeilutIndex));
+                    bool bHosafatSidurVisa = ((hidGeneralParam.Value.Equals("1")) && (bSidurVisa));
+                    if (((bHosafatSidurVisa) && (!bPeilutVisaExists)) || (!bHosafatSidurVisa) || (!hidGeneralParam.Value.Equals("1")))
+                    {                       
+                        _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut) + 1, _Peilut);
+                        _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
+                        _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0;                       
+                    }
                     hidGeneralParam.Value = "0";
                 }                
             }
