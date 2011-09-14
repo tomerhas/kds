@@ -2866,7 +2866,7 @@ namespace KdsBatch
                 if (fMichsaYomit == 0 && oCalcBL.GetSugYomLemichsa(objOved, dTaarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     if ((objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 120)
-                        fErech = Math.Min(120, fNochehutBeshishi - 120);
+                        fErech = Math.Min(120, fDakotNochehut);
                     else if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
                         fErech = Math.Min(240, fDakotNochehut);
                 }
@@ -3859,16 +3859,9 @@ namespace KdsBatch
                     fSumDakotRechiv = 1;
                 }
 
-                if (fDakotNochehut > 0 && fMichsaMechushevet > 0 && (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() | objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()))
+                if (fDakotNochehut > 0 && fMichsaMechushevet > 0 && (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()))
                 {
-                    if (fMichsaMechushevet >= fDakotNochehut)
-                    {
-                        fSumDakotRechiv = 1;
-                    }
-                    else
-                    {
-                        fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
-                    }
+                   fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
                 }
 
                 sRechivim = clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + "," + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + "," +
@@ -3881,14 +3874,7 @@ namespace KdsBatch
 
                 if (iKaymRechiv == 0 && fDakotNochehut > objOved.objParameters.iMinDakotNechshavYomAvoda && fMichsaMechushevet > 0 && objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                 {
-                    if (fMichsaMechushevet >= fDakotNochehut)
-                    {
-                        fSumDakotRechiv = 1;
-                    }
-                    else
-                    {
-                        fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
-                    }
+                        fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;                 
                 }
 
                 addRowToTable(clGeneral.enRechivim.YemeyAvoda.GetHashCode(), fSumDakotRechiv);

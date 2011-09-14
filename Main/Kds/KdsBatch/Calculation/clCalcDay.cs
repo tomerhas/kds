@@ -3781,14 +3781,8 @@ namespace KdsBatch
 
             if (fDakotNochehut >0 && fMichsaMechushevet > 0 && (_oGeneralData.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() | _oGeneralData.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode()))
             {
-                if (fMichsaMechushevet >= fDakotNochehut)
-                {
-                    fSumDakotRechiv = 1;
-                }
-                else
-                {
+                
                     fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
-                }
             }
 
             sRechivim = clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + "," + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + "," +
@@ -3801,14 +3795,8 @@ namespace KdsBatch
            
             if (iKaymRechiv == 0 && fDakotNochehut > _objParameters.iMinDakotNechshavYomAvoda && fMichsaMechushevet > 0 && _oGeneralData.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
             {
-                if (fMichsaMechushevet >= fDakotNochehut)
-                {
-                    fSumDakotRechiv = 1;
-                }
-                else
-                {
+
                     fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
-                }
             }
        
             addRowToTable(clGeneral.enRechivim.YemeyAvoda.GetHashCode(), fSumDakotRechiv);
