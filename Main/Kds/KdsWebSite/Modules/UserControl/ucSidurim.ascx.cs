@@ -3393,7 +3393,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     {                       
                         _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut) + 1, _Peilut);
                         _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-                        _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0;                       
+                        _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0; 
+                        long lCarNumber = FindCarNumber();
+                        if (lCarNumber != 0)
+                        {
+                            _Peilut.lOldOtoNo = lCarNumber;
+                            _Peilut.lOtoNo = lCarNumber;
+                        }
+                           
                     }
                     hidGeneralParam.Value = "0";
                 }                
@@ -3403,7 +3410,35 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ClearControl();
         BuildPage();
     }
+    private long FindCarNumber()
+    {
+        //נעבור על כל הסידורים ונבדוק אם קיים מספר רכב אחיד בכל הפעילויות, אם כן נחזיר אותו
+        long lCarNumber=0;
+        clSidur _Sidur;
+        bool bFoundChanges = false;
 
+        if (_DataSource != null)
+        {
+            for (int iIndex = 0; iIndex < _DataSource.Count; iIndex++)
+            {
+                _Sidur = (clSidur)(_DataSource[iIndex]);
+                for (int j = 0; j < _Sidur.htPeilut.Count; j++)
+                {
+                    if ((j == 0) && (iIndex == 0))
+                        lCarNumber = ((clPeilut)_Sidur.htPeilut[j]).lOtoNo;
+                    else
+                        if ((lCarNumber != ((clPeilut)_Sidur.htPeilut[j]).lOtoNo) && (((clPeilut)_Sidur.htPeilut[j]).lOtoNo!=0))
+                        {
+                            bFoundChanges = true;
+                            break;
+                        }
+                }
+            }
+            if (bFoundChanges)
+                lCarNumber = 0;
+        }
+        return lCarNumber;
+    }
     private int FindNextKey(ref OrderedDictionary _SidurPeilut)
     {
         int iMaxKey = 0;
