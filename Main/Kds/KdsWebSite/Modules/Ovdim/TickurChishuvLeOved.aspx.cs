@@ -694,8 +694,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
              iBakashaId = long.Parse(ViewState["BakashId"].ToString());
              clOvdim oOvdim = new clOvdim();
 
-             //clCalculation objCalc = new clCalculation();
-             //objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz);
+             clCalculation objCalc = new clCalculation();
+             objCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz);
 
 
              MainCalc objMainCalc = new MainCalc();
