@@ -3393,12 +3393,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     {                       
                         _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut) + 1, _Peilut);
                         _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
-                        _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0; 
-                        long lCarNumber = FindCarNumber();
-                        if (lCarNumber != 0)
+                        _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0;
+                        if (_Peilut.lMakatNesia.Equals(MAKAT_VISA))
                         {
-                            _Peilut.lOldOtoNo = lCarNumber;
-                            _Peilut.lOtoNo = lCarNumber;
+                            long lCarNumber = FindCarNumber();
+                            if (lCarNumber != 0)
+                            {
+                                _Peilut.lOldOtoNo = lCarNumber;
+                                _Peilut.lOtoNo = lCarNumber;
+                            }
                         }
                            
                     }
