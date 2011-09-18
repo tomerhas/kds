@@ -81,6 +81,7 @@ namespace KdsBatch.TaskManager
                 {
                     oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.PartialFinish, "ThreadHrChainges did not run.a lot of mispar_ishi: " + num.ToString(), 0);
                     //'**  KdsWriteProcessLog(8, 3, 4, "ThreadHrChainges did not run.a lot of mispar_ishi: " & num.ToString())
+                    throw new Exception("ThreadHrChainges didn't run because a lot of records (" + num.ToString() +" workers)");
                 }
             }
             catch
