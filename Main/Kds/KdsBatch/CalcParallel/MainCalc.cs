@@ -596,7 +596,9 @@ namespace KdsBatch
                     catch (Exception ex)
                     {
                         status = clGeneral.enBatchExecutionStatus.Failed;
-                        clGeneral.LogError(ex);
+                        KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
+                        clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
+                        throw (ex);
                     }
                     finally
                     {
@@ -610,6 +612,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
+                KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId,  clGeneral.enBatchExecutionStatus.Failed);
                 clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
                 throw(ex);
             }
