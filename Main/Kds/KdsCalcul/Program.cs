@@ -13,11 +13,11 @@ namespace KdsCalcul
             switch ((clGeneral.enCalcType)int.Parse(args[0]))
             {
                 case clGeneral.enCalcType.MonthlyCalc:
-                         //oCalculMain = new clCalculMain((long)int.Parse(args[1]), DateTime.Parse(args[2]), DateTime.Parse(args[3]), (string)args[4],
-                         //                                   (int.Parse(args[5]) == 1), (int.Parse(args[6]) == 1), int.Parse(args[7]));
+                    oCalculMain = new clCalculMain((long)int.Parse(args[1]), DateTime.Parse(args[2]), DateTime.Parse(args[3]), (string)args[4],
+                                                       (int.Parse(args[5]) == 1), (int.Parse(args[6]) == 1), int.Parse(args[7]));
 
-                          oCalculMain = new clCalculMain(0, DateTime.Parse("01/08/2010"), DateTime.Parse("01/09/2010"), "",
-                                                                   true, false,2);
+                          //oCalculMain = new clCalculMain(0, DateTime.Parse("01/08/2010"), DateTime.Parse("01/09/2010"), "",
+                          //                                         true, false,2);
   
                          oCalculMain.RunCalcBatchProcess();
                     break;
