@@ -444,7 +444,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 _Peilut = ((clPeilut)oSidur.htPeilut[i]);
                 _MakatType = (clKavim.enMakatType)(_Peilut.iMakatType);
-                if (_Peilut.iOnatiyut == clGeneral.enOnatiut.enOnatiut.GetHashCode() && (_MakatType== clKavim.enMakatType.mKavShirut)) 
+                if (_Peilut.iOnatiyut == clGeneral.enOnatiut.enOnatiut.GetHashCode() && (_MakatType== clKavim.enMakatType.mKavShirut) && (_Peilut.iEilatTrip.Equals(1))) 
                 {
                     bExists = true;
                     break;
