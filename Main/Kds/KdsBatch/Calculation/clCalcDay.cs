@@ -222,9 +222,6 @@ namespace KdsBatch
                 //ימי נוכחות לעובד (רכיב 109)
                 CalcRechiv109();
 
-                //דקות פרמיה בתוך המכסה  (רכיב 27) 
-                CalcRechiv27();
-
                 //משמרת שנייה במשק (רכיב 125) 
                 CalcRechiv125();
 
@@ -425,6 +422,9 @@ namespace KdsBatch
                 CalcRechiv90();
 
                 UpdateRechiv1();
+
+                //דקות פרמיה בתוך המכסה  (רכיב 27) 
+                CalcRechiv27();
 
                 CalcRechiv146();
                 //שעות % 100 לתשלום (רכיב 100
