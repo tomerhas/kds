@@ -123,6 +123,7 @@
     <Compile Include="HrWorkersChanges\ClWorkerCompare.cs" />
     <Compile Include="HrWorkersChanges\ClWorkerTable.cs" />
     <Compile Include="InputData\clInputData.cs" />
+    <Compile Include="Entities\Sidur.cs" />
     <Compile Include="Premia\ExcelAdapter.cs" />
     <Compile Include="Premia\PremiaCalcRoutine.cs" />
     <Compile Include="Premia\PremiaCalculation.cs" />
