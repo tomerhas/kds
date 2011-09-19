@@ -610,7 +610,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clGeneral.LogError(ex);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild: " + ex.Message);
+                throw(ex);
             }
 
             //    if (_Ovdim != null)

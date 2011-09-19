@@ -53,7 +53,7 @@ namespace KdsBatch
           DataRow[] drYamim;
           try
           {
-              fErech = GetErechRechiv( clGeneral.enRechivim.YemeyAvoda.GetHashCode());
+              fErech = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode());
               if (fErech > 0)
               {
                   CreateDataEtToRechiv("100", fErech, 0);

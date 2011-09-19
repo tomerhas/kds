@@ -2796,7 +2796,7 @@ namespace KdsBatch
                 fYomMiluim = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMiluim); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Taarich); 
                 fYomHadracha = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomHadracha); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHadracha.GetHashCode(), objOved.Taarich); 
 
-                if (fDakotNochehut > 0 && fMichsaYomit > 0 && fYomMachala == 0 && fYomMachalaBoded == 0
+                if (fDakotNochehut > 0 && fYomMachala == 0 && fYomMachalaBoded == 0
                     && fYomShmiratHerayon == 0 && fYomEvel == 0 && fYomMachalatYeled == 0 && fYomHadracha == 0
                     && fYomMiluim == 0 && fYomMachalaBenZug == 0 && fYomTeuna == 0 && fYomMachaltHorim == 0)
                 {
