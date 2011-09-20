@@ -98,7 +98,7 @@ namespace KdsBatch
                       {
                         //  fKamut = float.Parse(dtChishuvYomi.Compute("count(MISPAR_ISHI)", "MISPAR_ISHI=" + _iMisparIshi + " AND ERECH_RECHIV>0 AND KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')").ToString());
                        //   drYamim = dtChishuvYomi.Select("ERECH_RECHIV>0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
-                          fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyAvoda.GetHashCode());
+                          fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode());
                           CreateDataEtToRechiv("004", fKamut, fErech);
 
                       }
