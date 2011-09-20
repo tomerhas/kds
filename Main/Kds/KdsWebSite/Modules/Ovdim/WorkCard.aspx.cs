@@ -679,15 +679,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //יש לבדוק שלפחות אחד הרכבים המדווחים באותו תאריך אינו מדגם 64  (דגם שאינו מכיל טכוגרף). Vehicle_Type =64 במעל"ה.
         try
         {
-            dt =  GetMasharData(oBatchManager.htFullEmployeeDetails); //lstSidurim.Mashar;
-           if (dt != null)
-           {
-               if (dt.Rows.Count > 0)
-               {
-                   dr = dt.Select("Vehicle_Type<>" + clGeneral.enVehicleType.NoTachograph.GetHashCode());
-                   HasVehicleType = (dr.Length > 0);
-               }
-           }
+            if (oBatchManager.htFullEmployeeDetails != null)
+            {
+                dt = GetMasharData(oBatchManager.htFullEmployeeDetails); //lstSidurim.Mashar;
+                if (dt != null)
+                {
+                    if (dt.Rows.Count > 0)
+                    {
+                        dr = dt.Select("Vehicle_Type<>" + clGeneral.enVehicleType.NoTachograph.GetHashCode());
+                        HasVehicleType = (dr.Length > 0);
+                    }
+                }
+            }
            return HasVehicleType;
         }
         catch (Exception ex)
