@@ -1579,7 +1579,7 @@ namespace KdsBatch
                         fDakotNosafotNahagut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode().ToString()));
                         if (fDakotNosafotNahagut > _oGeneralData.objParameters.iTamrizNosafotLoLetashlum)
                         {
-                            fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, fDakotNosafotNahagut - _oGeneralData.objParameters.iTamrizNosafotLoLetashlum);
+                            fSumDakotRechiv = Math.Min(_oGeneralData.objParameters.iMaxNosafotNahagut, (fDakotNosafotNahagut/60) - _oGeneralData.objParameters.iTamrizNosafotLoLetashlum);
                             addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
                         }
 
