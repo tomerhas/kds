@@ -1053,8 +1053,7 @@ namespace KdsBatch
                 //נוספות 100% לעובד חודשי 
                 CalcRechiv146();
 
-                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
-                CalcRechiv11();
+              
                 // CalcRechiv148();
 
                 // נוספות תנועה חול (רכיב 160)קיזוז
@@ -1133,6 +1132,9 @@ namespace KdsBatch
                 CalcRechiv67();
 
                 UpdateRechiv146();
+
+                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
+                CalcRechiv11();
 
                 //נוכחות לפרמיה – משק מוסכים (רכיב 211) 
                 CalcRechiv211();
