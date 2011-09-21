@@ -38,7 +38,7 @@ namespace KdsBatch
           float fErech;
           try
           {
-              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.YemeyAvoda.GetHashCode()), 3, 0) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode()), 3, 0) + ";");
               fErech = GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode());
               fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
               sBakaraEt.Append(FormatNumberWithPoint((fErech / 60), 6, 2) + ";");
