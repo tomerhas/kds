@@ -576,11 +576,11 @@ namespace KdsBatch
                                 catch (Exception ex)
                                 {
                                     numFailed += 1;
-                                    clLogBakashot.SetError(_iBakashaId, CurrentOved.Mispar_ishi, "E",
-                                        (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
-                                        CurrentOved.Month, ex.Message);
-                                    clLogBakashot.InsertErrorToLog();
-                                    status = clGeneral.enBatchExecutionStatus.PartialyFinished;  
+                                    //clLogBakashot.SetError(_iBakashaId, CurrentOved.Mispar_ishi, "E",
+                                    //    (int)clGeneral.enGeneralBatchType.CalculationForPremiaPopulation,
+                                    //    CurrentOved.Month, ex.Message);
+                                    //clLogBakashot.InsertErrorToLog();
+                                    //status = clGeneral.enBatchExecutionStatus.PartialyFinished;  
                                 }
                                 finally
                                 {
