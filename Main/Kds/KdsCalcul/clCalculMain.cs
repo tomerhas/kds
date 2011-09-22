@@ -78,9 +78,18 @@ namespace KdsCalcul
                     #region not parallel
                     oMainCalc.Ovdim.ForEach(CurrentOved =>
                                         {
-                                            oMainCalc.CalcOved(CurrentOved);
-                                            CurrentOved.Dispose();
-                                            CurrentOved = null;
+                                            try
+                                            {
+                                                oMainCalc.CalcOved(CurrentOved);
+                                                CurrentOved.Dispose();
+                                                CurrentOved = null;
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                clLogBakashot.InsertErrorToLog(lRequestNum, "E", CurrentOved.Mispar_ishi, "RunCalcBatchProcess " + iNumProcess + ": " + ex.Message);
+                                               CurrentOved.Dispose();
+                                               CurrentOved = null;
+                                            }
                                         });
                     #endregion
                     //#region parallel
