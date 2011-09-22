@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="~/Modules/Main.aspx" title="מסך פתיחה"  description="" roles="*">
+    <siteMapNode url="" title="צפיה/עדכון כ. עבודה"  description="" roles="*" >
+      <siteMapNode url="~/Modules/Ovdim/EmployeeCards.aspx" title="כרטיסי עבודה לעובד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/WorkCard.aspx" title="עדכון/צפיה בכ'ע" description="" roles="*"/>
+      <siteMapNode url="~/Modules/Test.aspx" title="דף בדיקות"  description="" roles="*"/>      
+      <siteMapNode url="~/Modules/Ovdim/EmployeePremias.aspx" title="פרמיות ידניות"  description="" roles="*"/>      
+    </siteMapNode>
+    <siteMapNode url="~/Modules/Ovdim/EmployeTotalMonthly.aspx" title="סיכום חודשי"  description="" roles="*"/>
+    <siteMapNode url="~/Modules/Errors/EmployeErrors.aspx" title="כ. עבודה לטיפול"  description="כ. עובד לטיפול" roles="*"/>
+    <siteMapNode url="~/Modules/Ovdim/TickurChishuvLeOved.aspx" title="חישוב לעובד"  description="" roles="*"/>
+    <siteMapNode  title="אישורים"  description="" roles="*">
+      <siteMapNode url="~/Modules/Approvals/Approvals.aspx" title=" ניהול  &#10;  אישורים " description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/MonthlyQuotaAgafit.aspx" title="מחוץ למכסה אגפית"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/MonthlyQuotaVaadatPnim.aspx" title="מחוץ למכסה החלטת ועדת פנים"  description="" roles="*"/>
+    </siteMapNode>
+    <siteMapNode  title="הפעלת מהלכים"  description="" roles="*">
+      <siteMapNode url="~/Modules/Batches/RunErrorsBatch.aspx" title="ריצה גורפת לשגויים"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/RunCalcBatch.aspx" title="הרצת חישוב"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/HaavaraLesachar.aspx" title="העברה לשכר"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/CreateConstantReports.aspx" title=" הפקת דו''חות קבועים"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Premia/PremiaCalculation.aspx" title="פרמיות ניהול תנועה"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/RunCalcParallel.aspx" title="הרצת חישוב מקבילי"  description="" roles="*"/>
+    
+    </siteMapNode>
+    <siteMapNode   title="טבלאות"  description="" roles="*">
+      <siteMapNode url="~/SystemManager/DataEntryView.aspx?table=TB_BUGIM" title="דיווח באגים"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=1" title="טבלאות תשתית"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=2" title="טבלאות תחזוקה"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=3" title="טבלאות כח אדם"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=4" title="טבלאות תנועה ומשק"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=5" title="טבלאות ויזות וכספים"  description="" roles="*"/>
+      <siteMapNode url="~/SystemManager/DataEntryNavigation.aspx?category=6" title="טבלאות קוד פענוח"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Ovdim/NetuneyOved.aspx" title="נתוני עובד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=SpecialSidur" title="מאפייני סידורים מיוחדים"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=SugSidur" title="מאפייני סוג סידור "  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=Elements" title="מאפייני אלמנטים"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=Parameters" title="פרמטרים"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=ComponentSidurim" title="רכיבים לסידור מיוחד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/DynamicForms/DynamicForms.aspx?table=ComponentTypeSidur" title="רכיבים לסוג סידור"  description="" roles="*"/>
+    </siteMapNode>
+    <siteMapNode  title="מעקב בקשות"  description="" roles="*">
+      <siteMapNode url="~/Modules/Requests/MaakavBakashot.aspx"  title="מעקב בקשות"  description=""  roles="*"/>
+      <siteMapNode url="" title="בקשות במערכת"  description="" roles="*"/>
+      <siteMapNode url="" title="פרמטרים לבקשות"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Requests/LogBakashot.aspx" title="לוג בקשות"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Requests/LogTahalich.aspx" title="לוג תהליך"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Requests/HarazatTaalichKlita.aspx" title="הפעלת תהליך הקליטה"  description="" roles="*"/>
+    </siteMapNode>
+    <siteMapNode title="דו''חות"  description="" roles="*">
+      <siteMapNode url="~/Modules/Reports/ReportsList.aspx" title=" הפקת דו''חות"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Reports/ShowHeavyReportsList.aspx" title="דוחות מוכנים"  description="" roles="*"/>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KdsLibrary.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="wsReportingServices" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://KDSTST01:80/ReportServer/ReportExecution2005.asmx</Value>
+    </Setting>
+    <Setting Name="wsBarCode" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.2.42/BarCode/wsBarcode.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

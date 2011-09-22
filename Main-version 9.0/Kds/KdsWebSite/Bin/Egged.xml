@@ -1,0 +1,184 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Egged.WebCustomControls
+</name>
+</assembly>
+<members>
+<member name="P:Egged.WebCustomControls.My.Resources.Calendar.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.Calendar">
+	<summary>
+  Looks up a localized string similar to &lt;script language='javascript'&gt;/*  Copyright Mihai Bazon, 2002, 2003  |  http://students.infoiasi.ro/~mishoo
+ * ---------------------------------------------------------------------------
+ *
+ * The DHTML Calendar, version 0.9.3 "It's still alive &amp; keeps rocking"
+ *
+ * Details and latest version at:
+ * http://students.infoiasi.ro/~mishoo/site/calendar.epl
+ *
+ * Feel free to use this script under the terms of the GNU Lesser General
+ * Public License, as long as you do not remove or alter this notice.
+ [rest of string was truncated]";.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.CalendarHeb">
+	<summary>
+  Looks up a localized string similar to &lt;script language='javascript'&gt;// ** I18N
+Calendar._DN = new Array
+("א",
+ "ב",
+ "ג",
+ "ד",
+ "ה",
+ "ו",
+ "ש",
+ "א");
+Calendar._MN = new Array
+("ינואר",
+ "פברואר",
+ "מרץ",
+ "אפריל",
+ "מאי",
+ "יוני",
+ "יולי",
+ "אוגוסט",
+ "ספטמבר",
+ "אוקטובר",
+ "נובמבר",
+ "דצמבר");
+
+// tooltips
+Calendar._TT = {};
+Calendar._TT["TOGGLE"] = "קביעת יום ראשון בשבוע";
+Calendar._TT["PREV_YEAR"] = "(שנה קודמת (החזק לקבלת תפריט";
+Calendar._TT["PREV_MONTH"] = "(חודש קודם (החזק לקבלת תפריט";
+Calendar._TT["GO_TO [rest of string was truncated]";.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.CalendarSetup">
+	<summary>
+  Looks up a localized string similar to &lt;script language='javascript'&gt;/*  Copyright Mihai Bazon, 2002, 2003  |  http://students.infoiasi.ro/~mishoo
+ * ---------------------------------------------------------------------------
+ *
+ * The DHTML Calendar
+ *
+ * Details and latest version at:
+ * http://students.infoiasi.ro/~mishoo/site/calendar.epl
+ *
+ * Feel free to use this script under the terms of the GNU Lesser General
+ * Public License, as long as you do not remove or alter this notice.
+ *
+ * This file defines helper functions for set [rest of string was truncated]";.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.CalendarStyle">
+	<summary>
+  Looks up a localized string similar to     &lt;style type="text/css"&gt;
+    /* The main calendar widget.  DIV containing a table. */
+
+div.calendar { position: relative;width:200px; }
+
+.calendar, .calendar table {
+  border: 1px solid #556;
+  font-size: 11px;
+  color: #000;
+  cursor: default;
+  background: #eef;
+  font-family: tahoma,verdana,sans-serif;
+}
+
+/* Header part -- contains navigation buttons and day names. */
+
+.calendar .button { /* "&lt;&lt;", "&lt;", "&gt;", "&gt;&gt;" buttons have this class */
+  text-align: center;    /* They are the navig [rest of string was truncated]";.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.CalendarUI">
+	<summary>
+  Looks up a localized string similar to &lt;div style='position:absolute;left:100px;top:100px;visibility:hidden;width:200px;height:270px;' id='DivCal'&gt;
+    &lt;IE:Calendar id='cal' style='width : 200px; height : 270px; border : 1px solid black;'&gt;&lt;/IE:Calendar&gt;
+&lt;/div&gt;
+.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Calendar.ClientScript">
+	<summary>
+  Looks up a localized string similar to &lt;!--
+*******************************************************************
+* This Client Side script created for Calendar User Control using *
+*******************************************************************
+--&gt;
+&lt;STYLE&gt;
+	@media all 
+	{
+		IE\:Calendar 
+		{
+			behavior: url("/Namak.Net/UserControls/Calendar/calendar.htc") ;
+		}
+	}
+&lt;/STYLE&gt;
+&lt;SCRIPT LANGUAGE="vbscript"&gt;
+
+	function CheckIsDate(d)
+		if IsDate(d) then
+			CheckIsDate=true
+		else
+			CheckIsDate=false
+		end  if
+	end function
+	 [rest of string was truncated]";.
+</summary>
+</member><member name="T:Egged.WebCustomControls.My.Resources.Calendar">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.TopMenu.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.TopMenu.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.TopMenu.ClientScript">
+	<summary>
+  Looks up a localized string similar to // JScript File
+
+// JScript File
+
+/************************************************************
+Coolmenus Beta 4.04 - Copyright Thomas Brattli - www.dhtmlcentral.com
+Last updated: 03.22.02
+*************************************************************/
+/*Browsercheck object*/
+function cm_bwcheck(){
+	this.ver=navigator.appVersion
+	this.agent=navigator.userAgent.toLowerCase()
+	this.dom=document.getElementById?1:0
+	this.op5=(this.agent.indexOf("opera 5")&gt;-1 || this.agent.indexOf("opera/5")&gt;-1) &amp;&amp; w [rest of string was truncated]";.
+</summary>
+</member><member name="T:Egged.WebCustomControls.My.Resources.TopMenu">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:Egged.WebCustomControls.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:Egged.WebCustomControls.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>
