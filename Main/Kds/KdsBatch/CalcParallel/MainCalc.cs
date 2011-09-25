@@ -183,7 +183,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                SingleGeneralData.ResetObject();
+                if (SingleGeneralData.GetInstance() != null)
+                    SingleGeneralData.ResetObject();
                 clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.Message);
             }
         }
@@ -463,7 +464,8 @@ namespace KdsBatch
                 oDal.TxBegin();
                 oDal.AddParameter("p_coll_chishuv_chodesh", ParameterType.ntOracleArray, _collChishuvChodesh, ParameterDir.pdInput, "COLL_CHISHUV_CHODESH");
                 oDal.AddParameter("p_coll_chishuv_yomi", ParameterType.ntOracleArray, _collChishuvYomi, ParameterDir.pdInput, "COLL_CHISHUV_YOMI");
-                oDal.ExecuteSP(clDefinitions.cProInsChishuvTemp);
+                if (!(_collChishuvChodesh.IsNull) && !(_collChishuvYomi.IsNull))
+                    oDal.ExecuteSP(clDefinitions.cProInsChishuvTemp);
 
                 clOvdim oOvdim = new clOvdim();
                 oDal.ClearCommand();

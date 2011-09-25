@@ -86,7 +86,6 @@ namespace KdsCalcul
                                             }
                                             catch (Exception ex)
                                             {
-                                                clLogBakashot.InsertErrorToLog(lRequestNum, "E", CurrentOved.Mispar_ishi, "RunCalcBatchProcess " + iNumProcess + ": " + ex.Message);
                                                CurrentOved.Dispose();
                                                CurrentOved = null;
                                             }
