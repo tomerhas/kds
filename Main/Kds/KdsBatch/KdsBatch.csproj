@@ -110,6 +110,7 @@
     <Compile Include="clBatchFactory.cs" />
     <Compile Include="clBatchManager.cs" />
     <Compile Include="clPirteyOved.cs" />
+    <Compile Include="Entities\Day.cs" />
     <Compile Include="Entities\Peilut.cs" />
     <Compile Include="Errors\clCardErrors.cs" />
     <Compile Include="clDefinitions.cs" />

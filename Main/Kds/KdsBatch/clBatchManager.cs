@@ -3738,7 +3738,7 @@ namespace KdsBatch
             return isValid;
         }
 
-        private bool IsZakaiLina31(ref clSidur oSidur, ref clPeilut oPeilut, ref DataTable dtErrors)
+        private bool  IsZakaiLina31(ref clSidur oSidur, ref clPeilut oPeilut, ref DataTable dtErrors)
         {
             DataRow drNew;
             bool isValid = true;
