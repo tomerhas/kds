@@ -1474,6 +1474,7 @@
 
             
             </div>
+            <div visible="true" style="height:400px">
             <div id="pirteySidur" runat="server" style="display:none;width:990px">
                 <table style="border-color:Black;border-width:1px;border-style:outset;"  >
                     <tr class="GridHeader">
@@ -1632,24 +1633,23 @@
                      <%--<tr id="tsEmpty" runat="server" visible="false" ><td colspan="3"></td>
                      <td align="center" valign="top" style="font-weight:bold" >סידור ללא פעילויות</td></tr>--%>
                  </table>
-                   <br />
+                   <br /> 
+                 </div> 
+            </div>
+            <div>
                 <table style="width:100%" >
                       <tr> 
                           <td align="right">
-                                <input type="button" class="ImgButtonSearch" value="סגור" style="width:100px" onclick="window.close();" />
+                              <input type="button" class="ImgButtonSearch" value="סגור" style="width:100px" onclick="window.close();" />
                           </td>
-                          
-                         <td align="left">
+                          <td align="left">
                              <asp:Button ID="btnIdkunGridHidden" runat="server" onclick="BtIdkunGrid_Click"  />
                             <input type="button" id="btnHosafatPeilut"  class="ImgButtonSearch"  runat="server" value="הוסף/חפש פעילות" style="width:150px;display:none" onclick="OpenHosefPeilut();"   causesvalidation="false"  />
-                            <input id="btnHosafa" runat="server" type="button"  class="ImgButtonSearch" style="width:238px"  value="הוסף את הסידור לכרטיס העבודה"  
-                              onclick="btnHosafa_OnClick();" />
-                 <%--
-                             <asp:Button id="btnHosafa" runat="server" Text="הוסף את הסידור לכרטיס העבודה" style="width:238px" class="ImgButtonSearch" OnClientClick="btnHosafa_OnClick();"  OnClick="btnHosafatSidur_OnClick" />
-                  --%>    </td> 
+                            <input id="btnHosafa" runat="server" type="button"  class="ImgButtonSearch" style="width:238px;display:none"  value="הוסף את הסידור לכרטיס העבודה"   onclick="btnHosafa_OnClick();" />
+                        </td>
                    </tr>
                 </table>
-            </div>
+                 </div>
         <input type="hidden" id="TaarichHatchala" name="TaarichHatchala"  runat="server" />
         <input type="hidden" id="TaarichGmar" name="TaarichGmar"  runat="server" />
         <input type="hidden" id="DestTime" name="DestTime"  runat="server" />
