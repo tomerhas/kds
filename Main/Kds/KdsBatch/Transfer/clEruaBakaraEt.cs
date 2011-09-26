@@ -55,9 +55,9 @@ namespace KdsBatch
               fErech = GetErechRechiv( clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
               fErech += GetErechRechiv( clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
               sBakaraEt.Append(FormatNumberWithPoint((fErech/60), 5, 1) + ";");
-              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode()), 2, 0) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode()), 2, 0));
 
-              if (!IsEmptyErua(sBakaraEt.ToString()))
+              if (!IsEmptyErua(sBakaraEt.ToString().Replace(";","").Replace(".","")))
               {
                   ListErua.Add(sBakaraEt.ToString());
                   return ListErua;

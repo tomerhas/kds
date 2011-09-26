@@ -111,6 +111,8 @@
     <Compile Include="clBatchManager.cs" />
     <Compile Include="clPirteyOved.cs" />
     <Compile Include="Entities\Day.cs" />
+    <Compile Include="Entities\EntitiesDal.cs" />
+    <Compile Include="Entities\Oved.cs" />
     <Compile Include="Entities\Peilut.cs" />
     <Compile Include="Errors\clCardErrors.cs" />
     <Compile Include="clDefinitions.cs" />
