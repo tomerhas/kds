@@ -2173,7 +2173,16 @@ public class wsGeneral : System.Web.Services.WebService
             return false;
         }
     }
+    [WebMethod]
+    public string GetNextErrorCardDate(string sMisparSidur, string dCardDate)
+    {
+        string sNextErrorCardDate = "";
+        clWorkCard _WorkCard = new clWorkCard();
 
+        sNextErrorCardDate = clWorkCard.GetNextErrorCard(int.Parse(sMisparSidur), DateTime.Parse(dCardDate)).ToShortDateString();
+
+        return sNextErrorCardDate;
+    }
     [WebMethod(EnableSession=true)]
     public string IsNewSidurNumberValid(int iSidurNumber, int iSidurIndex, string sSidurDate, int iMeasherMistayeg)
     {

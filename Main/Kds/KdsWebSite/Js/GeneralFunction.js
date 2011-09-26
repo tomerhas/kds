@@ -89,8 +89,19 @@ function GetOvedName(oID)
         //document.getElementById("ctl00_KdsContent_txtId").select();
       }  
   }    
-} 
+}
+function GetHebrewDay(iDay) {
+    var arrDays = new Array(7); // regular array (add an optional integer
+    arrDays[0] = "א";       // argument to control array's size)
+    arrDays[1] = "ב";
+    arrDays[2] = "ג";
+    arrDays[3] = "ד";
+    arrDays[4] = "ה";
+    arrDays[5] = "ו";
+    arrDays[6] = "שבת";
 
+    return arrDays[iDay];
+}
 function getSysDate()
 {
     var currentTime = new Date();

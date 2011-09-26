@@ -6337,8 +6337,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         String sPeilutKey;
         HtmlTableCell hCell = new HtmlTableCell();
        
-        //int iMisparKnisa;
-
+        
         try
         {
             oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0]));

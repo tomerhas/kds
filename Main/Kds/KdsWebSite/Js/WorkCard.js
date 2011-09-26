@@ -94,21 +94,24 @@
     }    
     function EnabledAllFrames(bEnable)
     {
-        document.getElementById("tbEmpDetails").disabled = (!bEnable);
-        document.getElementById("tbLblWorkDay").disabled = (!bEnable);
-        document.getElementById("tbValWorkDay").disabled = (!bEnable);
-        document.getElementById("tblPart").disabled = (!bEnable);
-        document.getElementById("tbSidur").disabled = (!bEnable);
-        document.getElementById("btnFindSidur").disabled = (!bEnable);
-        document.getElementById("btnAddHeadrut").disabled = (!bEnable);        
-        document.getElementById("btnClock").disabled = (!bEnable);
-        document.getElementById("btnApprovalReport").disabled = (!bEnable);     
-        document.getElementById("ddlTachograph").disabled = (!bEnable);
-        document.getElementById("ddlHalbasha").disabled = (!bEnable);
-        document.getElementById("ddlLina").disabled = (!bEnable);
-        document.getElementById("ddlHashlamaReason").disabled = (!bEnable);
-        document.getElementById("btnHashlamaForDay").disabled = (!bEnable);
-        document.getElementById("btnCalcItem").disabled = (!bEnable);
+        $get("tbEmpDetails").disabled = (!bEnable);
+        $get("tbLblWorkDay").disabled = (!bEnable);
+        $get("tbValWorkDay").disabled = (!bEnable);
+        $get("tblPart").disabled = (!bEnable);
+        $get("tbSidur").disabled = (!bEnable);
+        $get("btnFindSidur").disabled = (!bEnable);
+        $get("btnAddHeadrut").disabled = (!bEnable);
+        $get("btnClock").disabled = (!bEnable);
+        $get("btnApprovalReport").disabled = (!bEnable);
+        $get("ddlTachograph").disabled = (!bEnable);
+        $get("ddlHalbasha").disabled = (!bEnable);
+        $get("ddlLina").disabled = (!bEnable);
+        $get("ddlHashlamaReason").disabled = (!bEnable);
+        $get("btnHashlamaForDay").disabled = (!bEnable);
+        $get("btnCalcItem").disabled = (!bEnable);
+        $get("btnPrevCard").disabled = (!bEnable);
+        $get("btnNextCard").disabled = (!bEnable);
+        $get("btnNextErrCard").disabled = (!bEnable); 
         EnabledSidurimListBtn(!bEnable);   
     }
     function GetOvedALLDetails(iKodOved){
@@ -196,7 +199,10 @@
     function SetBtnChanges(){
          bScreenChanged = true; document.getElementById("btnUpdateCard").disabled = false;
          document.getElementById("hidUpdateBtn").value = "false";
-         document.getElementById("btnRefreshOvedDetails").disabled = true;          
+         document.getElementById("btnRefreshOvedDetails").disabled = true;
+         document.getElementById("btnPrevCard").disabled = true;
+         document.getElementById("btnNextCard").disabled = true;
+         document.getElementById("btnNextErrCard").disabled = true; 
          document.getElementById("txtId").disabled = true;          
          document.getElementById("txtName").disabled = true;          
          document.getElementById("clnDate").disabled = true;            
@@ -226,13 +232,14 @@
         document.getElementById("btnPlus1").value = '+';
         document.getElementById("btnPlus2").value = '+';
         document.getElementById("btnPlus3").value = '+';
-        document.getElementById("hidRefresh").value = "1";
+        document.getElementById("hidRefresh").value = "1";       
         EnabledAllFrames(true);
         return true;
     }
     function CloseChgBtn(){
         bScreenChanged = false;return true;
     }
+    
     function CheckIfCardExists(){
       var sDay = document.getElementById("clnDate").value.substr(0,2);
       var sMonth =  document.getElementById("clnDate").value.substr(3,2);
@@ -604,10 +611,8 @@ function SetMeasher(iStatus)
 }
 function onMeasherSuccuss(result,iStatus)
 {
-    if (result=='0')
-    {
-        alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");
-    }
+    if (result=='0')   
+        alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");    
     else
     {
         document.getElementById("btnPrint").disabled=false;
@@ -670,6 +675,14 @@ function isUserNameValid(){
     }
     var iAdmin=document.getElementById("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeByName(EmpName,0,iAdmin, onUsrValidSuccess);
+}
+function SetNewDate(_Add){
+    var sCardDate = document.getElementById("clnDate").value;
+    var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
+
+    dCardDate.setDate(dCardDate.getDate() + Number(_Add));
+    document.getElementById("clnDate").value = GetDateDDMMYYYY(dCardDate);
+    document.getElementById("txtDay").value = GetHebrewDay(dCardDate.getDay());
 }
 
 function onUsrValidSuccess(result){

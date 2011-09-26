@@ -78,7 +78,7 @@
                     <td style="color:gray"><label id="lblLastUpdateDate" runat="server"></label></td>                    
                 </tr>
             </table>
-            <table width="100%">
+            <table width="100%" >
                 <tr>
                     <td width="90%">
                         <fieldset class="FilterFieldSet" style="width: 98%; height: 50px">
@@ -137,9 +137,10 @@
                                               <input type="hidden" id="hidRefresh" runat="server"/>
                                               <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
                                                     CausesValidation="false" CssClass="ImgButtonShow" Height="25px" TabIndex="2"/>
-                                                    <input type="hidden" runat="server" id="hidSave"/>                                              
+                                                    <input type="hidden" runat="server" id="hidSave"/> 
+                                                                                                                                              
                                             </td>                                            
-                                        </tr>
+                                        </tr>                                        
                                     </table>                                   
                                 </ContentTemplate>
                                 <Triggers>                                                                                                                                
@@ -154,8 +155,8 @@
                                     <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
                                     <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
                                     <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
-                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />
-                                                                                                                                                                                                                                                                                                                                                     
+                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
+                                    <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />                                                                                                                                                                                                                                                                                                                                                                                                                            
                                 </Triggers>
                             </asp:UpdatePanel>
                         </fieldset>
@@ -180,28 +181,59 @@
                         </asp:UpdatePanel>
                     </td>
                 </tr>
-            </table>            
-            <table width="100%">
-                <tr>
-                    <td width="105px">
-                        <input type="button" id="btnPlus1" name="btnOpenEmployeeDetails1" class="ImgButtonShowPlus"
-                            style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divEmployeeDetails', this.id);" />
-                        <label style="font-weight: bold;"> פרטי העובד</label>                           
-                    </td>
-                    <td style="width:20px"></td>
-                    <td td width="130px">
-                     <input type="button" id="btnPlus2" name="btnOpenNetunimLeYom1" class="ImgButtonShowPlus"
-                            style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divNetunimLeYom', this.id);" />
-                        <label style="font-weight: bold;">נתונים ליום עבודה</label>                                             
-                    </td>
-                     <td style="width:20px"></td>
-                    <td>
-                        <input runat="server" type="button" id="btnPlus3" name="btnOpenParticipation1"
-                                    class="ImgButtonShowPlus" style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divParticipation', this.id);" />
-                                <label style="font-weight: bold;">התייצבות </label>                                      
-                    </td>
-                </tr>
-            </table>
+            </table>   
+            <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+                <ContentTemplate>         
+                    <table width="100%">
+                        <tr>
+                            <td width="105px">
+                                <input type="button" id="btnPlus1" name="btnOpenEmployeeDetails1" class="ImgButtonShowPlus"
+                                    style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divEmployeeDetails', this.id);" />
+                                <label style="font-weight: bold;"> פרטי העובד</label>                           
+                            </td>
+                            <td style="width:20px"></td>
+                            <td width="130px">
+                             <input type="button" id="btnPlus2" name="btnOpenNetunimLeYom1" class="ImgButtonShowPlus"
+                                    style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divNetunimLeYom', this.id);" />
+                                <label style="font-weight: bold;">נתונים ליום עבודה</label>                                             
+                            </td>
+                             <td style="width:20px"></td>
+                            <td>
+                                <input runat="server" type="button" id="btnPlus3" name="btnOpenParticipation1"
+                                            class="ImgButtonShowPlus" style="width: 20px; height: 20px" value="+" onclick="OpenDiv('divParticipation', this.id);" />
+                                        <label style="font-weight: bold;">התייצבות </label>                                      
+                            </td>
+                            <td width="15px">
+                                <asp:Button runat="server" ID="btnPrevCard" Text="<" OnClientClick="RefreshBtn();SetNewDate(-1);" OnClick="btnRefreshOvedDetails_Click"
+                                    CausesValidation="false" Height="25px" />                                    
+                            </td>
+                            <td>
+                                <asp:Button runat="server" ID="btnNextCard" Text=">" OnClientClick="RefreshBtn();SetNewDate(1);" OnClick="btnRefreshOvedDetails_Click"
+                                    CausesValidation="false" Height="25px" />                                    
+                            </td>
+                            <td>
+                                <asp:Button runat="server" ID="btnNextErrCard" Text="השגוי הבא" OnClientClick="hidNextErrCard.value='1'; RefreshBtn(); " OnClick="btnRefreshOvedDetails_Click"
+                                    CausesValidation="false" Height="25px" />
+                                      <input type="hidden" runat="server" id="hidNextErrCard"/>                                                                            
+                            </td>
+                        </tr>
+                    </table>
+                </ContentTemplate>
+                <Triggers>                                                                                                                                
+                    <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
+                    <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />
+                    <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                    
+                    <asp:AsyncPostBackTrigger ControlID="btnAddMyuchad" />
+                    <asp:AsyncPostBackTrigger ControlID="btnApprovalReport" />
+                    <asp:AsyncPostBackTrigger ControlID="btnClock" />
+                    <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/> 
+                    <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
+                    <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
+                    <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
+                    <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
+                    <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />                                                                                                                                                                                                                                                                                                                                                                         
+                </Triggers>
+            </asp:UpdatePanel>
             <table width="100%" id="tbEmpDetails" runat="server">
                 <tr>
                     <td>
@@ -553,6 +585,7 @@
     <input type="hidden" runat="server" id="hidDriver"/>
     <input type="hidden" runat="server" id="hidUpdateBtn"/>
     <input type="hidden" runat="server" id="hidSdrInd"/>
+      
     </form>   
     <script language="javascript" type="text/javascript">
          var iCount=0;

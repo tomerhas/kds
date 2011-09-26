@@ -253,6 +253,7 @@ namespace KdsLibrary
         public const string cProGetMeafyenySidurById = "pkg_sidurim.pro_get_meafyeny_sidur_by_id";
         public const string cProGetSibaLoLetashlum = "pkg_sidurim.pro_get_siba_lo_letashlum";
         public const string cProGetSidurimMeyuchadim = "pkg_sidurim.get_sidurim_meyuchadim_all";
+        public const string cFuncGetNextErrCard = "pkg_ovdim.func_get_next_err_card";
       //  public const string cProGetMeafyenimLesidurRagil = "PKG_SIDURIM.pro_get_meafyen_sidur_ragil";
 #endregion
 

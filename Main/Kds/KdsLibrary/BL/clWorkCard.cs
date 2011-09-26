@@ -614,6 +614,24 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+        public static DateTime GetNextErrorCard(int iMisparIshi, DateTime dDate)
+        {           
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_result", ParameterType.ntOracleVarchar, null, ParameterDir.pdReturnValue,100);    
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dDate, ParameterDir.pdInput);                
+                oDal.ExecuteSP(clGeneral.cFuncGetNextErrCard);
+
+                return DateTime.Parse(oDal.GetValParam("p_result").ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
         public void InsertNesiaReka(int iLoginUser,int iMisparIshi, string sCardDate, int iMisparSidur, string sSidurShatHatchala,
                                     long lMakat, long lCarNum, DateTime dPeilutShatYetiza, string sPeilutShatYetiza)
         {

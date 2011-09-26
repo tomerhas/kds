@@ -56,6 +56,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private int iMisparIshiKiosk;
     private DataTable dtPakadim;
     private bool bRashemet;
+   // private bool bNextCardErrorNotFound;
     private int iMisparIshiIdkunRashemet;
     private bool bParticipationAllowed;
  //   private bool bDisabledFrame;
@@ -432,12 +433,35 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
+    protected bool SetNextErrorCardDate()
+    {
+        string sNextErrorCardDate;
+        bool bFound = false;
+
+        clWorkCard _WorkCard = new clWorkCard();
+
+        sNextErrorCardDate = clWorkCard.GetNextErrorCard(int.Parse(txtId.Text), DateTime.Parse(clnDate.Text)).ToShortDateString();
+        bFound = (!(sNextErrorCardDate.Equals(clnDate.Text)));
+        clnDate.Text = sNextErrorCardDate;        
+        return bFound;
+    }
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
         try
         {          
             ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
+            //אם נלחץ השגוי הבא, נמצא את התאריך של הכרטיס הבא השגוי
+            if (hidNextErrCard.Value.Equals("1"))
+            {
+                if (!SetNextErrorCardDate())
+                    //לא נמצא השגוי הבא
+                    hidNextErrCard.Value = "2";
+                else
+                    hidNextErrCard.Value = "0";
+            }
+                           
+
             //הרשאות לדף
             SetSecurityLevel();
 
@@ -458,9 +482,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //שינויי קלט ושגויים
             if (RunBatchFunctions())
             {
-                //רוטינת שגויים             
-                //Session["Errors"] = oBatchManager.dtErrors;
-                //Session["Parameters"] = oBatchManager.oParam;
+                //רוטינת שגויים                            
                 //נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
                 SetGeneralData(oBatchManager);
 
@@ -493,9 +515,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         BindTachograph();
                         SetLookUpDDL();
                         ShowOvedCardDetails(iMisparIshi, dDateCard);
-                        SetImageForButtonMeasherOMistayeg();
-                        //dtPakadim = GetMasachPakadim();
-                        //Session["Pakadim"] = dtPakadim;
+                        SetImageForButtonMeasherOMistayeg();                        
                     }
                     //אם הגענו מעמדת נהג, נשמור 1 אחרת 0
                     hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
@@ -555,8 +575,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     lstSidurim.SadotNosafim = (DataTable)Session["SadotNosafim"];
                     lstSidurim.MeafyeneySidur = (DataTable)Session["MeafyeneySidur"];
                     lstSidurim.dtPakadim = (DataTable)Session["Pakadim"];
-                    lstSidurim.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];
-                    //btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);                    
+                    lstSidurim.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];                              
                 }
             }            
         }
@@ -633,34 +652,25 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 CreateChangeAttributs();
 
             SetDDLToolTip();
-            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ")";
 
             if (bAddSidur)
-            {
-                sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";
-                
-                //sScript = sScript + " if ($get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').isDisabled==false){";
-                //sScript = sScript + " $get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();}";
-            }
+                sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";                         
             if (lstSidurim.AddPeilut != null)
             {
                 sPeilutDetails = lstSidurim.AddPeilut.Split(char.Parse("|"));
-                if (sPeilutDetails[0].Equals("1"))
-                    //    sScript = sScript + "$get('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "').focus();";
-                    // sScript = sScript + "$get('lstSidurim_000_ctl05_lstSidurim_000_ctl05ShatYetiza').focus();";
+                if (sPeilutDetails[0].Equals("1"))                    
                     sScript = sScript + "SetNewPeilutFocus('" + lstSidurim.GetPeilutClientKey(sPeilutDetails) + "');";
-
-                //sScript = sScript + " $get('lstSidurim_000_ctl04_lstSidurim_000_ctl04ShatYetiza').focus();";
+                
             }
+            ////אם הגענו לשגוי הבא, נעלה הודעה
+            //if (bNextCardErrorNotFound)
+            //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
-            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
-           // lstSidurim.HasSaveCard = (!bool.Parse(hidUpdateBtn.Value));
-            //btnUpdateCard.Enabled = (!bool.Parse(hidUpdateBtn.Value));
-            //string sScript = "";
-            //ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
+            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);           
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();
@@ -2023,7 +2033,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //סיבות להשלמה
        // ddlHashlamaReason.SelectedValue = oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString() == "0" ? "-1" : oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString();
         ddlHalbasha.Enabled = false;
-            }
+       }
     }
 
     private void ShowEmployeeDetails(int iMisparIshi, DateTime dCardDate)
@@ -2090,12 +2100,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = false;
     }
     protected void btnRefreshOvedDetails_Click(object sender, EventArgs e)
-    {
-       // OrderedDictionary htSidurim = (OrderedDictionary)(Session["Sidurim"]);
+    {       
         if (bInpuDataResult)
         {
-             
-//            hidExecInputChg.Value = "0";
+          
             if (hidSave.Value.Equals("1"))
             {
                 RunBatchFunctions();
@@ -2104,20 +2112,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             SetImageForButtonMeasherOMistayeg();
             oBatchManager.IsExecuteErrors = false;
             ShowOvedCardDetails(iMisparIshi, dDateCard);
-            //SetLookUpDDL();
-
+         
             ViewState["LoadNewCard"] = true;
             lstSidurim.RefreshBtn = 0;
             hidRefresh.Value = "0";
           
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
-            //lstSidurim.UpdateHashTableWithGridChanges(ref htSidurim);
-            //lstSidurim.ClearControl();
-            //lstSidurim.BuildPage();
+         
             string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
-           
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);           
         }
     }
     protected void btnResonOutIn_Click(object sender, EventArgs e)
