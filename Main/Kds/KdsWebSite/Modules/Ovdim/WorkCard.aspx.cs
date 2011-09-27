@@ -652,7 +652,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 CreateChangeAttributs();
 
             SetDDLToolTip();
-            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ")";
+            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
 
             if (bAddSidur)
                 sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";                         

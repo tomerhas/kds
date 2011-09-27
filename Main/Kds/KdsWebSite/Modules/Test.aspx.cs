@@ -57,6 +57,20 @@ public partial class Modules_Test :Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
+        long dateNumber = 1297380023295;
+        long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
+        DateTime dateValue = new DateTime(beginTicks + dateNumber * 10000).ToLocalTime(); 
+
+        //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 
+        //var kind = convertedDate.Kind; // will equal DateTimeKind.Utc Now, once the system knows its in UTC time, you can just call ToLocalTime:
+
+        //DateTime dt = convertedDate.ToLocalTime(); 
+
+        //DateTime d1 = new DateTime(1970, 1, 1);
+        //long d2 = DateTime.UtcNow.Ticks;
+        
+        //TimeSpan ts = new TimeSpan(d2 - d1.Ticks); 
+
        // //DataTable dtTest = new DataTable();
        // //clUtils oUtils = new clUtils();
        // clBatchManager oBatchManager;

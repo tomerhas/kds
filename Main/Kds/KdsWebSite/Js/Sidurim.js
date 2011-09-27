@@ -1743,9 +1743,9 @@ function chkMkt(oRow) {
          }     
         i=++i;
         _Sidur = $get("lstSidurim_lblSidur" + i);
-        if ($get('hidNextErrCard').value == '2') {
-            $get('hidNextErrCard').value = '0'
-            alert('לא קיים כרטיס שגוי הבא');
+        if ($get('hidNextErrCard').value == '2'){
+            $get('hidNextErrCard').value = '0';
+            alert('לא קיים כרטיס שגוי הבא');           
         }
     }
    

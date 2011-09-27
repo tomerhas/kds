@@ -197,8 +197,9 @@
         }SetBtnChanges();          
     }
     function SetBtnChanges(){
-        bScreenChanged = true; document.getElementById("btnUpdateCard").disabled = false;
-        document.getElementById("hidChanges").value = true;                
+         bScreenChanged = true; 
+         document.getElementById("btnUpdateCard").disabled = false;
+         document.getElementById("hidChanges").value = true;                
          document.getElementById("hidUpdateBtn").value = "false";
          document.getElementById("btnRefreshOvedDetails").disabled = true;
          document.getElementById("btnPrevCard").disabled = true;
