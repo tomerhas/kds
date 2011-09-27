@@ -378,10 +378,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             clOvedYomAvoda oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dDateCard);
             if (ViewState["LoadNewCard"] != null)
                 bLoadNewCard = (bool.Parse(ViewState["LoadNewCard"].ToString()) == true);
-            if (
-                ((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
+            if ( (hidChanges.Value.ToLower() != "true")  && 
+                (((oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!Page.IsPostBack) && (Request.QueryString["WCardUpdate"] == null))
                 || ((Request.QueryString["WCardUpdate"]==null) && (oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()))
-                )     
+                ))     
                        
             {       
                 oBatchManager.InitGeneralData();
@@ -2397,6 +2397,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //          lstSidurim.BuildPage();  
 
             hidRefresh.Value = "1";
+            hidChanges.Value = "";
             RunBatchFunctions();
 
             SetImageForButtonMeasherOMistayeg();
