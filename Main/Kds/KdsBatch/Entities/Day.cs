@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.DAL;
 using System.Data;
+using KdsLibrary.Utils;
+using KdsLibrary;
+using KdsBatch.Errors;
+using KdsLibrary.BL;
+
 namespace KdsBatch.Entities
 {
-    public class Day
+    public class Day  
     {
        
         public string sHalbasha = "";
@@ -29,8 +34,10 @@ namespace KdsBatch.Entities
         public string sRishyonAutobus;
         public string sShlilatRishayon;
         public DateTime dCardDate;
-        List<Sidur> Sidurim;
-        Oved oOved;
+        public int iSugYom;
+        public clParameters oParameters;
+        public List<Sidur> Sidurim;
+        public Oved oOved;
 
         public Day(){}
         public Day(int iMisparIshi, DateTime dDate)
@@ -39,13 +46,13 @@ namespace KdsBatch.Entities
             oOved = new Oved(iMisparIshi, dDate);
             if (oOved.dtOvedDetails.Rows.Count > 0)
             {
-                SetMeafyneyOved();
+                SetPirteyYom();
                 InitSidurim();
             }
         }
 
      
-        private void SetMeafyneyOved()
+        private void SetPirteyYom()
         {
             EntitiesDal oDal = new EntitiesDal();
             DataTable dtOvedCardDetails;
@@ -80,65 +87,76 @@ namespace KdsBatch.Entities
                 iStatusTipul = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["status_tipul"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["status_tipul"].ToString());
                 sStatusCardDesc = dtOvedCardDetails.Rows[0]["teur_status_kartis"].ToString();
                 sDayTypeDesc = dtOvedCardDetails.Rows[0]["teur_yom"].ToString();
-                iMeasherOMistayeg = String.IsNullOrEmpty(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString()) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString()); 
+                iMeasherOMistayeg = String.IsNullOrEmpty(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString()) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString());
+                iSugYom = clGeneral.GetSugYom(GlobalData.dtYamimMeyuchadim, dCardDate, GlobalData.dtSugeyYamimMeyuchadim);
+                oParameters = new clParameters(dCardDate, iSugYom);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
-           
 
-        void InitSidurim()
+
+        private void InitSidurim()
         {
             Sidurim = new List<Sidur>();
             Sidur item;// = new Sidur();
             EntitiesDal oDal = new EntitiesDal();
-            DataTable dtDetails;
+           // DataTable dtDetails;
             if (oOved.OvedDetailsExists)
-            {
-                if (oOved.sKodMaamd == "331" || oOved.sKodMaamd == "332" || oOved.sKodMaamd == "333" || oOved.sKodMaamd == "334")
+            { 
+                foreach (DataRow dr in oOved.dtSidurimVePeiluyot.Rows)
                 {
-                  //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "I", 0, dCardDate, "MainInputData: " + "HR - לעובד זה חסרים נתונים ב ");
-                  //  _bSuccsess = false;
-                   // _bHaveCount = false;
-                }
-                else if (oOved.iIsuk == 0)
-                {
-                   // clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "W", 0, dCardDate, "MainInputData: " + "HR - לעובד זה חסרים נתונים ב ");
-                   // _bSuccsess = false;
-                }
-                else
-                {
-                    dtDetails = oDal.GetSidurimLeOved(oOved.iMisparIshi, dCardDate);
-                    foreach (DataRow dr in dtDetails.Rows)
-                    {
-                        item = new Sidur(dr);
-                        Sidurim.Add(item);
-                    }
-                    //if (dtDetails.Rows.Count > 0)
-                    //{
-
-                    //    //htEmployeeDetails = oDefinition.InsertEmployeeDetails(false, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
-                    //    //htFullEmployeeDetails = htFullSidurimDetails;
-                    //    //sCarNumbers = clDefinitions.GetMasharCarNumbers(htEmployeeDetails);
-
-                    //    //if (sCarNumbers != string.Empty)
-                    //    //{
-                    //    //    clKavim oKavim = new clKavim();
-                    //    //    dtMashar = oKavim.GetMasharData(sCarNumbers);
-                    //    //}
-                    //}
-                    //_dtApproval = clDefinitions.GetApprovalToEmploee(iMisparIshi, dCardDate);
-                   // _dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
-                   // _dtApprovalError = clDefinitions.GetApprovalErrors(iMisparIshi, dCardDate);
-
-                   // CheckAllData(dCardDate, iMisparIshi, iSugYom);
-
-                    //_IsExecuteInputData = true;
+                    item = new Sidur(dr,this);
+                    Sidurim.Add(item);
                 }
             }
+        }
+
+        public int GetZmanNesiaMeshtana(int iSidurIndex, int iType, DateTime dCardDate)
+        {
+            int iZmanNesia = 0;
+            int iMerkazErua = 0;
+            int iMikumYaad = 0;
+            clUtils oUtils = new clUtils();
+
+            //נשלוף את הסידור 
+            Sidur oSidur;
+            try
+            {
+                //if (DayInstance.Sidurim.Count > 0)
+                //{
+                //    oSidur = DayInstance.Sidurim[iSidurIndex];
+
+                //    //עבור מאפיין 61:
+                //    if (iType == 1) //כניסה
+                //    {
+                //        if (oSidur.sMikumShaonKnisa.Length > 0)
+                //        {
+                //            iMikumYaad = int.Parse(oSidur.sMikumShaonKnisa);
+                //        }
+                //    }
+                //    else //יציאה
+                //    {
+                //        if (oSidur.sMikumShaonYetzia.Length > 0)
+                //        {
+                //            iMikumYaad = int.Parse(oSidur.sMikumShaonYetzia);
+                //        }
+                //    }
+
+                //    iMerkazErua = (String.IsNullOrEmpty(DayInstance.oOved.sMercazErua) ? 0 : int.Parse(DayInstance.oOved.sMercazErua));
+                //    if ((iMerkazErua > 0) && (iMikumYaad > 0))
+                //    {
+                //        iZmanNesia = oUtils.GetZmanNesia(iMerkazErua, iMikumYaad, dCardDate);
+                //    }
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iZmanNesia;
         }
     }
 }

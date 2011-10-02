@@ -14,10 +14,13 @@ namespace KdsBatch.Errors
         protected Sidur SidurInstance;
         protected Peilut PeilutInstance;
         protected string Comment;
+        protected OriginError _originError;
+        public TypeCheck Error;
 
         protected void SetInstance(object CurrentInstance, OriginError origin)
         {
             bool InstanceCreated = false;
+            _originError = origin;
             try
             {
                 switch (origin)
@@ -48,11 +51,25 @@ namespace KdsBatch.Errors
 
         protected void InsertErrortoCardErrors()
         {
-            //replace this old code by something else 
-            //drNew = dtErrors.NewRow();
-            //InsertErrorRow(oSidur, ref drNew, "חובה לפחות פעילות אחת", enErrors.errAtLeastOnePeilutRequired.GetHashCode());
-            //dtErrors.Rows.Add(drNew);
-            //isValid = false;
+            CardError ErrorItem = new CardError();
+
+            ErrorItem.check_num = int.Parse(Error.GetHashCode().ToString());
+            switch (_originError)
+            {
+                case OriginError.Day:
+                    ErrorItem.mispar_ishi = DayInstance.oOved.iMisparIshi;
+                    ErrorItem.taarich = DayInstance.dCardDate;
+                    break;
+                case OriginError.Sidur:
+                   
+                    break;
+                case OriginError.Peilut:
+                    
+                    break;
+                default:
+                    break;
+            }
+            GlobalData.CardErrors.Add(ErrorItem);
         }
         protected abstract bool IsCorrect();
         public void Check()

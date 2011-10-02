@@ -6,10 +6,11 @@ using System.Data;
 using KdsLibrary.BL;
 using System.Configuration;
 using System.Web;
+using KdsBatch.Errors;
 
 namespace KdsBatch.Entities
 {
-    public class Peilut
+    public class Peilut 
     {
         public int iKisuyTor = 0;
         public int iKisuyTorMap = 0;
@@ -66,9 +67,69 @@ namespace KdsBatch.Entities
         public bool bElementLershutExists;
         private DataTable dtElementim;
         public bool bElementHachanatMechona = false;
-       
+        Sidur objSidur;
+
         public Peilut(){}
 
+        public Peilut(DataRow dr, Sidur oSidur)
+        {
+            objSidur = oSidur;
+            //נתוני פעילויות       
+            iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
+            iKisuyTor = (System.Convert.IsDBNull(dr["Kisuy_Tor"]) ? 0 : int.Parse(dr["Kisuy_Tor"].ToString()));
+            lMakatNesia = (System.Convert.IsDBNull(dr["Makat_Nesia"]) ? 0 : long.Parse(dr["Makat_Nesia"].ToString()));
+            dFullShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? new DateTime(199, 1, 1) : DateTime.Parse(dr["Shat_Yetzia"].ToString()));
+            sShatYetzia = (System.Convert.IsDBNull(dr["Shat_Yetzia"]) ? "" : DateTime.Parse(dr["Shat_Yetzia"].ToString()).ToString("HH:mm"));
+            lOtoNo = (System.Convert.IsDBNull(dr["Oto_No"]) ? 0 : long.Parse(dr["Oto_No"].ToString()));
+            lMisparSiduriOto = (System.Convert.IsDBNull(dr["mispar_siduri_oto"]) ? 0 : int.Parse(dr["mispar_siduri_oto"].ToString()));
+            iElementLeYedia = (System.Convert.IsDBNull(dr["element_for_yedia"]) ? 0 : int.Parse(dr["element_for_yedia"].ToString()));
+            iErechElement = (System.Convert.IsDBNull(dr["erech_element"]) ? 0 : int.Parse(dr["erech_element"].ToString()));
+
+            iMisparSidurMatalotTnua = (System.Convert.IsDBNull(dr["mispar_sidur_matalot_tnua"]) ? 0 : int.Parse(dr["mispar_sidur_matalot_tnua"].ToString()));
+            bMisparSidurMatalotTnuaExists = !String.IsNullOrEmpty(dr["mispar_sidur_matalot_tnua"].ToString());
+         //   sBusNumberMust = dr["bus_number_must"].ToString();
+            bBusNumberMustExists = !(String.IsNullOrEmpty(dr["bus_number_must"].ToString()));
+           // sElementHamtana = dr["element_hamtana"].ToString();
+            bElementHamtanaExists = !String.IsNullOrEmpty(dr["element_hamtana"].ToString());
+            //sElementIgnoreHafifaBetweenNesiot = dr["lehitalem_hafifa_bein_nesiot"].ToString();
+            //bElementIgnoreHafifaBetweenNesiotExists = !String.IsNullOrEmpty(dr["lehitalem_hafifa_bein_nesiot"].ToString());
+            //sElementIgnoreReka = dr["lehitalem_beitur_reyka"].ToString();
+            //bElementIgnoreReka = !String.IsNullOrEmpty(dr["lehitalem_beitur_reyka"].ToString());
+
+            sElementZviraZman = dr["element_zvira_zman"].ToString();
+            sElementNesiaReka = dr["nesia_reika"].ToString();
+            sElementInMinutes = dr["element_in_minutes"].ToString();
+            sKodLechishuvPremia = dr["kod_lechishuv_premia"].ToString();
+            sLoNitzbarLishatGmar = dr["lo_nizbar_leshat_gmar"].ToString();
+            bElementLershutExists = !String.IsNullOrEmpty(dr["Lershut"].ToString());
+            lMisparMatala = (System.Convert.IsDBNull(dr["mispar_matala"]) ? 0 : int.Parse(dr["mispar_matala"].ToString()));
+            //sBitulBiglalIchurLasidur = dr["bitul_biglal_ichur_lasidur"].ToString();
+            bBitulBiglalIchurLasidurExists = !String.IsNullOrEmpty(dr["bitul_biglal_ichur_lasidur"].ToString());
+            lMisparVisa = (System.Convert.IsDBNull(dr["mispar_visa"]) ? 0 : long.Parse(dr["mispar_visa"].ToString()));
+            sDivuchInSidurVisa = dr["divuch_in_sidur_visa"].ToString();
+            sDivuchInSidurMeyuchad = dr["divuach_besidur_meyuchad"].ToString();
+            iMisparKnisa = (System.Convert.IsDBNull(dr["mispar_knisa"]) ? 0 : int.Parse(dr["mispar_knisa"].ToString()));
+            bImutNetzer = System.Convert.IsDBNull(dr["imut_netzer"]) ? false : true;
+            iBitulOHosafa = System.Convert.IsDBNull(dr["peilut_bitul_o_hosafa"]) ? 0 : int.Parse(dr["peilut_bitul_o_hosafa"].ToString());
+            iDakotBafoal = System.Convert.IsDBNull(dr["DAKOT_BAFOAL"]) ? 0 : int.Parse(dr["DAKOT_BAFOAL"].ToString());
+            iKmVisa = System.Convert.IsDBNull(dr["KM_VISA"]) ? 0 : int.Parse(dr["KM_VISA"].ToString());
+            sSnifTnua = dr["snif_tnua"].ToString();
+            sHeara = dr["heara_peilut"].ToString();
+            sShilutNetzer = dr["shilut_netzer"].ToString();
+            dShatYetziaNetzer = (System.Convert.IsDBNull(dr["shat_yetzia_netzer"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_yetzia_netzer"].ToString()));
+            dShatBhiratNesiaNetzer = (System.Convert.IsDBNull(dr["shat_bhirat_nesia_netzer"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_bhirat_nesia_netzer"].ToString()));
+            iMisparSidurNetzer = System.Convert.IsDBNull(dr["mispar_sidur_netzer"]) ? 0 : int.Parse(dr["mispar_sidur_netzer"].ToString());
+            sMikumBhiratNesiaNetzer = dr["mikum_bhirat_nesia_netzer"].ToString();
+            lMakatNetzer = System.Convert.IsDBNull(dr["makat_netzer"]) ? 0 : long.Parse(dr["makat_netzer"].ToString());
+            lOtoNoNetzer = System.Convert.IsDBNull(dr["oto_no_netzer"]) ? 0 : long.Parse(dr["oto_no_netzer"].ToString());
+            iElementLeShatGmar = System.Convert.IsDBNull(dr["peilut_mashmautit"]) ? 0 : int.Parse(dr["peilut_mashmautit"].ToString());
+
+            iKodShinuyPremia = System.Convert.IsDBNull(dr["kod_shinuy_premia"]) ? 0 : int.Parse(dr["kod_shinuy_premia"].ToString());
+
+            //נבדוק מה סוג הפעילות )שירות,נמק,ריקה,אלמנט,וסות) ונשלח בהתאם לתנועה
+            SetKavDetails();
+            
+        }
         public Peilut(int iMisparIshi,DateTime dDateCard,Peilut oPeilutOld,long lMakatNesiaNew,DataTable dtMeafyeneyElements) 
         {
             DataTable dtPeiluyot;
@@ -109,7 +170,7 @@ namespace KdsBatch.Entities
 
             dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dDateCard);
 
-            SetKavDetails(dtPeiluyot, lMakatNesia);
+            SetKavDetails();
 
             if ((clKavim.enMakatType)iMakatType == clKavim.enMakatType.mElement)
             {
@@ -187,7 +248,7 @@ namespace KdsBatch.Entities
                 lOtoNo = oObjPeilutOvdimIns.OTO_NO;
                 dtPeiluyot = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dDateCard);
 
-                SetKavDetails(dtPeiluyot, lMakatNesia);
+                SetKavDetails();
 
                 if ((clKavim.enMakatType)iMakatType == clKavim.enMakatType.mElement)
                 {
@@ -296,7 +357,7 @@ namespace KdsBatch.Entities
             }
         }
 
-        private void SetKavDetails(DataTable dtPeiluyot, long lMakatNesia)
+        private void SetKavDetails()
         {
             clKavim _Kavim = new clKavim();
             DataRow[] dr;
@@ -308,7 +369,7 @@ namespace KdsBatch.Entities
             switch (oMakatType)
             {
                 case clKavim.enMakatType.mKavShirut:
-                    dr = dtPeiluyot.Select("MAKAT8=" + lMakatNesia);
+                    dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
                         if (dr[0]["STATUS"].ToString() == "0")
@@ -339,7 +400,7 @@ namespace KdsBatch.Entities
 
                     break;
                 case clKavim.enMakatType.mEmpty:
-                    dr = dtPeiluyot.Select("MAKAT8=" + lMakatNesia);
+                    dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
                         if (dr[0]["STATUS"].ToString() == "0")
@@ -364,7 +425,7 @@ namespace KdsBatch.Entities
 
                     break;
                 case clKavim.enMakatType.mNamak:
-                    dr = dtPeiluyot.Select("MAKAT8=" + lMakatNesia);
+                    dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
                         if (dr[0]["STATUS"].ToString() == "0")

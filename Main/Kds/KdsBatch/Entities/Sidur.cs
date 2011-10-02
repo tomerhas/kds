@@ -9,10 +9,11 @@ using KdsLibrary.BL;
 using KdsLibrary;
 using System.Diagnostics;
 using System.Web;
+using KdsBatch.Errors;
 
-namespace KdsBatch.Entities
+namespace KdsBatch.Entities 
 {
-    public class Sidur
+    public class Sidur  
     {
         public int iMisparIshi;
         public int iMisparSidur;
@@ -114,11 +115,13 @@ namespace KdsBatch.Entities
         //נתוני פעילות
         public List<Peilut> Peiluyot; // = new List<Peilut>();
         public Peilut oPeilutEilat;
+        public Day objDay;
         //costructors
         public Sidur() {}
 
-        public Sidur(DataRow dr)
+        public Sidur(DataRow dr,Day oDay)
         {
+            objDay = oDay;
             iMisparIshi = int.Parse(dr["Mispar_Ishi"].ToString());
             iMisparSidur = (System.Convert.IsDBNull(dr["Mispar_Sidur"]) ? 0 : int.Parse(dr["Mispar_Sidur"].ToString()));
             sShatGmar = (System.Convert.IsDBNull(dr["Shat_gmar"]) ? "" : DateTime.Parse(dr["Shat_gmar"].ToString()).ToString("HH:mm"));
@@ -175,6 +178,7 @@ namespace KdsBatch.Entities
             dTaarichIdkunAcharon = System.Convert.IsDBNull(dr["taarich_idkun_acharon"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon"].ToString());
             iHachtamaBeatarLoTakin = System.Convert.IsDBNull(dr["Hachtama_Beatar_Lo_Takin"]) ? 0 : int.Parse(dr["Hachtama_Beatar_Lo_Takin"].ToString());
 
+            InitPeiluyot();
         }
 
         public Sidur(Sidur oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr)
@@ -326,6 +330,24 @@ namespace KdsBatch.Entities
 
         }
 
+        private void InitPeiluyot()
+        {
+            Peiluyot = new List<Peilut>();
+            Peilut item;// = new Sidur();
+            int iPeilutMisparSidur;
+            if (objDay.oOved.OvedDetailsExists)
+            {
+                foreach (DataRow dr in objDay.oOved.dtSidurimVePeiluyot.Rows)
+                {
+                    iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
+                    if (iPeilutMisparSidur > 0)
+                    {
+                        item = new Peilut(dr, this);
+                        Peiluyot.Add(item);
+                    }
+                }
+            }
+        }
         private bool IsSidurNahagut()
         {
             //מחזיר אם סידור הוא מסוג נהגות
@@ -357,8 +379,8 @@ namespace KdsBatch.Entities
 
         public bool IsLongEilatTrip()
         {
-            oPeilutEilat = this.Peiluyot.FirstOrDefault(peilut => peilut.bPeilutEilat); 
-            if (!string.IsNullOrEmpty("fPaar")//להוסיף טיפול בפרמטר 149
+            oPeilutEilat = this.Peiluyot.FirstOrDefault(peilut => peilut.bPeilutEilat);
+            if (!string.IsNullOrEmpty(objDay.oParameters.fOrechNesiaKtzaraEilat.ToString())//להוסיף טיפול בפרמטר 149
                 && oPeilutEilat != null)
             {
                 return true;

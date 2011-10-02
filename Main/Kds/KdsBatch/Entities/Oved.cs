@@ -21,8 +21,15 @@ namespace KdsBatch.Entities
         public int iSnifAv;
         public int iKodSectorIsuk;
         public int iSnifTnua;
+        public int iMatzavOved = 0;
+        public DateTime dCardDate;
 
+        public DataTable dtIdkuneyRashemet;
+        public DataTable dtTmpMeafyeneyElements;
         public DataTable dtOvedDetails;
+        public DataTable dtSidurimVePeiluyot;
+        public clMeafyenyOved oMeafyeneyOved;
+        public DataTable dtPeiluyotTnua;
         public bool _bOvedDetailsExists = false;
 
         public bool OvedDetailsExists
@@ -34,6 +41,8 @@ namespace KdsBatch.Entities
         public Oved(int iMisparIshi, DateTime dDate)
         {
             EntitiesDal oDal = new EntitiesDal();
+
+            dCardDate = dDate;
             dtOvedDetails = oDal.GetOvedDetails(iMisparIshi, dDate);
             if (dtOvedDetails.Rows.Count > 0)
             {
@@ -64,7 +73,11 @@ namespace KdsBatch.Entities
                 iSnifAv = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["snif_av"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["snif_av"].ToString());
                 iKodSectorIsuk = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
                 iSnifTnua = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["Snif_Tnua"].ToString());
+                
+                oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
+               
 
+                SetDataTables();
             }
             catch (Exception ex)
             {
@@ -72,6 +85,77 @@ namespace KdsBatch.Entities
             }
         }
 
+        private void SetDataTables()
+        {
+            EntitiesDal oDal = new EntitiesDal();
+            DataTable dtMatzavOved;
+            dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
+            dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
+            dtMatzavOved = oDal.GetOvedMatzav(iMisparIshi, dCardDate);
+            if (dtMatzavOved.Rows.Count>0)
+                iMatzavOved =int.Parse(dtMatzavOved.Rows[0]["kod_matzav"].ToString());
+            dtSidurimVePeiluyot = oDal.GetSidurimLeOved(iMisparIshi, dCardDate);
+            dtPeiluyotTnua = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dCardDate);
        
+        }
+
+
+        public bool IsOvedZakaiLZmanNesiaLaAvoda()
+        {
+            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות            
+            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "1")
+                   ||
+                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "1"));
+        }
+
+        public bool IsOvedZakaiLZmanNesiaMeAvoda()
+        {
+            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 2 בספרה הראשונה של מאפיין זמן נסיעות            
+            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "2")
+                   ||
+                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "2"));
+        }
+
+        public bool IsOvedZakaiLZmanNesiaLeMeAvoda()
+        {
+            //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות מהעבודה (ערך 3 בספרה הראשונה של מאפיין זמן נסיעות            
+            return ((oMeafyeneyOved.Meafyen61Exists && oMeafyeneyOved.sMeafyen61.Substring(0, 1) == "3")
+                   ||
+                   (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "3"));
+        }
+
+        public bool IsOvedInMatzav(string sMatzavim)
+        {
+            bool result = false;
+            try
+            {
+                //return result;
+                result = sMatzavim.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                               .Any(matzav =>int.Parse(matzav) == iMatzavOved);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public bool CheckIdkunRashemet(string sFieldToChange)
+        {
+            bool bHaveIdkun = false;
+            DataRow[] drIdkunim;
+            try
+            {
+                drIdkunim = dtIdkuneyRashemet.Select("shem_db='" + sFieldToChange.ToUpper() + "'");
+                if (drIdkunim.Length > 0)
+                    bHaveIdkun = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bHaveIdkun;
+        }
     }
 }
