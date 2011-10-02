@@ -53,10 +53,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KdsDataImport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KdsDataImport\bin\Debug\KdsDataImport.dll</HintPath>
-    </Reference>
     <Reference Include="KdsLibrary">
       <HintPath>..\KdsLibrary\bin\Release\KdsLibrary.dll</HintPath>
     </Reference>
@@ -100,6 +96,10 @@
     <ProjectReference Include="..\KdsBatch\KdsBatch.csproj">
       <Project>{482BDA70-9AF2-4498-9627-E9C43EE44FDF}</Project>
       <Name>KdsBatch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KdsDataImport\KdsDataImport.vbproj">
+      <Project>{D4A152EC-27EB-4C8C-BDAB-4012680DA683}</Project>
+      <Name>KdsDataImport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
