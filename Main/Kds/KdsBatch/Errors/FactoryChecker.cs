@@ -11,11 +11,12 @@ namespace KdsBatch.Errors
         public BasicChecker GetInstance(TypeCheck Error, object CurrentInstance)
         {
             BasicChecker creator = null;
-            creator.Error = Error;
+           
             if (creator == null)
             {
                 switch (Error)
                 {
+                        //Day
                     case TypeCheck.errHrStatusNotValid:
                         creator = new DayError1(CurrentInstance);
                         break;
@@ -55,7 +56,149 @@ namespace KdsBatch.Errors
                     case TypeCheck.errTimeForPrepareMechineNotValid:
                         creator = new DayError86(CurrentInstance);
                         break;
+                       
+                    //Sidur
+
+                    case TypeCheck.errSidurNotExists:
+                        creator = new SidurError9(CurrentInstance);
+                        break;
+                    case TypeCheck.errStartHourMissing:
+                        creator = new SidurError15(CurrentInstance);
+                        break;
+                    case TypeCheck.errEndHourMissing:
+                        creator = new SidurError174(CurrentInstance);
+                        break;
+                    case TypeCheck.errCharigaZmanHachtamatShaonNotValid:
+                        creator = new SidurError33(CurrentInstance);
+                        break;
+                    case TypeCheck.errPizulHafsakaValueNotValid:
+                        creator = new SidurError20(CurrentInstance);
+                        break;
+                    case TypeCheck.errHashlamaNotValid:
+                        creator = new SidurError137(CurrentInstance);
+                        break;
+                    case TypeCheck.errShabatPizulValueNotValid:
+                        creator = new SidurError23(CurrentInstance);
+                        break;
+                    case TypeCheck.errKmNotExists:
+                        creator = new SidurError96(CurrentInstance);
+                        break;
+                    case TypeCheck.errOutMichsaNotValid:
+                        creator = new SidurError118(CurrentInstance);
+                        break;
+                    case TypeCheck.errOutMichsaInSidurHeadrutNotValid:
+                        creator = new SidurError40(CurrentInstance);
+                        break;
+                    case TypeCheck.errDriverLessonsNumberNotValid:
+                        creator = new SidurError136(CurrentInstance);
+                        break;
+                    case TypeCheck.errZakaiLeCharigaValueNotValid:
+                        creator = new SidurError34(CurrentInstance);
+                        break;
+                    case TypeCheck.errHashlamaForSidurNotValid:
+                        creator = new SidurError48(CurrentInstance);
+                        break;
+                    case TypeCheck.errPitzulMuchadValueNotValid:
+                        creator = new SidurError25(CurrentInstance);
+                        break;
+                    case TypeCheck.errSimunVisaNotValid:
+                        creator = new SidurError57(CurrentInstance);
+                        break;
+                    case TypeCheck.errPizulValueNotValid:
+                        creator = new SidurError22(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurVisaNotValid:
+                        creator = new SidurError58(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurHourStartNotValid:
+                        creator = new SidurError14(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurHourEndNotValid:
+                        creator = new SidurError173(CurrentInstance);
+                        break;
+                    case TypeCheck.errHahlamatHazmanaNotValid:
+                        creator = new SidurError49(CurrentInstance);
+                        break;
+                    case TypeCheck.errMissingSugVisa:
+                        creator = new SidurError106(CurrentInstance);
+                        break;
+                    case TypeCheck.errMissingKodMevatzaVisa:
+                        creator = new SidurError178(CurrentInstance);
+                        break;
+                    case TypeCheck.errAtLeastOnePeilutRequired:
+                        creator = new SidurError127(CurrentInstance);
+                        break;
+                    case TypeCheck.errNotAllowedSidurForEggedTaavora:
+                        creator = new SidurError148(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurNetzerNotValidForOved:
+                        creator = new SidurError124(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurAvodaNotValidForMonth:
+                        creator = new SidurError160(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurNotAllowedInShabaton:
+                        creator = new SidurError50(CurrentInstance);
+                        break;
+                    case TypeCheck.errCharigaValueNotValid:
+                        creator = new SidurError32(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurSummerNotValidForOved:
+                        creator = new SidurError164(CurrentInstance);
+                        break;
+                    case TypeCheck.errOvedNotAllowedToDoSidurNahagut:
+                        creator = new SidurError161(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurimHoursNotValid:
+                        creator = new SidurError16(CurrentInstance);
+                        break;
+                    case TypeCheck.errPitzulSidurInShabat:
+                        creator = new SidurError24(CurrentInstance);
+                        break;
+                    case TypeCheck.errHashlamaForComputerWorkerAndAccident:
+                        creator = new SidurError45(CurrentInstance);
+                        break;
+                    case TypeCheck.errTotalHashlamotBiggerThanAllow:
+                        creator = new SidurError142(CurrentInstance);
+                        break;
+                    case TypeCheck.errMiluimAndAvoda:
+                        creator = new SidurError156(CurrentInstance);
+                        break;
+                    case TypeCheck.errMissingNumStore:
+                        creator = new SidurError143(CurrentInstance);
+                        break;
+                    case TypeCheck.errChafifaBesidurNihulTnua:
+                        creator = new SidurError152(CurrentInstance);
+                        break;
+                    case TypeCheck.errHighPremya:
+                        creator = new SidurError153(CurrentInstance);
+                        break;
+                    case TypeCheck.errNegativePremya:
+                        creator = new SidurError154(CurrentInstance);
+                        break;
+                    case TypeCheck.errCurrentSidurInPrevSidur:
+                        creator = new SidurError168(CurrentInstance);
+                        break;
+                    case TypeCheck.errHachtamaYadanitKnisa:
+                        creator = new SidurError175(CurrentInstance);
+                        break;
+                    case TypeCheck.errHachtamaYadanitYetzia:
+                        creator = new SidurError176(CurrentInstance);
+                        break;
+                    case TypeCheck.IsShatHatchalaLetashlumNull:
+                        creator = new SidurError180(CurrentInstance);
+                        break;
+                    case TypeCheck.IsShatGmarLetashlumNull:
+                        creator = new SidurError181(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurEilatNotValid:
+                        creator = new SidurError55(CurrentInstance);
+                        break;
+                    //case TypeCheck.errTimeForPrepareMechineNotValid:
+                    //    creator = new SidurError86(CurrentInstance);
+                    //    break;                    
                 }
+                creator.Error = Error;
             }
             if (creator == null)
                 throw new Exception("Error " + Error + " doesn't not defined");

@@ -11,7 +11,7 @@ using KdsLibrary.BL;
 
 namespace KdsBatch.Entities
 {
-    public class Day  
+    public class Day : BasicErrors
     {
        
         public string sHalbasha = "";
@@ -39,8 +39,8 @@ namespace KdsBatch.Entities
         public List<Sidur> Sidurim;
         public Oved oOved;
 
-        public Day(){}
-        public Day(int iMisparIshi, DateTime dDate)
+        public Day() : base(OriginError.Day)  { }
+        public Day(int iMisparIshi, DateTime dDate) : base(OriginError.Day)
         {
             dCardDate = dDate;
             oOved = new Oved(iMisparIshi, dDate);
@@ -48,6 +48,7 @@ namespace KdsBatch.Entities
             {
                 SetPirteyYom();
                 InitSidurim();
+                InitializeErrors();
             }
         }
 
@@ -55,39 +56,39 @@ namespace KdsBatch.Entities
         private void SetPirteyYom()
         {
             EntitiesDal oDal = new EntitiesDal();
-            DataTable dtOvedCardDetails;
+          //  DataTable oOved.dtOvedDetails;
             try
             {
 
-                dtOvedCardDetails = oDal.GetOvedYomAvodaDetails(oOved.iMisparIshi, dCardDate);
+              //  oOved.dtOvedDetails = oDal.GetOvedYomAvodaDetails(oOved.iMisparIshi, dCardDate);
                 //נתונים כללים               
                 //נוציא את שדה הלבשה ברמת יום עבודה
-                if (dtOvedCardDetails.Rows[0]["halbasha"] != null)
+                if (oOved.dtOvedDetails.Rows[0]["halbasha"] != null)
                 {
-                    sHalbasha = dtOvedCardDetails.Rows[0]["halbasha"].ToString();
+                    sHalbasha = oOved.dtOvedDetails.Rows[0]["halbasha"].ToString();
                 }
-                if (dtOvedCardDetails.Rows[0]["Hamara"] != null)
+                if (oOved.dtOvedDetails.Rows[0]["Hamara"] != null)
                 {
-                    sHamara = dtOvedCardDetails.Rows[0]["Hamara"].ToString();
+                    sHamara = oOved.dtOvedDetails.Rows[0]["Hamara"].ToString();
                 }
 
-                sBitulZmanNesiot = dtOvedCardDetails.Rows[0]["bitul_zman_nesiot"].ToString();
-                sTachograf = dtOvedCardDetails.Rows[0]["Tachograf"].ToString();
-                sLina = dtOvedCardDetails.Rows[0]["lina"].ToString();
-                sHashlamaLeyom = dtOvedCardDetails.Rows[0]["Hashlama_Leyom"].ToString();
-                iSibatHashlamaLeyom = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["sibat_hashlama_leyom"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["sibat_hashlama_leyom"].ToString());
-                sSidurDay = dtOvedCardDetails.Rows[0]["iDay"].ToString();
-                sShabaton = dtOvedCardDetails.Rows[0]["shbaton"].ToString();
-                sErevShishiChag = dtOvedCardDetails.Rows[0]["erev_shishi_chag"].ToString();
-                sRishyonAutobus = dtOvedCardDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
-                sShlilatRishayon = dtOvedCardDetails.Rows[0]["shlilat_rishayon"].ToString();
-                iZmanNesiaHaloch = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_haloch"].ToString());
-                iZmanNesiaHazor = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["zman_nesia_hazor"].ToString());
-                iStatus = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Status"]) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["Status"].ToString());
-                iStatusTipul = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["status_tipul"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["status_tipul"].ToString());
-                sStatusCardDesc = dtOvedCardDetails.Rows[0]["teur_status_kartis"].ToString();
-                sDayTypeDesc = dtOvedCardDetails.Rows[0]["teur_yom"].ToString();
-                iMeasherOMistayeg = String.IsNullOrEmpty(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString()) ? -1 : int.Parse(dtOvedCardDetails.Rows[0]["measher_o_mistayeg"].ToString());
+                sBitulZmanNesiot = oOved.dtOvedDetails.Rows[0]["bitul_zman_nesiot"].ToString();
+                sTachograf = oOved.dtOvedDetails.Rows[0]["Tachograf"].ToString();
+                sLina = oOved.dtOvedDetails.Rows[0]["lina"].ToString();
+                sHashlamaLeyom = oOved.dtOvedDetails.Rows[0]["Hashlama_Leyom"].ToString();
+                iSibatHashlamaLeyom = System.Convert.IsDBNull(oOved.dtOvedDetails.Rows[0]["sibat_hashlama_leyom"]) ? 0 : int.Parse(oOved.dtOvedDetails.Rows[0]["sibat_hashlama_leyom"].ToString());
+                sSidurDay = oOved.dtOvedDetails.Rows[0]["iDay"].ToString();
+                sShabaton = oOved.dtOvedDetails.Rows[0]["shbaton"].ToString();
+                sErevShishiChag = oOved.dtOvedDetails.Rows[0]["erev_shishi_chag"].ToString();
+                sRishyonAutobus = oOved.dtOvedDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
+                sShlilatRishayon = oOved.dtOvedDetails.Rows[0]["shlilat_rishayon"].ToString();
+                iZmanNesiaHaloch = System.Convert.IsDBNull(oOved.dtOvedDetails.Rows[0]["zman_nesia_haloch"]) ? 0 : int.Parse(oOved.dtOvedDetails.Rows[0]["zman_nesia_haloch"].ToString());
+                iZmanNesiaHazor = System.Convert.IsDBNull(oOved.dtOvedDetails.Rows[0]["zman_nesia_hazor"]) ? 0 : int.Parse(oOved.dtOvedDetails.Rows[0]["zman_nesia_hazor"].ToString());
+                iStatus = System.Convert.IsDBNull(oOved.dtOvedDetails.Rows[0]["Status"]) ? -1 : int.Parse(oOved.dtOvedDetails.Rows[0]["Status"].ToString());
+                iStatusTipul = System.Convert.IsDBNull(oOved.dtOvedDetails.Rows[0]["status_tipul"]) ? 0 : int.Parse(oOved.dtOvedDetails.Rows[0]["status_tipul"].ToString());
+                sStatusCardDesc = oOved.dtOvedDetails.Rows[0]["teur_status_kartis"].ToString();
+                sDayTypeDesc = oOved.dtOvedDetails.Rows[0]["teur_yom"].ToString();
+                iMeasherOMistayeg = String.IsNullOrEmpty(oOved.dtOvedDetails.Rows[0]["measher_o_mistayeg"].ToString()) ? -1 : int.Parse(oOved.dtOvedDetails.Rows[0]["measher_o_mistayeg"].ToString());
                 iSugYom = clGeneral.GetSugYom(GlobalData.dtYamimMeyuchadim, dCardDate, GlobalData.dtSugeyYamimMeyuchadim);
                 oParameters = new clParameters(dCardDate, iSugYom);
             }
@@ -103,13 +104,23 @@ namespace KdsBatch.Entities
             Sidurim = new List<Sidur>();
             Sidur item;// = new Sidur();
             EntitiesDal oDal = new EntitiesDal();
-           // DataTable dtDetails;
+            int curMisparSidur, prevMisparSidur;
+            int i = 0;
             if (oOved.OvedDetailsExists)
-            { 
+            {
+                prevMisparSidur = 0;
+               
                 foreach (DataRow dr in oOved.dtSidurimVePeiluyot.Rows)
                 {
-                    item = new Sidur(dr,this);
-                    Sidurim.Add(item);
+                    curMisparSidur = int.Parse(dr["Mispar_Sidur"].ToString());
+                    if (curMisparSidur != prevMisparSidur)
+                    {
+                        item = new Sidur(dr,this);
+                        item.iMispar_Siduri = i;
+                        Sidurim.Add(item);
+                        i++;
+                    }
+                    prevMisparSidur = curMisparSidur;
                 }
             }
         }
@@ -125,32 +136,32 @@ namespace KdsBatch.Entities
             Sidur oSidur;
             try
             {
-                //if (DayInstance.Sidurim.Count > 0)
-                //{
-                //    oSidur = DayInstance.Sidurim[iSidurIndex];
+                if (Sidurim.Count > 0)
+                {
+                    oSidur = Sidurim[iSidurIndex];
 
-                //    //עבור מאפיין 61:
-                //    if (iType == 1) //כניסה
-                //    {
-                //        if (oSidur.sMikumShaonKnisa.Length > 0)
-                //        {
-                //            iMikumYaad = int.Parse(oSidur.sMikumShaonKnisa);
-                //        }
-                //    }
-                //    else //יציאה
-                //    {
-                //        if (oSidur.sMikumShaonYetzia.Length > 0)
-                //        {
-                //            iMikumYaad = int.Parse(oSidur.sMikumShaonYetzia);
-                //        }
-                //    }
+                    //עבור מאפיין 61:
+                    if (iType == 1) //כניסה
+                    {
+                        if (oSidur.sMikumShaonKnisa.Length > 0)
+                        {
+                            iMikumYaad = int.Parse(oSidur.sMikumShaonKnisa);
+                        }
+                    }
+                    else //יציאה
+                    {
+                        if (oSidur.sMikumShaonYetzia.Length > 0)
+                        {
+                            iMikumYaad = int.Parse(oSidur.sMikumShaonYetzia);
+                        }
+                    }
 
-                //    iMerkazErua = (String.IsNullOrEmpty(DayInstance.oOved.sMercazErua) ? 0 : int.Parse(DayInstance.oOved.sMercazErua));
-                //    if ((iMerkazErua > 0) && (iMikumYaad > 0))
-                //    {
-                //        iZmanNesia = oUtils.GetZmanNesia(iMerkazErua, iMikumYaad, dCardDate);
-                //    }
-                //}
+                    iMerkazErua = (String.IsNullOrEmpty(oOved.sMercazErua) ? 0 : int.Parse(oOved.sMercazErua));
+                    if ((iMerkazErua > 0) && (iMikumYaad > 0))
+                    {
+                        iZmanNesia = oUtils.GetZmanNesia(iMerkazErua, iMikumYaad, dCardDate);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -158,5 +169,7 @@ namespace KdsBatch.Entities
             }
             return iZmanNesia;
         }
+
+        //public run
     }
 }

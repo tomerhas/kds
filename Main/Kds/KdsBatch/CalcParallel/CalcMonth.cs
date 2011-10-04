@@ -3058,7 +3058,7 @@ namespace KdsBatch
                 fNosafotNahagut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.SachNosafotNahagutCholVeshishi); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachNosafotNahagutCholVeshishi.GetHashCode());
                 fNosafotTnua = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.SachNosafotTnuaCholVeshishi); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode());
                 fNosafotTafkid = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.SachNosafotTafkidCholVeshishi); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachNosafotTafkidCholVeshishi.GetHashCode());
-                fShaot100 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Shaot100Letashlum); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
+                fShaot100 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
 
                 fSumDakotRechiv = (fNosafotNahagut + fNosafotTnua + fNosafotTafkid) / 60 + fShaot100;
                 addRowToTable(clGeneral.enRechivim.SachShaotNosafot.GetHashCode(), fSumDakotRechiv);

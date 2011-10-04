@@ -13,8 +13,9 @@ using KdsBatch.Errors;
 
 namespace KdsBatch.Entities 
 {
-    public class Sidur  
+    public class Sidur : BasicErrors
     {
+        public int iMispar_Siduri;
         public int iMisparIshi;
         public int iMisparSidur;
         public int iMisparSidurMyuhad;
@@ -117,9 +118,9 @@ namespace KdsBatch.Entities
         public Peilut oPeilutEilat;
         public Day objDay;
         //costructors
-        public Sidur() {}
+        public Sidur() : base(OriginError.Sidur){}
 
-        public Sidur(DataRow dr,Day oDay)
+        public Sidur(DataRow dr, Day oDay): base(OriginError.Sidur)
         {
             objDay = oDay;
             iMisparIshi = int.Parse(dr["Mispar_Ishi"].ToString());
@@ -179,9 +180,10 @@ namespace KdsBatch.Entities
             iHachtamaBeatarLoTakin = System.Convert.IsDBNull(dr["Hachtama_Beatar_Lo_Takin"]) ? 0 : int.Parse(dr["Hachtama_Beatar_Lo_Takin"].ToString());
 
             InitPeiluyot();
+            InitializeErrors();
         }
 
-        public Sidur(Sidur oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr)
+        public Sidur(Sidur oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr) : base(OriginError.Sidur)
         {
             //נתונים ברמת סידור            
             iMisparIshi = oSidurKodem.iMisparIshi;
@@ -333,18 +335,15 @@ namespace KdsBatch.Entities
         private void InitPeiluyot()
         {
             Peiluyot = new List<Peilut>();
-            Peilut item;// = new Sidur();
-            int iPeilutMisparSidur;
+            Peilut item;
+            DataTable dtPeiluyotLeSidur;
             if (objDay.oOved.OvedDetailsExists)
             {
-                foreach (DataRow dr in objDay.oOved.dtSidurimVePeiluyot.Rows)
-                {
-                    iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
-                    if (iPeilutMisparSidur > 0)
-                    {
-                        item = new Peilut(dr, this);
-                        Peiluyot.Add(item);
-                    }
+                dtPeiluyotLeSidur = (objDay.oOved.dtSidurimVePeiluyot.Select("peilut_mispar_sidur=" + iMisparSidur)).CopyToDataTable();
+                foreach (DataRow dr in dtPeiluyotLeSidur.Rows)
+                {     
+                    item = new Peilut(dr, this);
+                    Peiluyot.Add(item);
                 }
             }
         }
@@ -388,7 +387,114 @@ namespace KdsBatch.Entities
 
             return false;
         }
-       }
 
-    
+        public bool IsSidurNihulTnua()
+        {
+            bool bSidurNihulTnua = false;
+            bool bElementZviraZman = false;
+            //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
+
+            try
+            {
+                if (bSidurMyuhad)
+                {//סידור מיוחד
+                    bSidurNihulTnua = (sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    if (!bSidurNihulTnua)
+                        if (iMisparSidur == 99301)
+                        {
+
+                            Peilut oPeilut = null;
+                            for (int i = 0; i < Peiluyot.Count; i++)
+                            {
+                                oPeilut = (Peilut)Peiluyot[i];
+                                if (!string.IsNullOrEmpty(oPeilut.sElementZviraZman))
+                                    if (int.Parse(oPeilut.sElementZviraZman) == 4)
+                                    {
+                                        bElementZviraZman = true;
+                                        break;
+                                    }
+                            }
+                            if (bElementZviraZman)
+                                bSidurNihulTnua = true;
+                        }
+                }
+                else
+                {//סידור רגיל
+                    DataRow[] drSugSidur = GlobalData.GetOneSugSidurMeafyen(iSugSidurRagil, objDay.dCardDate);
+
+                    if (drSugSidur.Length > 0)
+                    {
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
+            return bSidurNihulTnua;
+        }
+
+        public bool CheckConditionsAllowSidur()
+        {
+            bool bError = false;
+            //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
+            bError = (!IsOvedHasDriverLicence());
+
+            //ב. עובד הוא מותאם שאסור לו לנהוג (יודעים שעובד הוא מותאם שאסור לו לנהוג לפי ערכים 4, 5 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) 
+            if (!(bError))
+            {
+                bError = IsOvedMutaam();
+            }
+
+            if (!bError)
+            {
+                //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
+                bError = IsOvedBShlila();
+            }
+
+            if (!bError)
+            {
+                //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
+                bError = IsOvedMutaamForEmptyPeilut();
+            }
+            return bError;
+        }
+
+
+        private bool IsOvedHasDriverLicence()
+        {
+            //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
+            return ( objDay.oOved.sRishyonAutobus == clGeneral.enRishyonAutobus.enRishyon10.GetHashCode().ToString() ||
+                    objDay.oOved.sRishyonAutobus == clGeneral.enRishyonAutobus.enRishyon11.GetHashCode().ToString() ||
+                    objDay.oOved.sRishyonAutobus == clGeneral.enRishyonAutobus.enRishyon6.GetHashCode().ToString());
+
+        }
+
+        private bool IsOvedMutaam()
+        {
+            //ב. עובד הוא מותאם שאסור לו לנהוג (יודעים שעובד הוא מותאם שאסור לו לנהוג לפי ערכים 4, 5 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים)
+            return (objDay.oOved.sMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode().ToString() ||
+                    objDay.oOved.sMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode().ToString());
+
+        }
+
+        private bool IsOvedBShlila()
+        {
+            //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
+            return objDay.oOved.sShlilatRishayon == clGeneral.enOvedBShlila.enBShlila.GetHashCode().ToString();
+        }
+
+
+        private bool IsOvedMutaamForEmptyPeilut()
+        {
+            //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
+            return ((objDay.oOved.sMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode().ToString() ||
+                   objDay.oOved.sMutamut == clGeneral.enMutaam.enMutaam7.GetHashCode().ToString())
+                   && (bSidurNotEmpty));
+
+        }
+          
+       }
 }

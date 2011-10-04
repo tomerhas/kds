@@ -26,6 +26,7 @@ namespace KdsBatch.Errors
                 {
                     FactoryChecker error = new FactoryChecker();
                     ListOfChecks.Add(error.GetInstance(item, this));
+
                 });
             }
             catch (Exception ex)
@@ -38,10 +39,7 @@ namespace KdsBatch.Errors
         {
             try
             {
-                _SpecificErrors.ForEach(item =>
-                {
-                    ListOfChecks.ForEach(itemErr => itemErr.Check());
-                });
+               ListOfChecks.ForEach(itemErr => itemErr.Check());
             }
             catch (Exception ex)
             {

@@ -28,7 +28,7 @@ namespace KdsBatch.Entities
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_last_taarich", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
-                oDal.ExecuteSP(clGeneral.cProGetOvedDetails, ref dt);
+                oDal.ExecuteSP(clDefinitions.cProGetOvedYomAvodaDetails, ref dt);
 
                 return dt;
             }

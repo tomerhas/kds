@@ -20,7 +20,7 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                bError = DayInstance.oOved.IsOvedInMatzav("1,3,4,5,6,7,8");
+                bError = !(DayInstance.oOved.IsOvedInMatzav("1,3,4,5,6,7,8"));
                 return bError;
             }
             catch (Exception ex)
@@ -142,9 +142,9 @@ namespace KdsBatch.Errors
             {
                 if (DayInstance.sHashlamaLeyom == "1" && clDefinitions.CheckShaaton(GlobalData.dtSugeyYamimMeyuchadim, DayInstance.iSugYom, DayInstance.dCardDate))
                 {
-                    return false;
+                    return true;
                 }
-                else return true;
+                else return false;
             }
             catch (Exception ex)
             {
@@ -173,7 +173,7 @@ namespace KdsBatch.Errors
                                             {
                                                 sidur.Peiluyot.ForEach(peilut =>
                                                         {
-                                                            if (bError)
+                                                            if (!bError)
                                                             {
                                                                 if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
                                                                 {

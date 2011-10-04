@@ -20,7 +20,8 @@ using KdsLibrary.UDT;
 //using KdsBatch.InputData;
 //using KdsBatch;
 using KdsWorkFlow.Approvals;
-
+using KdsBatch.Entities;
+using KdsBatch.Errors;
 public partial class Modules_Test :Page
 {
   
@@ -781,6 +782,15 @@ public partial class Modules_Test :Page
     {
 
     }
+    protected void ButtonShinuyim_Click(object sender, EventArgs e)
+    {
+        GlobalData.InitGlobalData();
+        Day oDay = new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
+
+        oDay.Run();
+    }
+
+
     protected void Button5_Click(object sender, EventArgs e)
     {
         clKavim oKavim = new clKavim();

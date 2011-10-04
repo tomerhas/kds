@@ -7,9 +7,9 @@ namespace KdsBatch.Errors
 {
     public enum OriginError
     {
-        Day,
-        Sidur,
-        Peilut
+        Day = 1,
+        Sidur = 2,
+        Peilut = 3
     }
     public enum TypeCheck
     {

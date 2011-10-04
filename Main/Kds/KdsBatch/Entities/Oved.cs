@@ -22,6 +22,8 @@ namespace KdsBatch.Entities
         public int iKodSectorIsuk;
         public int iSnifTnua;
         public int iMatzavOved = 0;
+        public string sRishyonAutobus;
+        public string sShlilatRishayon;
         public DateTime dCardDate;
 
         public DataTable dtIdkuneyRashemet;
@@ -73,7 +75,9 @@ namespace KdsBatch.Entities
                 iSnifAv = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["snif_av"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["snif_av"].ToString());
                 iKodSectorIsuk = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
                 iSnifTnua = System.Convert.IsDBNull(dtOvedDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedDetails.Rows[0]["Snif_Tnua"].ToString());
-                
+                sRishyonAutobus = dtOvedDetails.Rows[0]["rishyon_autobus"].ToString().Trim();
+                sShlilatRishayon = dtOvedDetails.Rows[0]["shlilat_rishayon"].ToString();
+               
                 oMeafyeneyOved = new clMeafyenyOved(iMisparIshi, dCardDate);
                
 
