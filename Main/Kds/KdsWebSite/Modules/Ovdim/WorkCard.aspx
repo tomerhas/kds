@@ -177,6 +177,9 @@
                                 <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut"/>
                                 <asp:AsyncPostBackTrigger ControlID="btnFindSidur"/>
                                 <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/>
+                                <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" /> 
+                                <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
+                                <asp:AsyncPostBackTrigger ControlID="btnPrevCard" /> 
                             </Triggers>
                         </asp:UpdatePanel>
                     </td>
