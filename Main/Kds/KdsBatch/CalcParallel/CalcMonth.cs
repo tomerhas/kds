@@ -3514,7 +3514,7 @@ namespace KdsBatch
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutBefoal); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode());
                     fMichsaChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
                     if (fMichsaChodshit>0)
-                        fSumDakotRechiv = Math.Min((fDakotNochehut /fMichsaChodshit) * objOved.objParameters.fBasisLechishuvPremia,  objOved.objParameters.fMaxPremiatNehiga);
+                        fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia) / Math.Max(objOved.objParameters.iMinZmanMishmeretShniaBameshek*60,fMichsaChodshit), objOved.objParameters.fMaxPremiatNehiga);
                 }
                 else
                 {
