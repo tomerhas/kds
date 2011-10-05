@@ -37,6 +37,8 @@ namespace KdsBatch
         static DataSet _dsChishuv;
         static DataTable _DtMonth, _DtDay, _DtSidur, _DtPeilut;
 
+        public static float fTotalAruchatZaharimForDay { set; get; }
+        
         #region Properties
         public static DataTable DtSidur
         {

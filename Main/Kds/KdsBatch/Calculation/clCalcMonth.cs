@@ -136,7 +136,7 @@ namespace KdsBatch
                          _oGeneralData.objPirteyOved = new clPirteyOved(iMisparIshi, dTaarich,"Calc");
                         // clCalcData.DtSidurimMeyuchRechiv=SetSidurimMeyuchaRechiv(dTaarich);
                        //  clCalcData.DtSugeySidurRechiv = GetSugeySidurRechiv(dTaarich);
-
+                         clCalcData.fTotalAruchatZaharimForDay = 0;
                          oDay.CalcRechivim(dTaarich);
                      }
                      dTaarich = dTaarich.AddDays(1);
