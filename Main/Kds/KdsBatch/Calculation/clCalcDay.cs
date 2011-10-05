@@ -6094,11 +6094,10 @@ namespace KdsBatch
 
                       fSumRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                     // fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker; 
-                      fSumRechiv = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay);
-                      clCalcData.fTotalAruchatZaharimForDay += fSumRechiv;
-
-
+                      fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay); ;
+                      fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;
+                      clCalcData.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
+ 
                       addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), fSumRechiv);
 
                   
@@ -6123,10 +6122,9 @@ namespace KdsBatch
                   //{ fZmanAruchatTzharayim = 30; }
 
                   fSumRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-
-                 // fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// -fZmanAruchatErev - fZmanAruchatBoker;
-                  fSumRechiv = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay);
-                  clCalcData.fTotalAruchatZaharimForDay += fSumRechiv;
+                  fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay); ;
+                  fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;
+                  clCalcData.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                   addRowToTable(clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), fSumRechiv);
 
@@ -6155,9 +6153,9 @@ namespace KdsBatch
 
                   fSumRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                //  fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                  fSumRechiv = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay);
-                  clCalcData.fTotalAruchatZaharimForDay += fSumRechiv;
+                  fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay); ;
+                  fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;
+                  clCalcData.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                   addRowToTable(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), fSumRechiv);
 
@@ -6185,9 +6183,9 @@ namespace KdsBatch
 
                   fSumRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                 //fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                  fSumRechiv = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay);
-                  clCalcData.fTotalAruchatZaharimForDay += fSumRechiv;
+                  fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay); ;
+                  fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;
+                  clCalcData.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                   addRowToTable(clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), fSumRechiv);
 
@@ -6214,9 +6212,9 @@ namespace KdsBatch
 
                   fSumRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                 // fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                  fSumRechiv = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay);
-                  clCalcData.fTotalAruchatZaharimForDay += fSumRechiv;
+                  fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - clCalcData.fTotalAruchatZaharimForDay); ;
+                  fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;
+                  clCalcData.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                   addRowToTable(clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), fSumRechiv);
 

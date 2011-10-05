@@ -6243,11 +6243,10 @@ namespace KdsBatch
                 //{ fZmanAruchatTzharayim = 30; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Taarich);
+                fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay); ;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
-                //fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-               
-                fSumRechiv = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay);
-                objOved.fTotalAruchatZaharimForDay += fSumRechiv;
+                objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), fSumRechiv);
 
 
@@ -6273,9 +6272,10 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Taarich);
 
-                //fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                fSumRechiv = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay);
-                objOved.fTotalAruchatZaharimForDay += fSumRechiv;
+                fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay); ;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+
+                objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), fSumRechiv);
 
 
@@ -6301,9 +6301,9 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Taarich);
 
-                //fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                fSumRechiv = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay);
-                objOved.fTotalAruchatZaharimForDay += fSumRechiv;
+                fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay); ;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), fSumRechiv);
 
@@ -6331,9 +6331,9 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Taarich);
 
-               // fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                fSumRechiv = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay);
-                objOved.fTotalAruchatZaharimForDay += fSumRechiv;
+                fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay); ;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), fSumRechiv);
 
@@ -6361,9 +6361,9 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Taarich);
 
-               // fSumRechiv = fSumRechiv - fZmanAruchatTzharayim;// fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
-                fSumRechiv = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay);
-                objOved.fTotalAruchatZaharimForDay += fSumRechiv;
+                fZmanAruchatTzharayim = Math.Min(fSumRechiv, 30 - objOved.fTotalAruchatZaharimForDay); ;
+                fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
+                objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
                 addRowToTable(clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), fSumRechiv);
 
