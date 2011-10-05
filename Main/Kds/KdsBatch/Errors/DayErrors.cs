@@ -256,7 +256,47 @@ namespace KdsBatch.Errors
         }
         protected override bool IsCorrect()
         {
-            return true;
+            EntitiesDal oDal = new EntitiesDal();
+            DateTime shatHatchalaOfPrevDay = DateTime.MinValue;
+            DateTime shatGmarOfPrevDay = DateTime.MinValue;
+            DateTime shatHatchalaOfNextDay = DateTime.MinValue;
+            DateTime shatGmarOfNextDay = DateTime.MinValue;
+            bool bError = false;
+            DataTable dtSidur = oDal.GetSidur("last", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(-1));
+            if (dtSidur != null && dtSidur.Rows.Count > 0)
+            {
+                DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
+                DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
+            }
+            if (DayInstance.Sidurim.Count > 0)
+            {
+                Sidur firstSidurOfTheDay = DayInstance.Sidurim[0] as Sidur;
+                Sidur lastSidurOfTheDay = DayInstance.Sidurim[DayInstance.Sidurim.Count - 1] as Sidur;
+                dtSidur = oDal.GetSidur("first", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(1));
+                if (dtSidur != null && dtSidur.Rows.Count > 0)
+                {
+                    DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfNextDay);
+                    DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
+                }
+
+                if (shatGmarOfPrevDay != DateTime.MinValue &&
+                    shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
+                    (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
+                {
+                    bError = true;
+                 //   hafifaDescription = "חפיפה עם יום קודם";
+                }
+
+                if (shatHatchalaOfNextDay != DateTime.MinValue &&
+                    lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
+                    lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
+                    (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
+                {
+                    bError = true;
+                  //  hafifaDescription = "חפיפה עם יום עוקב";
+                }
+            }
+            return bError;
         }
     }
 
@@ -314,7 +354,7 @@ namespace KdsBatch.Errors
         {
             try
             {
-                if (DayInstance.oOved.IsOvedInMatzav("5,6,8") && DayInstance.Sidurim.Any(sidur => sidur.bSidurMyuhad && !string.IsNullOrEmpty(sidur.sHeadrutTypeKod)))
+                if (DayInstance.oOved.IsOvedInMatzav("5,6,8") && DayInstance.Sidurim.Any(sidur => !sidur.IsSidurHeadrut()))
                 {
                     return true;
                 }
@@ -405,7 +445,13 @@ namespace KdsBatch.Errors
         }
         protected override bool IsCorrect()
         {
-            return true;
+            bool bError = false;
+            if ((DayInstance.iTotalTimePrepareMechineForDay > DayInstance.oParameters.iPrepareAllMechineTotalMaxTimeInDay) ||
+                (DayInstance.iTotalTimePrepareMechineForOtherMechines > DayInstance.oParameters.iPrepareOtherMechineTotalMaxTime))
+            {
+                bError = true;
+            }
+            return bError;
         }
     }  
 

@@ -35,13 +35,19 @@ namespace KdsBatch.Entities
         public string sShlilatRishayon;
         public DateTime dCardDate;
         public int iSugYom;
+        public int iTotalHashlamotForSidur;
+        public int iTotalTimePrepareMechineForDay=0;
+        public int iTotalTimePrepareMechineForOtherMechines = 0;
+        public int iUserId;
         public clParameters oParameters;
         public List<Sidur> Sidurim;
+        public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
 
         public Day() : base(OriginError.Day)  { }
         public Day(int iMisparIshi, DateTime dDate) : base(OriginError.Day)
         {
+            iUserId = -2;
             dCardDate = dDate;
             oOved = new Oved(iMisparIshi, dDate);
             if (oOved.dtOvedDetails.Rows.Count > 0)
@@ -59,7 +65,7 @@ namespace KdsBatch.Entities
           //  DataTable oOved.dtOvedDetails;
             try
             {
-
+                dtTmpMeafyeneyElements = oDal.GetTmpMeafyeneyElements(dCardDate, dCardDate);
               //  oOved.dtOvedDetails = oDal.GetOvedYomAvodaDetails(oOved.iMisparIshi, dCardDate);
                 //נתונים כללים               
                 //נוציא את שדה הלבשה ברמת יום עבודה

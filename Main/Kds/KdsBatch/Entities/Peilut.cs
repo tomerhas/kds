@@ -10,8 +10,9 @@ using KdsBatch.Errors;
 
 namespace KdsBatch.Entities
 {
-    public class Peilut 
+    public class Peilut : BasicErrors
     {
+        public int iMispar_siduri;
         public int iKisuyTor = 0;
         public int iKisuyTorMap = 0;
         public long lMakatNesia = 0;
@@ -67,11 +68,11 @@ namespace KdsBatch.Entities
         public bool bElementLershutExists;
         public clKavim.enMakatType MakatType;
         public bool bElementHachanatMechona = false;
-        Sidur objSidur;
+        public Sidur objSidur;
 
-        public Peilut(){}
+        public Peilut() : base(OriginError.Peilut) { }
 
-        public Peilut(DataRow dr, Sidur oSidur)
+        public Peilut(DataRow dr, Sidur oSidur)  : base(OriginError.Peilut)
         {
             objSidur = oSidur;
             //נתוני פעילויות       
@@ -128,9 +129,10 @@ namespace KdsBatch.Entities
 
             //נבדוק מה סוג הפעילות )שירות,נמק,ריקה,אלמנט,וסות) ונשלח בהתאם לתנועה
             SetKavDetails();
-            
+            InitializeErrors();
         }
-        public Peilut(int iMisparIshi,DateTime dDateCard,Peilut oPeilutOld,long lMakatNesiaNew,DataTable dtMeafyeneyElements) 
+        public Peilut(int iMisparIshi, DateTime dDateCard, Peilut oPeilutOld, long lMakatNesiaNew, DataTable dtMeafyeneyElements)
+            : base(OriginError.Peilut)
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();
@@ -210,6 +212,7 @@ namespace KdsBatch.Entities
         }
 
         public Peilut(int iMisparIshi, DateTime dDateCard, KdsLibrary.UDT.OBJ_PEILUT_OVDIM oObjPeilutOvdimIns, DataTable dtMeafyeneyElements)
+            : base(OriginError.Peilut)
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();

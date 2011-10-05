@@ -195,6 +195,7 @@ namespace KdsBatch
         public DateTime dStartAruchatTzaharayim246;//246 - תחילת ארוחת צהריים
         public DateTime dEndAruchatTzaharayim247;//247 - סיום ארוחת צהריים
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
+        public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
         
         private DataTable dtParameters;
@@ -944,7 +945,10 @@ namespace KdsBatch
                 sTmp = GetOneParam(247, dCardDate);
                 dEndAruchatTzaharayim247 = GetParamHour(sTmp, dCardDate);
 
-                
+
+                //503 -אגד תעבורה- מכסת שעות חודשית 
+                sTmp = GetOneParam(503, dCardDate);
+                fMichsatSaotChodshitET = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
 
                 //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
                 sTmp = GetOneParam(504, dCardDate);

@@ -12,5 +12,8 @@ namespace KdsBatch.Entities
         public int mispar_sidur { get; set; }
         public DateTime taarich { get; set; }
         public DateTime shat_hatchala { get; set; }
+        public DateTime Shat_Yetzia { get; set; }
+        public int mispar_knisa { get; set; }
+        public long makat_nesia { get; set; }
     }
 }

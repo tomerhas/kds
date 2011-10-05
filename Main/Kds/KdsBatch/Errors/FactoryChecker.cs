@@ -8,10 +8,10 @@ namespace KdsBatch.Errors
     public class FactoryChecker
     {
 
-        public BasicChecker GetInstance(TypeCheck Error, object CurrentInstance)
+        public BasicChecker GetInstance(TypeCheck Error, object CurrentInstance, OriginError origion)
         {
             BasicChecker creator = null;
-           
+ 
             if (creator == null)
             {
                 switch (Error)
@@ -54,7 +54,11 @@ namespace KdsBatch.Errors
                         creator = new DayError150(CurrentInstance);
                         break;
                     case TypeCheck.errTimeForPrepareMechineNotValid:
-                        creator = new DayError86(CurrentInstance);
+                        if (origion == OriginError.Day)
+                            creator = new DayError86(CurrentInstance);
+                        else if (origion == OriginError.Sidur)
+                            creator = new SidurError86(CurrentInstance);
+                        else  creator = new PeilutError86(CurrentInstance);
                         break;
                        
                     //Sidur
@@ -196,7 +200,68 @@ namespace KdsBatch.Errors
                         break;
                     //case TypeCheck.errTimeForPrepareMechineNotValid:
                     //    creator = new SidurError86(CurrentInstance);
-                    //    break;                    
+                    //    break;   
+                 
+                    // Peilut
+
+                    case TypeCheck.errKodNesiaNotExists:
+                        creator = new PeilutError81(CurrentInstance);
+                        break;
+                    case TypeCheck.errMisparSiduriOtoNotExists:
+                        creator = new PeilutError139(CurrentInstance);
+                        break;
+                    case TypeCheck.errElementTimeBiggerThanSidurTime:
+                        creator = new PeilutError129(CurrentInstance);
+                        break;
+                    case TypeCheck.errShatPeilutSmallerThanShatHatchalaSidur:
+                        creator = new PeilutError121(CurrentInstance);
+                        break;
+                    case TypeCheck.errShatPeilutBiggerThanShatGmarSidur:
+                        creator = new PeilutError122(CurrentInstance);
+                        break;
+                    case TypeCheck.errPeilutForSidurNonValid:
+                        creator = new PeilutError84(CurrentInstance);
+                        break;
+                    case TypeCheck.errOtoNoNotExists:
+                        creator = new PeilutError69(CurrentInstance);
+                        break;
+                    case TypeCheck.errLoZakaiLLina:
+                        creator = new PeilutError31(CurrentInstance);
+                        break;
+                    case TypeCheck.errOtoNoExists:
+                        creator = new PeilutError68(CurrentInstance);
+                        break;
+                    case TypeCheck.errTeoodatNesiaNotInVisa:
+                        creator = new PeilutError52(CurrentInstance);
+                        break;
+                    case TypeCheck.errHighValueKisuyTor:
+                        creator = new PeilutError87(CurrentInstance);
+                        break;
+                    case TypeCheck.errElementInSpecialSidurNotAllowed:
+                        creator = new PeilutError123(CurrentInstance);
+                        break;
+                    case TypeCheck.errNesiaInSidurVisaNotAllowed:
+                        creator = new PeilutError125(CurrentInstance);
+                        break;
+                    case TypeCheck.errHmtanaTimeNotValid:
+                        creator = new PeilutError166(CurrentInstance);
+                        break;
+                    case TypeCheck.errSidurNamlakWithoutNesiaCard:
+                        creator = new PeilutError13(CurrentInstance);
+                        break;
+                    case TypeCheck.errCurrentPeilutInPrevPeilut:
+                        creator = new PeilutError162(CurrentInstance);
+                        break;
+                    case TypeCheck.errDuplicateTravle:
+                        creator = new PeilutError151(CurrentInstance);
+                        break;
+                    case TypeCheck.errHightValueDakotBefoal:
+                        creator = new PeilutError179(CurrentInstance);
+                        break;                
+                    //case TypeCheck.errTimeForPrepareMechineNotValid:
+                    //    creator = new SidurError86(CurrentInstance);
+                    //    break;   
+
                 }
                 creator.Error = Error;
             }

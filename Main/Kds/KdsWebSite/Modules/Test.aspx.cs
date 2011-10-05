@@ -786,7 +786,14 @@ public partial class Modules_Test :Page
     {
         GlobalData.InitGlobalData();
         Day oDay = new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
-
+        foreach (Sidur oSidur in oDay.Sidurim)
+        {
+            foreach (Peilut oPeilut in oSidur.Peiluyot)
+            {
+                oPeilut.Run();
+            }
+            oSidur.Run();
+        }
         oDay.Run();
     }
 

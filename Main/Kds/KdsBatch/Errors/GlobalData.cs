@@ -51,12 +51,9 @@ namespace KdsBatch.Errors
            dtErrorsActive = oEntDal.GetErrorsActive();
            foreach (DataRow dr in dtErrorsActive.Rows)
            {
-               if (dr["rama"].ToString() == "1")
-               {
-                   type = (TypeCheck)Enum.Parse(typeof(TypeCheck), dr["kod_shgia"].ToString());
-                   origion = (OriginError)Enum.Parse(typeof(OriginError), dr["rama"].ToString());
-                   ActiveErrors.Add(new ErrorItem(type, origion));
-               }
+                type = (TypeCheck)Enum.Parse(typeof(TypeCheck), dr["kod_shgia"].ToString());
+                origion = (OriginError)Enum.Parse(typeof(OriginError), dr["rama"].ToString());
+                ActiveErrors.Add(new ErrorItem(type, origion));
            }
         }
 
@@ -89,5 +86,38 @@ namespace KdsBatch.Errors
             dr = dtSugSidur.Select(string.Concat("sug_sidur=", iSugSidur.ToString(), " and Convert('", dDate.ToShortDateString(), "','System.DateTime') >= me_tarich and Convert('", dDate.ToShortDateString(), "', 'System.DateTime') <= ad_tarich"));
             return dr;
         }
+
+        public static bool CheckHourValid(string sHour)
+        {
+            string[] arr;
+            bool bValid = true;
+            //מקבל מחרוזת בפורמט XX:XX ומחזיר שגיאה אם לא בין 00:01 ל23:59-
+            try
+            {
+                if (sHour.Length > 0)
+                {
+                    arr = sHour.Split(char.Parse(":"));
+                    if (!((int.Parse(arr[0])) >= 0 && (int.Parse(arr[0])) <= 23))
+                    {
+                        bValid = false;
+                    }
+                    if (!(int.Parse(arr[1]) >= 1 || (int.Parse(arr[1]) == 0 && int.Parse(arr[0]) >= 0) && int.Parse(arr[1]) <= 59))
+                    {
+                        bValid = false;
+                    }
+                }
+                else
+                {
+                    bValid = false;
+                }
+
+                return bValid;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

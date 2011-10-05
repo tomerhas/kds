@@ -15,6 +15,7 @@ namespace KdsBatch.Entities
 {
     public class Sidur : BasicErrors
     {
+       
         public int iMispar_Siduri;
         public int iMisparIshi;
         public int iMisparSidur;
@@ -113,6 +114,7 @@ namespace KdsBatch.Entities
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
 
+        public int iTotalTimePrepareMechineForSidur=0;
         //נתוני פעילות
         public List<Peilut> Peiluyot; // = new List<Peilut>();
         public Peilut oPeilutEilat;
@@ -337,16 +339,20 @@ namespace KdsBatch.Entities
             Peiluyot = new List<Peilut>();
             Peilut item;
             DataTable dtPeiluyotLeSidur;
+            int i = 0;
             if (objDay.oOved.OvedDetailsExists)
             {
                 dtPeiluyotLeSidur = (objDay.oOved.dtSidurimVePeiluyot.Select("peilut_mispar_sidur=" + iMisparSidur)).CopyToDataTable();
                 foreach (DataRow dr in dtPeiluyotLeSidur.Rows)
-                {     
+                {
                     item = new Peilut(dr, this);
+                    item.iMispar_siduri = i;
                     Peiluyot.Add(item);
+                    i++;
                 }
             }
         }
+
         private bool IsSidurNahagut()
         {
             //מחזיר אם סידור הוא מסוג נהגות
@@ -436,6 +442,24 @@ namespace KdsBatch.Entities
             return bSidurNihulTnua;
         }
 
+        public bool IsSidurHeadrut()
+        {
+            bool bSidurHeadrut = false;
+            try
+            {
+                //הפונקציה תחזיר  אם הסידור הוא סידור העדרות מסוג מחלה/מילואים/תאונה  TRUE
+                if (bSidurMyuhad)
+                {//סידור מיוחד
+                    bSidurHeadrut = !string.IsNullOrEmpty(sHeadrutTypeKod);
+                }              
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bSidurHeadrut;
+        }
+
         public bool CheckConditionsAllowSidur()
         {
             bool bError = false;
@@ -462,7 +486,6 @@ namespace KdsBatch.Entities
             return bError;
         }
 
-
         private bool IsOvedHasDriverLicence()
         {
             //א. לעובד אין רישיון נהיגה באוטובוס (יודעים אם לעובד יש רישיון לפי ערכים 6, 10, 11 בקוד נתון 7 (קוד רישיון אוטובוס) בטבלת פרטי עובדים)
@@ -486,7 +509,6 @@ namespace KdsBatch.Entities
             return objDay.oOved.sShlilatRishayon == clGeneral.enOvedBShlila.enBShlila.GetHashCode().ToString();
         }
 
-
         private bool IsOvedMutaamForEmptyPeilut()
         {
             //. עובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה (יודעים שעובד הוא מותאם שמותר לו לבצע רק נסיעה ריקה לפי ערכים 6, 7 בקוד נתון 8 (קוד עובד מותאם) בטבלת פרטי עובדים) במקרה זה יש לבדוק אם הסידור מכיל רק נסיעות ריקות, מפעילים את הרוטינה לזיהוי מקט
@@ -495,6 +517,89 @@ namespace KdsBatch.Entities
                    && (bSidurNotEmpty));
 
         }
-          
-       }
+
+        public bool CheckSidurNihulTnua()
+        {
+            try
+            {
+                bool bSidurNihulTnua = false;
+                //                 סידורים מסוג ניהול תנועה:
+                //ניהול תנועה - (ערך 4 במאפיין 3 מאפייני סוג סידור)
+                //לרשות (ערך 6 במאפיין 52 במאפייני סוג סידור)
+                //קופאי (ערך 7  במאפיין 52 במאפייני סוג סידור)
+                //כוננות גרירה (ערך 8 במאפיין 52 במאפייני סוג סידור)
+                if (bSidurMyuhad)
+                {//סידור מיוחד
+                    bSidurNihulTnua = (sSectorAvoda == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                    if (!bSidurNihulTnua)
+                    {
+                        bSidurNihulTnua = (sSugAvoda == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
+                    }
+                    if (!bSidurNihulTnua)
+                    {
+                        bSidurNihulTnua = (sSugAvoda == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                    }
+                    if (!bSidurNihulTnua)
+                    {
+                        bSidurNihulTnua = (sSugAvoda == clGeneral.enSugAvoda.Grira.GetHashCode().ToString());
+                    }
+                }
+                else
+                {//סידור רגיל
+                    DataRow[] drSugSidur = GlobalData.GetOneSugSidurMeafyen(iSugSidurRagil, objDay.dCardDate);
+
+                    if (drSugSidur.Length > 0)
+                    {
+                        bSidurNihulTnua = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString());
+                        if (!bSidurNihulTnua)
+                        {
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Lershut.GetHashCode().ToString());
+                        }
+                        if (!bSidurNihulTnua)
+                        {
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Kupai.GetHashCode().ToString());
+                        }
+                        if (!bSidurNihulTnua)
+                        {
+                            bSidurNihulTnua = (drSugSidur[0]["sug_avoda"].ToString() == clGeneral.enSugAvoda.Grira.GetHashCode().ToString());
+                        }
+                    }
+                }
+
+                return bSidurNihulTnua;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Peilut GetLastPeilutNoElementLeyedia()
+        {
+            try
+            {
+                Peilut oPeilutAchrona = null;
+
+                for (int i = Peiluyot.Count - 1; i >= 0; i--)
+                {
+                    oPeilutAchrona = (Peilut)Peiluyot[i];
+                    if (oPeilutAchrona.iMakatType == clKavim.enMakatType.mElement.GetHashCode())
+                    {
+                        if (oPeilutAchrona.iElementLeYedia != 2)
+                        {
+                            break;
+                        }
+                    }
+                    else { break; }
+                }
+
+                return oPeilutAchrona;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        }
 }

@@ -75,13 +75,18 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
     {
         try
         {
-            DataTable dtMonth;
-            clOvdim oOvdim = new clOvdim();
+            DataTable dtParametrim;
+            clUtils oUtils = new clUtils();
+           // DataTable dtMonth;
+           // clOvdim oOvdim = new clOvdim();
             if (txtEmpId.Text.Length > 0 && clGeneral.IsNumeric(txtEmpId.Text))
             {
-                dtMonth = oOvdim.GetMonthsToOved(int.Parse(txtEmpId.Text));
-                ddlMonth.DataSource = dtMonth;
-                ddlMonth.DataBind();
+                //dtMonth = oOvdim.GetMonthsToOved(int.Parse(txtEmpId.Text));
+                //ddlMonth.DataSource = dtMonth;
+                //ddlMonth.DataBind();
+                dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+                clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
+               
                 ddlMonth.Enabled = true;
             }
             else { ddlMonth.Enabled = false; }

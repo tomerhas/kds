@@ -61,10 +61,19 @@ namespace KdsBatch.Errors
                     ErrorItem.taarich = DayInstance.dCardDate;
                     break;
                 case OriginError.Sidur:
-                   
+                    ErrorItem.mispar_ishi = SidurInstance.objDay.oOved.iMisparIshi;
+                    ErrorItem.taarich = SidurInstance.objDay.dCardDate;
+                    ErrorItem.mispar_sidur = SidurInstance.iMisparSidur;
+                    ErrorItem.shat_hatchala = (SidurInstance.sShatHatchala == null ? DateTime.MinValue : SidurInstance.dFullShatHatchala);
                     break;
                 case OriginError.Peilut:
-                    
+                    ErrorItem.mispar_ishi = PeilutInstance.objSidur.objDay.oOved.iMisparIshi;
+                    ErrorItem.taarich = PeilutInstance.objSidur.objDay.oOved.dCardDate;
+                    ErrorItem.mispar_sidur = PeilutInstance.objSidur.iMisparSidur;
+                    ErrorItem.shat_hatchala = (PeilutInstance.objSidur.sShatHatchala == null ? DateTime.MinValue : PeilutInstance.objSidur.dFullShatHatchala);
+                    ErrorItem.Shat_Yetzia = string.IsNullOrEmpty(PeilutInstance.sShatYetzia) ? DateTime.MinValue : PeilutInstance.dFullShatYetzia;
+                    ErrorItem.mispar_knisa = PeilutInstance.iMisparKnisa;
+                    ErrorItem.makat_nesia = PeilutInstance.lMakatNesia;
                     break;
                 default:
                     break;

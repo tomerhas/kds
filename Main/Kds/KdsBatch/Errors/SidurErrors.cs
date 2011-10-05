@@ -214,15 +214,30 @@ namespace KdsBatch.Errors
     {
         public SidurError20(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "ערך  פיצול/הפסקה שגוי";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            string sLookUp = "";
             try
             {
-                return bError;
+                //בדיקה ברמת סידור
+                if (String.IsNullOrEmpty(SidurInstance.sPitzulHafsaka))
+                {
+                    bError = true;
+                }
+                else
+                {
+                    sLookUp =GlobalData.GetLookUpKods("ctb_pitzul_hafsaka");
+                    if (sLookUp.IndexOf(SidurInstance.sPitzulHafsaka) == -1)
+                    {
+                        bError = true;
+                    }
+                }
+              
+             return bError;
             }
             catch (Exception ex)
             {
@@ -230,7 +245,6 @@ namespace KdsBatch.Errors
             }
         }
     }
-
     public class SidurError137 : BasicChecker
     {
         public SidurError137(object CurrentInstance)
@@ -1279,14 +1293,40 @@ namespace KdsBatch.Errors
     {
         public SidurError142(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment =  "מספר השלמות גדול מהמותר ליום עבודה ";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            int iZmanMaximum = 0;
+            int iHashlama;
             try
             {
+                iHashlama = string.IsNullOrEmpty(SidurInstance.sHashlama) ? 0 : int.Parse(SidurInstance.sHashlama);
+                if (iHashlama > 0)
+                {
+                    SidurInstance.objDay.iTotalHashlamotForSidur += 1;// SidurInstance.objDay.iTotalHashlamotForSidur + 1;
+                    if (clDefinitions.CheckShaaton(GlobalData.dtSugeyYamimMeyuchadim, SidurInstance.objDay.iSugYom, SidurInstance.dSidurDate))
+                    {
+                        iZmanMaximum =SidurInstance.objDay.oParameters.iHashlamaMaxShabat;
+                    }
+                    else
+                    {
+                        if ((SidurInstance.sErevShishiChag == "1") || (SidurInstance.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+                        {
+                            iZmanMaximum = SidurInstance.objDay.oParameters.iHashlamaMaxShisi;
+                        }
+                        else
+                        {
+                            iZmanMaximum = SidurInstance.objDay.oParameters.iHashlamaMaxYomRagil;
+                        }
+                    }
+                    if (SidurInstance.objDay.iTotalHashlamotForSidur > iZmanMaximum)
+                    {
+                        bError = true;
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1300,7 +1340,7 @@ namespace KdsBatch.Errors
     {
         public SidurError156(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "מילואים ועבודה באותו יום";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1308,6 +1348,13 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.sHeadrutTypeKod == "3")
+                {
+                    if (SidurInstance.objDay.Sidurim.Any(sidur => !sidur.IsSidurHeadrut()  && (sidur.iLoLetashlum != 1 || sidur.iLoLetashlum == 0 && sidur.iKodSibaLoLetashlum == 1) && sidur.iMisparSidur != SidurInstance.iMisparSidur && sidur.dFullShatHatchala != SidurInstance.dFullShatHatchala))
+                    {
+                        bError = true;
+                    } 
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1321,7 +1368,7 @@ namespace KdsBatch.Errors
     {
         public SidurError143(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment ="חסר מספר מחסן";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1329,6 +1376,13 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.bSidurMyuhad)
+                {//בסידור "מתגבר מחסן" (מזהים לפי מאפיין 36 (חובה לדווח מספר מחסן) בטבלת מאפייני סידורים מיוחדים) בודקים האם הוכנס מספר מחסן, אם חסר - שגוי. (כדי שניתן יהיה לצרפו למערכת חישוב פרמיות אחסנה). מספר מחסן זה לא שדה שמגיע מהסדרן. 
+                    if (SidurInstance.bHovaMisparMachsan && SidurInstance.iMisparMusachOMachsan == 0)
+                    {
+                        bError = true;
+                    } 
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1342,14 +1396,29 @@ namespace KdsBatch.Errors
     {
         public SidurError152(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment =  "חפיפה בסידור ניהול תנועה";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            EntitiesDal oDal = new EntitiesDal();
+            DataTable dtChafifa = new DataTable();
             try
             {
+                if (SidurInstance.CheckSidurNihulTnua())
+                {
+                    if (oDal.IsSidurChofef(SidurInstance.iMisparIshi, SidurInstance.dSidurDate, SidurInstance.iMisparSidur, SidurInstance.dFullShatHatchala, SidurInstance.dFullShatGmar,SidurInstance.objDay.oParameters.iMaxChafifaBeinSidureyNihulTnua, ref dtChafifa))
+                    {
+                        bError = true;
+
+                        for (int i = 0; i < dtChafifa.Rows.Count; i++)
+                        {
+                            //if (!CheckApprovalToEmploee((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], "27", SidurInstance.iMisparSidur, SidurInstance.dFullShatHatchala))
+                            oDal.UpdateCardStatus((int)dtChafifa.Rows[i]["mispar_ishi"], (DateTime)dtChafifa.Rows[i]["taarich"], clGeneral.enCardStatus.Error, SidurInstance.objDay.iUserId);
+                        }
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1363,14 +1432,92 @@ namespace KdsBatch.Errors
     {
         public SidurError153(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment ="פרמיה גבוהה";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            DataSet dsSidur;
+            float dSumMazanTashlum = 0;
+            double dSumMazanTichnun = 0;
+            int iTypeMakat;
+            Peilut oPeilut;
+            float fZmanSidur = 0;
+            float fZmanSidurMapa = 0;
+            clKavim oKavim = new clKavim();
+            DateTime dShatGmarMapa, dShaHatchalaMapa;
+            int iResult;
+            string sShaa;
             try
             {
+                dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(SidurInstance.iMisparSidur, SidurInstance.dSidurDate, null, out iResult);
+                if (iResult == 0)
+                {
+                    //שעת התחלה ושעת גמר
+                    if (dsSidur.Tables[1].Rows.Count > 0)
+                    {
+                        sShaa = dsSidur.Tables[1].Rows[0]["SHAA"].ToString();
+                        dShaHatchalaMapa = clGeneral.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate);
+                        for (int i = dsSidur.Tables[1].Rows.Count - 1; i >= 0; i--)
+                        {
+                            long lMakatNesia = long.Parse(dsSidur.Tables[1].Rows[i]["MAKAT8"].ToString());
+                            sShaa = dsSidur.Tables[1].Rows[i]["SHAA"].ToString();
+                            if (!string.IsNullOrEmpty(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString()))
+                                dSumMazanTichnun = double.Parse(dsSidur.Tables[1].Rows[i]["MazanTichnun"].ToString());
+                            dShatGmarMapa = clGeneral.GetDateTimeFromStringHour(sShaa, SidurInstance.dSidurDate).AddMinutes(dSumMazanTichnun);
+                            fZmanSidurMapa = int.Parse((dShatGmarMapa - dShaHatchalaMapa).TotalMinutes.ToString());
+
+                            //במידה והפעילות האחרונה היא אלמנט לידיעה בלבד (ערך 2 (לידיעה בלבד) במאפיין 3  (לפעולה/לידיעה בלבד), יש לקחת את הפעילות הקודמת לה.
+
+                            if ((clKavim.enMakatType)(oKavim.GetMakatType(lMakatNesia)) == clKavim.enMakatType.mElement)
+                            {
+                                DataRow drMeafyeneyElements =SidurInstance.objDay.dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
+                                if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
+                                {
+                                    break;
+                                }
+                            }
+                            else { break; }
+                        }
+
+                    }
+                }
+                // נתונים מהסידור בכרטיס העבודה 
+                fZmanSidur = float.Parse((SidurInstance.dFullShatGmar - SidurInstance.dFullShatHatchala).TotalMinutes.ToString());
+
+                for (int i = 0; i < SidurInstance.Peiluyot.Count; i++)
+                {
+                    oPeilut = ((Peilut)SidurInstance.Peiluyot[i]);
+                    iTypeMakat = oPeilut.iMakatType;
+                    if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
+                    {
+                        dSumMazanTashlum += oPeilut.iMazanTashlum;
+                    }
+                    else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
+                    {
+                        if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                        {
+                            dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                        }
+                    }
+                }
+
+                if (dSumMazanTashlum >= fZmanSidur)
+                {
+                    if (SidurInstance.bSidurMyuhad)
+                    {
+                        if (dSumMazanTashlum >= (fZmanSidur * 2))
+                            bError = true;
+                    }
+                    else
+                    {
+                        if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
+                            if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < SidurInstance.objDay.oParameters.fHighPremya)
+                                bError = true;
+                    }
+                }
+
                 return bError;
             }
             catch (Exception ex)
@@ -1384,14 +1531,64 @@ namespace KdsBatch.Errors
     {
         public SidurError154(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "פרמיה שלילית";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            double dTempPremia = 0;
+            float fZmanSidur;
+            double dElementsHamtanaReshut;
+            Peilut oPeilutAchrona;
             try
             {
+                if (SidurInstance.Peiluyot.Count > 0)
+                {
+                    if (SidurInstance.bSidurNahagut)
+                    {
+                        oPeilutAchrona = SidurInstance.GetLastPeilutNoElementLeyedia();
+                        fZmanSidur = float.Parse(((oPeilutAchrona.dFullShatYetzia.AddMinutes(oPeilutAchrona.iMazanTichnun)) - SidurInstance.dFullShatHatchala).TotalMinutes.ToString());
+
+                        //אם זמן הנוכחות (שעת גמר פחות שעת התחלה של  סידור) קטן מ- 350 - לא ממשיכים בבדיקה 
+                        if (fZmanSidur >= 350)
+                        {
+                            dTempPremia = SidurInstance.CalculatePremya(out dElementsHamtanaReshut);
+
+                            if (!SidurInstance.bSidurMyuhad)
+                            {//סידורי מפה
+                                if (dTempPremia < fZmanSidur)
+                                {
+                                    //אם הפער בין הפרמיה היא  שווה או פחות מ- % 20 מזמן הנוכחות - לא ממשיכים בבדיקה 
+                                    if (dTempPremia - fZmanSidur > ((fZmanSidur * 20) / 100))
+                                    {
+                                        //בודקים האם סה"כ זמן האלמנטים מסוג המתנה ולרשות קטן מהפרמיה שחושבה בא' -שגוי.
+                                        if (dElementsHamtanaReshut < dTempPremia)
+                                        {
+                                            bError = true;
+                                        }
+                                    }
+                                } 
+                            }
+                            else
+                            {
+                                if (dTempPremia < fZmanSidur)
+                                {
+                                    //הפער בין הפרמיה  היא שווה או פחות מ- % 20 מזמן הנוכחות - לא ממשיכים בבדיקה 
+                                    if (dTempPremia - fZmanSidur > ((fZmanSidur * 20) / 100))
+                                    {
+                                        //בודקים האם סה"כ זמן האלמנטים מסוג המתנה ולרשות קטן מהפרמיה שחושבה בא' -שגוי.
+                                        if (dElementsHamtanaReshut < dTempPremia)
+                                        {
+                                            bError = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1405,14 +1602,53 @@ namespace KdsBatch.Errors
     {
         public SidurError168(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment =  "סידור נבלעת בתוך סידור קודם ";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            DateTime dShatHatchalaSidur;
+            DateTime dShatGmarSidur;
+            DateTime dShatHatchalaPrevSidur;
+            DateTime dShatGmarPrevSidur;
             try
             {
+                Sidur oPrevSidur = null;
+                if (SidurInstance.iMispar_Siduri > 0) oPrevSidur = SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1] as Sidur;
+                if (oPrevSidur != null)
+                {
+                    dShatHatchalaSidur = SidurInstance.dFullShatHatchala;
+                    dShatGmarSidur = SidurInstance.dFullShatGmar;
+                     dShatHatchalaPrevSidur = oPrevSidur.dFullShatHatchala;
+                     dShatGmarPrevSidur = oPrevSidur.dFullShatGmar;
+                    if (dShatHatchalaSidur == DateTime.MinValue)
+                    {
+                        dShatHatchalaSidur = SidurInstance.dFullShatGmar;
+                    }
+                    if (dShatGmarSidur == DateTime.MinValue)
+                    {
+                        dShatGmarSidur = SidurInstance.dFullShatHatchala;
+                    }
+                    if (dShatHatchalaPrevSidur == DateTime.MinValue)
+                    {
+                        dShatHatchalaPrevSidur = oPrevSidur.dFullShatGmar;
+                    }
+                    if (dShatGmarPrevSidur == DateTime.MinValue)
+                    {
+                        dShatGmarPrevSidur = oPrevSidur.dFullShatHatchala;
+                    }
+
+                    if ((SidurInstance.iLoLetashlum == 0 || (SidurInstance.iLoLetashlum == 1 && SidurInstance.iKodSibaLoLetashlum == 1)) && (oPrevSidur.iLoLetashlum == 0 || (oPrevSidur.iLoLetashlum == 1 && oPrevSidur.iKodSibaLoLetashlum == 1)))
+                    {
+
+                        if (dShatHatchalaSidur > dShatHatchalaPrevSidur &&
+                            dShatGmarSidur < dShatGmarPrevSidur)
+                        {
+                            bError = true;
+                        }
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1426,7 +1662,7 @@ namespace KdsBatch.Errors
     {
         public SidurError175(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "חסרה סיבת אי החתמה ידנית כניסה";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1434,6 +1670,13 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.iKodSibaLedivuchYadaniIn == 0)
+                {
+                    if (SidurInstance.bSidurMyuhad && !string.IsNullOrEmpty(SidurInstance.sShaonNochachut) && (string.IsNullOrEmpty(SidurInstance.sMikumShaonKnisa) || SidurInstance.sMikumShaonKnisa == "0") && GlobalData.CheckHourValid(SidurInstance.sShatHatchala))
+                    {
+                        bError = true;
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1447,7 +1690,7 @@ namespace KdsBatch.Errors
     {
         public SidurError176(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "חסרה סיבת אי החתמה ידנית יציאה";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1455,6 +1698,13 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.iKodSibaLedivuchYadaniOut == 0)
+                {
+                    if (SidurInstance.bSidurMyuhad && !string.IsNullOrEmpty(SidurInstance.sShaonNochachut) && (string.IsNullOrEmpty(SidurInstance.sMikumShaonYetzia) || SidurInstance.sMikumShaonYetzia == "0") && GlobalData.CheckHourValid(SidurInstance.sShatGmar))
+                    {
+                        bError = true;
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1468,7 +1718,7 @@ namespace KdsBatch.Errors
     {
         public SidurError180(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment ="חסרה שעת התחלה לתשלום";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1476,6 +1726,10 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.dFullShatHatchalaLetashlum == DateTime.MinValue)
+                {
+                    bError = true;
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1489,7 +1743,7 @@ namespace KdsBatch.Errors
     {
         public SidurError181(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+             Comment =  "חסרה שעת גמר לתשלום";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1497,6 +1751,10 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.dFullShatGmarLetashlum == DateTime.MinValue)
+                {
+                    bError = true;
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1510,14 +1768,71 @@ namespace KdsBatch.Errors
     {
         public SidurError55(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment = "סידור אילת ללא הפסקה כנדרש לפני הסידור ";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
         {
             bool bError = false;
+            bool bCurrSidurEilat = false;
+            string par = string.Empty;
+            Sidur oPrevSidur = null;
+            float SachHamtana=0;
             try
             {
+                if (SidurInstance.bSidurEilat && SidurInstance.IsLongEilatTrip())
+                {
+                    bCurrSidurEilat = true;
+                }
+
+                // if the current sidur isn't SidurEilat then we shouldn't check anything
+                //if (!bCurrSidurEilat) 
+                //    isValid = false;
+                //else
+                if (bCurrSidurEilat)
+                {
+                    bool bPrevSidurEilat = false;
+
+                    for (int index = 0; index < SidurInstance.iMispar_Siduri; index++)
+                    {
+                        oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[index];
+
+                        if (oPrevSidur.bSidurEilat && oPrevSidur.IsLongEilatTrip())
+                        {
+                            bPrevSidurEilat = true;
+                        }
+
+                        if (bPrevSidurEilat) break;
+                    }
+
+                    //צריך להיות שעה הפרש בין שני סידורי אילת. מזהים סידור אילת אם יש לו פעילות אילת. מזהים פעילות אילת לפי שדה שחוזר מהפרוצדורה GetKavDetails.
+                    if (bPrevSidurEilat && bCurrSidurEilat)
+                    {
+                        SachHamtana = oPrevSidur.Peiluyot.Sum(peilut =>
+                        {
+                            if (peilut.bElementHamtanaExists && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
+                                return Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
+                            else return 0;
+                        });
+
+
+
+                        //foreach (clPeilut oPeilut in oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList())
+                        //{
+                        //    if (oPeilut.bElementHamtanaExists)
+                        //    {
+                        //        SachHamtana += Int32.Parse(oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3));
+                        //    }
+                        //}
+                        if ((SidurInstance.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60)
+                             && ((SachHamtana + SidurInstance.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes) < 60))
+                        //    && oPrevSidur.htPeilut.Values.Cast<clPeilut>().ToList().Any(peilut => (peilut.bElementHamtanaExists && Int32.Parse(peilut.lMakatNesia.ToString().PadLeft(8).Substring(3, 3)) + SidurInstance.dFullShatHatchala.Subtract(oPrevSidur.dFullShatGmar).TotalMinutes < 60))))
+                        {
+
+                            bError = true;
+                        }
+                    }
+                }
                 return bError;
             }
             catch (Exception ex)
@@ -1531,7 +1846,7 @@ namespace KdsBatch.Errors
     {
         public SidurError86(object CurrentInstance)
         {
-            //  Comment = " נתונים ";
+            Comment =  "הכנת מכונה מעל המותר ";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1539,6 +1854,10 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
+                if (SidurInstance.iTotalTimePrepareMechineForSidur > SidurInstance.objDay.oParameters.iPrepareAllMechineTotalMaxTimeForSidur)
+                {
+                    bError = true;
+                }
                 return bError;
             }
             catch (Exception ex)

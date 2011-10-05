@@ -22,10 +22,11 @@ namespace KdsBatch.Errors
             ListOfChecks = new List<BasicChecker>();
             try
             {
+
                 _SpecificErrors.ForEach(item =>
                 {
                     FactoryChecker error = new FactoryChecker();
-                    ListOfChecks.Add(error.GetInstance(item, this));
+                    ListOfChecks.Add(error.GetInstance(item, this, _originError));
 
                 });
             }

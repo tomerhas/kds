@@ -101,7 +101,7 @@ namespace KdsBatch
                             objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
                             // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                             SetNetunimLeYom();
-
+                            objOved.fTotalAruchatZaharimForDay = 0;
                             oDay.CalcRechivim();
 
                             objOved.DtYemeyAvodaYomi = null;
@@ -3514,7 +3514,7 @@ namespace KdsBatch
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutBefoal); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode());
                     fMichsaChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
                     if (fMichsaChodshit>0)
-                        fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia) / Math.Max(objOved.objParameters.iMinZmanMishmeretShniaBameshek*60,fMichsaChodshit), objOved.objParameters.fMaxPremiatNehiga);
+                        fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia) / Math.Min(objOved.objParameters.fMichsatSaotChodshitET * 60, fMichsaChodshit), objOved.objParameters.fMaxPremiatNehiga);
                 }
                 else
                 {
