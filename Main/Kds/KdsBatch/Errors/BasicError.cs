@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KdsBatch.Entities;
+using KdsLibrary.BL;
 
 namespace KdsBatch.Errors
 {
@@ -51,5 +52,65 @@ namespace KdsBatch.Errors
         {
             // implement here InsertErrorsToTbShgiot
         }
+
+        public void RemoveShgiotMeusharotFromDt(ref string sArrKodShgia)
+        {
+            clWorkCard.ErrorLevel iErrorLevel;
+            bool bMeushar;
+            int iCount;
+            iCount = GlobalData.CardErrors.Count;
+            CardError ErrorItem; //= new CardError();
+            int I = 0;
+            try
+            {
+                sArrKodShgia = "";
+                if (iCount > 0)
+                {
+                    do
+                    {
+                        bMeushar = false;
+                        ErrorItem = GlobalData.CardErrors[I];
+                        if (!(string.IsNullOrEmpty(ErrorItem.Shat_Yetzia.ToString())))
+                        {
+                            iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
+                            bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.Parse(ErrorItem.Shat_Yetzia.ToString()), (int)ErrorItem.mispar_knisa);
+
+                        }
+                        else if (string.IsNullOrEmpty(ErrorItem.mispar_sidur.ToString()))
+                        {
+                            iErrorLevel = clWorkCard.ErrorLevel.LevelYomAvoda;
+                            bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), 0, DateTime.MinValue, DateTime.MinValue, 0);
+
+                        }
+                        else
+                        {
+                            iErrorLevel = clWorkCard.ErrorLevel.LevelSidur;
+                            bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.MinValue, 0);
+                        }
+
+
+                        if (bMeushar)
+                        {
+                            GlobalData.CardErrors.Remove(ErrorItem);
+                        }
+                        else
+                        {
+                            sArrKodShgia += ErrorItem.check_num.ToString() + ",";
+                            I += 1;
+                        }
+
+                        iCount = GlobalData.CardErrors.Count;
+                    }
+                    while (I < iCount);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
     }
 }

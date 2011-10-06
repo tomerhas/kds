@@ -113,7 +113,7 @@ namespace KdsBatch.Entities
         public string sZakayMichutzLamichsa; //מאפיין 25
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
-
+        public bool bIsSidurLeBdika;
         public int iTotalTimePrepareMechineForSidur=0;
         //נתוני פעילות
         public List<Peilut> Peiluyot; // = new List<Peilut>();
@@ -181,6 +181,8 @@ namespace KdsBatch.Entities
             dTaarichIdkunAcharon = System.Convert.IsDBNull(dr["taarich_idkun_acharon"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon"].ToString());
             iHachtamaBeatarLoTakin = System.Convert.IsDBNull(dr["Hachtama_Beatar_Lo_Takin"]) ? 0 : int.Parse(dr["Hachtama_Beatar_Lo_Takin"].ToString());
 
+            iLebdikaShguim = System.Convert.IsDBNull(dr["LEBDIKAT_SHGUIM"]) ? 0 : int.Parse(dr["LEBDIKAT_SHGUIM"].ToString());
+          
             InitPeiluyot();
             InitializeErrors();
         }
@@ -340,7 +342,7 @@ namespace KdsBatch.Entities
             Peilut item;
             DataTable dtPeiluyotLeSidur;
             int i = 0;
-            if (objDay.oOved.OvedDetailsExists)
+            if (objDay.oOved.bOvedDetailsExists)
             {
                 dtPeiluyotLeSidur = (objDay.oOved.dtSidurimVePeiluyot.Select("peilut_mispar_sidur=" + iMisparSidur)).CopyToDataTable();
                 foreach (DataRow dr in dtPeiluyotLeSidur.Rows)

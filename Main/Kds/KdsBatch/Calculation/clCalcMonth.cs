@@ -231,15 +231,15 @@ namespace KdsBatch
         private void ChangingChofeshFromShaotNosafot()
         {
             //טיפול בחופש ע"ח שעות נוספות 
-            DataRow[] drSidurimToChange, drMichsaYomit, drShaot100,drChofesh,drDakotNochehut;
+            DataRow[] drSidurimToChange, drMichsaYomit, drNosafot100, drChofesh, drDakotNochehut;
             DateTime dTaarich, dShatHatchalaSidur;
-            float fMichsaYomit, fShaot100Letashlum;
+            float fMichsaYomit, fNosafot100LeOved;
             int I, iSachSidurimKuzezu, iOutMichsa, iMisparSidur;
             try 
             {
                 iSachSidurimKuzezu = 0;
-                drShaot100 = _dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.Shaot100Letashlum.GetHashCode().ToString());
-                if (drShaot100.Length > 0)
+                drNosafot100 = _dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.Nosafot100.GetHashCode().ToString());
+                if (drNosafot100.Length > 0)
                 {
                    
                     drSidurimToChange = clCalcData.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur=99822", "taarich asc");
@@ -247,20 +247,20 @@ namespace KdsBatch
                     {
                         dTaarich = (DateTime)(drSidurimToChange[I]["taarich"]);
                         fMichsaYomit = 0;
-                        fShaot100Letashlum = 0;
+                        fNosafot100LeOved = 0;
                         drMichsaYomit = _dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                         if (drMichsaYomit.Length > 0)
                         {
                             fMichsaYomit = (float)(drMichsaYomit[0]["ERECH_RECHIV"]);
-                            fShaot100Letashlum = (float)(drShaot100[0]["ERECH_RECHIV"]) / 60;
+                            fNosafot100LeOved = (float)(drNosafot100[0]["ERECH_RECHIV"]) / 60;
                             iOutMichsa = int.Parse(drSidurimToChange[I]["out_michsa"].ToString());
                             iMisparSidur = int.Parse(drSidurimToChange[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = (DateTime)(drSidurimToChange[I]["shat_hatchala_sidur"]);
 
-                            if (fMichsaYomit <= fShaot100Letashlum && (clCalcData.CheckOutMichsa(_iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, iOutMichsa) || iSachSidurimKuzezu < _oGeneralData.objParameters.iMaxYamimHamaratShaotNosafot))
+                            if (fMichsaYomit <= (fNosafot100LeOved*60) && (clCalcData.CheckOutMichsa(_iMisparIshi, dTaarich, iMisparSidur, dShatHatchalaSidur, iOutMichsa) || iSachSidurimKuzezu < _oGeneralData.objParameters.iMaxYamimHamaratShaotNosafot))
                             {
-                                fShaot100Letashlum = fShaot100Letashlum - (fMichsaYomit / 60);
-                                drShaot100[0]["ERECH_RECHIV"] = fShaot100Letashlum;
+                                fNosafot100LeOved = fNosafot100LeOved - (fMichsaYomit / 60);
+                                drNosafot100[0]["ERECH_RECHIV"] = fNosafot100LeOved;
                                 
                                 // -	לעדכן את רכיב 67 כדלקמן: 
                                 //•	ברמת יום עבודה – לבטל את הרשומה של הרכיב ביום העבודה אליו שייך הסידור.
@@ -1201,6 +1201,9 @@ namespace KdsBatch
 
                 //נוכחות לפרמיה – משק אחסנה (רכיב 212)
                 CalcRechiv212();
+
+                //נוכחות לפרמיה – משק גרירה (276)
+                CalcRechiv276();
 
                 //מחוץ למכסה שישי ( רכיב 201): 
                 CalcRechiv201();
@@ -4574,6 +4577,20 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv276()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode().ToString()));
+                addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv213()
         {
             float fSumDakotRechiv;
@@ -5193,7 +5210,7 @@ namespace KdsBatch
                 
                 fDakotMichutzChol = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotMichutzTafkidChol.GetHashCode().ToString()));
                 fSumDakotRechiv207 = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichutzLamichsaTafkidShishi.GetHashCode().ToString()));
-                fShaotTafkidLeloMichutz = fTempX - ((fDakotMichutzChol + fSumDakotRechiv207) / 60);
+                fShaotTafkidLeloMichutz = fTempX - float.Parse(((fDakotMichutzChol + fSumDakotRechiv207) / 60).ToString());
 
                 fMichsatTafkidChol = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode().ToString()));
                 fTempY = fShaotTafkidLeloMichutz > fMichsatTafkidChol ? fMichsatTafkidChol : fShaotTafkidLeloMichutz;

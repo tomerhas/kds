@@ -24,13 +24,14 @@ namespace KdsBatch.Errors
                 if ((SidurInstance.bSidurMyuhad && SidurInstance.iMisparSidurMyuhad == 0) || SidurInstance.iMisparSidur.ToString().Length < 4)
                 {
                     bError = true;
-                }
-                return bError;
+                }             
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurNotExists.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError9: " + ex.Message);
+                SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -50,12 +51,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+           
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errStartHourMissing.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError15: " + ex.Message); ;
+                SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -75,12 +78,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errEndHourMissing.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError9: " + ex.Message); ;
+                SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -201,12 +205,14 @@ namespace KdsBatch.Errors
                        }
                    }
                }
-               return bError;
+             
             }
             catch (Exception ex)
             {
-                throw ex;
+                   clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurNotExists.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError33: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+           return bError;
         }
     }
 
@@ -236,13 +242,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-              
-             return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errPizulHafsakaValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError20: " + ex.Message);
             }
+            return bError;
         }
     }
     public class SidurError137 : BasicChecker
@@ -271,13 +277,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-              
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHalbashaInSidurNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError37: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -298,12 +305,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }             
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errShabatPizulValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError23: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -333,12 +342,13 @@ namespace KdsBatch.Errors
                                 }
                                 );
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errKmNotExists.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError96: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -358,12 +368,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errOutMichsaNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError118: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -383,12 +394,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }            
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errOutMichsaInSidurHeadrutNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError40: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -422,13 +435,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errDriverLessonsNumberNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError136: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -469,12 +482,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errZakaiLeCharigaValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError34: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -506,12 +521,14 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHashlamaForSidurNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError48: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -534,12 +551,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errPitzulMuchadValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError25: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -566,12 +585,14 @@ namespace KdsBatch.Errors
                         bError = true;  
                     }
                 }
-                return bError;
+            
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSimunVisaNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError57: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -594,12 +615,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errPizulValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError22: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -619,12 +642,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurVisaNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError58: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -678,12 +703,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurHourStartNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError14: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -737,12 +763,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurHourEndNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError173: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -804,12 +831,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHahlamatHazmanaNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError49: " + ex.Message);
+                SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -832,12 +860,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errMissingSugVisa.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError106: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -860,12 +889,13 @@ namespace KdsBatch.Errors
                         bError=true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errMissingKodMevatzaVisa.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError178: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -889,12 +919,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }      
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errAtLeastOnePeilutRequired.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError127: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -919,12 +950,13 @@ namespace KdsBatch.Errors
                         bError = true; 
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errNotAllowedSidurForEggedTaavora.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError148: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -946,12 +978,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurNetzerNotValidForOved.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError124: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -998,12 +1031,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurAvodaNotValidForMonth.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError160: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1027,12 +1061,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }        
-                return bError;
+              
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurNotAllowedInShabaton.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError50: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1062,13 +1098,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                 
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errCharigaValueNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError32: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1096,12 +1133,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurSummerNotValidForOved.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError164: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1140,13 +1178,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-              
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errOvedNotAllowedToDoSidurNahagut.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError161: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1181,12 +1219,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurimHoursNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError16: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1235,12 +1274,14 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errPitzulSidurInShabat.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError24: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1280,12 +1321,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
+             
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHashlamaForComputerWorkerAndAccident.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError45: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1327,12 +1370,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errTotalHashlamotBiggerThanAllow.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError142: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1355,12 +1399,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     } 
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errMiluimAndAvoda.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError156: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1383,12 +1428,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     } 
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errMissingNumStore.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError143: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1419,12 +1465,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errChafifaBesidurNihulTnua.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError152: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1517,13 +1564,13 @@ namespace KdsBatch.Errors
                                 bError = true;
                     }
                 }
-
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHighPremya.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError153: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1589,12 +1636,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errNegativePremya.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError154: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1649,12 +1697,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errCurrentSidurInPrevSidur.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError168: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1677,12 +1726,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHachtamaYadanitKnisa.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError175: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1705,13 +1755,15 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                   clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errHachtamaYadanitYetzia.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError176: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
+      
     }
 
     public class SidurError180 : BasicChecker
@@ -1730,12 +1782,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.IsShatHatchalaLetashlumNull.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError180: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1755,12 +1809,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.IsShatGmarLetashlumNull.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError181: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1833,12 +1889,14 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
+              
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errSidurEilatNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError55: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -1858,12 +1916,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errTimeForPrepareMechineNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError86: " + ex.Message);
+                   SidurInstance.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 }

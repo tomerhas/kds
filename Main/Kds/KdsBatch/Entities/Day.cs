@@ -38,14 +38,18 @@ namespace KdsBatch.Entities
         public int iTotalHashlamotForSidur;
         public int iTotalTimePrepareMechineForDay=0;
         public int iTotalTimePrepareMechineForOtherMechines = 0;
+        
         public int iUserId;
+        public bool bSuccsess = true;
+        public long btchRequest;
+
         public clParameters oParameters;
         public List<Sidur> Sidurim;
         public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
 
         public Day() : base(OriginError.Day)  { }
-        public Day(int iMisparIshi, DateTime dDate) : base(OriginError.Day)
+        public Day(int iMisparIshi, DateTime dDate, bool bInsertToShguim) : base(OriginError.Day)
         {
             iUserId = -2;
             dCardDate = dDate;
@@ -53,7 +57,7 @@ namespace KdsBatch.Entities
             if (oOved.dtOvedDetails.Rows.Count > 0)
             {
                 SetPirteyYom();
-                InitSidurim();
+                InitSidurim(bInsertToShguim);
                 InitializeErrors();
             }
         }
@@ -105,14 +109,14 @@ namespace KdsBatch.Entities
         }
 
 
-        private void InitSidurim()
+        private void InitSidurim(bool bInsertToShguim)
         {
             Sidurim = new List<Sidur>();
             Sidur item;// = new Sidur();
             EntitiesDal oDal = new EntitiesDal();
             int curMisparSidur, prevMisparSidur;
             int i = 0;
-            if (oOved.OvedDetailsExists)
+            if (oOved.bOvedDetailsExists)
             {
                 prevMisparSidur = 0;
                
@@ -123,6 +127,8 @@ namespace KdsBatch.Entities
                     {
                         item = new Sidur(dr,this);
                         item.iMispar_Siduri = i;
+                        if (!bInsertToShguim || (bInsertToShguim && (item.iLoLetashlum == 0 || (item.iLoLetashlum == 1 && item.iLebdikaShguim == 1))))
+                            item.bIsSidurLeBdika = true;  
                         Sidurim.Add(item);
                         i++;
                     }

@@ -784,19 +784,68 @@ public partial class Modules_Test :Page
     }
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
-        GlobalData.InitGlobalData();
-        Day oDay = new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text));
-        if (oDay.oOved.bOvedDetailsExists)
+        EntitiesDal oDal = new EntitiesDal();
+        clGeneral.enCardStatus _CardStatus;
+        bool bHaveShgiotLetzuga = false;
+        string sArrKodShgia;
+        try
         {
-            foreach (Sidur oSidur in oDay.Sidurim)
+            GlobalData.InitGlobalData();
+
+            Day oDay = new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
+            if (oDay.oOved.bOvedDetailsExists)
             {
-                foreach (Peilut oPeilut in oSidur.Peiluyot)
+                try
                 {
-                    oPeilut.Run();
+                    foreach (Sidur oSidur in oDay.Sidurim)
+                    {
+                        if (oSidur.bIsSidurLeBdika)
+                        {
+                            foreach (Peilut oPeilut in oSidur.Peiluyot)
+                            {
+                                oPeilut.Run();
+                            }
+                            oSidur.Run();
+                        }
+                    }
+                    oDay.Run();
                 }
-                oSidur.Run();
+                catch (Exception ex)
+                {
+                    oDay.bSuccsess = false;
+                }
+
+                oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
+
+                sArrKodShgia = "";
+                oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia);
+                if (sArrKodShgia.Length > 0)
+                {
+                    sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
+                    bHaveShgiotLetzuga =oDal.CheckShgiotLetzuga(sArrKodShgia);
+                }
+                if (GlobalData.CardErrors.Count > 0)
+                {
+                    oDal.InsertErrorsToTbShgiot(oDay.dCardDate);
+                    _CardStatus = clGeneral.enCardStatus.Error;
+                }
+                else
+                {
+                    _CardStatus = clGeneral.enCardStatus.Valid;
+                }
+                if (_CardStatus.GetHashCode() != oDay.iStatus)
+                {
+                    oDal.UpdateCardStatus(oDay.oOved.iMisparIshi, oDay.dCardDate, _CardStatus, oDay.iUserId);
+                }
+
+                oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
             }
-            oDay.Run();
+           // return oDay.bSuccsess;
+        }
+        catch (Exception ex)
+        {
+          //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", 0, dCardDate, "MainOvedErrors: " + ex.Message);
+          //  return false;
         }
     }
 

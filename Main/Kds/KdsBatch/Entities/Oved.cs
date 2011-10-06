@@ -32,12 +32,8 @@ namespace KdsBatch.Entities
         public DataTable dtSidurimVePeiluyot;
         public clMeafyenyOved oMeafyeneyOved;
         public DataTable dtPeiluyotTnua;
-        public bool _bOvedDetailsExists = false;
+        public bool bOvedDetailsExists = false;
 
-        public bool OvedDetailsExists
-        {
-            get { return _bOvedDetailsExists; }
-        }
         public Oved() { }
 
         public Oved(int iMisparIshi, DateTime dDate)
@@ -49,7 +45,7 @@ namespace KdsBatch.Entities
             if (dtOvedDetails.Rows.Count > 0)
             {
                 SetMeafyneyOved();
-                _bOvedDetailsExists = true;
+                bOvedDetailsExists = true;
             }
         }
 

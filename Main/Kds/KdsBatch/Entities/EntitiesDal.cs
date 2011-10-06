@@ -11,12 +11,13 @@ using KdsLibrary.DAL;
 using KdsLibrary.UDT;
 using KdsLibrary.BL;
 using KdsLibrary;
-
+using KdsBatch.Errors;
 namespace KdsBatch.Entities
 {
     public class EntitiesDal
     {
-        private const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active"; 
+        private const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
+        private const string cProDeleteErrors = "Pkg_Errors.pro_Delete_Errors";
       
         public DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate)
         {
@@ -223,5 +224,137 @@ namespace KdsBatch.Entities
                 throw ex;
             }
         }
+
+        public void DeleteErrorsFromTbShgiot(int iMisparIshi, DateTime dCardDate)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProDeleteErrors);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void InsertErrorsToTbShgiot(DateTime dCardDate)
+        {
+            //כתיבת שגיאות ל-TB_SHGIOT
+            clDal oDal = new clDal();
+            StringBuilder sbYeshut = new StringBuilder();
+            DataSet ds = new DataSet();
+            string[] ucols = new string[2];
+            //DataTable dtErrors;
+            try
+            {
+                 int i = 0;
+                oDal.ArrayBindCount = GlobalData.CardErrors.Count; // dtErrors.Rows.Count;
+                int[] arrMisparIshi = new int[GlobalData.CardErrors.Count];
+                int[] arrKodShgia = new int[GlobalData.CardErrors.Count];
+                string[] arrYeshutId = new string[GlobalData.CardErrors.Count];
+                int[] arrMisparSidur = new int[GlobalData.CardErrors.Count];
+                DateTime[] arrTaarich = new DateTime[GlobalData.CardErrors.Count];
+                DateTime[] arrShatHatchala = new DateTime[GlobalData.CardErrors.Count];
+                DateTime[] arrShatYetzia = new DateTime[GlobalData.CardErrors.Count];
+                int[] arrMisparKnisa = new int[GlobalData.CardErrors.Count];
+                string[] arrHeara = new string[GlobalData.CardErrors.Count];
+
+                foreach (CardError ce in GlobalData.CardErrors)
+                {
+                    arrMisparIshi[i] = int.Parse(ce.mispar_ishi.ToString());
+                    arrKodShgia[i] = int.Parse(ce.check_num.ToString());
+                    sbYeshut.Remove(0, sbYeshut.Length);
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.taarich.ToString()) ? dCardDate.ToShortDateString() : DateTime.Parse(ce.taarich.ToString()).ToShortDateString());
+                    //sbYeshut.Append(DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
+                    sbYeshut.Append(",");
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? "" : string.Concat(ce.mispar_sidur.ToString(), ","));
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.shat_hatchala.ToString()) ? "" : string.Concat(DateTime.Parse(ce.shat_hatchala.ToString()).ToString("HH:mm"), ","));
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? "" : string.Concat(DateTime.Parse(ce.Shat_Yetzia.ToString()).ToString("HH:mm"), ","));
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_knisa.ToString()) ? "" : string.Concat(ce.mispar_knisa.ToString(), ","));
+
+                    sbYeshut.Append(int.Parse(ce.check_num.ToString()));
+                    sbYeshut.Append(",");
+                    sbYeshut.Append(i.ToString());
+                    //arrYeshutId[i]=sbYeshut.ToString().Remove(sbYeshut.ToString().Length-1,1);
+                    arrYeshutId[i] = sbYeshut.ToString();
+
+                    arrTaarich[i] = (string.IsNullOrEmpty(ce.taarich.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.taarich.ToString()));
+                    arrMisparSidur[i] = string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? 0 : (int)ce.mispar_sidur;
+                    arrShatHatchala[i] = string.IsNullOrEmpty(ce.shat_hatchala.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.shat_hatchala.ToString());
+                    arrShatYetzia[i] = string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.Shat_Yetzia.ToString());
+                    arrMisparKnisa[i] = string.IsNullOrEmpty(ce.mispar_knisa.ToString()) ? 0 : (int)ce.mispar_knisa;
+
+                    //arrHeara[i] = dr["error_desc"].ToString();
+                    i++;
+                }
+
+                oDal.AddParameter("MISPAR_ISHI", ParameterType.ntOracleInteger, arrMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("KOD_SHGIA", ParameterType.ntOracleInteger, arrKodShgia, ParameterDir.pdInput);
+                oDal.AddParameter("YESHUT_ID", ParameterType.ntOracleVarchar, arrYeshutId, ParameterDir.pdInput);
+                oDal.AddParameter("TAARICH", ParameterType.ntOracleDate, arrTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("MISPAR_SIDUR", ParameterType.ntOracleInteger, arrMisparSidur, ParameterDir.pdInput);
+                oDal.AddParameter("SHAT_HATCHALA", ParameterType.ntOracleDate, arrShatHatchala, ParameterDir.pdInput);
+                oDal.AddParameter("SHAT_YETZIA", ParameterType.ntOracleDate, arrShatYetzia, ParameterDir.pdInput);
+                oDal.AddParameter("MISPAR_KNISA", ParameterType.ntOracleInteger, arrMisparKnisa, ParameterDir.pdInput);
+                //oDal.AddParameter("HEARA", ParameterType.ntOracleVarchar, arrHeara, ParameterDir.pdInput);
+                //// Set the command text on an OracleCommand object
+                //oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,HEARA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:HEARA)");
+                oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,MISPAR_KNISA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:MISPAR_KNISA)");
+         
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateRitzatShgiotDate(int iMisparIshi, DateTime dCardDate, bool bShgiotLetzuga)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
+                if (bShgiotLetzuga)
+                {
+                    oDal.AddParameter("p_shgiot_letzuga", ParameterType.ntOracleInteger, 1, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_shgiot_letzuga", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+                oDal.ExecuteSP(clDefinitions.cProUpdTarRitzatShgiot);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool CheckShgiotLetzuga(string sArrKodShgia)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                //בודקים אם ישנה פעילות זהה
+                //אם כן, נחזיר TRUE
+                oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_arr_kod_shgia", ParameterType.ntOracleVarchar, sArrKodShgia, ParameterDir.pdInput, 300);
+
+                oDal.ExecuteSP(clDefinitions.cFunCountShgiotLetzuga);
+
+                return int.Parse(oDal.GetValParam("p_result").ToString()) > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }

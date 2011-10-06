@@ -18,7 +18,7 @@ namespace KdsBatch.Errors
 {
     public static class GlobalData
     {
-
+        public static bool GlobalDataEmpty = true;
         public static DataTable dtLookUp { get; set; }
         public static DataTable dtYamimMeyuchadim { get; set; }
         public static DataTable dtSugeyYamimMeyuchadim { get; set; }
@@ -30,14 +30,17 @@ namespace KdsBatch.Errors
         public static void InitGlobalData()
         {
              clUtils oUtils = new clUtils();
-
              CardErrors = new List<CardError>();
-             dtLookUp = oUtils.GetLookUpTables();
-             dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
-             dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
-             dtSugSidur = clDefinitions.GetSugeySidur();
-             dtElementim = oUtils.GetCtbElementim();
-             SetActiveErrors();
+             if (GlobalDataEmpty)
+             {
+                 dtLookUp = oUtils.GetLookUpTables();
+                 dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
+                 dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
+                 dtSugSidur = clDefinitions.GetSugeySidur();
+                 dtElementim = oUtils.GetCtbElementim();
+                 SetActiveErrors();
+                 GlobalDataEmpty = false;
+            }
          }
 
         private static void SetActiveErrors()

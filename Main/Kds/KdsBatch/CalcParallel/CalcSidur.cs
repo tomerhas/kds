@@ -5122,6 +5122,47 @@ namespace KdsBatch
             }
         }
 
+
+        public void CalcRechiv276()
+        {
+            DataRow[] _drSidurim;
+            int iMisparSidur,iSugSidur;
+            DateTime dShatHatchalaSidur;
+            DateTime dShatGmarLetashlum;
+            float fErechRechiv;
+            dShatHatchalaSidur = DateTime.MinValue;
+            iMisparSidur = 0;
+            try
+            {
+                 _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+
+                for (int I = 0; I < _drSidurim.Length; I++)
+                {
+                    iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
+                    iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
+
+                    if (iMisparSidur == 99220 || iSugSidur == 69)
+                    {
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
+
+                        fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString());
+
+                        addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
+                    } 
+                }
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.Message, null);
+                throw (ex);
+            }
+            finally
+            {
+                _drSidurim = null;
+            }
+        }
         public void CalcRechiv213()
         {
             DataRow[] _drSidurim;

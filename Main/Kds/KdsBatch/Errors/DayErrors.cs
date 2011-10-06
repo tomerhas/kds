@@ -5,7 +5,7 @@ using System.Text;
 using KdsLibrary.BL;
 using System.Data;
 using KdsBatch.Entities;
-
+using KdsLibrary;
 namespace KdsBatch.Errors
 {
     public class DayError1 : BasicChecker
@@ -21,12 +21,15 @@ namespace KdsBatch.Errors
             try
             {
                 bError = !(DayInstance.oOved.IsOvedInMatzav("1,3,4,5,6,7,8"));
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errHrStatusNotValid.GetHashCode(), DayInstance.dCardDate, "DayError1: " + ex.Message);
+                DayInstance.bSuccsess = false;
             }
+            
+           return bError;    
         }
     }
     
@@ -55,12 +58,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errSimunNesiaNotValid.GetHashCode(), DayInstance.dCardDate, "DayError27: " + ex.Message);
+                DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -86,12 +91,14 @@ namespace KdsBatch.Errors
                     sLookUp = GlobalData.GetLookUpKods("ctb_lina");
                     bError = (sLookUp.IndexOf(DayInstance.sLina) == -1);
                 }
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errLinaValueNotValid.GetHashCode(), DayInstance.dCardDate, "DayError30: " + ex.Message);
+                DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -120,12 +127,14 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errHalbashaNotvalid.GetHashCode(), DayInstance.dCardDate, "DayError36: " + ex.Message);
+                DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -138,18 +147,20 @@ namespace KdsBatch.Errors
         }
         protected override bool IsCorrect()
         {
+            bool bError = false;
             try
             {
                 if (DayInstance.sHashlamaLeyom == "1" && clDefinitions.CheckShaaton(GlobalData.dtSugeyYamimMeyuchadim, DayInstance.iSugYom, DayInstance.dCardDate))
                 {
-                    return true;
+                    bError= true;
                 }
-                else return false;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errShbatHashlamaNotValid.GetHashCode(), DayInstance.dCardDate, "DayError47: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -211,12 +222,14 @@ namespace KdsBatch.Errors
                                                       );
                                             }
                                     );
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errDuplicateShatYetiza.GetHashCode(), DayInstance.dCardDate, "DayError103: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -238,12 +251,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errOvdaInMachalaNotAllowed.GetHashCode(), DayInstance.dCardDate, "DayError132: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -262,39 +277,48 @@ namespace KdsBatch.Errors
             DateTime shatHatchalaOfNextDay = DateTime.MinValue;
             DateTime shatGmarOfNextDay = DateTime.MinValue;
             bool bError = false;
-            DataTable dtSidur = oDal.GetSidur("last", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(-1));
-            if (dtSidur != null && dtSidur.Rows.Count > 0)
+            DataTable dtSidur;
+            try
             {
-                DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
-                DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
-            }
-            if (DayInstance.Sidurim.Count > 0)
-            {
-                Sidur firstSidurOfTheDay = DayInstance.Sidurim[0] as Sidur;
-                Sidur lastSidurOfTheDay = DayInstance.Sidurim[DayInstance.Sidurim.Count - 1] as Sidur;
-                dtSidur = oDal.GetSidur("first", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(1));
+                dtSidur = oDal.GetSidur("last", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(-1));
                 if (dtSidur != null && dtSidur.Rows.Count > 0)
                 {
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfNextDay);
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
+                    DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
+                    DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
                 }
-
-                if (shatGmarOfPrevDay != DateTime.MinValue &&
-                    shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
-                    (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
+                if (DayInstance.Sidurim.Count > 0)
                 {
-                    bError = true;
-                 //   hafifaDescription = "חפיפה עם יום קודם";
-                }
+                    Sidur firstSidurOfTheDay = DayInstance.Sidurim[0] as Sidur;
+                    Sidur lastSidurOfTheDay = DayInstance.Sidurim[DayInstance.Sidurim.Count - 1] as Sidur;
+                    dtSidur = oDal.GetSidur("first", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(1));
+                    if (dtSidur != null && dtSidur.Rows.Count > 0)
+                    {
+                        DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfNextDay);
+                        DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
+                    }
 
-                if (shatHatchalaOfNextDay != DateTime.MinValue &&
-                    lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
-                    lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
-                    (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
-                {
-                    bError = true;
-                  //  hafifaDescription = "חפיפה עם יום עוקב";
+                    if (shatGmarOfPrevDay != DateTime.MinValue &&
+                        shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
+                        (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
+                    {
+                        bError = true;
+                        //   hafifaDescription = "חפיפה עם יום קודם";
+                    }
+
+                    if (shatHatchalaOfNextDay != DateTime.MinValue &&
+                        lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
+                        lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
+                        (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
+                    {
+                        bError = true;
+                        //  hafifaDescription = "חפיפה עם יום עוקב";
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errHafifaBetweenSidurim.GetHashCode(), DayInstance.dCardDate, "DayError167: " + ex.Message);
+                DayInstance.bSuccsess = false;
             }
             return bError;
         }
@@ -334,12 +358,14 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
+              
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errHasBothSidurEilatAndSidurVisa.GetHashCode(), DayInstance.dCardDate, "DayError171: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -352,18 +378,20 @@ namespace KdsBatch.Errors
         }
         protected override bool IsCorrect()
         {
+            bool bError = false;
             try
             {
                 if (DayInstance.oOved.IsOvedInMatzav("5,6,8") && DayInstance.Sidurim.Any(sidur => !sidur.IsSidurHeadrut()))
                 {
-                    return true;
+                    bError = true;
                 }
-                else return false;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errOvedPeilutNotValid.GetHashCode(), DayInstance.dCardDate, "DayError172: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -386,13 +414,14 @@ namespace KdsBatch.Errors
                        if( DayInstance.Sidurim.Any(sidur => sidur.bSidurNahagut))
                            bError = true;
                     }
-                }
-                return bError;
+                }  
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errAvodatNahagutNotValid.GetHashCode(), DayInstance.dCardDate, "DayError165: " + ex.Message);
+                 DayInstance.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -407,36 +436,44 @@ namespace KdsBatch.Errors
         {
             bool bError = false;
             int iZmanNesiaHaloch, iZmanNesiaChazor;
-            iZmanNesiaHaloch = -1;
-            iZmanNesiaChazor = -1;
-            if (DayInstance.oOved.oMeafyeneyOved.Meafyen61Exists) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
+            try
             {
-                if (DayInstance.oOved.bMercazEruaExists)
+                iZmanNesiaHaloch = -1;
+                iZmanNesiaChazor = -1;
+                if (DayInstance.oOved.oMeafyeneyOved.Meafyen61Exists) // אם קיים מאפיין 61, לעובד מגיע זמן נסיעה משתנה
                 {
-                    if (DayInstance.oOved.IsOvedZakaiLZmanNesiaLaAvoda() || DayInstance.oOved.IsOvedZakaiLZmanNesiaLeMeAvoda())
+                    if (DayInstance.oOved.bMercazEruaExists)
                     {
-                        iZmanNesiaHaloch = DayInstance.GetZmanNesiaMeshtana(0, 1, DayInstance.dCardDate);
-                    }
+                        if (DayInstance.oOved.IsOvedZakaiLZmanNesiaLaAvoda() || DayInstance.oOved.IsOvedZakaiLZmanNesiaLeMeAvoda())
+                        {
+                            iZmanNesiaHaloch = DayInstance.GetZmanNesiaMeshtana(0, 1, DayInstance.dCardDate);
+                        }
 
-                    if (DayInstance.oOved.IsOvedZakaiLZmanNesiaMeAvoda() || DayInstance.oOved.IsOvedZakaiLZmanNesiaLeMeAvoda())
-                    {
-                        iZmanNesiaChazor = DayInstance.GetZmanNesiaMeshtana(DayInstance.Sidurim.Count - 1, 1, DayInstance.dCardDate);
-                    }
+                        if (DayInstance.oOved.IsOvedZakaiLZmanNesiaMeAvoda() || DayInstance.oOved.IsOvedZakaiLZmanNesiaLeMeAvoda())
+                        {
+                            iZmanNesiaChazor = DayInstance.GetZmanNesiaMeshtana(DayInstance.Sidurim.Count - 1, 1, DayInstance.dCardDate);
+                        }
 
-                    if (iZmanNesiaChazor == -1 || iZmanNesiaHaloch == -1)
-                    {
-                        bError = true;
-                    }
+                        if (iZmanNesiaChazor == -1 || iZmanNesiaHaloch == -1)
+                        {
+                            bError = true;
+                        }
 
+                    }
                 }
             }
-            return bError;     
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errNesiaMeshtanaNotDefine.GetHashCode(), DayInstance.dCardDate, "DayError150: " + ex.Message);
+                DayInstance.bSuccsess = false;
+            }
+            return bError;   
         }
 
       
     }
 
-    public class DayError86 : BasicChecker  // x2
+    public class DayError86 : BasicChecker   
     {
         public DayError86(object CurrentInstance)
         {
@@ -446,12 +483,20 @@ namespace KdsBatch.Errors
         protected override bool IsCorrect()
         {
             bool bError = false;
-            if ((DayInstance.iTotalTimePrepareMechineForDay > DayInstance.oParameters.iPrepareAllMechineTotalMaxTimeInDay) ||
-                (DayInstance.iTotalTimePrepareMechineForOtherMechines > DayInstance.oParameters.iPrepareOtherMechineTotalMaxTime))
+            try
             {
-                bError = true;
+                if ((DayInstance.iTotalTimePrepareMechineForDay > DayInstance.oParameters.iPrepareAllMechineTotalMaxTimeInDay) ||
+                    (DayInstance.iTotalTimePrepareMechineForOtherMechines > DayInstance.oParameters.iPrepareOtherMechineTotalMaxTime))
+                {
+                    bError = true;
+                }
             }
-            return bError;
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errTimeForPrepareMechineNotValid.GetHashCode(), DayInstance.dCardDate, "DayError86: " + ex.Message);
+                DayInstance.bSuccsess = false;
+            }
+            return bError;   
         }
     }  
 

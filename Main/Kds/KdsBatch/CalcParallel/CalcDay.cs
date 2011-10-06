@@ -489,6 +489,8 @@ namespace KdsBatch
                 //נוכחות לפרמיה – משק מוסכים (רכיב 211) -נוכחות לפרמיה – משק אחסנה (רכיב 212)
                 CalcRechiv211_212();
 
+                //נוכחות לפרמיה – משק גרירה (276)
+                CalcRechiv276();
                 //מחוץ למכסה שישי ( רכיב 201): 
                 CalcRechiv201();
 
@@ -3967,7 +3969,7 @@ namespace KdsBatch
             DataRow[] rowSidurim;
             float fErechRechiv = 0;
             iSugYomLemichsa = 0;
-
+            bool flag = false;
             objOved.Taarich = dTaarich;
 
             //objOved.objMeafyeneyOved = objOved.objMeafyeneyOved;
@@ -4137,17 +4139,24 @@ namespace KdsBatch
                         }
                     }
 
-
-                    if ((objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && objOved.objPirteyOved.iZmanMutamut > 0)
+                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8))
+                    {
+                        if (!oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
+                            flag = false;
+                        else if (objOved.objPirteyOved.iZmanMutamut > 0 && oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
+                        {
+                            fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
+                            flag = false;
+                        }
+                        else flag = true;
+                    }
+                    else if ( flag && (objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && objOved.objPirteyOved.iZmanMutamut > 0)
                     {
                         fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
                     }
 
-                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8) && !oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom)
-                            && (objOved.objPirteyOved.iZmanMutamut > 0))
-                    {
-                        fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
-                    }
+                 
+                   
 
                     if (objOved.objMeafyeneyOved.sMeafyen91.Length > 0)
                     {
@@ -5640,6 +5649,25 @@ namespace KdsBatch
             }
         }
 
+        private void CalcRechiv276()
+        {
+            float fSumErechRechiv;
+            try
+            {
+                if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
+                {
+                    oSidur.CalcRechiv276();
+                    fSumErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), fSumErechRechiv);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv213()
         {
             float fSumDakotRechiv;

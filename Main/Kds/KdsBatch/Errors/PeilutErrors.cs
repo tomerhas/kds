@@ -30,13 +30,13 @@ namespace KdsBatch.Errors
                 }
                 else if (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.lMakatNesia.ToString().Substring(0, 3) != "700" && (PeilutInstance.lMakatNesia.ToString().Length < 8 || PeilutInstance.iMakatValid != 0))
                     bError = true;
-
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError81: " + ex.Message);
+                PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -56,13 +56,14 @@ namespace KdsBatch.Errors
                    PeilutInstance.iOnatiyut == 71 && PeilutInstance.lMisparSiduriOto == 0 && PeilutInstance.bPeilutEilat)
                 {
                     bError = true;
-                }
-                return bError;
+                }    
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errMisparSiduriOtoNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError139: " + ex.Message);
+                PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError129 : BasicChecker
@@ -91,12 +92,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError129: " + ex.Message);
+                PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError121 : BasicChecker
@@ -134,12 +136,13 @@ namespace KdsBatch.Errors
                         } 
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError121: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 
@@ -178,12 +181,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError122: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError84 : BasicChecker
@@ -215,12 +219,13 @@ namespace KdsBatch.Errors
                         }
                     }                    
                 }
-                return !bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError84: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return !bError;
         }
     }
     public class PeilutError69 : BasicChecker
@@ -255,12 +260,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError69: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError31 : BasicChecker
@@ -285,12 +291,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError31: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError68 : BasicChecker
@@ -329,12 +336,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }                
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError68: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError52 : BasicChecker
@@ -353,12 +361,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError52: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError87 : BasicChecker
@@ -379,12 +388,13 @@ namespace KdsBatch.Errors
                         bError = true;
 
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError87: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError123 : BasicChecker
@@ -406,12 +416,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError123: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError125 : BasicChecker
@@ -433,12 +444,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }        
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError125: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError166 : BasicChecker
@@ -481,12 +493,13 @@ namespace KdsBatch.Errors
                 {
                     bError = true;
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError166: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError13 : BasicChecker
@@ -508,12 +521,13 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError13: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError162 : BasicChecker
@@ -570,12 +584,14 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError162: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError151 : BasicChecker
@@ -606,12 +622,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError151: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError179 : BasicChecker
@@ -638,13 +655,13 @@ namespace KdsBatch.Errors
                     if (PeilutInstance.iDakotBafoal > PeilutInstance.objSidur.objDay.oParameters.iMaxMinutsForKnisot)
                         bError = true;
                 }
-
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError179: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
     public class PeilutError86 : BasicChecker
@@ -696,12 +713,13 @@ namespace KdsBatch.Errors
                         }
                     }
                 }
-                return bError;
             }
             catch (Exception ex)
             {
-                throw ex;
+                clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError86: " + ex.Message);
+                  PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
+            return bError;
         }
     }
 }

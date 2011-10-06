@@ -83,10 +83,18 @@ namespace KdsBatch.Errors
         protected abstract bool IsCorrect();
         public void Check()
         {
-            bIsCorrect = IsCorrect();
-            if (bIsCorrect)
-                InsertErrortoCardErrors();
+            try
+            {
+                bIsCorrect = IsCorrect();
+                if (bIsCorrect)
+                    InsertErrortoCardErrors();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
+     
     }
 }
