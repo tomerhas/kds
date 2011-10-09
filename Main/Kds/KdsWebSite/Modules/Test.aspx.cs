@@ -784,6 +784,19 @@ public partial class Modules_Test :Page
     }
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
+        string sMisparim = "74122,372,72345,19274,60818";
+        DateTime dTaarich = DateTime.Parse("06/08/2010");
+         string[] iMisparim = sMisparim.Split(',');
+         clBatchManager oBatchManager = new clBatchManager();
+         for (int i = 0; i < iMisparim.Length; i++)
+         {
+             HafelShguim(int.Parse(iMisparim[i]), dTaarich);
+           //  oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+         }
+    }
+
+    private void HafelShguim(int mispar_ishi,DateTime taarich)
+    {
         EntitiesDal oDal = new EntitiesDal();
         clGeneral.enCardStatus _CardStatus;
         bool bHaveShgiotLetzuga = false;
@@ -792,7 +805,8 @@ public partial class Modules_Test :Page
         {
             GlobalData.InitGlobalData();
 
-            Day oDay = new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
+            Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
+            oDay.btchRequest = 100;
             if (oDay.oOved.bOvedDetailsExists)
             {
                 try
@@ -822,7 +836,7 @@ public partial class Modules_Test :Page
                 if (sArrKodShgia.Length > 0)
                 {
                     sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
-                    bHaveShgiotLetzuga =oDal.CheckShgiotLetzuga(sArrKodShgia);
+                    bHaveShgiotLetzuga = oDal.CheckShgiotLetzuga(sArrKodShgia);
                 }
                 if (GlobalData.CardErrors.Count > 0)
                 {
@@ -840,16 +854,14 @@ public partial class Modules_Test :Page
 
                 oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
             }
-           // return oDay.bSuccsess;
+            // return oDay.bSuccsess;
         }
         catch (Exception ex)
         {
-          //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", 0, dCardDate, "MainOvedErrors: " + ex.Message);
-          //  return false;
+            //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", 0, dCardDate, "MainOvedErrors: " + ex.Message);
+            //  return false;
         }
     }
-
-
     protected void Button5_Click(object sender, EventArgs e)
     {
         clKavim oKavim = new clKavim();

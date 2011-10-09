@@ -465,6 +465,12 @@ namespace KdsBatch
                 //דקות נוספות בנהגות (רכיב 19)/ דקות נוספות בניהול תנועה (רכיב 20)/ דקות נוספות בתפקיד (רכיב 21): 
                 CalcRechiv19_20_21();
 
+                //קיזוז נוספות תפקיד חול ושישי (רכיב 147)
+                CalcRechiv147();
+
+                //קיזוז נוספות תנועה חול (רכיב 160)
+                CalcRechiv160();
+
                 //נוספות תפקיד חול ושישי לאחר קיזוז (רכיב 250)
                 CalcRechiv250();
 
@@ -491,6 +497,10 @@ namespace KdsBatch
 
                 //נוכחות לפרמיה – משק גרירה (276)
                 CalcRechiv276();
+
+                //נוכחות לפרמיה – משק כוננות גרירה (277)
+                CalcRechiv277();
+
                 //מחוץ למכסה שישי ( רכיב 201): 
                 CalcRechiv201();
 
@@ -1218,6 +1228,45 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+
+        private void CalcRechiv147()
+        {
+            float fSumDakotRechiv,fDakotNosafot21,fDakotShishi193;
+            try
+            {
+
+                fDakotNosafot21 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), objOved.Taarich);
+                fDakotShishi193 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
+
+                fSumDakotRechiv = fDakotNosafot21 + fDakotShishi193;
+                addRowToTable(clGeneral.enRechivim.KizuzNosafotTafkidChol.GetHashCode(), fSumDakotRechiv);  
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTafkidChol.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv160()
+        {
+            float fSumDakotRechiv, fDakotNosafot20, fDakotShishi191;
+            try
+            {
+
+                fDakotNosafot20 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNosafotNihul.GetHashCode(), objOved.Taarich);
+                fDakotShishi191 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), objOved.Taarich);
+
+                fSumDakotRechiv = fDakotNosafot20 + fDakotShishi191;
+                addRowToTable(clGeneral.enRechivim.KizuzNosafotTnuaChol.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.KizuzNosafotTnuaChol.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
                 throw (ex);
             }
         }
@@ -5668,6 +5717,27 @@ namespace KdsBatch
                 throw (ex);
             }
         }
+
+        private void CalcRechiv277()
+        {
+            float fSumErechRechiv;
+            try
+            {
+                if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
+                {
+                    oSidur.CalcRechiv277();
+                    fSumErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), fSumErechRechiv);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.Message);
+                throw (ex);
+            }
+        }
+
         private void CalcRechiv213()
         {
             float fSumDakotRechiv;

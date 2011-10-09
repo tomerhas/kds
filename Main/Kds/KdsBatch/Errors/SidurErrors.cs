@@ -1204,7 +1204,7 @@ namespace KdsBatch.Errors
             {
                 if (SidurInstance.iMispar_Siduri > 0)
                 {
-                    oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
+                    oPrevSidur =SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);// (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
                     if (dShatHatchalaSidur != DateTime.MinValue && oPrevSidur.dFullShatGmar != DateTime.MinValue)
                     {
                         DateTime dPrevTime = new DateTime(oPrevSidur.dFullShatGmar.Year, oPrevSidur.dFullShatGmar.Month, oPrevSidur.dFullShatGmar.Day, int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(0, 2)), int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(3, 2)), 0);
@@ -1248,7 +1248,8 @@ namespace KdsBatch.Errors
             {
                 if (SidurInstance.iMispar_Siduri > 0)
                 {
-                    oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
+                    oPrevSidur = SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);
+                   // oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
                     iSidurPrevPitzulHafsaka= string.IsNullOrEmpty(oPrevSidur.sPitzulHafsaka) ? 0 : int.Parse(oPrevSidur.sPitzulHafsaka);
 
                     if (!(string.IsNullOrEmpty(SidurInstance.sShatHatchala)))
@@ -1663,7 +1664,9 @@ namespace KdsBatch.Errors
             try
             {
                 Sidur oPrevSidur = null;
-                if (SidurInstance.iMispar_Siduri > 0) oPrevSidur = SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1] as Sidur;
+                if (SidurInstance.iMispar_Siduri > 0)
+                    oPrevSidur = SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);
+                    //oPrevSidur = SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1] as Sidur;
                 if (oPrevSidur != null)
                 {
                     dShatHatchalaSidur = SidurInstance.dFullShatHatchala;
@@ -1851,7 +1854,8 @@ namespace KdsBatch.Errors
 
                     for (int index = 0; index < SidurInstance.iMispar_Siduri; index++)
                     {
-                        oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[index];
+                        oPrevSidur = SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);
+                       // oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[index];
 
                         if (oPrevSidur.bSidurEilat && oPrevSidur.IsLongEilatTrip())
                         {

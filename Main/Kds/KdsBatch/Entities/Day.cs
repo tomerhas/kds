@@ -183,5 +183,23 @@ namespace KdsBatch.Entities
         }
 
         //public run
+
+        public Sidur getPrevSidurLeTashlum(int index)
+        {
+
+            try
+            {
+                for (int i = (index-1); i >= 0; i--)
+                {
+                    if (Sidurim[i].bIsSidurLeBdika)
+                        return Sidurim[i];
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

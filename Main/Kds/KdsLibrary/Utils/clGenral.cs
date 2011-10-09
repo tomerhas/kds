@@ -782,6 +782,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ZmanRetzifutBoker = 274,
             ZmanRetzifutShabat = 275,
             NochechutLePremiyaMeshekGrira = 276,
+            NochechutLePremiyaMeshekKonenutGrira = 277,
             HalbashaTchilatYom=931,
             HalbashaSofYom=932,
             TosefetGririoTchilatSidur=1281,

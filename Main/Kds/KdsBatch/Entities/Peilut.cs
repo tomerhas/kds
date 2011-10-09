@@ -75,6 +75,7 @@ namespace KdsBatch.Entities
         public Peilut(DataRow dr, Sidur oSidur)  : base(OriginError.Peilut)
         {
             objSidur = oSidur;
+            dCardDate = oSidur.dSidurDate;
             //נתוני פעילויות       
             iPeilutMisparSidur = (System.Convert.IsDBNull(dr["peilut_mispar_sidur"]) ? 0 : int.Parse(dr["peilut_mispar_sidur"].ToString()));
             iKisuyTor = (System.Convert.IsDBNull(dr["Kisuy_Tor"]) ? 0 : int.Parse(dr["Kisuy_Tor"].ToString()));

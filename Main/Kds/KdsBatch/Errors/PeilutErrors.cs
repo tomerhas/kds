@@ -225,7 +225,7 @@ namespace KdsBatch.Errors
                 clLogBakashot.InsertErrorToLog(PeilutInstance.objSidur.objDay.btchRequest, PeilutInstance.objSidur.objDay.oOved.iMisparIshi, "E", TypeCheck.errKodNesiaNotExists.GetHashCode(), PeilutInstance.objSidur.objDay.dCardDate, "PeilutError84: " + ex.Message);
                   PeilutInstance.objSidur.objDay.bSuccsess = false;
             }
-            return !bError;
+            return bError;
         }
     }
     public class PeilutError69 : BasicChecker
