@@ -415,6 +415,7 @@ namespace KdsBatch
                 //דקות פרמיה בתוך המכסה  (רכיב 27) 
                 CalcRechiv27();
 
+                //נוספות 100% לעובד חודשי (רכיב 146 ) 
                 CalcRechiv146();
 
                 //שעות % 100 לתשלום (רכיב 100
@@ -4602,12 +4603,15 @@ namespace KdsBatch
             float fMichsaYomit, fDakotNocheut, fSumDakotRechiv;
             try
             {
-                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
-                fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
-                if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                 {
-                    fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
-                    addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                    fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                    fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                    if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                    {
+                        fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
+                        addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                    }
                 }
             }
             catch (Exception ex)

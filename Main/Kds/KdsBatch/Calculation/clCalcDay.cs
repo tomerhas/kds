@@ -426,6 +426,7 @@ namespace KdsBatch
                 //דקות פרמיה בתוך המכסה  (רכיב 27) 
                 CalcRechiv27();
 
+                //נוספות 100% לעובד חודשי (רכיב 146 ) 
                 CalcRechiv146();
                 //שעות % 100 לתשלום (רכיב 100
                 CalcRechiv100();
@@ -4502,12 +4503,15 @@ namespace KdsBatch
               float fMichsaYomit, fDakotNocheut, fSumDakotRechiv;
               try
               {
-                  fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                  fDakotNocheut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                  if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                  if (_oGeneralData.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                   {
-                      fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
-                      addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                      fMichsaYomit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                      fDakotNocheut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + _Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                      if (fMichsaYomit > 0 && fDakotNocheut > fMichsaYomit)
+                      {
+                          fSumDakotRechiv = (fDakotNocheut - fMichsaYomit) / 60;
+                          addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
+                      }
                   }
               }
               catch (Exception ex)

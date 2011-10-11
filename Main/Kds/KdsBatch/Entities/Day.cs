@@ -114,16 +114,18 @@ namespace KdsBatch.Entities
             Sidurim = new List<Sidur>();
             Sidur item;// = new Sidur();
             EntitiesDal oDal = new EntitiesDal();
+            DateTime dcurShatHatchala, dPreShatHatchala;
             int curMisparSidur, prevMisparSidur;
             int i = 0;
             if (oOved.bOvedDetailsExists)
             {
                 prevMisparSidur = 0;
-               
+                dPreShatHatchala = DateTime.MinValue;
                 foreach (DataRow dr in oOved.dtSidurimVePeiluyot.Rows)
                 {
                     curMisparSidur = int.Parse(dr["Mispar_Sidur"].ToString());
-                    if (curMisparSidur != prevMisparSidur)
+                    dcurShatHatchala = DateTime.Parse(dr["shat_hatchala"].ToString());
+                    if ((curMisparSidur != prevMisparSidur) || (curMisparSidur == prevMisparSidur && dcurShatHatchala != dPreShatHatchala))
                     {
                         item = new Sidur(dr,this);
                         item.iMispar_Siduri = i;
@@ -133,6 +135,7 @@ namespace KdsBatch.Entities
                         i++;
                     }
                     prevMisparSidur = curMisparSidur;
+                    dPreShatHatchala = dcurShatHatchala;
                 }
             }
         }

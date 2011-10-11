@@ -44,7 +44,7 @@ namespace KdsBatch
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode());
-               fErech += GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode());
+               fErech += GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode());
 
                sErua416.Append(FormatNumber(fErech,4,2));
            }
@@ -61,16 +61,19 @@ namespace KdsBatch
 
                sErua416.Append(FormatNumber(fErech,4,2));
            }
-           else
-           {
-               sErua416.Append(GetBlank(4));
-           }
+          else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+          {
+              fErech = GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode());
+              if (fErech>0)
+                  sErua416.Append(FormatNumber(fErech, 4, 2));
+              else sErua416.Append(GetBlank(4));
+          }
+          else
+          {
+              sErua416.Append(GetBlank(4));
+          }
           
-           if(_iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode())
-           {
-               sErua416.Append(GetBlank(4));
-           }
-           else if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode())
+           if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode())
            {
                fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
@@ -105,7 +108,8 @@ namespace KdsBatch
                sErua416.Append(FormatNumber(fErech, 4, 2));//ChofeshZchut
                sErua416.Append(GetBlank(4));
                sErua416.Append(GetBlank(4));
-               if (_iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode())
+               if (_iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() &&
+                   _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode())
                {
                    sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode()),4,2));
                }

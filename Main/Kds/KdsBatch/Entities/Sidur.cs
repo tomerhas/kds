@@ -401,7 +401,7 @@ namespace KdsBatch.Entities
             int i = 0;
             if (objDay.oOved.bOvedDetailsExists)
             {
-                drPeilut = objDay.oOved.dtSidurimVePeiluyot.Select("peilut_mispar_sidur=" + iMisparSidur);
+                drPeilut = objDay.oOved.dtSidurimVePeiluyot.Select("peilut_mispar_sidur=" + iMisparSidur + " and shat_hatchala=Convert('" + dFullShatHatchala.ToString() + "', 'System.DateTime')"); 
                 if (drPeilut.Length > 0)
                 {
                     dtPeiluyotLeSidur = drPeilut.CopyToDataTable();

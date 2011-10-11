@@ -784,8 +784,8 @@ public partial class Modules_Test :Page
     }
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
-        string sMisparim = "74122,372,72345,19274,60818";
-        DateTime dTaarich = DateTime.Parse("06/08/2010");
+        string sMisparim = "201,31010,30860,21478";
+        DateTime dTaarich = DateTime.Parse("15/08/2011");
          string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
          for (int i = 0; i < iMisparim.Length; i++)

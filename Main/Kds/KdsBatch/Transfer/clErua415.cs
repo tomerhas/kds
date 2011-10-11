@@ -92,8 +92,8 @@ namespace KdsBatch
                   sErua415.Append(FormatNumber(fErech, 4, 1));
 
                   if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() &&
-                      _iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() && 
-                      _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
+                      _iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() &&
+                      _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
                   {
                       sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()), 4, 2));
                   }
