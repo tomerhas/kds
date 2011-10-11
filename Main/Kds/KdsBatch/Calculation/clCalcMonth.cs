@@ -2429,7 +2429,7 @@ namespace KdsBatch
                 fNochehutChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString()));
                 fMichsaChodshit = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString()));
 
-                if (_oGeneralData.objMeafyeneyOved.iMeafyen83 == 1 && _oGeneralData.objMeafyeneyOved.iMeafyen33==1)
+                if (_oGeneralData.objMeafyeneyOved.iMeafyen83 == 1) // && _oGeneralData.objMeafyeneyOved.iMeafyen33==1)
                 {
                     fSachKizuzMeheadrut = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_EZER)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString()));
                     fShaotNosafot = clCalcData.GetSumErechRechiv(_dsChishuv.Tables["CHISHUV_CHODESH"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachShaotNosafot.GetHashCode().ToString()));
