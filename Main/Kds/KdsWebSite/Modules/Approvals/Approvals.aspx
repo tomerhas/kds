@@ -108,7 +108,7 @@
         </asp:UpdatePanel>        
    </fieldset  >
     <fieldset class="FilterFieldSet"> 
-        <legend >חיפוש לפי</legend>      
+        <legend>חיפוש לפי</legend>      
         <table class="FilterTable" style="width:70%;"> 
             <tr>
                 <td class="InternalLabel" style="width:80px">

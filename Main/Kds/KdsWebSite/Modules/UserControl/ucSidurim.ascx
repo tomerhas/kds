@@ -3,7 +3,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <link href="../../StyleSheet.css" type="text/css" rel="stylesheet" />
-<table runat="server" id="tbSidurimHeader" width="100%" class="Grid" cellpadding="4" cellspacing="1"></table>
+<table runat="server" id="tbSidurimHeader" width="100%" ></table>
 <div class="lstSidurDiv" id="dvS" runat="server" onscroll="SaveScrollPosToHidden();">        
     <asp:Table runat="server" id="tbSidurim" Width="100%"  cellpadding="0" cellspacing="0"></asp:Table>        
     <input type="hidden" runat="server" id="hidItmAddKey" />   

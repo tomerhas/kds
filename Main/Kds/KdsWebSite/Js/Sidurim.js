@@ -91,7 +91,7 @@ function chkMkt(oRow) {
                 iPos = String($get(oRId).id).indexOf("ctl");
                 iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
                 if (GetMakatType(lNewMkt) != MKT_ELEMENT) {                    
-                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + $get(oRId).id + "_AddReka" + $get(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/plus.jpg' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
+                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + $get(oRId).id + "_AddReka" + $get(oRId).id + " name=lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekalstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/down.png' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
                 }
                 else {
                     if ($get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
@@ -179,7 +179,7 @@ function chkMkt(oRow) {
                             bMeafyen7 = true;
                             break;
                         case "REKA_UP":
-                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUplstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/plus.jpg' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
+                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='lstSidurim$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUplstSidurim_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/up.png' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
                              break;
                         case "HYPER_LINK":
                             if (_FirstChild.text == "1") {
@@ -482,7 +482,7 @@ function chkMkt(oRow) {
          if ((FirstMkt == 0) || ((SubMkt == 1) && (FirstMkt!=0))) {
              oColCancel = $get(Row.id).cells[_COL_CANCEL].childNodes[0];
              oColPeilutCancel = $get(Row.id).cells[_COL_CANCEL_PEILUT].childNodes[0];
-             if ((oColCancel.className == "ImgChecked") || (oColCancel.className == "ImgCheckedDisable")){
+             if ((oColCancel.className == "ImgCheckedPeilut") || (oColCancel.className == "ImgCheckedDisablePeilut")) {
                  SetPeilutStatus(Row.id, true, iSidur);
                  //oColCancel.className = "ImgCancel";
                  oColPeilutCancel.value = "1";
@@ -582,10 +582,10 @@ function chkMkt(oRow) {
             }
             else {
                 if (oColCancel.getAttribute("OrgEnabled") == "1") {
-                   oColCancel.className = "ImgChecked"; oColPeilutCancel.value = "0";
+                   oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";
                 }
                 else {
-                    oColCancel.className = "ImgCheckedDisable"; oColPeilutCancel.value = "0";
+                    oColCancel.className = "ImgCheckedDisablePeilut"; oColPeilutCancel.value = "0";
                 }
             }                       
         }
@@ -1208,7 +1208,7 @@ function chkMkt(oRow) {
 //    
     function AddHosafatKnisot(iSidurIndx, iPeilutIndx) {
         _bScreenChanged = bScreenChanged;
-        if ($get(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgChecked') {
+        if ($get(iPeilutIndx.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgCheckedPeilut') {
             if (_bScreenChanged) {
                 if (!ChkCardVld())
                     return false;
@@ -1312,13 +1312,13 @@ function chkMkt(oRow) {
     }
     function ChgImg(iInx){
         var img = $get("lstSidurim_cImgS".concat(iInx));
-       if ((String(img.nameProp).indexOf("expand_blue_big.jpg"))>-1){
-        img.src= "../../images/collapse_blue_big.jpg";
+        if ((String(img.nameProp).indexOf("closeArrow.png")) > -1) {
+            img.src = "../../images/openArrow.png";
         return;
        }
-     
-       if ((String(img.nameProp).indexOf("red_down_2_big.jpg"))>-1){
-           img.src= "../../images/red_up_2_big.jpg";
+
+    if ((String(img.nameProp).indexOf("closeArrow_red.png")) > -1) {
+        img.src = "../../images/openArrow_red.png";
            return;
        } 
      
@@ -1326,14 +1326,14 @@ function chkMkt(oRow) {
             img.src= "../../images/green_up_2_big.jpg";
             return;
        }
-      
-       if ((String(img.nameProp).indexOf("collapse_blue_big.jpg"))>-1){
-         img.src= "../../images/expand_blue_big.jpg";
+
+        if ((String(img.nameProp).indexOf("openArrow.png")) > -1) {
+           img.src = "../../images/closeArrow.png";
          return;
        }
-       
-       if ((String(img.nameProp).indexOf("red_up_2_big.jpg"))>-1){
-         img.src= "../../images/red_down_2_big.jpg";
+
+     if ((String(img.nameProp).indexOf("openArrow_red.png")) > -1) {
+           img.src = "../../images/closeArrow_red.png";
          return;
        }
           
@@ -1648,7 +1648,7 @@ function chkMkt(oRow) {
                     switch (stat)
                     {
                         case "1":
-                             _Img.src = "../../images/red_up_2_big.jpg";
+                            _Img.src = "../../images/openArrow_red.png";
                             break;
                         case "2":
                             _Img.src = "../../images/green_up_2_big.jpg";
@@ -1677,10 +1677,10 @@ function chkMkt(oRow) {
                 _ImgPeilut.disabled = bDisabled;
             }           
             if (_ImgPeilut.disabled){
-                _ImgPeilut.src =  "../../images/plus-disable.jpg";
+                _ImgPeilut.src = "../../images/Plus_Dis.png";
             }
             else{
-                _ImgPeilut.src =  "../../images/plus.jpg";
+                _ImgPeilut.src =  "../../images/plus.png";
             }
         }       
         _imgCancel= $get("lstSidurim_imgCancel" + i);
@@ -1704,7 +1704,7 @@ function chkMkt(oRow) {
                    if (!_imgAddNesiaReka.childNodes[0].disabled)
                        _imgAddNesiaReka.childNodes[0].disabled = bDisabled;
                    if (_imgAddNesiaReka.childNodes[0].disabled)
-                       _imgAddNesiaReka.childNodes[0].src = "../../images/plus-disable.jpg";                                 
+                       _imgAddNesiaReka.childNodes[0].src = "../../images/down_Dis.png";                                 
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
@@ -1714,14 +1714,14 @@ function chkMkt(oRow) {
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;
-                   _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus.jpg";
+                   _imgAddNesiaRekaUp.childNodes[0].src = "../../images/up.png";
                }
                else {
                    if (_imgAddNesiaRekaUp.childNodes[0].disabled != undefined) {
                        if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
                            _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
                        if (_imgAddNesiaRekaUp.childNodes[0].disabled)
-                           _imgAddNesiaRekaUp.childNodes[0].src = "../../images/plus-disable.jpg";
+                           _imgAddNesiaRekaUp.childNodes[0].src = "../../images/up_Dis.png";
                    }
                }
                if (_imgCancelPeilut.firstChild.disabled!=undefined)
@@ -1732,8 +1732,8 @@ function chkMkt(oRow) {
                
                if (_imgCancelPeilut.firstChild.disabled){
                  if(_imgCancelPeilut.firstChild.className!=undefined){
-                     if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgChecked"))>-1) 
-                       _imgCancelPeilut.firstChild.className =  "ImgCheckedDisable";
+                     if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut"))>-1)
+                         _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";
                      else
                        _imgCancelPeilut.firstChild.className =  "ImgCancelDisable";              
                     }
@@ -1767,7 +1767,7 @@ function chkMkt(oRow) {
                 _imgAddNesiaReka = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA];
                 if ((_imgAddNesiaReka.firstChild.getAttribute("NesiaReka") == "1") && (_imgCancelPeilut.firstChild.value != "1")){
                     _imgAddNesiaReka.childNodes[0].disabled = false;
-                    _imgAddNesiaReka.childNodes[0].src = "../../images/plus.jpg";
+                    _imgAddNesiaReka.childNodes[0].src = "../../images/down.png";
                     break;
                 }
             }

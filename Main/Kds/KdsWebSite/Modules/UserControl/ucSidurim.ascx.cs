@@ -580,13 +580,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             if (!bEnableSidur)
                 grdPeiluyot.Enabled = false;
-            //נוריד הוספת נסיעה ריקה, בפעילות אחרונה
-            //if ((grdPeiluyot.Rows.Count > 0) && (htEmployeeDetails.Count-1==iIndex))
-            //    if (grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.Count > 0)
-            //    {
-            //        grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Controls.RemoveAt(0);                    
-            //        grdPeiluyot.Rows[grdPeiluyot.Rows.Count - 1].Cells[_COL_ADD_NESIA_REKA].Attributes.Add("NesiaReka", "1");
-            //    }
+           
             
             // If Peilyot exists for sidur add collapsible panel                   
             if (oSidur.htPeilut.Count > 0)
@@ -626,7 +620,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Ax.ID = "Ax" + iIndex;
         Ax.Collapsed = false;
         Ax.CollapsedSize = 0;
-        Ax.ExpandedSize = (iPeilutSize)+25 ;
+        Ax.ExpandedSize = (iPeilutSize)+30;
         Ax.AutoCollapse = false;
         Ax.AutoExpand = false;
         Ax.ScrollContents = false;
@@ -1183,13 +1177,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.GridLines = GridLines.None;
             grdPeiluyot.ID = iIndex.ToString().PadLeft(3, char.Parse("0"));
             grdPeiluyot.ShowHeader = true;
+            grdPeiluyot.ShowFooter = false;
             grdPeiluyot.AllowPaging = false;
             grdPeiluyot.AutoGenerateColumns = false;
             grdPeiluyot.AllowSorting = true;
             grdPeiluyot.Width = Unit.Pixel(975);
-            grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_AltItemRow";
+            grdPeiluyot.AlternatingRowStyle.CssClass = "WCard_GridRow";
             grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"GridRow";
-            grdPeiluyot.ShowFooter = false;
+            
+           
+            grdPeiluyot.CellPadding = 5;
+            grdPeiluyot.CellSpacing = 5;
+            //grdPeiluyot.BorderStyle = BorderStyle.Solid;
             
             //רווח
             tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "");
@@ -1199,14 +1198,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrControlToAdd[iArrControlSize] = enControlToAdd.TextBox;
             oGridControls = new GridControls(arrControlToAdd, "", "", "", "", ListItemType.Item, "cancel_peilut_flag", iIndex);
             tGridField.ItemTemplate = new GridViewTemplate(oGridControls);
-            tGridField.ItemStyle.Width = Unit.Pixel(120);
+            tGridField.ItemStyle.Width = Unit.Pixel(30);
             tGridField.ItemStyle.BackColor = System.Drawing.Color.White;
             grdPeiluyot.Columns.Add(tGridField);
 
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "למטה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1215,7 +1214,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //הוספת נסיעה ריקה
             iArrControlSize = 0;
             tGridField = new TemplateField();
-            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header,  "למעלה");
+            tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header,  "ריקה");
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer_left";
             // tGridField.ItemStyle.Width = Unit.Pixel(30);
@@ -1311,7 +1310,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.SortExpression = "dakot_bafoal";
             tGridField.HeaderStyle.CssClass = "wcard_header";
             tGridField.FooterStyle.CssClass = "wcard_footer";
-            tGridField.ItemStyle.Width = Unit.Pixel(40);
+            tGridField.ItemStyle.Width = Unit.Pixel(45);
             grdPeiluyot.Columns.Add(tGridField);
 
             //מספר רכב
@@ -1435,7 +1434,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //{
                 ImageButton imgAddPeilut = new ImageButton();
                 imgAddPeilut.ID = "imgAddPeilut" + iIndex;
-                imgAddPeilut.ImageUrl = "~/images/plus.jpg";               
+                imgAddPeilut.ImageUrl = "~/images/plus.png";               
                 imgAddPeilut.Attributes.Add("onclick", "hidExecInputChg.value = '0'; hidErrChg.value = '1'; MovePanel(" + iIndex + ");");
                 imgAddPeilut.Attributes.Add("SdrInd", iIndex.ToString());
                // imgAddPeilut.Attributes.Add("AddPeilut","0");
@@ -2518,7 +2517,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
         if (oSidur.htPeilut.Count > 0)
         {
-            hCell.Controls.Add(AddImage("~/images/collapse_blue_big.jpg", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+            hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
         }
 
         hCell.Controls.Add(lDummy);
@@ -2587,13 +2586,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             LiteralControl lDummy = new LiteralControl();
             lDummy.Text = " ";
             hCell = CreateTableCell("95px", "", "");
+            
             //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
             if (oSidur.htPeilut.Count > 0){
-                hCell.Controls.Add(AddImage("~/images/collapse_blue_big.jpg", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+                hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
             }
           
             hCell.Controls.Add(lDummy);
-
+            hCell.Attributes.Add("class", "CollapseHeader");
             DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
             string sToolTip = oSidur.sSidurDescription;
@@ -2626,7 +2626,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     case clGeneral.enCardStatus.Error:
                         if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
-                            imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                            imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                             imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
 
@@ -2664,7 +2664,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lbl.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
                 lbl.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
                 lbl.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
-
+                
                 hCell.Controls.Add(lbl);
 
                 // DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
@@ -2674,7 +2674,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     case clGeneral.enCardStatus.Error:
                         if (SetOneError(lbl, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
-                            imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                            imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                             imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                             hCell.Controls.Add(lDummy);
@@ -2690,10 +2690,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
                 }
-            }            
-            hCell.Style.Add("valign", "top");
-            hCell.Style.Add("border-left", "solid 1px gray");
-            hCell.Style.Add("border-right", "solid 1px gray");            
+            }                        
+            
+            //hCell.Style.Add("border-left", "solid 1px gray");
+            //hCell.Style.Add("border-right", "solid 1px gray");            
         }
         catch (Exception ex)
         {
@@ -2825,6 +2825,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+        chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         string sAllApprovalDescription = "";
@@ -3715,11 +3716,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl = BuildHashlamaDLL(bEnabled);
         ddl.ID = "ddlHashlama" + iIndex;
         ddl.SelectedValue = oSidur.sHashlama;
-        ddl.Style.Add("width", "82px");
+        ddl.Style.Add("width", "100px");
         ddl.Enabled = ((bEnabled) && (bSidurActive));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1" : "0");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        ddl.CssClass = "WorkCardSidurDropDown";
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         //string sAllApprovalDescription = "";
@@ -3737,7 +3739,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             case clGeneral.enCardStatus.Error:
                 if (SetOneError(ddl, hCell, "Hashlama", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
                 {
-                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                    imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
@@ -3844,7 +3846,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.SelectedValue = oSidur.sPitzulHafsaka;        
         ddl.Style.Add("width", "95px");       
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+"); chkPitzulHafsaka(" + iIndex + ",false)");
-        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");        
+        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        ddl.CssClass = "WorkCardSidurDropDown";
         //AddAttribute(ddl, "OldV",ddl.SelectedValue);
 
         switch (_StatusCard)
@@ -3852,7 +3855,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             case clGeneral.enCardStatus.Error:
                 if (SetOneError(ddl, hCell, "Pitzul_hafsaka", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
                 {
-                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                    imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
@@ -3891,7 +3894,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1":"0");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");ChkCharigaVal(" + iIndex  + ");");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-
+        ddl.CssClass = "WorkCardSidurDropDown";
        // AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         
@@ -3917,7 +3920,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             case clGeneral.enCardStatus.Error:
                 if (SetOneError(ddl, hCell, "Chariga", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
                 {
-                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                    imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
@@ -3975,6 +3978,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
+        oTextBox.CssClass = "WorkCardSidurTextBox";
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
         oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
@@ -4026,6 +4030,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
         oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
+        oTextBox.CssClass = "WorkCardSidurTextBox";
 
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
@@ -4074,12 +4079,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Items.Insert(0, Item);
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
-        ddl.Style.Add("width", "75px");
+        ddl.Style.Add("width", "85px");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
         ddl.Attributes.Add("OrgEnabled", OrgEnable ? "1" : "0");
+        ddl.CssClass = "WorkCardSidurDropDown";
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
         
       
@@ -4100,7 +4106,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             case clGeneral.enCardStatus.Error:
                 if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_OUT", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
                 {
-                    imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                    imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
@@ -4141,13 +4147,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ddl.Items.Insert(0, Item);
             ddl.SelectedValue = (IsSidurShaon(ref oSidur)) ? oSidur.iKodSibaLedivuchYadaniIn.ToString() : "-1";
             
-            ddl.Style.Add("width", "78px");           
+            ddl.Style.Add("width", "85px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
             ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
+            ddl.CssClass = "WorkCardSidurDropDown";
             // AddAttribute(ddl, "OldV", ddl.SelectedValue);
            
             ////נבדוק אם יש אישורים על שדה כניסה
@@ -4167,7 +4174,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 case clGeneral.enCardStatus.Error:
                     if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_IN", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
                     {
-                        imgErr.ImageUrl = "../../Images/ErrorSign.jpg";
+                        imgErr.ImageUrl = "../../Images/!.png";
                         imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                         imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                         hCell.Controls.Add(imgErr);
@@ -4303,6 +4310,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.CellPadding = 1;
             hTable.CellSpacing = 0;               
             hTable.Style.Add("height", "20px");
+            //hTable.Style.Add("CssClass", "CollapseHeader");
+            
           
             bSidurContinue = ((oSidur.iMisparSidur == SIDUR_CONTINUE_NAHAGUT) || (oSidur.iMisparSidur == SIDUR_CONTINUE_NOT_NAHAGUT));
                                                       
@@ -4991,6 +5000,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Text = oSidur.sShatHatchala;
             oTextBox.Width = Unit.Pixel(40);
             //oTextBox.Height = Unit.Pixel(20);
+            oTextBox.CssClass = "WorkCardSidurTextBox";
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
@@ -5404,6 +5414,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Width = Unit.Pixel(40);          
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
+            oTextBox.CssClass = "WorkCardSidurTextBox";
             bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
             oTextBox.ReadOnly = ((!bOrgEnable) || (!bSidurActive));
 
@@ -5617,20 +5628,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlTableCell hCell;
        
         try
-        {       
-            tbSidurimHeader.Attributes.Add("class", "Grid");
-            tbSidurimHeader.Attributes.Add("width", "985px");   
+        {
+           // tbSidurimHeader.Attributes.Add("class", "WCard_collapse_header");
+            tbSidurimHeader.Attributes.Add("width", "1010px");   
             tbSidurimHeader.CellPadding=1;
             tbSidurimHeader.CellSpacing=1;
             tbSidurimHeader.EnableViewState = false;
 
-            hRow.Attributes.Add("class", "WCard_collapse_header");            
+            //hRow.Attributes.Add("class", "WCard_collapse_header");            
             tbSidurimHeader.Rows.Add(hRow);
 
-            hCell = CreateTableCell("32px", "CellListView", "הוסף");
+            hCell = CreateTableCell("30px", "CellListView", "הוסף");
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("69px", "CellListView", "מספר סידור");
+            hCell = CreateTableCell("71px", "CellListView", "מספר סידור");
             hRow.Controls.Add(hCell);
 
             hCell = CreateTableCell("47px",  "CellListView", "התחלה");
@@ -5639,10 +5650,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hCell = CreateTableCell("46px",  "CellListView", "גמר");
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("83px", "CellListView", "אי החתמה התחל'");
+            hCell = CreateTableCell("80px", "CellListView", "אי החתמה התחל'");
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("87px", "CellListView", "אי החתמה גמר");
+            hCell = CreateTableCell("85px", "CellListView", "אי החתמה גמר");
             hRow.Controls.Add(hCell);
 
             hCell = CreateTableCell("58px", "CellListView", "תש' התחלה");
@@ -5654,7 +5665,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hCell = CreateTableCell("100px", "CellListView", "חריגה");
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("92px", "CellListView", "פיצול/ הפסקה");
+            hCell = CreateTableCell("100px", "CellListView", "פיצול/ הפסקה");
             hRow.Controls.Add(hCell);
 
             hCell = CreateTableCell("97px", "CellListView", "השלמה");
@@ -5668,7 +5679,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             hCell = CreateTableCell("23px", "CellListView", "פעיל");
             hRow.Controls.Add(hCell);
-           
+
+            //Panel pnlHeader;
+            //TableCell tCell;
+            //pnlHeader = CreatePanel(123, "pnlHeader", "CollapseHeader");
+            //pnlHeader.Controls.Add(tbSidurimHeader);
+
+            //tCell = CreateCellForPanel(123);
+            //tCell.Controls.Add(pnlHeader);
         }
         catch (Exception ex)
         {
@@ -5989,6 +6007,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
+            oTxt.CssClass = "WorkCardPeilutTextBox";
             //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = oTxt.ID;
             sID = "defMin";
@@ -6032,9 +6051,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(lnkKnisa);            
         }
         if (e.Row.Cells[_COL_LINE_DESCRIPTION].Text.Length > 35)
-            iPeilutSize = iPeilutSize + 45;
+            iPeilutSize = iPeilutSize + 55;
         else
-            iPeilutSize = iPeilutSize + 25;
+            iPeilutSize = iPeilutSize + 35;
         //e.Row.Cells[_COL_LINE_DESCRIPTION].ToolTip = e.Row.Cells[_COL_LINE_DESCRIPTION].Text;
     }
     protected void SetDefMinutes(GridViewRowEventArgs e, ref clKavim oKavim)
@@ -6051,8 +6070,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             //עבור שירות (מק"ט שירות שאינו כניסה  (mispar_knisa=0, ריקה, נמ"ק לקבלת נתון זה יש לפנות לתנועה:
             //GetKavDetails.MazanTichnun  (עבור קו שירות) GetRekaDetails.MazanTichnun   (עבור ריקה) GetNamakDetails.MazanTichnun   (עבור נמ"ק)  
-            //עבור אלמנט (כולל ויסות 700xxxxx) - יש להציג 0.
-
+            //עבור אלמנט (כולל ויסות 700xxxxx) - יש להציג 0.           
             lmakat = long.Parse(((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Text);
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
             _MakatType = ((clKavim.enMakatType)oKavim.GetMakatType(lmakat));
@@ -6091,13 +6109,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                       {
                         if (((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa == 0)) || ((_MakatType == clKavim.enMakatType.mEmpty) || (_MakatType == clKavim.enMakatType.mNamak)))
                         {                
-                            e.Row.Cells[_COL_DEF_MINUTES].Width = Unit.Pixel(55);
+                            e.Row.Cells[_COL_DEF_MINUTES].Width = Unit.Pixel(55);                            
                             e.Row.Cells[_COL_DEF_MINUTES].ToolTip = "הגדרה לגמר היא " + e.Row.Cells[_COL_MAZAN_TASHLUM].Text + " דקות ";
                         }                                        
                     }     
-                }                       
+                }            
           }       
-
+           
         //}
         catch (Exception ex)
         {
@@ -6154,7 +6172,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 imgAddRekaUp.Style.Add("visibility", "hidden");
 
             imgAddRekaUp.CausesValidation = false;
-            imgAddRekaUp.ImageUrl = "~/images/plus.jpg";
+            imgAddRekaUp.ImageUrl = "~/images/up.png";
             imgAddRekaUp.ID = "AddRekaUp" + e.Row.ClientID;
 
             e.Row.Cells[_COL_ADD_NESIA_REKA_UP].Controls.Add(imgAddRekaUp);
@@ -6192,7 +6210,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgAddReka.Style.Add("visibility","hidden");
                 
                 imgAddReka.CausesValidation = false;
-                imgAddReka.ImageUrl = "~/images/plus.jpg";
+                imgAddReka.ImageUrl = "~/images/down.png";
                 imgAddReka.ID = "AddReka" + e.Row.ClientID;
               //  imgAddReka.ID = "AddReka" + e.Row.RowIndex.ToString();
                 e.Row.Cells[_COL_ADD_NESIA_REKA].Controls.Add(imgAddReka);
@@ -6215,7 +6233,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           oCancelButton = AddImageButton();
           oCancelButton.OnClientClick = "if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0"  + ")) {return false;} else {return true;} ";
         //  bPeilutActive = (((System.Data.DataRowView)(e.Row.DataItem)).Row["bitul_o_hosafa"].ToString() == "0");
-          oCancelButton.CssClass = bPeilutActive ? "ImgChecked" : "ImgCancel";
+          oCancelButton.CssClass = bPeilutActive ? "ImgCheckedPeilut" : "ImgCancel";
           //oCancelButton.Attributes.Add("cancel", (!bPeilutActive).GetHashCode().ToString());
           e.Row.Cells[_COL_CANCEL].Controls.Add(oCancelButton);
           oCancelButton = ((Button)(e.Row.Cells[_COL_CANCEL].Controls[0]));
@@ -6266,7 +6284,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
             oTxt.ID = e.Row.ClientID + "MakatNumber";
-
+            oTxt.CssClass = "WorkCardPeilutTextBox";
             //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
             sID = "vldFilterMakatNumber";
@@ -6352,6 +6370,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");          
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
+            oTxt.CssClass = "WorkCardPeilutTextBox";
            // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
 
@@ -6436,6 +6455,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
+            oTxt.CssClass = "WorkCardPeilutTextBox";
           //  oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
@@ -6551,6 +6571,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(40);
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
+            oTxt.CssClass="WorkCardPeilutTextBox";
          //   oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             //Add MaskTextBox

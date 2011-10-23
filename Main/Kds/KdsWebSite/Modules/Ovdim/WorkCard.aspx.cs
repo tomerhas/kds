@@ -151,7 +151,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                 if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
                 if (!bRashemet)                
                     btnPrint.Enabled = false;                
                 //if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
@@ -169,9 +169,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
 
                 if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled");
                 else
-                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular");
                 break;
             case clGeneral.enMeasherOMistayeg.Mistayeg:
                  if (btnApprove.Disabled)
@@ -179,9 +179,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  else
                      btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
                  if (btnNotApprove.Disabled)
-                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalCheckedDisabled");
                  else
-                     btnNotApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
+                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
                 break;
 
             default:
@@ -190,9 +190,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
                 if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
                 else
-                    btnNotApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
                 btnPrint.Enabled = true;
                 break;
         }
@@ -1099,7 +1099,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //שגיאה 27 ו-150 בדיקת זמן נסיעות
             bErrorExists = SetOneError(ddlTravleTime, "Bitul_Zman_nesiot", "imgTimeErr");
             ErrorImage(imgTimeErr, bErrorExists);
-
+            if (bErrorExists)
+                tdZmanNesiotErr.Style["display"] = "block";
+            else
+                tdZmanNesiotErr.Style["display"] = "none";
             //בדיקת לינה - שגיאה 30
             bErrorExists = SetOneError(ddlLina, "Lina", "imgLinaErr");
             ErrorImage(imgLinaErr, bErrorExists);
@@ -1113,7 +1116,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ErrorImage(imgDayHaslamaErr, bErrorExists);
             if (bErrorExists)
             {
-                imgDayHaslamaErr.Src = "../../Images/ErrorSign.jpg";
+                imgDayHaslamaErr.Src = "../../Images/!.png";
                 imgDayHaslamaErr.Attributes.Add("ondblclick", "GetErrorMessage(ddlHashlamaReason,1,'');");
             }
             else           
@@ -1648,7 +1651,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         { //אם קיים מאפיין 51 או 61, ניצור לינק לפתיחת דף זמני נסיעות, אחרת נכניס מלל זמני ניסעות
             HyperLink lnkZmaneyNesiot = new HyperLink();
             lnkZmaneyNesiot.ID = "lnkTravelTime";
-            lnkZmaneyNesiot.Text = "זמן נסיעות:";
+            lnkZmaneyNesiot.Text = "זמן נסיעות";
             lnkZmaneyNesiot.Style.Add("text-decoration", "underline");
             lnkZmaneyNesiot.Style.Add("cursor", "pointer");
             ddlTravleTime.Attributes.Add("MeafyenVal", sMeafyenEmployeeValue == string.Empty ? "" : sMeafyenEmployeeValue.Substring(0, 1));
@@ -1667,7 +1670,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             Label lblNesiot = new Label();
             lblNesiot.ID = "lblTravelTime";
-            lblNesiot.Text = "זמן נסיעות:";
+            lblNesiot.Text = "זמן נסיעות";
             tdZmaniNesiot.Controls.Add(lblNesiot);
             ddlTravleTime.Enabled = false;
         }
@@ -1866,15 +1869,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    lblCardStatus.Attributes.Add("class", "ImgBtnCStatusErr");
+                    tdCardStatus.Attributes.Add("class", "CardStatusError");
+                    tdCardStatus2.Attributes.Add("class", "CardStatusError");
                     //strImageUrl = "../../Images/btn-error.jpg";
                     break;
                 case clGeneral.enCardStatus.Valid:
-                    lblCardStatus.Attributes.Add("class", "ImgBtnCStatusValid");
+                    tdCardStatus.Attributes.Add("class", "CardStatusValid");
+                    tdCardStatus2.Attributes.Add("class", "CardStatusValid");
                     //strImageUrl = "../../Images/btn-ok.jpg";
                     break;
                 case clGeneral.enCardStatus.Calculate:
-                    lblCardStatus.Attributes.Add("class", "ImgBtnCStatusValid");
+                    tdCardStatus.Attributes.Add("class", "CardStatusValid");
+                    tdCardStatus2.Attributes.Add("class", "CardStatusValid");
                     //strImageUrl = "../../Images/btn-ok.jpg";
                     break;
             }            
@@ -1927,19 +1933,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 case clGeneral.enMeasherOMistayeg.Measher:
                     strImageUrlApprove = "ImgButtonApprovalChecked";
-                    strImageUrlNotApprove = "ImgButtonApprovalRegular";
+                    strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
                 case clGeneral.enMeasherOMistayeg.Mistayeg:
                     strImageUrlApprove = "ImgButtonApprovalRegular";
-                    strImageUrlNotApprove = "ImgButtonApprovalChecked";
+                    strImageUrlNotApprove = "ImgButtonDisApproveChecked";
                     break;
                 case clGeneral.enMeasherOMistayeg.ValueNull:
                     strImageUrlApprove = "ImgButtonApprovalRegular";
-                    strImageUrlNotApprove = "ImgButtonApprovalRegular";
+                    strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
                 default:
                     strImageUrlApprove = "ImgButtonApprovalRegular";
-                    strImageUrlNotApprove = "ImgButtonApprovalRegular";
+                    strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
             }
        // }

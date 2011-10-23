@@ -49,6 +49,11 @@ namespace KdsLibrary.Controls
             set{   _calendar.Text = value; }
             get{ return _calendar.Text; }
         }
+        public string TextBoxCssClass
+        {
+            set { _calendar.CssClass = value; }
+            get { return _calendar.Text; }
+        }
         public short ImgTabIndex
         {
             set { imgCal.TabIndex = value; }
@@ -103,6 +108,7 @@ namespace KdsLibrary.Controls
             set { _calendar.Width = value; }
             get { return _calendar.Width; }
         }
+       
         public string CalendarId
         {
             get
@@ -128,7 +134,7 @@ namespace KdsLibrary.Controls
 
 
             imgCal.ID = "Img" + _calendar.ID;
-            imgCal.ImageUrl = urlAbs + "/Images/calendar.gif";
+            imgCal.ImageUrl = urlAbs + "/Images/B_calander.png";
             imgCal.Style.Add("padding-right", "5px");
             imgCal.ImageAlign = ImageAlign.Middle;
 

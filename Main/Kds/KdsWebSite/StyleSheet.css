@@ -125,6 +125,7 @@
 	margin:0px;
 	vertical-align:middle;
 	text-align:right;
+	width:1005px;
 }
 
 .WorkCardFieldSet
@@ -236,7 +237,7 @@
 
 .ImgChecked
 {
-	background-image: url(Images/allscreens-checkbox.jpg);
+	background-image: url(Images/Title_activeV.png);
 	background-repeat:no-repeat;
 	background-position:center;	
 	border:none;
@@ -253,7 +254,7 @@
 }
 .ImgCheckedDisable
 {
-	background-image: url(Images/allscreens-disable.jpg);
+	background-image: url(Images/Title_activeV_Dis.png);
 	background-repeat:no-repeat;
 	background-position:center;	
 	border:none;
@@ -268,35 +269,11 @@
 	color:White;
 	cursor:pointer;	
 }
-.ImgPlus
-{
-	background-image: url(Images/Plus.jpg);
-	background-position:center;
-	background-repeat:no-repeat;	
-	border:none;
-	width:25px; 
-	height:19px; 	
-	padding-top:0px;
-	padding-bottom:0px;		
-	color:White;
-	cursor:pointer;	
-}
-.ImgPlusDisable
-{
-	background-image: url(Images/plus-disable.jpg);
-	background-position:center;
-	background-repeat:no-repeat;	
-	border:none;
-	width:25px; 
-	height:19px; 	
-	padding-top:0px;
-	padding-bottom:0px;		
-	color:White;
-	cursor:pointer;	
-}
+
+
 .ImgCancel
 {
-	background-image: url(Images/allscreens-cancle-btn.jpg);
+	background-image: url(Images/activeX.png);
 	background-position:center;
 	background-repeat:no-repeat;	
 	border:none;
@@ -312,7 +289,7 @@
 }
 .ImgCancelDisable
 {
-	background-image: url(Images/allscreens-cancle-disable.jpg);
+	background-image: url(Images/activeX_Dis.png);
 	background-position:center;
 	background-repeat:no-repeat;	
 	border:none;
@@ -326,22 +303,93 @@
 	color:White;
 	cursor:pointer;	
 }
+
+
+.ImgCheckedPeilut
+{
+	background-image: url(Images/activeV.png);
+	background-repeat:no-repeat;
+	background-position:center;	
+	border:none;
+	width:25px; 
+	height:40px;
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:19px;
+	font-weight:bolder;
+	color:White;
+	cursor:pointer;	
+}
+.ImgCheckedDisablePeilut
+{
+	background-image: url(Images/activeV_dis.png);
+	background-repeat:no-repeat;
+	background-position:center;	
+	border:none;
+	width:25px; 
+	height:40px;
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:19px;
+	font-weight:bolder;
+	color:White;
+	cursor:pointer;	
+}
+
+
+.ImgCancelPeilut
+{
+	background-image: url(Images/activeX.png);
+	background-position:center;
+	background-repeat:no-repeat;	
+	border:none;
+	width:25px; 	
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:19px;
+	font-weight:bolder;
+	color:White;
+	cursor:pointer;	
+}
+.ImgCancelDisablePeilut
+{
+	background-image: url(Images/activeX_Dis.png);
+	background-position:center;
+	background-repeat:no-repeat;	
+	border:none;
+	width:25px; 	
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:19px;
+	font-weight:bolder;
+	color:White;
+	cursor:pointer;	
+}
+
 .ImgButtonMake
 {
 	background-color:#CE940E;
-		border-style:solid;
-		border-color:white;
-		border:1px;	
-		width:60px; 
-		font-size:16px;
-		font-family:Arial;
-		padding-top:0px;
-		padding-bottom:0px;
-		margin:0px;
-		height:23px;
-		font-weight:bolder;
-		color:White;
-		cursor:pointer;		
+	border-style:solid;
+	border-color:white;
+	border:1px;	
+	width:60px; 
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	margin:0px;
+	height:23px;
+	font-weight:bolder;
+	color:White;
+	cursor:pointer;		
 }
 
 .ImgButtonOvedPrevDisable
@@ -408,38 +456,32 @@
 
 .ImgButtonShow
 {
-	background-color:#CE940E;
-	border-style:double;
-	border-color:#CE940E;
-	border:2px;	
-	width:60px; 
+	background-image: url(Images/showB.png);		
+	width:50px; 
 	font-size:16px;
 	font-family:Arial;
 	padding-top:0px;
 	padding-bottom:0px;
-	height:19px;
+	height:25px;
 	font-weight:bolder;
-	color:White;
+	color: #627c98;
 	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+	border-style:none;
+	background-color:transparent;
 }
 
 .ImgButtonShowPlus
 {
-	background-color:#CE940E;
-	border-style:double;
-	border-color:#CE940E;
-	border:2px;		
-	font-size:16px;
-	font-family:Arial;
-	padding-top:0px;
-	padding-bottom:0px;
-	padding-left:1px;
-	padding-right:2px;
-	height:19px;
-	font-weight:bolder;
-	color:White;
-	cursor:pointer;
-	
+	background-image: url(Images/tabPlus.png);		
+	height:15px;
+	background-color:transparent;
+	background-repeat:no-repeat;	
+	border-style:none;		
+	vertical-align:middle;
+	background-position:right;
+	cursor:pointer;	
 }
 .ImgButtonUpdate
 {
@@ -466,7 +508,7 @@
 
 .ImgErr
 {
-	background-image: url(Images/ErrorSign.jpg);
+	background-image: url(Images/!.png);
 	border:none;
 	width:25px; 
 	font-size:16px;
@@ -527,66 +569,128 @@
 	color: white;
 	font-weight:bold;		
 }
-.ImgButtonApprovalChecked
-{
-	background-image: url(Images/pressed.jpg);	
-	width:80px; 
-	height:30px; 
-	font-family: campaign; 		
-	color: #059574;
-	text-align:center;
-	border-style:hidden;
-	background-repeat:no-repeat;	
-	font-weight:bold;
-	background-color:White;		
-}
-.ImgButtonApprovalCheckedDisabled
-{
-	background-image: url(Images/pressed.jpg);	
-	width:80px; 
-	height:30px; 
-	font-family: campaign; 		
-	text-align:center;
-	color: #c0c0c0;
-	border-style:hidden;
-	background-repeat:no-repeat;	
-	font-weight:bold;
-	background-color:White;		
-}
 .ImgButtonApprovalRegularOld
 {
 	background-image: url(Images/btn-approval-regular.jpg);	
 	width:80px; 
 	height:30px; 
-	color: White;		
+	color: White;	
+	font-family:Arial;	
 }
+.ImgButtonApprovalChecked
+{
+	background-image: url(Images/B_approve_press.png);			
+	color: black;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
+}
+.ImgButtonApprovalCheckedDisabled
+{
+	background-image: url(Images/B_approve_press.png);	
+	color: black;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
+}
+
 .ImgButtonApprovalRegular
 {
-	background-image: url(Images/unpressed.jpg);	
-	width:80px; 
-	height:30px; 
-	color: #059574;	
-	font-family: campaign; 	
+	background-image: url(Images/B_approve.png);	
+	color: black;
+	text-align:center;		
 	font-weight:bold;
-	border-style:none;
-	text-align:center;
-	background-repeat:no-repeat;	
-	background-color:White;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
 }
 .ImgButtonApprovalRegularDisabled
 {
-	background-image: url(Images/unpressed.jpg);	
-	width:80px; 
-	height:30px; 
-	color: #c0c0c0;	
-	text-align:center;
-	font-family: campaign; 	
+	background-image: url(Images/B_approve_Dis.png);	
+	color: black;
+	text-align:center;		
 	font-weight:bold;
-	border-style:none;
-	background-repeat:no-repeat;	
-	background-color:White;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
 }
 
+.ImgButtonDisApproveChecked
+{
+	background-image: url(Images/B_Disapprove_Press.png);			
+	color: white;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
+}
+.ImgButtonDisApprovalCheckedDisabled
+{
+	background-image: url(Images/B_Disapprove_Dis.png);	
+	color: white;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
+}
+.ImgButtonDisApprovalRegular
+{
+	background-image: url(Images/B_Disapprove.png);	
+	color: white;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;
+	font-family:Arial;
+	vertical-align:bottom;
+}
+.ImgButtonDisApprovalRegularDisabled
+{
+	background-image: url(Images/B_Disapprove_Dis.png);	
+	color: black;
+	text-align:center;		
+	font-weight:bold;
+	font-size:19px;	
+	height:30px;
+	width:90px;
+	border-style:none; 
+	background-color:transparent;	
+	font-family:Arial;
+	vertical-align:bottom;
+}
 .ImgBtnCStatusErr
 {	
 	width:140px; 
@@ -1078,14 +1182,7 @@ a
 	color:Yellow;
 }
 
-.WorkCardTextBox
-{
-	 border-color: #cdcdcd;	 
-	 border-style: solid;
-	 width:100px;
-	 height:15px;
-	 border-width:1px;
-}
+
 .TextBoxReadOnly
 {
 	 border-color: #cdcdcd;	 
@@ -1136,11 +1233,17 @@ a
 {
 	font-family:Arial;
 	font-size:12px;	
+	text-align:center;	
+	font-weight:bold;
+	background-color:#627c98;
+	border-left:solid 0.2px white;		
+	direction:rtl;	
+	color: White;	
 }
 
 .CollapseContent
 {
-    background-color: white;
+    background-color: #f5fbff;
     border:none;
     border-top: none;
     padding: 0px;
@@ -1149,44 +1252,37 @@ a
 
 .CollapseHeader
 {
- background-color:White;
+ background-color:#d1e4f2;
  color: black;
  font-family:Arial;
- border-top:solid 1px #3F3F3F; 
- border-left:solid 1px #3F3F3F; 
- border-bottom:solid 1px #3F3F3F;
- border-right:solid 1px #3F3F3F;
- border-color: Gray;
+ border:none;
 }
 
 .WCard_collapse_header
 {
 	text-align:right;
-	background-color:#299A52;
-	border-left:solid 1px #3F3F3F;
-	border-top:solid 1px #3F3F3F;
-	border-bottom:solid 1px #3F3F3F;
-	border-right:solid 1px #3F3F3F;
-	border-color: Black;	
+	background-color:#627c98;
+	border-left:solid 1px white;	
+	border-left-style:solid;	
 	direction:rtl;	
 	color: White;
 	font-family:Arial;
-	font-size:12px;
+	font-size:16px;
+	font-weight:bold;
 }
+
 .wcard_header
 {
-	text-align:right;
-	background-color:#299A52;
-	border-left:solid 1px gray;
-	border-top:solid 1px gray;
-	border-bottom:solid 1px gray;
-	border-right:solid 1px gray;
-	border-color: gray;
+	text-align:center;
+	background-color:#ECF7FD;	
 	direction:rtl;	
-	color:white;
+	color:black;
 	font-family:Arial;
 	font-size:12px;
-	font-weight:normal;
+	font-weight:bold;
+	border-style:solid;
+	border-color:#D1E4F2;
+	border-width:1px;
 }
 .wcard_footer
 {
@@ -1232,33 +1328,19 @@ a
  font-family:Arial;
  color:White; 
 }
-.WCard_AltItemRow
-{
- background-color :white;
- padding-right:4px;
- font-size:14px;
- font-family:Arial;
- font-weight:normal; 
-}
+
 .WCard_GridRow
 {
- background-color :#E1FFE1; 
+ background-color :#F6FBFF; 
  padding-right:4px;
  font-size:14px;
  font-weight:normal;
  font-family:Arial;
 }
-.WCard_GridRowTextBox
-{
- background-color :#E1FFE1; 
- padding-right:4px;
- font-size:14px;
- font-weight:normal;
- font-family:Arial;
-}
+
 .lstSidurDiv
 {
-	height:400px; 	
+	height:520px; 	
 	overflow: auto;
 	overflow-x: hidden; 	
 	width : 100%;
@@ -1406,7 +1488,265 @@ a
 	background-color:#3399FF;
 	color:White;
 }         
+.WorkCardTable1
+{
+	background-color:#d4e4f3;	
+	font-size: 14px;
+	height:24px;
+	border-bottom-width:1px;
+	border-bottom-color:White;
+	border-bottom-style:solid;    
+}
+.WorkCardTable2
+{
+	background-color:#d4e4f3;	
+	font-size: 14px;
+	height:15px;	
+}
+.WorkCardTable1Label
+{
+	background-color:#d4e4f3;	
+	font-weight:bold;	    
+    
+}
+.WorkCardTextBox
+{
+	 background-color:white;	
+	 font-weight:bolder;	
+	 width:100px;
+	 height:20px;
+	 border-style:none;
+	 outline:#627c97;
+	 text-align:center;
+}
+.WorkCardSidurTextBox
+{
+	 background-color:#F2F7FB;	
+	 font-weight:bolder;	
+	 width:100px;
+	 height:20px;
+	 border-style:none;
+	 outline:#627c97;
+	 text-align:center;	 
+}
+.WorkCardSidurDropDown
+{
+	 background-color:#F2F7FB;	
+	 font-weight:bolder;	
+	 width:100px;
+	 height:20px;
+	 border-style:none;
+	 outline:#627c97;
+	 text-align:center;	 
+}
+	
+.WorkCardPeilutTextBox
+{
+	 background-color:#F6FBFF;	
+	 font-weight:bolder;	
+	 width:100px;
+	 height:20px;	 
+	 outline:#627c97;	 
+	 text-align:center;	 
+	 border-style:solid;
+	 border-color:#E4EDF3;
+	 border-width :1px;
+}
 
+.btnNextDay
+{
+	background-image: url(Images/B_nextDay.png);	
+	background-position:center;		 
+}
+.btnPrevDay
+{
+	background-image: url(Images/B_prevDay.png);			
+	background-position:center;
+}
+.btnNextError
+{
+	background-image: url(Images/B_next_error.png);		
+    background-position:center; 
+    font-size: 17px;
+    color: Black; 
+}
+.btnWorkCardPrint
+{
+	background-image: url(Images/B_print.png);		
+    background-position:center;  
+    width:30px;  
+    height:30px;
+    vertical-align:middle;
+}
+.btnWorkCardUpadte
+{
+	background-image: url(Images/B_update.png);		
+    background-position:center;    
+    font-family:Arial;
+    text-align:left;
+    font-weight:bold;
+    font-size:19px;
+    color:Black;
+    height:30px;
+    text-align:center;
+}
 
+.CardStatusValid
+{
+	background-color:#8dd761;
+	color:White;	
+	font-family: @Arial Unicode MS;
+	font-size :x-large;
+	font-weight :bolder;
+}
+.CardStatusError
+{
+	background-color:#e6212f;
+	color:White;
+	font-family: @Arial Unicode MS;
+	font-size :x-large;
+	font-weight :bolder;
+}
+.WorkCardTdBorder
+{
+	background-color:#d4e4f3;	
+	font-weight:bold;	 
+	font-size: 14px;	
+	border-left-width:1px;
+	border-left-color:White;
+	border-left-style:solid;    
+}
+.WorkCardTableBottom
+{	
+	height:80px;	
+}
+.WorkCardTableBottomTrTop
+{	
+	background-color: #eef6fc;
+	height:40px;	
+}
+.WorkCardTableBottomTrBottom
+{	
+	background-color: #d4e4f3;
+	height:40px;	
+}
+.btnWorkCardAddMap
+{
+	background-image: url(Images/B_AddMap_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardAddSpecial
+{
+	background-image: url(Images/B_AddSpecial_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardCalculate
+{
+	background-image: url(Images/B_callculated_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardCloseCard
+{
+	background-image: url(Images/B_close_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardClocks
+{
+	background-image: url(Images/B_clocks_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardLeft
+{
+	background-image: url(Images/B_left.png);	
+	background-repeat:no-repeat;		
+}
+.btnWorkCardRight
+{
+	background-image: url(Images/B_right.png);	
+	background-repeat:no-repeat;
+			
+}
+.btnWorkCardMid
+{
+	background-image: url(Images/B_Mid.png);		
+	background-repeat:repeat;	
+	border:none;
+	width:100px;	
+}
+.btnGeneral
+{		
+	width:60px; 
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:19px;
+	font-weight:bolder;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
 
+.WorkCardTabs
+{
+ filter:border:solid 1px #627c97 progid:DXImageTransform.Microsoft.gradient 
+	(GradientType=0,startColorstr=#aabfd7, endColorstr=#c2d4e9);
 
+ outline-color:#9BB0C9;
+ outline-style:solid;
+ outline-width:0.8px;
+ height:20px;
+ font-family:Arial;
+ font-weight:normal;  
+}
+.WorkCardCheckBox
+{
+	border-style:none;
+	
+}

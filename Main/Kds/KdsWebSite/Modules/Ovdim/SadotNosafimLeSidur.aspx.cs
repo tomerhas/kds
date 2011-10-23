@@ -401,8 +401,8 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         AjaxControlToolkit.ValidatorCalloutExtender vldExtenderCallOut = new AjaxControlToolkit.ValidatorCalloutExtender();
         string defult;
         bool bErrorExists = false;
-        
-        imgErr.Src = "../../Images/ErrorSign.jpg";
+
+        imgErr.Src = "../../Images/!.png";
         try
         {
            kodObject= dr["KOD_SADE_IN_MASACH"].ToString();
@@ -889,7 +889,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         string[] shaa;
         try
         {
-            imgErr.Src = "../../Images/ErrorSign.jpg";
+            imgErr.Src = "../../Images/!.png";
             if (flagNewRow)
             {
                 oCell.InnerHtml = " מק''ט: "; // +drPeilutKayemet["MAKAT_NESIA"].ToString();   
