@@ -29,9 +29,10 @@ namespace KdsBatch
            sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode()),4,2));
            sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyAvoda.GetHashCode()),4,2));
 
-           fErech = GetErechRechiv(clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode());
-          if (_iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode() && fErech>0)
+           //fErech = GetErechRechiv(clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode());
+          if (_iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode() ) //&& fErech>0)
            {
+               fErech = GetErechRechiv(clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
 
                sErua416.Append(FormatNumber(fErech,4,2));
@@ -61,17 +62,22 @@ namespace KdsBatch
 
                sErua416.Append(FormatNumber(fErech,4,2));
            }
-          else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
-          {
+           else if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+           {
+               fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
+               sErua416.Append(FormatNumber(fErech, 4, 2));
+           }
+           else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+           {
               fErech = GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode());
-              if (fErech>0)
+              if (fErech > 0)
                   sErua416.Append(FormatNumber(fErech, 4, 2));
               else sErua416.Append(GetBlank(4));
-          }
-          else
-          {
+           }
+           else
+           {
               sErua416.Append(GetBlank(4));
-          }
+           }
           
            if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode())
            {
