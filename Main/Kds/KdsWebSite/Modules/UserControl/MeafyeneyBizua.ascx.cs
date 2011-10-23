@@ -17,6 +17,7 @@ public partial class Modules_UserControl_MeafyeneyBizua : System.Web.UI.UserCont
     public const int COL_TEUR = 1;
     public const int COL_ERECH = 4;
     public const int COL_ERECH_HISTORY = 2;
+    public const int COL_KOD_INT = 6;
     protected string sElement;
     protected int iEmployeeId;
     protected string sMonth;
@@ -112,7 +113,7 @@ public partial class Modules_UserControl_MeafyeneyBizua : System.Web.UI.UserCont
                     lblMaamad.Text = dtPirteyOved.Rows[0]["maamad"].ToString();
                    
                     ViewState["SortDirection"] = SortDirection.Ascending;
-                    ViewState["SortExp"] = "kod_meafyen";
+                    ViewState["SortExp"] = "KOD_MEAFYEN_INT";
 
                     GetMeafyeneyBitzua(dMeTaarich,dTaarich);
 
@@ -140,10 +141,14 @@ public partial class Modules_UserControl_MeafyeneyBizua : System.Web.UI.UserCont
 
 
             dtMeafyeneyBitzua = oOvdim.GetMeafyeneyBitzuaLeOvedAll(iEmployeeId, dMeTaarich, dAdTaarich, iBreratMechdal);
-
+            dtMeafyeneyBitzua.Columns.Add(new DataColumn("KOD_MEAFYEN_INT", typeof(System.Int32)));
+            for (int i = 0; i < dtMeafyeneyBitzua.Rows.Count; i++)
+            {
+                dtMeafyeneyBitzua.Rows[i]["KOD_MEAFYEN_INT"] = int.Parse(dtMeafyeneyBitzua.Rows[i]["KOD_MEAFYEN"].ToString());
+            }
             dvMeafyeneyBitzua = new DataView(dtMeafyeneyBitzua);
 
-            dvMeafyeneyBitzua.Sort = "KOD_MEAFYEN ASC";
+            dvMeafyeneyBitzua.Sort = "KOD_MEAFYEN_INT ASC";
 
             txtTeurMeafyen.Text = "";
             txtCodeMeafyen.Text = "";
@@ -192,6 +197,7 @@ public partial class Modules_UserControl_MeafyeneyBizua : System.Web.UI.UserCont
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+               // e.Row.Cells[COL_KOD_INT].Text = 
                 if (((DataRowView)e.Row.DataItem).Row["Erech_Brirat_Mechdal"].ToString().Length > 0 && e.Row.Cells[COL_ERECH].Text != ((DataRowView)e.Row.DataItem).Row["Erech_Brirat_Mechdal"].ToString())
                 {
                     sErech = "<span style='Display:none'> &nbsp;  &nbsp; " + ((DataRowView)e.Row.DataItem).Row["Erech_Mechdal_partany"];

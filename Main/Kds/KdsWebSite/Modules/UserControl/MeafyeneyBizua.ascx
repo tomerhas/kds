@@ -43,12 +43,13 @@
                                Width="930px"   EmptyDataText="לא נמצאו נתונים!" EmptyDataRowStyle-CssClass="GridHeader" 
                               onrowdatabound="grdMeafyeneyBitzua_RowDataBound" onsorting="grdMeafyeneyBitzua_Sorting">
                             <Columns>
-                                <asp:BoundField DataField="kod_meafyen" HeaderText="קוד"  ItemStyle-Width="145px"  SortExpression="kod_meafyen" HeaderStyle-CssClass="GridHeader"  ItemStyle-CssClass="ItemRow"/>
+                                <asp:BoundField DataField="kod_meafyen_int" HeaderText="קוד"  ItemStyle-Width="145px"  SortExpression="kod_meafyen_int" HeaderStyle-CssClass="GridHeader"  ItemStyle-CssClass="ItemRow"/>
                                 <asp:BoundField DataField="teur_MEAFYEN_BITZUA" HeaderText="תאור"  SortExpression="teur_MEAFYEN_BITZUA" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="165px" ItemStyle-CssClass="ItemRow" />
                                 <asp:BoundField DataField="ME_TAARICH" HeaderText="מתאריך" SortExpression="ME_TAARICH" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="115px"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                                 <asp:BoundField DataField="AD_TAARICH" HeaderText="עד תאריך" SortExpression="AD_TAARICH" ItemStyle-Width="115px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                                 <asp:BoundField DataField="Erech_ishi" HeaderText="ערך מאפיין" SortExpression="value_Erech_ishi" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                                 <asp:BoundField DataField="YECHIDA" HeaderText="יחידה" SortExpression="YECHIDA" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" />
+
                              </Columns> 
                             <RowStyle CssClass="GridAltRow"   />
                                
