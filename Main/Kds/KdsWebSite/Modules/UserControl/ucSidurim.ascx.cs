@@ -133,7 +133,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private const string COL_TRIP_EMPTY = "ריקה";
     private string _sAddPeilut="";
     private int iPeilutSize = 0;
-    // Delegate declaration
+    
+    // Delegate declaration    
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
     // Event declaration
@@ -567,7 +568,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tCell.Controls.Add(pnlContent);
 
             //Add grid   
-
             grdPeiluyot = BuildSidurPeiluyot(((KdsBatch.clSidur)(htFullEmployeeDetails[iIndex])).htPeilut, iIndex, ref dvPeiluyot);
 
             //Add Update Panel
@@ -2586,14 +2586,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             LiteralControl lDummy = new LiteralControl();
             lDummy.Text = " ";
             hCell = CreateTableCell("95px", "", "");
-            
+            hCell.Attributes.Add("class", "SidurCollapseHeader");
             //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
             if (oSidur.htPeilut.Count > 0){
-                hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+                hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));               
             }
           
             hCell.Controls.Add(lDummy);
-            hCell.Attributes.Add("class", "CollapseHeader");
+           
             DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
             string sToolTip = oSidur.sSidurDescription;
@@ -3886,7 +3886,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.DataSource = _dvChariga;            
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sChariga;
-        ddl.Style.Add("width", "85px");
+        ddl.Style.Add("width", "100px");
         
         bEnabled = IsExceptionAllowed(ref oSidur, ref sCharigaType);
         ddl.Attributes.Add("ChrigaType", sCharigaType);
@@ -3962,7 +3962,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         AjaxControlToolkit.MaskedEditExtender oMaskedEditExtender;
         AjaxControlToolkit.ValidatorCalloutExtender vldExShatGmarLetashlum;
         CustomValidator vldShatGmarLetashlum;
-        hCell = CreateTableCell("70px", "", "");
+        hCell = CreateTableCell("73px", "", "");
        
         TextBox oTextBox = new TextBox();
         oTextBox.ID = "txtSGL" + iIndex;
@@ -3970,7 +3970,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
         bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || (((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnable));
-        oTextBox.Width = Unit.Pixel(40);
+        oTextBox.Width = Unit.Pixel(60);
        // oTextBox.Height = Unit.Pixel(20);
         oTextBox.CausesValidation = true;
         oTextBox.MaxLength = MAX_LEN_HOUR;
@@ -4019,7 +4019,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         TextBox oTextBox = new TextBox();
         oTextBox.ID = "txtSHL" + iIndex;
         oTextBox.Text = oSidur.sShatHatchalaLetashlum;
-        oTextBox.Width = Unit.Pixel(37);
+        oTextBox.Width = Unit.Pixel(60);
        // oTextBox.Height = Unit.Pixel(20);
         oTextBox.CausesValidation = true;
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
@@ -4064,7 +4064,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected void CreateDDLResonOutCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {
         bool OrgEnable;
-        hCell = CreateTableCell("100px", "", "");
+        hCell = CreateTableCell("95px", "", "");
         DropDownList ddl = new DropDownList();
         ListItem Item = new ListItem();
         Image imgErr = new Image();
@@ -4079,7 +4079,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Items.Insert(0, Item);
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
-        ddl.Style.Add("width", "85px");
+        ddl.Style.Add("width", "90px");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
@@ -4129,7 +4129,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     private void CreateDDLResonInCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {       
-        hCell = CreateTableCell("91px", "", "");
+        hCell = CreateTableCell("95px", "", "");
         DropDownList ddl = new DropDownList();
         ListItem Item = new ListItem();
         Image imgErr = new Image();
@@ -4147,7 +4147,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ddl.Items.Insert(0, Item);
             ddl.SelectedValue = (IsSidurShaon(ref oSidur)) ? oSidur.iKodSibaLedivuchYadaniIn.ToString() : "-1";
             
-            ddl.Style.Add("width", "85px");           
+            ddl.Style.Add("width", "90px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
@@ -5624,69 +5624,86 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //}
     protected void CreateSidurHeader()
     {
+        //tbSidurimHeader = new HtmlTable();
         HtmlTableRow hRow = new HtmlTableRow();
         HtmlTableCell hCell;
        
         try
         {
-           // tbSidurimHeader.Attributes.Add("class", "WCard_collapse_header");
-            tbSidurimHeader.Attributes.Add("width", "1010px");   
-            tbSidurimHeader.CellPadding=1;
-            tbSidurimHeader.CellSpacing=1;
+           // tbSidurimHeader.Attributes.Add("class", "WorkCardSidurHeader");
+           // tbSidurimHeader.Attributes.Add("width", "1010px");   
+           // tbSidurimHeader.CellPadding=1;
+            //tbSidurimHeader.CellSpacing = 1;
+            //tbSidurimHeader.Border = 1;
             tbSidurimHeader.EnableViewState = false;
-
-            //hRow.Attributes.Add("class", "WCard_collapse_header");            
+            //hRow.Attributes.Add("class", "WorkCardSidurHeader");            
             tbSidurimHeader.Rows.Add(hRow);
 
-            hCell = CreateTableCell("30px", "CellListView", "הוסף");
+            hCell = CreateTableCell("30px", "CellListView", "הוסף"); //30
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("71px", "CellListView", "מספר סידור");
+            hCell = CreateTableCell("75px", "CellListView", "מספר סידור"); //75
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("47px",  "CellListView", "התחלה");
+            hCell = CreateTableCell("48px",  "CellListView", "התחלה"); //48
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("46px",  "CellListView", "גמר");
+            hCell = CreateTableCell("50px",  "CellListView", "גמר"); //50
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("80px", "CellListView", "אי החתמה התחל'");
+            hCell = CreateTableCell("102px", "CellListView", "אי החתמה התחל'"); //102
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("85px", "CellListView", "אי החתמה גמר");
+            hCell = CreateTableCell("98px", "CellListView", "אי החתמה גמר"); //98
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("58px", "CellListView", "תש' התחלה");
+            hCell = CreateTableCell("70px", "CellListView", "תש' התחלה"); //70
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("57px", "CellListView", "תש' גמר");
+            hCell = CreateTableCell("73px", "CellListView", "תש' גמר"); //73
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("100px", "CellListView", "חריגה");
+            hCell = CreateTableCell("115px", "CellListView", "חריגה"); //113
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("100px", "CellListView", "פיצול/ הפסקה");
+            hCell = CreateTableCell("112px", "CellListView", "פיצול/ הפסקה"); //112
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("97px", "CellListView", "השלמה");
+            hCell = CreateTableCell("115px", "CellListView", "השלמה"); //115
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("46px", "CellListView", "מ.ל.");
+            hCell = CreateTableCell("48px", "CellListView", "מ.ל."); //48
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("49px", "CellListView", "לא לתש'");
+            hCell = CreateTableCell("54px", "CellListView", "לא לתש'"); //54
             hRow.Controls.Add(hCell);
 
-            hCell = CreateTableCell("23px", "CellListView", "פעיל");
+            hCell = CreateTableCell("30px", "CellListView", "פעיל"); //30
             hRow.Controls.Add(hCell);
 
             //Panel pnlHeader;
             //TableCell tCell;
-            //pnlHeader = CreatePanel(123, "pnlHeader", "CollapseHeader");
+            //Panel pnlContent;            
+           
+
+            ////Add sidur table to header panel
+            //pnlHeader = CreatePanel(1010, "pnlHeader", "");
             //pnlHeader.Controls.Add(tbSidurimHeader);
 
-            //tCell = CreateCellForPanel(123);
+            //tCell = CreateCellForPanel(1010);
             //tCell.Controls.Add(pnlHeader);
+
+            //pnlContent = CreatePanel(1010, "pnlContent", "");
+            ////Add Panel
+            //tCell.Controls.Add(pnlContent);
+
+            ////Panel pnlHeader;
+            ////TableCell tCell;
+            ////pnlHeader = CreatePanel(123, "pnlHeader", "CollapseHeader");
+            ////pnlHeader.Controls.Add(tbSidurimHeader);
+
+            ////tCell = CreateCellForPanel(123);
+            ////tCell.Controls.Add(pnlHeader);
         }
         catch (Exception ex)
         {
@@ -5725,7 +5742,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             hCell.InnerHtml = sText;
         }
-        //hCell.Style.Add("border-left", "solid 1px #3F3F3F");
+       
         return hCell;
     }
     protected TableHeaderCell CreateTableCell(string sWidth, string sClass, string sText,int? iTest)

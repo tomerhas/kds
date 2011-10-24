@@ -80,15 +80,15 @@
             <td width="89%">                        
                <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate>
-                            <table width="100%" cellpadding="0">
+                            <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="width: 8%">
                                         <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>                                                    
                                     </td>
                                     <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
-                                    <td style="width: 10%">                                                                                      
+                                    <td style="width: 7%">                                                                                      
                                         <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                                            dir="rtl" Style="width: 60px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
+                                            dir="rtl" Style="width: 50px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
                                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                                             CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                                             ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -100,7 +100,7 @@
                                     <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
                                     <td style="width: 15%">
                                         <asp:TextBox ID="txtName" CssClass="WorkCardTextBox" runat="server" AutoComplete="Off"
-                                            Style="width: 100px;" onblur="GetOvedMisparIshiByName();" OnTextChanged="txtName_TextChanged" ></asp:TextBox>
+                                            Style="width: 110px;" onblur="GetOvedMisparIshiByName();" OnTextChanged="txtName_TextChanged" ></asp:TextBox>
                                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
                                             CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
                                             ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -109,14 +109,14 @@
                                             CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">
                                         </cc1:AutoCompleteExtender>
                                     </td>
-                                    <td style="width: 5%" class = "WorkCardTable1Label">מעמד:</td>                                
-                                    <td style="width: 15%" class="WorkCardTdBorder">
+                                    <td style="width: 6%" class = "WorkCardTable1Label">מעמד:</td>                                
+                                    <td style="width: 21%;height:45px; " class="WorkCardTdBorder" align="right">
                                         <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtMaamad" ReadOnly="true"
-                                            Style="width: 85px;"> </asp:TextBox>
+                                            Style="width: 173px;"> </asp:TextBox>
                                     </td>
                                     <td style="width: 5%" class = "WorkCardTable1Label">תאריך:</td>
-                                    <td dir="ltr" align="right" style="width: 18%">                                                                                                       
-                                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox" OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="70px"></KdsCalendar:KdsCalendar>
+                                    <td dir="ltr" align="right" style="width: 15%">                                                                                                       
+                                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox" OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="90px"></KdsCalendar:KdsCalendar>
                                         <asp:CustomValidator runat="server" ID="vldDay" ErrorMessage="לא נמצא כרטיס לתאריך זה"
                                             ControlToValidate="clnDate" Display="None"></asp:CustomValidator>
                                         <cc1:ValidatorCalloutExtender runat="server" ID="vldEx" BehaviorID="vldExBehavior"
@@ -124,14 +124,14 @@
                                         </cc1:ValidatorCalloutExtender>    
                                     </td>
                                     <td style="width: 3%" class = "WorkCardTable1Label">יום:</td>
-                                    <td style="width: 10%" class="WorkCardTdBorder">
-                                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 80px;"> </asp:TextBox>
+                                    <td style="width: 9%" class="WorkCardTdBorder">
+                                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 70px;"> </asp:TextBox>
                                     </td>                                           
                                     <td>
                                         <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
                                         <input type="hidden" id="hidRefresh" runat="server"/>
                                         <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
-                                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2"/>
+                                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:50px"/>
                                             <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
                                     </td>                                            
                                 </tr>                                        
@@ -181,31 +181,32 @@
            
       <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
             <ContentTemplate>         
-                <table width="100%" class="WorkCardTable2" cellpadding="0" cellspacing="0">
+                <table width="100%" class="WorkCardTable2" cellpadding="0" cellspacing="0" >
                     <tr>
                         <td width="8px" runat="server" id="tdZmanNesiotErr" style="display:none;"><img id="imgTimeErr"  runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlTravleTime,1,'');" /></td>
-                        <td id="tdZmaniNesiot" runat="server" width="80px" class = "WorkCardTable1Label"></td> 
-                        <td width="120px">
+                        <td id="tdZmaniNesiot" runat="server" width="70px" class = "WorkCardTable1Label"></td> 
+                        <td width="108px">
                             <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardSidurDropDown"  onchange="SetBtnChanges();SetLvlChg(1,0);"
-                                ondblclick="GetErrorMessage(this,1,'');" width="112px" >
+                                ondblclick="GetErrorMessage(this,1,'');" width="100" >
                             </asp:DropDownList>
                         </td>
-                        <td width="100px" class="WorkCardTabs"> 
+                        <td width="110px" class="WorkCardTabs"> 
                             <input type="button" id="btnPlus1" name="btnOpenEmployeeDetails1" class="ImgButtonShowPlus"
                                  onclick="OpenDiv('divEmployeeDetails', this.id);" />
-                            <label style="font-weight: bold;">   פרטי העובד</label>                           
+                            <label style="font-weight: bold;"> פרטי העובד</label>                           
                         </td>                        
-                        <td width="160px" class="WorkCardTabs">
+                        <td width="150px" class="WorkCardTabs">
                             <input type="button" id="btnPlus2" name="btnOpenNetunimLeYom1" class="ImgButtonShowPlus"
                                  onclick="OpenDiv('divNetunimLeYom', this.id);" />
                             <label style="font-weight: bold;">נתונים ליום עבודה</label>                                             
                         </td>                      
-                        <td width="120px" class="WorkCardTabs"> 
+                        <td width="117px" class="WorkCardTabs"> 
                             <input runat="server" type="button" id="btnPlus3" name="btnOpenParticipation1"
                                 class="ImgButtonShowPlus"  onclick="OpenDiv('divParticipation', this.id);" />
-                            <label style="font-weight: bold;">  התייצבות </label>                                      
+                            <label style="font-weight: bold;"> התייצבות </label>                                      
                         </td>
-                        <td width="72px"></td>
+                        <td width="1px" class="WorkCardTdBorder"></td>
+                        <td width="48px"></td>
                         <td width="15px">
                             <asp:Button runat="server" ID="btnPrevCard" CssClass="btnPrevDay"  OnClientClick="RefreshBtn();SetNewDate(-1);" OnClick="btnRefreshOvedDetails_Click"
                                 CausesValidation="false" Height="25px" />                                    
@@ -214,12 +215,13 @@
                             <asp:Button runat="server" ID="btnNextCard" CssClass="btnNextDay"  OnClientClick="RefreshBtn();SetNewDate(1);" OnClick="btnRefreshOvedDetails_Click"
                                 CausesValidation="false" Height="25px" />                                    
                         </td>
-                        <td width="80px" align="right" class="WorkCardTdBorder">
+                        <td width="105px" align="right" >
                             <asp:Button runat="server" ID="btnNextErrCard" CssClass="btnNextError" Text="שגוי הבא" OnClientClick="hidNextErrCard.value='1'; RefreshBtn(); " OnClick="btnRefreshOvedDetails_Click"
                                 CausesValidation="false" Height="25px" />
                                     <input type="hidden" runat="server" id="hidNextErrCard"/>                                                                            
                         </td>
-                        <td width="120px" align="right"></td>                                                    
+                        <td width="87" align="right" class="WorkCardTdBorder"></td>                                                    
+                        <td width="55px" align="right" ></td>    
                         <td width="111px" id="tdCardStatus2" runat="server"></td>                                                    
                     </tr>
                 </table>
