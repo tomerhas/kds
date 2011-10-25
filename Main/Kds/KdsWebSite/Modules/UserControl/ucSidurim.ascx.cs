@@ -2586,7 +2586,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             LiteralControl lDummy = new LiteralControl();
             lDummy.Text = " ";
             hCell = CreateTableCell("95px", "", "");
-            hCell.Attributes.Add("class", "SidurCollapseHeader");
+            hCell.Attributes.Add("class", "WorkCardSidur");
             //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
             if (oSidur.htPeilut.Count > 0){
                 hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));               
@@ -5864,7 +5864,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     e.Row.Cells[_COL_NETZER].EnableViewState = false;
                     e.Row.Cells[_COL_DAY_TO_ADD].EnableViewState = false;
                     e.Row.Cells[_COL_KISUY_TOR_MAP].EnableViewState = false;
-                   
+
+                    e.Row.Cells[_COL_LINE_TYPE].CssClass = "WorkCardPeilutLabel";
+                    e.Row.Cells[_COL_LINE].CssClass = "WorkCardPeilutLabel";
+                    e.Row.Cells[_COL_NETZER].CssClass = "WorkCardPeilutLabel";
                     break;
                 case DataControlRowType.Header:
                     for (int i = 0; i < ((GridView)sender).Columns.Count; i++)
@@ -6059,6 +6062,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
         int iMisparKnisa = int.Parse(arrKnisaVal[0]);
 
+        e.Row.Cells[_COL_LINE_DESCRIPTION].CssClass = "WorkCardPeilutLabel";
         e.Row.Cells[_COL_LINE_DESCRIPTION].Width = Unit.Pixel(300);
         _MakatType = ((clKavim.enMakatType)oKavim.GetMakatType(lMakatNumber));
         if ((_MakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa==0) && (lMakatNumber!=MAKAT_VISA))
@@ -6095,6 +6099,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //אם אלמנט זמן מסוג ריקה
             //אלמנט מסוג ריקה (מאפיין 23 = 1)  - להציג 
             //בעמודה ערך מפוזיציות 4-6 * פרמטר 43.
+            e.Row.Cells[_COL_DEF_MINUTES].CssClass = "WorkCardPeilutLabel";
             if (((_MakatType == clKavim.enMakatType.mElement)
                   && (IsMeafyenExistsInElement(lmakat,clGeneral.enMeafyenElementim.Meafyen23.GetHashCode(), 
                    clGeneral.enMeafyenElementim23.ElementTimeNesiaReka.GetHashCode().ToString()))))

@@ -10,19 +10,23 @@
                     document.getElementById("divNetunimLeYom").style.display = 'none';
                     document.getElementById("divParticipation").style.display = 'none';
                     document.getElementById("tbEmpDetails").style.display = 'block';
-                    document.getElementById("tblPart").style.display = 'none';                    
+                    document.getElementById("tblPart").style.display = 'none';
+                    document.getElementById("btnPlus1").className = 'ImgButtonShowMinus';
+                    
                     break;
             case "divNetunimLeYom":
                     document.getElementById("divEmployeeDetails").style.display='none';
                     document.getElementById("divParticipation").style.display = 'none';
                     document.getElementById("tblPart").style.display = 'block';
-                    document.getElementById("tbEmpDetails").style.display = 'none';                    
+                    document.getElementById("tbEmpDetails").style.display = 'none';
+                    document.getElementById("btnPlus2").className = 'ImgButtonShowMinus';              
                 break;
             case "divParticipation":
                     document.getElementById("divNetunimLeYom").style.display='none';
                     document.getElementById("divEmployeeDetails").style.display = 'none';
                     document.getElementById("tblPart").style.display = 'block';
                     document.getElementById("tbEmpDetails").style.display = 'none';
+                    document.getElementById("btnPlus3").className = 'ImgButtonShowMinus';
                     
                 break;
             }           
@@ -30,7 +34,18 @@
         else{
             oDiv.style.display = 'none';
             document.getElementById("tbEmpDetails").style.display = 'none';
-            document.getElementById("tblPart").style.display = 'none';            
+            document.getElementById("tblPart").style.display = 'none';
+            switch (DivId) {
+                case "divEmployeeDetails":                   
+                     document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
+                     break;
+                case "divNetunimLeYom":
+                     document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
+                     break;
+                case "divParticipation":
+                     document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
+                     break;
+            }                      
         }       
     }
     function onClientItemSelected_getID(sender, eventArgs) {
@@ -232,10 +247,7 @@
         return false;        
         }               
     }
-    function RefreshBtn() {
-        document.getElementById("btnPlus1").value = '+';
-        document.getElementById("btnPlus2").value = '+';
-        document.getElementById("btnPlus3").value = '+';
+    function RefreshBtn() {      
         document.getElementById("hidRefresh").value = "1";       
         EnabledAllFrames(true);
         return true;

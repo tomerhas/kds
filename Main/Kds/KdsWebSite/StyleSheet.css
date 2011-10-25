@@ -483,6 +483,17 @@
 	background-position:right;
 	cursor:pointer;	
 }
+.ImgButtonShowMinus
+{
+	background-image: url(Images/tabMinus.png);		
+	height:15px;
+	background-color:transparent;
+	background-repeat:no-repeat;	
+	border-style:none;		
+	vertical-align:middle;
+	background-position:right;
+	cursor:pointer;	
+}
 .ImgButtonUpdate
 {
 	background-color:#CE940E;
@@ -1268,6 +1279,16 @@ a
  border:none;
  text-align:left;
 }
+.WorkCardSidur
+{
+ background-color:#d1e4f2;
+ color: black;
+ font-family:Arial;
+ font-weight:bold;
+ font-size:14px;
+ border:none;
+ text-align:center;
+}
 .WCard_collapse_header
 {
 	text-align:right;
@@ -1533,7 +1554,9 @@ a
 .WorkCardSidurTextBox
 {
 	 background-color:#F2F7FB;	
-	 font-weight:bolder;	
+	 font-weight:bold;
+	 font-family:Arial;
+	 font-size:14px;	
 	 width:100px;
 	 height:20px;
 	 border-style:none;
@@ -1764,7 +1787,9 @@ a
 	border:0px;
 	
 }
-.WorkCardSidurHeader
+.WorkCardPeilutLabel
 {
-	background-color:White;		
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;
 }
