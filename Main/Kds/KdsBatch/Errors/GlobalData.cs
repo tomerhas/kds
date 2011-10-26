@@ -26,7 +26,8 @@ namespace KdsBatch.Errors
         public static DataTable dtElementim { get; set; }
         public static List<ErrorItem> ActiveErrors { get; set; }
         public static List<CardError> CardErrors { get; set; }
-  
+        public static List<int> SpecialSidurim = new List<int> { 99200 };
+
         public static void InitGlobalData()
         {
              clUtils oUtils = new clUtils();

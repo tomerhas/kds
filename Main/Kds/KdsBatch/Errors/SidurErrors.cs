@@ -727,14 +727,15 @@ namespace KdsBatch.Errors
             DateTime dSidurEndHour;
             try
             {
-                bool isSidurNahagut = false;
-                bool isSidurNihulTnua = false;
+              
+              //  bool isSidurNihulTnua = false;
                 DataRow[] drSugSidur = GlobalData.GetOneSugSidurMeafyen(SidurInstance.iSugSidurRagil,SidurInstance.dSidurDate );
    
-                if (!SidurInstance.bSidurNahagut) { isSidurNihulTnua = SidurInstance.IsSidurNihulTnua(); }
+               // if (!SidurInstance.bSidurNahagut) { isSidurNihulTnua = SidurInstance.IsSidurNihulTnua(); }
 
                 dStartLimitHour =SidurInstance.objDay.oParameters.dSidurStartLimitHourParam1;
-                dEndLimitHour = (isSidurNahagut || isSidurNihulTnua) ? SidurInstance.objDay.oParameters.dNahagutLimitShatGmar : SidurInstance.objDay.oParameters.dSidurEndLimitHourParam3;
+                dEndLimitHour = (SidurInstance.bSidurNahagut || SidurInstance.IsSidurNihulTnua()) ? SidurInstance.objDay.oParameters.dNahagutLimitShatGmar : SidurInstance.objDay.oParameters.dSidurEndLimitHourParam3;
+             
 
                 if (SidurInstance.bSidurMyuhad && !string.IsNullOrEmpty(SidurInstance.sShaonNochachut) && (SidurInstance.objDay.oOved.iIsuk == 122 || SidurInstance.objDay.oOved.iIsuk == 123 || SidurInstance.objDay.oOved.iIsuk == 124 || SidurInstance.objDay.oOved.iIsuk == 127))
                     dEndLimitHour = SidurInstance.objDay.oParameters.dSidurLimitShatGmarMafilim;
@@ -1205,16 +1206,19 @@ namespace KdsBatch.Errors
                 if (SidurInstance.iMispar_Siduri > 0)
                 {
                     oPrevSidur =SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);// (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
-                    if (dShatHatchalaSidur != DateTime.MinValue && oPrevSidur.dFullShatGmar != DateTime.MinValue)
+                    if (oPrevSidur != null)
                     {
-                        DateTime dPrevTime = new DateTime(oPrevSidur.dFullShatGmar.Year, oPrevSidur.dFullShatGmar.Month, oPrevSidur.dFullShatGmar.Day, int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(0, 2)), int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(3, 2)), 0);
-                        DateTime dCurrTime = new DateTime(dShatHatchalaSidur.Year, dShatHatchalaSidur.Month, dShatHatchalaSidur.Day, int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(3, 2)), 0);
-                        //אם גם הסידור הקודם וגם הסידור הנוכחי הם לתשלום, נבצע את הבדיקה
-                        if ((SidurInstance.iLoLetashlum == 0 || (SidurInstance.iLoLetashlum == 1 && SidurInstance.iKodSibaLoLetashlum == 1)) && (oPrevSidur.iLoLetashlum == 0 || (oPrevSidur.iLoLetashlum == 1 && oPrevSidur.iKodSibaLoLetashlum == 1)))
+                        if (dShatHatchalaSidur != DateTime.MinValue && oPrevSidur.dFullShatGmar != DateTime.MinValue)
                         {
-                            if (dCurrTime < dPrevTime)
+                            DateTime dPrevTime = new DateTime(oPrevSidur.dFullShatGmar.Year, oPrevSidur.dFullShatGmar.Month, oPrevSidur.dFullShatGmar.Day, int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(0, 2)), int.Parse(oPrevSidur.dFullShatGmar.ToString("HH:mm").Substring(3, 2)), 0);
+                            DateTime dCurrTime = new DateTime(dShatHatchalaSidur.Year, dShatHatchalaSidur.Month, dShatHatchalaSidur.Day, int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(0, 2)), int.Parse(dShatHatchalaSidur.ToString("HH:mm").Substring(3, 2)), 0);
+                            //אם גם הסידור הקודם וגם הסידור הנוכחי הם לתשלום, נבצע את הבדיקה
+                            if ((SidurInstance.iLoLetashlum == 0 || (SidurInstance.iLoLetashlum == 1 && SidurInstance.iKodSibaLoLetashlum == 1)) && (oPrevSidur.iLoLetashlum == 0 || (oPrevSidur.iLoLetashlum == 1 && oPrevSidur.iKodSibaLoLetashlum == 1)))
                             {
-                                bError = true;
+                                if (dCurrTime < dPrevTime)
+                                {
+                                    bError = true;
+                                }
                             }
                         }
                     }
@@ -1250,27 +1254,30 @@ namespace KdsBatch.Errors
                 {
                     oPrevSidur = SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);
                    // oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[SidurInstance.iMispar_Siduri - 1];
-                    iSidurPrevPitzulHafsaka= string.IsNullOrEmpty(oPrevSidur.sPitzulHafsaka) ? 0 : int.Parse(oPrevSidur.sPitzulHafsaka);
-
-                    if (!(string.IsNullOrEmpty(SidurInstance.sShatHatchala)))
+                    if (oPrevSidur != null)
                     {
-                        //אם  יום שישי או ערב חג אבל  לא בשבתון
-                        if ((((SidurInstance.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || ((SidurInstance.sErevShishiChag == "1") && (SidurInstance.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
+                        iSidurPrevPitzulHafsaka = string.IsNullOrEmpty(oPrevSidur.sPitzulHafsaka) ? 0 : int.Parse(oPrevSidur.sPitzulHafsaka);
+
+                        if (!(string.IsNullOrEmpty(SidurInstance.sShatHatchala)))
                         {
-                            //נקרא את שעת כניסת השבת                   
-                            //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
-                            //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(SidurInstance.sShatHatchala.Remove(2, 1)) <= iShabatStart))
-                            dSidurPrevShatGmar = clGeneral.GetDateTimeFromStringHour(oPrevSidur.sShatGmar, SidurInstance.dSidurDate);
-                            dSidurShatHatchala = clGeneral.GetDateTimeFromStringHour(SidurInstance.sShatHatchala, SidurInstance.dSidurDate);
-                            if ((dSidurPrevShatGmar <= SidurInstance.objDay.oParameters.dKnisatShabat) && (dSidurShatHatchala > SidurInstance.objDay.oParameters.dKnisatShabat))
+                            //אם  יום שישי או ערב חג אבל  לא בשבתון
+                            if ((((SidurInstance.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()) || ((SidurInstance.sErevShishiChag == "1") && (SidurInstance.sSidurDay != clGeneral.enDay.Shabat.GetHashCode().ToString())))) && (iSidurPrevPitzulHafsaka > 0))
                             {
-                                //נציג את הסידור השני כשגוי
-                                bError = true;
-                            }
-                            if ((dSidurPrevShatGmar > SidurInstance.objDay.oParameters.dKnisatShabat) && (dSidurShatHatchala > SidurInstance.objDay.oParameters.dKnisatShabat))
-                            {
-                                //נציג את שני הסידורים כשגויים
-                                bError = true;
+                                //נקרא את שעת כניסת השבת                   
+                                //אם ביום שהוא ערב שבת/חג יש סידור אחד שמסתיים לפני כניסת שבת ויש לו סימון בשדה פיצול והסידור העוקב אחריו התחיל אחרי כניסת השבת  - זו שגיאה. (מצב תקין הוא שהסידור העוקב התחיל לפני כניסת שבת וגלש/לא גלש לשבת). 
+                                //if (((int.Parse(sSidurPrevShatGmar.Remove(2, 1)) > iShabatStart)) || (int.Parse(SidurInstance.sShatHatchala.Remove(2, 1)) <= iShabatStart))
+                                dSidurPrevShatGmar = clGeneral.GetDateTimeFromStringHour(oPrevSidur.sShatGmar, SidurInstance.dSidurDate);
+                                dSidurShatHatchala = clGeneral.GetDateTimeFromStringHour(SidurInstance.sShatHatchala, SidurInstance.dSidurDate);
+                                if ((dSidurPrevShatGmar <= SidurInstance.objDay.oParameters.dKnisatShabat) && (dSidurShatHatchala > SidurInstance.objDay.oParameters.dKnisatShabat))
+                                {
+                                    //נציג את הסידור השני כשגוי
+                                    bError = true;
+                                }
+                                if ((dSidurPrevShatGmar > SidurInstance.objDay.oParameters.dKnisatShabat) && (dSidurShatHatchala > SidurInstance.objDay.oParameters.dKnisatShabat))
+                                {
+                                    //נציג את שני הסידורים כשגויים
+                                    bError = true;
+                                }
                             }
                         }
                     }
@@ -1856,10 +1863,12 @@ namespace KdsBatch.Errors
                     {
                         oPrevSidur = SidurInstance.objDay.getPrevSidurLeTashlum(SidurInstance.iMispar_Siduri);
                        // oPrevSidur = (Sidur)SidurInstance.objDay.Sidurim[index];
-
-                        if (oPrevSidur.bSidurEilat && oPrevSidur.IsLongEilatTrip())
+                        if (oPrevSidur != null)
                         {
-                            bPrevSidurEilat = true;
+                            if (oPrevSidur.bSidurEilat && oPrevSidur.IsLongEilatTrip())
+                            {
+                                bPrevSidurEilat = true;
+                            }
                         }
 
                         if (bPrevSidurEilat) break;

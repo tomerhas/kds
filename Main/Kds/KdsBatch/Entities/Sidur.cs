@@ -76,7 +76,7 @@ namespace KdsBatch.Entities
 
         public int iNitanLedaveachBemachalaAruca;
         public int iShayahLeyomKodem;
-        public bool bSidurMyuhad;
+        public bool bSidurMyuhad = false;
         public bool bSidurEilat;
         public bool bSidurNotEmpty;
         public bool bSidurNahagut;
@@ -127,14 +127,22 @@ namespace KdsBatch.Entities
             objDay = oDay;
             iMisparIshi = int.Parse(dr["Mispar_Ishi"].ToString());
             iMisparSidur = (System.Convert.IsDBNull(dr["Mispar_Sidur"]) ? 0 : int.Parse(dr["Mispar_Sidur"].ToString()));
-            
-            bSidurMyuhad = iMisparSidur.ToString().Substring(0, 2) == "99" ? true : false;
+
+            iMisparSidurMyuhad = (System.Convert.IsDBNull(dr["mispar_sidur_myuhad"]) ? 0 : int.Parse(dr["mispar_sidur_myuhad"].ToString()));
+            if(iMisparSidur>9)
+                bSidurMyuhad = iMisparSidur.ToString().Substring(0, 2) == "99" ? true : false;
+
             if (bSidurMyuhad)
             {
                 InitNetuneySidurMeyuchad(dr);
             }
-            else if (dr["SUG_SIDUR"] != null && dr["SUG_SIDUR"].ToString() != "")
-                iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+            else
+                if (dr["SUG_SIDUR"] != null && dr["SUG_SIDUR"].ToString() != "")
+                    iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+
+            bSidurNahagut = IsSidurNahagut();
+            if (!bSidurNahagut)
+            { bSidurTafkid = IsSidurTafkid(); }
 
             sShatGmar = (System.Convert.IsDBNull(dr["Shat_gmar"]) ? "" : DateTime.Parse(dr["Shat_gmar"].ToString()).ToString("HH:mm"));
             if (String.IsNullOrEmpty(sShatGmar))
@@ -192,7 +200,9 @@ namespace KdsBatch.Entities
             iMivtzaVisa = (System.Convert.IsDBNull(dr["mivtza_visa"]) ? 0 : int.Parse(dr["mivtza_visa"].ToString()));
 
             iLebdikaShguim = System.Convert.IsDBNull(dr["LEBDIKAT_SHGUIM"]) ? 0 : int.Parse(dr["LEBDIKAT_SHGUIM"].ToString());
+
           
+
             InitPeiluyot();
             InitializeErrors();
         }
@@ -200,8 +210,7 @@ namespace KdsBatch.Entities
         private void InitNetuneySidurMeyuchad(DataRow dr)
         {
 
-            iMisparSidurMyuhad = (System.Convert.IsDBNull(dr["mispar_sidur_myuhad"]) ? 0 : int.Parse(dr["mispar_sidur_myuhad"].ToString()));
-
+            
             sSectorAvoda = dr["sector_avoda"].ToString();
             //  bSectorAvodaExists = !String.IsNullOrEmpty(dr["sector_avoda"].ToString());
             sHalbashKod = dr["Halbash_Kod"].ToString();
@@ -236,11 +245,8 @@ namespace KdsBatch.Entities
             bKizuzAlPiHatchalaGmarExists = !(String.IsNullOrEmpty(dr["kizuz_al_pi_hatchala_gmar"].ToString()));
             sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
             bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
-
-            bSidurNahagut = IsSidurNahagut();
-            if (!bSidurNahagut)
-            { bSidurTafkid = IsSidurTafkid(); }
-
+            
+           
         }
         //public Sidur(Sidur oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr)
         //    : base(OriginError.Sidur)
@@ -416,15 +422,41 @@ namespace KdsBatch.Entities
             }
         }
 
+        //private bool IsSidurNahagut()
+        //{
+        //    //מחזיר אם סידור הוא מסוג נהגות
+        //    bool bSidurNahagut = false;
+
+        //    if (!String.IsNullOrEmpty(sSectorAvoda))
+        //    {
+        //        bSidurNahagut = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+        //    }
+        //    return bSidurNahagut;
+        //}
+
+
         private bool IsSidurNahagut()
         {
-            //מחזיר אם סידור הוא מסוג נהגות
             bool bSidurNahagut = false;
 
-            if (!String.IsNullOrEmpty(sSectorAvoda))
-            {
-                bSidurNahagut = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+            //הפונקציה תחזיר TRUE אם הסידור הוא סידור נהגות
+            if (bSidurMyuhad)
+            {//סידור מיוחד
+                if (!String.IsNullOrEmpty(sSectorAvoda))
+                {
+                    bSidurNahagut = (int.Parse(sSectorAvoda) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+                }
             }
+            else
+            {//סידור רגיל
+                DataRow[] drSugSidur = GlobalData.GetOneSugSidurMeafyen(iSugSidurRagil, objDay.dCardDate);
+
+                if (drSugSidur.Length > 0)
+                {
+                    bSidurNahagut = (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString());
+                }
+            }
+           
             return bSidurNahagut;
         }
 

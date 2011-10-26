@@ -33,7 +33,7 @@ namespace KdsBatch.Entities
         public clMeafyenyOved oMeafyeneyOved;
         public DataTable dtPeiluyotTnua;
         public bool bOvedDetailsExists = false;
-
+        public bool bSidurimExists = false;
         public Oved() { }
 
         public Oved(int iMisparIshi, DateTime dDate)
@@ -95,6 +95,8 @@ namespace KdsBatch.Entities
             if (dtMatzavOved.Rows.Count>0)
                 iMatzavOved =int.Parse(dtMatzavOved.Rows[0]["kod_matzav"].ToString());
             dtSidurimVePeiluyot = oDal.GetSidurimLeOved(iMisparIshi, dCardDate);
+            if (dtSidurimVePeiluyot.Rows.Count>0)
+                bSidurimExists=true;
             dtPeiluyotTnua = clDefinitions.GetPeiluyotFromTnua(iMisparIshi, dCardDate);
        
         }

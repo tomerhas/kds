@@ -368,11 +368,14 @@ namespace KdsBatch.Entities
             clKavim.enMakatType oMakatType;
             oMakatType = (clKavim.enMakatType)iMakatType;
             DataTable dtVisut = new DataTable();
-            string sMakatNesia;       
+            string sMakatNesia;
+            
+            if(iMakatType !=0)
+                MakatType = (clKavim.enMakatType)Enum.Parse(typeof(clKavim.enMakatType), iMakatType.ToString());
+
             switch (oMakatType)
             {
                 case clKavim.enMakatType.mKavShirut:
-                    MakatType = clKavim.enMakatType.mKavShirut;
                     dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
@@ -381,8 +384,11 @@ namespace KdsBatch.Entities
                             if (dr[0]["EILAT_TRIP"] != null)
                             {
                                 if (dr[0]["EILAT_TRIP"].ToString() == "1")
+                                {
                                     //אם לפחות אחת מהפעילויות היא פעילות אילת, נסמן את הסידור כסידור אילת
                                     bPeilutEilat = true;
+                                    objSidur.bSidurEilat = true;
+                                }
                             }
                           //  iEilatTrip = (!System.Convert.IsDBNull(dr[0]["EILAT_TRIP"])) ? int.Parse(dr[0]["EILAT_TRIP"].ToString()) : 0;
                             iMazanTichnun = (!System.Convert.IsDBNull(dr[0]["MAZAN_TICHNUN"])) ? int.Parse(dr[0]["MAZAN_TICHNUN"].ToString()) : 0;
@@ -404,7 +410,6 @@ namespace KdsBatch.Entities
 
                     break;
                 case clKavim.enMakatType.mEmpty:
-                    MakatType = clKavim.enMakatType.mEmpty;
                     dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
@@ -430,7 +435,6 @@ namespace KdsBatch.Entities
 
                     break;
                 case clKavim.enMakatType.mNamak:
-                    MakatType = clKavim.enMakatType.mNamak;
                     dr = objSidur.objDay.oOved.dtPeiluyotTnua.Select("MAKAT8=" + lMakatNesia);
                     if (dr.Length > 0)
                     {
@@ -457,7 +461,6 @@ namespace KdsBatch.Entities
                   
                     int iKodElement;
                     DataRow[] drElementim;
-                    MakatType = clKavim.enMakatType.mElement;
                     iMazanTichnun = int.Parse(lMakatNesia.ToString().Substring(3, 3));
                     iMazanTashlum = int.Parse(lMakatNesia.ToString().Substring(3, 3));
                     iKodElement = int.Parse(lMakatNesia.ToString().Substring(1, 2));
@@ -475,7 +478,6 @@ namespace KdsBatch.Entities
                   //  sSugShirutName = "";
                     break;
                 case clKavim.enMakatType.mVisut:
-                    MakatType = clKavim.enMakatType.mVisut;
                     dtVisut = _Kavim.GetVisutDetails(lMakatNesia);
                     if (dtVisut.Rows.Count > 0)
                         sMakatDescription = dtVisut.Rows[0]["teur_visut"].ToString();
@@ -484,7 +486,6 @@ namespace KdsBatch.Entities
                     iMakatType = clKavim.enMakatType.mElement.GetHashCode(); //5-Element  
                     break;
                 default:
-                    MakatType = 0;
                     iMakatValid = 1;
                     break;
             }

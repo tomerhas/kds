@@ -127,12 +127,17 @@ namespace KdsBatch.Entities
                     dcurShatHatchala = DateTime.Parse(dr["shat_hatchala"].ToString());
                     if ((curMisparSidur != prevMisparSidur) || (curMisparSidur == prevMisparSidur && dcurShatHatchala != dPreShatHatchala))
                     {
-                        item = new Sidur(dr,this);
-                        item.iMispar_Siduri = i;
-                        if (!bInsertToShguim || (bInsertToShguim && (item.iLoLetashlum == 0 || (item.iLoLetashlum == 1 && item.iLebdikaShguim == 1))))
-                            item.bIsSidurLeBdika = true;  
-                        Sidurim.Add(item);
-                        i++;
+                        if (!GlobalData.SpecialSidurim.Contains(curMisparSidur))
+                        {
+                            item = new Sidur(dr,this);
+                            item.iMispar_Siduri = i;
+                       
+                            if (!bInsertToShguim || (bInsertToShguim && (item.iLoLetashlum == 0 || (item.iLoLetashlum == 1 && item.iLebdikaShguim == 1))))
+                                item.bIsSidurLeBdika = true;
+                            Sidurim.Add(item);
+                            i++;
+                        }
+                      
                     }
                     prevMisparSidur = curMisparSidur;
                     dPreShatHatchala = dcurShatHatchala;

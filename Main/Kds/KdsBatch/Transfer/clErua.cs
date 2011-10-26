@@ -25,6 +25,7 @@ namespace KdsBatch
         protected DataTable _dtDetailsChishuv;
         protected DataRow _drPirteyOved;
         private List<string> _sLine;
+        protected bool bKayamEfreshBErua=false;
 
         public clErua(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iKodErua)
         {
@@ -118,7 +119,8 @@ namespace KdsBatch
         {
             //double dErech;
             string sFormat="";
-            int iSfarot;
+            int iSfarot,iLastDigit;
+            string sErech;
             if (fErech.ToString().IndexOf(".") > -1)
             {
                 iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
@@ -139,9 +141,35 @@ namespace KdsBatch
             else { sFormat = sFormat.PadLeft(iLen , char.Parse("0")); }
 
             //dErech = clGeneral.TrimDoubleToXDigits(double.Parse(fErech.ToString()), iNumDigit);
-            if (fErech == 0 && _iKodErua !=162 ) 
-                return fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
-            else return fErech.ToString(sFormat).Replace(".", "");
+            if (fErech == 0 && _iKodErua !=162 )
+                sErech = fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
+            else sErech = fErech.ToString(sFormat).Replace(".", "");
+
+            if (_iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech < 0)
+            {
+                iLastDigit = int.Parse(sErech.Substring(sErech.Length - 1, 1));
+                sErech = sErech.Substring(1, sErech.Length - 2);
+                sErech += GetSimanEfresh(iLastDigit);
+            }
+            return sErech;
+        }
+
+        protected string GetSimanEfresh(int iLastDigit)
+        {
+            switch (iLastDigit)
+            {
+                case 0: return "}"; 
+                case 1: return "J"; 
+                case 2: return "K"; 
+                case 3: return "L"; 
+                case 4: return "M"; 
+                case 5: return "N"; 
+                case 6: return "O"; 
+                case 7: return "P"; 
+                case 8: return "Q"; 
+                case 9: return "R"; 
+            }
+            return "";
         }
 
         protected bool IsEmptyErua(string sErua)
@@ -189,6 +217,10 @@ namespace KdsBatch
 
         protected float GetErechRechiv(int iKodRechiv)
         {
+            return GetErechRechiv(iKodRechiv, "erech_rechiv");
+        }
+        protected float GetErechRechiv(int iKodRechiv,string col)
+        {
             DataRow[] drRechiv;
             float fErech = 0;
 
@@ -196,10 +228,25 @@ namespace KdsBatch
 
             if (drRechiv.Length > 0)
             {
-                fErech = float.Parse(drRechiv[0]["erech_rechiv"].ToString());
-            }
+                fErech = float.Parse(drRechiv[0][col].ToString());
 
+                if (!bKayamEfreshBErua && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech < 0)
+                {
+                    CheckHefresh(drRechiv[0]);
+                }
+            }
             return fErech;
+        }
+
+        private void CheckHefresh(DataRow drRechiv)
+        {
+            float erechA, erechB, Hefresh;
+            erechA = float.Parse(drRechiv["erech_rechiv_a"].ToString());
+            erechB = float.Parse(drRechiv["erech_rechiv_b"].ToString());
+            Hefresh = float.Parse(drRechiv["erech_rechiv"].ToString());
+
+            if (erechA != 0 && erechB != 0 && Hefresh != 0)
+                bKayamEfreshBErua = true;
         }
 
         protected void WriteError(string sError)
@@ -210,6 +257,12 @@ namespace KdsBatch
 
         protected void PrepareLines()
         {
+            int iLastDigit;
+            if (bKayamEfreshBErua)
+            {
+                iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
+                _sFooter = _sFooter.Replace(iLastDigit.ToString(),GetSimanEfresh(iLastDigit));
+            }
             _sBody.ForEach(delegate(string Line)
             {
                 _sLine.Add(_sHeader + Line + _sFooter);

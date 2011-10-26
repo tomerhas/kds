@@ -65,6 +65,21 @@ namespace KdsBatch
                 throw new Exception("GetSumErechRechiv :" + ex.Message);
             }
         }
+        public float GetSumErechEzer(DataTable TableName, int kodRechiv, DateTime dTaarich)
+        {
+            try
+            {
+                float Res = (from c in TableName.AsEnumerable()
+                             where c.Field<int>("KOD_RECHIV").Equals(kodRechiv)
+                             && c.Field<DateTime>("taarich").Equals(dTaarich)
+                             select c.Field<float>("ERECH_EZER")).Sum();
+                return (Res == null) ? 0 : float.Parse(Res.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetSumErechRechiv :" + ex.Message);
+            }
+        }
         public Dictionary<int, float> GetSumsOfRechiv(DataTable TableName, DateTime dTaarich)
         {
             try

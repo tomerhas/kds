@@ -38,12 +38,20 @@ namespace KdsBatch
 
       protected override void SetFooter()
       {
+          int iLastDigit;
           StringBuilder sEnd = new StringBuilder();
 
           sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
           sEnd.Append(_dMonth.Year.ToString());
           sEnd.Append(GetBlank(37));
-          _sFooter = sEnd.ToString();  
+          _sFooter = sEnd.ToString();
+
+          if (bKayamEfreshBErua)
+          {
+              iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Length - 1, 1));
+              _sFooter = _sFooter.Substring(0, _sFooter.Length - 1);
+              _sFooter += GetSimanEfresh(iLastDigit);
+          }
       }
 
       protected override List<string> SetBody()

@@ -359,7 +359,12 @@ namespace KdsBatch
                     sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_sidur"].ToString()) ? "" : string.Concat(dr["mispar_sidur"].ToString(), ","));
                     sbYeshut.Append(string.IsNullOrEmpty(dr["shat_hatchala"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_hatchala"].ToString()).ToString("HH:mm"), ","));
                     sbYeshut.Append(string.IsNullOrEmpty(dr["shat_yetzia"].ToString()) ? "" : string.Concat(DateTime.Parse(dr["shat_yetzia"].ToString()).ToString("HH:mm"), ","));
-                    sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? "" : string.Concat(dr["mispar_knisa"].ToString(), ","));
+
+                    if (string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) || dr["mispar_knisa"].ToString() == "0")
+                        sbYeshut.Append("");
+                    else sbYeshut.Append(string.Concat(dr["mispar_knisa"].ToString(), ","));
+
+                  //  sbYeshut.Append(string.IsNullOrEmpty(dr["mispar_knisa"].ToString()) ? "" : string.Concat(dr["mispar_knisa"].ToString(), ","));
                     
                     sbYeshut.Append(int.Parse(dr["check_num"].ToString()));
                     sbYeshut.Append(",");
@@ -1172,7 +1177,7 @@ namespace KdsBatch
                     if (CheckErrorActive(25)) IsPitzulAndNotZakai25(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(57)) IsSidurVisaValid57(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(22)) IsOneSidurValid22(i, ref oSidur, ref dtErrors);
-                    if (CheckErrorActive(158)) IsVisaInSidurRagil58(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(58)) IsVisaInSidurRagil58(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(14)) IsSidurStartHourValid14(dCardDate, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(173)) IsSidurEndHourValid173(dCardDate, ref oSidur, ref dtErrors);
                     if (CheckErrorActive(49)) IsHashlamatHazmanaValid49(fSidurTime, ref oSidur, ref dtErrors);

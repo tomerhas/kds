@@ -784,15 +784,31 @@ public partial class Modules_Test :Page
     }
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
-        string sMisparim = "201,31010,30860,21478";
-        DateTime dTaarich = DateTime.Parse("15/08/2011");
-         string[] iMisparim = sMisparim.Split(',');
+        EntitiesDal oDal = new EntitiesDal();
+        DataTable dt = oDal.getOvdimForShguim();
+        //string sMisparim = "72878";
+        //DateTime dTaarich = DateTime.Parse("12/09/2010");
+        // string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
-         for (int i = 0; i < iMisparim.Length; i++)
+
+         //HafelShguim(557, DateTime.Parse("06/09/2010"));
+         //oBatchManager.MainOvedErrors(557, DateTime.Parse("06/09/2010"));
+
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
          {
-             HafelShguim(int.Parse(iMisparim[i]), dTaarich);
-           //  oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
+             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             // oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          }
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
+
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+             //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
     }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
@@ -806,7 +822,7 @@ public partial class Modules_Test :Page
             GlobalData.InitGlobalData();
 
             Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
-            oDay.btchRequest = 100;
+            oDay.btchRequest = 0;
             if (oDay.oOved.bOvedDetailsExists)
             {
                 try

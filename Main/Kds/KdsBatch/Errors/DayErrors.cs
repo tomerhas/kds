@@ -115,16 +115,19 @@ namespace KdsBatch.Errors
             string sLookUp = "";
             try
             {
-                sLookUp = GlobalData.GetLookUpKods("ctb_zmaney_halbasha");
-                if (string.IsNullOrEmpty(DayInstance.sHalbasha))
+                if (DayInstance.oOved.bSidurimExists)
                 {
-                    bError = true;
-                }
-                else
-                {
-                    if ((sLookUp.IndexOf(DayInstance.sHalbasha) == -1) || DayInstance.sHalbasha == ZmanHalbashaType.CardError.GetHashCode().ToString())
+                    sLookUp = GlobalData.GetLookUpKods("ctb_zmaney_halbasha");
+                    if (string.IsNullOrEmpty(DayInstance.sHalbasha))
                     {
                         bError = true;
+                    }
+                    else
+                    {
+                        if ((sLookUp.IndexOf(DayInstance.sHalbasha) == -1) || DayInstance.sHalbasha == ZmanHalbashaType.CardError.GetHashCode().ToString())
+                        {
+                            bError = true;
+                        }
                     }
                 }
                
@@ -180,48 +183,51 @@ namespace KdsBatch.Errors
             DataTable dtMeafyenim = null;
             try
             {
-                DayInstance.Sidurim.ForEach(sidur =>
-                                            {
-                                                sidur.Peiluyot.ForEach(peilut =>
-                                                        {
-                                                            if (!bError)
+                if (DayInstance.oOved.bSidurimExists)
+                {
+                    DayInstance.Sidurim.ForEach(sidur =>
+                                                {
+                                                    sidur.Peiluyot.ForEach(peilut =>
                                                             {
-                                                                if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
+                                                                if (!bError)
                                                                 {
-                                                                    dtMeafyenim = oKavim.GetMeafyeneyElementByKod(peilut.lMakatNesia, peilut.dCardDate);
-                                                                    if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                                                                    if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
                                                                     {
-                                                                        shouldProcess = false;
+                                                                        dtMeafyenim = oKavim.GetMeafyeneyElementByKod(peilut.lMakatNesia, peilut.dCardDate);
+                                                                        if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                                                                        {
+                                                                            shouldProcess = false;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            shouldProcess = true;
+                                                                        }
                                                                     }
                                                                     else
                                                                     {
                                                                         shouldProcess = true;
                                                                     }
-                                                                }
-                                                                else
-                                                                {
-                                                                    shouldProcess = true;
-                                                                }
 
-                                                                if (shouldProcess)
-                                                                {
-                                                                    if (!peiluyot.ContainsKey(peilut.dFullShatYetzia.ToString()))
+                                                                    if (shouldProcess)
                                                                     {
-                                                                        peiluyot.Add(peilut.dFullShatYetzia.ToString(), peilut);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        if (peilut.iMisparKnisa == 0 && peiluyot[peilut.dFullShatYetzia.ToString()].iMisparKnisa == 0)
+                                                                        if (!peiluyot.ContainsKey(peilut.dFullShatYetzia.ToString()))
                                                                         {
-                                                                            bError = true;
+                                                                            peiluyot.Add(peilut.dFullShatYetzia.ToString(), peilut);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if (peilut.iMisparKnisa == 0 && peiluyot[peilut.dFullShatYetzia.ToString()].iMisparKnisa == 0)
+                                                                            {
+                                                                                bError = true;
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
                                                             }
-                                                        }
-                                                      );
-                                            }
-                                    );
+                                                          );
+                                                }
+                                        );
+                }
                
             }
             catch (Exception ex)
@@ -246,10 +252,13 @@ namespace KdsBatch.Errors
             int iCountSidurim;
             try
             {
-                iCountSidurim = DayInstance.Sidurim.Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
-                if ((DayInstance.oOved.iMatzavOved == 5) && (iCountSidurim > 0))
+                if (DayInstance.oOved.bSidurimExists)
                 {
-                    bError = true;
+                    iCountSidurim = DayInstance.Sidurim.Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
+                    if ((DayInstance.oOved.iMatzavOved == 5) && (iCountSidurim > 0))
+                    {
+                        bError = true;
+                    }
                 }
                
             }
@@ -280,38 +289,41 @@ namespace KdsBatch.Errors
             DataTable dtSidur;
             try
             {
-                dtSidur = oDal.GetSidur("last", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(-1));
-                if (dtSidur != null && dtSidur.Rows.Count > 0)
+                if (DayInstance.oOved.bSidurimExists)
                 {
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
-                }
-                if (DayInstance.Sidurim.Count > 0)
-                {
-                    Sidur firstSidurOfTheDay = DayInstance.Sidurim[0] as Sidur;
-                    Sidur lastSidurOfTheDay = DayInstance.Sidurim[DayInstance.Sidurim.Count - 1] as Sidur;
-                    dtSidur = oDal.GetSidur("first", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(1));
+                    dtSidur = oDal.GetSidur("last", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(-1));
                     if (dtSidur != null && dtSidur.Rows.Count > 0)
                     {
-                        DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfNextDay);
-                        DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
+                        DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
+                        DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
                     }
-
-                    if (shatGmarOfPrevDay != DateTime.MinValue &&
-                        shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
-                        (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
+                    if (DayInstance.Sidurim.Count > 0)
                     {
-                        bError = true;
-                        //   hafifaDescription = "חפיפה עם יום קודם";
-                    }
+                        Sidur firstSidurOfTheDay = DayInstance.Sidurim[0] as Sidur;
+                        Sidur lastSidurOfTheDay = DayInstance.Sidurim[DayInstance.Sidurim.Count - 1] as Sidur;
+                        dtSidur = oDal.GetSidur("first", DayInstance.oOved.iMisparIshi, DayInstance.dCardDate.AddDays(1));
+                        if (dtSidur != null && dtSidur.Rows.Count > 0)
+                        {
+                            DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfNextDay);
+                            DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
+                        }
 
-                    if (shatHatchalaOfNextDay != DateTime.MinValue &&
-                        lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
-                        lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
-                        (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
-                    {
-                        bError = true;
-                        //  hafifaDescription = "חפיפה עם יום עוקב";
+                        if (shatGmarOfPrevDay != DateTime.MinValue &&
+                            shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
+                            (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
+                        {
+                            bError = true;
+                            //   hafifaDescription = "חפיפה עם יום קודם";
+                        }
+
+                        if (shatHatchalaOfNextDay != DateTime.MinValue &&
+                            lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
+                            lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
+                            (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
+                        {
+                            bError = true;
+                            //  hafifaDescription = "חפיפה עם יום עוקב";
+                        }
                     }
                 }
             }
@@ -337,26 +349,29 @@ namespace KdsBatch.Errors
             bool hasSidurEilat = false;
             bool hasVisa = false;
             bool isLongNesiaToEilat = false;
-            Peilut tmpPeilut = null;
+           // Peilut tmpPeilut = null;
             try
             {
-                DayInstance.Sidurim.ForEach(
-                                            sidur =>
-                                            {
-                                                if (sidur.bSidurEilat)
-                                                {
-                                                    hasSidurEilat = true;
-
-                                                    if (sidur.IsLongEilatTrip())
-                                                        isLongNesiaToEilat = true;
-                                                }
-
-                                                if (sidur.bSidurVisaKodExists) hasVisa = true;
-                                            }
-                                        );
-                if (hasSidurEilat && isLongNesiaToEilat && hasVisa)
+                if (DayInstance.oOved.bSidurimExists)
                 {
-                    bError = true;
+                    DayInstance.Sidurim.ForEach(
+                                                sidur =>
+                                                {
+                                                    if (sidur.bSidurEilat)
+                                                    {
+                                                        hasSidurEilat = true;
+
+                                                        if (sidur.IsLongEilatTrip())
+                                                            isLongNesiaToEilat = true;
+                                                    }
+
+                                                    if (sidur.bSidurVisaKodExists) hasVisa = true;
+                                                }
+                                            );
+                    if (hasSidurEilat && isLongNesiaToEilat && hasVisa)
+                    {
+                        bError = true;
+                    }
                 }
               
             }
@@ -381,9 +396,12 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if (DayInstance.oOved.IsOvedInMatzav("5,6,8") && DayInstance.Sidurim.Any(sidur => !sidur.IsSidurHeadrut()))
+                if (DayInstance.oOved.bSidurimExists)
                 {
-                    bError = true;
+                    if (DayInstance.oOved.IsOvedInMatzav("5,6,8") && DayInstance.Sidurim.Any(sidur => !sidur.IsSidurHeadrut()))
+                    {
+                        bError = true;
+                    }
                 }
             }
             catch (Exception ex)

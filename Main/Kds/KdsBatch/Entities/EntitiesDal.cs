@@ -18,7 +18,8 @@ namespace KdsBatch.Entities
     {
         private const string cProGetShgiotNoActive = "Pkg_Errors.pro_get_shgiot_active";
         private const string cProDeleteErrors = "Pkg_Errors.pro_Delete_Errors";
-      
+        private const string cProGetOvdimErrors = "PKG_CALCULATION.pro_Ovdim_Errors";
+
         public DataTable GetOvedDetails(int iMisparIshi, DateTime dCardDate)
         {
             clDal oDal = new clDal();
@@ -273,8 +274,11 @@ namespace KdsBatch.Entities
                     sbYeshut.Append(",");
                     sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? "" : string.Concat(ce.mispar_sidur.ToString(), ","));
                     sbYeshut.Append(string.IsNullOrEmpty(ce.shat_hatchala.ToString()) ? "" : string.Concat(DateTime.Parse(ce.shat_hatchala.ToString()).ToString("HH:mm"), ","));
-                    sbYeshut.Append(string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? "" : string.Concat(DateTime.Parse(ce.Shat_Yetzia.ToString()).ToString("HH:mm"), ","));
-                    sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_knisa.ToString()) ? "" : string.Concat(ce.mispar_knisa.ToString(), ","));
+                    if (ce.Shat_Yetzia != DateTime.MinValue)
+                        sbYeshut.Append(string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? "" : string.Concat(DateTime.Parse(ce.Shat_Yetzia.ToString()).ToString("HH:mm"), ","));
+                    if(string.IsNullOrEmpty(ce.mispar_knisa.ToString()) || ce.mispar_knisa ==0)
+                    sbYeshut.Append("");
+                    else sbYeshut.Append(string.Concat(ce.mispar_knisa.ToString(), ","));
 
                     sbYeshut.Append(int.Parse(ce.check_num.ToString()));
                     sbYeshut.Append(",");
@@ -303,7 +307,7 @@ namespace KdsBatch.Entities
                 //oDal.AddParameter("HEARA", ParameterType.ntOracleVarchar, arrHeara, ParameterDir.pdInput);
                 //// Set the command text on an OracleCommand object
                 //oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,HEARA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:HEARA)");
-                oDal.ExecuteSQL("insert into TB_SHGIOT(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,MISPAR_KNISA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:MISPAR_KNISA)");
+                oDal.ExecuteSQL("insert into TB_SHGIOT_2(MISPAR_ISHI,KOD_SHGIA,YESHUT_ID,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA,SHAT_YETZIA,MISPAR_KNISA) values (:MISPAR_ISHI,:KOD_SHGIA,:YESHUT_ID,:TAARICH,:MISPAR_SIDUR,:SHAT_HATCHALA,:SHAT_YETZIA,:MISPAR_KNISA)");
          
             }
             catch (Exception ex)
@@ -355,6 +359,25 @@ namespace KdsBatch.Entities
                 throw ex;
             }
         }
-        
+
+        public DataTable getOvdimForShguim()
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+
+            try
+            {
+               
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(cProGetOvdimErrors, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
     }
 }
