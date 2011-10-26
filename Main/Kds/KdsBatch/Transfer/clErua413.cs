@@ -38,20 +38,12 @@ namespace KdsBatch
 
       protected override void SetFooter()
       {
-          int iLastDigit;
           StringBuilder sEnd = new StringBuilder();
 
           sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
           sEnd.Append(_dMonth.Year.ToString());
           sEnd.Append(GetBlank(37));
-          _sFooter = sEnd.ToString();
-
-          if (bKayamEfreshBErua)
-          {
-              iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Length - 1, 1));
-              _sFooter = _sFooter.Substring(0, _sFooter.Length - 1);
-              _sFooter += GetSimanEfresh(iLastDigit);
-          }
+          _sFooter = sEnd.ToString();      
       }
 
       protected override List<string> SetBody()
@@ -126,7 +118,8 @@ namespace KdsBatch
       private void CreateData413(string sSaifHilan, int iKodRechiv, int iLen, int iNumDigit)
       {
           float fErech;
-
+          int iLastDigit;
+          bKayamEfreshBErua = false;
           fErech = GetErechRechiv(iKodRechiv);
           if (fErech > 0)
           {
@@ -136,8 +129,17 @@ namespace KdsBatch
               sErua413.Append(GetBlank(17));
               sErua413.Append(FormatNumber(fErech, iLen, iNumDigit));
               sErua413.Append(GetBlank(12));
+
+              if (bKayamEfreshBErua)
+              {
+                  iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Length - 1, 1));
+                  _sFooter = _sFooter.Substring(0, _sFooter.Length - 1);
+                  _sFooter += GetSimanEfresh(iLastDigit);
+              }
               if (!IsEmptyErua(sErua413.ToString()))
-                _ListErua.Add(sErua413.ToString());
+              {
+                  _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
+              }
           }
       }
     }

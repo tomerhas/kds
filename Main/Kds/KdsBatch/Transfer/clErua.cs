@@ -120,15 +120,17 @@ namespace KdsBatch
             //double dErech;
             string sFormat="";
             int iSfarot,iLastDigit;
-            string sErech;
+            string sErech, sErechTmp;
             if (fErech.ToString().IndexOf(".") > -1)
             {
-                iSfarot = fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")).Length;
+                sErechTmp = fErech.ToString().Substring(0, fErech.ToString().IndexOf("."));
+                sErechTmp = sErechTmp.Replace("-", "");
+                iSfarot = sErechTmp.Length;
                 if (iNumDigit==0) //dakot
                     fErech =float.Parse(fErech.ToString().Substring(0, fErech.ToString().IndexOf(".")));
             }
             else
-                iSfarot = fErech.ToString().Length;
+                iSfarot = fErech.ToString().Replace("-", "").Length;
             if (iSfarot > (iLen - iNumDigit))
                 throw new Exception("num digits of value above the permitted.wrong value=" + fErech);
 
@@ -258,14 +260,19 @@ namespace KdsBatch
         protected void PrepareLines()
         {
             int iLastDigit;
-            if (bKayamEfreshBErua)
+            string sErua="";
+            if (bKayamEfreshBErua && _iKodErua != 413)
             {
                 iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
                 _sFooter = _sFooter.Replace(iLastDigit.ToString(),GetSimanEfresh(iLastDigit));
             }
             _sBody.ForEach(delegate(string Line)
             {
-                _sLine.Add(_sHeader + Line + _sFooter);
+                if (_iKodErua == 413)
+                    sErua = Line;
+                else sErua = _sHeader + Line + _sFooter;
+                //_sLine.Add(_sHeader + Line + _sFooter);
+                _sLine.Add(sErua);
             });
          }
 
