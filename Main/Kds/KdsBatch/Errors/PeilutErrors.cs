@@ -212,10 +212,11 @@ namespace KdsBatch.Errors
                     //sMakatNesia = htEmployeeDetails["MakatNesia"].ToString();
                     if (iPeilutMisparSidur > 0)
                     {
+                        bError = true;
                         if (PeilutInstance.objSidur.Peiluyot.Count == 1)
                         {
                             if (PeilutInstance.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && PeilutInstance.bMisparSidurMatalotTnuaExists && PeilutInstance.iMisparSidurMatalotTnua == iPeilutMisparSidur)
-                                bError = true;
+                                bError = false;
                         }
                     }                    
                 }

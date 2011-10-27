@@ -232,7 +232,7 @@ namespace KdsBatch
             {
                 fErech = float.Parse(drRechiv[0][col].ToString());
 
-                if (!bKayamEfreshBErua && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech < 0)
+                if (!bKayamEfreshBErua && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech != 0)
                 {
                     CheckHefresh(drRechiv[0]);
                 }
@@ -242,12 +242,14 @@ namespace KdsBatch
 
         private void CheckHefresh(DataRow drRechiv)
         {
-            float erechA, erechB, Hefresh;
-            erechA = float.Parse(drRechiv["erech_rechiv_a"].ToString());
-            erechB = float.Parse(drRechiv["erech_rechiv_b"].ToString());
+            string  bakasha2="";
+            float Hefresh;
+
+            if (drRechiv["bakasha_id_2"] != null)
+                bakasha2 = drRechiv["bakasha_id_2"].ToString();
             Hefresh = float.Parse(drRechiv["erech_rechiv"].ToString());
 
-            if (erechA != 0 && erechB != 0 && Hefresh != 0)
+            if (bakasha2 != "" && Hefresh != 0)
                 bKayamEfreshBErua = true;
         }
 

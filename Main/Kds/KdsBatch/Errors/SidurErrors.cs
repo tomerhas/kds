@@ -218,8 +218,10 @@ namespace KdsBatch.Errors
 
     public class SidurError20 : BasicChecker
     {
+       // private object _CurrentInstance;
         public SidurError20(object CurrentInstance)
         {
+           // _CurrentInstance = CurrentInstance;
             Comment = "ערך  פיצול/הפסקה שגוי";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
@@ -242,7 +244,11 @@ namespace KdsBatch.Errors
                         bError = true;
                     }
                 }
-
+                //if (!bError)
+                //{
+                //    SidurError22 objError = new SidurError22(_CurrentInstance);
+                //    objError.Check();
+                //}
             }
             catch (Exception ex)
             {

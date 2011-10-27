@@ -418,7 +418,7 @@ namespace KdsLibrary.BL
                 //1- שגיאה
                 //2- לא אותר
 
-                if (HttpRuntime.Cache.Get(sCacheKey) == null)
+                if (HttpRuntime.Cache.Get(sCacheKey) == null || HttpRuntime.Cache.Get(sCacheKey).ToString()=="")
                 {
                     oDal.AddParameter("p_result", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
                     oDal.AddParameter("p_oto_no", ParameterType.ntOracleLong, lOtoNo, ParameterDir.pdInput);
@@ -427,8 +427,8 @@ namespace KdsLibrary.BL
                     HttpRuntime.Cache.Insert(sCacheKey, int.Parse(oDal.GetValParam("p_result").ToString()), null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
                     return int.Parse(oDal.GetValParam("p_result").ToString()) == 0;
                 }
-                else                
-                    return  (int)HttpRuntime.Cache.Get(sCacheKey) == 0;                                  
+                else return  HttpRuntime.Cache.Get(sCacheKey).ToString().Trim() == "0";                 
+                //    return  (int)HttpRuntime.Cache.Get(sCacheKey) == 0;                                  
             }
             catch (Exception ex)
             {

@@ -138,7 +138,7 @@
                  <asp:Button ID="Button6" runat="server" onclick="Button6_Click" 
                         Text="חישוב פרימיות" />
                  <asp:Button ID="ButtonShinuyim" runat="server" onclick="ButtonShinuyim_Click" 
-                        Text="שינויי קלט" />
+                        Text="שגיאות" />
                  </td>      
             </tr>
          </table>  

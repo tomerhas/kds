@@ -33,7 +33,7 @@ namespace KdsBatch
               sErua462.Append(FormatNumber(drYamim.Length, 4, 2));
 
               sErua462.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(),"erech_rechiv_a")/60), 4, 1));
-              sErua462.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), "erech_rechiv") / 60), 4, 1));
+              sErua462.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), "erech_rechiv_a") / 60), 4, 1));
 
               sErua462.Append(GetBlank(61));
 
