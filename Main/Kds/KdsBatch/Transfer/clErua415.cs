@@ -77,7 +77,7 @@ namespace KdsBatch
 
             sErua415.Append(GetBlank(4));
 
-            sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode()), 4, 1));
+            sErua415.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode())/60), 4, 1));
             fErech =GetErechRechiv(clGeneral.enRechivim.DakotNehigaChol.GetHashCode()) ;
             fErech += GetErechRechiv(clGeneral.enRechivim.SachDakotNehigaShishi.GetHashCode());
             fErech += GetErechRechiv(clGeneral.enRechivim.DakotNehigaShabat.GetHashCode());
