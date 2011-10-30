@@ -491,11 +491,11 @@ namespace KdsBatch.Errors
       
     }
 
-    public class DayError86 : BasicChecker   
+    public class DayError182 : BasicChecker   
     {
-        public DayError86(object CurrentInstance)
+        public DayError182(object CurrentInstance)
         {
-            // Comment = " נתונים ";
+             Comment = " משך הכנות מכונה נוספות ביום עבודה מעל המותר ";
             SetInstance(CurrentInstance, OriginError.Day);
         }
         protected override bool IsCorrect()
@@ -503,20 +503,43 @@ namespace KdsBatch.Errors
             bool bError = false;
             try
             {
-                if ((DayInstance.iTotalTimePrepareMechineForDay > DayInstance.oParameters.iPrepareAllMechineTotalMaxTimeInDay) ||
-                    (DayInstance.iTotalTimePrepareMechineForOtherMechines > DayInstance.oParameters.iPrepareOtherMechineTotalMaxTime))
+                if (DayInstance.iTotalTimePrepareMechineForDay > DayInstance.oParameters.iPrepareAllMechineTotalMaxTimeInDay)
                 {
                     bError = true;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errTimeForPrepareMechineNotValid.GetHashCode(), DayInstance.dCardDate, "DayError86: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errMechonotNosafotBeYomMealLamutar.GetHashCode(), DayInstance.dCardDate, "DayError182: " + ex.Message);
                 DayInstance.bSuccsess = false;
             }
             return bError;   
         }
-    }  
+    }
 
-   
+    public class DayError183 : BasicChecker
+    {
+        public DayError183(object CurrentInstance)
+        {
+            Comment = " משך כל הכנות מכונה ביום עבודה מעל המותר ";
+            SetInstance(CurrentInstance, OriginError.Day);
+        }
+        protected override bool IsCorrect()
+        {
+            bool bError = false;
+            try
+            {
+                if (DayInstance.iTotalTimePrepareMechineForOtherMechines > DayInstance.oParameters.iPrepareOtherMechineTotalMaxTime)
+                {
+                    bError = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(DayInstance.btchRequest, DayInstance.oOved.iMisparIshi, "E", TypeCheck.errAllMechonotBeYomMealLamutar.GetHashCode(), DayInstance.dCardDate, "DayError183: " + ex.Message);
+                DayInstance.bSuccsess = false;
+            }
+            return bError;
+        }
+    }  
 }

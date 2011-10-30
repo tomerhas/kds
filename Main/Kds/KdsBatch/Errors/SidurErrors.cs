@@ -1919,11 +1919,11 @@ namespace KdsBatch.Errors
         }
     }
 
-      public class SidurError86 : BasicChecker
+      public class SidurError184 : BasicChecker
     {
-        public SidurError86(object CurrentInstance)
+        public SidurError184(object CurrentInstance)
         {
-            Comment =  "הכנת מכונה מעל המותר ";
+            Comment = "מספר הכנות מכונה בסידור מעל המותר ";
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1938,7 +1938,7 @@ namespace KdsBatch.Errors
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errTimeForPrepareMechineNotValid.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError86: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(SidurInstance.objDay.btchRequest, SidurInstance.objDay.oOved.iMisparIshi, "E", TypeCheck.errMechonotBeSidurMealLamutar.GetHashCode(), SidurInstance.objDay.dCardDate, "SidurError184: " + ex.Message);
                    SidurInstance.objDay.bSuccsess = false;
             }
             return bError;

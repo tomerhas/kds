@@ -109,7 +109,10 @@ namespace KdsBatch.Errors
         errMissingKodMevatzaVisa=178,
         errHightValueDakotBefoal=179,
         IsShatHatchalaLetashlumNull = 180,
-        IsShatGmarLetashlumNull = 181 
+        IsShatGmarLetashlumNull = 181,
+        errMechonotNosafotBeYomMealLamutar = 182, 
+        errAllMechonotBeYomMealLamutar = 183, 
+        errMechonotBeSidurMealLamutar = 184 
     }
 
     public enum ZmanHalbashaType

@@ -53,14 +53,12 @@ namespace KdsBatch.Errors
                     case TypeCheck.errNesiaMeshtanaNotDefine:
                         creator = new DayError150(CurrentInstance);
                         break;
-                    case TypeCheck.errTimeForPrepareMechineNotValid:
-                        if (origion == OriginError.Day)
-                            creator = new DayError86(CurrentInstance);
-                        else if (origion == OriginError.Sidur)
-                            creator = new SidurError86(CurrentInstance);
-                        else  creator = new PeilutError86(CurrentInstance);
+                    case TypeCheck.errMechonotNosafotBeYomMealLamutar:
+                        creator = new DayError182(CurrentInstance);
                         break;
-                       
+                    case TypeCheck.errAllMechonotBeYomMealLamutar:
+                        creator = new DayError183(CurrentInstance);
+                        break;  
                     //Sidur
 
                     case TypeCheck.errSidurNotExists:
@@ -198,9 +196,9 @@ namespace KdsBatch.Errors
                     case TypeCheck.errSidurEilatNotValid:
                         creator = new SidurError55(CurrentInstance);
                         break;
-                    //case TypeCheck.errTimeForPrepareMechineNotValid:
-                    //    creator = new SidurError86(CurrentInstance);
-                    //    break;   
+                    case TypeCheck.errMechonotBeSidurMealLamutar:
+                        creator = new SidurError184(CurrentInstance);
+                        break;   
                  
                     // Peilut
 
@@ -257,10 +255,10 @@ namespace KdsBatch.Errors
                         break;
                     case TypeCheck.errHightValueDakotBefoal:
                         creator = new PeilutError179(CurrentInstance);
-                        break;                
-                    //case TypeCheck.errTimeForPrepareMechineNotValid:
-                    //    creator = new SidurError86(CurrentInstance);
-                    //    break;   
+                        break;
+                    case TypeCheck.errTimeForPrepareMechineNotValid:
+                        creator = new PeilutError86(CurrentInstance);
+                        break;   
 
                 }
                 creator.Error = Error;
