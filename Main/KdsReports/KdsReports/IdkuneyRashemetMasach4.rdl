@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.20638cm</Width>
+              <Width>1.57138cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.33583cm</Width>
@@ -817,12 +817,12 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Fields!MEASHER_O_MISTAYEG.Value = nothing,"ללא התייחסות", iif(Fields!MEASHER_O_MISTAYEG.Value = "0","מסתייג", "מאשר"))</Value>
+                              <Value>=iif(Fields!MEASHER_O_MISTAYEG.Value = nothing,"לא", iif(Fields!MEASHER_O_MISTAYEG.Value = "0","מסתייג", "מאשר"))</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -853,7 +853,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -884,7 +884,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -915,7 +915,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -946,7 +946,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -977,7 +977,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1008,7 +1008,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1039,7 +1039,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1070,7 +1070,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1101,7 +1101,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1132,7 +1132,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1163,7 +1163,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1194,7 +1194,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1225,7 +1225,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1256,7 +1256,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1287,7 +1287,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1318,7 +1318,7 @@
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -1367,6 +1367,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1474,7 +1475,7 @@
         </SortExpressions>
         <Top>0.39652cm</Top>
         <Height>4.67542cm</Height>
-        <Width>19.82119cm</Width>
+        <Width>19.18619cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1486,7 +1487,7 @@
     <Height>1.99683in</Height>
     <Style />
   </Body>
-  <Width>7.80362in</Width>
+  <Width>7.55362in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

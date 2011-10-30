@@ -758,7 +758,7 @@
                           <Top>2.02775cm</Top>
                           <Left>0.18783cm</Left>
                           <Height>1.62334cm</Height>
-                          <Width>19.6674cm</Width>
+                          <Width>19.66741cm</Width>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
                           </Visibility>
@@ -1183,7 +1183,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>סוג העדרות</Value>
+                                                <Value>תיאור הסידור</Value>
                                                 <Style>
                                                   <FontWeight>Bold</FontWeight>
                                                 </Style>
@@ -1411,7 +1411,9 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"אין דיווח","")</Value>
+                                                <Value>=iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"אין דיווח",
+ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" ,
+ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח","")))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -2061,7 +2063,7 @@
                           <Top>3.84328cm</Top>
                           <Left>0.13066cm</Left>
                           <Height>2.62021cm</Height>
-                          <Width>19.72457cm</Width>
+                          <Width>19.72458cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
@@ -2150,7 +2152,7 @@
                             </Parameter>
                           </Parameters>
                           <Top>0.15719in</Top>
-                          <Left>1.34271in</Left>
+                          <Left>0.07395in</Left>
                           <Height>1.2877cm</Height>
                           <Width>12.45264cm</Width>
                           <ZIndex>3</ZIndex>

@@ -1153,6 +1153,7 @@
                               <TablixMember>
                                 <Group Name="Group7">
                                   <GroupExpressions>
+                                    <GroupExpression>=Fields!KOD_EZOR.Value</GroupExpression>
                                     <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
                                   </GroupExpressions>
                                 </Group>
@@ -1168,6 +1169,17 @@
                                         <TablixMembers>
                                           <TablixMember>
                                             <Group Name="Details4" />
+                                            <SortExpressions>
+                                              <SortExpression>
+                                                <Value>=Fields!MISPAR_ISHI.Value</Value>
+                                              </SortExpression>
+                                              <SortExpression>
+                                                <Value>=Fields!TAARICH.Value</Value>
+                                              </SortExpression>
+                                              <SortExpression>
+                                                <Value>=Fields!SHAT_HATCHALA.Value</Value>
+                                              </SortExpression>
+                                            </SortExpressions>
                                             <TablixMembers>
                                               <TablixMember />
                                             </TablixMembers>
@@ -1191,13 +1203,16 @@
                               <Value>=Fields!MISPAR_ISHI.Value</Value>
                             </SortExpression>
                             <SortExpression>
+                              <Value>=Fields!TAARICH.Value</Value>
+                            </SortExpression>
+                            <SortExpression>
                               <Value>=Fields!SHAT_HATCHALA.Value</Value>
                               <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
                           <Top>3.18563cm</Top>
                           <Left>0.05208in</Left>
-                          <Height>2.96784cm</Height>
+                          <Height>2.96783cm</Height>
                           <Width>17.88287cm</Width>
                           <ZIndex>4</ZIndex>
                           <Style>
@@ -1213,6 +1228,7 @@
                         </Border>
                       </Style>
                     </Rectangle>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1229,12 +1245,21 @@
             <TablixMember>
               <Group Name="Details2">
                 <GroupExpressions>
+                  <GroupExpression>=Fields!KOD_EZOR.Value</GroupExpression>
                   <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
                   <BreakLocation>End</BreakLocation>
                 </PageBreak>
               </Group>
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!KOD_EZOR.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                </SortExpression>
+              </SortExpressions>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
@@ -1242,6 +1267,9 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DsDisregardDrivers</DataSetName>
         <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!KOD_EZOR.Value</Value>
+          </SortExpression>
           <SortExpression>
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
@@ -1333,7 +1361,7 @@
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
+    <LeftMargin>1cm</LeftMargin>
     <RightMargin>0.5cm</RightMargin>
     <TopMargin>1cm</TopMargin>
     <BottomMargin>1cm</BottomMargin>
@@ -1408,6 +1436,10 @@
         <Field Name="TEUR_SNIF_AV">
           <DataField>TEUR_SNIF_AV</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_EZOR">
+          <DataField>KOD_EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

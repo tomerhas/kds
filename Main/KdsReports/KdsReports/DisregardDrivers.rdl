@@ -1,75 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>4e584d2c-70f1-4912-a813-4d0090d31a3d</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsDisregardDrivers">
-      <Fields>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="OTO_NO">
-          <DataField>OTO_NO</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SECTOR_VISA">
-          <DataField>SECTOR_VISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_DISREGARDDRIVERS</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_DISREGARDTYPE">
-            <Value>=Parameters!P_DISREGARDTYPE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix5">
@@ -110,7 +40,7 @@
                           <ReportName>GeneralHeader</ReportName>
                           <Parameters>
                             <Parameter Name="P_Title">
-                              <Value>= "נהגים משובצים שלא שלחו כרטיס עבודה ויזה מהסניף לתקופה " 
+                              <Value>= "נהגים משובצים שלא שלחו כרטיס עבודה מהסניף לתקופה " 
  &amp; Trim(Parameters!P_PERIOD.Value)</Value>
                             </Parameter>
                           </Parameters>
@@ -128,39 +58,39 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.66134in</Width>
+                                <Width>1.6798cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.98425in</Width>
+                                <Width>2.5cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.156in</Width>
+                                <Width>2.93624cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.80023in</Width>
+                                <Width>2.03258cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.26in</Width>
+                                <Width>0.6604cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.60417in</Width>
+                                <Width>1.53459cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.52083in</Width>
+                                <Width>1.32291cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.47916in</Width>
+                                <Width>1.21707cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.5625in</Width>
+                                <Width>1.42875cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.01202in</Width>
+                                <Width>2.57053cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -274,7 +204,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.46549in</Height>
+                                <Height>1.18234cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -571,7 +501,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.21673in</Height>
+                                <Height>0.55049cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -982,7 +912,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.25in</Height>
+                                <Height>0.635cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1160,7 +1090,8 @@
                               <TablixMember>
                                 <Group Name="Group6">
                                   <GroupExpressions>
-                                    <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
+                                    <GroupExpression>=Fields!KOD_EZOR.Value</GroupExpression>
+                                    <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                                   </GroupExpressions>
                                 </Group>
                                 <SortExpressions>
@@ -1175,6 +1106,17 @@
                                         <TablixMembers>
                                           <TablixMember>
                                             <Group Name="Details2" />
+                                            <SortExpressions>
+                                              <SortExpression>
+                                                <Value>=Fields!MISPAR_ISHI.Value</Value>
+                                              </SortExpression>
+                                              <SortExpression>
+                                                <Value>=Fields!TAARICH.Value</Value>
+                                              </SortExpression>
+                                              <SortExpression>
+                                                <Value>=Fields!SHAT_HATCHALA.Value</Value>
+                                              </SortExpression>
+                                            </SortExpressions>
                                             <TablixMembers>
                                               <TablixMember />
                                             </TablixMembers>
@@ -1198,12 +1140,15 @@
                               <Value>=Fields!MISPAR_ISHI.Value</Value>
                             </SortExpression>
                             <SortExpression>
+                              <Value>=Fields!TAARICH.Value</Value>
+                            </SortExpression>
+                            <SortExpression>
                               <Value>=Fields!SHAT_HATCHALA.Value</Value>
                               <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
                           <Top>3.11508cm</Top>
-                          <Height>2.96784cm</Height>
+                          <Height>2.96783cm</Height>
                           <Width>17.88287cm</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
@@ -1297,6 +1242,7 @@
             <TablixMember>
               <Group Name="Details">
                 <GroupExpressions>
+                  <GroupExpression>=Fields!KOD_EZOR.Value</GroupExpression>
                   <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
@@ -1310,6 +1256,9 @@
         <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DsDisregardDrivers</DataSetName>
         <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!KOD_EZOR.Value</Value>
+          </SortExpression>
           <SortExpression>
             <Value>=Fields!TEUR_SNIF_AV.Value</Value>
           </SortExpression>
@@ -1363,11 +1312,10 @@
             <ReportName>GeneralHeader</ReportName>
             <Parameters>
               <Parameter Name="P_Title">
-                <Value>= "נהגים משובצים שלא שלחו כרטיס עבודה ויזה מהסניף לתקופה " 
+                <Value>= "נהגים משובצים שלא שלחו כרטיס עבודה מהסניף לתקופה " 
  &amp; Trim(Parameters!P_PERIOD.Value)</Value>
               </Parameter>
             </Parameters>
-            <Left>0cm</Left>
             <Height>1.80071cm</Height>
             <Width>17.88287cm</Width>
             <ZIndex>1</ZIndex>
@@ -1379,7 +1327,6 @@
           </Subreport>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>0cm</Top>
         <Left>0.03445cm</Left>
         <Height>2.76458cm</Height>
         <Width>17.88287cm</Width>
@@ -1397,6 +1344,93 @@
     <Height>9.14586cm</Height>
     <Style />
   </Body>
+  <Width>18.61103cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>4e584d2c-70f1-4912-a813-4d0090d31a3d</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsDisregardDrivers">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_DISREGARDTYPE">
+            <Value>=Parameters!P_DISREGARDTYPE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_DISREGARDDRIVERS</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DAYOFWEEK">
+          <DataField>DAYOFWEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="OTO_NO">
+          <DataField>OTO_NO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SECTOR_VISA">
+          <DataField>SECTOR_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_EZOR">
+          <DataField>KOD_EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_PERIOD">
       <DataType>String</DataType>
@@ -1426,18 +1460,7 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>18.61103cm</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
-    <ColumnSpacing>1.27cm</ColumnSpacing>
-    <Style />
-  </Page>
   <Language>he-IL</Language>
-  <rd:ReportID>923cb826-e75f-4c17-9f14-2b0e3d6f0fe2</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>923cb826-e75f-4c17-9f14-2b0e3d6f0fe2</rd:ReportID>
 </Report>
