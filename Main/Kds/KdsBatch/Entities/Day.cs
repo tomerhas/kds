@@ -45,7 +45,7 @@ namespace KdsBatch.Entities
 
         public clParameters oParameters;
         public List<Sidur> Sidurim;
-        public DataTable dtTmpMeafyeneyElements;
+    //    public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
 
         public Day() : base(OriginError.Day)  { }
@@ -69,7 +69,7 @@ namespace KdsBatch.Entities
           //  DataTable oOved.dtOvedDetails;
             try
             {
-                dtTmpMeafyeneyElements = oDal.GetTmpMeafyeneyElements(dCardDate, dCardDate);
+                //dtTmpMeafyeneyElements = oDal.GetTmpMeafyeneyElements(dCardDate, dCardDate);
               //  oOved.dtOvedDetails = oDal.GetOvedYomAvodaDetails(oOved.iMisparIshi, dCardDate);
                 //נתונים כללים               
                 //נוציא את שדה הלבשה ברמת יום עבודה

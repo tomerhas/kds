@@ -27,7 +27,7 @@ namespace KdsBatch.Entities
         public DateTime dCardDate;
 
         public DataTable dtIdkuneyRashemet;
-        public DataTable dtTmpMeafyeneyElements;
+      //  public DataTable dtTmpMeafyeneyElements;
         public DataTable dtOvedDetails;
         public DataTable dtSidurimVePeiluyot;
         public clMeafyenyOved oMeafyeneyOved;
@@ -90,7 +90,7 @@ namespace KdsBatch.Entities
             EntitiesDal oDal = new EntitiesDal();
             DataTable dtMatzavOved;
             dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
-            dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
+            //dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
             dtMatzavOved = oDal.GetOvedMatzav(iMisparIshi, dCardDate);
             if (dtMatzavOved.Rows.Count>0)
                 iMatzavOved =int.Parse(dtMatzavOved.Rows[0]["kod_matzav"].ToString());

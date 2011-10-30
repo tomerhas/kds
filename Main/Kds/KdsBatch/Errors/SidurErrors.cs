@@ -1533,7 +1533,7 @@ namespace KdsBatch.Errors
 
                             if ((clKavim.enMakatType)(oKavim.GetMakatType(lMakatNesia)) == clKavim.enMakatType.mElement)
                             {
-                                DataRow drMeafyeneyElements =SidurInstance.objDay.dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
+                                DataRow drMeafyeneyElements = GlobalData.dtTmpMeafyeneyElements.Select("kod_element=" + int.Parse(lMakatNesia.ToString().Substring(1, 2)))[0];
                                 if (drMeafyeneyElements["element_for_yedia"].ToString() != "2")
                                 {
                                     break;

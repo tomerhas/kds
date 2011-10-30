@@ -819,7 +819,7 @@ public partial class Modules_Test :Page
         string sArrKodShgia;
         try
         {
-            GlobalData.InitGlobalData();
+            GlobalData.InitGlobalData(taarich);
 
             Day oDay = new Day(mispar_ishi, taarich,true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
             oDay.btchRequest = 0;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-//using KdsBatch.InputData;
+using KdsBatch.Errors;
 using KdsLibrary.DAL;
 using System.Web;
 using KdsLibrary;
@@ -208,6 +208,7 @@ namespace KdsBatch
             bool nextStep = false;
             successCount = false;
             clBatchManager btchMan = new clBatchManager(this._btchRequest);
+            MainErrors oErrors = new MainErrors(date);
             try
             {
                 if (_executionType == BatchExecutionType.InputData ||
@@ -223,7 +224,9 @@ namespace KdsBatch
                 if (_executionType == BatchExecutionType.ErrorIdentification ||
                     (_executionType == BatchExecutionType.All && nextStep))
                 {
-                    nextStep = btchMan.MainOvedErrors(employeeID, date);
+                 //   nextStep = btchMan.MainOvedErrors(employeeID, date);
+                    nextStep = oErrors.HafelShguim(employeeID, date);
+                    
                     //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
                     //   String.Format("{0}: OvedErrors result:{1}",
                     //   employeeID, nextStep));

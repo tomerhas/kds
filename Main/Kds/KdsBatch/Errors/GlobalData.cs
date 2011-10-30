@@ -24,11 +24,12 @@ namespace KdsBatch.Errors
         public static DataTable dtSugeyYamimMeyuchadim { get; set; }
         public static DataTable dtSugSidur { get; set; }
         public static DataTable dtElementim { get; set; }
+        public static DataTable dtTmpMeafyeneyElements { get; set; }
         public static List<ErrorItem> ActiveErrors { get; set; }
         public static List<CardError> CardErrors { get; set; }
         public static List<int> SpecialSidurim = new List<int> { 99200 };
 
-        public static void InitGlobalData()
+        public static void InitGlobalData(DateTime taarich)
         {
              clUtils oUtils = new clUtils();
              CardErrors = new List<CardError>();
@@ -39,6 +40,7 @@ namespace KdsBatch.Errors
                  dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                  dtSugSidur = clDefinitions.GetSugeySidur();
                  dtElementim = oUtils.GetCtbElementim();
+                 dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(taarich, taarich);
                  SetActiveErrors();
                  GlobalDataEmpty = false;
             }
