@@ -790,7 +790,7 @@ public partial class Modules_Test :Page
         //DateTime dTaarich = DateTime.Parse("12/09/2010");
         // string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
-
+         
          //HafelShguim(254, DateTime.Parse("14/09/2010"));
          //oBatchManager.MainOvedErrors(254, DateTime.Parse("14/09/2010"));
 
