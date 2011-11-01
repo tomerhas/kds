@@ -604,6 +604,13 @@
         <input type="hidden" runat="server" id="hidSdrInd"/>
       
     </form>   
+    <script language="vbscript" type="text/vbscript">
+        sub ShiftTab()
+           set WSHShell=CreateObject("WScript.Shell")        
+           WSHShell.SendKeys "+{Tab}"
+        end sub
+    </script>
+    
     <script language="javascript" type="text/javascript">
          var iCount=0;
 //       frmWorkCard.submit =SaveScrollPositionSubmit();
@@ -624,8 +631,16 @@
 //                    event.cancel = true;
                  }                 
                  break;  
-              case 107:
+              case 107: //+
                  event.keyCode=9;
+                 break;
+              case 109: //-
+                    ShiftTab();
+                  // event.SendKeys("{+Tab}");
+//                 var newEvent = document.createEventObject(event);                                                                                      
+//                 newEvent.shiftKey = true;                   
+//                 newEvent.keyCode = 9; 
+//                 event.srcElement.fireEvent( '', newEvent );                                                                                                     
                  break;
               case 110: //. //123-f12
                    if (document.getElementById("btnUpdateCard").disabled==false)

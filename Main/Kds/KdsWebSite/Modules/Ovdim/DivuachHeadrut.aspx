@@ -193,8 +193,8 @@ function CheckDateGreaterStart(val, args) {
     <div style="text-align:center">
      <asp:UpdatePanel ID="upBody" runat="server" UpdateMode="Conditional">
           <ContentTemplate>
-               <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0px">
-                   <tr class="GridHeader"><td colspan="7"> דיווח העדרות</td></tr>
+               <table width="100%" cellpadding="0" cellspacing="0" border="1" style="margin:0px">
+                   <tr class="GridHeader"><td colspan="7" class = "WorkCardTable1Label"> דיווח העדרות</td></tr>
                    <tr><td rowspan="2" width="20px"><br /></td><td colspan="6"><br /></td></tr>
                     <tr><td width="100px">סוג העדרות:</td> 
                          <td colspan="4"  align="right">  

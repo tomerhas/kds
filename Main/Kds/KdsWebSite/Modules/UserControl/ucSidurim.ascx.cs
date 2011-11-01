@@ -2513,7 +2513,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //הכנסת סידור חדש
         LiteralControl lDummy = new LiteralControl();
         lDummy.Text = " ";
-        hCell = CreateTableCell("92px", "", "");
+        hCell = CreateTableCell("73px", "", "");
         //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
         if (oSidur.htPeilut.Count > 0)
         {
@@ -2574,7 +2574,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Style.Add("border-right", "solid 1px gray");
                 
     }
-    protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
+    protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell,ref HtmlTableCell hCollapseCell,ref HtmlTableCell hErrCell, int iIndex)
     {
         try
         {
@@ -2583,16 +2583,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             Image imgErr = new Image();
             imgErr.ID = "imgSdr" + iIndex;
 
-            LiteralControl lDummy = new LiteralControl();
-            lDummy.Text = " ";
-            hCell = CreateTableCell("95px", "", "");
-            hCell.Attributes.Add("class", "WorkCardSidur");
+            Label lDummy = new Label();
+            lDummy.Text = "11";
+            lDummy.CssClass = "WorkCardSidurDummy";
+
+
+            hCollapseCell = CreateTableCell("7px", "WorkCardSidurCollapse", "");
+            hCell = CreateTableCell("40px", "WorkCardSidur", "");
+            hErrCell = CreateTableCell("7px", "WorkCardSidurErr", "");
+           
             //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
-            if (oSidur.htPeilut.Count > 0){
-                hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));               
-            }
+            if (oSidur.htPeilut.Count > 0)            
+                hCollapseCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));            
+            else            
+                hCollapseCell.Controls.Add(lDummy);            
           
-            hCell.Controls.Add(lDummy);
+            //hCell.Controls.Add(lDummy);
            
             DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
@@ -2624,19 +2630,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
-                        if (SetOneError(lnkSidur, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
+                        if (SetOneError(lnkSidur, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                             imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
 
-                            hCell.Controls.Add(lDummy);
-                            hCell.Controls.Add(imgErr);
-                            hCell.Style.Add("background-color", "white");
-                            hCell.Style.Add("color", "black");
+                            //hCell.Controls.Add(lDummy);
+                            hErrCell.Controls.Add(imgErr);
+                            hErrCell.Style.Add("background-color", "white");
+                            hErrCell.Style.Add("color", "black");
                         }
                         else
                         {
+                            lDummy.Text = "1";
+                            //lDummy.CssClass = "WorkCardSidurDummy";                            
+                            hErrCell.Controls.Add(lDummy);            
                             //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
                             if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
                                 lnkSidur.Style.Add("color", "white");
@@ -2648,6 +2657,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                         break;
                     case clGeneral.enCardStatus.Valid:
+                        lDummy.Text = "1";
+                        //lDummy.CssClass = "WorkCardSidurDummy";
+                        
+                        hErrCell.Controls.Add(lDummy);      
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2672,20 +2685,30 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
-                        if (SetOneError(lbl, hCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
+                        if (SetOneError(lbl, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                             imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
-                            hCell.Controls.Add(lDummy);
-                            hCell.Controls.Add(imgErr);
-                            hCell.Style.Add("background-color", "white");
-                            hCell.Style.Add("color", "black");
+                            //hCell.Controls.Add(lDummy);
+                            hErrCell.Controls.Add(imgErr);
+                            hErrCell.Style.Add("background-color", "white");
+                            hErrCell.Style.Add("color", "black");
                         }
                         else
+                        {
+                            lDummy.Text = "1";
+                            //lDummy.CssClass = "WorkCardSidurDummy";
+
+                            hErrCell.Controls.Add(lDummy);
                             CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        }
                         break;
                     case clGeneral.enCardStatus.Valid:
+                        lDummy.Text = "1";
+                        lDummy.CssClass = "WorkCardSidurDummy";
+                        hErrCell.Attributes.Add("class", "WorkCardSidurDummy");
+                        hErrCell.Controls.Add(lDummy);  
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2793,7 +2816,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             chkBox.Disabled = false;
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
-        chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");   
+        chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");
+       // chkBox.Attributes.Add("class","WorkCardCheckBox");
        // AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         Image imgRemark = new Image();
@@ -4294,7 +4318,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         HtmlTable hTable = new HtmlTable();
         HtmlTableRow hRow = new HtmlTableRow();
-        HtmlTableCell hCell = new HtmlTableCell();            
+        HtmlTableCell hCell = new HtmlTableCell();
+        HtmlTableCell hCollapseCell = new HtmlTableCell();
+        HtmlTableCell hErrCell = new HtmlTableCell();            
         DataRow[] drSugSidur;
         bool bSidurNahagut=false;
         bool bSidurTnua = false;
@@ -4310,6 +4336,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.CellPadding = 1;
             hTable.CellSpacing = 0;               
             hTable.Style.Add("height", "20px");
+            
             //hTable.Style.Add("CssClass", "CollapseHeader");
             
           
@@ -4345,13 +4372,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.Rows[0].Cells.Add(hCell);
 
             //מספר סידור   
-            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))                
+            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
                 CreateNewSidurCell(oSidur, ref hCell, iIndex); //יצירת סידור חדש - txtBox
             else
-                CreateSidurCell(oSidur, ref hCell, iIndex);          
-
+            {                
+                CreateSidurCell(oSidur, ref hCell, ref hCollapseCell, ref hErrCell,  iIndex);                               
+            }
+            hTable.Rows[0].Cells.Add(hCollapseCell);
             hTable.Rows[0].Cells.Add(hCell);
-            
+            hTable.Rows[0].Cells.Add(hErrCell);
             //שעת התחלה
             CreateShatHatchalaCell(oSidur, ref hCell, iIndex, bSidurActive);
             hTable.Rows[0].Cells.Add(hCell);
