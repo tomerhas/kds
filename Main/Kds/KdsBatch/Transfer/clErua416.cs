@@ -102,13 +102,13 @@ namespace KdsBatch
                switch (_iGil)
                {
                    case 0: //clGeneral.enKodGil.enKashish.GetHashCode():
-                        fErech= fErech/516;
+                        fErech= fErech/444;
                        break;
                    case 1: //clGeneral.enKodGil.enKshishon.GetHashCode():
                         fErech= fErech/480;
                        break;
                    case 2: //clGeneral.enKodGil.enTzair.GetHashCode():
-                        fErech= fErech/444;
+                        fErech= fErech/516;
                        break;
                }
                sErua416.Append(FormatNumber(fErech, 4, 2));//ChofeshZchut

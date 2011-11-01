@@ -1437,7 +1437,7 @@ namespace KdsBatch
                             fSumDakotRechiv += oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotPremiaVisa); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotPremiaVisa.GetHashCode(), objOved.Taarich);
                         }
 
-                        fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv).ToString());
+                        fSumDakotRechiv = float.Parse(Math.Floor(fSumDakotRechiv).ToString());
                         addRowToTable(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), fSumDakotRechiv);
                     }
                 }
