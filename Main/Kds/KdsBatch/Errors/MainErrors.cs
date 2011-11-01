@@ -26,6 +26,7 @@ namespace KdsBatch.Errors
             string sArrKodShgia;
             try
             {
+                GlobalData.CardErrors.Clear();
                 Day oDay = new Day(mispar_ishi, taarich, true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
            //     oDay.btchRequest = 0;
                 if (oDay.oOved.bOvedDetailsExists)

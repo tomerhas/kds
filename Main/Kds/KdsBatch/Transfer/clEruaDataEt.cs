@@ -53,15 +53,15 @@ namespace KdsBatch
           DataRow[] drYamim;
           try
           {
-              fErech = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode());
+              fErech = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
                   CreateDataEtToRechiv("100", fErech, 0);
                
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
+              fErech = GetErechRechiv( clGeneral.enRechivim.ShaotShabat100.GetHashCode(),"erech_rechiv_a");
+              fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
                    CreateDataEtToRechiv("001", (fErech/60), 0);
@@ -71,7 +71,7 @@ namespace KdsBatch
                   isuk =int.Parse(_drPirteyOved["isuk"].ToString());
               if (isuk>= 500 && isuk<600)
               {
-                  fErech = GetErechRechiv( clGeneral.enRechivim.PremyaRegila.GetHashCode());
+                  fErech = GetErechRechiv(clGeneral.enRechivim.PremyaRegila.GetHashCode(), "erech_rechiv_a");
                   if (fErech > 0)
                   {
                    //   if (fErech > 500) { fErech = 500; }
@@ -80,7 +80,7 @@ namespace KdsBatch
                   }
 
 
-                  fErech = GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode());
+                  fErech = GetErechRechiv(clGeneral.enRechivim.SachPitzul.GetHashCode(), "erech_rechiv_a");
                   if (fErech > 0)
                   {
                       CreateDataEtToRechiv( "063", fErech, 0);
@@ -93,19 +93,19 @@ namespace KdsBatch
               {
                   if (sMeafyen53.Substring(0, 1) == "1")
                   {
-                      fErech = GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode());
+                      fErech = GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
                       if (fErech > 0)
                       {
                         //  fKamut = float.Parse(dtChishuvYomi.Compute("count(MISPAR_ISHI)", "MISPAR_ISHI=" + _iMisparIshi + " AND ERECH_RECHIV>0 AND KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')").ToString());
                        //   drYamim = dtChishuvYomi.Select("ERECH_RECHIV>0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
-                          fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode());
+                          fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a");
                           CreateDataEtToRechiv("004", fKamut, fErech);
 
                       }
                   }
                   else if (sMeafyen53.Substring(0, 1) == "2")
                   {
-                      fErech = GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode());
+                      fErech = GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
                       if (fErech > 0)
                       {
                           CreateDataEtToRechiv("004", 1, fErech);
@@ -114,8 +114,8 @@ namespace KdsBatch
                   //else { CreateDataEtToRechiv("004", 0, fErech); }
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
-              fErech += GetErechRechiv( clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
+              fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), "erech_rechiv_a");
+              fErech += GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), "erech_rechiv_a");
 
               if (fErech > 0)
               {
@@ -124,7 +124,7 @@ namespace KdsBatch
               }
 
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode());
+              fErech = GetErechRechiv(clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
                    CreateDataEtToRechiv( "079", fErech, 0);
@@ -132,21 +132,21 @@ namespace KdsBatch
               }
 
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60;
+              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(),"erech_rechiv_a")/60;
               if (fErech > 0)
               {
                  CreateDataEtToRechiv( "007", fErech, 0);
                  
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60;
+              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(),"erech_rechiv_a")/60;
               if (fErech > 0)
               {
                   CreateDataEtToRechiv( "008", fErech, 0);
                  
               }
 
-              fErech = GetErechRechiv( clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60;
+              fErech = GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), "erech_rechiv_a")/60;
               if (fErech > 0)
               {
                  CreateDataEtToRechiv( "048", fErech, 0);

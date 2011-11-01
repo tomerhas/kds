@@ -29,6 +29,7 @@ namespace KdsBatch
         public DataTable dtPremyot { set; get; }
         public string sSugYechida { get; set; }
         public float fMekademNipuach { set; get; }
+        public float fmichsatYom { get; set; }
         public DataSet _dsChishuv { set; get; }
         private DataTable _DtMonth; 
         private DataTable _DtDay;
@@ -72,8 +73,9 @@ namespace KdsBatch
         {
             try
             {
+                fmichsatYom = 0;
                 oGeneralData = SingleGeneralData.GetInstance();
-
+               
                 InitPremyotYadaniyot();
                 InitPremyot();
                 InitPirteyOvedList();

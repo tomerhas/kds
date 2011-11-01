@@ -38,24 +38,24 @@ namespace KdsBatch
           float fErech;
           try
           {
-              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode()), 3, 0) + ";");
-              fErech = GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
+              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a"), 3, 0) + ";");
+              fErech = GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "erech_rechiv_a");
+              fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), "erech_rechiv_a");
               sBakaraEt.Append(FormatNumberWithPoint((fErech / 60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode())/60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode())/60), 6, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode())/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(), "erech_rechiv_a")/60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(), "erech_rechiv_a") / 60), 6, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint((GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), "erech_rechiv_a") / 60), 6, 2) + ";");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append("000.00;");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.PremyaRegila.GetHashCode()), 11, 2) + ";");
-              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv( clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode()), 7, 2) + ";");
-              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()), 2, 0) + ";");
-              fErech = GetErechRechiv( clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
-              fErech += GetErechRechiv( clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.PremyaRegila.GetHashCode(), "erech_rechiv_a"), 11, 2) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a"), 7, 2) + ";");
+              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachPitzul.GetHashCode(), "erech_rechiv_a"), 2, 0) + ";");
+              fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), "erech_rechiv_a");
+              fErech += GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), "erech_rechiv_a");
               sBakaraEt.Append(FormatNumberWithPoint((fErech/60), 5, 1) + ";");
-              sBakaraEt.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode()), 2, 0));
+              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), "erech_rechiv_a"), 2, 0));
 
               if (!IsEmptyErua(sBakaraEt.ToString().Replace(";","").Replace(".","")))
               {
