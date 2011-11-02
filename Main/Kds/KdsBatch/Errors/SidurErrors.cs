@@ -612,9 +612,11 @@ namespace KdsBatch.Errors
         protected override bool IsCorrect()
         {
             bool bError = false;
+            int iNumSidurim=0;
             try
             {
-                if ((SidurInstance.objDay.Sidurim.Count == 1) || (SidurInstance == SidurInstance.objDay.Sidurim[SidurInstance.objDay.Sidurim.Count-1]))
+                iNumSidurim = SidurInstance.objDay.Sidurim.Sum(sidur => sidur.bIsSidurLeBdika ? 1 : 0);
+                if ((iNumSidurim == 1) || (SidurInstance ==SidurInstance.objDay.getLastSidurLebdika()))
                 {
                     if (!string.IsNullOrEmpty(SidurInstance.sPitzulHafsaka) && Int32.Parse(SidurInstance.sPitzulHafsaka) > 0)
                     {
@@ -1309,11 +1311,13 @@ namespace KdsBatch.Errors
         protected override bool IsCorrect()
         {
             bool bError = false;
+            int iNumSidurim = 0;
             try
             {
                 if (SidurInstance.objDay.sHashlamaLeyom == "1")
                 {
-                    if ((SidurInstance.objDay.Sidurim.Count == 1))
+                    iNumSidurim = SidurInstance.objDay.Sidurim.Sum(sidur => sidur.bIsSidurLeBdika ? 1 : 0);
+                    if (iNumSidurim == 1) //(SidurInstance.objDay.Sidurim.Count == 1))
                     {
                         if (SidurInstance.bSidurMyuhad)
                         {

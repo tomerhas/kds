@@ -377,7 +377,27 @@ namespace KdsBatch.Entities
             {
                 throw ex;
             }
-            
+        }
+
+        public  DataTable GetData(DateTime taarich)
+        {
+            DataTable dt = new DataTable();
+           // errorMessage = String.Empty;
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("p_date", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, 0, ParameterDir.pdInput);
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor,
+                    null, ParameterDir.pdOutput);
+                dal.ExecuteSP(KdsLibrary.clGeneral.cProGetYameiAvodaMeshek, ref dt);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+              //  errorMessage = ex.ToString();
+            }
+            return dt;
         }
     }
 }

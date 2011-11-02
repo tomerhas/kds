@@ -190,6 +190,15 @@ namespace KdsBatch.Entities
             return iZmanNesia;
         }
 
+        public Sidur getLastSidurLebdika()
+        {
+            for (int i = Sidurim.Count - 1; i>=0; i--)
+            {
+                if (Sidurim[i].bIsSidurLeBdika)
+                    return Sidurim[i];
+            }
+            return null;
+        }
         //public run
 
         public Sidur getPrevSidurLeTashlum(int index)
@@ -209,5 +218,6 @@ namespace KdsBatch.Entities
                 throw ex;
             }
         }
+
     }
 }

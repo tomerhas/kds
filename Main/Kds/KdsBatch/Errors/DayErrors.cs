@@ -187,44 +187,47 @@ namespace KdsBatch.Errors
                 {
                     DayInstance.Sidurim.ForEach(sidur =>
                                                 {
-                                                    sidur.Peiluyot.ForEach(peilut =>
-                                                            {
-                                                                if (!bError)
+                                                    if (sidur.bIsSidurLeBdika)
+                                                    {
+                                                        sidur.Peiluyot.ForEach(peilut =>
                                                                 {
-                                                                    if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
+                                                                    if (!bError)
                                                                     {
-                                                                        dtMeafyenim = oKavim.GetMeafyeneyElementByKod(peilut.lMakatNesia, peilut.dCardDate);
-                                                                        if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                                                                        if ((clKavim.enMakatType)peilut.iMakatType == clKavim.enMakatType.mElement)
                                                                         {
-                                                                            shouldProcess = false;
+                                                                            dtMeafyenim = oKavim.GetMeafyeneyElementByKod(peilut.lMakatNesia, peilut.dCardDate);
+                                                                            if (dtMeafyenim.Select("KOD_MEAFYEN = 9") != null)
+                                                                            {
+                                                                                shouldProcess = false;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                shouldProcess = true;
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
                                                                             shouldProcess = true;
                                                                         }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        shouldProcess = true;
-                                                                    }
 
-                                                                    if (shouldProcess)
-                                                                    {
-                                                                        if (!peiluyot.ContainsKey(peilut.dFullShatYetzia.ToString()))
+                                                                        if (shouldProcess)
                                                                         {
-                                                                            peiluyot.Add(peilut.dFullShatYetzia.ToString(), peilut);
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            if (peilut.iMisparKnisa == 0 && peiluyot[peilut.dFullShatYetzia.ToString()].iMisparKnisa == 0)
+                                                                            if (!peiluyot.ContainsKey(peilut.dFullShatYetzia.ToString()))
                                                                             {
-                                                                                bError = true;
+                                                                                peiluyot.Add(peilut.dFullShatYetzia.ToString(), peilut);
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                if (peilut.iMisparKnisa == 0 && peiluyot[peilut.dFullShatYetzia.ToString()].iMisparKnisa == 0)
+                                                                                {
+                                                                                    bError = true;
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
                                                                 }
-                                                            }
-                                                          );
+                                                              );
+                                                    }
                                                 }
                                         );
                 }
