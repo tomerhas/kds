@@ -725,7 +725,7 @@
 
                var NextPeilutName = ElementName.substr(0,18) + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,19) + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                
-               if (document.getElementById(NextPeilutName)==null)
+               if ($get(NextPeilutName)==null)
                {
                 if (Direction==38){ //up
                    SidurNum = Number(SidurNum) - 1;
@@ -740,8 +740,8 @@
                  NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                }
                 
-               if (document.getElementById(NextSidurName)!=null){
-                   while ((document.getElementById(NextPeilutName)==null) || (document.getElementById(NextPeilutName).isDisabled==true))
+               if ($get(NextSidurName)!=null){
+                   while (($get(NextPeilutName)==null) || ($get(NextPeilutName).isDisabled==true))
                    {
                     //  נעבור לפעילות הבאה
                     if (Direction==38) //up
@@ -750,16 +750,32 @@
                         PeilutNum=Number(PeilutNum)+1;
                    
                    NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
-                   if (PeilutNum==0) break;
+                   if (PeilutNum==0){             
+                        SidurNum=SidurNum-1;            
+                        _GridPeilut = document.getElementById("lstSidurim_" + padLeft(Number(SidurNum), '0', 3));   
+                        if (_GridPeilut!=null){      
+                           PeilutNum = Number(_GridPeilut.rows.length+1);
+                           NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;  
+                           SetFocusToNextPrevPeilutField(Direction,NextPeilutName,FieldName);
+                           break;
+                        }
+                        else
+                          break;
+                    }
 //{
 //                       NextSidurName = "lstSidurim_txtSH".concat(Number(SidurNum)+1);
 //                       SetFocusToNextPrevSidur(Direction,NextSidurName,'txtSH');
 //                       break;
 //                    }
                    }
-                   if (document.getElementById(NextPeilutName)!=null)                  
-                      if (!document.getElementById(NextPeilutName).isDisabled)
-                           document.getElementById(NextPeilutName).focus();//                   
+                   if ($get(NextPeilutName)!=null)                  
+                      if (!$get(NextPeilutName).isDisabled)
+                      try{
+                           $get(NextPeilutName).focus();//                   
+                          }
+                      catch(err)
+                      {
+                      }
                }
            }            
          }
