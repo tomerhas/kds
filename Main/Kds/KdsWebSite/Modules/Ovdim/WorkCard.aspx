@@ -635,19 +635,133 @@
                  event.keyCode=9;
                  break;
               case 109: //-
-                    ShiftTab();
-                  // event.SendKeys("{+Tab}");
-//                 var newEvent = document.createEventObject(event);                                                                                      
-//                 newEvent.shiftKey = true;                   
-//                 newEvent.keyCode = 9; 
-//                 event.srcElement.fireEvent( '', newEvent );                                                                                                     
-                 break;
+                   ShiftTab();                                                                                                                 
+                   break;
               case 110: //. //123-f12
                    if (document.getElementById("btnUpdateCard").disabled==false)
                        document.getElementById("btnUpdateCard").focus();
               
                    break;
+             case 38://up 
+                  GoToNextPrevLine (KeyID,document.activeElement.id);                
+                  break;
+             case 40://down       
+                  GoToNextPrevLine (KeyID,document.activeElement.id);                 
+                  break;
              }                
+         }
+         function GoToNextPrevLine(Direction,ElementName){
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'MakatNumber');
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'CarNumber');  
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'ActualMinutes'); 
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'ShatYetiza'); 
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'KisuyTor'); 
+            SetFocusToNextPrevSidur(Direction,ElementName,'txtSG');
+            SetFocusToNextPrevSidur(Direction,ElementName,'txtSH');
+         }
+         function SetFocusToNextPrevSidur(Direction,ElementName,FieldName)
+         {
+            var iPos=ElementName.indexOf(FieldName);
+            var NextSidurName,PeilutName; 
+            if (iPos>-1)
+            {
+               var SidurNum = ElementName.substr(ElementName.indexOf('lstSidurim_')+16);
+               var _GridPeilut; 
+               if (Direction==40)
+               {  //down             
+//                    _GridPeilut = document.getElementById("lstSidurim_" + padLeft(SidurNum, '0', 3));   
+//                    if (_GridPeilut==null){                      
+                        //נמצא את הסידור הבא                    
+                        SidurNum = Number(SidurNum) + 1;                                         
+                        while (($get("lstSidurim_txtSH".concat(SidurNum))!=null) && ($get("lstSidurim_txtSH".concat(SidurNum)).isDisabled==true)){                                                                  
+                            SidurNum = Number(SidurNum) + 1;                             
+                        }
+
+                        if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
+                            if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
+                                $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();   
+                  //  }
+//                    else{//נמצא את הפעילות הראשונה בסידור
+//                       PeilutName = "lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl01_lstSidurim_" + padLeft(SidurNum, '0', 3) +"_ctl01ShatYetiza" ;
+//                       SetFocusToNextPrevPeilutField(Direction,PeilutName,'ShatYetiza'); 
+//                    }
+                 }
+                 else
+                 {//up      
+                    SidurNum = Number(SidurNum) - 1;       
+                    while ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)   
+                    {                                                  
+//                        _GridPeilut = document.getElementById("lstSidurim_" + padLeft(SidurNum, '0', 3));   
+//                        if (_GridPeilut==null){         
+                            if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
+                                if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
+                                {
+                                    $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();
+                                    break;
+                                }
+//                        }
+//                        else{
+//                           PeilutName = "lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl"+ padLeft(_GridPeilut.rows.length+1,'0',2) + "_lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl"+ padLeft(_GridPeilut.rows.length+1,'0',2)+"ShatYetiza" ;
+//                           SetFocusToNextPrevPeilutField(Direction,PeilutName,'ShatYetiza'); 
+//                           break;
+//                        }                                                          
+                         SidurNum = Number(SidurNum) - 1;   
+                    }                                                                                                                                                                                      
+                }                                                
+            }//end if pos           
+         }//end function
+
+         function SetFocusToNextPrevPeilutField(Direction,ElementName,FieldName){            
+            var iPos=ElementName.indexOf(FieldName);
+            var NextSidurName; 
+            if (iPos>-1){
+               var PeilutNum=ElementName.substr(ElementName.indexOf('ctl')+3,2);
+               var SidurNum = ElementName.substr(ElementName.indexOf('lstSidurim_')+11,3);
+               NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);     
+               if (Direction==38) //up
+                  PeilutNum=Number(PeilutNum)-1;
+               else //down
+                  PeilutNum=Number(PeilutNum)+1;
+
+               var NextPeilutName = ElementName.substr(0,18) + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,19) + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+               
+               if (document.getElementById(NextPeilutName)==null)
+               {
+                if (Direction==38){ //up
+                   SidurNum = Number(SidurNum) - 1;
+                   PeilutNum = 99;
+                }
+                else //down
+                {
+                  SidurNum = Number(SidurNum) + 1;
+                  PeilutNum = 2;
+                }
+                 NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);                  
+                 NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+               }
+                
+               if (document.getElementById(NextSidurName)!=null){
+                   while ((document.getElementById(NextPeilutName)==null) || (document.getElementById(NextPeilutName).isDisabled==true))
+                   {
+                    //  נעבור לפעילות הבאה
+                    if (Direction==38) //up
+                        PeilutNum=Number(PeilutNum)-1;
+                    else //down
+                        PeilutNum=Number(PeilutNum)+1;
+                   
+                   NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                   if (PeilutNum==0) break;
+//{
+//                       NextSidurName = "lstSidurim_txtSH".concat(Number(SidurNum)+1);
+//                       SetFocusToNextPrevSidur(Direction,NextSidurName,'txtSH');
+//                       break;
+//                    }
+                   }
+                   if (document.getElementById(NextPeilutName)!=null)                  
+                      if (!document.getElementById(NextPeilutName).isDisabled)
+                           document.getElementById(NextPeilutName).focus();//                   
+               }
+           }            
          }
          function chkIfBarCode(){
             var KeyID = event.keyCode;
