@@ -25,8 +25,8 @@ namespace KdsBatch
            sErua416 = new StringBuilder();
            try
            {
-           
-           sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyAvodaLeloMeyuchadim.GetHashCode()),4,2));
+
+           sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode()), 4, 2));
            sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YemeyAvoda.GetHashCode()),4,2));
 
            //fErech = GetErechRechiv(clGeneral.enRechivim.YomKursHasavaLekav.GetHashCode());

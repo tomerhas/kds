@@ -92,8 +92,11 @@ namespace KdsBatch.Entities
             dtIdkuneyRashemet = clDefinitions.GetIdkuneyRashemet(iMisparIshi, dCardDate);
             //dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
             dtMatzavOved = oDal.GetOvedMatzav(iMisparIshi, dCardDate);
-            if (dtMatzavOved.Rows.Count>0)
-                iMatzavOved =int.Parse(dtMatzavOved.Rows[0]["kod_matzav"].ToString());
+            if (dtMatzavOved.Rows.Count > 0)
+            {
+                int.TryParse(dtMatzavOved.Rows[0]["kod_matzav"].ToString(), out iMatzavOved);
+                //iMatzavOved = int.Parse(dtMatzavOved.Rows[0]["kod_matzav"].ToString());
+            }
             dtSidurimVePeiluyot = oDal.GetSidurimLeOved(iMisparIshi, dCardDate);
             if (dtSidurimVePeiluyot.Rows.Count>0)
                 bSidurimExists=true;
