@@ -785,29 +785,29 @@ public partial class Modules_Test :Page
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
         EntitiesDal oDal = new EntitiesDal();
-    //    DataTable dt = oDal.getOvdimForShguim();
+        DataTable dt = oDal.getOvdimForShguim();
        // string sMisparim = "77319";
        // DateTime dTaarich = DateTime.Parse("25/08/2011");
         // string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
 
-         HafelShguim(63745, DateTime.Parse("09/05/2011"));
-         oBatchManager.MainOvedErrors(63745, DateTime.Parse("09/05/2011"));
+         //HafelShguim(31241, DateTime.Parse("06/04/2011"));
+         //oBatchManager.MainOvedErrors(31241, DateTime.Parse("06/04/2011"));
 
          //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
-         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         //{
-         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //}
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
          ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
 
          ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
-         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         //{
-         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //}
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
          //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
     }
 

@@ -432,7 +432,7 @@ namespace KdsBatch.Errors
                 {
                     if ((DayInstance.oOved.oMeafyeneyOved.Meafyen51Exists) || (DayInstance.oOved.oMeafyeneyOved.Meafyen61Exists))
                     {
-                       if( DayInstance.Sidurim.Any(sidur => sidur.bSidurNahagut))
+                       if( DayInstance.Sidurim.Any(sidur => (sidur.bIsSidurLeBdika && sidur.bSidurNahagut)))
                            bError = true;
                     }
                 }  

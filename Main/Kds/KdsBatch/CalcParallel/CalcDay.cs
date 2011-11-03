@@ -2185,22 +2185,22 @@ namespace KdsBatch
                                 }
                                 else if (fTempZ >= fTempX)
                                 {
-                                    fSumDakotRechiv = fTempX * float.Parse("1.5");
+                                    fSumDakotRechiv =float.Parse(Math.Ceiling(fTempX * float.Parse("1.5")).ToString());
                                 }
                                 else
                                 {
                                     fTempX = fTempX - fTempZ;
 
-                                    fSumDakotRechiv = fTempZ * float.Parse("1.5");
+                                    fSumDakotRechiv = float.Parse(Math.Ceiling(fTempZ * float.Parse("1.5")).ToString());
 
                                     if (fTempY > fTempX)
                                     {
 
-                                        fSumDakotRechiv = fSumDakotRechiv + (fTempX * float.Parse("1.25"));
+                                        fSumDakotRechiv = fSumDakotRechiv + fTempX * float.Parse("1.25");
                                     }
                                     else
                                     {
-                                        fSumDakotRechiv = fSumDakotRechiv + (fTempY * float.Parse("1.25")) + (fTempX - fTempY);
+                                        fSumDakotRechiv = fSumDakotRechiv + float.Parse(Math.Ceiling((fTempY * float.Parse("1.25"))).ToString()) +(fTempX - fTempY);
                                     }
                                 }
                             }
@@ -2894,7 +2894,7 @@ namespace KdsBatch
                 fYomMiluim = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMiluim); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomMiluim.GetHashCode(), objOved.Taarich); 
                 fYomHadracha = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomHadracha); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHadracha.GetHashCode(), objOved.Taarich); 
 
-                if (fDakotNochehut > 0 && fYomMachala == 0 && fYomMachalaBoded == 0
+                if (fMichsaYomit > 0 && fDakotNochehut > 0 && fYomMachala == 0 && fYomMachalaBoded == 0
                     && fYomShmiratHerayon == 0 && fYomEvel == 0 && fYomMachalatYeled == 0 && fYomHadracha == 0
                     && fYomMiluim == 0 && fYomMachalaBenZug == 0 && fYomTeuna == 0 && fYomMachaltHorim == 0)
                 {
