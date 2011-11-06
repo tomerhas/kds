@@ -49,6 +49,7 @@ namespace KdsBatch
         public DataTable DtPeiluyotTnuaYomi { set; get; }
 
         public float fTotalAruchatZaharimForDay { set; get; }
+        public float fHashlamaAlCheshbonNosafot { set; get; }
         
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {

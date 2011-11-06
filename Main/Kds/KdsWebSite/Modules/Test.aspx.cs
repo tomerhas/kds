@@ -817,6 +817,7 @@ public partial class Modules_Test :Page
         clGeneral.enCardStatus _CardStatus;
         bool bHaveShgiotLetzuga = false;
         string sArrKodShgia;
+        DataTable dt = new DataTable();
         try
         {
             GlobalData.InitGlobalData(taarich);
@@ -844,7 +845,7 @@ public partial class Modules_Test :Page
                 {
                     oDay.bSuccsess = false;
                 }
-
+               
                 oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
 
                 sArrKodShgia = "";
@@ -869,6 +870,7 @@ public partial class Modules_Test :Page
                 }
 
                 oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
+                dt = GlobalData.CardErrors.ToDataTable();
             }
             // return oDay.bSuccsess;
         }

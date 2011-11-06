@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using KdsBatch.Entities;
 using System.Data;
-
+using System.ComponentModel;
 //using System.Collections.Specialized;
 
 using KdsLibrary.BL;
@@ -33,6 +33,7 @@ namespace KdsBatch.Errors
         {
              clUtils oUtils = new clUtils();
              CardErrors = new List<CardError>();
+            
              if (GlobalDataEmpty)
              {
                  dtLookUp = oUtils.GetLookUpTables();
@@ -62,6 +63,27 @@ namespace KdsBatch.Errors
                 ActiveErrors.Add(new ErrorItem(type, origion));
            }
         }
+
+        public static DataTable ToDataTable<T>(this IList<T> data) 
+        { 
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable(); 
+            for (int i = 0; i < props.Count; i++)
+            {
+                PropertyDescriptor prop = props[i]; 
+                table.Columns.Add(prop.Name, prop.PropertyType);
+            } 
+            object[] values = new object[props.Count];
+            foreach (T item in data)
+            {
+                for (int i = 0; i < values.Length; i++) 
+                { 
+                    values[i] = props[i].GetValue(item);
+                }
+                table.Rows.Add(values); 
+            } 
+            return table; 
+        } 
 
         public static string GetLookUpKods(string sTableName)
         {
