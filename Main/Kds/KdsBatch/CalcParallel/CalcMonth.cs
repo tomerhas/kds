@@ -2466,7 +2466,7 @@ namespace KdsBatch
         {
 
             float fSumDakotRechiv, fNochehutChodshit, fMichsaChodshit, fNosafot100,fSachKizuzMeheadrut;
-            float fShaotNosafot, fMichsaYomit,fErechYomi;//, fmichsatYom;
+            float fShaotNosafot, fMichsaYomit,fErechYomi,fDakotChofesh;//, fmichsatYom;
             float fMichsaChodshitChelkit, fNochehutChodshitChelkit,fHashlama;
             DataRow[] days;
             DataRow[] dr;
@@ -2531,6 +2531,7 @@ namespace KdsBatch
                     fSumDakotRechiv = fSumDakotRechiv - fHashlama;
 
                       days = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("ERECH_RECHIV>0 and ERECH_RECHIV<1 and KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString());
+                      fDakotChofesh =float.Parse( objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotChofesh.GetHashCode().ToString())[0]["ERECH_RECHIV"].ToString());
                       for (i = 0; i < days.Length; i++)
                       {
                            taarich = DateTime.Parse(days[i]["taarich"].ToString());
@@ -2539,6 +2540,9 @@ namespace KdsBatch
                           {
                               fHashlama -= fErechYomi;
                               objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')")[0]["ERECH_RECHIV"] = 0;
+                              fMichsaYomit =float.Parse( objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')")[0]["ERECH_RECHIV"].ToString());
+                              fDakotChofesh = fDakotChofesh - (fErechYomi * fMichsaYomit);
+                              objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotChofesh.GetHashCode().ToString())[0]["ERECH_RECHIV"] = 0;
                           }
                           else
                           {

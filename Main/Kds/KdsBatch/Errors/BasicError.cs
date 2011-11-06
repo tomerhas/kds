@@ -70,7 +70,7 @@ namespace KdsBatch.Errors
                     {
                         bMeushar = false;
                         ErrorItem = GlobalData.CardErrors[I];
-                        if (!(string.IsNullOrEmpty(ErrorItem.Shat_Yetzia.ToString())))
+                        if (ErrorItem.Shat_Yetzia != DateTime.MinValue)
                         {
                             iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
                             bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.Parse(ErrorItem.Shat_Yetzia.ToString()), (int)ErrorItem.mispar_knisa);

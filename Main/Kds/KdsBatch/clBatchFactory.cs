@@ -206,7 +206,7 @@ namespace KdsBatch
         private bool ExecuteProcessForEmployee(int employeeID, DateTime date, out bool successCount)
         {
             bool nextStep = false;
-            bool nextStep1 = false;
+         //   bool nextStep1 = false;
             successCount = false;
             clBatchManager btchMan = new clBatchManager(this._btchRequest);
             MainErrors oErrors = new MainErrors(date);
@@ -225,8 +225,8 @@ namespace KdsBatch
                 if (_executionType == BatchExecutionType.ErrorIdentification ||
                     (_executionType == BatchExecutionType.All && nextStep))
                 {
-                    nextStep = btchMan.MainOvedErrors(employeeID, date);
-                    nextStep1 = oErrors.HafelShguim(employeeID, date);
+                   // nextStep = btchMan.MainOvedErrors(employeeID, date);
+                    nextStep = oErrors.HafelShguim(employeeID, date);
                     
                     //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
                     //   String.Format("{0}: OvedErrors result:{1}",
