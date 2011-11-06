@@ -791,8 +791,8 @@ public partial class Modules_Test :Page
         // string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
 
-         //HafelShguim(31241, DateTime.Parse("06/04/2011"));
-         //oBatchManager.MainOvedErrors(31241, DateTime.Parse("06/04/2011"));
+         HafelShguim(69904, DateTime.Parse("01/01/2011"));
+         oBatchManager.MainOvedErrors(69904, DateTime.Parse("01/01/2011"));
 
          //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
          foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
