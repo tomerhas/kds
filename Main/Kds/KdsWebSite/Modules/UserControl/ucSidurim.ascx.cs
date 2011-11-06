@@ -2584,19 +2584,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             imgErr.ID = "imgSdr" + iIndex;
 
             Label lDummy = new Label();
-            lDummy.Text = "..";
+            lDummy.Text = "11";
             lDummy.CssClass = "WorkCardSidurDummy";
 
 
             hCollapseCell = CreateTableCell("7px", "WorkCardSidurCollapse", "");
-            hCell = CreateTableCell("40px", "WorkCardSidur", "");
+            hCell = CreateTableCell("43px", "WorkCardSidur", "");
             hErrCell = CreateTableCell("7px", "WorkCardSidurErr", "");
            
             //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
-            if (oSidur.htPeilut.Count > 0)            
-                hCollapseCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));            
-            else            
-                hCollapseCell.Controls.Add(lDummy);            
+            if (oSidur.htPeilut.Count > 0)
+                hCollapseCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+            else
+                hCollapseCell = CreateTableCell("24px", "WorkCardSidurCollapse", "");
+
+
           
             //hCell.Controls.Add(lDummy);
            
@@ -2643,9 +2645,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         }
                         else
                         {
-                            lDummy.Text = "1";
+                           // lDummy.Text = ".";
                             //lDummy.CssClass = "WorkCardSidurDummy";                            
-                            hErrCell.Controls.Add(lDummy);            
+                            //hErrCell.Controls.Add(lDummy);         
+                            hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
                             //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
                             if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
                                 lnkSidur.Style.Add("color", "white");
@@ -2657,10 +2660,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                         break;
                     case clGeneral.enCardStatus.Valid:
-                        lDummy.Text = "1";
+                        //lDummy.Text = ".";
                         //lDummy.CssClass = "WorkCardSidurDummy";
                         
-                        hErrCell.Controls.Add(lDummy);      
+                        //hErrCell.Controls.Add(lDummy);      
+                        hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2697,18 +2701,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         }
                         else
                         {
-                            lDummy.Text = "1";
+                            //lDummy.Text = ".";
                             //lDummy.CssClass = "WorkCardSidurDummy";
 
-                            hErrCell.Controls.Add(lDummy);
+                            //hErrCell.Controls.Add(lDummy);
+                            hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
                             CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         }
                         break;
                     case clGeneral.enCardStatus.Valid:
-                        lDummy.Text = "1";
-                        lDummy.CssClass = "WorkCardSidurDummy";
-                        hErrCell.Attributes.Add("class", "WorkCardSidurDummy");
-                        hErrCell.Controls.Add(lDummy);  
+                        //lDummy.Text = ".";
+                        //lDummy.CssClass = "WorkCardSidurDummy";
+                        //hErrCell.Attributes.Add("class", "WorkCardSidurDummy");
+                        //hErrCell.Controls.Add(lDummy);  
+                        hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
