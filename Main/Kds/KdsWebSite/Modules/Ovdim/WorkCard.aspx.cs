@@ -3967,9 +3967,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                         //אם השתנתה שעת ההתחלה של הסידור, נכניס סידור חדש ונמחק את הקודם
                         //כמו כן נעדכן את שעת התחלת הסידור לפעילויות שמקושרות לסידור
-                        bInsert = (((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
-                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))))
-                                  || (oSidur.oSidurStatus==clSidur.enSidurStatus.enNew));
+                        bInsert = (((oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()))) &&
+                                  (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year <= clGeneral.cYearNull))))
+                                  || (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew));
+                        //bInsert = (((oTxt.Text != (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).ToShortTimeString())) &&
+                        //          (!((oTxt.Text == "") && (DateTime.Parse(oTxt.Attributes["OrgShatHatchala"].ToString()).Year<=clGeneral.cYearNull))))
+                        //          || (oSidur.oSidurStatus==clSidur.enSidurStatus.enNew));
 
                         oShatGmar = ((TextBox)(this.FindControl("lstSidurim").FindControl("txtSG" + iIndex)));
                         //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא

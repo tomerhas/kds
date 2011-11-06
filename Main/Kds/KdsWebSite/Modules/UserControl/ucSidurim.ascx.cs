@@ -2584,7 +2584,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             imgErr.ID = "imgSdr" + iIndex;
 
             Label lDummy = new Label();
-            lDummy.Text = "11";
+            lDummy.Text = "..";
             lDummy.CssClass = "WorkCardSidurDummy";
 
 
