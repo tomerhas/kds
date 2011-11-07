@@ -14,7 +14,7 @@ namespace KdsBatch.Errors
         protected Sidur SidurInstance;
         protected Peilut PeilutInstance;
         protected string Comment;
-        protected int Sadot_Nosafim;
+        public int Sadot_Nosafim;
         protected OriginError _originError;
         public TypeCheck Error;
 
@@ -55,7 +55,7 @@ namespace KdsBatch.Errors
             CardError ErrorItem = new CardError();
 
             ErrorItem.check_num = int.Parse(Error.GetHashCode().ToString());
-         //   ErrorItem.sadot_nosafim = Sadot_Nosafim;
+            ErrorItem.sadot_nosafim = Sadot_Nosafim;
             switch (_originError)
             {
                 case OriginError.Day:

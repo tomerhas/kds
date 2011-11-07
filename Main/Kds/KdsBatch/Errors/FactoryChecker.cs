@@ -262,10 +262,21 @@ namespace KdsBatch.Errors
 
                 }
                 creator.Error = Error;
+                //SetSadotNosafim(creator);
             }
             if (creator == null)
                 throw new Exception("Error " + Error + " doesn't not defined");
             return creator;
         }
+
+        //private void SetSadotNosafim(BasicChecker creator)
+        //{
+        //    int num_check = creator.Error.GetHashCode();
+        //    if (num_check == 96 || num_check == 139 || num_check == 143 || num_check == 57 ||
+        //        num_check == 13 || num_check == 106 || num_check == 178)
+        //    {
+        //        creator.Sadot_Nosafim = 1;
+        //    }     
+        //}
     }
 }
