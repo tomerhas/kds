@@ -12,17 +12,32 @@
  <ajaxToolkit:ModalPopupExtender ID="ModalPopupEx" dropshadow="false" X="300" Y="280" PopupControlID="paMessage"
     TargetControlID="btnShowMessage"  runat="server" BehaviorID="pBehvDate" BackgroundCssClass="modalBackground">
  </ajaxToolkit:ModalPopupExtender>
- <asp:Panel runat="server" Style="display: none" ID="paMessage" CssClass="modalPopup" Width="350px" >
-    <asp:Label ID="lblHeaderMessage" runat="server" Width="97%" BackColor="#696969" ForeColor="White">קביעת תאריך</asp:Label>   
-    <br />
-    <br />
-    יש לקבוע את היום של השעה שהוקלדה:
-    <br />
-    <br />
-    <input type="button" ID="btnCurrentDay" runat="server" value="יום נוכחי" class="ImgButtonEndUpdate"
-        style="width:80px" onclick="btnDay_click(0)" CausesValidation="false" />
-    <input type="button" ID="btnNextDay"  runat="server" onclick="btnDay_click(1)"  value="יום הבא" class="ImgButtonEndUpdate"
-        style="width:80px" CausesValidation="false" />
+ <asp:Panel runat="server" Style="display: none" ID="paMessage" CssClass="WorkCardPanelMessage" Width="455px" Height="180px" >
+    <table width="450px">
+        <tr class="WorkCardPanelMessageBorder">
+            <td colspan="2" width="380px" height="33px"  class="WorkCardPanelMessageHeader">
+                <asp:Label ID="lblHeaderMessage" runat="server"  width="450px" >קביעת תאריך</asp:Label>
+            </td>
+        </tr>
+        <tr class="WorkCardPanelMessageBorder">
+            <td width="450px" height="100px" colspan="2">                                
+                <asp:Label ID="lblMessage" runat="server" Width="90%"></asp:Label>
+                <br/>
+                יש לקבוע את היום של השעה שהוקלדה:
+                <br/>                        
+            </td>
+        </tr>
+        <tr class="WorkCardPanelMessageHeader">
+            <td width="380px" align="left">
+                 <input type="button" ID="btnCurrentDay" runat="server" value="יום נוכחי" class="btnWorkCardChangeDate"
+                     style="width:80px" onclick="btnDay_click(0)" CausesValidation="false" />
+            </td>
+            <td align="left">
+                   <input type="button" ID="btnNextDay"  runat="server" onclick="btnDay_click(1)"  value="יום הבא" class="btnWorkCardChangeDate"
+                    style="width:80px" CausesValidation="false" />
+            </td>
+        </tr>
+    </table>          
 </asp:Panel>
 
 <input type="hidden" runat="server" id="hidCurrIndx"/>

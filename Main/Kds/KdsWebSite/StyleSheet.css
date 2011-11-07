@@ -772,22 +772,45 @@ select
 	height:19px;
 	font-weight:bolder;
 }
-
-.PanelMessage
+.WorkCardPanelMessageBorder
 {
-	border: outset 5px #E1E1E1; 
-	width:240px;
-	height :120px;
+ border-bottom :solid 1px #b9c1cc; 
+ outline:solid 1px #b9c1cc;
+}
+.WorkCardPanelMessageHeader
+{	
+	font-family:Arial;
+	font-size :16px;
+	text-align:center;		
+	background-color:#d4e4f3;
+	font-weight:bold;
+	padding:0px;
+	margin:0px;
+}
+.WorkCardPanelMessage
+{
+	font-family:Arial;
+	border: solid 3px #7a7978; 		
+	font-weight:bold;
+	font-size :14px;
+	text-align:center;	
+	background-color:#edf4fa;
+	padding:0px;
+	margin:0px;
+}
+.WorkCardPanelMiddleMessage
+{	
+	font-family:Arial;
+	font-weight:bold;
 	font-size :14px;
 	text-align:center;
 	top:30%;
 	left:40%;
 	position:absolute;
-	background-color:#E1E1E1;
+	background-color:#edf4fa;
 	padding:0px;
 	margin:0px;
 }
-
 .AppMsg
 {
 	background-color:  #41BD5D;
@@ -1777,6 +1800,50 @@ a
 	background-position:center;
 	background-attachment:inherit;	
 	
+}
+.btnWorkCardChangeDate
+{	
+	background-image: url(Images/B_closeWin_reg.png);	
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardUpdate
+{	
+	background-image: url(Images/B_Move2Approve_reg.png);	
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardLongUpdate
+{
+	background-image: url(Images/B_updateLong_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
 }
 .btnWorkCardLong
 {

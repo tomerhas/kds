@@ -443,18 +443,35 @@
                                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paCloseMsg"
                                     TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose">
                                 </cc1:ModalPopupExtender>
-                                <asp:Panel runat="server" Style="display: none" ID="paCloseMsg" CssClass="PanelMessage" Width="350px" Height="130px">                            
-                                    <asp:Label ID="lblHeaderMessage" runat="server" Width="97%" BackColor="#696969" ForeColor="White">סגירת כרטיס</asp:Label>
-                                    <br />
-                                    <br />
-                                    <asp:Label ID="lblMessage" runat="server" Width="90%"></asp:Label>
-                                    <br />
-                                    האם ברצונך לעדכן את השינויים שביצעת?<br/>
-                                    <br>
-                                    </br>
-                                    <asp:Button ID="btnConfirm" runat="server" Text="עדכון שינויים בכרטיס" CssClass="ImgButtonMake"
-                                        Width="150px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
-                                    <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="ImgButtonMake" Width="150px" CausesValidation="false" OnClientClick="CloseWindow();return false;" />                                
+                                <asp:Panel runat="server" Style="display: none" ID="paCloseMsg" CssClass="WorkCardPanelMessage" Width="480px" Height="180px" > 
+                                    <table width="480px">
+                                        <tr class="WorkCardPanelMessageBorder">
+                                            <td colspan="2" width="480px" height="33px"  class="WorkCardPanelMessageHeader">
+                                               <asp:Label ID="lblHeaderMessage" runat="server"  width="450px" >סגירת כרטיס</asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr class="WorkCardPanelMessageBorder">
+                                            <td width="480px" height="100px" colspan="2">
+                                                <br />
+                                                <br />
+                                                <asp:Label ID="lblMessage" runat="server" Width="90%"></asp:Label>
+                                                <br />
+                                                האם ברצונך לעדכן את השינויים שביצעת?<br/>
+                                                <br>
+                                                </br>
+                                                </br>
+                                            </td>
+                                        </tr>
+                                        <tr class="WorkCardPanelMessageHeader">
+                                            <td width="380px" align="left">
+                                                <asp:Button ID="btnConfirm" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLongUpdate"
+                                                    Width="170px" OnClick="btnConfirm_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
+                                            </td>
+                                            <td align="left">
+                                                 <asp:Button runat="server" ID="btnCancel" Text="סגור ללא עדכון" CssClass="btnWorkCardUpdate" CausesValidation="false" OnClientClick="CloseWindow();return false;" />                                    
+                                            </td>
+                                        </tr>
+                                    </table>                                                                                                  
                                 </asp:Panel>
                                     
                                 <asp:Button ID="btnShowPrintMsg" runat="server" OnClick="btnShowPrintMsg_Click" Style="display: none;" />
@@ -570,16 +587,39 @@
         <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="500" Y="280" PopupControlID="paCopy"
            TargetControlID="btnCopy"  runat="server" behaviorid="pBehvCopy" BackgroundCssClass="modalBackground">
         </cc1:ModalPopupExtender>
-        <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="modalPopup" Width="350px">
-        <asp:Label ID="Label2" runat="server" Width="100%" BackColor="#696969" ForeColor="White">העתקת מספר רכב</asp:Label>
-        <input type="hidden" id="hidCarKey" />        
-        <br />
-            <asp:Label ID="lblCarNumQ" runat="server" Width="100%"></asp:Label>    
-        <br />
-        <br />
-        <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
-        <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
-     </asp:Panel>        
+        <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="WorkCardPanelMessage" Width="450px">
+           <%-- <asp:Label ID="Label2" runat="server" Width="100%" BackColor="#696969" ForeColor="White">העתקת מספר רכב</asp:Label>
+            <input type="hidden" id="hidCarKey1" />        
+            <br />
+                <asp:Label ID="lbl" runat="server" Width="100%"></asp:Label>    
+            <br />
+            <br />
+            <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
+            <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       --%>
+            <table width="450px">
+                <tr class="WorkCardPanelMessageBorder">
+                    <td colspan="2" width="450px" height="33px"  class="WorkCardPanelMessageHeader">
+                        <asp:Label ID="Label7" runat="server" Width="100%">העתקת מספר רכב</asp:Label>
+                        <input type="hidden" id="hidCarKey" />        
+                        <br />                                                    
+                    </td>
+                </tr>
+                <tr class="WorkCardPanelMessageBorder">
+                    <td width="455px" height="100px" colspan="2">                        
+                       <asp:Label ID="lblCarNumQ" runat="server" Width="100%"></asp:Label>    
+                       <br/>                                               
+                    </td>
+                </tr>
+                <tr class="WorkCardPanelMessageHeader">
+                    <td width="380px" align="left">
+                        <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="btnWorkCardChangeDate" style="width:80px" />       
+                    </td>
+                    <td align="left">
+                       <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="btnWorkCardChangeDate" style="width:80px"/>       
+                    </td>
+                </tr>
+            </table>               
+        </asp:Panel>        
         <asp:Panel runat="server" Style="display: none" ID="prtMsg" CssClass="PanelMessage" Width="350px" Height="100px">                            
             <asp:Label ID="Label6" runat="server" Width="97%" BackColor="#696969" ForeColor="White">הדפסת כרטיס</asp:Label>
             <br />
