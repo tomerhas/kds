@@ -1670,6 +1670,34 @@ a
 	font-size :x-large;
 	font-weight :bolder;
 }
+.WorkCardDivuchHeadrutMiddleTable
+{
+	background-color:#eef5fb;
+}
+.WorkCardDivuchHeadrutTopTable
+{
+	background-color:#d4e4f3;	
+	font-weight:bold;	
+	font-size:14px;    
+	border-bottom-width:1px;
+	border-bottom-color:#ffffff;
+	border-bottom-style:inset;
+}
+.WorkCardDivuchHeadrutButtomTable
+{
+	background-color:#d4e4f3;		 
+	border-top-width:1px;
+	border-top-color:#7a7978;
+	border-top-style:solid;   
+}
+.WorkCardDivuchHeadrutTextBox
+{
+	background-color:#F6FBFF;		 
+	border-width:1px;
+	border-color:#D4E4F3;
+	border-style:solid;   
+	color:Black;
+}
 .WorkCardTdBorder
 {
 	background-color:#d4e4f3;	
@@ -1734,6 +1762,50 @@ a
 	cursor:pointer;
 	background-position:center;
 	background-attachment:inherit;	
+}
+.btnWorkCardCalculateDis
+{
+	background-image: url(Images/B_callculated_Dis.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+	
+}
+.btnWorkCardLong
+{
+	background-image: url(Images/B_updateLong_reg.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardLongDis
+{
+	background-image: url(Images/B_updateLong_Dis.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+	
 }
 .btnWorkCardCloseCard
 {

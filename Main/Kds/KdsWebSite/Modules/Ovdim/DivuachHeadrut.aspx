@@ -37,7 +37,7 @@
         selectedSidur = selectedItem;
         if ($(selectedItem).attr('value') == -1) {
             document.all("btnUpdate").disabled = true;
-            document.all("btnUpdate").className = "ImgButtonRunWideXlDisabled";
+            document.all("btnUpdate").className = "btnWorkCardLongDis";
             document.all("txtStartTime").value = "";
             document.all("txtEndTime").value = "";
             document.all("txtStartTime").disabled = true;
@@ -62,7 +62,7 @@
                 document.all("txtStartTime").value = $(selectedItem).attr('max_shat_hatchala').substring(11, 16);
             }
             document.all("btnUpdate").disabled = false;
-            document.all("btnUpdate").className = "ImgButtonSearch";
+            document.all("btnUpdate").className = "btnWorkCardLong";
             document.all("txtStartTime").disabled = false;
             document.all("txtEndTime").disabled = false;
             document.all("clnEndDateHeadrut").disabled = false;
@@ -172,13 +172,13 @@ function CheckDateGreaterStart(val, args) {
                 ValidatorEnable(document.all("vldEndHeadrut"), true);
 
                 document.all("btnUpdate").disabled = true;
-                document.all("btnUpdate").className = "ImgButtonRunWideXlDisabled";
+                document.all("btnUpdate").className = "btnWorkCardLongDis";
                 $find("CalloutEndHeadrut")._ensureCallout();
                 $find("CalloutEndHeadrut").show(true);
             }
             else {
                 document.all("btnUpdate").disabled = false;
-                document.all("btnUpdate").className = "ImgButtonSearch";
+                document.all("btnUpdate").className = "btnWorkCardLong";
 
                 //                }
 //            } 
@@ -190,91 +190,97 @@ function CheckDateGreaterStart(val, args) {
     <form id="form1" runat="server">
       <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >        
      </asp:ScriptManager>
-    <div style="text-align:center">
+    <div style="text-align:center" class="WCard_GridRow">
      <asp:UpdatePanel ID="upBody" runat="server" UpdateMode="Conditional">
           <ContentTemplate>
-               <table width="100%" cellpadding="0" cellspacing="0" border="1" style="margin:0px">
-                   <tr class="GridHeader"><td colspan="7" class = "WorkCardTable1Label"> דיווח העדרות</td></tr>
-                   <tr><td rowspan="2" width="20px"><br /></td><td colspan="6"><br /></td></tr>
-                    <tr><td width="100px">סוג העדרות:</td> 
+               <table width="651px" cellpadding="1" cellspacing="1" class= "WorkCardDivuchHeadrutTopTable">
+                   <tr style="height:22px" >
+                     <td colspan="7" class = "WorkCardTable1Label"> דיווח העדרות</td>
+                   </tr>
+               </table> 
+               <table width="651px" cellpadding="0" cellspacing="0" border="0">   
+                   <tr><td width="20px" class="WorkCardTable1Label"></td>
+                       <td colspan="6" class="WorkCardTable1Label"></td>
+                   </tr>
+                   <tr class = "WorkCardTable1Label" style="height:42px; width:651px">
+                         <td></td>
+                         <td width="27px" >סוג העדרות:</td> 
                          <td colspan="4"  align="right">  
-                          <asp:DropDownList ID="ddlHeadrutType" runat="server" Width="250px" TabIndex="1"  EnableViewState="true" AutoPostBack="false"
+                             <asp:DropDownList ID="ddlHeadrutType" runat="server" CssClass="WorkCardSidurDropDown"  Width="360px" Height="25px" TabIndex="1"  EnableViewState="true" AutoPostBack="false"
                                  OnDataBound="ddlHeadrutType_DataBound" onchange="HideShaotRow(this.options[this.selectedIndex]);" CausesValidation="false"></asp:DropDownList>
                            
-                                 </td>
-                         <td></td></tr>
-                   <tr><td colspan="7"><hr /></td></tr>
-                   <tr>
-                           <td rowspan="2" width="50px"><br /></td>
-                           <td width="130px" valign="top">שעת התחלה:</td>
-                            <td align="right" width="150px">    
-                         
-                                <asp:TextBox runat="server" MaxLength="5" ID="txtStartTime" Width="50px" TabIndex="2"  AutoPostBack="false" onblur="if(this.value=='__:__' && $(selectedSidur).attr('headrut_hova_ledaveach_shaot')!='True'){this.value=$(selectedSidur).attr('max_shat_hatchala').substring(11, 16);}" ></asp:TextBox>
-                           <cc1:MaskedEditExtender ID="extMaskStartTime"  runat="server" TargetControlID="txtStartTime" MaskType="Time"  UserTimeFormat="TwentyFourHour" Mask="99:99" ClearMaskOnLostFocus="true" ClearTextOnInvalid="true">
+                         </td>
+                         <td></td>
+                   </tr>
+                   <tr class="WCard_GridRow" style="height:22px; width:651px"><td  colspan="7" ></td></tr>
+                   <tr class="WCard_GridRow" style="height:266px; width:651px">
+                        <td width="50px"><br /></td>
+                        <td width="130px" valign="top" >שעת התחלה:</td>
+                        <td  width="150px" valign="top" align="right">                             
+                            <asp:TextBox runat="server" MaxLength="5" ID="txtStartTime" Width="100px" TabIndex="2" CssClass="WorkCardDivuchHeadrutTextBox"  AutoPostBack="false" onblur="if(this.value=='__:__' && $(selectedSidur).attr('headrut_hova_ledaveach_shaot')!='True'){this.value=$(selectedSidur).attr('max_shat_hatchala').substring(11, 16);}" ></asp:TextBox>
+                            <cc1:MaskedEditExtender ID="extMaskStartTime"  runat="server" TargetControlID="txtStartTime" MaskType="Time"  UserTimeFormat="TwentyFourHour" Mask="99:99" ClearMaskOnLostFocus="true" ClearTextOnInvalid="true"  >
+                            </cc1:MaskedEditExtender><br />
+                            <asp:RequiredFieldValidator   ID="vldReqStartTime"  runat="server" Display="None"  SetFocusOnError="true" TabIndex="3" CssClass="ErrorMessage" ErrorMessage="! חובה להזין שעת התחלה " ControlToValidate="txtStartTime"  ></asp:RequiredFieldValidator>                               
+                                <asp:CustomValidator  runat="server" id="RgVldsStartTime" EnableClientScript="true" TabIndex="4" SetFocusOnError="true" Display="none" ErrorMessage="שעת התחלה לא תקינה" ControlToValidate="txtStartTime"   ClientValidationFunction="CheckValidHour"></asp:CustomValidator >
+                                <asp:CustomValidator ID="vldStartTime"  EnableClientScript="true" TabIndex="5"  SetFocusOnError="true" ErrorMessage="שעת התחלה מותרת מ - "  runat="server" Display="None" ControlToValidate="txtStartTime" ClientValidationFunction="CheckDateStart"></asp:CustomValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exvldReqStartTime" TargetControlID="vldReqStartTime"  Width="220px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exvldStartTime" TargetControlID="vldStartTime" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                             
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exRgVldsStartTime" TargetControlID="RgVldsStartTime" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                                                    
+                        </td>                           
+                        <td></td>
+                        <td width="80px" valign="top"> שעת גמר: &nbsp;</td>
+                        <td width="150px" valign="top"  align="right">                          
+                            <asp:TextBox runat="server" MaxLength="5" ID="txtEndTime" Width="100px" AutoPostBack="false" TabIndex="6"  CssClass="WorkCardDivuchHeadrutTextBox"  onblur="if(this.value=='__:__' && $(selectedSidur).attr('headrut_hova_ledaveach_shaot')!='True'){this.value=$(selectedSidur).attr('max_gmar_muteret').substring(11, 16);}"></asp:TextBox>
+                                <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" MaskType="Time" TargetControlID="txtEndTime" UserTimeFormat="TwentyFourHour" Mask="99:99"  ClearMaskOnLostFocus="true">
                                 </cc1:MaskedEditExtender><br />
-                                <asp:RequiredFieldValidator   ID="vldReqStartTime"  runat="server" Display="None"  SetFocusOnError="true" TabIndex="3" CssClass="ErrorMessage" ErrorMessage="! חובה להזין שעת התחלה " ControlToValidate="txtStartTime"  ></asp:RequiredFieldValidator>
-                               
-                                 <asp:CustomValidator  runat="server" id="RgVldsStartTime" EnableClientScript="true" TabIndex="4" SetFocusOnError="true" Display="none" ErrorMessage="שעת התחלה לא תקינה" ControlToValidate="txtStartTime"   ClientValidationFunction="CheckValidHour"></asp:CustomValidator >
-                                 <asp:CustomValidator ID="vldStartTime"  EnableClientScript="true" TabIndex="5"  SetFocusOnError="true" ErrorMessage="שעת התחלה מותרת מ - "  runat="server" Display="None" ControlToValidate="txtStartTime" ClientValidationFunction="CheckDateStart"></asp:CustomValidator>
-                               <cc1:ValidatorCalloutExtender runat="server" ID="exvldReqStartTime" TargetControlID="vldReqStartTime"  Width="220px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
-                           <cc1:ValidatorCalloutExtender runat="server" ID="exvldStartTime" TargetControlID="vldStartTime" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                             
-                         <cc1:ValidatorCalloutExtender runat="server" ID="exRgVldsStartTime" TargetControlID="RgVldsStartTime" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                             
-                       
-                                  </td>
-                           
-                            <td></td>
-                            <td width="80px" align="left" valign="top"> שעת גמר: &nbsp;</td>
-                            <td align="right"  width="150px">
-                          
-                            <asp:TextBox runat="server" MaxLength="5" ID="txtEndTime" Width="50px" AutoPostBack="false" TabIndex="6"  onblur="if(this.value=='__:__' && $(selectedSidur).attr('headrut_hova_ledaveach_shaot')!='True'){this.value=$(selectedSidur).attr('max_gmar_muteret').substring(11, 16);}"></asp:TextBox>
-                              <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" MaskType="Time" TargetControlID="txtEndTime" UserTimeFormat="TwentyFourHour" Mask="99:99"  ClearMaskOnLostFocus="true">
-                                </cc1:MaskedEditExtender><br />
-                                 <asp:CustomValidator  runat="server" id="rgVldEndTime" EnableClientScript="true" TabIndex="8" SetFocusOnError="true" Display="none" ErrorMessage="שעה גמר לא תקינה" ControlToValidate="txtEndTime"    ClientValidationFunction="CheckValidHour" ></asp:CustomValidator >
-                                     <asp:CustomValidator ID="vldEndTimeGreater" runat="server" EnableClientScript="true" SetFocusOnError="true" TabIndex="9"  ErrorMessage="שעת הגמר צריכה להיות גדולה משעת ההתחלה" Display="none" ControlToValidate="txtEndTime" ClientValidationFunction="CheckDateGreaterStart" ></asp:CustomValidator>
+                                    <asp:CustomValidator  runat="server" id="rgVldEndTime" EnableClientScript="true" TabIndex="8" SetFocusOnError="true" Display="none" ErrorMessage="שעה גמר לא תקינה" ControlToValidate="txtEndTime"    ClientValidationFunction="CheckValidHour" ></asp:CustomValidator >
+                                        <asp:CustomValidator ID="vldEndTimeGreater" runat="server" EnableClientScript="true" SetFocusOnError="true" TabIndex="9"  ErrorMessage="שעת הגמר צריכה להיות גדולה משעת ההתחלה" Display="none" ControlToValidate="txtEndTime" ClientValidationFunction="CheckDateGreaterStart" ></asp:CustomValidator>
                             
-                                   <asp:CustomValidator ID="vldEndTime" runat="server" EnableClientScript="true" SetFocusOnError="true"   ErrorMessage="" Display="none" ControlToValidate="txtEndTime" ClientValidationFunction="CheckDateEnd" ></asp:CustomValidator>
+                                    <asp:CustomValidator ID="vldEndTime" runat="server" EnableClientScript="true" SetFocusOnError="true"   ErrorMessage="" Display="none" ControlToValidate="txtEndTime" ClientValidationFunction="CheckDateEnd" ></asp:CustomValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldEndTime" TargetControlID="vldEndTime" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>                                             
                             <cc1:ValidatorCalloutExtender runat="server" ID="exVldreqEndTime" TargetControlID="vldreqEndTime"  Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>     
-                          <asp:RequiredFieldValidator ID="vldreqEndTime"  runat="server" Display="None"   SetFocusOnError="true" CssClass="ErrorMessage" TabIndex="7" ErrorMessage="! חובה להזין שעת גמר "  ControlToValidate="txtEndTime" ></asp:RequiredFieldValidator>
-                         <cc1:ValidatorCalloutExtender runat="server" ID="exRgVldEndTime" TargetControlID="rgVldEndTime" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>                                             
-                        <cc1:ValidatorCalloutExtender runat="server" ID="exvldEndTimeGreater" TargetControlID="vldEndTimeGreater" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>                                             
-                       
-                               </td>
+                            <asp:RequiredFieldValidator ID="vldreqEndTime"  runat="server" Display="None"   SetFocusOnError="true" CssClass="ErrorMessage" TabIndex="7" ErrorMessage="! חובה להזין שעת גמר "  ControlToValidate="txtEndTime" ></asp:RequiredFieldValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exRgVldEndTime" TargetControlID="rgVldEndTime" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>                                             
+                        <cc1:ValidatorCalloutExtender runat="server" ID="exvldEndTimeGreater" TargetControlID="vldEndTimeGreater" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>                                                                    
+                        </td>
                            
-                            <td width="60px"></td></tr>
-                     <tr><td colspan="6"><br /></td></tr>
-                    <tr id="drHeaara" runat="server"><td rowspan="3" width="50px"><br /></td>
-                            <td colspan="5" align="right">הסידור שבחרת יתווסף לכרטיס העבודה אותו פתחת.  ניתן להאריך את ההיעדרות על ידי בחירת תאריך סיום היעדרות מתוך התאריכון</td>
-                            <td  width="60px"></td>
-                    </tr>
-                     <tr><td colspan="6"><br /></td></tr>
-                     <tr id="drTaarichAd" runat="server">
+                        <td width="60px"></td>
+                      </tr>                      
+                      <tr class="WorkCardDivuchHeadrutMiddleTable" id="drHeaara" runat="server" style="width:651px">
+                        <td  width="50px"><br /></td>
+                        <td colspan="5" align="right">הסידור שבחרת יתווסף לכרטיס העבודה אותו פתחת.  ניתן להאריך את ההיעדרות על ידי בחירת תאריך סיום היעדרות מתוך התאריכון</td>
+                        <td  width="60px"></td>
+                      </tr>                    
+                     <tr class="WorkCardDivuchHeadrutMiddleTable" id="drTaarichAd" runat="server" style="width:651px">
                             <td colspan="3" valign="top" align="left"> תאריך סיום היעדרות:</td>
-                            <td colspan="2" dir="ltr" align="right">
+                            <td colspan="4" dir="ltr" align="right">
                               <KdsCalendar:KdsCalendar runat="server" ID="clnEndDateHeadrut"  TabIndex="10"    AutoPostBack="false"  dir="rtl" CausesValidation="false" PopupPositionCallOut="left"  ></KdsCalendar:KdsCalendar> 
                             <%--<wccEgged:wccCalendar  runat="server" ID="clnEndDateHeadrut"  BasePath="../../EggedFramework" AutoPostBack="false" Width="80px" dir="rtl" CausesValidation="false"></wccEgged:wccCalendar>--%>                                                                      
-                         </td>
-                            <td colspan="1"> </td>
+                            </td>                            
                       </tr>
-                       <tr id="drVldTaarichAd" runat="server"><td  width="50px"><br /></td><td colspan="6"> 
+                     <tr class="WorkCardDivuchHeadrutMiddleTable" id="drVldTaarichAd" runat="server" style="width:651px">
+                        <td  width="50px"><br /></td>
+                        <td colspan="6"> 
                      <%-- <asp:RequiredFieldValidator ID="vldReqEndDateHeadrut" EnableClientScript="true"  runat="server" Display="None" CssClass="ErrorMessage"   ErrorMessage="חובה להזין מתאריך !" ControlToValidate="clnEndDateHeadrut"></asp:RequiredFieldValidator>
                      --%>   <%--<asp:CompareValidator ID="vldTypeEndDateHeadrut" EnableClientScript="true" runat="server"  Display="None" ControlToValidate="clnEndDateHeadrut" ErrorMessage="  תאריך סיום העדרות לא תקין !" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>--%>
                           <asp:CustomValidator ID="vldEndHeadrut" runat="server" Display="None"  EnableClientScript="true" ControlToValidate="clnEndDateHeadrut"  ErrorMessage="יש לבחור תאריך גדול מתאריך כרטיס העבודה"></asp:CustomValidator>
                           <cc1:ValidatorCalloutExtender runat="server" ID="exEndHeadrut" TargetControlID="vldEndHeadrut" BehaviorID="CalloutEndHeadrut" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                                
                               <%--<cc1:ValidatorCalloutExtender runat="server" ID="exTypeEndDateHeadrut" TargetControlID="vldTypeEndDateHeadrut" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>--%>                                             
                      <%--           <cc1:ValidatorCalloutExtender runat="server" ID="exReqEndDateHeadrut" TargetControlID="vldReqEndDateHeadrut"  Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>                                                                                     
-                    --%> <br /><br /><br /></td></tr>
-                       <tr>
-                                <td colspan="4" align="right"> &nbsp; &nbsp; <input type="button" class="ImgButtonSearch" causesvalidation="false" value="סגור" tabindex="12" style="width:80px" onclick="window.close();" 
-                                 onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />    </td>
-                                <td colspan="2" align="left"> <asp:Button ID="btnUpdate" runat="server" Width="190px" 
-                                    CausesValidation="true" CssClass="ImgButtonSearch"  TabIndex="11" Text="עדכון סידור בכרטיס עבודה" onclick="btnUpdate_Click"  
-                                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />    
+                    --%> <br /><br /><br /></td>
+                    </tr>
+                    </table>  
+                    <table class="WorkCardDivuchHeadrutButtomTable">
+                     <tr class="WorkCardTable1" style="height:44px; width:651px">
+                        <td  style="width:320px"><input type="button" class="btnWorkCardCloseCard" causesvalidation="false" value="סגור" tabindex="12" style="width:80px" onclick="window.close();" 
+                            onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> </td>
+                        <td style="width:331px"> <asp:Button ID="btnUpdate" runat="server" Width="190px" 
+                            CausesValidation="true"  CssClass="btnWorkCardCalculate"  TabIndex="11" Text="עדכון סידור בכרטיס עבודה" onclick="btnUpdate_Click"  
+                                        onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" />    
                                      
-                                         </td>
-                        </tr>
-                    </table>
-                    
+                        </td>
+                      </tr>
+                    </table>                                      
                 </ContentTemplate>
            </asp:UpdatePanel>
         <br /><br />

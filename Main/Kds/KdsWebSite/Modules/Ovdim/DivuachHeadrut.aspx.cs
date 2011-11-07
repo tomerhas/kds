@@ -79,7 +79,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 {
                     
                     btnUpdate.Attributes.Add("disabled", "true");
-                    btnUpdate.ControlStyle.CssClass = "ImgButtonRunWideXlDisabled";
+                    btnUpdate.ControlStyle.CssClass = "btnWorkCardLongDis";
                     txtStartTime.Attributes.Add("disabled", "true");
                     txtEndTime.Attributes.Add("disabled", "true");
                 }

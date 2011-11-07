@@ -422,7 +422,7 @@
         sQueryString = sQueryString + "&TimeEnd=";
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';   
-        res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:580px;dialogheight:380px;dialogtop:280px;dialogleft:480px;status:no;resizable:no;');
+        res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:650px;dialogheight:421px;dialogtop:280px;dialogleft:380px;status:no;resizable:no;');
         document.getElementById("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
