@@ -11388,18 +11388,18 @@ namespace KdsBatch
             //עדכון שדה מחוץ למכסה
             try
             {
-                if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
-                {
-                    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
-                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                    //oObjSidurimOvdimUpd.bUpdate = true;
-                    oSidur.sOutMichsa = "0";
-                }
-                else
-                {
+                //if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+                //{
+                //    oObjSidurimOvdimUpd.OUT_MICHSA = 0;
+                //    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                //    //oObjSidurimOvdimUpd.bUpdate = true;
+                //    oSidur.sOutMichsa = "0";
+                //}
+                //else
+                //{
                     if ((oSidur.bSidurMyuhad) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM==1)))
                     {
-                        if ((oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()) && (oOvedYomAvodaDetails.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode()))
+                        if ((oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakaiAutomat.GetHashCode().ToString()) )
                         {   //אם סידור הוא סידור מיוחד ויש לו ערך 3 במאפיין 25 (זכאי אוטומטית "מחוץ למכסה")
                             //וגם הוא לא מאגד תעבורה.                                               
                             oObjSidurimOvdimUpd.OUT_MICHSA = 1;
@@ -11419,7 +11419,7 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         oSidur.sOutMichsa = "0";
                     }
-                }
+             //   }
             }
             catch (Exception ex)
             {

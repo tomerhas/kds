@@ -57,49 +57,49 @@ namespace KdsBatch
               CreateData413( "221", clGeneral.enRechivim.Kizuz125.GetHashCode(),  7, 2);
               CreateData413( "222", clGeneral.enRechivim.Kizuz150.GetHashCode(),  7, 2);
               CreateData413( "223", clGeneral.enRechivim.Kizuz200.GetHashCode(),  7, 2);
-              CreateData413( "321", clGeneral.enRechivim.PremiaManasim.GetHashCode(),  7, 0);
+              CreateData413( "321", clGeneral.enRechivim.PremiaManasim.GetHashCode(),  7,2);
 
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
 
-                  CreateData413( "311", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),  7, 0);
-                  CreateData413( "321", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),  7, 0);
-                  CreateData413( "311", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatDfus.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatGifur.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremiaMeshek.GetHashCode(),  7, 0);
-                  CreateData413( "331", clGeneral.enRechivim.PremiaGrira.GetHashCode(),  7, 0);
+                  CreateData413( "311", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),  7, 2);
+                  CreateData413( "321", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),  7, 2);
+                  CreateData413( "311", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatDfus.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatGifur.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),  7,2);
+                  CreateData413( "331", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremiaMeshek.GetHashCode(),  7, 2);
+                  CreateData413( "331", clGeneral.enRechivim.PremiaGrira.GetHashCode(),  7, 2);
 
-                  CreateData413( "303", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(),  7, 0);
+                  CreateData413( "303", clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(),  7, 2);
 
               }
               else
               {
 
-                  CreateData413( "389", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),  7, 0);
-                  CreateData413( "321", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),  7, 0);
-                  CreateData413( "389", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatDfus.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatGifur.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremiaMeshek.GetHashCode(),  7, 0);
-                  CreateData413( "322", clGeneral.enRechivim.PremiaGrira.GetHashCode(),  7, 0);
+                  CreateData413( "389", clGeneral.enRechivim.PremiaLariushum.GetHashCode(),  7, 2);
+                  CreateData413( "321", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),  7, 2);
+                  CreateData413( "389", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatDfus.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatMisgarot.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatGifur.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatMusachRishonLetzyon.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremyatTechnayYetzur.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremiaMeshek.GetHashCode(),  7, 2);
+                  CreateData413( "322", clGeneral.enRechivim.PremiaGrira.GetHashCode(),  7, 2);
 
               }
 
