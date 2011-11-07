@@ -45,6 +45,7 @@ namespace KdsBatch.Errors
         public PeilutError139(object CurrentInstance)
         {
             Comment = "  נסיעה ללא רכב סידורי ";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Peilut);
         }
         protected override bool IsCorrect()
@@ -508,6 +509,7 @@ namespace KdsBatch.Errors
         public PeilutError13(object CurrentInstance)
         {
             Comment = "סדור נמלק ללא תעודת נסיעה";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Peilut);
         }
         protected override bool IsCorrect()

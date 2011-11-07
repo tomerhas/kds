@@ -274,8 +274,8 @@ namespace KdsBatch.Entities
                     sbYeshut.Append(",");
                     sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? "" : string.Concat(ce.mispar_sidur.ToString(), ","));
                     sbYeshut.Append(string.IsNullOrEmpty(ce.shat_hatchala.ToString()) ? "" : string.Concat(DateTime.Parse(ce.shat_hatchala.ToString()).ToString("HH:mm"), ","));
-                    if (ce.Shat_Yetzia != DateTime.MinValue)
-                        sbYeshut.Append(string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? "" : string.Concat(DateTime.Parse(ce.Shat_Yetzia.ToString()).ToString("HH:mm"), ","));
+                    if (ce.shat_yetzia != DateTime.MinValue)
+                        sbYeshut.Append(string.IsNullOrEmpty(ce.shat_yetzia.ToString()) ? "" : string.Concat(DateTime.Parse(ce.shat_yetzia.ToString()).ToString("HH:mm"), ","));
                     if(string.IsNullOrEmpty(ce.mispar_knisa.ToString()) || ce.mispar_knisa ==0)
                     sbYeshut.Append("");
                     else sbYeshut.Append(string.Concat(ce.mispar_knisa.ToString(), ","));
@@ -289,7 +289,7 @@ namespace KdsBatch.Entities
                     arrTaarich[i] = (string.IsNullOrEmpty(ce.taarich.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.taarich.ToString()));
                     arrMisparSidur[i] = string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? 0 : (int)ce.mispar_sidur;
                     arrShatHatchala[i] = string.IsNullOrEmpty(ce.shat_hatchala.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.shat_hatchala.ToString());
-                    arrShatYetzia[i] = string.IsNullOrEmpty(ce.Shat_Yetzia.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.Shat_Yetzia.ToString());
+                    arrShatYetzia[i] = string.IsNullOrEmpty(ce.shat_yetzia.ToString()) ? DateTime.MinValue : DateTime.Parse(ce.shat_yetzia.ToString());
                     arrMisparKnisa[i] = string.IsNullOrEmpty(ce.mispar_knisa.ToString()) ? 0 : (int)ce.mispar_knisa;
 
                     //arrHeara[i] = dr["error_desc"].ToString();

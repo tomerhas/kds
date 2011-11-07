@@ -70,10 +70,10 @@ namespace KdsBatch.Errors
                     {
                         bMeushar = false;
                         ErrorItem = GlobalData.CardErrors[I];
-                        if (ErrorItem.Shat_Yetzia != DateTime.MinValue)
+                        if (ErrorItem.shat_yetzia != DateTime.MinValue)
                         {
                             iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
-                            bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.Parse(ErrorItem.Shat_Yetzia.ToString()), (int)ErrorItem.mispar_knisa);
+                            bMeushar = clWorkCard.IsErrorApprovalExists(iErrorLevel, (int)ErrorItem.check_num, (int)ErrorItem.mispar_ishi, DateTime.Parse(ErrorItem.taarich.ToString()), (int)ErrorItem.mispar_sidur, DateTime.Parse(ErrorItem.shat_hatchala.ToString()), DateTime.Parse(ErrorItem.shat_yetzia.ToString()), (int)ErrorItem.mispar_knisa);
 
                         }
                         else if (string.IsNullOrEmpty(ErrorItem.mispar_sidur.ToString()))

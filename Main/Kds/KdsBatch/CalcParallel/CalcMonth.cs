@@ -2530,9 +2530,9 @@ namespace KdsBatch
 
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
-                    fSumDakotRechiv = fSumDakotRechiv - fHashlama;
+                    fSumDakotRechiv = float.Parse(fSumDakotRechiv.ToString()) - float.Parse(fHashlama.ToString());
 
-                    objOved.fHashlamaAlCheshbonNosafot = fHashlama;
+                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString()); 
                 }
 
                 addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fSumDakotRechiv);
@@ -3217,7 +3217,7 @@ namespace KdsBatch
                    
                    if (fDakotNechehut < fMichsaChodshitChelkit)
                    {
-                       fSumDakotRechiv = (fDakotNechehut * fSumDakotRechiv) / fMichsaChodshitChelkit;
+                       fSumDakotRechiv =float.Parse( Math.Round(((fDakotNechehut * fSumDakotRechiv) / fMichsaChodshitChelkit), MidpointRounding.AwayFromZero).ToString());
                    }
                     addRowToTable(clGeneral.enRechivim.YemeyAvoda.GetHashCode(), fSumDakotRechiv);
                 }

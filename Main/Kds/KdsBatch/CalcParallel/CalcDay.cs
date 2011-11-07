@@ -3993,7 +3993,7 @@ namespace KdsBatch
                      {
                          if (fDakotNochehut > fMichsaMechushevet)
                                fSumDakotRechiv = 1;
-                         else fSumDakotRechiv = fDakotNochehut / fMichsaMechushevet;
+                         else fSumDakotRechiv =float.Parse(( Math.Truncate((fDakotNochehut / fMichsaMechushevet) * 100) / 100).ToString());
                      }
                 }
 

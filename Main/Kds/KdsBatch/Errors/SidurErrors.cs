@@ -327,6 +327,7 @@ namespace KdsBatch.Errors
         public SidurError96(object CurrentInstance)
         {
             Comment ="חסר קמ";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -573,6 +574,7 @@ namespace KdsBatch.Errors
         public SidurError57(object CurrentInstance)
         {
             Comment = "סדור ויזה ללא סימון";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -855,6 +857,7 @@ namespace KdsBatch.Errors
         public SidurError106(object CurrentInstance)
         {
             Comment ="סדור ויזה מחייב סוג ויזה";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -884,6 +887,7 @@ namespace KdsBatch.Errors
         public SidurError178(object CurrentInstance)
         {
             //  Comment = " נתונים ";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
@@ -1432,6 +1436,7 @@ namespace KdsBatch.Errors
         public SidurError143(object CurrentInstance)
         {
             Comment ="חסר מספר מחסן";
+            Sadot_Nosafim = 1;
             SetInstance(CurrentInstance, OriginError.Sidur);
         }
         protected override bool IsCorrect()
