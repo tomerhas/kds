@@ -555,7 +555,7 @@
             <table style="height: 31px; width: 520px">
                 <tr style="height: 31px" class="WorkCardTopBorder">
                     <td width="500px" align="left" >
-                        <asp:Button ID="btnErrClose" runat="server" Text="סגור" CssClass="btnWorkCardChangeDate"
+                        <asp:Button ID="btnErrClose" runat="server" Text="סגור" CssClass="btnWorkCardCloseWin"
                             Width="75px" Height="30px"  CausesValidation="false" />
                             <input type="hidden" runat="server" id="hErrKey" width="0px" />
                     </td>                                                        
@@ -633,10 +633,10 @@
                 </tr>
                 <tr class="WorkCardPanelMessageHeader">
                     <td width="380px" align="left">
-                        <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="btnWorkCardChangeDate" style="width:80px" />       
+                        <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="btnWorkCardCloseWin" style="width:80px" />       
                     </td>
                     <td align="left">
-                       <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="btnWorkCardChangeDate" style="width:80px"/>       
+                       <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="btnWorkCardCloseWin" style="width:80px"/>       
                     </td>
                 </tr>
             </table>               

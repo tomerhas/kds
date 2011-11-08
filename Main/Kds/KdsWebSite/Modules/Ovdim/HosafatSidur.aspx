@@ -21,7 +21,7 @@
 
 
 
-<body dir="rtl" onload="return window_onload()" onkeydown="return ChangeKeyCode(event.keyCode);">
+<body dir="rtl" onload="return window_onload()" class="WorkCardRechivimHeader" onkeydown="return ChangeKeyCode(event.keyCode);">
  <script type="text/javascript">
      var iRowIndexNochehi = 0;
      var col_ShatYetzia = "<%=SHAT_YETZIA %>";
@@ -1373,88 +1373,51 @@
        }
 
  </script>
-    <form id="form1" runat="server">
-             <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
-               </asp:ScriptManager>
-               <asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
-                    <ProgressTemplate>
-                        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
-                              <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/Eggedprogress.gif" style="width: 100px; height: 100px" />טוען...
-                        </div>        
-                    </ProgressTemplate>
-               </asp:UpdateProgress>
+    <form id="form1" runat="server" >
+<asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
+</asp:ScriptManager>
+<asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
+    <ProgressTemplate>
+        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
+                <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/Eggedprogress.gif" style="width: 100px; height: 100px" />טוען...
+        </div>        
+    </ProgressTemplate>
+</asp:UpdateProgress>
     <asp:UpdatePanel  ID="upsd" runat="server"  UpdateMode="Always">
-                   <ContentTemplate>
+        <ContentTemplate>
             <div>
                 <table style="width:100%" >
-                      <tr class="GridHeader"><td > חיפוש והוספת סידור</td></tr>
-                      <tr>
-                        <td>
-                            <fieldset  style="height:50px" >  <legend   id="LegendFilter" style="background-color:White" >הוספת סידור מפה  : </legend> 
-                                
-                                     <table>
-                                        <tr>
-                                            <td>&nbsp;&nbsp;</td>
-                                         <%--   <td><input id="btnMapa" type="button" runat="server" value="מפה" class="ImgButtonSearch"  onclick="btnMapa_Click()" style="width:auto;"  tabindex="1" onfocusout="this.style.border ='none';"  /></td>
-                                              <td>&nbsp;&nbsp;</td>        
-                                            <td><input id="btnMeyuchad"  type="button"  runat="server" value="מיוחד" class="ImgButtonSearch"  onclick="btnMeyuchad_Click()" style="width:auto;"   tabindex="2"   onfocusout="this.style.border ='none';" /></td>
-                                           
-                                              <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>      --%>         
-                                            <td >
-                                          <%--  <asp:RadioButton  ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"   GroupName="chkDefault" Checked="true" Text="מספר סידור"  tabindex="3"    />--%>
-<%--                                            <asp:CheckBox runat="server" Text="מספר סידור" onclick="cbMis_OnChange()"   ID="cbMisSidur" />--%>
-                                           <%--   <input type="checkbox" ID="cbMisSidur" runat="server" onclick="cbMis_OnChange()"  style="background-color:red;width:150px"   title="מספר סידורי"   value="מספר סידורי"   />--%>
-                                         <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>
-                                        <%-- <asp:TextBox ID="txtMisSiduri" runat="server" Enabled="false"  onChange="MisSiduri_onChange()"     width="130px" MaxLength="5"  tabindex="4"    ></asp:TextBox>--%>
-                                                <asp:TextBox ID="txtMisSidurMapa" runat="server"    onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5"     ></asp:TextBox>
-                                             <%--    <asp:CustomValidator runat="server" id="vldMis"   ControlToValidate="txtMisSiduri" ErrorMessage=""   Display="None"    ></asp:CustomValidator>
-                                                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExMis" BehaviorID="vldExSidur"   TargetControlID="vldMis" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
-                                                --%>
-                                                 <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""></asp:CustomValidator>
-                                                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExMisMapa" BehaviorID="vldExSidurMapa"  TargetControlID="vldMisMapa" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
-                                                 <%--<cc1:AutoCompleteExtender id="AautoKodSidur"  runat="server" CompletionInterval="0"   CompletionSetCount="25" UseContextKey="true"  
-                                                        TargetControlID="txtMisSiduri" MinimumPrefixLength="1" ServiceMethod="getKodSidurimWhithOutList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
-                                                 </cc1:AutoCompleteExtender> --%> 
-                                            </td>
-                                               <td>&nbsp;&nbsp;</td>    
-                                            <td>
-                                       <%--     <asp:RadioButton  ID="cbTeurSidur" GroupName="chkDefault"  onclick="cbTeur_OnChange()" runat="server" Text="תאור הסידור" tabindex="6"     />--%>
-                                     <%--           <asp:CheckBox runat="server" Text="תאור הסידור" onclick="cbTeur_OnChange()" ID="cbTeurSidur" />--%>
-                                                 <%-- <input type="checkbox" ID="cbTeurSidur" runat="server" onclick="cbTeur_OnChange()"  value="תאור הסידור"  disabled />
-                                    --%>
-                                               <%-- <asp:TextBox ID="txtTeurSidur" runat="server" Enabled="false" width="130px" onchange="txtTeurSidur_OnChange()"  tabindex="7"   ></asp:TextBox>
-                                                      <cc1:AutoCompleteExtender id="AautoTeurSidur"  runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
-                                                        TargetControlID="txtTeurSidur" MinimumPrefixLength="1" ServiceMethod="getTeureySidurimWhithOutList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
-                                                    </cc1:AutoCompleteExtender>   
-                                                     <asp:CustomValidator runat="server" id="vldTeur"   ControlToValidate="txtTeurSidur" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
-                                                 <cc1:ValidatorCalloutExtender runat="server" ID="vldExTeur" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                --%>
-                                            </td>
-                                            <%--  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>  --%>
-                                            <td>
-                                              <input type="button" ID="btnShow" runat="server" onclick="MisSiduri_onChange();" value="הצג"  style="width:auto;"  tabindex="8" class="ImgButtonSearch"  onblur="moveFocus('btnShow');" />
-                                              <input type="button" ID="Button1" runat="server" onserverclick="btnShow_OnClick"  style="display: none;" />
-                                                    </td>
-                                        </tr>
-                                      </table>
-                                   
-                            </fieldset>  
-                        </td>
-                      </tr>
-                </table>
+                      <tr class="WorkCardRechivimHeader" style="height:31px"><td> חיפוש והוספת סידור</td></tr>                                        
+                      <tr class="WorkCardRechivimHeader">
+                        <td>      
+                            <hr />                                                      
+                            <table>
+                            <tr>
+                                <td>&nbsp;&nbsp;</td>                                 
+                                <td >                                
+                                <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>                            
+                                    <asp:TextBox ID="txtMisSidurMapa" runat="server"  CssClass="WorkCardTextBox"  onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5" ></asp:TextBox>                                    
+                                    <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""></asp:CustomValidator>
+                                    <cc1:ValidatorCalloutExtender runat="server" ID="vldExMisMapa" BehaviorID="vldExSidurMapa"  TargetControlID="vldMisMapa" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                                                    
+                                </td>
+                                <td>&nbsp;&nbsp;</td>    
+                                <td> </td>                                                                                          
+                                <td>
+                                    <input type="button" ID="btnShow" runat="server" onclick="MisSiduri_onChange();" value="הצג"   tabindex="8" class="ImgButtonShow"  onblur="moveFocus('btnShow');" />
+                                    <input type="button" ID="Button1" runat="server" onserverclick="btnShow_OnClick"  style="display: none;" />
+                                        </td>
+                            </tr>
+                            </table>                                                             
+                        </td>                        
+                      </tr>                                         
+                </table>                   
                 <br />          
-            </div>
+            </div>           
     </ContentTemplate>
     </asp:UpdatePanel>
-        <asp:UpdatePanel  ID="UpdatePanel1" runat="server"  UpdateMode="Always">
+    <asp:UpdatePanel  ID="UpdatePanel1" runat="server"  UpdateMode="Always">
         <ContentTemplate>
-            <div style="width:100%">
-            
+            <div style="width:100%">            
              <input type="button" ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click()" style="display: none;" />
                         <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paMessage"
                             TargetControlID="btnShowMessage"  runat="server">
@@ -1467,45 +1430,45 @@
                             יש לקבוע את היום של השעה שהוקלדה:
                             <br />
                             <br />
-                            <input type="button" ID="btnNochachi" runat="server" value="יום נוכחי" CssClass="ImgButtonMake"
+                            <input type="button" ID="btnNochachi" runat="server" value="יום נוכחי" class="ImgButtonMake"
                                 Width="150px" onclick="btnNochachi_click()" CausesValidation="false" />
-                            <input type="button" ID="btnHaba"  runat="server" onclick="btnHaba_click()"  value="יום הבא" CssClass="ImgButtonMake"
+                            <input type="button" ID="btnHaba"  runat="server" onclick="btnHaba_click()"  value="יום הבא" class="ImgButtonMake"
                                 Width="150px" CausesValidation="false" /></asp:Panel>
 
             
             </div>
             <div visible="true" style="height:400px">
             <div id="pirteySidur" runat="server" style="display:none;width:990px">
-                <table style="border-color:Black;border-width:1px;border-style:outset;"  >
-                    <tr class="GridHeader">
+                <table style="border-color:Black;border-width:1px;border-style:outset;">
+                    <tr class="WorkCardRechivimGridHeader">
                         <td style="width:52px">מספר סידור</td>
                         <td style="width:52px">שעת התחלה</td>
                         <td style="width:52px">שעת גמר</td>
                         <td style="width:808px"></td>
                     </tr>
                     <tr>
-                        <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"  ></asp:Label></td>
+                        <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"></asp:Label></td>
                         <td  valign="top" align="center">
-                              <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5"  onchange="onchange_txtShatHatchala(true,'')" ></asp:TextBox>
-                                    <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
-                                    <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
-                                    <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
-                              </td>
+                        <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5"  onchange="onchange_txtShatHatchala(true,'')" CssClass="WorkCardSidurTextBox" ></asp:TextBox>
+                            <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
+                            <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
+                        </td>
                         <td  valign="top"  align="center">
-                                <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onchange="onchange_txtShatGmar(true,'')" ></asp:TextBox>
-                                    <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" TargetControlID="txtShatGmar" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
-                                    <asp:RegularExpressionValidator  runat="server" id="vldShatGmar" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatGmar"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
-                                    <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
-                              </td>
+                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onchange="onchange_txtShatGmar(true,'')"  CssClass="WorkCardSidurTextBox"></asp:TextBox>
+                            <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" TargetControlID="txtShatGmar" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
+                            <asp:RegularExpressionValidator  runat="server" id="vldShatGmar" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatGmar"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
+                        </td>
                         <td>
                           <div id="divPeiluyot" runat="server" dir="ltr" style="overflow-y:auto">
                         <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  height="330px" width="808px" runat="server" >   
                       
                         <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="790px" 
+                                 AutoGenerateColumns="False" width="820px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
-                                 HeaderStyle-CssClass="GridHeaderSecondary"
-                                 OnRowDataBound="grdPeiluyot_RowDataBound" >
+                                 HeaderStyle-CssClass="WorkCardHosafatSidurGridHeader"
+                                 OnRowDataBound="grdPeiluyot_RowDataBound" CellPadding="2" CellSpacing="2">
                               <Columns>
                                     <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="ItemRow"  />
                                     <asp:TemplateField HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" ItemStyle-CssClass="ItemRow" HeaderText="כיסוי תור" >
@@ -1640,7 +1603,7 @@
                 <table style="width:100%" >
                       <tr> 
                           <td align="right">
-                              <input type="button" class="ImgButtonSearch" value="סגור" style="width:100px" onclick="window.close();" />
+                              <input type="button" class="btnWorkCardCloseWin" value="סגור" style="width:81px; height:32px" onclick="window.close();" />
                           </td>
                           <td align="left">
                              <asp:Button ID="btnIdkunGridHidden" runat="server" onclick="BtIdkunGrid_Click"  />

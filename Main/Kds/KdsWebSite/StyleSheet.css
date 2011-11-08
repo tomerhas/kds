@@ -458,12 +458,12 @@
 .ImgButtonShow
 {
 	background-image: url(Images/showB.png);		
-	width:50px; 
+	width:55px; 
 	font-size:16px;
 	font-family:Arial;
 	padding-top:0px;
 	padding-bottom:0px;
-	height:25px;
+	height:30px;
 	font-weight:bolder;
 	color: #627c98;
 	cursor:pointer;
@@ -772,10 +772,79 @@ select
 	height:19px;
 	font-weight:bolder;
 }
+
 .WorkCardPanelMessageBorder
 {
  border-bottom :solid 1px #b9c1cc; 
  outline:solid 1px #b9c1cc;
+}
+.WorkCardRechivimTable
+{
+	border: solid 1px #627d98; 	
+}
+
+.WorkCardHosafatSidurGridHeader
+{	
+	font-family:Arial;
+	border: solid 1px #627d98; 			
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;	
+	background-color:#ebf7fc;
+	color:Black;
+	padding:0px;
+	margin:0px;
+	height:26px;
+}
+.WorkCardRechivimGridRow
+{	
+	font-family:Arial;
+	border: solid 1px #A4B5C5; 		
+	font-weight:bold;	
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;	
+	background-color:#F6FBFF;
+	color:black;
+	padding:0px;
+	margin:0px;
+	height:26px;
+}
+.WorkCardRechivimGridHeader
+{	
+	font-family:Arial;
+	border: solid 1px #627d98; 		
+	font-weight:bold;	
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;	
+	background-color:#627d98;
+	color:White;
+	padding:0px;
+	margin:0px;
+	height:26px;
+}
+.WorkCardRechivimHeader
+{
+	font-family:Arial;
+	border: solid 1px #627d98; 		
+	font-weight:bold;	
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;	
+	background-color:#D4E4F3;
+	padding:0px;
+	margin:0px;
+}
+.WorkCardRechivim
+{
+	font-family:Arial;
+	border: solid 1px #7a7978; 		
+	font-weight:bold;	
+	text-align:center;	
+	background-color:#f6fbff;
+	padding:0px;
+	margin:0px;
 }
 .WorkCardPanelMessageHeader
 {	
@@ -1881,7 +1950,7 @@ a
 	background-position:center;
 	background-attachment:inherit;	
 }
-.btnWorkCardChangeDate
+.btnWorkCardCloseWin
 {	
 	background-image: url(Images/B_closeWin_reg.png);	
 	font-size:14px;
