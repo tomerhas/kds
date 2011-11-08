@@ -4,30 +4,26 @@
   <xsl:output method="xml" indent="yes"/>
   <xsl:variable name="RowKey">0</xsl:variable>
   <xsl:template match="/">
-    <table border="1">
-      <tr>
-        <th colspan="5" bgcolor="#FFFFDE">תיאור שגיאה</th>
-      </tr>
-     
+    <table border="0" width="100%" >     
       <xsl:for-each select="NewDataSet/Table[SHOW_ERROR=1]">       
-          <tr>
-            <td class="ErrItemRow">
+          <tr class="WorkCardErrorLine">
+            <td width="340px">
               <xsl:value-of select="TEUR_SHGIA"/>
             </td>                          
-            <td>
+            <td align="left" width="100px">
               <xsl:if test="ISHUR_RASHEMET=1 and USER_PROFILE=0">
-                 <Input type="button" ID="btnErrCancel"  value="בטל שגיאה" class="ErrBtnItemRowEnable" Width="100px" Height="25px" onClick="CancelError(this);"  />
+                 <Input type="button" ID="btnErrCancel"  value="בטל שגיאה" class="btnWorkCancelError" Width="100px" Height="34px" onClick="CancelError(this);"  />
               </xsl:if>
               <xsl:if test="ISHUR_RASHEMET=0 or USER_PROFILE=1">
-                <Input type="button" ID="btnErrCancel"  value="בטל שגיאה" class="ErrBtnItemRow" Width="100px" Height="25px" disabled="disabled"/>
+                <Input type="button" ID="btnErrCancel"  value="בטל שגיאה" class="btnWorkCancelErrorDisabled" Width="100px" Height="34px" disabled="disabled"/>
               </xsl:if> 
             </td>                                                    
-            <td>
+            <td align="left">
               <xsl:if test="KOD_ISHUR>0 and USER_PROFILE=0">
-                  <Input type="button" ID="btnErrApproval"  value="העברה לאישור" class="ErrBtnItemRowEnable" onClick="ApproveError(this);" />
+                  <Input type="button" ID="btnErrApproval"  value="העברה לאישור" class="btnWorkCardUpdate" Height="34px" onClick="ApproveError(this);" />
               </xsl:if>
               <xsl:if test="KOD_ISHUR=0 or USER_PROFILE=1">
-                  <Input type="button" ID="btnErrApproval" value="העברה לאישור" class="ErrBtnItemRow" disabled="disabled" />
+                  <Input type="button" ID="btnErrApproval" value="העברה לאישור" class="btnWorkCardUpdateDisabled" Height="34px" disabled="disabled" />
               </xsl:if> 
             </td>
             <td style="display:none">

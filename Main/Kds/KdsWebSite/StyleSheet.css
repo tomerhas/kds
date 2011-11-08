@@ -787,6 +787,28 @@ select
 	padding:0px;
 	margin:0px;
 }
+.WorkCardPanelTopTableMessage
+{
+	font-family:Arial;	
+	font-weight:bold;
+	font-size :16px;	
+	text-align:right;	
+	border-top-color:#b9c1cc;	
+	background-color:#d4e4f3;
+	padding:0px;
+	margin:0px;
+}
+.WorkCardPanelMessageError
+{
+	font-family:Arial;
+	border: solid 3px #7a7978; 		
+	font-weight:bold;
+	font-size :14px;
+	text-align:center;	
+	background-color:#f6fbff;
+	padding:0px;
+	margin:0px;
+}
 .WorkCardPanelMessage
 {
 	font-family:Arial;
@@ -824,6 +846,14 @@ select
 	Color: White;
 	text-align:right;
 	font-weight:bold;	
+}
+.WorkCardErrMsg
+{
+	background-color: #e62230;
+	Color: White;
+	font-weight:bold;	
+	font-size:16px;
+	font-family:Arial;	
 }
 .RemarkMsg
 {
@@ -1434,6 +1464,8 @@ a
 	overflow:auto;
 }
 
+
+
 .ErrBtnItemRowEnable
 {
  background-color:#E1E1E1;
@@ -1693,6 +1725,13 @@ a
 	font-size :x-large;
 	font-weight :bolder;
 }
+.WorkCardTopBorder
+{
+	background-color:#EEF5FB;		 
+	border-top-width:1px;
+	border-top-color:#7a7978;
+	border-top-style:solid;   
+}
 .WorkCardDivuchHeadrutMiddleTable
 {
 	background-color:#eef5fb;
@@ -1743,6 +1782,17 @@ a
 {	
 	background-color: #d4e4f3;
 	height:40px;	
+}
+.WorkCardError
+{
+	background-color:#F6FBFF;
+}
+.WorkCardErrorLine
+{
+	background-color: #EDF4FA;
+	font-family: Arial;	
+	font-size:14px;
+	height:40px;
 }
 .btnWorkCardAddMap
 {
@@ -1801,9 +1851,9 @@ a
 	background-attachment:inherit;	
 	
 }
-.btnWorkCardChangeDate
-{	
-	background-image: url(Images/B_closeWin_reg.png);	
+.btnWorkCancelErrorDisabled
+{
+	background-image: url(Images/B_cancelError_Dis.png);	
 	font-size:14px;
 	font-family:Arial;
 	font-weight:bold;	
@@ -1816,9 +1866,54 @@ a
 	background-position:center;
 	background-attachment:inherit;	
 }
+.btnWorkCancelError
+{	
+	background-image: url(Images/B_cancelError_reg.png);	
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardChangeDate
+{	
+	background-image: url(Images/B_closeWin_reg.png);	
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:33px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
 .btnWorkCardUpdate
 {	
 	background-image: url(Images/B_Move2Approve_reg.png);	
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #115799;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
+.btnWorkCardUpdateDisabled
+{	
+	background-image: url(Images/B_Move2Approve_Dis.png);	
 	font-size:14px;
 	font-family:Arial;
 	font-weight:bold;	

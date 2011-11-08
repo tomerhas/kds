@@ -478,18 +478,35 @@
                                 <cc1:ModalPopupExtender ID="MPEPrintMsg" DropShadow="false" X="300" Y="200" PopupControlID="pnlPrint"
                                     TargetControlID="btnShowPrintMsg" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPPrint">
                                 </cc1:ModalPopupExtender>
-                                <asp:Panel runat="server" Style="display: none" ID="pnlPrint" CssClass="PanelMessage" Width="350px" Height="130px">                            
-                                    <asp:Label ID="Label3" runat="server" Width="97%" BackColor="#696969" ForeColor="White">הדפסת כרטיס</asp:Label>
-                                    <br />
-                                    <br />
-                                    <asp:Label ID="Label5" runat="server" Width="90%"></asp:Label>
-                                    <br />
-                                            האם ברצונך לעדכן את השינויים שביצעת לפני הדפסת הכרטיס?<br/>
-                                    <br>
-                                    </br>
-                                    <asp:Button ID="btnUpdatePrint" runat="server" Text="עדכון שינויים בכרטיס" CssClass="ImgButtonMake"
-                                        Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
-                                    <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="ImgButtonMake" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" />                                
+                                <asp:Panel runat="server" Style="display: none" ID="pnlPrint" CssClass="WorkCardPanelMessage" Width="480px" Height="175px"> 
+                                    <table width="480px">
+                                        <tr class="WorkCardPanelMessageBorder">
+                                            <td colspan="2" width="480px" height="33px"  class="WorkCardPanelMessageHeader">
+                                               <asp:Label ID="Label3" runat="server" >הדפסת כרטיס</asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr class="WorkCardPanelMessageBorder">
+                                            <td width="480px" height="100px" colspan="2">
+                                                <br />
+                                                <br />
+                                                 <asp:Label ID="Label5" runat="server" Width="90%"></asp:Label>
+                                                <br />
+                                                 האם ברצונך לעדכן את השינויים שביצעת לפני הדפסת הכרטיס?<br/>
+                                                <br>
+                                                </br>
+                                                </br>
+                                            </td>
+                                        </tr>
+                                        <tr class="WorkCardPanelMessageHeader">
+                                            <td width="380px" align="left">
+                                                 <asp:Button ID="btnUpdatePrint" runat="server" Text="עדכון שינויים בכרטיס" CssClass="btnWorkCardLong"
+                                                    Width="150px" OnClick="btnUpdatePrint_click" CausesValidation="false" OnClientClick= 'return ChkCardVld();'/>
+                                            </td>
+                                            <td align="left">
+                                                 <asp:Button runat="server" ID="btnPrintWithoutUpdate" Text="הדפס ללא עדכון" CssClass="btnWorkCardLong" Width="150px" CausesValidation="false" OnClick="btnPrintWithoutUpdate_click" />                                
+                                            </td>
+                                        </tr>
+                                    </table>                                            
                                 </asp:Panel>
                             </td>      
                             <td style="width: 90px">
@@ -523,22 +540,26 @@
         <cc1:ModalPopupExtender ID="MPEErrors" DropShadow="false" CancelControlID="btnErrClose" BehaviorID="bMpeErr"
             X="300" Y="200" PopupControlID="paErrorMessage" TargetControlID="btnErrors" runat="server">
         </cc1:ModalPopupExtender>
-        <asp:Panel runat="server" Style="display: none" ID="paErrorMessage" CssClass="PanelMessage" Width="450px" height="250px">            
-            <asp:Label ID="lblErrors" runat="server" Width="100%" CssClass="ErrMsg">פירוט שגיאה</asp:Label>
-            <table border="1" width="100%" >
-                <tr>
-                    <td id="tbErr" style="background-color: white; height: 180px"></td>                      
+        <asp:Panel runat="server" Style="display: none" ID="paErrorMessage" CssClass="WorkCardPanelMessageError" Width="520px" height="300px">                       
+            <table border="0" width="520px" >
+                <tr style="height:40px">
+                    <td class="WorkCardErrMsg" width="520px"><asp:Label ID="lblErrors" runat="server" >פירוט שגיאה</asp:Label></td>
+                </tr>
+                <tr style="height: 40px">
+                   <td class="WorkCardPanelTopTableMessage" id="Td1" align="right" width="520px"><asp:Label ID="Label8" runat="server"  >תיאור השגיאה</asp:Label></td>                      
+                </tr>
+                <tr style="height: 170px" valign="top">                    
+                   <td id="tbErr" align="right"></td>                      
                 </tr>
             </table>
-            <table style="height: 30px; width: 500px">
-                <tr>
-                    <td width="10px"></td>                
-                    <td width="100px">
-                        <asp:Button ID="btnErrClose" runat="server" Text="סגור" CssClass="ImgButtonEndUpdate"
-                            Width="100px" Height="25px" CausesValidation="false" />
-                    </td>                    
-                    <td><input type="hidden" runat="server" id="hErrKey" width="0px" /></td>                    
-                </tr>
+            <table style="height: 31px; width: 520px">
+                <tr style="height: 31px" class="WorkCardTopBorder">
+                    <td width="500px" align="left" >
+                        <asp:Button ID="btnErrClose" runat="server" Text="סגור" CssClass="btnWorkCardChangeDate"
+                            Width="75px" Height="30px"  CausesValidation="false" />
+                            <input type="hidden" runat="server" id="hErrKey" width="0px" />
+                    </td>                                                        
+                </tr>              
             </table>
         </asp:Panel>      
         <asp:Button ID="btnApp" runat="server" CssClass="ImgButtonUpdate" CausesValidation="false" Style="display: none;" />            
