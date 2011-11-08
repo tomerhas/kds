@@ -7207,7 +7207,7 @@ namespace KdsBatch
                                         return;
                                     }
 
-                                    if (oSidur.dFullShatGmar >= _oParameters.dSummerStart && oSidur.dFullShatGmar <= _oParameters.dSummerEnd)
+                                    if (oSidur.dFullShatGmar >= _oParameters.dSummerStart && oSidur.dFullShatGmar < _oParameters.dSummerEnd.AddDays(1))
                                     {
                                         iMinPaar = _oParameters.iMinHefreshSidurimLepitzulSummer;
                                     }
