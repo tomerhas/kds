@@ -586,23 +586,25 @@
         </asp:Panel>        
         <asp:Button ID="btnRemark" runat="server" CausesValidation="false" Style="display: none;" />            
         <cc1:ModalPopupExtender ID="MPERemark" DropShadow="false" CancelControlID="btnRmkClose" X="50" Y="250" PopupControlID="pnlRemark" TargetControlID="btnRemark" runat="server"> </cc1:ModalPopupExtender>                   
-        <asp:Panel runat="server" Style="display: none;" ID="pnlRemark" CssClass="PanelMessage" Width="200px" height="100px">            
-            <asp:Label ID="Label4" runat="server" Width="100%" CssClass="RemarkMsg">הערה</asp:Label>
-            <table border="1" width="100%" >
+        <asp:Panel runat="server" Style="display: none;" ID="pnlRemark" CssClass="WorkCardPanelMessage" Width="500px" height="180px" >                        
+            <asp:Label ID="Label4" runat="server" width="100%" Height="30px" CssClass="WorkCardErrMsg">הערה</asp:Label>
+            <table style="height: 100px; width: 500px;">   
+                <tr><td style="height: 15px; Width:500px"></td></tr>                              
                 <tr>
-                    <td id="tblRmk" style="background-color: white; height: 30px"></td>                      
+                    <td id="tblRmk" style="Width:500px"></td>                                                                                    
                 </tr>
-            </table>
-            <table style="height: 30px; width: 500px">
-                <tr>
-                    <td width="10px"></td>                
-                    <td width="100px">
-                        <asp:Button ID="btnRmkClose" runat="server" Text="סגור" CssClass="ImgButtonEndUpdate"
-                            Width="80px" Height="20px" CausesValidation="false" />
-                    </td>                    
-                    <td><input type="hidden" runat="server" id="Hidden1" width="0px" /></td>                    
-                </tr>
-            </table>            
+             </table>
+             <hr />
+             <table style="width: 500px;" cellpadding="0" cellspacing="0">     
+                <tr>                                   
+                    <td width="500px" align="left" valign="bottom">
+                        <input type="hidden" runat="server" id="Hidden1" />
+                        <asp:Button ID="btnRmkClose" runat="server" Text="סגור" CssClass="btnWorkCardCloseWin"
+                            Width="80px" Height="30px" CausesValidation="false" />
+                    </td>                                       
+                </tr>              
+            </table>      
+                  
       </asp:Panel>     
         <input type="button" ID="btnCopy" runat="server" style="display: none;" />
         <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="500" Y="280" PopupControlID="paCopy"
