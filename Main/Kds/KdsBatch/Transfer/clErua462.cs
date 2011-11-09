@@ -59,7 +59,7 @@ namespace KdsBatch
       {
         int iLastDigit;
         
-        if (sErech.Length>0){
+        if (sErech.Trim() !="" && sErech.Length>0){
             iLastDigit = int.Parse(sErech.Substring(sErech.Length - 1, 1));
             sErech = sErech.Substring(0, sErech.Length - 1);
             sErech += GetSiman(iLastDigit);
