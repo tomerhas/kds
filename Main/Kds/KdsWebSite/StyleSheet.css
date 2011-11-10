@@ -808,11 +808,23 @@ select
 	padding:0px;
 	margin:0px;
 }
+.WorkCardKnisotHeader
+{
+	font-family:Arial;
+	border: solid 1px #627d98; 	
+	outline: solid 1px #627d98; 		
+	font-weight:bold;	
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;	
+	background-color:#D4E4F3;
+	padding:0px;
+	margin:0px;
+}
 .WorkCardRechivimGridRow
 {	
 	font-family:Arial;
-	border: solid 1px #A4B5C5; 		
-	font-weight:bold;	
+	border: solid 1px #A4B5C5; 				
 	font-size:16px;
 	text-align:center;
 	vertical-align:middle;	
@@ -826,7 +838,6 @@ select
 {	
 	font-family:Arial;
 	border: solid 1px #627d98; 		
-	font-weight:bold;	
 	font-size:16px;
 	text-align:center;
 	vertical-align:middle;	
@@ -850,8 +861,7 @@ select
 }
 .WorkCardRechivim
 {
-	font-family:Arial;
-	border: solid 1px #7a7978; 		
+	font-family:Arial;	
 	font-weight:bold;	
 	text-align:center;	
 	background-color:#f6fbff;

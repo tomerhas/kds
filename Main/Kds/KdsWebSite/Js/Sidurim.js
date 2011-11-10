@@ -1236,7 +1236,7 @@ function chkMkt(oRow) {
             var OtoNo = $get(iPeilutIndx.id).cells[_COL_CAR_NUMBER].childNodes[0].value;
             var sQueryString = "?EmpID=" + id + "&SidurID=" + SidurId + "&CardDate=" + CardDate + "&SidurDate=" + SidurDate + "&SidurHour=" + SidurHour + "&ShatYetzia=" + GetDateDDMMYYYY(dPeilutDate).concat(" " + ShatYetzia) + "&MakatNesia=" + MakatNesia + "&OtoNo=" + OtoNo + "&dt=" + Date();
             $get("divHourglass").style.display = 'block';
-            res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:500px;dialogheight:380px;dialogtop:280px;dialogleft:340px;status:no;resizable:yes;');
+            res = window.showModalDialog('HosafatKnisot.aspx' + sQueryString, window, 'dialogwidth:617px;dialogheight:400px;dialogtop:280px;dialogleft:340px;status:no;resizable:no;');
             $get("divHourglass").style.display = 'none';
             if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
                 $get("hidExecInputChg").value = "1";

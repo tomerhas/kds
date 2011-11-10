@@ -28,10 +28,10 @@
              <asp:Label runat="server" ID="lblPageHeader" class="WorkCardRechivimHeader"  width="637px" Height="36px" >רכיבים מחושבים לסידור וליום עבודה</asp:Label>
               <div runat="server" id="pnlRechivim" style="height: 395px; width:637px; overflow:auto;direction: rtl;">
                 <asp:GridView ID="grdRechivim" runat="server" GridLines="none" width="637px"
-                      CssClass="WorkCardRechivimGridRow"  EmptyDataText="לא נמצאו נתונים!" 
+                    CssClass="WorkCardRechivimGridRow"  EmptyDataText="לא נמצאו נתונים!" 
                     AllowPaging="false" AutoGenerateColumns="false"  
                     HeaderStyle-CssClass="WorkCardRechivimGridHeader" ShowHeader="true" ShowFooter="false"
-                      onrowdatabound="grdRechivim_RowDataBound">
+                    onrowdatabound="grdRechivim_RowDataBound">
                     <EmptyDataRowStyle CssClass="WorkCardRechivimGridRow" />
                     <Columns>                      
                         <asp:BoundField DataField="TEUR_RECHIV" HeaderText="תאור רכיב" 

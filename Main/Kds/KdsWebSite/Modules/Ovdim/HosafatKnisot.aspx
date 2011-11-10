@@ -9,7 +9,7 @@
       <script src='../../js/jquery.js' type='text/javascript'></script>
    <link id="Link1" runat="server" href="~/StyleSheet.css" type="text/css" rel="stylesheet" />
  </head>
-<body  dir="rtl" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
+<body  dir="rtl" class="WorkCardRechivim" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
     <form id="form1" runat="server">
     <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
       <Scripts >
@@ -18,88 +18,84 @@
         <asp:ScriptReference Path="~/Js/jquery.js" />
        </Scripts>
       </asp:ScriptManager>
- <table style="width:100%" >
-              <tr class="GridHeader"><td id="tdHeader" runat="server"> </td></tr>
-            <tr>
-               <td align="center">
-              <br />     
-              <asp:UpdatePanel ID="upTblKnisot" runat="server" UpdateMode="Always" >
-                  <ContentTemplate>  
-                    <asp:Panel ID="pnlgrdKnisot"    height="250px" width="430px" dir="ltr"  runat="server" ScrollBars="Auto">   
-                 <div dir="rtl">
-                   <asp:GridView ID="grdKnisot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="417px"
-                                 ShowHeader="true"    
-                                 HeaderStyle-CssClass="GridHeaderSecondary"
-                                 OnRowDataBound="grdKnisot_RowDataBound" >
-                              <Columns>
-                                  
-                                   <asp:BoundField DataField="Siduri" HeaderText="מספר" ItemStyle-CssClass="ItemRow"  />
-                                  
-                                    <asp:BoundField DataField="MokedTchilaName" HeaderText="תאור"  ItemStyle-CssClass="ItemRow"   />
-                                  
-                                    <asp:BoundField DataField="SugKnisa" HeaderText="סוג" ItemStyle-CssClass="ItemRow" ItemStyle-Width="50px"  />
-                          
-                                  <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="ItemRow"  HeaderText="דקות בפועל" >
-                                       <ItemTemplate>
-                                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="30px"></asp:TextBox>
-                                           <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotBafoal" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
-                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
-                                         </ItemTemplate>
-                                   </asp:TemplateField>
-                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="ItemRowLast"
-                                             HeaderStyle-Wrap="true"  >
-                                        <HeaderTemplate>
-                                           <table align="center">
-                                               <tr>
-                                                   <td align="center" colspan="2">
-                                                       <asp:Label ID="Label1" runat="server" Text="הוסף פעילות"></asp:Label>
-                                                   </td>
-                                               </tr>
-                                               <tr>
-                                                   <td>
-                                                         <a id="lbSamenHakol" href="#" runat="server" onclick="SamenHakol_OnClick()">סמן הכל</a>/
-                                                         <a id="lbNake" href="#" runat="server"  onclick="NakeHakol_OnClick()">נקה</a>
-                                                 </td>
-                                               </tr>
-                                           </table>
-                                       </HeaderTemplate>
-                                       <ItemTemplate>
-                                           <asp:CheckBox ID="cbHosef" AutoPostBack="false" runat="server" />
-                                       </ItemTemplate>
-                                   </asp:TemplateField>
-                                    <asp:BoundField DataField="SugKnisa"  ItemStyle-CssClass="ItemRow"  />
-                                 <asp:BoundField DataField="YeshuvName"  ItemStyle-CssClass="ItemRow"   />
-                                  
-                                     </Columns>
-                                    <AlternatingRowStyle CssClass="GridAltRow" />
-                                    <RowStyle CssClass="GridRow" />
-                                    <PagerStyle CssClass="GridPager" HorizontalAlign="Center" />
-                            </asp:GridView></div>
-                            </asp:Panel>
-                       
-             </ContentTemplate>
-           </asp:UpdatePanel> 
-             <br />
-              <asp:UpdatePanel ID="UPbuttons" runat="server" UpdateMode="Always">
-                 <ContentTemplate>      
-                        <table width="98%">
-                          <tr>
-                              <td align="right"  style="width:50%"> &nbsp; &nbsp;
-                                     <input type="button" class="ImgButtonSearch" value="סגור" onclick="window.returnValue = ''; window.close();" />
-                                 </td>
-                                <td align="left" style="width:50%">
-                                <asp:Button ID="btnUpdateKnisot" runat="server" style="display:none;width:128px"   Text="עדכן כניסות"  OnClick="btnUpdate_OnClick"   CssClass="ImgButtonSearch" OnClientClick="if (!checkFileds()) return false; else return true;" />
-                                 </td>
-                            </tr>
-                          </table>
-                 </ContentTemplate>
-           </asp:UpdatePanel> 
-           <br />
-               </td>
-           </tr>
+      <table style="width:100%" cellpadding="0" cellspacing="0">
+        <tr class="WorkCardKnisotHeader" ><td id="tdHeader" runat="server" style="height:22px"> </td></tr>
+      </table>
+      <table  style="width:100%; height:325px" cellpadding="2" cellspacing="2" >
+        <tr>
+        <td align="center"> 
+        <br />                  
+        <asp:UpdatePanel ID="upTblKnisot" runat="server" UpdateMode="Always" >
+            <ContentTemplate>  
+            <asp:Panel ID="pnlgrdKnisot" height="292px" width="542px" dir="ltr"  runat="server" ScrollBars="Auto">   
+            <div dir="rtl" >
+            <asp:GridView ID="grdKnisot" runat="server" GridLines="None"
+                    AutoGenerateColumns="False" height="289px" width="520px" 
+                    ShowHeader="true"    
+                    HeaderStyle-CssClass="WorkCardRechivimGridHeader"
+                    OnRowDataBound="grdKnisot_RowDataBound" >
+                <Columns>                                  
+                    <asp:BoundField DataField="Siduri" HeaderText="מספר" ItemStyle-CssClass="WorkCardRechivimGridRow"  />                                  
+                    <asp:BoundField DataField="MokedTchilaName" HeaderText="תאור"  ItemStyle-CssClass="WorkCardRechivimGridRow"   />                                  
+                    <asp:BoundField DataField="SugKnisa" HeaderText="סוג" ItemStyle-CssClass="WorkCardRechivimGridRow" ItemStyle-Width="70px"  />                          
+                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardRechivimGridRow"  HeaderText="דקות בפועל" >
+                        <ItemTemplate>
+                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="50px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                            <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotBafoal" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardRechivimGridRow" HeaderStyle-Wrap="true" >                                
+                        <HeaderTemplate>
+                            <table align="center">
+                                <tr>
+                                    <td align="center" colspan="2">
+                                        <asp:Label ID="Label1" runat="server" Text="הוסף פעילות"></asp:Label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a id="lbSamenHakol" href="#" runat="server" onclick="SamenHakol_OnClick()">סמן הכל</a>/
+                                        <a id="lbNake" href="#" runat="server"  onclick="NakeHakol_OnClick()">נקה</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <asp:CheckBox ID="cbHosef" AutoPostBack="false" runat="server" />
+                        </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="SugKnisa"  ItemStyle-CssClass="WorkCardRechivimGridRow"  />
+                        <asp:BoundField DataField="YeshuvName"  ItemStyle-CssClass="WorkCardRechivimGridRow"   />                                  
+                    </Columns>
+                    <AlternatingRowStyle CssClass="WorkCardRechivimGridRow" />
+                    <RowStyle CssClass="WorkCardRechivimGridRow" />
+                    <PagerStyle CssClass="GridPager" HorizontalAlign="Center" />
+            </asp:GridView></div>
+            </asp:Panel>                       
+        </ContentTemplate>
+    </asp:UpdatePanel>                
+       </td>
+    </tr>
        </table>
-          <input type="hidden" id="Params" name="Params"  runat="server" />
+          
+       <table style="width:100%">
+        <asp:UpdatePanel ID="UPbuttons" runat="server" UpdateMode="Always">
+            <ContentTemplate>      
+                <table width="100%" >
+                    <tr>
+                        <td align="left"  style="width:80%">
+                            <input type="button" class="btnWorkCardCloseWin" style="width:72px; height:30px" value="סגור" onclick="window.returnValue = ''; window.close();" />
+                         </td>
+                        <td align="left" style="width:20%">
+                        <asp:Button ID="btnUpdateKnisot" runat="server" style="display:none;width:105px; height:30px"   Text="עדכן כניסות"  OnClick="btnUpdate_OnClick"   CssClass="btnWorkCardUpdate" OnClientClick="if (!checkFileds()) return false; else return true;" />
+                            </td>
+                    </tr>
+                 </table>
+            </ContentTemplate>
+         </asp:UpdatePanel>    
+       </table>
+       <input type="hidden" id="Params" name="Params"  runat="server" />
     </form>
     <script type="text/javascript" language="javascript">
         var col_HosefPeilut = "<%=HOSEF_PEILUT %>";
