@@ -783,15 +783,26 @@ select
 	border: solid 1px #627d98; 	
 }
 
+.WorkCardHosafatSidurGridItm
+{
+	font-family:Arial;
+	font-size:16px;
+	text-align:center;
+	vertical-align:middle;
+	background-color:#F7FAFC;
+	color:#1A2125;
+	height:26px;
+}
 .WorkCardHosafatSidurGridHeader
 {	
-	font-family:Arial;
-	border: solid 1px #627d98; 			
+	font-family:Arial;			
 	font-size:16px;
 	text-align:center;
 	vertical-align:middle;	
-	background-color:#ebf7fc;
-	color:Black;
+	background-color:#D2E9F6;	
+	border-color:#BDDFF5;
+	border-style:solid;
+	border-width:1px;
 	padding:0px;
 	margin:0px;
 	height:26px;
@@ -1141,7 +1152,7 @@ legend
 {
  border-right:solid 1px #3F3F3F;
  border-bottom:solid 1px #3F3F3F;
- padding-right:4px;
+ padding-right:3px;
  font-size:14px;
  font-family:Arial;
 }
