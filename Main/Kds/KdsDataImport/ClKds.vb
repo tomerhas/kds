@@ -1946,12 +1946,14 @@ Public Class ClKds
             Status = ChkStatusSdrn(DateTime.Now.AddDays(-1).ToString("yyyyMMdd"))
 
             Select Case Status
+                Case "1"
+                    Throw New Exception("Status of Sadran : the procedure CreateActivitiesAtSdrn didn't finish properly.")
                 Case "6"
                     Throw New Exception("Status of Sadran : the procedure PKG_sdrn.pro_GetStatusSdrn was aborted")
                 Case "7"
-                    Throw New Exception("Status of Sadran : the record exists but there was an error while replicating")
+                    Throw New Exception("Status of Sadran : the record exists but there was a problem in Sadran procedure in Tnua")
                 Case "8"
-                    Throw New Exception("Status of Sadran : the record does not exist")
+                    Throw New Exception("Status of Sadran : the record does not exist/wasn't created by PKG_sdrn.pro_GetStatusSdrn")
             End Select
         Catch ex As Exception
             Throw ex
