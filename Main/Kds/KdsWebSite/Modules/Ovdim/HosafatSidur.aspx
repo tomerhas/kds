@@ -1421,18 +1421,33 @@
                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paMessage"
                     TargetControlID="btnShowMessage"  runat="server">
                 </cc1:ModalPopupExtender>
-                <asp:Panel runat="server" Style="display: none" ID="paMessage" CssClass="PanelMessage" Width="350px">
-                        <asp:Label ID="lblHeaderMessage" runat="server"  BackColor="#696969" ForeColor="White">קביעת תאריך</asp:Label>
-                    <br />
-                    <br />
-                    <br />
-                    יש לקבוע את היום של השעה שהוקלדה:
-                    <br />
-                    <br />
-                    <input type="button" ID="btnNochachi" runat="server" value="יום נוכחי" class="ImgButtonMake"
-                        Width="150px" onclick="btnNochachi_click()" CausesValidation="false" />
-                    <input type="button" ID="btnHaba"  runat="server" onclick="btnHaba_click()"  value="יום הבא" class="ImgButtonMake"
-                        Width="150px" CausesValidation="false" /></asp:Panel>
+                <asp:Panel runat="server" Style="display: none" ID="paMessage" CssClass="WorkCardPanelMessage" Width="455px" Height="180px">
+                    <table width="450px">
+                        <tr class="WorkCardPanelMessageBorder">
+                            <td colspan="2" width="380px" height="33px"  class="WorkCardPanelMessageHeader">
+                                <asp:Label ID="lblHeaderMessage" runat="server" width="450px" >קביעת תאריך</asp:Label>
+                            </td>
+                        </tr>
+                        <tr class="WorkCardPanelMessageBorder">
+                            <td width="450px" height="100px" colspan="2">                                
+                                <asp:Label ID="lblMessage" runat="server" Width="90%"></asp:Label>
+                                <br/>
+                                יש לקבוע את היום של השעה שהוקלדה:
+                                <br/>                        
+                            </td>
+                        </tr>
+                        <tr class="WorkCardPanelMessageHeader">
+                            <td width="380px" align="left">
+                                 <input type="button" ID="btnNochachi" runat="server" value="יום נוכחי" class="btnWorkCardCloseWin"
+                                    style="width:74px; height:30px" onclick="btnNochachi_click()" CausesValidation="false" />
+                            </td>
+                            <td align="left">
+                              <input type="button" ID="btnHaba"  runat="server" onclick="btnHaba_click()"  value="יום הבא" class="btnWorkCardCloseWin"
+                                style="width:74px; height:30px" CausesValidation="false" />
+                            </td>
+                        </tr>
+                    </table>   
+                  </asp:Panel>
             </div>
             <div visible="true" style="height:550px;width:1050px;">
                 <div id="pirteySidur" runat="server" style="display:none;width:1050px;">
