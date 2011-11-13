@@ -2149,7 +2149,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
         hidRefresh.Value = "0";
-        SetImageForButtonMeasherOMistayeg();
+        SetImageForButtonMeasherOMistayeg();     
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
     }
@@ -2168,7 +2168,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
         hidRefresh.Value = "0";
-        SetImageForButtonMeasherOMistayeg();
+        SetImageForButtonMeasherOMistayeg();     
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
     }
