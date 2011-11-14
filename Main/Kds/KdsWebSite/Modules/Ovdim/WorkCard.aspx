@@ -884,10 +884,19 @@
          {       
             SetMeasher(value); 
             if (document.getElementById('hidFromEmda').value =='true') 
-                {
-                    document.getElementById("btnPrint").disabled=false;
-                    document.all('btnPrint').click(); 
-                } 
+            {
+                document.getElementById("btnPrint").disabled=false;
+                document.all('btnPrint').click(); 
+            } 
+            if (value==1)
+              {
+               document.getElementById("btnApprove").className="ImgButtonApprovalChecked";
+               document.getElementById("btnNotApprove").className="ImgButtonDisApprovalCheckedDisabled";         
+              }
+              else{
+                document.getElementById("btnApprove").className="ImgButtonApprovalRegularDisabled";
+                document.getElementById("btnNotApprove").className="ImgButtonDisApproveChecked";                   
+              }
          }   
          
         var prm = Sys.WebForms.PageRequestManager.getInstance();
