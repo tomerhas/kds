@@ -627,7 +627,7 @@
                 wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
             }
         }
-   }
+    }   
 function SetMeasher(iStatus)
 {
     var iMisparIshi=document.getElementById("txtId").value;
@@ -642,14 +642,14 @@ function onMeasherSuccuss(result,iStatus)
     {
         document.getElementById("btnPrint").disabled=false;
         if(iStatus==1)
-        {
-         document.getElementById("btnApprove").className = "ImgButtonApprovalChecked";
-         document.getElementById("btnNotApprove").className = "ImgButtonDisApprovalRegular";        
-        }
+        {            
+            document.getElementById("btnApprove").className = "ImgButtonApprovalChecked";
+            document.getElementById("btnNotApprove").className = "ImgButtonDisApprovalCheckedDisabled";                                        
+        }                           
         else
         {
-           document.getElementById("btnNotApprove").className = "ImgButtonDisApproveChecked";
-           document.getElementById("btnApprove").className = "ImgButtonApprovalRegular";    
+            document.getElementById("btnApprove").className = "ImgButtonApprovalRegularDisabled";
+            document.getElementById("btnNotApprove").className = "ImgButtonDisApproveChecked"; 
         }
     }
 }

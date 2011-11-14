@@ -635,7 +635,7 @@
 .ImgButtonApprovalRegularDisabled
 {
 	background-image: url(Images/B_approve_Dis.png);	
-	color: black;
+	color: white;
 	text-align:center;		
 	font-weight:bold;
 	font-size:19px;	

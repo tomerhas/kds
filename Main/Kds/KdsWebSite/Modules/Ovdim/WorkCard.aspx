@@ -436,10 +436,10 @@
                                 <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"  CssClass="btnWorkCardUpadte" Style="width: 150px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click" />                                                                                                               
                             </td>   
                             <td style="width: 90px;">                                            
-                               <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclick="btnMeasherOrMistayeg_onclick(1);" />
+                               <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclientclick="SetStyle(1);" onclick="btnMeasherOrMistayeg_onclick(1);" />
                             </td>
                             <td style="width: 90px;">
-                               <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server"  onclick="btnMeasherOrMistayeg_onclick(0);"/>   
+                               <input type="button"  value="מסתייג" ID="btnNotApprove" runat="server" onclientclick="SetStyle(0);" onclick="btnMeasherOrMistayeg_onclick(0);"/>   
                             </td>                                                                               
                             <td align="right" style="display:none"><asp:Button ID="btnResonOutIn" runat="server"  CausesValidation="false" OnClick="btnResonOutIn_Click"/></td>                                    
                         </tr>
@@ -881,22 +881,13 @@
            document.getElementById("btnRefreshOvedDetails").click();          
          }
          function btnMeasherOrMistayeg_onclick(value)
-         {       
+         {               
             SetMeasher(value); 
             if (document.getElementById('hidFromEmda').value =='true') 
             {
                 document.getElementById("btnPrint").disabled=false;
                 document.all('btnPrint').click(); 
-            } 
-            if (value==1)
-              {
-               document.getElementById("btnApprove").className="ImgButtonApprovalChecked";
-               document.getElementById("btnNotApprove").className="ImgButtonDisApprovalCheckedDisabled";         
-              }
-              else{
-                document.getElementById("btnApprove").className="ImgButtonApprovalRegularDisabled";
-                document.getElementById("btnNotApprove").className="ImgButtonDisApproveChecked";                   
-              }
+            }            
          }   
          
         var prm = Sys.WebForms.PageRequestManager.getInstance();
