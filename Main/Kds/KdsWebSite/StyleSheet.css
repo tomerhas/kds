@@ -1734,6 +1734,18 @@ a
 	 text-align:center;
 	 color:Black;
 }
+.WorkCardSidurTextBoxFocus
+{
+	background-color:#1A8CFF;
+	color:white;	 
+	font-weight:bold;
+	font-family:Arial;
+	font-size:14px;	
+	width:100px;
+	height:20px;
+	border-style:none;	 
+	text-align:center;	 
+}
 .WorkCardSidurTextBox
 {
 	 background-color:#F2F7FB;	
@@ -1743,9 +1755,8 @@ a
 	 font-size:14px;	
 	 width:100px;
 	 height:20px;
-	 border-style:none;
-	 
-	 text-align:center;	 
+	 border-style:none;	 
+	 text-align:center;	 	 	 	 
 }
 .WorkCardSidurDropDown
 {
@@ -1758,7 +1769,20 @@ a
 	 border-color:#E4EDF3;
 	 border-width :1px;
 }
-	
+.WorkCardPeilutTextBoxFocus
+{
+	 background-color:#1A8CFF;	
+	 color:White;
+	 font-weight:bolder;	
+	 width:100px;
+	 height:20px;	 
+	 outline:#627c97;	 
+	 text-align:center;	 
+	 border-style:solid;
+	 border-color:#E4EDF3;
+	 border-width :1px;
+	 font-size: 14px;
+}	
 .WorkCardPeilutTextBox
 {
 	 background-color:#F6FBFF;	
@@ -1773,7 +1797,16 @@ a
 	 border-width :1px;
 	 font-size: 14px;
 }
-
+.btnNextDayDis
+{
+	background-image: url(Images/B_nextDay_Dis.png);	
+	background-position:center;		 
+}
+.btnPrevDayDis
+{
+	background-image: url(Images/B_prevDay_Dis.png);			
+	background-position:center;
+}
 .btnNextDay
 {
 	background-image: url(Images/B_nextDay.png);	

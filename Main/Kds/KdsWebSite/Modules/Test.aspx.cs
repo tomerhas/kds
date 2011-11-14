@@ -60,8 +60,9 @@ public partial class Modules_Test :Page
     {
         long dateNumber = 1297380023295;
         long beginTicks = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Ticks;
-        DateTime dateValue = new DateTime(beginTicks + dateNumber * 10000).ToLocalTime(); 
+        DateTime dateValue = new DateTime(beginTicks + dateNumber * 10000).ToLocalTime();
 
+        txtId.Attributes.Add("onfocus", "alert('')");
         //DateTime convertedDate = DateTime.SpecifyKind(DateTime.Parse("26/08/2011"), DateTimeKind.Utc); 
         //var kind = convertedDate.Kind; // will equal DateTimeKind.Utc Now, once the system knows its in UTC time, you can just call ToLocalTime:
 

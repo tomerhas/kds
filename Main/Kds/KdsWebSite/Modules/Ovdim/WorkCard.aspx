@@ -75,11 +75,13 @@
         </tr>
       </table>
      
-      <table width="100%" class="WorkCardTable2" cellspacing="0">
-          <tr>
-            <td width="89%">                        
-               <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-                        <ContentTemplate>
+      <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+        <ContentTemplate>
+         <table width="100%" class="WorkCardTable2" cellspacing="0">
+            <tr>
+              <td width="89%">                        
+              <%-- <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+                        <ContentTemplate>--%>
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="width: 8%">
@@ -136,7 +138,7 @@
                                     </td>                                            
                                 </tr>                                        
                             </table>                                   
-                        </ContentTemplate>
+                    <%--    </ContentTemplate>
                         <Triggers>                                                                                                                                
                             <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
                             <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />
@@ -152,11 +154,11 @@
                             <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
                             <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />                                                                                                                                                                                                                                                                                                                                                                                                                            
                         </Triggers>
-                    </asp:UpdatePanel>                        
+                    </asp:UpdatePanel>               --%>         
             </td>
-            <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">
-                <asp:UpdatePanel ID="upApproveButton" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-                    <ContentTemplate>
+              <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">
+               <%-- <asp:UpdatePanel ID="upApproveButton" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+                    <ContentTemplate>--%>
                         <table style="width: 100%" cellpadding="0" cellspacing="0">
                             <tr valign="bottom">
                                 <td colspan="2" align="center">
@@ -164,7 +166,7 @@
                                 </td>
                             </tr>                                                                     
                         </table>
-                    </ContentTemplate>
+                  <%--  </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails"/>
                         <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut"/>
@@ -174,10 +176,29 @@
                         <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
                         <asp:AsyncPostBackTrigger ControlID="btnPrevCard" /> 
                     </Triggers>
-                </asp:UpdatePanel>
+                </asp:UpdatePanel>--%>
             </td>
-         </tr>            
-      </table>   
+           </tr>            
+         </table>   
+        </ContentTemplate>
+        <Triggers>                                                                                                                                
+            <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
+            <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />
+            <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                    
+            <asp:AsyncPostBackTrigger ControlID="btnAddMyuchad" />
+            <asp:AsyncPostBackTrigger ControlID="btnApprovalReport" />
+            <asp:AsyncPostBackTrigger ControlID="btnClock" />
+            <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/> 
+            <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
+            <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
+            <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
+            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
+            <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
+            <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />  
+            <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
+            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                                          
+        </Triggers>
+      </asp:UpdatePanel>
            
       <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
             <ContentTemplate>         

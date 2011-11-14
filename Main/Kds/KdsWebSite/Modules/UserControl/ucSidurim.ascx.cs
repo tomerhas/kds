@@ -5049,7 +5049,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            // oTextBox.Attributes.Add("onchange", "disableUpdateBtn();");
             oTextBox.Attributes.Add("onkeyup", "changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
-            oTextBox.Attributes.Add("onfocus", "this.select();");
+            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+            oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
           
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
@@ -5452,7 +5453,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-            
+            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+            oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
             
             //AddAttribute(oTextBox, "OrgDate", oSidur.dOldFullShatGmar.ToString());           
             //AddAttribute(oTextBox, "OldV", oTextBox.Text);
@@ -6503,6 +6505,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
             oTxt.CssClass = "WorkCardPeilutTextBox";
+            oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
+            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
           //  oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());

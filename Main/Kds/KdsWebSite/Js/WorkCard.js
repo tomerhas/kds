@@ -126,8 +126,17 @@
         $get("ddlHashlamaReason").disabled = (!bEnable);
         $get("btnHashlamaForDay").disabled = (!bEnable);
         $get("btnCalcItem").disabled = (!bEnable);
-        $get("btnPrevCard").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
+        $get("btnPrevCard").disabled = (!bEnable);
+        if (bEnable){
+            $get("btnPrevCard").className = "btnPrevDay";
+            $get("btnNextCard").className = "btnNextDay";            
+          }
+        else
+        {
+          $get("btnPrevCard").className = "btnPrevDayDis";
+          $get("btnNextCard").className = "btnNextDayDis";         
+        }
         $get("btnNextErrCard").disabled = (!bEnable); 
         EnabledSidurimListBtn(!bEnable);   
     }

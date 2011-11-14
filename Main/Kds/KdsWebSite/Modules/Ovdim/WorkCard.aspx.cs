@@ -148,10 +148,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         switch (oMasherOMistayeg)
         {
             case clGeneral.enMeasherOMistayeg.ValueNull:
-                if (btnApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
-                if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
+                //if (btnApprove.Disabled)
+                   // btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+               // if (btnNotApprove.Disabled)
+                  //  btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
                 if (!bRashemet)                
                     btnPrint.Enabled = false;                
                 //if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
@@ -163,35 +163,35 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //    EnabledFrames(true);                
                 break;
             case clGeneral.enMeasherOMistayeg.Measher:
-                if (btnApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
-                else
+                //if (btnApprove.Disabled)
+                   // btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+                if (!btnApprove.Disabled)
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
 
-                if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled");
-                else
-                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular");
+                //if (btnNotApprove.Disabled)
+                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled");
+                //if (!btnNotApprove.Disabled)
+                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular");
                 break;
             case clGeneral.enMeasherOMistayeg.Mistayeg:
-                 if (btnApprove.Disabled)
-                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
-                 else
-                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
-                 if (btnNotApprove.Disabled)
-                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalCheckedDisabled");
-                 else
+                 //if (btnApprove.Disabled)
+                 //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                 //if (!btnApprove.Disabled)
+                 //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
+                 //if (btnNotApprove.Disabled)
+                    // btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalCheckedDisabled");
+                 if (!btnNotApprove.Disabled)
                      btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
                 break;
 
             default:
-                if (btnApprove.Disabled)
-                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
-                else
+                //if (btnApprove.Disabled)
+                //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+                if (!btnApprove.Disabled) 
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
-                if (btnNotApprove.Disabled)
-                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
-                else
+                //if (btnNotApprove.Disabled)
+                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
+                if (!btnNotApprove.Disabled)
                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
                 btnPrint.Enabled = true;
                 break;
@@ -1933,15 +1933,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 case clGeneral.enMeasherOMistayeg.Measher:
                     strImageUrlApprove = "ImgButtonApprovalChecked";
-                    strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
+                    strImageUrlNotApprove = "ImgButtonDisApprovalCheckedDisabled";//"ImgButtonDisApprovalRegular";
                     break;
                 case clGeneral.enMeasherOMistayeg.Mistayeg:
-                    strImageUrlApprove = "ImgButtonApprovalRegular";
+                    strImageUrlApprove = "ImgButtonApprovalRegularDisabled";//"ImgButtonApprovalRegular";
                     strImageUrlNotApprove = "ImgButtonDisApproveChecked";
                     break;
                 case clGeneral.enMeasherOMistayeg.ValueNull:
-                    strImageUrlApprove = "ImgButtonApprovalRegular";
-                    strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
+                    strImageUrlApprove = "ImgButtonApprovalRegularDisabled";//"ImgButtonApprovalRegular";
+                    strImageUrlNotApprove = "ImgButtonDisApprovalCheckedDisabled";//"ImgButtonDisApprovalRegular";
                     break;
                 default:
                     strImageUrlApprove = "ImgButtonApprovalRegular";
