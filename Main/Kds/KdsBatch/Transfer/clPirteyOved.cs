@@ -63,10 +63,8 @@ namespace KdsBatch
                     oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim);
                 
-                    if (iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
-                    {
-                        oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
-                    }
+                    oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
+                    
                     oErua416 = new clErua416(iBakashaId, _drPirteyOved, _dtRechivim);
                     oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim);
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
