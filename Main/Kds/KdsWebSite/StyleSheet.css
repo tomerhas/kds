@@ -879,6 +879,21 @@ select
 	padding:0px;
 	margin:0px;
 }
+
+.PanelMessage
+{
+	border: outset 5px #E1E1E1; 
+	width:240px;
+	height :120px;
+	font-size :14px;
+	text-align:center;
+	top:30%;
+	left:40%;
+	position:absolute;
+	background-color:#E1E1E1;
+	padding:0px;
+	margin:0px;
+}
 .WorkCardPanelMessageHeader
 {	
 	font-family:Arial;
