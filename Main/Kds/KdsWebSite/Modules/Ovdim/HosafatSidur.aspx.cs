@@ -556,7 +556,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                 if (e.Row.Cells[(int)enPeilut.hidShatYezia].Text != "&nbsp;")
                     ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("txtShatYezia")).Text = e.Row.Cells[(int)enPeilut.hidShatYezia].Text;
                 ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("exvldShatYezia")).BehaviorID = e.Row.ClientID + "_vldExvldShatYezia";
-                ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("txtShatYezia")).Attributes.Add("onchange", "onchange_txtShatYezia(" + e.Row.ClientID + ",true,'')");
+                ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("txtShatYezia")).Attributes.Add("onkeyup", "onchange_txtShatYezia(" + e.Row.ClientID + ",true,'')");
                 if (e.Row.Cells[(int)enPeilut.SHAT_YEZIA_DATE].Text.IndexOf("nbsp;") == -1)
                 {
                     if (e.Row.Cells[(int)enPeilut.SHAT_YEZIA_DATE].Text.Split(' ').Length > 1)

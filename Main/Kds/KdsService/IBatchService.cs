@@ -30,6 +30,9 @@ namespace KdsService
         void TransferToHilan(long lRequestNum, long lRequestNumToTransfer);
 
         [OperationContract]
+        void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim);
+
+        [OperationContract]
         void CreateConstantsReports(long lRequestNum, string sMonth, int iUserId);
 
         [OperationContract]

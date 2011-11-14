@@ -13,6 +13,13 @@ namespace KdsBatch.Reports
         private string _eMail;
         private int _MisparIshi;
 
+        private DateTime _Month; //for rikuzim
+        public DateTime Month
+        {
+            get { return _Month; }
+            //  set { _sValue = value; }
+        }
+
         public TypeSending TypeSending
         {
             get { return _TypeSending; }
@@ -41,6 +48,13 @@ namespace KdsBatch.Reports
         public clDestinationReport(TypeSending type, int kod, string TypeValue, int MisparIshi) : this(type,kod,TypeValue)
         {
             _MisparIshi = MisparIshi;
+        }
+
+        public clDestinationReport(TypeSending type, int kod, string TypeValue, int MisparIshi,DateTime Month)
+            : this(type, kod, TypeValue)
+        {
+            _MisparIshi = MisparIshi;
+            _Month = Month;
         }
 
         public clDestinationReport(TypeSending type, int kod, string TypeValue)

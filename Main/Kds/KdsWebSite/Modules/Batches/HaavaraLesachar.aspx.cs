@@ -12,7 +12,9 @@ using System.Data;
 public partial class Modules_Batches_HaavaraLesachar :KdsPage
 {
     private const int COL_REQUEST_ID  = 1;
-    private const int COL_BUTTON = 6;
+    private const int COL_AVAR_LASACHAR = 6;
+    private const int COL_BUTTON = 7;
+    private const int COL_BUTTON_RIKUZ = 8;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -113,6 +115,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
+     e.Row.Cells[(int)COL_AVAR_LASACHAR].Style.Add("display", "none");
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
@@ -138,7 +141,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          int i = 0;
          object sortHeader = null;
 
-         for (i = 0; i < e.Row.Cells.Count-1; i++)
+         for (i = 0; i < e.Row.Cells.Count-3; i++)
          {
              sortHeader = e.Row.Cells[i].Controls[0];
              ((LinkButton)(sortHeader)).Style.Add("color", "white");
@@ -147,7 +150,10 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      }
      else if (e.Row.RowType == DataControlRowType.DataRow)
      {
+         //if (e.Row.Cells[(int)COL_AVAR_LASACHAR].Text == "1")
+        // ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).Enabled = true;
          ((Button)e.Row.Cells[COL_BUTTON].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
+         ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
      }
  }
 
@@ -226,6 +232,32 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          lblMessage.Text = sMessage;
          btnShowMessage_Click(this, new EventArgs());
      
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+ protected void YeziratRicuzim(object sender, EventArgs e)
+ {
+     long iRequestId, iRequestIdForRikuzim;
+     string sMessage;
+     int iUserId;
+
+     clBatch objBatch = new clBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+         iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
+         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
+         ViewState["iRequestId"] = iRequestId;
+         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
+
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+
      }
      catch (Exception ex)
      {

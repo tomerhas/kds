@@ -32,7 +32,7 @@ namespace KdsLibrary.Utils
             _FromMail = _DisplayNameServer + "<" + ConfigurationManager.AppSettings["NoRep"].ToString() + ">";
             _mailFromAddress = new MailAddress(_FromMail);
             _mailToAddress = new MailAddress(To);
-            SmtpClient client = new SmtpClient(_host);
+            client = new SmtpClient(_host);
             client.Credentials = new System.Net.NetworkCredential(username, password);
             message = new MailMessage(_mailFromAddress, _mailToAddress);
             message.Subject = Subject;

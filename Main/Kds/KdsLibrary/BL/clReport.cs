@@ -373,5 +373,44 @@ namespace KdsLibrary.BL
             }
             return dt;
         }
+
+        public DataTable getDetailsOvdimLeRikuzim(long BakashaId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+
+                dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetDetailsOvdimLeRikuzim, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public DataTable getEmailOvdimLeRikuzim(long BakashaId)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+
+                dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetEmailOvdimLeRikuzim, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

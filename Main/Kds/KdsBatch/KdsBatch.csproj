@@ -152,6 +152,7 @@
     <Compile Include="Reports\ClFactoryReport.cs" />
     <Compile Include="Reports\ClManageHeavyReport.cs" />
     <Compile Include="Reports\clManagerReport.cs" />
+    <Compile Include="Reports\clManagerRikuzim.cs" />
     <Compile Include="Reports\clReport.cs" />
     <Compile Include="Reports\clReportParam.cs" />
     <Compile Include="Reports\clDestinationReport.cs" />

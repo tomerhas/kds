@@ -52,7 +52,9 @@ namespace KdsLibrary
         public const string cProMoveNewMeafyenimOvdimToOld = "pkg_batch.MoveNewMeafyenimOvdimToOld";
         public const string cProMoveNewBrerotMechdalToOld = "pkg_batch.MoveNewBrerotMechdalToOld";
         public const string cProDeleteLogTahalichRecords = "pkg_batch.pro_delete_log_tahalich_rcds";
-       
+        public const string cProGetDetailsOvdimLeRikuzim = "pkg_batch.Pro_get_pirtey_ovdim_leRikuzim";
+        public const string cProGetEmailOvdimLeRikuzim = "pkg_batch.Pro_get_Email_Ovdim_LeRikuzim";
+        
 #endregion 
 
 #region pkg_calc constants

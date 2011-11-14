@@ -232,6 +232,23 @@ namespace KdsService
 
         }
 
+        private void RunYeziratRikuzimThread(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            long iRequestIdForRikuzim = (long)args[1];
+
+            clManagerRikuzim objReport = new clManagerRikuzim(lRequestNum, iRequestIdForRikuzim);
+            try
+            {
+                objReport.MakeReports(lRequestNum);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+            LogThreadEnd("TransferToHilan", lRequestNum);
+        }
         private void RunCreateConstantsReports(object param)
         {
             object[] args = param as object[];
@@ -433,6 +450,13 @@ namespace KdsService
             runThread.Start(new object[] { lRequestNum, lRequestNumToTransfer });
         }
 
+        public void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunYeziratRikuzimThread));
+            LogThreadStart("YeziratRikuzim", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, iRequestIdForRikuzim });
+        }
         public void CreateConstantsReports(long lRequestNum, string sMonth, int iUserId)
         {
             Thread runThread = new Thread(

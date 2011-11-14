@@ -196,5 +196,14 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
 
     }
+
+    [WebMethod(EnableSession = true)]
+    public string YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.YeziratRikuzim(lRequestNum, iRequestIdForRikuzim);
+        client.Close();
+        return "OK";
+    }
 }
 

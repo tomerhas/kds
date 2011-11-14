@@ -239,6 +239,12 @@ function GetDateDDMMYYYY(dDate){
        return (Math.floor(timediff / (1000 * 60 )));
    }
 
+   function GetKeyPressPosition(ctrl) {
+       // return ctrl.value.length;       
+       var Sel = document.selection.createRange();
+       Sel.moveStart('character', -ctrl.value.length);
+       return Sel.text.length;
+   }
 if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
 
 

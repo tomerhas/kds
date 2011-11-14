@@ -446,8 +446,9 @@
            var stop = false;
          
            var sugGmar =document.getElementById("txtShatGmar").attributes("SugGmar").value ;
-      //   debugger
-           if (shaa != "") {
+           //       debugger;
+           if (IsHourEmpty(shaa)==false && (GetKeyPressPosition(document.getElementById("txtShatHatchala")) == 5)) {
+           // if (shaa != "" && (GetKeyPressPosition(document.getElementById("txtShatHatchala")) == 5)) {
                if (IsValidTime(shaa)) {
                    
                    var Param1 = document.getElementById("Params").attributes("Param1").value;
@@ -572,8 +573,10 @@
                }
            }
            else {
-               document.getElementById("vldShatHatchala").errormessage = " חובה להכניס שעת התחלה ";
-               ShowValidatorCalloutExtender("vldExvldShatHatchala");
+               if (IsHourEmpty(shaa)) {
+                   document.getElementById("vldShatHatchala").errormessage = " חובה להכניס שעת התחלה ";
+                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
+               }
                return false;
            }
           
@@ -595,7 +598,7 @@
            var stop = false;
            var message;
            var sugGmar;
-           if (shaa != "") {
+           if (IsHourEmpty(shaa)==false  && (GetKeyPressPosition(document.getElementById("txtShatGmar")) == 5)) {
                if (IsValidTime(shaa)) {    
                    var Param1 = document.getElementById("Params").attributes("Param1").value;
                    var Param3 = document.getElementById("Params").attributes("Param3").value;
@@ -740,13 +743,15 @@
                }
            }
            else {
+              if (IsHourEmpty(shaa)){
                if (document.getElementById("sugSidur").value == "2") {
                    if (IsChovaShatGmar()) {
                        document.getElementById("vldShatGmar").errormessage = " חובה להכניס שעת גמר לסידור ";
                        ShowValidatorCalloutExtender("vldExvldShatGmar");
                        return false;
                    }
-               }
+                }
+              }
            }
            
            if (next) 
@@ -1075,26 +1080,27 @@
            var stop = false;
            var shatGmar = document.getElementById("txtShatGmar").value;
            var shatHatcahla = document.getElementById("txtShatHatchala").value;
-           if (trim(shaa) != "") {
-               if (IsValidTime(shaa)) {
-                   shatYeziaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                   if (shaa == Param29)
-                       shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
+          // debugger;
+           if (IsHourEmpty(shaa)==false && GetKeyPressPosition(document.getElementById(row.id + "_txtShatYezia")) == 5) {
+                   if (IsValidTime(shaa)) {
+                       shatYeziaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                       if (shaa == Param29)
+                           shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
                        if (ask) {
                            if (IsShatGmarInNextDay(shaa)) {
-                              //** if (shatGmar != "" && IsShatGmarInNextDay(shatGmar)){
-                                   if (choice == "") {
-                                       stop = true;
-                                       document.getElementById("DestTime").value = "yezia;"+ row.id;
-                                       document.getElementById("btnShowMessage").click();
-                                   }
-                                   else {
-                                       if (choice == "2")
-                                           shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
-                                   }
-                             //**  }
+                               //** if (shatGmar != "" && IsShatGmarInNextDay(shatGmar)){
+                               if (choice == "") {
+                                   stop = true;
+                                   document.getElementById("DestTime").value = "yezia;" + row.id;
+                                   document.getElementById("btnShowMessage").click();
+                               }
+                               else {
+                                   if (choice == "2")
+                                       shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
+                               }
+                               //**  }
                            }
-                     //      document.getElementById(row.id + "_DateHidden").value = shatYeziaDate.format("HH:mm:ss dd/MM/yyyy");
+                           //      document.getElementById(row.id + "_DateHidden").value = shatYeziaDate.format("HH:mm:ss dd/MM/yyyy");
                            document.getElementById(row.id + "_txtShatYeziaDate").value = shatYeziaDate.format("dd/MM/yyyy HH:mm:ss");
                            if (document.getElementById(row.id + "_txtKisuiTor").disabled == false) {
                                var KisuiTor = new Date();
@@ -1111,14 +1117,14 @@
                        }
                        else {
                            taarichTmp = document.getElementById(row.id + "_txtShatYeziaDate").value.split(' ')[0].split('/');
-                       //    taarichTmp = document.getElementById(row.id + "_txtShatYezia").attributes("Date").value.split(' ')[1].split('/');
+                           //    taarichTmp = document.getElementById(row.id + "_txtShatYezia").attributes("Date").value.split(' ')[1].split('/');
                            shatYeziaDate = new Date(taarichTmp[2], taarichTmp[1] - 1, taarichTmp[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                      //     alert(shatYeziaDate);
+                           //     alert(shatYeziaDate);
                        }
-                      
+
                        if (!stop) {
                            if (shatHatcahla != "") {
-                             //  debugger;
+                               //  debugger;
                                var startHour = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
                                shatHatchalaDate = new Date(startHour[2], startHour[1] - 1, startHour[0], shatHatcahla.split(':')[0], shatHatcahla.split(':')[1], '00');
                                if (shatYeziaDate < shatHatchalaDate) {
@@ -1127,38 +1133,44 @@
                                    return false;
                                }
                            }
-                     /**      if (shatGmar != "") {
-                               //   taarich = document.getElementById("txtShatGmar").title.split(' ')[1].split('/');
-                              // taarich = document.getElementById("txtShatGmar").attributes("Date").value.split(' ')[1].split('/');
-                               taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
+                           /**      if (shatGmar != "") {
+                           //   taarich = document.getElementById("txtShatGmar").title.split(' ')[1].split('/');
+                           // taarich = document.getElementById("txtShatGmar").attributes("Date").value.split(' ')[1].split('/');
+                           taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
                
-                               shatGmarDate = new Date(taarich[2], taarich[1]-1 , taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
-                               if (shatYeziaDate > shatGmarDate) {
-                                   vld.errormessage = " לא ניתן להקליד שעת יציאה הגדולה משעת גמר של הסידור ";
-                                   ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
-                                   return false;
-                               }
+                           shatGmarDate = new Date(taarich[2], taarich[1]-1 , taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
+                           if (shatYeziaDate > shatGmarDate) {
+                           vld.errormessage = " לא ניתן להקליד שעת יציאה הגדולה משעת גמר של הסידור ";
+                           ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
+                           return false;
+                           }
                            }**/
                        }
+                   }
+                   else {
+                       vld.errormessage = " שעה לא תקינה ";
+                       ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
+                       return false;
+                   }
                }
-              else {
-                   vld.errormessage = " שעה לא תקינה ";
-                   ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
+               else {
+                   if (IsHourEmpty(shaa)) {
+                       vld.errormessage = " חובה להכניס שעת יציאה לפעילות ";
+                       ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
+                   }
                    return false;
                }
-           }
-           else {
-           //    CopyShatYetziaToPeiluyot(row, "");
-               vld.errormessage = " חובה להכניס שעת יציאה לפעילות ";
-               ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
-               return false;
-           }
 
            document.getElementById(row.id + "_txtShatYezia").title = " תאריך שעת היציאה הוא " + shatYeziaDate.format("HH:mm:ss dd/MM/yyyy");
            CopyShatYetziaToPeiluyot(row,shatYeziaDate);
            return true;
        }
 
+       function IsHourEmpty(shaa) {
+           if (shaa == "__:__")
+               return true;
+           else return false;
+       }
        function CopyShatYetziaToPeiluyot(oRowAv, ShatYetziaDate) {
 
            var numRows = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length;
@@ -1461,13 +1473,13 @@
                     <tr>
                         <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"></asp:Label></td>
                         <td valign="top" align="center">
-                        <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5"  onchange="onchange_txtShatHatchala(true,'')" CssClass="WorkCardSidurTextBox" ></asp:TextBox>
+                        <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5" onkeyup="onchange_txtShatHatchala(true,'')" CssClass="WorkCardSidurTextBox" ></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td  valign="top"  align="center">
-                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onchange="onchange_txtShatGmar(true,'')"  CssClass="WorkCardSidurTextBox"></asp:TextBox>
+                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onkeyup="onchange_txtShatGmar(true,'')"  CssClass="WorkCardSidurTextBox"></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" TargetControlID="txtShatGmar" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatGmar" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatGmar"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     

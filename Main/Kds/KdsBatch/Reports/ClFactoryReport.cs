@@ -82,7 +82,7 @@ namespace KdsBatch.Reports
             {
                 // ReportMail rpt = new ReportMail();
                 string body = "";// rpt.GetMessageBody(Path);
-                clMail email = new clMail(eMail, " דו''ח " + teur, body);
+                clMail email = new clMail(eMail,  teur, body);
                 email.attachFile(Path);
                 email.IsHtmlBody(true);
                 email.SendMail();
@@ -126,11 +126,12 @@ namespace KdsBatch.Reports
                     if (info != null)
                     {
 
-                        List<clDestinationReport> tempDest = _DestinationReports.FindAll(delegate(clDestinationReport Dest)
+                        List<clDestinationReport> tempDest = getDestinationReports(drReport);/* _DestinationReports.FindAll(delegate(clDestinationReport Dest)
                         {
                             if ((Dest.Kod == drReport.KodReport) & (Dest.MisparIshi == drReport.MisparIshi)) return true;
                             else return false;
                         });
+                        */
                         if (tempDest.Count == 0)
                         {
                             ErrorMessage = "MakeReports::No Destination found for report kod:" + drReport.KodReport + ",BakashaId:" + drReport.BakashaId;
@@ -163,9 +164,17 @@ namespace KdsBatch.Reports
             }
         }
 
+        protected virtual List<clDestinationReport> getDestinationReports(clReport CurrentReport)
+        {
+           List<clDestinationReport>  ListDest = _DestinationReports.FindAll(delegate(clDestinationReport Dest)
+            {
+                if ((Dest.Kod == CurrentReport.KodReport) & (Dest.MisparIshi == CurrentReport.MisparIshi)) return true;
+                else return false;
+            });
+           return ListDest;
+        }
 
-
-        protected void FillDestinations()
+        protected virtual void FillDestinations()
         {
             if (_dtReportDefinitions.Rows.Count == 0)
                 throw new Exception("No actives reports are defined in the database .");

@@ -15,7 +15,14 @@ namespace KdsBatch.Reports
         private bool _HasPeriodParameters  = false;
         private eFormat _Extension;
         private long _BakashaId;
-        private int _MisparIshi; 
+        private int _MisparIshi;
+
+        private DateTime _Month; //for rikuzim
+        public DateTime Month
+        {
+            get { return _Month; }
+        }
+
 
         public string RdlName
         {
@@ -62,7 +69,7 @@ namespace KdsBatch.Reports
             _ReportParams = new List<clReportParam>();
             _sRdlName = name;
             _iKodReport = kod;
-            _sTeur = teur;
+            _sTeur = " דו''ח " + teur;
             _Extension = Extension;
             _BakashaId = BakashaId;
             _MisparIshi = MisparIshi;
@@ -73,6 +80,17 @@ namespace KdsBatch.Reports
             _HasPeriodParameters = (HasPeriodParameters == 1) ? true : false;
         }
 
+        public clReport(long BakashaId, int MisparIshi,DateTime Month)//for rikuzim
+        {
+            _ReportParams = new List<clReportParam>();
+            _sRdlName = "RikuzAvodaChodshi";
+            _Extension = eFormat.PDF ;
+            _BakashaId = BakashaId;
+            _MisparIshi = MisparIshi;
+            _Month = Month;
+            _sTeur = " ריכוזים ל" + _Month.ToShortDateString();
+            _iKodReport = 0;
+        }
         public void Add(string ParamName, string ParamValue)
         {
             _ReportParams.Add(new clReportParam(ParamName, ParamValue));

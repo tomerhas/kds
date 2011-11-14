@@ -61,11 +61,19 @@
                         <asp:BoundField DataField="auchlusia" HeaderText="אוכלוסיה לריצה" SortExpression="auchlusia" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="120px" />
                         <asp:BoundField DataField="tkufa" HeaderText="תקופת הריצה - עד חודש (כולל)" SortExpression="tkufa" ItemStyle-Width="195px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                         <asp:BoundField DataField="ritza_gorfet" HeaderText="ריצה גורפת" SortExpression="ritza_gorfet" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="65px"/>
+                        <asp:BoundField DataField="HUAVRA_LESACHAR" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         <asp:TemplateField>
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="65px" />
                            <ItemTemplate>
                                        <asp:button ID="btnTransfer" runat="server" text="העבר" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                         <asp:TemplateField>
+                            <HeaderStyle CssClass="GridHeader" />
+                            <ItemStyle CssClass="ItemRow" Width="90px" />
+                           <ItemTemplate>
+                                       <asp:button ID="btnYeziratRikuzim"  runat="server"  Width="85px" text="יצירת ריכוזים" Enabled="false" CssClass ="ImgButtonSearch"  OnClick="YeziratRicuzim" />
                             </ItemTemplate>
                         </asp:TemplateField>
                      </Columns> 
@@ -97,6 +105,10 @@
 function TransetToSachar(iRequestId,iRequestIdToTtansfer) 
 {
   wsBatch.TransferToHilan(iRequestId,iRequestIdToTtansfer);//, TransetToSacharSucceeded);
+}
+
+function YeziratRikuzim(iRequestId, iRequestIdForRikuzim) {
+    wsBatch.YeziratRikuzim(iRequestId, iRequestIdForRikuzim); //, TransetToSacharSucceeded);
 }
 /*
 function OnChange_Taarich(id) {
