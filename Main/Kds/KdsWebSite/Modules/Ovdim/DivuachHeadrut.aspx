@@ -190,7 +190,7 @@ function CheckDateGreaterStart(val, args) {
     <form id="form1" runat="server">
       <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >        
      </asp:ScriptManager>
-    <div style="text-align:center" class="WCard_GridRow">
+   
      <asp:UpdatePanel ID="upBody" runat="server" UpdateMode="Conditional">
           <ContentTemplate>
                <table width="651px" cellpadding="1" cellspacing="1" class= "WorkCardDivuchHeadrutTopTable">
@@ -270,7 +270,7 @@ function CheckDateGreaterStart(val, args) {
                     --%> <br /><br /><br /></td>
                     </tr>
                     </table>  
-                    <table class="WorkCardDivuchHeadrutButtomTable">
+                    <table class="WorkCardDivuchHeadrutButtomTable" style="width:651px">
                      <tr class="WorkCardTable1" style="height:44px; width:651px">
                         <td  style="width:320px"><input type="button" class="btnWorkCardCloseCard" causesvalidation="false" value="סגור" tabindex="12" style="width:80px" onclick="window.close();" 
                             onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> </td>
@@ -282,9 +282,7 @@ function CheckDateGreaterStart(val, args) {
                       </tr>
                     </table>                                      
                 </ContentTemplate>
-           </asp:UpdatePanel>
-        <br /><br />
-    </div>
+           </asp:UpdatePanel>   
     </form>
    
 </body>

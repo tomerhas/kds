@@ -1353,12 +1353,12 @@ function chkMkt(oRow) {
           else      
             _Add.value = "0";
       }
-      function GetKeyPressPosition(ctrl) {
-          // return ctrl.value.length;       
-          var Sel = document.selection.createRange();
-          Sel.moveStart('character', -ctrl.value.length);
-          return Sel.text.length;
-     }
+//      function GetKeyPressPosition(ctrl) {
+//          // return ctrl.value.length;       
+//          var Sel = document.selection.createRange();
+//          Sel.moveStart('character', -ctrl.value.length);
+//          return Sel.text.length;
+//     }
     function SetDay(iInx){
       $find("pBehvDate").hide();
       var sEndHour;    

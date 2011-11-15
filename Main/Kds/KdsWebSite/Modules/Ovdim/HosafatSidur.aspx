@@ -1396,39 +1396,36 @@
         </ProgressTemplate>
     </asp:UpdateProgress>
     <asp:UpdatePanel  ID="upsd" runat="server"  UpdateMode="Always">
-        <ContentTemplate>
-            <div>
-                <table class="WorkCardRechivimHeader" style="width:1076px" cellpadding="0" cellspacing="0" >
-                      <tr  style="height:25px"><td> חיפוש והוספת סידור</td></tr>                                        
-                      <tr  style="height:70px">                       
-                        <td>      
-                            <hr />                                                      
-                            <table cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td>&nbsp;&nbsp;</td>                                 
-                                <td >                                
-                                <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>                            
-                                    <asp:TextBox ID="txtMisSidurMapa" runat="server"  CssClass="WorkCardTextBox"  onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5" ></asp:TextBox>                                    
-                                    <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""></asp:CustomValidator>
-                                    <cc1:ValidatorCalloutExtender runat="server" ID="vldExMisMapa" BehaviorID="vldExSidurMapa"  TargetControlID="vldMisMapa" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                                                    
-                                </td>
-                                <td>&nbsp;&nbsp;</td>    
-                                <td> </td>                                                                                          
-                                <td>
-                                    <input type="button" ID="btnShow" runat="server" onclick="MisSiduri_onChange();" value="הצג"   tabindex="8" class="ImgButtonShow"  onblur="moveFocus('btnShow');" />
-                                    <input type="button" ID="Button1" runat="server" onserverclick="btnShow_OnClick"  style="display: none;" />
-                                </td>
-                            </tr>
-                            </table>                                                             
-                        </td>                        
-                      </tr>                                                            
-                </table>                                 
-            </div>           
-    </ContentTemplate>
+        <ContentTemplate>          
+          <table class="WorkCardRechivimHeader" style="width:970px; " cellpadding="0" cellspacing="0" >
+            <tr  style="height:25px"><td> חיפוש והוספת סידור</td></tr>                                        
+            <tr  style="height:70px">                       
+                <td>      
+                    <hr />                                                      
+                    <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>&nbsp;&nbsp;</td>                                 
+                        <td >                                
+                        <asp:Label ID="lblmis" runat="server" Text="מספר סידור"></asp:Label>                            
+                            <asp:TextBox ID="txtMisSidurMapa" runat="server"  CssClass="WorkCardTextBox"  onkeypress="document.getElementById('wsBack').value ='0';" width="130px" MaxLength="5"  tabindex="5" ></asp:TextBox>                                    
+                            <asp:CustomValidator runat="server" id="vldMisMapa"   ControlToValidate="txtMisSidurMapa" ErrorMessage=""></asp:CustomValidator>
+                            <cc1:ValidatorCalloutExtender runat="server" ID="vldExMisMapa" BehaviorID="vldExSidurMapa"  TargetControlID="vldMisMapa" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                                                    
+                        </td>
+                        <td>&nbsp;&nbsp;</td>    
+                        <td> </td>                                                                                          
+                        <td>
+                            <input type="button" ID="btnShow" runat="server" onclick="MisSiduri_onChange();" value="הצג"   tabindex="8" class="ImgButtonShow"  onblur="moveFocus('btnShow');" />
+                            <input type="button" ID="Button1" runat="server" onserverclick="btnShow_OnClick"  style="display: none;" />
+                        </td>
+                    </tr>
+                    </table>                                                             
+                </td>                        
+             </tr>                                                            
+        </table>                                                
+        </ContentTemplate>
     </asp:UpdatePanel>
     <asp:UpdatePanel  ID="UpdatePanel1" runat="server"  UpdateMode="Always">
-        <ContentTemplate>
-            <div style="width:1050px; " >            
+        <ContentTemplate>                  
              <input type="button" ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click()" style="display: none;" />
                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paMessage"
                     TargetControlID="btnShowMessage"  runat="server">
@@ -1459,11 +1456,10 @@
                             </td>
                         </tr>
                     </table>   
-                  </asp:Panel>
-            </div>
-            <div visible="true" style="height:550px;width:1050px;">
-                <div id="pirteySidur" runat="server" style="display:none;width:1050px;">
-                    <table style="border-color:Black;border-width:1px;border-style:outset;width:1050px; " cellspacing="0">
+                  </asp:Panel>          
+             <div visible="true" style="height:522px;width:824px;">
+                <div id="pirteySidur" runat="server" style="display:none;width:824px;height:522px">
+                    <table style="width:825px; height:522px"  cellspacing="0" >
                     <tr class="WorkCardRechivimGridHeader">
                         <td style="width:40px">מספר סידור</td>
                         <td style="width:45px">שעת התחלה</td>
@@ -1486,16 +1482,15 @@
                         </td>
                         <td>
                         <div id="divPeiluyot" runat="server" dir="ltr" style="overflow:auto">
-                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="930px" runat="server" >   
-                      
-                        <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="930px" 
+                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="824px" height="522px" runat="server" >                         
+                          <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
+                                 AutoGenerateColumns="False" width="824px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
                                  HeaderStyle-CssClass="WorkCardHosafatSidurGridHeader"
-                                 OnRowDataBound="grdPeiluyot_RowDataBound" CellPadding="2" CellSpacing="2">
+                                 OnRowDataBound="grdPeiluyot_RowDataBound" CellPadding="1" CellSpacing="1">
                               <Columns>
-                                    <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="85px" />
-                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="85px" HeaderStyle-Wrap="true" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" HeaderText="כיסוי תור" >
+                                    <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="30px" />
+                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="30px" HeaderStyle-Wrap="true"  HeaderText="כיסוי תור" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtKisuiTor" runat="server"  Width="60px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                              <cc1:MaskedEditExtender ID="extKisuiTor" runat="server" TargetControlID="txtKisuiTor" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
@@ -1503,8 +1498,8 @@
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvldKisuiTor" BehaviorID="vldExvldKisuiTor"  TargetControlID="vldKisuiTor" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>         
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                   <asp:BoundField DataField="SHAT_YETZIA" ItemStyle-Width="88px" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
-                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" ItemStyle-Width="88px" ItemStyle-CssClass="WorkCardPeilutTextBox" HeaderText="שעת יציאה" >
+                                   <asp:BoundField DataField="SHAT_YETZIA" ItemStyle-Width="60px" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
+                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" ItemStyle-Width="60px" ItemStyle-CssClass="WorkCardPeilutTextBox" HeaderText="שעת יציאה" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtShatYezia" runat="server" Width="60px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                                <cc1:MaskedEditExtender ID="extMaskShatYezia" runat="server" TargetControlID="txtShatYezia" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
@@ -1513,11 +1508,11 @@
                                               <input type="hidden" id="DateHidden" runat="server" />
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                   <asp:BoundField DataField="TEUR" HeaderText="תיאור" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="220px" />
-                                   <asp:BoundField DataField="KAV" HeaderText="קו"  ItemStyle-CssClass="WorkCardHosafatSidurGridItm"   />
-                                   <asp:BoundField DataField="SUG" HeaderText="סוג" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
+                                   <asp:BoundField DataField="TEUR" HeaderText="תיאור" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="250px" />
+                                   <asp:BoundField DataField="KAV" HeaderText="קו"  ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="40px"   />
+                                   <asp:BoundField DataField="SUG" HeaderText="סוג" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="40px" />
                                    <asp:BoundField DataField="MISPAR_RECHEV" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
-                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" HeaderText="מספר רכב" ItemStyle-Width="95px">
+                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" HeaderText="מספר רכב" ItemStyle-Width="60px">
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtMisRechev" runat="server" MaxLength="6" Width="51px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                             <asp:CustomValidator runat="server" id="vldMisRechev" ControlToValidate="txtMisRechev" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
@@ -1532,22 +1527,22 @@
                                      <%--  <input  type="text" ID="lblMisparRishuy" runat="server" readonly="readonly" style="width:50px;border:none;background:none;" />--%>
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                   <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="95px" />
-                                    <asp:TemplateField ItemStyle-Width="95px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
+                                   <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="90px" />
+                                   <asp:TemplateField ItemStyle-Width="95px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="88px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                              <asp:CustomValidator runat="server" id="vldMakat" ControlToValidate="txtMakat" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvMakat" BehaviorID="vldExvldMakat"  TargetControlID="vldMakat" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                     <asp:BoundField DataField="DAKOT_HAGDARA" HeaderText="דקות הגדרה" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="50px"/>
+                                   <asp:BoundField DataField="DAKOT_HAGDARA" HeaderText="דקות הגדרה" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px"/>
                                  
                                   <asp:BoundField DataField="DAKOT_BAFOAL" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
-                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="50px" HeaderStyle-Wrap="true" HeaderText="דקות בפועל" >
+                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px" HeaderStyle-Wrap="true" HeaderText="דקות בפועל" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtDakotBafoal" runat="server" Width="40px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                             <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotBafoal" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
-                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
+                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="150px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
                                    </asp:TemplateField>
                                    <asp:BoundField DataField="HOSEF_PEILUT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
@@ -1598,11 +1593,10 @@
                                     </Columns>
                                     <AlternatingRowStyle CssClass="WorkCardHosafatSidurGridItm" />
                                     <RowStyle CssClass="WorkCardHosafatSidurGridItm" />
-                             </asp:GridView>
-                            
-                            </asp:Panel>
-                             </div>
-                             <asp:Panel ID="tsEmpty" runat="server" HorizontalAlign="Center" Font-Bold="true"  visible="false" >
+                             </asp:GridView>                          
+                        </asp:Panel>
+                        </div>
+                        <asp:Panel ID="tsEmpty" runat="server" HorizontalAlign="Center" Font-Bold="true"  visible="false" >
                                 סידור ללא פעילויות</asp:Panel> 
                         </td>
                     </tr>
@@ -1619,10 +1613,10 @@
                      <%--<tr id="tsEmpty" runat="server" visible="false" ><td colspan="3"></td>
                      <td align="center" valign="top" style="font-weight:bold" >סידור ללא פעילויות</td></tr>--%>
                  </table>               
-                 </div> 
+               </div> 
             </div>
            
-            <table style="width:1050px;" cellspacing="0" >
+            <table style="width:970px;" cellspacing="0" >
                 <tr> 
                     <td align="right" style="width:10%">
                         <input type="button" class="btnWorkCardCloseWin" value="סגור" style="width:80px; height:32px" onclick="window.close();" />
@@ -1654,15 +1648,39 @@
       <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="300" Y="180" PopupControlID="paCopy"
          TargetControlID="btnCopy"  runat="server" behaviorid="pBehvCopy">
       </cc1:ModalPopupExtender>
-      <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="PanelMessage" Width="350px">
-        <asp:Label ID="Label2" runat="server" Width="100%" BackColor="#696969" ForeColor="White">העתקת מספר רכב</asp:Label>
-        <input type="hidden" id="hidCarKey" />        
+      <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="WorkCardPanelMessage" Width="450px">
+        <%--<asp:Label ID="Label2" runat="server" Width="100%" BackColor="#696969" ForeColor="White">העתקת מספר רכב</asp:Label>
+        <input type="hidden" id="hidCarKey1" />        
         <br />
-            <asp:Label ID="lblCarNumQ" runat="server" Width="100%"></asp:Label>    
+            <asp:Label ID="lblCarNumQ1" runat="server" Width="100%"></asp:Label>    
         <br />
         <br />
-        <input type="button" id="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
-        <input type="button" id="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
+        <input type="button" id="btnYes1" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
+        <input type="button" id="btnNo1"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
+--%>
+        <table width="450px">
+            <tr class="WorkCardPanelMessageBorder">
+                <td colspan="2" width="450px" height="33px"  class="WorkCardPanelMessageHeader">
+                    <asp:Label ID="Label7" runat="server" Width="100%">העתקת מספר רכב</asp:Label>
+                    <input type="hidden" id="hidCarKey" />        
+                    <br />                                                    
+                </td>
+            </tr>
+            <tr class="WorkCardPanelMessageBorder">
+                <td width="455px" height="100px" colspan="2">                        
+                    <asp:Label ID="lblCarNumQ" runat="server" Width="100%"></asp:Label>                     
+                    <br/>                                               
+                </td>
+            </tr>
+            <tr class="WorkCardPanelMessageHeader">
+                <td width="380px" align="left">
+                   <input type="button" id="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
+                </td>
+                <td align="left">
+                    <input type="button" id="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
+                </td>
+            </tr>
+        </table>               
      </asp:Panel>   
       <%--  <input type="hidden" id="MisSidur" name="MisSidur"  runat="server" />
         <input type="hidden" id="teurSidur" name="sugSidur"  runat="server" />--%>
