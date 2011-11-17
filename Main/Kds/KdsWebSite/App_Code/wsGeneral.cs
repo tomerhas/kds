@@ -1985,7 +1985,8 @@ public class wsGeneral : System.Web.Services.WebService
         
         //שינוי שעת התחלה - נבדוק אם צריך לפתוח/לסגור את שדה השלמה
         string sRes = (IsHashlamaAllowed(iSidurIndex, sCardDate));
-        sResult = sResult + "," + sRes;
+        string sExecp = IsExecptionAllowed(iSidurIndex);
+        sResult = sResult + "," + sRes + "," + sExecp;
         return sResult;       
     }
 
@@ -1999,7 +2000,7 @@ public class wsGeneral : System.Web.Services.WebService
         _Sidur = (clSidur)(odSidurim[iSidurIndex]);
         _Sidur.dFullShatGmar = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sShatGmar);
         _Sidur.sShatGmar = sShatGmar;
-        return IsHashlamaAllowed(iSidurIndex, sCardDate);
+        return IsHashlamaAllowed(iSidurIndex, sCardDate) + "," + IsExecptionAllowed(iSidurIndex);
     }
     [WebMethod(EnableSession = true)]
     public string IsHashlamaAllowed(int iSidurIndex, string sCardDate)
@@ -2017,6 +2018,22 @@ public class wsGeneral : System.Web.Services.WebService
             dtSugSidur = clDefinitions.GetSugeySidur();
             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(_Sidur.iSugSidurRagil, DateTime.Parse(sCardDate), dtSugSidur);
             return clDefinitions.IsHashlamaAllowed(ref _Sidur, drSugSidur, OvedYomAvoda) ? "1" : "0";
+        }
+        else
+            return "0";
+    }
+    [WebMethod(EnableSession = true)]
+    public string IsExecptionAllowed(int iSidurIndex)
+    {
+        clParameters _parameters = (clParameters)Session["Parameters"];
+        OrderedDictionary odSidurim;
+        clSidur _Sidur = new clSidur();
+        string sCharigaType="";
+        odSidurim = (OrderedDictionary)Session["Sidurim"];
+        if (odSidurim.Count > 0)
+        {
+            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+            return clDefinitions.IsExceptionAllowed(ref _Sidur,ref sCharigaType, _parameters) ? "1" : "0";
         }
         else
             return "0";

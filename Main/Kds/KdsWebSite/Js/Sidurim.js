@@ -910,6 +910,9 @@ function chkMkt(oRow) {
      $get("lstSidurim_ddlHashlama" + iIndex).disabled = (result[2] == '0');
      if (result[2]=='1')
          HasSidurHashlama();
+
+     //חריגה
+     $get("lstSidurim_ddlExeption" + iIndex).disabled = (result[3] == '0');
   }
   function ChkStartHour(val, args){
        // SetBtnChanges();
@@ -952,11 +955,15 @@ function chkMkt(oRow) {
             wsGeneral.UpdateShatGmar(iSidurIndex, sCardDate, sShatGmar, iAddDay, callBackHashlama, null, iSidurIndex);
     }
     function callBackHashlama(result, iSidurIndex) {
+        result = result.split(",");
         if (($get("lstSidurim_ddlHashlama" + iSidurIndex))!=null){
-            $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result == '0');
-            if (result == '1')
+            $get("lstSidurim_ddlHashlama" + iSidurIndex).disabled = (result[0] == '0');
+            if (result[0] == '1')
                 HasSidurHashlama();
-            }
+        }//חריגה
+        if (($get("lstSidurim_ddExecption" + iSidurIndex)) != null) {
+            $get("lstSidurim_ddExecption" + iSidurIndex).disabled = (result[1] == '0');           
+        }
     }
 
     function ISSGValid(val, args){

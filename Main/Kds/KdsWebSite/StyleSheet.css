@@ -580,6 +580,7 @@
 	height:30px; 	
 	color: white;
 	font-weight:bold;		
+	cursor:pointer;
 }
 .ImgButtonApprovalRegularOld
 {
@@ -602,6 +603,7 @@
 	background-color:transparent;
 	font-family:Arial;
 	vertical-align:bottom;
+	cursor:pointer;
 }
 .ImgButtonApprovalCheckedDisabled
 {
@@ -631,6 +633,7 @@
 	background-color:transparent;
 	font-family:Arial;
 	vertical-align:bottom;
+	cursor:pointer;
 }
 .ImgButtonApprovalRegularDisabled
 {
@@ -660,6 +663,7 @@
 	background-color:transparent;
 	font-family:Arial;
 	vertical-align:bottom;
+	cursor:pointer;
 }
 .ImgButtonDisApprovalCheckedDisabled
 {
@@ -688,6 +692,7 @@
 	background-color:transparent;
 	font-family:Arial;
 	vertical-align:bottom;
+	cursor:pointer;
 }
 .ImgButtonDisApprovalRegularDisabled
 {
@@ -1858,6 +1863,7 @@ a
     color:Black;
     height:30px;
     text-align:center;
+    cursor:pointer;
 }
 
 .CardStatusValid

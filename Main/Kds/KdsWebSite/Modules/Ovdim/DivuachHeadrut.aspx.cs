@@ -91,6 +91,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 clnEndDateHeadrut.OnBlurCalFunction = "EnableButton();";
                 drHeaara.Style.Add("display", "none");
                 drTaarichAd.Style.Add("display", "none");
+                trAddition.Style.Add("height", "267px");
                 drVldTaarichAd.Style.Add("display", "none");
             }
              

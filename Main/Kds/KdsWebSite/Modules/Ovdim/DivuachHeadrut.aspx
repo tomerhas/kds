@@ -45,6 +45,7 @@
             $("#drHeaara").css("display", "none");
             $("#drTaarichAd").css("display", "none");
             $("#drVldTaarichAd").css("display", "none");
+            $("#trAddition").css("height", "163px");
             ValidatorEnable(document.all("vldStartTime"), false);
             ValidatorEnable(document.all("vldEndTime"), false);
             ValidatorEnable(document.all("vldReqStartTime"), false);
@@ -80,9 +81,10 @@
            
             
             if ($(selectedItem).attr('nitan_ledaveach_ad_taarich') == "True") {
-                $("#drHeaara").css("display", "");
-                $("#drTaarichAd").css("display", "");
+                $("#drHeaara").css("display", "block");
+                $("#drTaarichAd").css("display", "block");
                 $("#drVldTaarichAd").css("display", "");
+                $("#trAddition").css("height", "163px");
                 document.all("clnEndDateHeadrut").value = "";
                 ValidatorEnable(document.all("vldCalDate_clnEndDateHeadrut"), true);
                 ValidatorEnable(document.all("vldEndHeadrut"),true);
@@ -95,6 +97,7 @@
                 $("#drHeaara").css("display", "none");
                 $("#drTaarichAd").css("display", "none");
                 $("#drVldTaarichAd").css("display", "none");
+                $("#trAddition").css("height", "267px");
             }
 
             document.all("txtStartTime").focus();
@@ -213,7 +216,7 @@ function CheckDateGreaterStart(val, args) {
                          <td></td>
                    </tr>
                    <tr class="WCard_GridRow" style="height:22px; width:651px"><td  colspan="7" ></td></tr>
-                   <tr class="WCard_GridRow" style="height:266px; width:651px">
+                   <tr class="WCard_GridRow" style="height:267px; width:651px" id="trAddition" runat="server">
                         <td width="50px"><br /></td>
                         <td width="130px" valign="top" >שעת התחלה:</td>
                         <td  width="150px" valign="top" align="right">                             

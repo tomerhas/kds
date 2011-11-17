@@ -1538,6 +1538,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         tbSidur.Disabled = (!bEnabled);
         //tbBtn.Disabled = (!bEnabled);
         btnFindSidur.Enabled = bEnabled;
+        btnAddMyuchad.Enabled = bEnabled;
         btnAddHeadrut.Enabled = bEnabled;
     }
     protected void EnabledFields()
@@ -1852,40 +1853,48 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             DataView dv;
             //string strImageUrl = "";        
             // btnCardStatus.Text = oBatchManager.oOvedYomAvodaDetails.sStatusCardDesc;
-
-         _StatusCard = oBatchManager.CardStatus;
-        if (bRashemet)
-        {
-            if (((clGeneral.enCardStatus)(oBatchManager.oOvedYomAvodaDetails.iStatus)) != (_StatusCard))
+            if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists)
             {
-                dv = new DataView(oBatchManager.dtLookUp);
-                dv.RowFilter = string.Concat("table_name='", "ctb_status_kartis", "' and kod =", oBatchManager.CardStatus.GetHashCode());
-                lblCardStatus.InnerText = dv[0]["teur"].ToString();
+                _StatusCard = oBatchManager.CardStatus;
+                if (bRashemet)
+                {
+                    if (((clGeneral.enCardStatus)(oBatchManager.oOvedYomAvodaDetails.iStatus)) != (_StatusCard))
+                    {
+                        dv = new DataView(oBatchManager.dtLookUp);
+                        dv.RowFilter = string.Concat("table_name='", "ctb_status_kartis", "' and kod =", oBatchManager.CardStatus.GetHashCode());
+                        lblCardStatus.InnerText = dv[0]["teur"].ToString();
+                    }
+                    else
+                    {
+                        lblCardStatus.InnerText = oBatchManager.oOvedYomAvodaDetails.sStatusCardDesc;
+                    }
+                    switch (_StatusCard)
+                    {
+                        case clGeneral.enCardStatus.Error:
+                            tdCardStatus.Attributes.Add("class", "CardStatusError");
+                            tdCardStatus2.Attributes.Add("class", "CardStatusError");
+                            //strImageUrl = "../../Images/btn-error.jpg";
+                            break;
+                        case clGeneral.enCardStatus.Valid:
+                            tdCardStatus.Attributes.Add("class", "CardStatusValid");
+                            tdCardStatus2.Attributes.Add("class", "CardStatusValid");
+                            //strImageUrl = "../../Images/btn-ok.jpg";
+                            break;
+                        case clGeneral.enCardStatus.Calculate:
+                            tdCardStatus.Attributes.Add("class", "CardStatusValid");
+                            tdCardStatus2.Attributes.Add("class", "CardStatusValid");
+                            //strImageUrl = "../../Images/btn-ok.jpg";
+                            break;
+                    }
+                }
+                lstSidurim.StatusCard = _StatusCard;
             }
             else
             {
-                lblCardStatus.InnerText = oBatchManager.oOvedYomAvodaDetails.sStatusCardDesc;
+               tdCardStatus.Attributes.Add("class","");
+               tdCardStatus2.Attributes.Add("class", "");
+               lblCardStatus.InnerText = "";
             }
-            switch (_StatusCard)
-            {
-                case clGeneral.enCardStatus.Error:
-                    tdCardStatus.Attributes.Add("class", "CardStatusError");
-                    tdCardStatus2.Attributes.Add("class", "CardStatusError");
-                    //strImageUrl = "../../Images/btn-error.jpg";
-                    break;
-                case clGeneral.enCardStatus.Valid:
-                    tdCardStatus.Attributes.Add("class", "CardStatusValid");
-                    tdCardStatus2.Attributes.Add("class", "CardStatusValid");
-                    //strImageUrl = "../../Images/btn-ok.jpg";
-                    break;
-                case clGeneral.enCardStatus.Calculate:
-                    tdCardStatus.Attributes.Add("class", "CardStatusValid");
-                    tdCardStatus2.Attributes.Add("class", "CardStatusValid");
-                    //strImageUrl = "../../Images/btn-ok.jpg";
-                    break;
-            }            
-        }
-        lstSidurim.StatusCard = _StatusCard;
 
         //btnCardStatus.Attributes.Add("style", string.Concat("background-image: url(", strImageUrl, ")"));
     }
@@ -2410,6 +2419,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oBatchManager.IsExecuteErrors = false;
             ShowOvedCardDetails(iMisparIshi, dDateCard);
             SetImageForButtonValiditiy();
+            DefineZmaniNesiotNavigatePage(dDateCard);
             //SetLookUpDDL();
 
             ViewState["LoadNewCard"] = true;
