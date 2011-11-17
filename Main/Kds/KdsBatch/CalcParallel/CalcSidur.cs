@@ -2243,26 +2243,28 @@ namespace KdsBatch
                 {
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
-                        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                        iMichutzLamichsa = int.Parse(drSidurim[I]["out_michsa"].ToString());
-                        dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-
-                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
-
-                        iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
-
-                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), 2, objOved.Taarich, iSugSidur);
-                        if (!bYeshSidur)
+                        if (drSidurim[I]["hamarat_shabat"].ToString() == "1")
                         {
-                            iDay = int.Parse(drSidurim[I]["day_taarich"].ToString());
-                          //  iSugYom = SugYom;
-                            dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                            dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
-                            fZmanHafsaka = float.Parse(drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
-                            CheckSidurShabatToAdd(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), iMisparSidur, iDay, objOved.SugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur, iMichutzLamichsa, false, fZmanHafsaka);
+                            iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                            iMichutzLamichsa = int.Parse(drSidurim[I]["out_michsa"].ToString());
+                            dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
+                            //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+
+                            iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
+
+                            bYeshSidur = CheckSugSidur(clGeneral.enMeafyenim.HamaratShaot.GetHashCode(), 2, objOved.Taarich, iSugSidur);
+                            if (!bYeshSidur)
+                            {
+                                iDay = int.Parse(drSidurim[I]["day_taarich"].ToString());
+                                //  iSugYom = SugYom;
+                                dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+                                fZmanHafsaka = float.Parse(drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
+                                CheckSidurShabatToAdd(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), iMisparSidur, iDay, objOved.SugYom, dShatHatchalaLetashlum, dShatGmarLetashlum, dShatHatchalaSidur, iMichutzLamichsa, false, fZmanHafsaka);
+
+                            }
                         }
-
                     }
                 }
 
