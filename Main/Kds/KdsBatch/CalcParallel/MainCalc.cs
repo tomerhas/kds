@@ -185,7 +185,7 @@ namespace KdsBatch
             {
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.StackTrace + "\n message: " + ex.Message);
             }
         }
 
