@@ -135,7 +135,9 @@
                                                               <TextRuns>
                                                                 <TextRun>
                                                                   <Value>=Fields!ERECH_RECHIV.Value</Value>
-                                                                  <Style />
+                                                                  <Style>
+                                                                    <Format>0;(0)</Format>
+                                                                  </Style>
                                                                 </TextRun>
                                                               </TextRuns>
                                                               <Style>
@@ -166,7 +168,7 @@
                                                             <Paragraph>
                                                               <TextRuns>
                                                                 <TextRun>
-                                                                  <Value>=Fields!TEUR_RECHIV.Value</Value>
+                                                                  <Value>=Replace(Fields!TEUR_RECHIV.Value,"דק ","דקות")</Value>
                                                                   <Style />
                                                                 </TextRun>
                                                               </TextRuns>
@@ -216,9 +218,9 @@
                                             </TablixRowHierarchy>
                                             <DataSetName>dsNetunim</DataSetName>
                                             <Top>1.9411cm</Top>
-                                            <Left>3.84118cm</Left>
+                                            <Left>4.62888cm</Left>
                                             <Height>1.2cm</Height>
-                                            <Width>7.46752cm</Width>
+                                            <Width>7.46753cm</Width>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
@@ -514,7 +516,6 @@
                                             </Style>
                                           </Textbox>
                                         </ReportItems>
-                                        <KeepTogether>true</KeepTogether>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -539,6 +540,9 @@
                                   <GroupExpressions>
                                     <GroupExpression>=Fields!TAARICH.Value</GroupExpression>
                                   </GroupExpressions>
+                                  <PageBreak>
+                                    <BreakLocation>Between</BreakLocation>
+                                  </PageBreak>
                                 </Group>
                               </TablixMember>
                             </TablixMembers>
@@ -593,7 +597,7 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox222</rd:DefaultName>
                           <Top>1.21356cm</Top>
-                          <Left>11.19786cm</Left>
+                          <Left>11.72702cm</Left>
                           <Height>0.42333cm</Height>
                           <Width>2.96334cm</Width>
                           <ZIndex>2</ZIndex>
@@ -628,7 +632,7 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox222</rd:DefaultName>
                           <Top>1.21356cm</Top>
-                          <Left>8.29428cm</Left>
+                          <Left>8.77052cm</Left>
                           <Height>0.42333cm</Height>
                           <Width>2.24895cm</Width>
                           <ZIndex>3</ZIndex>
@@ -664,7 +668,7 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox222</rd:DefaultName>
                           <Top>1.21356cm</Top>
-                          <Left>4.29906cm</Left>
+                          <Left>4.70475cm</Left>
                           <Height>0.42333cm</Height>
                           <Width>3.88938cm</Width>
                           <ZIndex>4</ZIndex>
@@ -700,8 +704,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox222</rd:DefaultName>
-                          <Top>1.21356cm</Top>
-                          <Left>2.39273cm</Left>
+                          <Top>1.17829cm</Top>
+                          <Left>3.1413cm</Left>
                           <Height>0.42333cm</Height>
                           <Width>1.29645cm</Width>
                           <ZIndex>5</ZIndex>
@@ -736,10 +740,46 @@
                           </Paragraphs>
                           <rd:DefaultName>Textbox222</rd:DefaultName>
                           <Top>1.21356cm</Top>
-                          <Left>14.26703cm</Left>
+                          <Left>14.7962cm</Left>
                           <Height>0.42333cm</Height>
                           <Width>1.37582cm</Width>
                           <ZIndex>6</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Direction>RTL</Direction>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox244">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Parameters!P_COMPANYID.Value = 580, "אגד", "אגד תעבורה")</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Language>he-IL</Language>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox222</rd:DefaultName>
+                          <Top>1.21355cm</Top>
+                          <Left>0.17156cm</Left>
+                          <Height>0.42333cm</Height>
+                          <Width>2.82863cm</Width>
+                          <ZIndex>7</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -817,7 +857,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>1.9771cm</Top>
-            <Left>10.87238cm</Left>
+            <Left>11.71904cm</Left>
             <Height>0.42333cm</Height>
             <Width>2.96334cm</Width>
             <Style>
@@ -851,7 +891,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>1.9771cm</Top>
-            <Left>8.154cm</Left>
+            <Left>8.76254cm</Left>
             <Height>0.42333cm</Height>
             <Width>2.24895cm</Width>
             <ZIndex>1</ZIndex>
@@ -887,7 +927,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>1.9771cm</Top>
-            <Left>4.15879cm</Left>
+            <Left>4.69677cm</Left>
             <Height>0.42333cm</Height>
             <Width>3.88938cm</Width>
             <ZIndex>2</ZIndex>
@@ -923,8 +963,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
-            <Top>1.94182cm</Top>
-            <Left>2.38475cm</Left>
+            <Top>1.9771cm</Top>
+            <Left>3.13332cm</Left>
             <Height>0.42333cm</Height>
             <Width>1.29645cm</Width>
             <ZIndex>3</ZIndex>
@@ -1014,10 +1054,46 @@
             </Paragraphs>
             <rd:DefaultName>Textbox222</rd:DefaultName>
             <Top>1.9771cm</Top>
-            <Left>13.94155cm</Left>
+            <Left>14.78822cm</Left>
             <Height>0.42333cm</Height>
             <Width>1.37582cm</Width>
             <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Direction>RTL</Direction>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox243">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=iif(Parameters!P_COMPANYID.Value =580,"אגד",iif(Parameters!P_COMPANYID.Value=4895,"אגד תעבורה","הכל"))</Value>
+                    <Style>
+                      <FontWeight>Bold</FontWeight>
+                      <Language>he-IL</Language>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <LeftIndent>0cm</LeftIndent>
+                <HangingIndent>0cm</HangingIndent>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox222</rd:DefaultName>
+            <Top>1.9771cm</Top>
+            <Left>0.16358cm</Left>
+            <Height>0.42333cm</Height>
+            <Width>2.82863cm</Width>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>

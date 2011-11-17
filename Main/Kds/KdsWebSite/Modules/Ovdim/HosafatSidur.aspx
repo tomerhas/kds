@@ -444,10 +444,10 @@
            var flag = true;
            var message;
            var stop = false;
-         
-           var sugGmar =document.getElementById("txtShatGmar").attributes("SugGmar").value ;
-           //       debugger;
-           if (IsHourEmpty(shaa)==false && (GetKeyPressPosition(document.getElementById("txtShatHatchala")) == 5)) {
+           var pos = GetKeyPressPosition(document.getElementById("txtShatHatchala"));
+           var sugGmar = document.getElementById("txtShatGmar").attributes("SugGmar").value;
+           //   debugger;
+           if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
            // if (shaa != "" && (GetKeyPressPosition(document.getElementById("txtShatHatchala")) == 5)) {
                if (IsValidTime(shaa)) {
                    
@@ -598,7 +598,8 @@
            var stop = false;
            var message;
            var sugGmar;
-           if (IsHourEmpty(shaa)==false  && (GetKeyPressPosition(document.getElementById("txtShatGmar")) == 5)) {
+           var pos =GetKeyPressPosition(document.getElementById("txtShatGmar")) ;
+           if (IsHourEmpty(shaa)==false  && (pos == 5 || pos == 0)) {
                if (IsValidTime(shaa)) {    
                    var Param1 = document.getElementById("Params").attributes("Param1").value;
                    var Param3 = document.getElementById("Params").attributes("Param3").value;
@@ -1080,8 +1081,9 @@
            var stop = false;
            var shatGmar = document.getElementById("txtShatGmar").value;
            var shatHatcahla = document.getElementById("txtShatHatchala").value;
+           var pos = GetKeyPressPosition(document.getElementById(row.id + "_txtShatYezia"));
           // debugger;
-           if (IsHourEmpty(shaa)==false && GetKeyPressPosition(document.getElementById(row.id + "_txtShatYezia")) == 5) {
+           if (IsHourEmpty(shaa)==false && (pos == 5 || pos == 0)) {
                    if (IsValidTime(shaa)) {
                        shatYeziaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
                        if (shaa == Param29)
