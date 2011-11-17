@@ -3756,7 +3756,7 @@ namespace KdsBatch
                                 for (int I = 0; I < rowSidurim.Length; I++)
                                 {
                                     RowNext = rowSidurim[I];
-                                    if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == rowSidurim[I]["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == rowSidurim[I]["shat_hatchala_sidur"].ToString()))
+                                    if ((rowMezakeNesia[rowMezakeNesia.Length - 1]["mispar_sidur"].ToString() == rowSidurim[I]["mispar_sidur"].ToString()) && (rowMezakeNesia[rowMezakeNesia.Length -1]["shat_hatchala_sidur"].ToString() == rowSidurim[I]["shat_hatchala_sidur"].ToString()))
                                     {
                                         if (I < (rowSidurim.Length - 1))
                                         {
@@ -3768,7 +3768,7 @@ namespace KdsBatch
                                 }
 
 
-                                if ((rowMezakeNesia[0]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeNesia[0]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
+                                if ((rowMezakeNesia[rowMezakeNesia.Length - 1]["mispar_sidur"].ToString() == RowNext["mispar_sidur"].ToString()) && (rowMezakeNesia[rowMezakeNesia.Length -1]["shat_hatchala_sidur"].ToString() == RowNext["shat_hatchala_sidur"].ToString()))
                                 {
                                     fNesiotSofYom = int.Parse(rowMezakeNesia[0]["Zman_Nesia_Hazor"].ToString());
                                     if (bLogNahag)

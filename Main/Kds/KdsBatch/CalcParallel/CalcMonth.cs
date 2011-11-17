@@ -125,7 +125,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "CalcMonth: " + ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
                 throw ex;
             }
         }

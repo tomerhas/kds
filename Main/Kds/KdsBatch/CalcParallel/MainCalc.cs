@@ -156,7 +156,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc: " + ex.StackTrace + "\n message: "+ ex.Message);
                 oOved.Dispose();
                 throw(ex);
             }
