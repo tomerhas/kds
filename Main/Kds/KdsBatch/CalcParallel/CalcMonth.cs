@@ -151,13 +151,13 @@ namespace KdsBatch
             try
             {
                 drs = objOved.DtYemeyAvoda.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
-                if (drs.Length > 0)
+                if (drs != null && drs.Length > 0)
                     objOved.DtYemeyAvodaYomi = drs.CopyToDataTable();
                 else objOved.DtYemeyAvodaYomi = objOved.DtYemeyAvoda.Clone();
                 drs = null;
 
                 drs = objOved.DtPeiluyotOved.Select("taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
-                if (drs.Length > 0)
+                if (drs != null && drs.Length > 0)
                     objOved.DtPeiluyotYomi = drs.CopyToDataTable();
                 else objOved.DtPeiluyotYomi = objOved.DtPeiluyotOved.Clone();
                 drs = null;
@@ -165,7 +165,7 @@ namespace KdsBatch
                 if (objOved.DtPeiluyotFromTnua != null)
                 {
                     drs = objOved.DtPeiluyotFromTnua.Select("activity_date=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
-                    if (drs.Length > 0)
+                    if (drs != null && drs.Length > 0)
                         objOved.DtPeiluyotTnuaYomi = drs.CopyToDataTable();
                     else objOved.DtPeiluyotTnuaYomi = objOved.DtPeiluyotFromTnua.Clone();
                     drs = null;
@@ -174,6 +174,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "SetNetunimLeYom: " + ex.Message);
                 throw ex;
             }  
         }
@@ -208,12 +209,14 @@ namespace KdsBatch
                     }
                     catch (Exception ex)
                     {
+                        clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "AddRowZmanLeloHafsaka: " + ex.Message);
                         throw ex;
                     }
                 }
             }
             catch (Exception ex)
             {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "AddRowZmanLeloHafsaka: " + ex.Message);
                 throw ex;
             }
         }
