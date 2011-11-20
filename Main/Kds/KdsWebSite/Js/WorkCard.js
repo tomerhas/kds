@@ -223,8 +223,9 @@
         }SetBtnChanges();          
     }
     function SetBtnChanges(){
-         bScreenChanged = true; 
+         bScreenChanged = true;
          document.getElementById("btnUpdateCard").disabled = false;
+         document.getElementById("btnUpdateCard").className = "btnWorkCardUpadte"; 
          document.getElementById("hidChanges").value = true;                
          document.getElementById("hidUpdateBtn").value = "false";
          document.getElementById("btnRefreshOvedDetails").disabled = true;
@@ -640,7 +641,9 @@ function onMeasherSuccuss(result,iStatus)
         alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");    
     else
     {
-        document.getElementById("btnPrint").disabled=false;
+        document.getElementById("btnPrint").disabled = false;
+        document.getElementById("btnPrint").className = "btnWorkCardPrint";
+        
         if(iStatus==1)
         {            
             document.getElementById("btnApprove").className = "ImgButtonApprovalChecked";

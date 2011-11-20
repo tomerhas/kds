@@ -433,7 +433,7 @@
                             <td style="width: 127px;" align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 124px;" CssClass="btnWorkCardAddSpecial" CausesValidation="false" OnClientClick="$get('hidExecInputChg').value ='0';return true;" OnClick="btnAddSpecialSidur_Click"/></td>
                             <td style="width: 350px;"></td>                                                        
                             <td style="width: 120px;">                                                                         
-                                <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"  CssClass="btnWorkCardUpadte" Style="width: 150px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click"  />                                                                                                               
+                                <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"   Style="width: 150px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click"  />                                                                                                               
                             </td>   
                             <td style="width: 90px;">                                            
                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclientclick="SetStyle(1);" onclick="btnMeasherOrMistayeg_onclick(1);" />
@@ -886,6 +886,7 @@
             if (document.getElementById('hidFromEmda').value =='true') 
             {
                 document.getElementById("btnPrint").disabled=false;
+                document.getElementById("btnPrint").className="btnWorkCardPrint";
                 document.all('btnPrint').click(); 
             }            
          }   

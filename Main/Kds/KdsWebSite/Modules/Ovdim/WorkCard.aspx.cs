@@ -152,8 +152,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                    // btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
                // if (btnNotApprove.Disabled)
                   //  btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
-                if (!bRashemet)                
-                    btnPrint.Enabled = false;                
+                if (!bRashemet)
+                {
+                    btnPrint.Enabled = false;
+                    btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
+                }
                 //if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
                 //{
                 //    EnabledFrames(false);
@@ -194,6 +197,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (!btnNotApprove.Disabled)
                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
                 btnPrint.Enabled = true;
+                btnPrint.Attributes.Add("class", "btnWorkCardPrint");
                 break;
         }
         hidMeasherMistayeg.Value = oMasherOMistayeg.GetHashCode().ToString();
@@ -510,12 +514,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     if (!Page.IsPostBack)
                     {
                         btnUpdateCard.Attributes.Add("disabled", "true");
+                        btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");  
                         hidUpdateBtn.Value = "true";
-                       // lstSidurim.HasSaveCard = false;
+                        // lstSidurim.HasSaveCard = false;
                         BindTachograph();
                         SetLookUpDDL();
                         ShowOvedCardDetails(iMisparIshi, dDateCard);
-                        SetImageForButtonMeasherOMistayeg();                        
+                        SetImageForButtonMeasherOMistayeg();
                     }
                     //אם הגענו מעמדת נהג, נשמור 1 אחרת 0
                     hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
@@ -670,7 +675,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
-            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);           
+            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);        
+            if (hidUpdateBtn.Value=="false")                
+                btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");  
+            else
+                btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");  
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();

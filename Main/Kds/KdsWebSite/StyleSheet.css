@@ -1851,6 +1851,15 @@ a
     width:30px;  
     height:30px;
     vertical-align:middle;
+    cursor:pointer;
+}
+.btnWorkCardPrintDis
+{
+	background-image: url(Images/B_printDis.png);		
+    background-position:center;  
+    width:30px;  
+    height:30px;
+    vertical-align:middle;
 }
 .btnWorkCardUpadte
 {
@@ -1862,10 +1871,23 @@ a
     font-size:19px;
     color:Black;
     height:30px;
+    width: 150px;
     text-align:center;
     cursor:pointer;
 }
-
+.btnWorkCardUpadteDis
+{
+	background-image: url(Images/B_update_Dis.png);		
+    background-position:center;    
+    font-family:Arial;
+    text-align:left;
+    font-weight:bold;
+    font-size:19px;
+    color:Black;
+    height:30px;
+    width: 150px;
+    text-align:center;    
+}
 .CardStatusValid
 {
 	background-color:#8dd761;

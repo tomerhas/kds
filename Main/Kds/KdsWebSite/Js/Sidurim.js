@@ -912,7 +912,7 @@ function chkMkt(oRow) {
          HasSidurHashlama();
 
      //חריגה
-     $get("lstSidurim_ddlExeption" + iIndex).disabled = (result[3] == '0');
+     $get("lstSidurim_ddlException" + iIndex).disabled = (result[3] == '0');
   }
   function ChkStartHour(val, args){
        // SetBtnChanges();
@@ -1250,8 +1250,10 @@ function chkMkt(oRow) {
                 bScreenChanged = false;
                 RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
-                if (_bScreenChanged)
-                   $get("btnUpdateCard").disabled = false;                    
+                if (_bScreenChanged) {
+                    $get("btnUpdateCard").disabled = false;
+                    $get("btnUpdateCard").className = "btnWorkCardUpadte";
+                }
             }
             return res;    
         }           
@@ -1877,6 +1879,7 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
    }
    function disableUpdateBtn() {
        $get("btnUpdateCard").disabled = true;
+       $get("btnUpdateCard").className = "btnWorkCardUpadteDis";
     }
     function SetFocus(id, col) {
         $get(id).cells[col].childNodes[0].select();
