@@ -37,7 +37,7 @@
 
 
      function ChangeKeyCode(keyCode) {
-        // debugger;
+     //    debugger;
          if (keyCode == 107) {
              event.keyCode = 9;
              return event.keyCode;
@@ -46,113 +46,46 @@
          if (document.getElementById("btnHosafa").disabled == false)
              document.getElementById("btnHosafa").focus();
          }
-
      }
      
      function btnMapa_Click() {
-         //*    document.getElementById("txtMisSiduri").style.display = "none";
          document.getElementById("txtMisSidurMapa").style.display = "inline";
-        //* document.getElementById("btnMapa").disabled = "disabled";
-         //* document.getElementById("btnMeyuchad").disabled = "";
-       //  document.getElementById("btnMapa").style.border = '1px solid black';
-       //  document.getElementById("btnMeyuchad").style.border = 'none';
-
-         //*      document.getElementById("cbMisSidur").checked = true;
-      //*   document.getElementById("cbTeurSidur").checked = false;
-
-        //* document.getElementById("cbTeurSidur").disabled = "disabled";
-         //*   document.getElementById("txtTeurSidur").disabled = true; //true;
-
-         //*    document.getElementById("cbMisSidur").disabled = false;
-         //*  document.getElementById("txtMisSiduri").disabled = false;
-
-         //*  document.getElementById("txtMisSiduri").value = "";
-         //* document.getElementById("txtTeurSidur").value = "";
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 1;
-         //**//  document.getElementById("btnShow").disabled = true;
          $find("vldExSidur").hide();
          document.getElementById("pirteySidur").style.display = "none";
-         document.getElementById("txtMisSidurMapa").focus();
-       
+         document.getElementById("txtMisSidurMapa").focus();     
      }
 
      function btnMeyuchad_Click() {
-         //*   document.getElementById("txtMisSiduri").style.display = "inline";
-      //*   document.getElementById("txtMisSidurMapa").style.display = "none";
-
-
-         //*     document.getElementById("btnMeyuchad").disabled = "disabled";
-         //* document.getElementById("btnMapa").disabled = "";
-      //   document.getElementById("btnMeyuchad").style.border = '1px solid black';
-      //   document.getElementById("btnMapa").style.border = 'none';
-
-         //*       document.getElementById("cbMisSidur").checked = true;
-       //*  document.getElementById("cbTeurSidur").checked = false;
-
-     //*    document.getElementById("cbTeurSidur").disabled = "";
-         //*  document.getElementById("txtTeurSidur").disabled = true;   //false;
-
-         //*      document.getElementById("cbMisSidur").disabled = false;
-         document.getElementById("txtMisSiduri").disabled = true; //false;
-
-         //*document.getElementById("txtMisSiduri").value = "";
-         //*  document.getElementById("txtTeurSidur").value = "";
+     
+         document.getElementById("txtMisSiduri").disabled = true; 
          document.getElementById("txtMisSidurMapa").value = "";
          document.getElementById("sugSidur").value = 2;
-        //**//  document.getElementById("btnShow").disabled = true;
          document.getElementById("pirteySidur").style.display = "none";
           $find("vldExSidurMapa").hide();
          cbMis_OnChange();
-         //*document.getElementById("txtMisSiduri").focus();
          
      }
      function MisSiduri_onChange() {
          var misSidur;
          var sugSidur = document.getElementById("sugSidur").value;
-    //  debugger;
+  //    debugger;
          if (sugSidur == 1) {
              misSidur = document.getElementById("txtMisSidurMapa").value;
-           //  document.getElementById("vldMis").controltovalidate = "txtMisSidurMapa";
          }
-//*         else {
-//             misSidur = document.getElementById("txtMisSiduri").value;
-//            // document.getElementById("vldMis").controltovalidate = "txtMisSiduri";
-//*         }
+
          var taarich = document.getElementById("TaarichCA").value;
       
-         //*    document.getElementById("txtTeurSidur").value = "";
          if (misSidur != "") {
              if (IsNumeric(misSidur)) {
                  if (sugSidur == 1 && misSidur.substr(0, 2) == "99") {
                      document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידורי שאינו מתחיל בספרות 99";
                      ShowValidatorCalloutExtender("vldExSidurMapa");
                      document.getElementById("wsBack").value = "-1";
-                     //**//  document.getElementById("btnShow").disabled = true;
-
                  }
-                 //                 else if (sugSidur == 2 && misSidur.substr(0, 1) != "9") {
-                 //                     document.getElementById("vldMis").errormessage = "יש להזין מספר סידורי המתחיל בספרה 9 ";
-                 //                     ShowValidatorCalloutExtender("vldExSidur");
-                 //                      //**//  document.getElementById("btnShow").disabled = true;
-                 //                 }
                  else {
                      if (sugSidur == 1) {
-                         //                        // alert(document.getElementById("SidureyEadrut").value);
-                         ////                         if (document.getElementById("SidureyEadrut").value.indexOf("," + misSidur + ",") > -1) {
-                         ////                             if (misSidur == "99200" || misSidur == "99214")
-                         ////                                 document.getElementById("vldMis").errormessage = "לא ניתן לדווח סידור התייצבות";
-                         ////                             else document.getElementById("vldMis").errormessage = "יש לדווח במסך הוסף דיווח היעדרות";
-                         ////                             ShowValidatorCalloutExtender("vldExSidur");
-                         //                                //**//  document.getElementById("btnShow").disabled = true;
-                         //     
-                         //                         }
-                         //                            else
-                         //                                if (document.getElementById("StatusCard").value == -1)
-                         //                                    wsGeneral.MeafyenSidurRagilExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
-                         //                                else wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
-                         //                     }
-                         //                     else {//מפה
                          if (document.getElementById("StatusCard").value == -1)
                              wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
                          else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
@@ -170,8 +103,6 @@
                      document.getElementById("wsBack").value = "-1";
 
                  }
-
-                 //**//  document.getElementById("btnShow").disabled = true;
              }
          }
          else {
@@ -186,9 +117,7 @@
          var misSidur;  
          if (sugSidur == 1) 
              misSidur = document.getElementById("txtMisSidurMapa").value;
-//*         else
-//*             misSidur = document.getElementById("txtMisSiduri").value;
-         
+       //  debugger;
          if (result == 1) {
              if (sugSidur == 2)
                 wsGeneral.getTeurSidurByKod(misSidur, CheckTeurSucceded);
@@ -196,28 +125,21 @@
                  wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
          }
          else if (result == -1) {
-
-             if (sugSidur == 1) {
-//                 document.getElementById("vldMis").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
-//                 ShowValidatorCalloutExtender("vldExSidur");
-
-//             } else {
                  document.getElementById("vldMisMapa").errormessage = "כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
                  document.getElementById("wsBack").value = "-1";
              }
-             //**//  document.getElementById("btnShow").disabled = true;
-         }
+             else if (result == -2) {
+                 document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
+                 ShowValidatorCalloutExtender("vldExSidurMapa");
+                 document.getElementById("wsBack").value = "-1";
+             }
      }
 
      function CheckTeurSucceded(result) {
          var sugSidur = document.getElementById("sugSidur").value;
-   
+       //  debugger;
          if (result != -1) {
-//             if (sugSidur == 2)
-//                 document.getElementById("txtTeurSidur").value = result;
-//             else
-//                 document.getElementById("txtTeurSidur").value = "";
              document.getElementById("btnShow").disabled = false;
              document.getElementById("btnShow").focus();
            
@@ -226,18 +148,9 @@
         
          }
          else {
-             //**//  document.getElementById("btnShow").disabled = true;
-             if (sugSidur == 1) {
-//                 document.getElementById("vldMis").errormessage = "מספר סידור שגוי";
-//                 ShowValidatorCalloutExtender("vldExSidur");
-
-
-//             } else {
                  document.getElementById("vldMisMapa").errormessage = "מספר סידור שגוי או לא קיים לתאריך כרטיס עבודה";
                  ShowValidatorCalloutExtender("vldExSidurMapa");
                  document.getElementById("wsBack").value = "0";
-
-             }
          }
      }
 
@@ -246,56 +159,14 @@
          $find(sBehaviorId).show(true);
      }
  
-//     function cbTeur_OnChange() {
-//         var sugSidur = document.getElementById("sugSidur").value;
-//         if (document.getElementById("cbTeurSidur").checked) {
-//             document.getElementById("txtTeurSidur").disabled = false;
-//             document.getElementById("cbMisSidur").checked = false;
-// //*            document.getElementById("txtMisSiduri").disabled = true;
-//         }
-//         else {
-//             document.getElementById("txtTeurSidur").disabled = true;
-//             document.getElementById("txtTeurSidur").value = "";
-//          //*   document.getElementById("txtMisSiduri").value = "";
-//            //**//  document.getElementById("btnShow").disabled = true;
-//         }
-//     }
      function cbMis_OnChange() {
          var sugSidur = document.getElementById("sugSidur").value;
-//         if (document.getElementById("cbMisSidur").checked) {
-//          //*   document.getElementById("txtMisSiduri").disabled = false;
-//            //* document.getElementById("cbTeurSidur").checked = false;
-//          //*    document.getElementById("txtTeurSidur").disabled = true;
-//            // if (sugSidur == 2)
-//            //     document.getElementById("cbTeurSidur").disabled = true;
-//         }
-//         else {
-             //*    document.getElementById("txtMisSiduri").disabled = true;
-             //*   document.getElementById("txtMisSiduri").value = "";
-            //*  document.getElementById("txtTeurSidur").value = "";
-           //  if (sugSidur == 2)
-           //      document.getElementById("cbTeurSidur").disabled = false;
-            //**//  document.getElementById("btnShow").disabled = true;
-//         }
      }
 
-//     function txtTeurSidur_OnChange() {
-//         var teur = document.getElementById("txtTeurSidur").value;
-//         if (teur != "") {
-//             wsGeneral.getKodSidurByTeur(teur, CheckKodSucceded);
-//         }
-//     }
+
      function CheckKodSucceded(result) {
          if (result != -1) {
-             //*    document.getElementById("txtMisSiduri").value = result;
-            // document.getElementById("btnShow").disabled = false;
             MisSiduri_onChange();
-         }
-         else {
-          //*    document.getElementById("vldTeur").errormessage = "תאור סידור שגוי";
-             //**//  document.getElementById("btnShow").disabled = true;
-             //*    document.getElementById("txtMisSiduri").value = "";
-          //*   ShowValidatorCalloutExtender("vldExTeur");
          }
      }
      /**************** כפתורים במסך *******************/
@@ -306,7 +177,7 @@
          var vldArr;
          var Rechev;
          var checked;
-        // debugger;
+       //  debugger;
          is_valid = onchange_txtShatHatchala(false, "");
            if (is_valid) {
                is_valid = onchange_txtShatGmar(false, "");
@@ -412,22 +283,7 @@
            document.getElementById("HosafatElement").value = retvalue;
            if (document.getElementById("HosafatElement").value != "undefined" &&
                 document.getElementById("HosafatElement").value != "") {
-            /*   document.getElementById("DestTime").value = document.getElementById("TaarichCA").value;
-               if (document.getElementById("txtShatGmar").value != "") {
-                   if (IsShatGmarInNextDay(document.getElementById("txtShatGmar").value)) {
-                       pratim = retvalue.split(';');
-                       if (IsShatGmarInNextDay((pratim[2]))) {
-                           document.getElementById("DestTime").value = "peilut";
-                           document.getElementById("btnShowMessage").click();
-                           flag = true;
-                           //alert(document.getElementById("DestTime").value);
-                       }
-                   }
-               }
-               if (!flag)*/
                    document.getElementById("btnIdkunGridHidden").click();
-               //alert(document.getElementById("HosafatElement").value);
-            //   document.getElementById("btnIdkunGridHidden").click();
            }
            document.getElementById("txtShatGmar").title = document.getElementById("TaarichGmar").value;
       }
@@ -446,130 +302,133 @@
            var stop = false;
            var pos = GetKeyPressPosition(document.getElementById("txtShatHatchala"));
            var sugGmar = document.getElementById("txtShatGmar").attributes("SugGmar").value;
-           //   debugger;
+           //     debugger;
+          var KeyID = event.keyCode;
+   
            if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
-           // if (shaa != "" && (GetKeyPressPosition(document.getElementById("txtShatHatchala")) == 5)) {
-               if (IsValidTime(shaa)) {
-                   
-                   var Param1 = document.getElementById("Params").attributes("Param1").value;
-                   var Param93 = document.getElementById("Params").attributes("Param93").value;
-                   shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                   if (ask) {
-                       if (sugGmar == "5" || sugGmar == "4" || document.getElementById("sugSidur").value == "1") {
-                           if (IsShatGmarInNextDay(shaa) || shaa=="00:00") {
-                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], '00', '00', '00');
-                               StaratDate = new Date(StaratDate.setDate(StaratDate.getDate() + 1));
-                               var Param244 = document.getElementById("Params").attributes("Param244").value;
-                               EndDate =new Date(taarich[2], taarich[1] - 1, taarich[0], Param244.split(':')[0], Param244.split(':')[1], '00');
-                               EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+               if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+                   if (IsValidTime(shaa)) {
 
-                               shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() + 1)); 
-                               if (shatHatchalaDate >= StaratDate && shatHatchalaDate <= EndDate) {
-                                   if (choice == "") {
-                                       stop = true;
-                                       document.getElementById("DestTime").value = "start";
-                                       document.getElementById("btnShowMessage").click();
+                       var Param1 = document.getElementById("Params").attributes("Param1").value;
+                       var Param93 = document.getElementById("Params").attributes("Param93").value;
+                       shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                       if (ask) {
+                           if (sugGmar == "5" || sugGmar == "4" || document.getElementById("sugSidur").value == "1") {
+                               if (IsShatGmarInNextDay(shaa) || shaa == "00:00") {
+                                   StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], '00', '00', '00');
+                                   StaratDate = new Date(StaratDate.setDate(StaratDate.getDate() + 1));
+                                   var Param244 = document.getElementById("Params").attributes("Param244").value;
+                                   EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param244.split(':')[0], Param244.split(':')[1], '00');
+                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+
+                                   shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() + 1));
+                                   if (shatHatchalaDate >= StaratDate && shatHatchalaDate <= EndDate) {
+                                       if (choice == "") {
+                                           stop = true;
+                                           document.getElementById("DestTime").value = "start";
+                                           document.getElementById("btnShowMessage").click();
                                        }
-                                   else if (choice == "1") {
+                                       else if (choice == "1") {
+                                           shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() - 1));
+                                       }
+                                   }
+                                   else
                                        shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() - 1));
+                               }
+                           } else {
+                               //shatHatchalaDate = new Date(taarich[2], taarich[1]-1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
+                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param93.split(':')[0], Param93.split(':')[1], '00');
+                               if (IsShatGmarInNextDay(Param93)) {
+                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                               }
+                               if (shatHatchalaDate < StaratDate || shatHatchalaDate > EndDate) {
+                                   document.getElementById("vldShatHatchala").errormessage = "הוקלד ערך שגוי. יש להקליד שעת התחלה בין " + Param1 + " עד " + Param93;
+                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                   flag = false;
+                               }
+                           }
+                           document.getElementById("txtShatHatchala").title = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
+                           document.getElementById("TaarichHatchala").value = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
+                       }
+
+                       if (!stop) {
+                           if (document.getElementById("sugSidur").value == "2") {
+                               if (document.getElementById("MustMeafyenim").value == "1") {
+                                   var Meafyen7;
+                                   var Meafyen8;
+                                   //var endTime, startTime;
+                                   if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
+                                       Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                                   else Meafyen7 = Param1;
+                                   if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
+                                       Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                                       if (IsShatGmarInNextDay(Meafyen8))
+                                           Meafyen8 = Param93;
+                                   }
+                                   else Meafyen8 = Param93;
+
+                                   if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1) {
+                                       //    alert("7");
+                                       //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                                       StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen7.split(':')[0], Meafyen7.split(':')[1], '00');
+                                       if (shatHatchalaDate < StaratDate) {
+                                           message = "";
+                                           message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
+                                           document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ " + Meafyen7 + " עד " + endTime;
+                                           ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                           flag = false;
+                                       }
+                                   }
+                                   if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
+                                       //  alert("8");
+                                       //  Meafyen8 = endTime;  //document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                                       EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen8.split(':')[0], Meafyen8.split(':')[1], '00');
+                                       if (IsShatGmarInNextDay(Meafyen8))
+                                           EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                                       if (shatHatchalaDate > EndDate) {
+                                           message = "";
+                                           message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
+                                           document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה עד " + Meafyen8 + " עד " + endTime;
+                                           ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                           flag = false;
+                                       }
                                    }
                                }
-                               else
-                                   shatHatchalaDate = new Date(shatHatchalaDate.setDate(shatHatchalaDate.getDate() - 1));
-                           } 
-                       } else {
-                           //shatHatchalaDate = new Date(taarich[2], taarich[1]-1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                           StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
-                           EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param93.split(':')[0], Param93.split(':')[1], '00');
-                           if (IsShatGmarInNextDay(Param93)) {
-                               EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
                            }
-                           if (shatHatchalaDate < StaratDate || shatHatchalaDate > EndDate) {
-                               document.getElementById("vldShatHatchala").errormessage = "הוקלד ערך שגוי. יש להקליד שעת התחלה בין " + Param1 + " עד " + Param93;
-                               ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                               flag = false;
+
+                           if (flag) {
+                               //debugger;
+
+                               if (document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length > 0)
+                                   var row = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(1).childNodes;
+                               if (row.item(col_ShatYetzia).childNodes.item(0).value == "") {
+                                   row.item(col_ShatYetzia).childNodes.item(0).value = shaa;
+                                   row.item(Col_txt_shat_yetzia).childNodes.item(0).value = shatHatchalaDate.format("dd/MM/yyyy HH:mm:ss");
+                                   row.item(col_ShatYetzia).childNodes.item(0).title = " תאריך שעת היציאה הוא " + shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
+                               }
+
+
+                               if (shatGmar != "") {
+                                   taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
+                                   shatGmarDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
+                                   taarich = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
+                                   shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                                   if (shatHatchalaDate >= shatGmarDate) {
+                                       document.getElementById("vldShatHatchala").errormessage = " שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר ";
+                                       ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                                       return false;
+                                   }
+                               }
                            }
+                           else return false;
                        }
-                       document.getElementById("txtShatHatchala").title = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
-                       document.getElementById("TaarichHatchala").value = shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
                    }
-
-                   if (!stop){
-                       if (document.getElementById("sugSidur").value == "2") {
-                       if (document.getElementById("MustMeafyenim").value == "1") {
-                           var Meafyen7;
-                           var Meafyen8;
-                           //var endTime, startTime;
-                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
-                               Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
-                           else Meafyen7 = Param1;
-                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
-                               Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                               if (IsShatGmarInNextDay(Meafyen8))
-                                   Meafyen8 = Param93; 
-                           }
-                           else Meafyen8 = Param93; 
-                      
-                          if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7")>-1) {
-                           //    alert("7");
-                            //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
-                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen7.split(':')[0], Meafyen7.split(':')[1], '00');
-                               if (shatHatchalaDate < StaratDate) {
-                                   message = "";
-                                   message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
-                                   document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ " + Meafyen7 + " עד " + endTime;
-                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                                   flag = false;
-                               }
-                           }
-                           if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8")>-1) {
-                             //  alert("8");
-                             //  Meafyen8 = endTime;  //document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Meafyen8.split(':')[0], Meafyen8.split(':')[1], '00');
-                               if (IsShatGmarInNextDay(Meafyen8))
-                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                               if (shatHatchalaDate > EndDate) {
-                                   message = "";
-                                   message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה: החל מ ", Meafyen7, " עד ", Meafyen8);
-                                   document.getElementById("vldShatHatchala").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת התחלה תקינה עד " + Meafyen8 + " עד " + endTime;
-                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                                   flag = false;
-                               }    
-                             }  
-                           }
-                        }
-
-                   if (flag) {
-                       //debugger;
-          
-                       if (document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length > 0)
-                           var row = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(1).childNodes;
-                       if (row.item(col_ShatYetzia).childNodes.item(0).value == "") {
-                           row.item(col_ShatYetzia).childNodes.item(0).value = shaa;
-                           row.item(Col_txt_shat_yetzia).childNodes.item(0).value = shatHatchalaDate.format("dd/MM/yyyy HH:mm:ss");
-                           row.item(col_ShatYetzia).childNodes.item(0).title = " תאריך שעת היציאה הוא " + shatHatchalaDate.format("HH:mm:ss dd/MM/yyyy");
-                       }
-
-
-                           if (shatGmar != "") {
-                              taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
-                               shatGmarDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
-                               taarich = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
-                               shatHatchalaDate =  new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                               if (shatHatchalaDate >= shatGmarDate) {
-                                   document.getElementById("vldShatHatchala").errormessage = " שעת ההתחלה אינה יכולה להיות גדולה או שווה לשעת הגמר ";
-                                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                                   return false;
-                               }
-                           }
-                       }
-                       else return false;
-                  }
-               }
-               else {
-                   document.getElementById("vldShatHatchala").errormessage = " שעה לא תקינה ";
-                   ShowValidatorCalloutExtender("vldExvldShatHatchala");
-                   return false;
+                   else {
+                       document.getElementById("vldShatHatchala").errormessage = " שעה לא תקינה ";
+                       ShowValidatorCalloutExtender("vldExvldShatHatchala");
+                       return false;
+                   }
                }
            }
            else {
@@ -598,163 +457,149 @@
            var stop = false;
            var message;
            var sugGmar;
-           var pos =GetKeyPressPosition(document.getElementById("txtShatGmar")) ;
-           if (IsHourEmpty(shaa)==false  && (pos == 5 || pos == 0)) {
-               if (IsValidTime(shaa)) {    
-                   var Param1 = document.getElementById("Params").attributes("Param1").value;
-                   var Param3 = document.getElementById("Params").attributes("Param3").value;
-                   var Param4 = document.getElementById("Params").attributes("Param4").value;
-                   var Param80 = document.getElementById("Params").attributes("Param80").value;
-                   var Param29 = document.getElementById("Params").attributes("Param29").value;
-                   Pstart = Param1;
-                   if (ask) {
-                       shatGmarDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                       if (shaa == Param29)
-                           shatGmarDate = new Date(shatGmarDate.setDate(shatGmarDate.getDate() + 1));
-                       if (IsShatGmarInNextDay(shaa)) {
-                           if (choice == "") {
-                               stop = true;
-                               document.getElementById("DestTime").value = "gmar";
-                               document.getElementById("btnShowMessage").click();
-                           }
-                           else {
-                               if (choice == "2") {
-                                   shatGmarDate = new Date(shatGmarDate.setDate(shatGmarDate.getDate() + 1));
-                                   next = true;
-                               }
-                           }
-                       }
-                       document.getElementById("txtShatGmar").title = shatGmarDate.format("HH:mm:ss dd/MM/yyyy");
-                       // document.getElementById("txtShatGmar").attributes("Date").value = shatGmarDate.format("HH:mm:ss dd/MM/yyyy");
-                       document.getElementById("TaarichGmar").value = shatGmarDate.format("HH:mm:ss dd/MM/yyyy");
-                        
-                   }
-                   else {
-                       //  taarichTmp = document.getElementById("txtShatGmar").title.split(' ')[1].split('/');
-                       // taarichTmp = document.getElementById("txtShatGmar").attributes("Date").value.split(' ')[1].split('/');
-                       taarichTmp = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
-                       shatGmarDate = new Date(taarichTmp[2], taarichTmp[1]-1, taarichTmp[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                   }
+           var pos = GetKeyPressPosition(document.getElementById("txtShatGmar"));
+         //  debugger;
+        var KeyID = event.keyCode;
+        if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+            if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
+                if (IsValidTime(shaa)) {
+                    var Param1 = document.getElementById("Params").attributes("Param1").value;
+                    var Param3 = document.getElementById("Params").attributes("Param3").value;
+                    var Param4 = document.getElementById("Params").attributes("Param4").value;
+                    var Param80 = document.getElementById("Params").attributes("Param80").value;
+                    var Param29 = document.getElementById("Params").attributes("Param29").value;
+                    Pstart = Param1;
+                    if (ask) {
+                        shatGmarDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                        if (shaa == Param29)
+                            shatGmarDate = new Date(shatGmarDate.setDate(shatGmarDate.getDate() + 1));
+                        if (IsShatGmarInNextDay(shaa)) {
+                            if (choice == "") {
+                                stop = true;
+                                document.getElementById("DestTime").value = "gmar";
+                                document.getElementById("btnShowMessage").click();
+                            }
+                            else {
+                                if (choice == "2") {
+                                    shatGmarDate = new Date(shatGmarDate.setDate(shatGmarDate.getDate() + 1));
+                                    next = true;
+                                }
+                            }
+                        }
+                        document.getElementById("txtShatGmar").title = shatGmarDate.format("HH:mm:ss dd/MM/yyyy");
+                        document.getElementById("TaarichGmar").value = shatGmarDate.format("HH:mm:ss dd/MM/yyyy");
+                    }
+                    else {
+                        taarichTmp = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
+                        shatGmarDate = new Date(taarichTmp[2], taarichTmp[1] - 1, taarichTmp[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                    }
 
-                   if (!stop) {
+                    if (!stop) {
 
-                       if (document.getElementById("sugSidur").value == "2") {
-                           sugGmar = document.getElementById("txtShatGmar").attributes("SugGmar").value;
-                           if (sugGmar == "0122" || sugGmar == "0123" || sugGmar == "0124" || sugGmar == "0127") { //מפעיל
-                               mafil = true;
-                               StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');                
-                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param4.split(':')[0], Param4.split(':')[1], '00');
-                               if (IsShatGmarInNextDay(Param4))
-                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                        if (document.getElementById("sugSidur").value == "2") {
+                            sugGmar = document.getElementById("txtShatGmar").attributes("SugGmar").value;
+                            if (sugGmar == "0122" || sugGmar == "0123" || sugGmar == "0124" || sugGmar == "0127") { //מפעיל
+                                mafil = true;
+                                StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
+                                EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param4.split(':')[0], Param4.split(':')[1], '00');
+                                if (IsShatGmarInNextDay(Param4))
+                                    EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
 
-                               if (shatGmarDate < StaratDate || shatGmarDate > EndDate) {
-                                   message = "";
-                                   message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Param1, " עד ", Param4);
-                                   document.getElementById("vldShatGmar").errormessage = message; //"הוקלד ערך שגוי. יש להקליד שעת גמר בטווח" + Param1 + " - " + Pend;
-                                   //  +  " עד " + Pend;
-                                   ShowValidatorCalloutExtender("vldExvldShatGmar");
-                                   return false;
-                                  // flag = false;
-                               }
-                              // Pend = Param4;
-                           }
-                           else if (document.getElementById("MustMeafyenim").value == "1") {
-                              
-                               if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
-                                   Pstart = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
-                               else Pstart = Param1;
-                               if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1)
-                                   Pend = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                               else Pend = Param29;
-////                               message = "";
-////                               message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Pstart, " עד ", Pend);
+                                if (shatGmarDate < StaratDate || shatGmarDate > EndDate) {
+                                    message = "";
+                                    message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Param1, " עד ", Param4);
+                                    document.getElementById("vldShatGmar").errormessage = message; //"הוקלד ערך שגוי. יש להקליד שעת גמר בטווח" + Param1 + " - " + Pend;
+                                    //  +  " עד " + Pend;
+                                    ShowValidatorCalloutExtender("vldExvldShatGmar");
+                                    return false;
+                                }
+                            }
+                            else if (document.getElementById("MustMeafyenim").value == "1") {
 
-                               if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1) {
-                                   //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                                if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1)
+                                    Pstart = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
+                                else Pstart = Param1;
+                                if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1)
+                                    Pend = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                                else Pend = Param29;
 
-                                   StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Pstart.split(':')[0], Pstart.split(':')[1], '00');
-                                   if (shatGmarDate < StaratDate) {
-////                                       document.getElementById("vldShatGmar").errormessage = message; //" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ " + Meafyen7;
-////                                       ShowValidatorCalloutExtender("vldExvldShatGmar");
-                                       flag = false;
-                                   }
-                               }
-                               if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
-                                   //  Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
-                                   //Pend = Meafyen8;
-                                   EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Pend.split(':')[0], Pend.split(':')[1], '00');
-                                   if (IsShatGmarInNextDay(Pend))
-                                       EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                                   if (shatGmarDate > EndDate) {
-////                                       document.getElementById("vldShatGmar").errormessage = message;  //" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה עד " + Meafyen8;
-////                                       ShowValidatorCalloutExtender("vldExvldShatGmar");
-                                       flagEnd = false;
-                                   }
-                               }
-                           }
-                       }
-                       
-                       if (flagEnd && !(mafil)) {
-                           StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
-                           if (document.getElementById("txtShatGmar").attributes("SugGmar").value == "5") {//נהגות
-                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param80.split(':')[0], Param80.split(':')[1], '00');
-                               if (IsShatGmarInNextDay(Param80))
-                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                               Pend = Param80;
-                           }
-                           else {//מנהל
-                               EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param3.split(':')[0], Param3.split(':')[1], '00');
-                               if (IsShatGmarInNextDay(Param3))
-                                   EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
-                               Pend = Param3;
+                                if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen7") > -1) {
+                                    //   Meafyen7 = document.getElementById("MustMeafyenim").attributes("Meafyen7").value;
 
-                           }
-                           if (shatGmarDate < StaratDate || shatGmarDate > EndDate) {
-////                               message = "";
-////                               message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Pstart, " עד ", Pend);
-////                               document.getElementById("vldShatGmar").errormessage = message; //"הוקלד ערך שגוי. יש להקליד שעת גמר בטווח" + Param1 + " - " + Pend;
-////                               //  +  " עד " + Pend;
-////                               ShowValidatorCalloutExtender("vldExvldShatGmar");
-                               flag = false;
-                           }
-                       }
-                       if (flag && flagEnd) {
-                           if (shatHatchala != "") {
-                               shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shatHatchala.split(':')[0], shatHatchala.split(':')[1], '00');
-                               if (shatGmarDate <= shatHatchalaDate) {
-                                   document.getElementById("vldShatGmar").errormessage = " שעת גמר אינה יכולה להיות קטנה או שווה לשעת התחלה ";
-                                   ShowValidatorCalloutExtender("vldExvldShatGmar");
-                                   return false;
-                               }
-                           }
-                       }
-                       else {
-                           message = "";
-                           message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Pstart, " עד ", Pend);
-                           document.getElementById("vldShatGmar").errormessage = message; 
-                           ShowValidatorCalloutExtender("vldExvldShatGmar");
-                           return false;
-                       }
-                   }
-               }
-               else {
-                   document.getElementById("vldShatGmar").errormessage = " שעה לא תקינה ";
-                   ShowValidatorCalloutExtender("vldExvldShatGmar");
-                   return false;
-               }
-           }
-           else {
-              if (IsHourEmpty(shaa)){
-               if (document.getElementById("sugSidur").value == "2") {
-                   if (IsChovaShatGmar()) {
-                       document.getElementById("vldShatGmar").errormessage = " חובה להכניס שעת גמר לסידור ";
-                       ShowValidatorCalloutExtender("vldExvldShatGmar");
-                       return false;
-                   }
+                                    StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Pstart.split(':')[0], Pstart.split(':')[1], '00');
+                                    if (shatGmarDate < StaratDate) {
+                                        flag = false;
+                                    }
+                                }
+                                if (document.getElementById("MustMeafyenim").outerHTML.indexOf("Meafyen8") > -1) {
+                                    //  Meafyen8 = document.getElementById("MustMeafyenim").attributes("Meafyen8").value;
+                                    //Pend = Meafyen8;
+                                    EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Pend.split(':')[0], Pend.split(':')[1], '00');
+                                    if (IsShatGmarInNextDay(Pend))
+                                        EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                                    if (shatGmarDate > EndDate) {
+                                        flagEnd = false;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (flagEnd && !(mafil)) {
+                            StaratDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param1.split(':')[0], Param1.split(':')[1], '00');
+                            if (document.getElementById("txtShatGmar").attributes("SugGmar").value == "5") {//נהגות
+                                EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param80.split(':')[0], Param80.split(':')[1], '00');
+                                if (IsShatGmarInNextDay(Param80))
+                                    EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                                Pend = Param80;
+                            }
+                            else {//מנהל
+                                EndDate = new Date(taarich[2], taarich[1] - 1, taarich[0], Param3.split(':')[0], Param3.split(':')[1], '00');
+                                if (IsShatGmarInNextDay(Param3))
+                                    EndDate = new Date(EndDate.setDate(EndDate.getDate() + 1));
+                                Pend = Param3;
+
+                            }
+                            if (shatGmarDate < StaratDate || shatGmarDate > EndDate) {
+                                flag = false;
+                            }
+                        }
+                        if (flag && flagEnd) {
+                            if (shatHatchala != "") {
+                                shatHatchalaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shatHatchala.split(':')[0], shatHatchala.split(':')[1], '00');
+                                if (shatGmarDate <= shatHatchalaDate) {
+                                    document.getElementById("vldShatGmar").errormessage = " שעת גמר אינה יכולה להיות קטנה או שווה לשעת התחלה ";
+                                    ShowValidatorCalloutExtender("vldExvldShatGmar");
+                                    return false;
+                                }
+                            }
+                        }
+                        else {
+                            message = "";
+                            message = message.concat(" הוקלד ערך שגוי. יש להקליד שעת גמר תקינה: החל מ ", Pstart, " עד ", Pend);
+                            document.getElementById("vldShatGmar").errormessage = message;
+                            ShowValidatorCalloutExtender("vldExvldShatGmar");
+                            return false;
+                        }
+                    }
                 }
-              }
-           }
-           
+                else {
+                    document.getElementById("vldShatGmar").errormessage = " שעה לא תקינה ";
+                    ShowValidatorCalloutExtender("vldExvldShatGmar");
+                    return false;
+                }
+            }
+//            else {
+//                if (IsHourEmpty(shaa)) {
+//                    if (document.getElementById("sugSidur").value == "2") {
+//                        if (IsChovaShatGmar()) {
+//                            document.getElementById("vldShatGmar").errormessage = " חובה להכניס שעת גמר לסידור ";
+//                            ShowValidatorCalloutExtender("vldExvldShatGmar");
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+        }
            if (next) 
              if (document.getElementById("tsEmpty") == null)
                if( document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length > 0)
@@ -976,7 +821,6 @@
                        kodElement = newMakat.substr(1, 2);
                        wsGeneral.getMigbalaLeErechElement(kodElement, document.getElementById("TaarichCA").value, ErechLeElemntSucceded, null, row);      
                    }
-                   //     wsGeneral.CheckMakat(oldMakat, newMakat, document.getElementById("TaarichCA").value, CheckMakatTakin, null, row);
                }
                else {
 
@@ -1038,7 +882,7 @@
            var dakotHagdara = row.childNodes.item(13).title;
            var Param98 = document.getElementById("Params").attributes("Param98").value;
            var dakotBafoal = document.getElementById(row.id + "_txtDakotBafoal").value;
-          // debugger
+  
            if (trim(dakotBafoal) == "")
                dakotBafoal = 0;
            if (IsNumeric(dakotBafoal)) {
@@ -1082,72 +926,58 @@
            var shatGmar = document.getElementById("txtShatGmar").value;
            var shatHatcahla = document.getElementById("txtShatHatchala").value;
            var pos = GetKeyPressPosition(document.getElementById(row.id + "_txtShatYezia"));
-          // debugger;
-           if (IsHourEmpty(shaa)==false && (pos == 5 || pos == 0)) {
+           var KeyID = event.keyCode;
+
+           if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
+              // debugger;
                    if (IsValidTime(shaa)) {
                        shatYeziaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
                        if (shaa == Param29)
                            shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
-                       if (ask) {
-                           if (IsShatGmarInNextDay(shaa)) {
-                               //** if (shatGmar != "" && IsShatGmarInNextDay(shatGmar)){
-                               if (choice == "") {
-                                   stop = true;
-                                   document.getElementById("DestTime").value = "yezia;" + row.id;
-                                   document.getElementById("btnShowMessage").click();
+                       if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+                           if (ask) {
+                               if (IsShatGmarInNextDay(shaa)) {
+                                   if (choice == "") {
+                                       stop = true;
+                                       document.getElementById("DestTime").value = "yezia;" + row.id;
+                                       document.getElementById("btnShowMessage").click();
+                                   }
+                                   else {
+                                       if (choice == "2")
+                                           shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
+                                   }
                                }
-                               else {
-                                   if (choice == "2")
-                                       shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
-                               }
-                               //**  }
-                           }
-                           //      document.getElementById(row.id + "_DateHidden").value = shatYeziaDate.format("HH:mm:ss dd/MM/yyyy");
-                           document.getElementById(row.id + "_txtShatYeziaDate").value = shatYeziaDate.format("dd/MM/yyyy HH:mm:ss");
-                           if (document.getElementById(row.id + "_txtKisuiTor").disabled == false) {
-                               var KisuiTor = new Date();
-                               var iKisuiTor = document.getElementById(row.id + "_txtKisuiTor").attributes("Kisuy_Tor").value;
-                               if (IsNumeric(iKisuiTor)) {
-                                   if (iKisuiTor > 0) {
-                                       KisuiTor.setHours(shaa.substr(0, 2));
-                                       KisuiTor.setMinutes(shaa.substr(shaa.length - 2, 2));
-                                       KisuiTor.setMinutes(KisuiTor.getMinutes() - Number(iKisuiTor));
-                                       document.getElementById(row.id + "_txtKisuiTor").value = KisuiTor.format("HH:mm");
+                               document.getElementById(row.id + "_txtShatYeziaDate").value = shatYeziaDate.format("dd/MM/yyyy HH:mm:ss");
+                               if (document.getElementById(row.id + "_txtKisuiTor").disabled == false) {
+                                   var KisuiTor = new Date();
+                                   var iKisuiTor = document.getElementById(row.id + "_txtKisuiTor").attributes("Kisuy_Tor").value;
+                                   if (IsNumeric(iKisuiTor)) {
+                                       if (iKisuiTor > 0) {
+                                           KisuiTor.setHours(shaa.substr(0, 2));
+                                           KisuiTor.setMinutes(shaa.substr(shaa.length - 2, 2));
+                                           KisuiTor.setMinutes(KisuiTor.getMinutes() - Number(iKisuiTor));
+                                           document.getElementById(row.id + "_txtKisuiTor").value = KisuiTor.format("HH:mm");
+                                       }
                                    }
                                }
                            }
-                       }
-                       else {
-                           taarichTmp = document.getElementById(row.id + "_txtShatYeziaDate").value.split(' ')[0].split('/');
-                           //    taarichTmp = document.getElementById(row.id + "_txtShatYezia").attributes("Date").value.split(' ')[1].split('/');
-                           shatYeziaDate = new Date(taarichTmp[2], taarichTmp[1] - 1, taarichTmp[0], shaa.split(':')[0], shaa.split(':')[1], '00');
-                           //     alert(shatYeziaDate);
-                       }
+                           else {
+                               taarichTmp = document.getElementById(row.id + "_txtShatYeziaDate").value.split(' ')[0].split('/');
+                               shatYeziaDate = new Date(taarichTmp[2], taarichTmp[1] - 1, taarichTmp[0], shaa.split(':')[0], shaa.split(':')[1], '00');
+                           }
 
-                       if (!stop) {
-                           if (shatHatcahla != "") {
-                               //  debugger;
-                               var startHour = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
-                               shatHatchalaDate = new Date(startHour[2], startHour[1] - 1, startHour[0], shatHatcahla.split(':')[0], shatHatcahla.split(':')[1], '00');
-                               if (shatYeziaDate < shatHatchalaDate) {
-                                   vld.errormessage = " לא ניתן להקליד שעת יציאה הקטנה משעת התחלה של הסידור ";
-                                   ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
-                                   return false;
+                           if (!stop) {
+                               if (shatHatcahla != "") {
+                                   var startHour = document.getElementById("TaarichHatchala").value.split(' ')[1].split('/');
+                                   shatHatchalaDate = new Date(startHour[2], startHour[1] - 1, startHour[0], shatHatcahla.split(':')[0], shatHatcahla.split(':')[1], '00');
+                                   if (shatYeziaDate < shatHatchalaDate) {
+                                       vld.errormessage = " לא ניתן להקליד שעת יציאה הקטנה משעת התחלה של הסידור ";
+                                       ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
+                                       return false;
+                                   }
                                }
                            }
-                           /**      if (shatGmar != "") {
-                           //   taarich = document.getElementById("txtShatGmar").title.split(' ')[1].split('/');
-                           // taarich = document.getElementById("txtShatGmar").attributes("Date").value.split(' ')[1].split('/');
-                           taarich = document.getElementById("TaarichGmar").value.split(' ')[1].split('/');
-               
-                           shatGmarDate = new Date(taarich[2], taarich[1]-1 , taarich[0], shatGmar.split(':')[0], shatGmar.split(':')[1], '00');
-                           if (shatYeziaDate > shatGmarDate) {
-                           vld.errormessage = " לא ניתן להקליד שעת יציאה הגדולה משעת גמר של הסידור ";
-                           ShowValidatorCalloutExtender(row.id + "_vldExvldShatYezia");
-                           return false;
-                           }
-                           }**/
-                       }
+                     }
                    }
                    else {
                        vld.errormessage = " שעה לא תקינה ";
@@ -1166,17 +996,16 @@
            document.getElementById(row.id + "_txtShatYezia").title = " תאריך שעת היציאה הוא " + shatYeziaDate.format("HH:mm:ss dd/MM/yyyy");
            CopyShatYetziaToPeiluyot(row,shatYeziaDate);
            return true;
-       }
+       } 
 
        function IsHourEmpty(shaa) {
-           if (shaa == "__:__")
+           if (shaa == "__:__" || shaa =="" )
                return true;
            else return false;
        }
        function CopyShatYetziaToPeiluyot(oRowAv, ShatYetziaDate) {
 
            var numRows = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length;
-           //  var oRowAv = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(iRowIndex);
            for (var i = 1; i < numRows; i++) {
                oRow = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(i);
                if (oRow.id == oRowAv.id) {
@@ -1195,15 +1024,7 @@
                    if (i < numRows)
                        oRow = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(i);
                }
-           }    
-//           for (i = iRowIndex + 1; i < numRows; i++) {
-//               oRow = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(i);
-//               if (oRow.childNodes.item(col_Makat).childNodes.item(0).value == oRowAv.childNodes.item(col_Makat).childNodes.item(0).value && Number(oRow.childNodes.item(col_Mispar_Knisa).innerHTML) > 0) {
-//                   document.getElementById(oRow.id + "_txtShatYeziaDate").value = ShatYetziaDate.format("dd/MM/yyyy HH:mm");
-//                   document.getElementById(oRow.id + "_txtShatYezia").value = ShatYetziaDate.format("HH:mm");
-//                   document.getElementById(oRow.id + "_txtShatYezia").title = " תאריך שעת היציאה הוא " + ShatYetziaDate.format("HH:mm:ss dd/MM/yyyy");
-//               }
-//           }
+           }  
        }
        function SamenHakol_OnClick() {
            var num = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.length;
@@ -1227,27 +1048,21 @@
        }
 
        function btnShowMessage_Click() {
-          
-//               document.getElementById("lblMessage").value = ":יש לקבוע את תאריך שעת יציאה של הסידור";
            $find('ModalPopupEx').show;
            document.getElementById("btnHosafa").disabled = true;
-        //   document.getElementById("btnHosafatPeilut").disabled = true;
        }
        function btnNochachi_click() {
            $find('ModalPopupEx').hide();
            var obj;
            document.getElementById("btnHosafa").disabled = false;
-        //   document.getElementById("btnHosafatPeilut").disabled = false;
+
             if (document.getElementById("DestTime").value == "gmar") {
                 onchange_txtShatGmar(true, "1");
             }
             if (document.getElementById("DestTime").value.split(';')[0] == "start") {
                 onchange_txtShatHatchala(true, "1")
             }
-           /* else if (document.getElementById("DestTime").value == "peilut") {
-            document.getElementById("DestTime").value = document.getElementById("TaarichCA").value;
-            document.getElementById("btnIdkunGridHidden").click();
-            }*/
+      
             if (document.getElementById("DestTime").value.split(';')[0] == "yezia") {
                 obj = document.getElementById(document.getElementById("DestTime").value.split(';')[1]);
                 onchange_txtShatYezia(obj, true, "1");
@@ -1258,22 +1073,15 @@
            $find('ModalPopupEx').hide();
 
            var taarich;
-           var shatYeziaDate; //= document.getElementById("txtShatHatchala").value;
+           var shatYeziaDate; 
            var obj;
            document.getElementById("btnHosafa").disabled = false;
-         //  document.getElementById("btnHosafatPeilut").disabled = false;
            if (document.getElementById("DestTime").value.split(';')[0] == "gmar") {
                onchange_txtShatGmar(true, "2")
            }
            if (document.getElementById("DestTime").value.split(';')[0] == "start") {
                onchange_txtShatHatchala(true, "2")
            }
-         /*  else if (document.getElementById("DestTime").value == "peilut") {
-               taarich=document.getElementById("TaarichCA").value.split('/');
-               shatYeziaDate = new Date(taarich[2], taarich[1] -1, taarich[0]);
-               document.getElementById("DestTime").value = ( new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1))).format("dd/MM/yyyy");
-               document.getElementById("btnIdkunGridHidden").click();
-           }*/
            if (document.getElementById("DestTime").value.split(';')[0] == "yezia") {
                obj = document.getElementById(document.getElementById("DestTime").value.split(';')[1]);
                onchange_txtShatYezia(obj, true, "2");
@@ -1281,15 +1089,9 @@
                
        }
        function window_onload() {
-           //*     document.getElementById("txtMisSiduri").style.display = "none";
            document.getElementById("txtMisSidurMapa").style.display = "inline";
            document.getElementById("txtMisSidurMapa").focus();
-           //*    document.getElementById("txtMisSiduri").disabled = false;
-           //*  document.getElementById("btnMapa").disabled = "disabled";
-           //*        document.getElementById("cbMisSidur").disabled = false;
-          //* document.getElementById("cbTeurSidur").disabled = "disabled";
-           //*   document.getElementById("btnMapa").style.border = '1px solid black';
-        
+         
              setBorderBtns();
              load();
        }
@@ -1337,9 +1139,7 @@
                    oRow.childNodes.item(col_Makat).childNodes[0].value.substr(0, 3) == "700" || oRow.childNodes.item(col_Makat).childNodes[0].value.substr(0, 3) == "761"
                    || oRow.childNodes.item(col_Makat).childNodes[0].value.substr(0, 3) == "784")
                        oRow.childNodes.item(col_hosefPeilut).childNodes.item(0).childNodes.item(0).checked = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(iIndexRow).childNodes.item(col_hosefPeilut).childNodes.item(0).checked;
-                   //else if (oRow.childNodes.item(col_Makat).childNodes[0].value.substr(0,3)== "700" || oRow.childNodes.item(col_Makat).childNodes[0].value.substr(0,3)=="743")
-                    //   oRow.childNodes.item(col_hosefPeilut).childNodes.item(0).childNodes.item(0).checked = document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(iIndexRow).childNodes.item(col_hosefPeilut).childNodes.item(0).checked;
-                   else if (oRow.childNodes.item(col_Makat).childNodes[0].value == oRowAv.childNodes.item(col_Makat).childNodes[0].value && Number(oRow.childNodes.item(col_Mispar_Knisa).innerHTML) > 0) {
+                    else if (oRow.childNodes.item(col_Makat).childNodes[0].value == oRowAv.childNodes.item(col_Makat).childNodes[0].value && Number(oRow.childNodes.item(col_Mispar_Knisa).innerHTML) > 0) {
                    if (document.getElementById("grdPeiluyot").childNodes.item(0).childNodes.item(iIndexRow).childNodes.item(col_hosefPeilut).childNodes.item(0).checked == true)
                            oRow.childNodes.item(col_hosefPeilut).childNodes.item(0).disabled = false;
                        else {
@@ -1360,15 +1160,9 @@
                if (document.getElementById('btnShow').disabled == true)
                    document.getElementById(obj).focus();
            }
-//*           else {
-//               if (document.getElementById('btnMapa').disabled == true)
-//                   document.getElementById('btnMeyuchad').focus();
-//               else document.getElementById('btnMapa').focus();
-//*           }
        }
 
        function btnShow_OnClientClick() {
-      //     debugger;
            var mis = document.getElementById("txtMisSidurMapa").value;
            if (mis == "") {
                document.getElementById("vldMisMapa").errormessage = "יש להזין מספר סידור מפה ";
@@ -1379,10 +1173,6 @@
                ShowValidatorCalloutExtender("vldExSidurMapa");
                return false;
            }
-//           else if (document.getElementById("wsBack").value == "0") {
-//               setTimeout('return true;', 1000);
-//             //  return false;
-//           }
            else return true;
        }
 
@@ -1676,10 +1466,10 @@
             </tr>
             <tr class="WorkCardPanelMessageHeader">
                 <td width="380px" align="left">
-                   <input type="button" id="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
+                   <input type="button" id="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="btnWorkCardCloseWin" style="width:80px" />       
                 </td>
                 <td align="left">
-                    <input type="button" id="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       
+                    <input type="button" id="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="btnWorkCardCloseWin" style="width:80px"/>       
                 </td>
             </tr>
         </table>               
