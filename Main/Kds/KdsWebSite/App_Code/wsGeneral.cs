@@ -2148,9 +2148,9 @@ public class wsGeneral : System.Web.Services.WebService
                         return 1;
                     else return -1;
                 }
-                return 0;
+                return -2;
             }
-            return 0;
+            return -2;
         }
         catch (Exception ex)
         {

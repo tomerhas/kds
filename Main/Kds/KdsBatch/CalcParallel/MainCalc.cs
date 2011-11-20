@@ -132,7 +132,8 @@ namespace KdsBatch
                // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                oMonth.CalcMonthOved();
                // DataSetTurnIntoUdt(oOved._dsChishuv);
-
+               clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "after CalcMonthOved");
+               
                //שמירת הנתונים רק אם התהליך התבצע ב-batch
                if (oOved.DtYemeyAvoda.Rows.Count > 0)
                {
@@ -156,7 +157,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc: " + ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "MainCalc,CalcOved: " + ex.StackTrace + "\n message: " + ex.Message);
                 oOved.Dispose();
                 throw(ex);
             }
@@ -185,7 +186,7 @@ namespace KdsBatch
             {
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc: " + ex.StackTrace + "\n message: " + ex.Message);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "MainCalc,MainCalcOved: " + ex.StackTrace + "\n message: " + ex.Message);
             }
         }
 
