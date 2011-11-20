@@ -132,7 +132,7 @@ namespace KdsBatch
                // iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
                oMonth.CalcMonthOved();
                // DataSetTurnIntoUdt(oOved._dsChishuv);
-               clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "after CalcMonthOved");
+              // clLogBakashot.InsertErrorToLog(_iBakashaId, oOved.Mispar_ishi, "E", 0, oOved.Month, "after CalcMonthOved");
                
                //שמירת הנתונים רק אם התהליך התבצע ב-batch
                if (oOved.DtYemeyAvoda.Rows.Count > 0)

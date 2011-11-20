@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AsyncTimeout="900"  AutoEventWireup="true" CodeFile="TickurChishuvLeOved.aspx.cs" Inherits="Modules_Ovdim_TickurChishuvLeOved" Title="תחקור חישוב לעובד" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AsyncTimeout="1500"  AutoEventWireup="true" CodeFile="TickurChishuvLeOved.aspx.cs" Inherits="Modules_Ovdim_TickurChishuvLeOved" Title="תחקור חישוב לעובד" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
