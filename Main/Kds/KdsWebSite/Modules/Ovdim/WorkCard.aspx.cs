@@ -2300,7 +2300,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         break;
                     }
                 }
-                sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000);";
+                sScript += " document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "');";
                 ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
             }
             else
