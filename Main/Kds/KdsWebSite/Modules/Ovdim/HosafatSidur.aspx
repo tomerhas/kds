@@ -306,7 +306,7 @@
           var KeyID = event.keyCode;
    
            if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
-               if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+               if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105)) || (KeyID == 0)) {
                    if (IsValidTime(shaa)) {
 
                        var Param1 = document.getElementById("Params").attributes("Param1").value;
@@ -458,11 +458,12 @@
            var message;
            var sugGmar;
            var pos = GetKeyPressPosition(document.getElementById("txtShatGmar"));
-         //  debugger;
+           //debugger;
         var KeyID = event.keyCode;
-        if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+        if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105)) || (KeyID == 0)) {
             if (IsHourEmpty(shaa) == false && (pos == 5 || pos == 0)) {
                 if (IsValidTime(shaa)) {
+                   
                     var Param1 = document.getElementById("Params").attributes("Param1").value;
                     var Param3 = document.getElementById("Params").attributes("Param3").value;
                     var Param4 = document.getElementById("Params").attributes("Param4").value;
@@ -934,7 +935,7 @@
                        shatYeziaDate = new Date(taarich[2], taarich[1] - 1, taarich[0], shaa.split(':')[0], shaa.split(':')[1], '00');
                        if (shaa == Param29)
                            shatYeziaDate = new Date(shatYeziaDate.setDate(shatYeziaDate.getDate() + 1));
-                       if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105))) {
+                       if (((KeyID >= 48) && (KeyID <= 57)) || ((KeyID >= 96) && (KeyID <= 105)) || (KeyID == 0)) {
                            if (ask) {
                                if (IsShatGmarInNextDay(shaa)) {
                                    if (choice == "") {
