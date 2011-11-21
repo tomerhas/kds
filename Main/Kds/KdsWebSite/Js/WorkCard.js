@@ -432,7 +432,7 @@
         sQueryString = sQueryString + "&TimeEnd=";
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';   
-        res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:655px;dialogheight:405px;dialogtop:280px;dialogleft:380px;status:no;resizable:no;');
+        res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:655px;dialogheight:405px;dialogtop:280px;dialogleft:380px;status:no;resizable:no;scroll:no');
         document.getElementById("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
@@ -458,7 +458,7 @@
         sQueryString = sQueryString + "&CardDate=" + document.getElementById("clnDate").value;
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';
-        res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:975px;dialogheight:690px;dialogtop:180px;dialogleft:50px;status:no;resizable:no;');
+        res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:975px;dialogheight:690px;dialogtop:180px;dialogleft:50px;status:no;resizable:no;scroll:no;');
         document.getElementById("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
