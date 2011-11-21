@@ -415,6 +415,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Mispar_Musach_O_Machsan,2,'');");
                    
                     cmb.ID = "cmb_Mispar_Musach_O_Machsan";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     Fill_Mispar_Musach_O_Machsan(ref cmb);
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut,AjaxControlToolkit.ValidatorCalloutPosition.Left);
@@ -429,6 +430,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Yom_Visa,2,'');");
                    
                     cmb.ID = "cmb_Yom_Visa";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Left);
                     if (drSadotKayamim["Yom_Visa"].ToString() != "")
@@ -439,6 +441,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     break;
                 case enKodSade.Achuz_Knas_LePremyat_Visa:
                     txt.ID = "txt_Achuz_Knas_LePremyat_Visa";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     if (drSadotKayamim["Achuz_Knas_LePremyat_Visa"].ToString() != "")
@@ -448,6 +451,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     break;
                 case enKodSade.Achuz_Viza_Besikun:
                     txt.ID = "txt_Achuz_Viza_Besikun";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Left);
                     if (drSadotKayamim["Achuz_Viza_Besikun"].ToString() != "")
@@ -460,6 +464,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Sug_Hazmanat_Visa,2,'');");
                    
                     cmb.ID = "cmb_Sug_Hazmanat_Visa";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     if (drSadotKayamim["Sug_Hazmanat_Visa"].ToString() != "")
@@ -470,6 +475,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     break;
                 case enKodSade.Mispar_shiurey_nehiga:
                     txt.ID = "txt_Mispar_shiurey_nehiga";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     txt.Attributes.Add("MAX", Params.Attributes["Param141"]);
@@ -483,6 +489,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Tafkid_Visa,2,'');");
                    
                     cmb.ID = "cmb_Tafkid_Visa";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     fill_tafkid_viza(ref cmb);
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
@@ -497,6 +504,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Mivtza_Visa,2,'');");
                    
                     cmb.ID = "cmb_Mivtza_Visa";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Left);
                     if (drSadotKayamim["Mivtza_Visa"].ToString() != "")
@@ -510,6 +518,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Lina,2,'');");
                    
                     cmb.ID = "cmb_Lina";
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     if (drSadotKayamim["Lina"].ToString() != "")
@@ -523,6 +532,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(txt_Km_visa,2,'');");
                    
                     txt.ID = "txt_Km_visa";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     checkMaximumKMLesidur(dr, ref txt, "Km_visa");
@@ -539,6 +549,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(txt_Mispar_Visa,2,'');");
                   
                     txt.ID = "txt_Mispar_Visa";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Left);
                     txt.Attributes.Add("MaxLength","10");

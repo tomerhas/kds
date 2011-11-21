@@ -1293,7 +1293,7 @@ function chkMkt(oRow) {
         $get("divHourglass").style.display = 'block';
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
         $get("divHourglass").style.display = 'none';
-        var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:670px;dialogheight:380px;dialogtop:210px;dialogleft:220px;status:no;resizable:yes;");
+        var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:650px;dialogheight:350px;dialogtop:210px;dialogleft:220px;status:no;resizable:no;scroll:no");
         if ((bScreenWasChg) || ((res != undefined) && (res != '') && (!bScreenWasChg))) {
             $get("hidExecInputChg").value = "1";
             bScreenChanged = false;
