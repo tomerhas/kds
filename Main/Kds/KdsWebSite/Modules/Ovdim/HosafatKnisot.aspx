@@ -8,6 +8,7 @@
      <title>הוספת כניסות</title>
       <script src='../../js/jquery.js' type='text/javascript'></script>
    <link id="Link1" runat="server" href="~/StyleSheet.css" type="text/css" rel="stylesheet" />
+   <base target="_self" />
  </head>
 <body  dir="rtl" class="WorkCardRechivim" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
     <form id="form1" runat="server">
