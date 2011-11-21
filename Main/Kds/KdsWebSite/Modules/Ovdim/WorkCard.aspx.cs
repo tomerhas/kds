@@ -142,8 +142,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         btnNotApprove.Disabled = true;                    
                 }           
         }
-       
 
+        btnPrint.Attributes.Add("class","btnWorkCardPrint");
         clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         switch (oMasherOMistayeg)
         {
@@ -1946,6 +1946,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //}
         //else
         //{
+        if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists)
+        {
             oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             switch (oMasherOMistayeg)
             {
@@ -1966,6 +1968,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
             }
+        }
+        else
+        {
+            strImageUrlApprove = "ImgButtonApprovalRegularDisabled";
+            strImageUrlNotApprove = "ImgButtonDisApprovalCheckedDisabled";
+        }
        // }
         btnApprove.Attributes.Add("class", strImageUrlApprove);
         btnNotApprove.Attributes.Add("class", strImageUrlNotApprove);

@@ -534,7 +534,7 @@
                                 <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="btnWorkCardClocks" Style="width: 88px;" OnClick="btnClock_click" CausesValidation="false" />                                           
                             </td>
                             <td style="width: 30px">
-                                <asp:Button ID="btnPrint" runat="server" CssClass="btnWorkCardPrint" CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             
+                                <asp:Button ID="btnPrint" runat="server"  CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             
                             </td>                                                                       
                             <td>
                                 <asp:Button Text="שגיאות" ID="btnDrvErrors" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px" OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                    

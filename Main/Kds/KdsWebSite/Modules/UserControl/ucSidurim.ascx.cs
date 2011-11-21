@@ -2539,7 +2539,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onchange", "chkNewSidur(" + iIndex + ");");
         oTextBox.Attributes.Add("onclick","MovePanel(" + iIndex + ");");
         oTextBox.Attributes.Add("onkeyup", "ClearSidurTitle(" + iIndex + ");");
-       
+        oTextBox.CssClass = "WorkCardSidurTextBox";
         if (oSidur.iMisparSidur > 0)
             oTextBox.Text = oSidur.iMisparSidur.ToString();
        // hCell = CreateTableCell("82px", "", "");       
@@ -3898,7 +3898,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bool bEnabled;
         Image imgErr = new Image();
         imgErr.ID = "imgCh" + iIndex;
-        hCell = CreateTableCell("110px", "", "");
+        hCell = CreateTableCell("117px", "", "");
         DropDownList ddl = new DropDownList();
         ddl.ID = "ddlException" + iIndex;           
         ddl.DataTextField = "teur";
@@ -3906,7 +3906,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.DataSource = _dvChariga;            
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sChariga;
-        ddl.Style.Add("width", "100px");
+        ddl.Style.Add("width", "85px");
 
         bEnabled = clDefinitions.IsExceptionAllowed(ref oSidur, ref sCharigaType, KdsParameters);
         ddl.Attributes.Add("ChrigaType", sCharigaType);
@@ -6416,7 +6416,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(60);
             
             oTxt.Attributes.Add("onchange", "SetBtnChanges();");
-            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");SetBtnChanges();");          
+            oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");");          
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
             oTxt.CssClass = "WorkCardPeilutTextBox";

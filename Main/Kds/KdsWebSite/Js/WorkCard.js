@@ -684,7 +684,7 @@ function chkTravelTime(){
          alert('לא קיים מאפיין מתאים');
      }
      else{       
-       bScreenChanged = true; document.getElementById("btnUpdateCard").disabled = false;
+       bScreenChanged = true; $get("btnUpdateCard").disabled = false;$get("btnUpdateCard").className = "btnWorkCardUpadte";
    }
    SetLvlChg(1,0);
 }
