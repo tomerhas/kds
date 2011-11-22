@@ -2948,7 +2948,7 @@ namespace KdsBatch
 
         private float CalcDayRechiv76(float fMichsaYomit, DateTime dTaarich)
         {
-            float fDakotNochehut, fErech, fNochehutBeshishi, fNochehutLetashlum;
+            float fDakotNochehut, fErech, fNochehutBeshishi, fShaotShabat100;
             float SumNochechutMeyuchdim;
             fErech = 0;
 
@@ -2975,7 +2975,10 @@ namespace KdsBatch
                 if (fMichsaYomit == 0 && oCalcBL.GetSugYomLemichsa(objOved, dTaarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     if ((objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 120)
-                        fErech = Math.Min(120, fDakotNochehut);
+                    {
+                        fShaotShabat100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
+                        fErech = Math.Min(120, fDakotNochehut - fShaotShabat100);
+                    }
                     else if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
                         fErech = Math.Min(240, fDakotNochehut);
                 }
