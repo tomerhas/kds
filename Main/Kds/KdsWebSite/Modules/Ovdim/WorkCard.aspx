@@ -739,7 +739,7 @@
             SetFocusToNextPrevPeilutField(Direction,ElementName,'CarNumber');  
             SetFocusToNextPrevPeilutField(Direction,ElementName,'ActualMinutes'); 
             SetFocusToNextPrevPeilutField(Direction,ElementName,'ShatYetiza'); 
-            SetFocusToNextPrevPeilutField(Direction,ElementName,'KisuyTor'); 
+            SetFocusToNextPrevPeilutField(Direction,ElementName,'KisoyTor'); 
             SetFocusToNextPrevSidur(Direction,ElementName,'txtSG');
             SetFocusToNextPrevSidur(Direction,ElementName,'txtSH');
          }
