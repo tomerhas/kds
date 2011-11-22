@@ -1253,7 +1253,7 @@ function chkMkt(oRow) {
                 if (_bScreenChanged) {
                     $get("btnUpdateCard").disabled = false;
                     $get("btnUpdateCard").className = "btnWorkCardUpadte";
-                }
+                }              
             }
             return res;    
         }           

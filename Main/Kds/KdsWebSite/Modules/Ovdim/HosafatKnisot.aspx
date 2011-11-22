@@ -28,13 +28,13 @@
         <br />                  
         <asp:UpdatePanel ID="upTblKnisot" runat="server" UpdateMode="Always" >
             <ContentTemplate>  
-            <asp:Panel ID="pnlgrdKnisot" height="292px" width="542px" dir="ltr"  runat="server" ScrollBars="Auto">   
-            <div dir="rtl" >
+            <asp:Panel ID="pnlgrdKnisot" height="292px" width="542px" dir="ltr"  runat="server" >   
+            <div dir="rtl" style="overflow:auto" >
             <asp:GridView ID="grdKnisot" runat="server" GridLines="None"
-                    AutoGenerateColumns="False" height="289px" width="520px" 
+                    AutoGenerateColumns="False"  width="520px" 
                     ShowHeader="true"    
                     HeaderStyle-CssClass="WorkCardRechivimGridHeader"
-                    OnRowDataBound="grdKnisot_RowDataBound" >
+                    OnRowDataBound="grdKnisot_RowDataBound">
                 <Columns>                                  
                     <asp:BoundField DataField="Siduri" HeaderText="מספר" ItemStyle-CssClass="WorkCardRechivimGridRow"  />                                  
                     <asp:BoundField DataField="MokedTchilaName" HeaderText="תאור"  ItemStyle-CssClass="WorkCardRechivimGridRow"   />                                  

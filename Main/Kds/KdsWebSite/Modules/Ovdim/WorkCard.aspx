@@ -125,7 +125,7 @@
                                             TargetControlID="vldDay" Width="200px" PopupPosition="Left">
                                         </cc1:ValidatorCalloutExtender>    
                                     </td>
-                                    <td style="width: 3%" class = "WorkCardTable1Label">יום:</td>
+                                    <td style="width: 3%" class="WorkCardTable1Label">יום:</td>
                                     <td style="width: 9%" class="WorkCardTdBorder">
                                         <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 70px;"> </asp:TextBox>
                                     </td>                                           
