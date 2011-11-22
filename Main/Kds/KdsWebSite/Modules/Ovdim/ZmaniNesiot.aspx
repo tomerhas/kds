@@ -27,7 +27,7 @@
         {
             var btnUpdate = document.getElementById("btnUpdate");
             btnUpdate.disabled =!Page_IsValid;
-            btnUpdate.className = Page_IsValid? "ImgButtonSearch" : "ImgButtonSearchDisable" ; 
+            btnUpdate.className = Page_IsValid ? "btnWorkCardAddSpecial" : "btnWorkCardAddSpecialDis"; 
                   
         }
 

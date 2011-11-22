@@ -43,7 +43,7 @@ namespace KdsBatch
         private long? _btchRequest;
         private int _iUserId;
         private bool _bSuccsess;
-        private clGeneral.enCardStatus _CardStatus;
+        private clGeneral.enCardStatus _CardStatus = clGeneral.enCardStatus.Valid;
         //private DataTable _dtApproval;
         private DataTable _dtIdkuneyRashemet;
         private DataTable _dtApprovalError;

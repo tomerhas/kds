@@ -6,28 +6,27 @@
     <title>Untitled Page</title>
 </head>
 
-<body>
+<body class="WorkCardRechivim">
       <form id="MadknAcharon" runat="server">
      <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" >        
      </asp:ScriptManager>
 
-    <div>
-      <table  border="0" cellspacing="0" cellpadding="0"  width="440px" >
+    <div style="overflow:auto" width="100%">
+      <table cellspacing="0" cellpadding="0"  width="100%" >
             <tr>
                 <td >
-                     <asp:Label runat="server" ID="lblPageHeader"   width="445px" CssClass = "GridHeader" >עדכונים בכרטיס העבודה   </asp:Label>
-                       <asp:Panel ID="pnlUpdators"  height="250px" width="430px" dir="rtl"  runat="server" ScrollBars="Vertical">   
-                        <asp:GridView ID="grdUpdators" runat="server"   GridLines="none" CssClass="GridAltRow"  
+                     <asp:Label runat="server" ID="lblPageHeader"   width="100%" CssClass = "WorkCardRechivimHeader" >עדכונים בכרטיס העבודה   </asp:Label>
+                       <asp:Panel ID="pnlUpdators"  height="250px" width="100%" dir="rtl"  runat="server" ScrollBars="Auto">   
+                        <asp:GridView ID="grdUpdators" runat="server"  width="100%" GridLines="none" CssClass="WorkCardRechivimGridRow"   
                                 EmptyDataText="לא נמצאו נתונים!"  
-                                AllowPaging="false" AutoGenerateColumns="false"  Width="430px"
-                                   HeaderStyle-CssClass="WCard_collapse_header" >
+                                AllowPaging="false" AutoGenerateColumns="false"  
+                                   HeaderStyle-CssClass="WorkCardRechivimGridHeader" >
                             <Columns>
-                                <asp:BoundField DataField="UPDATEDATE" HeaderText="תאריך עדכון"    ItemStyle-CssClass="ItemRow"   />
-                                <asp:BoundField DataField="IDNUM" HeaderText="מ.א. מעדכן" ItemStyle-CssClass="ItemRow" />
-                                <asp:BoundField DataField="FULLNAME" HeaderText="שם המעדכן"  ItemStyle-CssClass="ItemRow" />
+                                <asp:BoundField DataField="UPDATEDATE" HeaderText="תאריך עדכון"  ItemStyle-CssClass="WorkCardRechivimGridRow"  ItemStyle-Width="33%" />
+                                <asp:BoundField DataField="IDNUM" HeaderText="מ.א. מעדכן" ItemStyle-CssClass="WorkCardRechivimGridRow" ItemStyle-Width="33%" />
+                                <asp:BoundField DataField="FULLNAME" HeaderText="שם המעדכן"  ItemStyle-CssClass="WorkCardRechivimGridRow" ItemStyle-Width="33%"/>
                             </Columns> 
-                                 <EmptyDataRowStyle CssClass="GridEmptyData" height="20px"/> 
-                           
+                                 <EmptyDataRowStyle CssClass="GridEmptyData" height="20px"/>                            
                          </asp:GridView>
                        </asp:Panel > 
                 </td>

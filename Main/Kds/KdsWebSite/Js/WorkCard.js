@@ -196,7 +196,7 @@
         var id = document.getElementById("txtId").value;
         var date = document.getElementById("clnDate").value;
         var sQuryString="?id=" + id + "&date=" + date;
-        var ReturnWin = window.showModalDialog('MadknAcharon.aspx' + sQuryString, window, "dialogHeight: 280px; dialogWidth: 490px;dialogtop:200px;status:no;resizable:yes;");                         
+        var ReturnWin = window.showModalDialog('MadknAcharon.aspx' + sQuryString, window, "dialogHeight: 280px; dialogWidth: 490px;dialogtop:200px;status:no;resizable:no;scroll:no;");                         
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
     }

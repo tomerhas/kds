@@ -850,7 +850,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Betipul = 0
         }
         public enum enCardStatus
-        {
+        {            
             Error = 0,
             Valid = 1,
             Calculate = 2 //הועבר לשכר

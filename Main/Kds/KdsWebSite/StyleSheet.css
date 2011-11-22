@@ -1973,6 +1973,20 @@ a
 	background-position:center;
 	background-attachment:inherit;	
 }
+.btnWorkCardAddSpecialDis
+{
+	background-image: url(Images/B_AddSpecial_Dis.png);	
+	font-size:14px;
+	font-family:Arial;	
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bold;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+}
 .btnWorkCardCalculate
 {
 	background-image: url(Images/B_callculated_reg.png);	
