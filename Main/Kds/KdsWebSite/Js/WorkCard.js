@@ -493,7 +493,7 @@
    function OpenZmaneiNessiot(id,date, type, value){ 
         var sQueryString;
         sQueryString = "?id="+ id + "&date=" + date + "&type=" + type + "&value=" + value + "&dt=" + Date(); 
-        window.showModalDialog('ZmaniNesiot.aspx' + sQueryString, '', 'dialogwidth:650px;dialogheight:170px;dialogtop:200px;status:no;resizable:no;');
+        window.showModalDialog('ZmaniNesiot.aspx' + sQueryString, '', 'dialogwidth:660px;dialogheight:170px;dialogtop:200px;status:no;resizable:no;');
     }
    function SetChgFlag(){
     document.getElementById("hidChanges").value=bScreenChanged;
