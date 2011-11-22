@@ -15,6 +15,7 @@ using KdsBatch;
 using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.Security;
+using KdsLibrary.UDT;
 
 
 public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
@@ -72,6 +73,7 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
          
             if (!Page.IsPostBack)
             {
+             
                 if (iMeafienIn.ToString() == "51")
                 {
                     switch (iKodMeafienIn)
@@ -129,6 +131,9 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
                 }
                 // Update זמני נסיעות בפועל:   זמן נסיעה לעבודה & זמן נסיעה מהעבודה
                 ZmanNesiaBefoal(iMisparIshi, dTarich);
+
+                Session["ZmanHalochOld"] = int.Parse(txtZNLavoda.Text);
+                Session["ZmanHazorOld"] = int.Parse(txtZNMavoda.Text);
             }
         }
         catch (Exception ex)
@@ -285,8 +290,7 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
     }
 
     private void UpdateDB()
-    {
-
+    { 
         if (Page.IsValid)
         {
             txtChanged.Value = "0";  // undo txtchaned .
@@ -297,6 +301,7 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
             {
                 clOvdim oOvdim = new clOvdim();
                 oOvdim.UpdZmanNesiaa(iMisparIshi, dTarich, izmaNesiaHaloch, iZmanNesiaHazor);
+                InsertToTBIdkuneyRashemet();
             }
             catch (Exception ex)
             {
@@ -306,6 +311,47 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
         }
     }
 
+    private void InsertToTBIdkuneyRashemet()
+    {
+        COLL_IDKUN_RASHEMET oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
+        OBJ_IDKUN_RASHEMET _ObjIdkunRashemet; 
+         try
+            {
+                if (int.Parse(Session["ZmanHalochOld"].ToString()) != izmaNesiaHaloch)
+                {
+                    _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
+                    _ObjIdkunRashemet.PAKAD_ID = 40;//זמן נסיעה הלוך
+                    FillObjIdkuneyRashemet(ref _ObjIdkunRashemet);
+                    oCollIdkunRashemet.Add(_ObjIdkunRashemet);
+                }
+
+                if (int.Parse(Session["ZmanHazorOld"].ToString()) != iZmanNesiaHazor)
+                {
+                    _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
+                    _ObjIdkunRashemet.PAKAD_ID = 41; //זמן נסיעה חזור
+                    FillObjIdkuneyRashemet(ref _ObjIdkunRashemet);
+                    oCollIdkunRashemet.Add(_ObjIdkunRashemet);
+                }
+                clDefinitions.SaveIdkunRashemet(oCollIdkunRashemet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void FillObjIdkuneyRashemet(ref OBJ_IDKUN_RASHEMET _ObjIdkunRashemet)
+        {
+            _ObjIdkunRashemet.TAARICH = dTarich;
+            _ObjIdkunRashemet.MISPAR_ISHI = iMisparIshi;
+            _ObjIdkunRashemet.MISPAR_SIDUR = 0;
+            _ObjIdkunRashemet.SHAT_HATCHALA = DateTime.MinValue;
+            _ObjIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.MinValue; 
+            _ObjIdkunRashemet.SHAT_YETZIA = DateTime.MinValue;
+            _ObjIdkunRashemet.NEW_SHAT_YETZIA = DateTime.MinValue; 
+            _ObjIdkunRashemet.MISPAR_KNISA = 0;
+            _ObjIdkunRashemet.GOREM_MEADKEN = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+        }
 }
 
 
