@@ -2262,9 +2262,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
          // urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
             // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
-            EventLog.WriteEntry("kds", Page.Title + ": before urlBarcode", EventLogEntryType.Error);
+          //  EventLog.WriteEntry("kds", Page.Title + ": before urlBarcode", EventLogEntryType.Error);
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;
-            EventLog.WriteEntry("kds", Page.Title + ": after urlBarcode", EventLogEntryType.Error);
+          //  EventLog.WriteEntry("kds", Page.Title + ": after urlBarcode", EventLogEntryType.Error);
             if (hidFromEmda.Value == "true")
             {
                 string sScript = "";
@@ -2281,19 +2281,22 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
 
                 s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
-                EventLog.WriteEntry("kds", Page.Title + ": after CreateReport", EventLogEntryType.Error);
+             //   EventLog.WriteEntry("kds", Page.Title + ": after CreateReport", EventLogEntryType.Error);
                 string sFileName, sPathFile;
                 FileStream fs;
                 sIp = "";// arrParams[1];
                 sFileName = "WorkCard.pdf";
+               
                 sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+                
                 if (!Directory.Exists(sPathFile))
                     Directory.CreateDirectory(sPathFile);
-                fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
+                
+                fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);    
                 fs.Write(s, 0, s.Length);
                 fs.Flush();
                 fs.Close();
-                EventLog.WriteEntry("kds", Page.Title + ": after Flush", EventLogEntryType.Error);
+
                 for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
                 {
                     if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
@@ -2302,7 +2305,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         break;
                     }
                 }
-                sScript += " document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "');";
+                sScript += " PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
                 ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
                 EventLog.WriteEntry("kds", Page.Title + ": after RegisterStartupScript", EventLogEntryType.Error);
             }
