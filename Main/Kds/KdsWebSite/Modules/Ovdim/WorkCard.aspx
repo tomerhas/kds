@@ -906,7 +906,7 @@
                 return;
             }
             
-            $get("lstSidurim_dvS").scrollTop = $get("lstSidurim_hidScrollPos").value;            
+            $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value) + 100 ;            
          }   
         
     </script>

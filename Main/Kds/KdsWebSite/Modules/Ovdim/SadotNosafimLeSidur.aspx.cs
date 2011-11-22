@@ -409,7 +409,6 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             switch ((enKodSade)Enum.Parse(typeof(enKodSade), kodObject))
             {
   
-
                 case enKodSade.Mispar_Musach_O_Machsan:
                     imgErr.ID = "imgMispar_Musach_O_Machsan";
                     imgErr.Attributes.Add("ondblclick", "GetErrorMessageSadotNosafim(cmb_Mispar_Musach_O_Machsan,2,'');");
@@ -641,6 +640,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             }
             
             cmb.Width =140;
+            cmb.CssClass = "WorkCardSidurDropDown";
             
             ListItem item = new ListItem();
             item.Text = "";
@@ -723,6 +723,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         try
         {
             txt.Text = "";
+            txt.CssClass = "WorkCardSidurTextBox";
             if (dr["BRAT_MECHDAT"].ToString() != "null" && dr["BRAT_MECHDAT"].ToString() != "")
                 txt.Text = dr["BRAT_MECHDAT"].ToString();
 
@@ -748,6 +749,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             cmb.DataTextField = Dt.Columns["description"].ToString();
             cmb.DataValueField = Dt.Columns["code"].ToString();
             cmb.DataBind();
+            cmb.CssClass = "WorkCardSidurDropDown";
         }
         catch (Exception ex)
         {
@@ -781,6 +783,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             cmb.DataValueField = Dt.Columns["code"].ToString();
             cmb.DataSource = Dt;
             cmb.DataBind();
+            cmb.CssClass = "WorkCardSidurDropDown";
         }
         catch (Exception ex)
         {
@@ -799,7 +802,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             dr["code"] = "1";
             dr["description"] = "נהג";
             Dt.Rows.InsertAt(dr, 0);
-
+           
             dr = Dt.NewRow();
             dr["code"] = "2";
             dr["description"] = "נהג משנה";
@@ -819,6 +822,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
             cmb.DataValueField = Dt.Columns["code"].ToString();
             cmb.DataSource = Dt;
             cmb.DataBind();
+            cmb.CssClass = "WorkCardSidurDropDown";
         }
         catch (Exception ex)
         {
@@ -971,9 +975,11 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     imgErr.ID = "imgKod_shinuy_premia_" + num; 
 
                     cmb.ID = "cmb_Kod_shinuy_premia_" + num;
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     fill_Kod_shinuy_premia(ref cmb);
                     BulidObjectCmb(ref cmb, dr);
                     AddValidSadeChova(dr, cmb.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
+
                     //validation
                     if (drPeilutKayemet["Kod_shinuy_premia"].ToString() != "")
                         cmb.SelectedValue = drPeilutKayemet["Kod_shinuy_premia"].ToString();
@@ -990,6 +996,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     break;
                 case enKodSade.Mispar_Siduri_Oto:
                     txt.ID = "txt_Mispar_Siduri_Oto_" + num;
+                    txt.CssClass = "WorkCardSidurTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     //validation
@@ -1069,6 +1076,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 {
                     id = "cmb_" + id;
                     cmb = (DropDownList)oTbl.FindControl(id);
+                    cmb.CssClass = "WorkCardSidurDropDown";
                     vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                     if (!checkValidCmb(cmb,ref vld, dr))
                         return false;
@@ -1077,6 +1085,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 {
                     id = "txt_" + id;
                     txt = (TextBox)oTbl.FindControl(id);
+                    txt.CssClass = "WorkCardSidurTextBox";
                     vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                    // isValid = checkValidTxt(txt, ref vld, dr);
                     if (!checkValidTxt(txt, ref vld, dr))
@@ -1127,6 +1136,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                         cmb = (DropDownList)oTbl.FindControl(id);
                         if (cmb != null)
                         {
+                            cmb.CssClass = "WorkCardSidurDropDown";
                             vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                             if (!checkValidCmb(cmb,ref vld, dr))
                                 return false;
@@ -1138,6 +1148,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                         txt = (TextBox)oTbl.FindControl(id);
                         if (txt != null)
                         {
+                            txt.CssClass="WorkCardSidurTextBox";
                             vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                             if (!checkValidTxt(txt,ref vld,  dr))
                                 return false;

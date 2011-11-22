@@ -1251,7 +1251,7 @@
                         </tr>
                     </table>   
                   </asp:Panel>          
-             <div visible="true" style="height:522px;width:970px;overflow:auto;">
+             <div visible="true" style="height:522px;width:970px;overflow:auto;" dir="rtl">
                 <div id="pirteySidur" runat="server" style="display:none;width:824px;height:522px">
                     <table style="width:825px; height:522px"  cellspacing="0" >
                     <tr class="WorkCardRechivimGridHeader">
@@ -1293,7 +1293,7 @@
                                        </ItemTemplate>
                                    </asp:TemplateField>
                                    <asp:BoundField DataField="SHAT_YETZIA" ItemStyle-Width="60px" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
-                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" ItemStyle-Width="60px" ItemStyle-CssClass="WorkCardPeilutTextBox" HeaderText="שעת יציאה" >
+                                   <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" ItemStyle-Width="60px"  HeaderText="שעת יציאה" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtShatYezia" runat="server" Width="60px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                                <cc1:MaskedEditExtender ID="extMaskShatYezia" runat="server" TargetControlID="txtShatYezia" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>

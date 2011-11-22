@@ -231,6 +231,8 @@
          document.getElementById("btnRefreshOvedDetails").disabled = true;
          document.getElementById("btnPrevCard").disabled = true;
          document.getElementById("btnNextCard").disabled = true;
+         $get("btnPrevCard").className = "btnPrevDayDis";
+         $get("btnNextCard").className="btnNextDayDis"
          document.getElementById("btnNextErrCard").disabled = true; 
          document.getElementById("txtId").disabled = true;          
          document.getElementById("txtName").disabled = true;          

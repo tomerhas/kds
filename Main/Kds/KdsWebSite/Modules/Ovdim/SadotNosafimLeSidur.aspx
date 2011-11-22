@@ -41,7 +41,7 @@
            </asp:UpdateProgress>     
     
     <div id="divMeafyenim" runat="server" style="width:650px; height:350px">    
-          <asp:Button ID="btnErrors" runat="server" CssClass="ImgButtonSearch" CausesValidation="false"
+          <asp:Button ID="btnErrors" runat="server" CssClass="ImgButtonUpdate" CausesValidation="false"
             Style="display: none;" />
         <cc1:ModalPopupExtender ID="MPEErrors" DropShadow="false" CancelControlID="btnErrClose" BehaviorID="bMpeErr"
             X="10" Y="10" PopupControlID="paErrorMessage" TargetControlID="btnErrors" runat="server">
@@ -68,7 +68,6 @@
                 </tr>              
             </table>           
         </asp:Panel> 
-
       <asp:UpdatePanel  ID="upSadot" runat="server"  UpdateMode="Always">
      <ContentTemplate>                   
        <table id="tblMeafyenim" runat="server" width="650px; height:300px" >
