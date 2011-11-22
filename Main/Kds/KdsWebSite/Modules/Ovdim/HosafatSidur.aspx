@@ -1251,7 +1251,7 @@
                         </tr>
                     </table>   
                   </asp:Panel>          
-             <div visible="true" style="height:522px;width:824px;">
+             <div visible="true" style="height:522px;width:970px;overflow:auto;">
                 <div id="pirteySidur" runat="server" style="display:none;width:824px;height:522px">
                     <table style="width:825px; height:522px"  cellspacing="0" >
                     <tr class="WorkCardRechivimGridHeader">

@@ -458,7 +458,7 @@
         sQueryString = sQueryString + "&CardDate=" + document.getElementById("clnDate").value;
         sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
         document.getElementById("divHourglass").style.display = 'block';
-        res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:975px;dialogheight:690px;dialogtop:180px;dialogleft:50px;status:no;resizable:no;scroll:no;');
+        res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:975px;dialogheight:690px;dialogtop:180px;dialogleft:50px;status:no;resizable:no;');
         document.getElementById("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (!_bScreenChanged))) {
             document.getElementById("hidExecInputChg").value = "1";
