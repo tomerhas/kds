@@ -620,7 +620,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Ax.ID = "Ax" + iIndex;
         Ax.Collapsed = false;
         Ax.CollapsedSize = 0;
-        Ax.ExpandedSize = (iPeilutSize)+30;
+        Ax.ExpandedSize = (iPeilutSize)+35;
         Ax.AutoCollapse = false;
         Ax.AutoExpand = false;
         Ax.ScrollContents = false;
@@ -2513,7 +2513,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //הכנסת סידור חדש
         LiteralControl lDummy = new LiteralControl();
         lDummy.Text = " ";
-        hCell = CreateTableCell("73px", "", "");
+        hCell = CreateTableCell("90px", "", "");
         //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
         if (oSidur.htPeilut.Count > 0)
         {
@@ -2530,7 +2530,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //add TextBox
         oTextBox.ID = "lblSidur" + iIndex;        
-        oTextBox.Width = Unit.Pixel(50);
+        oTextBox.Width = Unit.Pixel(45);
         oTextBox.MaxLength = 5;
         oTextBox.Attributes.Add("SidurVisa","0");
         oTextBox.Attributes.Add("Sidur93", "0");
@@ -2570,8 +2570,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(vldExtenderCallOut);
 
         hCell.Style.Add("valign", "top");
-        hCell.Style.Add("border-left", "solid 1px gray");
-        hCell.Style.Add("border-right", "solid 1px gray");
+        //hCell.Style.Add("border-left", "solid 1px gray");
+        //hCell.Style.Add("border-right", "solid 1px gray");
                 
     }
     protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell,ref HtmlTableCell hCollapseCell,ref HtmlTableCell hErrCell, int iIndex)
@@ -2648,7 +2648,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                            // lDummy.Text = ".";
                             //lDummy.CssClass = "WorkCardSidurDummy";                            
                             //hErrCell.Controls.Add(lDummy);         
-                            hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
+                            hErrCell = CreateTableCell("16px", "WorkCardSidurErr", "");
                             //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
                             if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
                                 lnkSidur.Style.Add("color", "white");
@@ -2664,7 +2664,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         //lDummy.CssClass = "WorkCardSidurDummy";
                         
                         //hErrCell.Controls.Add(lDummy);      
-                        hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
+                        hErrCell = CreateTableCell("16px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2699,12 +2699,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         }
                         else
                         {                           
-                            hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
+                            hErrCell = CreateTableCell("16px", "WorkCardSidurErr", "");
                             CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         }
                         break;
                     case clGeneral.enCardStatus.Valid:                       
-                        hErrCell = CreateTableCell("10px", "WorkCardSidurErr", "");
+                        hErrCell = CreateTableCell("16px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2831,7 +2831,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(chkBox);              
         hCell.Controls.Add(imgRemark);
 
-        hCell.Style.Add("border-left", "solid 1px gray");        
+       // hCell.Style.Add("border-left", "solid 1px gray");        
     }
     protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {
@@ -2888,7 +2888,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         }
         hCell.Controls.Add(chkBox);
-        hCell.Style.Add("border-left", "solid 1px gray");
+        //hCell.Style.Add("border-left", "solid 1px gray");
     }
     public void UpdateHashTableWithGridChanges(ref OrderedDictionary htFullEmployeeDetails)
     {
@@ -3092,7 +3092,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (dShatYetiza.Date.Year < clGeneral.cYearNull)
                     if (oShatYetiza.Text != string.Empty)
                     {
-                        if ((DateTime.Parse(oShatYetiza.Text).Hour > 0) || (DateTime.Parse(oShatYetiza.Text).Minute > 0))
+                        if ((DateTime.Parse(oShatYetiza.Text).Hour >= 0) || (DateTime.Parse(oShatYetiza.Text).Minute >= 0))
                             oShatYetiza.Attributes["OrgDate"] = _CardDate.ToShortDateString();
                     }
                     else //שעת יציאה ריקה
@@ -3433,6 +3433,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Session["Sidurim"] = _DataSource;         
         ClearControl();
         BuildPage();
+        hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
     }
     private long FindCarNumber()
     {
@@ -3791,7 +3792,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(ddl);
         hCell.Controls.Add(vldHashlamaNumber);
         hCell.Controls.Add(vldExtenderCallOut);
-        hCell.Style.Add("border-left", "solid 1px gray");
+       // hCell.Style.Add("border-left", "solid 1px gray");
         clUtils.BindTooltip(ddl);
         clUtils.SetDDLToolTip(ddl);
       
@@ -3843,7 +3844,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         int iMikumShaonKnisa = String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) ? 0 : int.Parse(oSidur.sMikumShaonKnisa);
         int iMikumShaonYetiza = String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) ? 0 : int.Parse(oSidur.sMikumShaonYetzia);
 
-        hCell = CreateTableCell("108px", "", "");
+        hCell = CreateTableCell("115px", "", "");
         bEnablePitzul = IsPitzulHafsakaAllowed(ref oSidur,ref bSidurMychadShaon);
 
         DropDownList ddl = new DropDownList();
@@ -3864,7 +3865,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sPitzulHafsaka;        
-        ddl.Style.Add("width", "95px");       
+        ddl.Style.Add("width", "90px");       
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+"); chkPitzulHafsaka(" + iIndex + ",false)");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         ddl.CssClass = "WorkCardSidurDropDown";
@@ -3888,7 +3889,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Enabled = ((bSidurActive) && (bOrgEnable));
        
         hCell.Controls.Add(ddl);
-        hCell.Style.Add("border-left", "solid 1px gray");
+       // hCell.Style.Add("border-left", "solid 1px gray");
         clUtils.BindTooltip(ddl);
         clUtils.SetDDLToolTip(ddl);
     }
@@ -3957,7 +3958,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
         }        
         hCell.Controls.Add(ddl);
-        hCell.Style.Add("border-left", "solid 1px gray");
+    //    hCell.Style.Add("border-left", "solid 1px gray");
         clUtils.BindTooltip(ddl);
         clUtils.SetDDLToolTip(ddl);
     }
@@ -4008,7 +4009,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(vldShatGmarLetashlum);
         hCell.Controls.Add(vldExShatGmarLetashlum);
 
-        hCell.Style.Add("border-left", "solid 1px gray");
+     //   hCell.Style.Add("border-left", "solid 1px gray");
         
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Gmar_Letashlum'");
         switch (_StatusCard)
@@ -4062,7 +4063,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         hCell.Controls.Add(vldShatHatchalaLetashlum);
         hCell.Controls.Add(vldExShatHatchalaLetashlum);
 
-        hCell.Style.Add("border-left", "solid 1px gray");
+      //  hCell.Style.Add("border-left", "solid 1px gray");
 
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Hatchala_Letashlum'");
         switch (_StatusCard)
@@ -4143,7 +4144,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
         }
         hCell.Controls.Add(ddl);
-        hCell.Style.Add("border-left", "solid 1px gray");
+       // hCell.Style.Add("border-left", "solid 1px gray");
         clUtils.BindTooltip(ddl);
         clUtils.SetDDLToolTip(ddl);
     }
@@ -4211,7 +4212,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     }
             }    
             hCell.Controls.Add(ddl);
-            hCell.Style.Add("border-left", "solid 1px gray");
+          //  hCell.Style.Add("border-left", "solid 1px gray");
             clUtils.BindTooltip(ddl);
             clUtils.SetDDLToolTip(ddl);
         }
@@ -5098,7 +5099,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           
           
         
-            hCell.Style.Add("border-left", "solid 1px gray");
+         //   hCell.Style.Add("border-left", "solid 1px gray");
             //if (iIndex > 0)
             //{
             //    sMessage = "שעת ההתחלה שהוקלדה גורמת לחפיפת זמנים עם הסידור הקודם";
@@ -5488,7 +5489,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
             hCell.Controls.Add(oMaskedEditExtender);
-            hCell.Style.Add("border-left", "solid 1px gray");
+            //hCell.Style.Add("border-left", "solid 1px gray");
             hCell.Controls.Add(oTextBox);
 
             //SetSidurEndHourParameters(oSidur, ref sShatGmarMutertStart, ref sShatGmarMutertEnd, drSugSidur);

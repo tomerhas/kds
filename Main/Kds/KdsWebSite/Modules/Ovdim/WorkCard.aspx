@@ -400,7 +400,7 @@
             <table width="100%" id="tbSidur" runat="server" cellpadding="0" cellspacing="0">
                 <tr>                                     
                     <td width="100%">
-                        <div id="divSidur" style="text-align: right; overflow:hidden;height:520px" >                                        
+                        <div id="divSidur" style="text-align: right; overflow:hidden;height:520px;" >                                        
                             <uc:ucSidurim runat="server" ID="lstSidurim"/> 
                             <input type="hidden" runat="server" id="hidErrChg" /> 
                             <input type="hidden" runat="server" id="hidExecInputChg" />                                        
@@ -906,7 +906,10 @@
                 return;
             }
             
-            $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value) + 100 ;            
+            if (Number($get("lstSidurim_hidScrollPos").value)==0)
+              $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value);            
+            else
+                $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value) + 100;            
          }   
         
     </script>

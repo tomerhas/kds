@@ -1543,9 +1543,8 @@ a
 
 .lstSidurDiv
 {
-	height:520px; 	
-	overflow: auto;
-	overflow-x: hidden; 	
+	height:480px; 	
+	overflow: auto;	
 	width : 100%;
 }
 .ErrGrid
