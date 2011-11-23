@@ -2269,7 +2269,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 string sScript = "";
                 string sIp;
-                string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
 
                 ReportModule Report = ReportModule.GetInstance();
@@ -2305,9 +2305,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         break;
                     }
                 }
-                sScript += " PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
+          //      EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
+                sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
                 ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
-                EventLog.WriteEntry("kds", Page.Title + ": after RegisterStartupScript", EventLogEntryType.Error);
+            
             }
             else
             {
