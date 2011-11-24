@@ -110,7 +110,7 @@ public partial class Modules_Reports_PresenceReport : KdsPage
         string sScript;
         byte[] s;
         string sIp = "";
-        string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
+        string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
         
         if (LoginUser.IsLimitedUser && arrParams[2].ToString()=="1")
         {
