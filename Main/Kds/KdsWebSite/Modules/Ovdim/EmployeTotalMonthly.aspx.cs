@@ -171,7 +171,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
         string sScript;
         ReportModule Report = ReportModule.GetInstance();
         string sIp="";
-        string sPathFilePrint = @"\\\\" + System.Environment.MachineName + @"\\kdsPrints\\" + LoginUser.UserInfo.EmployeeNumber + @"\\";
+        string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
         
         if (Page.IsValid)
         {
