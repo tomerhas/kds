@@ -1,161 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsWorkCard">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>6986d4e3-afdb-4e95-a353-c14852495e43</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsSidurimVePeiluyot">
-      <Fields>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SECTOR_VISA">
-          <DataField>SECTOR_VISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YOM_VISA">
-          <DataField>YOM_VISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_YOM_VISA">
-          <DataField>TEUR_YOM_VISA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_VISA">
-          <DataField>MISPAR_VISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KM_VISA">
-          <DataField>KM_VISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_SIDUR">
-          <DataField>SHAT_SIDUR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_YETZIA">
-          <DataField>SHAT_YETZIA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="YOM">
-          <DataField>YOM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KOD_MAAMAD">
-          <DataField>KOD_MAAMAD</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MAAMAD">
-          <DataField>MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="OTO_NO">
-          <DataField>OTO_NO</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SNIF">
-          <DataField>SNIF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_TACHOGRAF">
-          <DataField>KOD_TACHOGRAF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MEASHER_O_MISTAYEG">
-          <DataField>MEASHER_O_MISTAYEG</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ZMAN_NESIAA">
-          <DataField>TEUR_ZMAN_NESIAA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_LINA">
-          <DataField>TEUR_LINA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HAMARAT_SHABAT">
-          <DataField>HAMARAT_SHABAT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsWorkCard</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETSIDUREYVISAFORWC</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="dsParam">
-      <Fields>
-        <Field Name="KOD_PARAM">
-          <DataField>KOD_PARAM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_PARAM">
-          <DataField>ERECH_PARAM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsWorkCard</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_KODLIST">
-            <Value>900</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Day(Parameters!P_TAARICH.Value) &amp; "/" &amp; Month(Parameters!P_TAARICH.Value)  &amp; "/" &amp; Year(Parameters!P_TAARICH.Value)</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TbList">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.75101in</Width>
+              <Width>19.68757cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>7.4012in</Height>
+              <Height>18.79905cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -293,12 +149,12 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.92448in</Width>
+                                <Width>4.88818cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.39556in</Height>
+                                <Height>1.00472cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -373,12 +229,12 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.93463in</Width>
+                                <Width>2.37396cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -420,7 +276,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -494,21 +350,21 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.04865in</Width>
+                                <Width>2.66357cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.10152in</Width>
+                                <Width>2.79786cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.05573in</Width>
+                                <Width>2.68155cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.04329in</Width>
+                                <Width>2.64996cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -667,7 +523,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -841,21 +697,21 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.42282in</Width>
+                                <Width>3.61396cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.45018in</Width>
+                                <Width>3.68346cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.04285in</Width>
+                                <Width>2.64884cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.44854in</Width>
+                                <Width>3.67929cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1016,7 +872,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1193,21 +1049,21 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.23702in</Width>
+                                <Width>3.14203cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.60182in</Width>
+                                <Width>4.06862cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.41036in</Width>
+                                <Width>3.58231cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.11521in</Width>
+                                <Width>2.83263cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1368,7 +1224,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.18204in</Height>
+                                <Height>0.46238cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1536,7 +1392,7 @@
                           <Top>1.81094cm</Top>
                           <Left>6.06197cm</Left>
                           <Height>0.92476cm</Height>
-                          <Width>13.6256cm</Width>
+                          <Width>13.62559cm</Width>
                           <ZIndex>8</ZIndex>
                           <Style>
                             <Border>
@@ -1548,33 +1404,33 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.92877in</Width>
+                                <Width>2.35908cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.01306in</Width>
+                                <Width>2.57317cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.81583in</Width>
+                                <Width>2.07221cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.19779in</Width>
+                                <Width>3.04239cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.06698in</Width>
+                                <Width>2.71013cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.99349in</Width>
+                                <Width>2.52346cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.71323in</Width>
+                                <Width>1.8116cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.94047in</Width>
+                                <Width>2.38879cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1891,7 +1747,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -2198,7 +2054,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           <Top>5.68089cm</Top>
                           <Left>0.20677cm</Left>
                           <Height>1.2cm</Height>
-                          <Width>19.48084cm</Width>
+                          <Width>19.48083cm</Width>
                           <ZIndex>9</ZIndex>
                           <Style>
                             <Border>
@@ -2210,12 +2066,12 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.94071in</Width>
+                                <Width>4.9294cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.39556in</Height>
+                                <Height>1.00472cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -2415,7 +2271,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </TablixRowHierarchy>
         <DataSetName>dsSidurimVePeiluyot</DataSetName>
         <Height>18.79905cm</Height>
-        <Width>19.68756cm</Width>
+        <Width>19.68757cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2428,6 +2284,163 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
       <Border />
     </Style>
   </Body>
+  <Width>7.75101in</Width>
+  <Page>
+    <PageHeight>28cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsWorkCard">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>6986d4e3-afdb-4e95-a353-c14852495e43</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsSidurimVePeiluyot">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETSIDUREYVISAFORWC</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SECTOR_VISA">
+          <DataField>SECTOR_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YOM_VISA">
+          <DataField>YOM_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_YOM_VISA">
+          <DataField>TEUR_YOM_VISA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_VISA">
+          <DataField>MISPAR_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KM_VISA">
+          <DataField>KM_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_SIDUR">
+          <DataField>SHAT_SIDUR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_YETZIA">
+          <DataField>SHAT_YETZIA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="YOM">
+          <DataField>YOM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_MAAMAD">
+          <DataField>KOD_MAAMAD</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MAAMAD">
+          <DataField>MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OTO_NO">
+          <DataField>OTO_NO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SNIF">
+          <DataField>SNIF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_TACHOGRAF">
+          <DataField>KOD_TACHOGRAF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MEASHER_O_MISTAYEG">
+          <DataField>MEASHER_O_MISTAYEG</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ZMAN_NESIAA">
+          <DataField>TEUR_ZMAN_NESIAA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_LINA">
+          <DataField>TEUR_LINA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HAMARAT_SHABAT">
+          <DataField>HAMARAT_SHABAT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsParam">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KODLIST">
+            <Value>900</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Day(Parameters!P_TAARICH.Value) &amp; "/" &amp; Month(Parameters!P_TAARICH.Value)  &amp; "/" &amp; Year(Parameters!P_TAARICH.Value)</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="KOD_PARAM">
+          <DataField>KOD_PARAM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_PARAM">
+          <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>Integer</DataType>
@@ -2520,15 +2533,6 @@ Dim BarSlice As Short
             return ret
     End function
 </Code>
-  <Width>7.75101in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <TopMargin>0.5cm</TopMargin>
-    <BottomMargin>0.5cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -2541,6 +2545,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
   <CodeModules>
     <CodeModule>System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</CodeModule>
   </CodeModules>
-  <rd:ReportID>824432fc-6a1f-40b3-a43c-41bc372953de</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>824432fc-6a1f-40b3-a43c-41bc372953de</rd:ReportID>
 </Report>
