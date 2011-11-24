@@ -101,6 +101,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          ListItem Item;
          DateTime dTaarich;
          string[] arrDate;
+       //  DataRow dr;
          clOvdim oOvdim = new clOvdim();
          if (txtEmpId.Text.Length > 0 && clGeneral.IsNumeric(txtEmpId.Text) && ddlMonth.SelectedValue!="")
          {
@@ -109,14 +110,18 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
              dTaarich = new DateTime(int.Parse(arrDate[1].ToString()), int.Parse(arrDate[0].ToString()), 1);
              
               dtRitzot = oOvdim.GetRitzotChishuv(int.Parse(txtEmpId.Text), dTaarich);
+              //dr = dtRitzot.NewRow();
+              //dr[0] ="0";  dr[2] ="חישוב מקוון";
+              //dtRitzot.Rows.Add(dr);
               ddlRitzatChishuv.DataSource = dtRitzot;
               ddlRitzatChishuv.DataBind();
               ddlRitzatChishuv.Enabled = true;
 
               Item = new ListItem();
               Item.Text = "חישוב מקוון";
-              Item.Value="0";
+              Item.Value = "0";
               ddlRitzatChishuv.Items.Add(Item);
+              ddlRitzatChishuv.SelectedValue = "0";
          }
          else { ddlRitzatChishuv.Enabled = false; }
      }
