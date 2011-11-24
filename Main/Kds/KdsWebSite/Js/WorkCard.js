@@ -12,6 +12,8 @@
                     document.getElementById("tbEmpDetails").style.display = 'block';
                     document.getElementById("tblPart").style.display = 'none';
                     document.getElementById("btnPlus1").className = 'ImgButtonShowMinus';
+                    document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
+                    document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
                     if ($get("txtIsuk").disabled != true)
                          $get("txtIsuk").select();
                     else
@@ -23,6 +25,8 @@
                     document.getElementById("tblPart").style.display = 'block';
                     document.getElementById("tbEmpDetails").style.display = 'none';
                     document.getElementById("btnPlus2").className = 'ImgButtonShowMinus';
+                    document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
+                    document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
                     if ($get("ddlTachograph").disabled!=true)
                         $get("ddlTachograph").focus();
                     else
@@ -34,6 +38,8 @@
                     document.getElementById("tblPart").style.display = 'block';
                     document.getElementById("tbEmpDetails").style.display = 'none';
                     document.getElementById("btnPlus3").className = 'ImgButtonShowMinus';
+                    document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
+                    document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
                     if ($get("txtFirstPart").disabled != true)
                         $get("txtFirstPart").select();
                     else
