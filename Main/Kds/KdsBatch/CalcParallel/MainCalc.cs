@@ -174,13 +174,15 @@ namespace KdsBatch
             {
                 //InsertOvedToTable(iMisparIshi, StartMonth);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
+               // clLogBakashot.InsertErrorToLog(_iBakashaId, iMisparIshi, "E", 0, dCalcMonth, "oOved is null? : " + (oOved == null ? "true" : "false"));
                 CalcOved(oOved);
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                 DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
 
                 oOved.Dispose();
-                SingleGeneralData.ResetObject();
+                if (SingleGeneralData.GetInstance() != null)
+                    SingleGeneralData.ResetObject();
             }
             catch (Exception ex)
             {
