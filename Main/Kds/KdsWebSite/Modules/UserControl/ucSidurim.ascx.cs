@@ -3412,7 +3412,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     bool bHosafatSidurVisa = ((hidGeneralParam.Value.Equals("1")) && (bSidurVisa));
                     if (((bHosafatSidurVisa) && (!bPeilutVisaExists)) || (!bHosafatSidurVisa) || (!hidGeneralParam.Value.Equals("1")))
                     {                       
-                        _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut) + 1, _Peilut);
+                        _Sidur.htPeilut.Add(FindNextKey(ref _Sidur.htPeilut) + 1, _Peilut);                       
                         _Peilut.oPeilutStatus = clPeilut.enPeilutStatus.enNew;
                         _Peilut.lMakatNesia = bHosafatSidurVisa ? MAKAT_VISA : 0;
                         if (_Peilut.lMakatNesia.Equals(MAKAT_VISA))

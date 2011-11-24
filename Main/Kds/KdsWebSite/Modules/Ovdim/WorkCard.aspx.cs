@@ -3399,6 +3399,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {
             oObjPeluyotOvdim.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.AddByUser.GetHashCode();
             oObjPeluyotOvdim.UPDATE_OBJECT = 1;
+            oObjPeluyotOvdim.MEADKEN_ACHARON = int.Parse(LoginUser.UserInfo.EmployeeNumber);
         }
         //נעדכן את ה-HashTable בערכים המקוריים
         oPeilut.dFullShatYetzia = oObjPeluyotOvdim.NEW_SHAT_YETZIA;

@@ -12,23 +12,34 @@
                     document.getElementById("tbEmpDetails").style.display = 'block';
                     document.getElementById("tblPart").style.display = 'none';
                     document.getElementById("btnPlus1").className = 'ImgButtonShowMinus';
-                    
+                    if ($get("txtIsuk").disabled != true)
+                         $get("txtIsuk").select();
+                    else
+                        $get("txtId").focus();
                     break;
-            case "divNetunimLeYom":
-                    document.getElementById("divEmployeeDetails").style.display='none';
+                case "divNetunimLeYom":
+                    document.getElementById("divEmployeeDetails").style.display = 'none';
                     document.getElementById("divParticipation").style.display = 'none';
                     document.getElementById("tblPart").style.display = 'block';
                     document.getElementById("tbEmpDetails").style.display = 'none';
-                    document.getElementById("btnPlus2").className = 'ImgButtonShowMinus';              
-                break;
-            case "divParticipation":
-                    document.getElementById("divNetunimLeYom").style.display='none';
+                    document.getElementById("btnPlus2").className = 'ImgButtonShowMinus';
+                    if ($get("ddlTachograph").disabled!=true)
+                        $get("ddlTachograph").focus();
+                    else
+                        $get("txtId").focus();
+                    break;
+                case "divParticipation":
+                    document.getElementById("divNetunimLeYom").style.display = 'none';
                     document.getElementById("divEmployeeDetails").style.display = 'none';
                     document.getElementById("tblPart").style.display = 'block';
                     document.getElementById("tbEmpDetails").style.display = 'none';
                     document.getElementById("btnPlus3").className = 'ImgButtonShowMinus';
-                    
-                break;
+                    if ($get("txtFirstPart").disabled != true)
+                        $get("txtFirstPart").select();
+                    else
+                        $get("txtId").focus();
+                       
+                    break;
             }           
         }
         else{
