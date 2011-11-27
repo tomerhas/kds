@@ -211,21 +211,21 @@
                                 ondblclick="GetErrorMessage(this,1,'');" width="100" >
                             </asp:DropDownList>
                         </td>
-                        <td width="110px" class="WorkCardTabs"> 
-                            <input type="button" id="btnPlus1" name="btnOpenEmployeeDetails1" class="ImgButtonShowPlus"
-                                 onclick="OpenDiv('divEmployeeDetails', this.id);" />
-                            <label style="font-weight: bold;"> פרטי העובד</label>                           
-                        </td>                        
+                        <td width="117px" class="WorkCardTabs"> 
+                            <input runat="server" type="button" id="btnPlus3" name="btnOpenParticipation1"
+                                class="ImgButtonShowPlus"  onclick="OpenDiv('divParticipation', this.id);" />
+                            <label style="font-weight: bold;"> התייצבות </label>                                      
+                        </td>                                             
                         <td width="150px" class="WorkCardTabs">
                             <input type="button" id="btnPlus2" name="btnOpenNetunimLeYom1" class="ImgButtonShowPlus"
                                  onclick="OpenDiv('divNetunimLeYom', this.id);" />
                             <label style="font-weight: bold;">נתונים ליום עבודה</label>                                             
                         </td>                      
-                        <td width="117px" class="WorkCardTabs"> 
-                            <input runat="server" type="button" id="btnPlus3" name="btnOpenParticipation1"
-                                class="ImgButtonShowPlus"  onclick="OpenDiv('divParticipation', this.id);" />
-                            <label style="font-weight: bold;"> התייצבות </label>                                      
-                        </td>
+                        <td width="110px" class="WorkCardTabs"> 
+                            <input type="button" id="btnPlus1" name="btnOpenEmployeeDetails1" class="ImgButtonShowPlus"
+                                 onclick="OpenDiv('divEmployeeDetails', this.id);" />
+                            <label style="font-weight: bold;"> פרטי העובד</label>                           
+                        </td>   
                         <td width="1px" class="WorkCardTdBorder"></td>
                         <td width="48px"></td>
                         <td width="15px">

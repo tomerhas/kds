@@ -873,6 +873,14 @@ function chkMkt(oRow) {
       var sOrgSH = _ShatHatchala.getAttribute("OrgShatHatchala");
       var sNewSH = _ShatHatchala.value;
       var sCardDate = $get("clnDate").value;
+
+      var OrgPTime = new Date(); var NewPTime = new Date();
+      SetDate(OrgPTime, sOrgSH.substr(6, 4), Number(sOrgSH.substr(3, 2)) - 1, sOrgSH.substr(0, 2), sOrgSH.substr(11, 2), sOrgSH.substr(14, 2));
+      SetDate(NewPTime, sCardDate.substr(6, 4), Number(sCardDate.substr(3, 2)) - 1, sCardDate.substr(0, 2), sNewSH.substr(0, 2), sNewSH.substr(3, 2)); 
+      var dOrgPTime = Date.UTC(OrgPTime.getFullYear(), OrgPTime.getMonth() + 1, OrgPTime.getDate(), OrgPTime.getHours(), OrgPTime.getMinutes(), 0);
+      var dNewPTime = Date.UTC(NewPTime.getFullYear(), NewPTime.getMonth() + 1, NewPTime.getDate(), NewPTime.getHours(), NewPTime.getMinutes(), 0);
+      if (dOrgPTime != dNewPTime)
+          SetBtnChanges();
       if (IsValidTime(sNewSH))
         if (sNewSH.indexOf('_')==-1)
             wsGeneral.SidurStartHourChanged(sCardDate, iSidur, sNewSH, sOrgSH,iIndex, callBackStartHour, null, iIndex);
@@ -897,7 +905,7 @@ function chkMkt(oRow) {
      dSidurSHDate.setDate(dSidurSHDate.getDate() + Number(result[1]));
     // if (result[1] == '0') {//שעת התחלה
      $get("lstSidurim_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(dSidurSHDate);  //$get("clnDate").value;
-     SetBtnChanges();
+//     SetBtnChanges();
     // }
 
      var sSdDate = $get("lstSidurim_lblDate".concat(iIndex)).innerHTML; 

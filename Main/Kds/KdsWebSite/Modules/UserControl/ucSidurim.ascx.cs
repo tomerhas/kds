@@ -3997,7 +3997,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
-        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
+        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
+        oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
         oTextBox.CssClass = "WorkCardSidurTextBox";
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
@@ -4049,10 +4050,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
-        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");");
+        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
         oTextBox.CssClass = "WorkCardSidurTextBox";
-
+        oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+       
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
         oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
@@ -6624,6 +6626,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
             oTxt.CssClass="WorkCardPeilutTextBox";
+            oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
+            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
          //   oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             //Add MaskTextBox
