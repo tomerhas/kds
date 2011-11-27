@@ -41,36 +41,35 @@ namespace KdsBatch
         }
         public static void ResetObject()
         {
-      
 
-            Instance.dtYamimMeyuchadim= null;
-            Instance.dtSugeyYamimMeyuchadim= null;
-            Instance.dtParameters= null;
-            Instance.dtOvdimLechishuv= null;
-            Instance.dtMichsaYomitAll= null;
-            Instance.dtMeafyeneySugSidurAll= null;
-            Instance.dtSidurimMeyuchRechivAll= null;
-            Instance.dtSugeySidurRechivAll= null;
-          //  Instance.dtSugeySidurAll= null;
-            Instance.dtPremyotAll= null;
-            Instance.dtPremyotYadaniyotAll= null;
-            Instance.dtBusNumbersAll= null;
-            Instance.dtYemeyAvodaAll= null;
-            Instance.dtPeiluyotFromTnuaAll= null;
-            Instance.dtPirteyOvdimAll= null;
-            Instance.dtMutamutAll= null;
-            Instance.dtMeafyenyOvedAll= null;
-            Instance.dtSugeyYechidaAll= null;
-            Instance.dtPeiluyotOvdimAll= null;
-            Instance.dtOvdimShePutru = null;
-            Instance.ListParameters = null;
-            Instance.dsNetuneyChishuv = null;
-            _IsCreated = false;
+            //Instance.dtYamimMeyuchadim = null;
+            //Instance.dtSugeyYamimMeyuchadim = null;
+            //Instance.dtParameters = null;
+            //Instance.dtOvdimLechishuv = null;
+            //Instance.dtMichsaYomitAll = null;
+            //Instance.dtMeafyeneySugSidurAll = null;
+            //Instance.dtSidurimMeyuchRechivAll = null;
+            //Instance.dtSugeySidurRechivAll = null;
+            ////  Instance.dtSugeySidurAll= null;
+            //Instance.dtPremyotAll = null;
+            //Instance.dtPremyotYadaniyotAll = null;
+            //Instance.dtBusNumbersAll = null;
+            //Instance.dtYemeyAvodaAll = null;
+            //Instance.dtPeiluyotFromTnuaAll = null;
+            //Instance.dtPirteyOvdimAll = null;
+            //Instance.dtMutamutAll = null;
+            //Instance.dtMeafyenyOvedAll = null;
+            //Instance.dtSugeyYechidaAll = null;
+            //Instance.dtPeiluyotOvdimAll = null;
+            //Instance.dtOvdimShePutru = null;
+            //Instance.ListParameters = null;
+            //Instance.dsNetuneyChishuv = null;
+           // _IsCreated = false;
             Instance = null;
 
-          //  GC.Collect();
-            GC.GetTotalMemory(true); 
-        }
+      //    //  GC.Collect();
+        //    GC.GetTotalMemory(true);
+         }
 
 
     }

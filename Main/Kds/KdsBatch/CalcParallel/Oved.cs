@@ -54,7 +54,7 @@ namespace KdsBatch
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
             if (BakashaId == 0 || BakashaId == 1)
-                oGeneralData = SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi,0);
+                oGeneralData = new GeneralData(tarMe, tarAd, "", false, mis_ishi, 0); //SingleGeneralData.GetInstance(tarMe, tarAd, "", false, mis_ishi, 0);
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
@@ -62,7 +62,7 @@ namespace KdsBatch
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
-            oGeneralData = SingleGeneralData.GetInstance(dDay, dDay, "", false, mis_ishi,0);
+            oGeneralData = new GeneralData(dDay, dDay, "", false, mis_ishi, 0); // SingleGeneralData.GetInstance(dDay, dDay, "", false, mis_ishi,0);
             Mispar_ishi = mis_ishi;
             Month = DateTime.Parse("01/" + dDay.Month + "/" + dDay.Year);
             _dDay = dDay;
@@ -75,7 +75,8 @@ namespace KdsBatch
             try
             {
                 fmichsatYom = 0;
-                oGeneralData = SingleGeneralData.GetInstance();
+                if (iBakashaId != 0 && iBakashaId != 1)
+                    oGeneralData = SingleGeneralData.GetInstance();
                
                 InitPremyotYadaniyot();
                 InitPremyot();
