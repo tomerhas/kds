@@ -1179,7 +1179,7 @@
        }
 
  </script>
-    <form id="form1" runat="server"  >
+    <form id="form1" runat="server">
     <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
     </asp:ScriptManager>
     <asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
@@ -1251,9 +1251,9 @@
                         </tr>
                     </table>   
                   </asp:Panel>          
-             <div visible="true" style="height:522px;width:970px;overflow:auto;" dir="rtl">
-                <div id="pirteySidur" runat="server" style="display:none;width:824px;height:522px">
-                    <table style="width:825px; height:522px"  cellspacing="0" >
+             <div visible="true" style="height:512px;width:970px;overflow:hidden;border:1px black" dir="rtl">
+                <div id="pirteySidur" runat="server" style="display:none;width:824px;height:512px;border:1px black">
+                    <table style="width:825px; height:512px"  cellspacing="0" >
                     <tr class="WorkCardRechivimGridHeader">
                         <td style="width:40px">מספר סידור</td>
                         <td style="width:45px">שעת התחלה</td>
@@ -1275,8 +1275,8 @@
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td>
-                        <div id="divPeiluyot" runat="server" dir="ltr" style="overflow:auto">
-                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="824px" height="522px" runat="server" >                         
+                        <div id="divPeiluyot" runat="server" dir="rtl" style="overflow:auto;;border:1px" >
+                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="824px" height="500px" runat="server" >                         
                           <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
                                  AutoGenerateColumns="False" width="824px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
@@ -1302,7 +1302,7 @@
                                               <input type="hidden" id="DateHidden" runat="server" />
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                   <asp:BoundField DataField="TEUR" HeaderText="תיאור" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="250px" />
+                                   <asp:BoundField DataField="TEUR" HeaderText="תיאור" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="240px" ItemStyle-HorizontalAlign="Right" />
                                    <asp:BoundField DataField="KAV" HeaderText="קו"  ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="40px"   />
                                    <asp:BoundField DataField="SUG" HeaderText="סוג" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="40px" />
                                    <asp:BoundField DataField="MISPAR_RECHEV" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />

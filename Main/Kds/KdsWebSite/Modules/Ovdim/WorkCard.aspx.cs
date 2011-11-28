@@ -2188,7 +2188,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.AddNewSidur();        
         string sScript = "$get('lstSidurim_lblSidur" + (lstSidurim.DataSource.Count - 1).ToString() + "').focus();";
         ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
-        bAddSidur = true;
+        bAddSidur = true;        
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {
@@ -2201,6 +2201,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SetImageForButtonMeasherOMistayeg();     
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
+       // DefineZmaniNesiotNavigatePage(dDateCard);
     }
     protected DataTable GetSidurimAndPeilut(int iMisparIshi, DateTime dCardDate)
     {
@@ -2574,6 +2575,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             string sScript = "SetBtnChanges();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "OpenUpdBtn", sScript, true);
             hidUpdateBtn.Value = "true";
+            DefineZmaniNesiotNavigatePage(dDateCard);
           //  lstSidurim.HasSaveCard = false;
         }
         //oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
