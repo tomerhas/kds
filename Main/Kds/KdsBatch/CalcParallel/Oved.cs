@@ -36,7 +36,6 @@ namespace KdsBatch
         private DataTable _DtSidur;
         private DataTable _DtPeilut;
 
-   //     private DataTable _Meafyenim;
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
         public clMeafyenyOved objMeafyeneyOved { get; set; }
@@ -58,7 +57,6 @@ namespace KdsBatch
             Mispar_ishi = mis_ishi;
             Month = month;
             iBakashaId = BakashaId;
-            //  SetNetunimLeOved();
         }
         public Oved(int mis_ishi, DateTime dDay, long BakashaId)
         {
@@ -68,14 +66,13 @@ namespace KdsBatch
             _dDay = dDay;
             bChishuvYom = true;
             iBakashaId = BakashaId;
-            //   SetNetunimLeOved();
         }
         public void SetNetunimLeOved()
         {
             try
             {
                 fmichsatYom = 0;
-                if (iBakashaId != 0 && iBakashaId != 1)
+                if (iBakashaId > 1)
                     oGeneralData = SingleGeneralData.GetInstance();
                
                 InitPremyotYadaniyot();
@@ -191,25 +188,6 @@ namespace KdsBatch
                     itemPirteyOved = null;
                 }
                 itemPirteyOved = null;
-                //while (dTarMe <= TarAd)
-                //{
-                //    if (rows.Length > 1)
-                //        rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
-               
-                //    if (rows.Length > 0)
-                //    {
-                //        itemPirteyOved = new clPirteyOved(rows[0], dTarMe);
-                //        PirteyOved.Add(itemPirteyOved);
-                //    }
-                //    else
-                //    {
-                //        itemPirteyOved = new clPirteyOved(dTarMe);
-                //        PirteyOved.Add(itemPirteyOved);
-                //    }
-                //    dTarMe = dTarMe.AddDays(1);
-                //    rows = null;
-                //    itemPirteyOved = null;
-                //}
             }
             catch (Exception ex)
             {
@@ -379,29 +357,6 @@ namespace KdsBatch
             }
         }
 
-        //public void InitMeafyenim()
-        //{
-        //    clMeafyenyOved itemMeafyenyOved;
-        //    DateTime dTarMe = Month;
-        //    DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
-        //    try
-        //    {
-
-        //        MeafyeneyOved = new List<clMeafyenyOved>();
-        //        while (dTarMe <= TarAd)
-        //        {
-        //            itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, oGeneralData.dtMeafyenyOvedAll);
-        //            MeafyeneyOved.Add(itemMeafyenyOved);
-        //            dTarMe = dTarMe.AddDays(1);
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMeafyenyOved: " + ex.Message);
-        //        throw ex;
-        //    }
-        //}
         private void InitSugeyYechida()
         {
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
@@ -437,8 +392,6 @@ namespace KdsBatch
             InitDtChishuvPeilut();
             InitDtChishuvSidur();
             InitDtChishuvChodesh();
-
-            //return _dsChishuv; 
         }
 
         private void InitDtChishuvPeilut()
@@ -524,8 +477,7 @@ namespace KdsBatch
             MeafyeneyOved = null;
             PirteyOved = null;
             oGeneralData = null;
-            //GC.Collect();
-            GC.GetTotalMemory(true); 
+           // GC.GetTotalMemory(true); 
 
         }
     }

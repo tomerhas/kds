@@ -41,33 +41,7 @@ namespace KdsBatch
         }
         public static void ResetObject()
         {
-
-            //Instance.dtYamimMeyuchadim = null;
-            //Instance.dtSugeyYamimMeyuchadim = null;
-            //Instance.dtParameters = null;
-            //Instance.dtOvdimLechishuv = null;
-            //Instance.dtMichsaYomitAll = null;
-            //Instance.dtMeafyeneySugSidurAll = null;
-            //Instance.dtSidurimMeyuchRechivAll = null;
-            //Instance.dtSugeySidurRechivAll = null;
-            ////  Instance.dtSugeySidurAll= null;
-            //Instance.dtPremyotAll = null;
-            //Instance.dtPremyotYadaniyotAll = null;
-            //Instance.dtBusNumbersAll = null;
-            //Instance.dtYemeyAvodaAll = null;
-            //Instance.dtPeiluyotFromTnuaAll = null;
-            //Instance.dtPirteyOvdimAll = null;
-            //Instance.dtMutamutAll = null;
-            //Instance.dtMeafyenyOvedAll = null;
-            //Instance.dtSugeyYechidaAll = null;
-            //Instance.dtPeiluyotOvdimAll = null;
-            //Instance.dtOvdimShePutru = null;
-            //Instance.ListParameters = null;
-            //Instance.dsNetuneyChishuv = null;
-           // _IsCreated = false;
             Instance = null;
-
-      //    //  GC.Collect();
         //    GC.GetTotalMemory(true);
          }
 
@@ -76,7 +50,6 @@ namespace KdsBatch
 
     public class GeneralData 
     {
-       // private clParameters objParameters;
         private DateTime _TarMe,_TarAd;
         public DataSet dsNetuneyChishuv;
 
@@ -91,7 +64,6 @@ namespace KdsBatch
         public DataTable dtMeafyeneySugSidurAll { get; set; }
         public DataTable dtSidurimMeyuchRechivAll { get; set; }
         public DataTable dtSugeySidurRechivAll { get; set; }
-       // public DataTable dtSugeySidurAll { get; set; }
         public DataTable dtPremyotAll { get; set; }
         public DataTable dtPremyotYadaniyotAll { get; set; }
         public DataTable dtBusNumbersAll { get; set; }
@@ -123,9 +95,8 @@ namespace KdsBatch
                      _TarAd = DateTime.Parse(drs[0]["taarich"].ToString()).AddMonths(1).AddDays(-1);
                  }
              }
-            //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "before InitGeneralData");
+
             InitGeneralData();
-            //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now.Date, "After InitGeneralData");
         }
         private void InitGeneralData()
         {
@@ -137,25 +108,24 @@ namespace KdsBatch
                 dtYamimMeyuchadim = clGeneral.GetYamimMeyuchadim();
                 dtSugeyYamimMeyuchadim = clGeneral.GetSugeyYamimMeyuchadim();
                 dtParameters = oUtils.GetKdsParametrs();
-                 InitListParamObject();
+                InitListParamObject();
                 
-                 dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; // oCalcDal.getPremyot();
-                 dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; // oCalcDal.getPremyotYadaniyot();
-                 dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"]; //oCalcDal.GetMichsaYomitLechodesh(_TarMe, _TarAd);
+                dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; 
+                dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; 
+                dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"];
                 dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
-                dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; // oCalcDal.SetSidurimMeyuchaRechiv(_TarMe, _TarAd);
-                dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; //oCalcDal.GetSugeySidurRechiv(_TarMe, _TarAd);
-               // dtSugeySidurAll = dsNetuneyChishuv.Tables["Sugey_Sidur_Tnua"]; // oCalcDal.GetSugeySidur();
-                dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; //oCalcDal.GetBusesDetails();
-                dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; //oCalcDal.GetYemeyAvoda();
+                dtSidurimMeyuchRechivAll = dsNetuneyChishuv.Tables["Sidur_Meyuchad_Rechiv"]; 
+                dtSugeySidurRechivAll = dsNetuneyChishuv.Tables["Sug_Sidur_Rechiv"]; 
+                dtBusNumbersAll = dsNetuneyChishuv.Tables["Buses_Details"]; 
+                dtYemeyAvodaAll = dsNetuneyChishuv.Tables["Yemey_Avoda"]; 
                 if (dsNetuneyChishuv.Tables["Kavim_Details"] != null)
-                    dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; //oCalcDal.GetKatalogKavim();
+                    dtPeiluyotFromTnuaAll = dsNetuneyChishuv.Tables["Kavim_Details"]; 
                 else dtPeiluyotFromTnuaAll = null;
-                dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; //oCalcDal.GetPirteyOvdim();
+                dtPirteyOvdimAll = dsNetuneyChishuv.Tables["Pirtey_Ovdim"]; 
                 dtMutamutAll = dsNetuneyChishuv.Tables["Ctb_Mutamut"]; 
-                dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; //oCalcDal.GetPeiluyotOvdim();               
-                dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"]; //oCalcDal.GetSugYechida();
-                dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; //oCalcDal.GetMeafyeneyBitzuaLeOvedAll(1);
+                dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; 
+                dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"];
+                dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; 
                 dtOvdimShePutru = dsNetuneyChishuv.Tables["Ovdim_ShePutru"];
             }
             catch (Exception ex)
@@ -188,7 +158,6 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-              //   clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
                 throw ex;
             }
         }
@@ -202,7 +171,6 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                //   clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "MainCalc: " + ex.Message);
                 throw ex;
             }
             finally
