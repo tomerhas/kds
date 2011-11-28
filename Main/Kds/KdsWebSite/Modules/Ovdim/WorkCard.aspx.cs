@@ -411,8 +411,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     {
                         bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
                         bResult = bInpuDataResult;
+                        ViewState["CardStatus"] = oBatchManager.CardStatus;
                     }
-                    else { hidErrChg.Value = "0"; } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
+                    else { 
+                        hidErrChg.Value = "0";
+                        oBatchManager.CardStatus = (clGeneral.enCardStatus) ViewState["CardStatus"];
+                    } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
                 }
             }
             if (!bResult)

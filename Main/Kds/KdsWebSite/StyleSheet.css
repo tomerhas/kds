@@ -2223,3 +2223,10 @@ a
 	font-weight:bold;
 	text-align:center;
 }
+.WorkCardPeilutLabelRight
+{
+	font-size:14px;
+	font-family:Arial;
+	font-weight:bold;
+	text-align:right;
+}
