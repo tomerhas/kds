@@ -18,7 +18,7 @@ namespace KdsLibrary.UI.SystemManager
      {
         private const int MAX_WIDTH = 315;
         private const int MAX_DROPDOWN_WIDTH = 320;
-        private const int CALENDAR_MAX_WIDTH = 125;
+        private const int CALENDAR_MAX_WIDTH = 130;
         private KdsDataSource _dataSource;
         private ScriptManager _scriptManager;
         private KdsSysManResources _resources;
