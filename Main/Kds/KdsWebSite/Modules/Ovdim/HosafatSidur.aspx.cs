@@ -78,6 +78,11 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
     {
         ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
         btnIdkunGridHidden.Style.Add("Display", "none");
+        txtShatHatchala.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+        txtShatHatchala.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+
+        txtShatGmar.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+        txtShatGmar.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
         clUtils oUtils = new clUtils();
         DataTable dtParametrim = new DataTable();
         DataTable dtElements = new DataTable();
@@ -552,6 +557,10 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                     ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].FindControl("txtKisuiTor")).Text = e.Row.Cells[(int)enPeilut.hidKisuyTor].Text;
                 ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.KISUY_TOR].FindControl("exvldKisuiTor")).BehaviorID = e.Row.ClientID + "_vldExvldKisuiTor";
                 ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("txtKisuiTor")).Attributes.Add("onchange", "onchange_txtKisuyTor(" + e.Row.ClientID + ")");
+                ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].Controls[1]).Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].Controls[1]).Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].Controls[1]).Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                ((TextBox)e.Row.Cells[(int)enPeilut.KISUY_TOR].Controls[1]).Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
 
                 if (e.Row.Cells[(int)enPeilut.hidShatYezia].Text != "&nbsp;")
                     ((TextBox)e.Row.Cells[(int)enPeilut.SHAT_YETZIA].FindControl("txtShatYezia")).Text = e.Row.Cells[(int)enPeilut.hidShatYezia].Text;
@@ -604,13 +613,15 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
                // ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.MISPAR_RECHEV].FindControl("exvMakat")).BehaviorID = e.Row.ClientID + "_vldExvldMakat";
                 ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.MAKAT].FindControl("exvMakat")).BehaviorID = e.Row.ClientID + "_vldExvldMakat";
                 ((TextBox)e.Row.Cells[(int)enPeilut.MAKAT].FindControl("txtMakat")).Attributes.Add("onchange", "onchange_txtMakat(" + e.Row.ClientID + ")");
-                ((TextBox)e.Row.Cells[(int)enPeilut.MAKAT].FindControl("txtMakat")).Attributes.Add("onFocus ", "onSadeFocus(" + e.Row.ClientID + "_txtMakat)");
-
+                ((TextBox)e.Row.Cells[(int)enPeilut.MAKAT].FindControl("txtMakat")).Attributes.Add("onFocus ", "this.className='WorkCardSidurTextBoxFocus';onSadeFocus(" + e.Row.ClientID + "_txtMakat)");
+                ((TextBox)e.Row.Cells[(int)enPeilut.MAKAT].FindControl("txtMakat")).Attributes.Add("onblur ", "this.className='WorkCardSidurTextBox';");
+                
                 if (e.Row.Cells[(int)enPeilut.hidDakotBafoal].Text != "&nbsp;")
                     ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Text = e.Row.Cells[(int)enPeilut.hidDakotBafoal].Text;
                 ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("exvDakot")).BehaviorID = e.Row.ClientID + "_vldExvldDakot";
                 ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Attributes.Add("onchange", "onchange_txtDakot(" + e.Row.ClientID + ")");
-                ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Attributes.Add("onFocus ", "onSadeFocus(" + e.Row.ClientID + "_txtDakotBafoal)");
+                ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Attributes.Add("onFocus ", "this.className='WorkCardSidurTextBoxFocus';onSadeFocus(" + e.Row.ClientID + "_txtDakotBafoal)");
+                ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Attributes.Add("onblur ", "this.className='WorkCardSidurTextBox';");
                 if (((DataRowView)e.Row.DataItem).Row["MUST_DAKOT"].ToString() == "false") {
                     ((TextBox)e.Row.Cells[(int)enPeilut.DAKOT_BAFOAL].FindControl("txtDakotBafoal")).Style.Add("display", "none");
                 }

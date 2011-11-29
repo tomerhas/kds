@@ -1967,8 +1967,15 @@ public class wsGeneral : System.Web.Services.WebService
             dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
             if (dr.Length > 0)
             {
-                if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                if (_Sidur.bSidurMyuhad)
+                {
+                    if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                        sResult = "1,1";
+                }
+                else
+                {
                     sResult = "1,1";
+                }
             }
             else
             {

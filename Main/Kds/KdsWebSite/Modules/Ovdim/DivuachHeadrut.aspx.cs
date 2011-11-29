@@ -82,6 +82,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                     btnUpdate.ControlStyle.CssClass = "btnWorkCardLongDis";
                     txtStartTime.Attributes.Add("disabled", "true");
                     txtEndTime.Attributes.Add("disabled", "true");
+                    txtStartTime.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                    txtStartTime.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                    txtEndTime.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                    txtEndTime.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
                 }
                
                 InitData();

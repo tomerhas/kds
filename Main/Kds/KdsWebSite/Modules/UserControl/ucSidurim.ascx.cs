@@ -3436,7 +3436,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Session["Sidurim"] = _DataSource;         
         ClearControl();
         BuildPage();
-        hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
+        //hidScrollPos.Value = "10000";//נמקם את הscroll בסוף הדף
     }
     private long FindCarNumber()
     {
