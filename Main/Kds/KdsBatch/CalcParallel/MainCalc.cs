@@ -152,6 +152,7 @@ namespace KdsBatch
             COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
             try
             {
+                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "START MainCalcOved:" + iMisparIshi);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
                 CalcOved(oOved);
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
@@ -161,6 +162,7 @@ namespace KdsBatch
                 oOved.Dispose();
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
+                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "END MainCalcOved:" + iMisparIshi);
             }
             catch (Exception ex)
             {
