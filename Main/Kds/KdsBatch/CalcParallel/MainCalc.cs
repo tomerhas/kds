@@ -152,9 +152,11 @@ namespace KdsBatch
             COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
             try
             {
-                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "START MainCalcOved:" + iMisparIshi);
+              //  clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "START MainCalcOved:" + iMisparIshi);
                 oOved = new Oved(iMisparIshi, StartMonth, StartMonth, dCalcMonth, lBakashaId);
+               // clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "START CalcOved:" + iMisparIshi);
                 CalcOved(oOved);
+             //   clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "END CalcOved:" + iMisparIshi);
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                 DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
@@ -162,7 +164,7 @@ namespace KdsBatch
                 oOved.Dispose();
                 if (SingleGeneralData.GetInstance() != null)
                     SingleGeneralData.ResetObject();
-                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "END MainCalcOved:" + iMisparIshi);
+             //   clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "END MainCalcOved:" + iMisparIshi);
             }
             catch (Exception ex)
             {

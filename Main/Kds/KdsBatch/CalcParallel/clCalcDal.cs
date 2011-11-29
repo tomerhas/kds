@@ -527,13 +527,13 @@ namespace KdsBatch
                 dal.AddParameter("p_Mis_Ishi", ParameterType.ntOracleInteger, mis_ishi, ParameterDir.pdInput);
                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, numProcess, ParameterDir.pdInput);
 
-                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, TarMe, "START GetNetuneyChishuvDS:" + mis_ishi);
+              //  clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, TarMe, "START GetNetuneyChishuvDS:" + mis_ishi);
                 if (mis_ishi>0)
                     dal.ExecuteSP(cGetNetunryChishuv, ref ds, names);
                 else 
                     dal.ExecuteSP(cGetNetunimLeprocess, ref ds, names);
                 dal.TxCommit();
-                clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, TarMe, "END GetNetuneyChishuvDS:" + mis_ishi);
+               // clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, TarMe, "END GetNetuneyChishuvDS:" + mis_ishi);
                 return ds;
             }
             catch (Exception ex)
