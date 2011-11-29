@@ -1680,7 +1680,7 @@ function chkMkt(oRow) {
    // if (($get('lstSidurim_lblSidur'.concat(i - 1)) != null) && ($get('lstSidurim_lblSidur'.concat(i - 1)).disabled==false))
      //    $get('lstSidurim_lblSidur'.concat(i-1)).select();    
    }
-   function EnabledSidurimListBtn(bDisabled){
+   function EnabledSidurimListBtn(bDisabled, bCloseAllBtn) {
      var _Sidur, _ImgPeilut,_imgCancel,_imgCancelPeilut;
      var i=0;
      var dId = $get("txtId").value;
@@ -1725,9 +1725,9 @@ function chkMkt(oRow) {
                }
                //reka up
                _imgAddNesiaRekaUp = _Peilut.firstChild.childNodes[j].cells[_COL_ADD_NESIA_REKA_UP];
-                if ((((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+               if ((!bCloseAllBtn) && ((((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
                     && ($get("hidDriver").value != '1'))
-                    || (GoremMEasger == dId)))) && (i==0))
+                    || (GoremMEasger == dId)))) && (i==0)))
                //אם סידור ראשון, נאפשר תמיד הוספת ריקה ממפה
                {
                    _imgAddNesiaRekaUp.childNodes[0].disabled = false;

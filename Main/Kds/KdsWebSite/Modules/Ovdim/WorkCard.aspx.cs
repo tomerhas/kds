@@ -661,7 +661,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 CreateChangeAttributs();
 
             SetDDLToolTip();
-            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
 
             if (bAddSidur)
                 sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";                         
@@ -2156,7 +2156,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
          
-            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);           
         }
     }
@@ -2342,7 +2342,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
             PrintCard(sender, e);
 
-        string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+        string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
         ScriptManager.RegisterStartupScript(btnPrint, this.GetType(), "PrintCard", sScript, true);  
     }
     protected void btnConfirm_click(object sender, EventArgs e)
@@ -2466,7 +2466,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             Session["Errors"] = oBatchManager.dtErrors;
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
-            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
+            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }
        

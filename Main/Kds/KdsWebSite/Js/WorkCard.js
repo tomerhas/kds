@@ -145,17 +145,24 @@
         $get("btnCalcItem").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
         $get("btnPrevCard").disabled = (!bEnable);
+        $get("btnPrint").disabled = (!bEnable);
+        $get("btnAddMyuchad").disabled = (!bEnable);
+        $get("btnCloseCard").disabled = (!bEnable);
         if (bEnable){
             $get("btnPrevCard").className = "btnPrevDay";
-            $get("btnNextCard").className = "btnNextDay";            
+            $get("btnNextCard").className = "btnNextDay";
+            $get("btnPrint").className = "btnWorkCardPrint";             
           }
         else
         {
           $get("btnPrevCard").className = "btnPrevDayDis";
-          $get("btnNextCard").className = "btnNextDayDis";         
+          $get("btnNextCard").className = "btnNextDayDis";
+          $get("btnPrint").className = "btnWorkCardPrintDis";             
         }
+      
+
         $get("btnNextErrCard").disabled = (!bEnable); 
-        EnabledSidurimListBtn(!bEnable);   
+        EnabledSidurimListBtn(!bEnable,true);   
     }
     function GetOvedALLDetails(iKodOved){
        var sCardDate;
