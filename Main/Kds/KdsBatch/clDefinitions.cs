@@ -1002,6 +1002,57 @@ namespace KdsBatch
             }
         }
 
+        //public static bool IsExceptionAllowedForSidurMyuchad(ref clSidur oSidur, ref string sCharigaType, clParameters KdsParameters)
+        //{
+        //    bool bExceptionAllowed = false;
+
+        //    //ברמת הסידור - רק לסידורים מיוחדים שיש להם ערך 1 (זכאי) במאפיין 35 (זכאות לחריגה משעות כניסה ויציאה
+        //    if ((oSidur.bSidurMyuhad) && (oSidur.sZakaiLeChariga == clGeneral.enMeafyenSidur35.enCharigaZakai.GetHashCode().ToString())
+        //        && ((oSidur.sShaonNochachut == clGeneral.enShaonNochachut.enMinhal.GetHashCode().ToString())))
+        //    {
+        //        /*
+        //        ג. בדיקת מאפייני העובד (רלוונטי רק לסידור שנוסף בכע) - מותר לעדכן את שדה חריגה במקרים הבאים: 
+        //        לגבי כל התנאים המפורטים בהמשך רלוונטי רק לסידור מיוחד עם מאפיין 54 וערך 1 (מנהל)                
+        //            ב. לעובד אין מאפיינים 3 ו- 4 
+        //        ג.  יום חול וערב חג
+
+        //        2. א.  לעובד אין מאפיינים 5 ו- 6 
+        //        ב.  יום שישי (שישי, לא ערב חג)
+
+        //        3. א.  לעובד אין מאפיינים 7 ו- 8 
+        //        ב.  יום שבת/שבתון
+
+        //         */
+        //         if ((oSidur.sErevShishiChag.Equals("1")) || 
+        //             ((oSidur.sSidurDay!= clGeneral.enDay.Shabat.GetHashCode().ToString()) &&
+        //             (oSidur.sSidurDay!= clGeneral.enDay.Shishi.GetHashCode().ToString()) &&
+        //             (!oSidur.sErevShishiChag.Equals("1")) && (!oSidur.sShabaton.Equals("1"))))
+
+        //         if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+        //         if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
+                 
+        //        ////יום שישי או ערב חג
+        //        ////ביום שישי/ערב חג לעובד ללא מאפיינים 5 ו- 6 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=5   (עבודה בשישי ללא הרשאה).
+        //        //if ((oSidur.sSidurDay == clGeneral.enDay.Shishi.GetHashCode().ToString()))
+        //        //{
+        //        //    if ((!MeafyenyOved.Meafyen5Exists) && (!MeafyenyOved.Meafyen6Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtFridayWithoutPremission.GetHashCode()))
+        //        //    {
+        //        //        bExceptionAllowed = true;
+        //        //        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+        //        //    }
+        //        //}
+        //        ////ביום שבת/שבתון לעובד ללא מאפיינים 7 ו- 8 וגם TB_Sidurim_Ovedim.KOD_SIBA_LO_LETASHLUM=4  (עבודה בשבתון ללא הרשאה).
+        //        //if ((oSidur.sSidurDay == clGeneral.enDay.Shabat.GetHashCode().ToString()) || (oSidur.sShabaton.Equals("1")))
+        //        //{
+        //        //    if ((!MeafyenyOved.Meafyen7Exists) && (!MeafyenyOved.Meafyen8Exists) && (oSidur.iKodSibaLoLetashlum == clGeneral.enLoLetashlum.WorkAtSaturdayWithoutPremission.GetHashCode()))
+        //        //    {
+        //        //        bExceptionAllowed = true;
+        //        //        sCharigaType = clGeneral.enCharigaValue.CharigaAvodaWithoutPremmision.GetHashCode().ToString();
+        //        //    }
+        //        //}
+        //    }
+        //    return bExceptionAllowed;
+        //}
 
         public static bool IsExceptionAllowed(ref clSidur oSidur, ref string sCharigaType, clParameters KdsParameters)
         {
