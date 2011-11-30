@@ -248,7 +248,7 @@
     }
     function SetBtnChanges() {
         var KeyID = event.keyCode;
-        if (KeyID != 45) {
+        if ((KeyID != 45) && (KeyID != 107)) {
             bScreenChanged = true;
             $get("btnUpdateCard").disabled = false;
             $get("btnUpdateCard").className = "btnWorkCardUpadte";
@@ -267,7 +267,7 @@
     }
     function SetLvlChg(iLvl, iSidurIndex) {
         var KeyID = event.keyCode;
-        if (KeyID != 45) {
+        if ((KeyID != 45) && (KeyID != 107)) {
             var id = ("hidLvl".concat(String(iLvl))).concat("Chg");
             if (Number(iLvl == 1))
                 document.getElementById(id).value = "1";
