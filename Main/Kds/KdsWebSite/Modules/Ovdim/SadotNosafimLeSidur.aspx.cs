@@ -723,7 +723,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
         try
         {
             txt.Text = "";
-            txt.CssClass = "WorkCardSidurTextBox";
+            txt.CssClass = "WorkCardPeilutTextBox";
             if (dr["BRAT_MECHDAT"].ToString() != "null" && dr["BRAT_MECHDAT"].ToString() != "")
                 txt.Text = dr["BRAT_MECHDAT"].ToString();
 
@@ -996,7 +996,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                     break;
                 case enKodSade.Mispar_Siduri_Oto:
                     txt.ID = "txt_Mispar_Siduri_Oto_" + num;
-                    txt.CssClass = "WorkCardSidurTextBox";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     BulidObjectTextBox(ref txt, dr);
                     AddValidSadeChova(dr, txt.ID, ref vldCustomValidator, ref vldExtenderCallOut, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                     //validation
@@ -1085,7 +1085,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                 {
                     id = "txt_" + id;
                     txt = (TextBox)oTbl.FindControl(id);
-                    txt.CssClass = "WorkCardSidurTextBox";
+                    txt.CssClass = "WorkCardPeilutTextBox";
                     vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                    // isValid = checkValidTxt(txt, ref vld, dr);
                     if (!checkValidTxt(txt, ref vld, dr))
@@ -1148,7 +1148,7 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
                         txt = (TextBox)oTbl.FindControl(id);
                         if (txt != null)
                         {
-                            txt.CssClass="WorkCardSidurTextBox";
+                            txt.CssClass = "WorkCardPeilutTextBox";
                             vld = (CustomValidator)oTbl.FindControl("vld_" + id);
                             if (!checkValidTxt(txt,ref vld,  dr))
                                 return false;

@@ -1251,9 +1251,9 @@
                         </tr>
                     </table>   
                   </asp:Panel>          
-             <div visible="true" style="height:512px;width:970px;overflow:hidden;border:1px black" dir="rtl">
-                <div id="pirteySidur" runat="server" style="display:none;width:824px;height:512px;border:1px black">
-                    <table style="width:825px; height:512px"  cellspacing="0" >
+             <div visible="true" style="height:480px;width:970px;overflow:hidden;border:1px black" dir="rtl">
+                <div id="pirteySidur" runat="server" style="display:none;width:826px;height:480px;border:1px black">
+                    <table style="width:826px; height:480px"  cellspacing="0" >
                     <tr class="WorkCardRechivimGridHeader">
                         <td style="width:40px">מספר סידור</td>
                         <td style="width:45px">שעת התחלה</td>
@@ -1275,18 +1275,18 @@
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td>
-                        <div id="divPeiluyot" runat="server" dir="rtl" style="overflow:auto;;border:1px" >
-                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="824px" height="500px" runat="server" >                         
+                        <div id="divPeiluyot" runat="server" dir="rtl" style="overflow:auto;border:1px" >
+                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="825px" height="400px" runat="server" >                         
                           <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="824px" 
+                                 AutoGenerateColumns="False" width="817px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
                                  HeaderStyle-CssClass="WorkCardHosafatSidurGridHeader"
                                  OnRowDataBound="grdPeiluyot_RowDataBound" CellPadding="1" CellSpacing="1">
                               <Columns>
-                                    <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="30px" />
-                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="30px" HeaderStyle-Wrap="true"  HeaderText="כיסוי תור" >
+                                    <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="40px" />
+                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="40px" HeaderStyle-Wrap="true"  HeaderText="כיסוי תור" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtKisuiTor" runat="server"  Width="60px" CssClass="WorkCardPeilutTextBox" ></asp:TextBox>
+                                            <asp:TextBox ID="txtKisuiTor" runat="server"  Width="40px" CssClass="WorkCardPeilutTextBox" ></asp:TextBox>
                                              <cc1:MaskedEditExtender ID="extKisuiTor" runat="server" TargetControlID="txtKisuiTor" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                                              <asp:RegularExpressionValidator  runat="server" id="vldKisuiTor" EnableClientScript="true"  Display="none" ErrorMessage="יש להקליד שעת יציאה בטווח 00:00-23:59" ControlToValidate="txtKisuiTor"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvldKisuiTor" BehaviorID="vldExvldKisuiTor"  TargetControlID="vldKisuiTor" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>         
@@ -1322,7 +1322,7 @@
                                        </ItemTemplate>
                                    </asp:TemplateField>
                                    <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="90px" />
-                                   <asp:TemplateField ItemStyle-Width="95px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
+                                   <asp:TemplateField ItemStyle-Width="90px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
                                        <ItemTemplate>
                                             <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="88px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                                              <asp:CustomValidator runat="server" id="vldMakat" ControlToValidate="txtMakat" ErrorMessage=""   Display="None"   ></asp:CustomValidator>

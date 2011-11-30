@@ -83,9 +83,9 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                     txtStartTime.Attributes.Add("disabled", "true");
                     txtEndTime.Attributes.Add("disabled", "true");
                     txtStartTime.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-                    txtStartTime.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                    txtStartTime.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
                     txtEndTime.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-                    txtEndTime.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                    txtEndTime.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
                 }
                
                 InitData();
