@@ -2468,8 +2468,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             lstSidurim.BuildPage();
             string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
-        }
-       
+        }       
     }
     protected void btnShowMessage_Click(object sender, EventArgs e)
     {
