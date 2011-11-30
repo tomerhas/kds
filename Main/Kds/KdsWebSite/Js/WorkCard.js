@@ -246,28 +246,34 @@
             btnId.style.cssText = "BACKGROUND-IMAGE: url(../../Images/allscreens-checkbox-empty.jpg)";
         }SetBtnChanges();          
     }
-    function SetBtnChanges(){
-         bScreenChanged = true;
-         document.getElementById("btnUpdateCard").disabled = false;
-         document.getElementById("btnUpdateCard").className = "btnWorkCardUpadte"; 
-         document.getElementById("hidChanges").value = true;                
-         document.getElementById("hidUpdateBtn").value = "false";
-         document.getElementById("btnRefreshOvedDetails").disabled = true;
-         document.getElementById("btnPrevCard").disabled = true;
-         document.getElementById("btnNextCard").disabled = true;
-         $get("btnPrevCard").className = "btnPrevDayDis";
-         $get("btnNextCard").className="btnNextDayDis"
-         document.getElementById("btnNextErrCard").disabled = true; 
-         document.getElementById("txtId").disabled = true;          
-         document.getElementById("txtName").disabled = true;          
-         document.getElementById("clnDate").disabled = true;            
+    function SetBtnChanges() {
+        var KeyID = event.keyCode;
+        if (KeyID != 45) {
+            bScreenChanged = true;
+            $get("btnUpdateCard").disabled = false;
+            $get("btnUpdateCard").className = "btnWorkCardUpadte";
+            $get("hidChanges").value = true;
+            $get("hidUpdateBtn").value = "false";
+            $get("btnRefreshOvedDetails").disabled = true;
+            $get("btnPrevCard").disabled = true;
+            $get("btnNextCard").disabled = true;
+            $get("btnPrevCard").className = "btnPrevDayDis";
+            $get("btnNextCard").className = "btnNextDayDis"
+            $get("btnNextErrCard").disabled = true;
+            $get("txtId").disabled = true;
+            $get("txtName").disabled = true;
+            $get("clnDate").disabled = true;
+        }        
     }
-    function SetLvlChg(iLvl, iSidurIndex){
-        var id = ("hidLvl".concat(String(iLvl))).concat("Chg");
-        if (Number(iLvl==1))
-            document.getElementById(id).value = "1";
-        else
-            document.getElementById(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ","); 
+    function SetLvlChg(iLvl, iSidurIndex) {
+        var KeyID = event.keyCode;
+        if (KeyID != 45) {
+            var id = ("hidLvl".concat(String(iLvl))).concat("Chg");
+            if (Number(iLvl == 1))
+                document.getElementById(id).value = "1";
+            else
+                document.getElementById(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ",");
+        }                    
     }    
     function CheckChanges(){    
       if (bScreenChanged) {        

@@ -718,8 +718,8 @@
               case 107: //+
                  event.keyCode=9;
                  break;
-              case 109: //-
-                   ShiftTab();                                                                                                                 
+              case 109: //-                   
+                   ShiftTab();                                       
                    break;
               case 110: //. //123-f12
                    if (document.getElementById("btnUpdateCard").disabled==false)
@@ -858,7 +858,7 @@
                             if ($get(NextSidurName)==null)
                                PeilutNum=0;
                               else
-                                PeilutNum = Number($get(NextSidurName).firstChild.childNodes.length);
+                               PeilutNum = Number($get(NextSidurName).firstChild.childNodes.length);
                         }
                         else //down
                         {
