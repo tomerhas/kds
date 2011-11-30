@@ -1275,10 +1275,10 @@
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td>
-                        <div id="divPeiluyot" runat="server" dir="rtl" style="overflow:auto;border:1px" >
-                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="825px" height="400px" runat="server" >                         
+                        <div id="divPeiluyot" runat="server" dir="rtl" style="overflow:auto;border:1px;width:825px" >
+                        <asp:Panel ID="pnlgrdPeiluyot"  Direction="RightToLeft"  width="820px" height="400px" runat="server" >                         
                           <asp:GridView ID="grdPeiluyot" runat="server" GridLines="None" 
-                                 AutoGenerateColumns="False" width="817px" 
+                                 AutoGenerateColumns="False" width="825px" 
                                  ShowHeader="true"  ShowFooter="false" AllowPaging="false" 
                                  HeaderStyle-CssClass="WorkCardHosafatSidurGridHeader"
                                  OnRowDataBound="grdPeiluyot_RowDataBound" CellPadding="1" CellSpacing="1">
@@ -1322,10 +1322,10 @@
                                        </ItemTemplate>
                                    </asp:TemplateField>
                                    <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="90px" />
-                                   <asp:TemplateField ItemStyle-Width="90px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
+                                   <asp:TemplateField ItemStyle-Width="85px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="88px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
-                                             <asp:CustomValidator runat="server" id="vldMakat" ControlToValidate="txtMakat" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
+                                            <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="84px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                                             <asp:CustomValidator runat="server" id="vldMakat" ControlToValidate="txtMakat" ErrorMessage=""   Display="None"  ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvMakat" BehaviorID="vldExvldMakat"  TargetControlID="vldMakat" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
                                    </asp:TemplateField>
