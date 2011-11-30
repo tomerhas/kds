@@ -52,11 +52,11 @@
                   <td class="WorkCardErrMsg" width="520px"><asp:Label ID="lblErrors" runat="server" >פירוט שגיאה</asp:Label></td>
               </tr>
               <tr style="height: 40px">
-                   <td class="WorkCardPanelTopTableMessage" id="Td1" align="right" width="520px"><asp:Label ID="Label8" runat="server"  >תיאור השגיאה</asp:Label></td>                      
+                 <td class="WorkCardPanelTopTableMessage" id="Td1" align="right" width="520px"><asp:Label ID="Label8" runat="server">תיאור השגיאה</asp:Label></td>                      
               </tr>
               <tr style="height: 170px" valign="top">                    
                    <td id="tbErr" align="right"></td>                      
-               </tr>
+              </tr>
             </table>
              <table style="height: 31px; width: 520px">
                 <tr style="height: 31px" class="WorkCardTopBorder">
@@ -85,10 +85,10 @@
             </tr>
             <tr class="WorkCardRechivim">
                 <td id="tdFilter" runat="server">
-                      <fieldset id="fieldsetPeilut" runat="server" width="650px"> <legend  style="background-color:White" >שדות ברמת פעילות: </legend> 
+                    <fieldset id="fieldsetPeilut" runat="server" width="650px"> <legend  style="background-color:White" >שדות ברמת פעילות: </legend> 
                         <br />    
                         <asp:Label ID="lblEinSadotLepeilut" runat="server" ForeColor="Red"  Visible="false" Text="לא קיימים שדות נוספים לעדכון ברמת פעילות!"></asp:Label>  
-                      </fieldset>
+                    </fieldset>
                 </td>
            </tr>
        </table>        

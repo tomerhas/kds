@@ -813,19 +813,23 @@
                {
                 if (Direction==38){ //up
                    SidurNum = Number(SidurNum) - 1;
-                   PeilutNum = 99;
+                   NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3); 
+                   if ($get(NextSidurName)==null)
+                     PeilutNum=0;
+                   else      
+                     PeilutNum = Number($get(NextSidurName).firstChild.childNodes.length);
                 }
                 else //down
                 {
                   SidurNum = Number(SidurNum) + 1;
                   PeilutNum = 2;
+                  NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);       
                 }
-                 NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);                  
+                 //NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);                  
                  NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                }
-                
-               if ($get(NextSidurName)!=null){
-                   while (($get(NextPeilutName)!=null) && ($get(NextPeilutName).isDisabled==true))
+                              
+                while (($get(NextPeilutName)!=null) && ($get(NextPeilutName).isDisabled==true) && ($get(NextSidurName)!=null))
                    {
                     //  נעבור לפעילות הבאה
                     if (Direction==38) //up
@@ -846,12 +850,31 @@
                         else
                           break;
                     }
+                    if ($get(NextPeilutName)==null)
+                    {
+                        if (Direction==38){ //up
+                            SidurNum = Number(SidurNum) - 1;
+                            NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);         
+                            if ($get(NextSidurName)==null)
+                               PeilutNum=0;
+                              else
+                                PeilutNum = Number($get(NextSidurName).firstChild.childNodes.length);
+                        }
+                        else //down
+                        {
+                            SidurNum = Number(SidurNum) + 1;
+                            PeilutNum = 2;
+                            NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);         
+                        }
+                                 
+                        NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                    }
 //{
 //                       NextSidurName = "lstSidurim_txtSH".concat(Number(SidurNum)+1);
 //                       SetFocusToNextPrevSidur(Direction,NextSidurName,'txtSH');
 //                       break;
 //                    }
-                   }
+                   }                 
                    if ($get(NextPeilutName)!=null)                  
                       if (!$get(NextPeilutName).isDisabled)
                       try{
@@ -860,8 +883,7 @@
                       catch(err)
                       {
                       }
-               }
-           }            
+               }                      
          }
          function chkIfBarCode(){
             var KeyID = event.keyCode;
