@@ -7179,10 +7179,10 @@ namespace KdsBatch
                         iCountPitzul = 0;
                         if (oCollSidurimOvdimUpd.Value != null)
                         {
-                            iCountPitzul = iCountPitzul + oCollSidurimOvdimUpd.Value.Cast<OBJ_SIDURIM_OVDIM>().ToList().Count(sidur => sidur.PITZUL_HAFSAKA == 1 && sidur.UPDATE_OBJECT==1);
+                            iCountPitzul = oCollSidurimOvdimUpd.Value.Cast<OBJ_SIDURIM_OVDIM>().ToList().Count(sidur => sidur.PITZUL_HAFSAKA == 1 && sidur.UPDATE_OBJECT==1);
                         }
                         // העובד זכאי למקסימום פיצולים ביום עבודה לפי פרמטר 170. 
-                        if (iCountPitzul <= _oParameters.iMaxPitzulLeyom && (oSidur.dFullShatGmar != DateTime.MinValue && oSidur.dFullShatHatchala != DateTime.MinValue))
+                        if (iCountPitzul < _oParameters.iMaxPitzulLeyom && (oSidur.dFullShatGmar != DateTime.MinValue && oSidur.dFullShatHatchala != DateTime.MinValue))
                         {
                             //אין פיצול בשבתון 
                             if (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim,iSugYom,oSidur.dSidurDate))
