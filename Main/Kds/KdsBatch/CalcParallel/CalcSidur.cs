@@ -3031,6 +3031,7 @@ namespace KdsBatch
                                             fErech += objOved.objParameters.iMaxRetzifutChodshitLetashlum - (fTempX + fErech);
                                         else fErech += fErechSidur;
                                     }
+                                    else fErechSidur = 0;
                                     // fErech += fErechSidur;
 
                                     //רציפות לילה  
@@ -3041,17 +3042,19 @@ namespace KdsBatch
                                         if (drSidurim[J]["Mezake_Halbasha"].ToString() == "1" || drSidurim[J]["Mezake_Halbasha"].ToString() == "3")
                                             dShatHatchalaLetashlum = dShatHatchalaLetashlum.AddMinutes(-10) > dShatGmarLetashlum ? dShatHatchalaLetashlum.AddMinutes(-10) : dShatGmarLetashlum;
                                     }
-                                    fErechSidurLaylaEgged = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, objOved.objParameters.dTchilatTosefetLaila, objOved.objParameters.dSiyumTosefetLaila);//9,10
-                                    fErechSidurLaylaChok = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, objOved.objParameters.dSiyumTosefetLaila, objOved.objParameters.dSiyumTosefetLailaChok);//10,12
-                                    fErechSidurBoker = getDakotRezifutBoker(dShatHatchalaLetashlum, dShatGmarLetashlum);
+                                    if (fErechSidur>0)
+                                    {
+                                        fErechSidurLaylaEgged = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, objOved.objParameters.dTchilatTosefetLaila, objOved.objParameters.dSiyumTosefetLaila);//9,10
+                                        fErechSidurLaylaChok = getDakotRezifutLayla(dShatHatchalaLetashlum, dShatGmarLetashlum, objOved.objParameters.dSiyumTosefetLaila, objOved.objParameters.dSiyumTosefetLailaChok);//10,12
+                                        fErechSidurBoker = getDakotRezifutBoker(dShatHatchalaLetashlum, dShatGmarLetashlum);
 
-                                    fErechLaylaEgged += fErechSidurLaylaEgged;
-                                    fErechLaylaChok += fErechSidurLaylaChok;
-                                    fErecBoker += fErechSidurBoker;
+                                        fErechLaylaEgged += fErechSidurLaylaEgged;
+                                        fErechLaylaChok += fErechSidurLaylaChok;
+                                        fErecBoker += fErechSidurBoker;
 
-                                    if (dShatGmarLetashlum >= objOved.objParameters.dKnisatShabat)
-                                        fErechShabat += float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
-
+                                        if (dShatGmarLetashlum >= objOved.objParameters.dKnisatShabat)
+                                            fErechShabat += float.Parse((dShatHatchalaLetashlum - dShatGmarLetashlum).TotalMinutes.ToString());
+                                    }
                                 }
                             }
                         }
