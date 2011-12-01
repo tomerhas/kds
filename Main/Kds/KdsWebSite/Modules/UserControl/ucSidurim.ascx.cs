@@ -2651,7 +2651,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                            // lDummy.Text = ".";
                             //lDummy.CssClass = "WorkCardSidurDummy";                            
                             //hErrCell.Controls.Add(lDummy);         
-                            hErrCell = CreateTableCell("18px", "WorkCardSidurErr", "");
+                            hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                             //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
                             if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
                                 lnkSidur.Style.Add("color", "white");
@@ -2667,7 +2667,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         //lDummy.CssClass = "WorkCardSidurDummy";
                         
                         //hErrCell.Controls.Add(lDummy);      
-                        hErrCell = CreateTableCell("18px", "WorkCardSidurErr", "");
+                        hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
@@ -2702,12 +2702,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         }
                         else
                         {
-                            hErrCell = CreateTableCell("18px", "WorkCardSidurErr", "");
+                            hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                             CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         }
                         break;
                     case clGeneral.enCardStatus.Valid:
-                        hErrCell = CreateTableCell("18px", "WorkCardSidurErr", "");
+                        hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
                         CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
                         break;
