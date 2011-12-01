@@ -115,7 +115,7 @@
             var WCardDate = RowDate;
             var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
             document.getElementById("divHourglass").style.display = 'block'; 
-            var ReturnWin=window.showModalDialog('../Ovdim/WorkCard.aspx' + sQuryString , window , "dialogHeight:750px; dialogWidth: 1010px;");
+            var ReturnWin=window.showModalDialog('../Ovdim/WorkCard.aspx' + sQuryString , window , "dialogHeight:750px; dialogWidth: 1010px;scroll:no;");
             if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
             document.getElementById("divHourglass").style.display = 'none';
             return ReturnWin;
