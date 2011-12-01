@@ -95,7 +95,7 @@
                 </table>
             </td>  
             <td width="10%">
-                <label>Version: 9.0</label>
+                <label>Version: 10.0</label>
             </td>  
             <td> <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                    <ContentTemplate>
