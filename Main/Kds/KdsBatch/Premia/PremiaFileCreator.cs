@@ -50,7 +50,7 @@ namespace KdsBatch.Premia
                     exAdpt.AddRow(cols, i, item.GetExcelRowValues());
                     i++;
                 }
-                exAdpt.SaveNewWorkBook();
+                exAdpt.SaveNewWorkBook(_periodDate);
             }
             catch (Exception ex)
             {

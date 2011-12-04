@@ -114,7 +114,7 @@ namespace KdsBatch
                     if (!objOved.bChishuvYom )
                     {
                         CalcRechivimInMonth(dTarMe, dTarAd);
-                        ChangingChofeshFromShaotNosafot();
+          
                     }
                 
                     oDay.SetNullObjects();
@@ -1137,9 +1137,6 @@ namespace KdsBatch
                 //שעות חופש (רכיב 219) 
                 CalcRechiv219();
 
-                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
-                CalcRechiv11();
-
                 //נוכחות לפרמיה – משק מוסכים (רכיב 211) 
                 CalcRechiv211();
 
@@ -1299,6 +1296,11 @@ namespace KdsBatch
                 //רכיב 932 - הלבשה סוף יום
                 CalcRechiv932();
 
+                //טיפול בחופש ע"ח שעות נוספות 
+                ChangingChofeshFromShaotNosafot();
+
+                //דקות לתוספת מיוחדת בנהגת  - תמריץ (רכיב 11) 
+                CalcRechiv11();
             }
             catch (Exception ex)
             {

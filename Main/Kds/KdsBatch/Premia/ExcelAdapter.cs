@@ -39,12 +39,13 @@ namespace KdsBatch.Premia
             //    false, Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
         }
 
-        public void SaveNewWorkBook()
+        public void SaveNewWorkBook(DateTime _periodDate)
         {
             object misValue = System.Reflection.Missing.Value;
 
             if (System.IO.File.Exists(_filename))
                 System.IO.File.Delete(_filename);
+            _excelSheet.Name = "TCT_ATTEND2_032011";// +_periodDate.ToString("MMyyyy");
             _excelSheet.SaveAs(_filename, misValue, misValue, misValue, misValue, misValue, misValue, misValue,
                 misValue, misValue);
         }
