@@ -207,7 +207,7 @@
                         <td width="8px" runat="server" id="tdZmanNesiotErr" style="display:none;"><img id="imgTimeErr"  runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlTravleTime,1,'');" /></td>
                         <td id="tdZmaniNesiot" runat="server" width="70px" class = "WorkCardTable1Label"></td> 
                         <td width="108px">
-                            <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardSidurDropDown"  onchange="SetBtnChanges();SetLvlChg(1,0);"
+                            <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardDDLZmanNesiot"  onchange="SetBtnChanges();SetLvlChg(1,0);"
                                 ondblclick="GetErrorMessage(this,1,'');" width="100" >
                             </asp:DropDownList>
                         </td>

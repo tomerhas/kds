@@ -1670,7 +1670,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             lnkZmaneyNesiot.Style.Add("cursor", "pointer");
             ddlTravleTime.Attributes.Add("MeafyenVal", sMeafyenEmployeeValue == string.Empty ? "" : sMeafyenEmployeeValue.Substring(0, 1));
             ddlTravleTime.Attributes.Add("OrgVal", oBatchManager.oOvedYomAvodaDetails.sBitulZmanNesiot);
-            ddlTravleTime.Attributes.Add("onchange", "chkTravelTime();");
+            ddlTravleTime.Attributes.Add("onchange", "chkTravelTime();");           
             lnkZmaneyNesiot.Attributes.Add("OnClick", "javascript:OpenZmaneiNessiot(" +
                                             iMisparIshi.ToString() + ",'" +
                                             dDateCard.ToShortDateString() + "'," +

@@ -1263,13 +1263,13 @@
                     <tr>
                         <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"></asp:Label></td>
                         <td valign="top" align="center">
-                        <asp:TextBox ID="txtShatHatchala" runat="server" Width="40px" MaxLength="5" onkeyup="onchange_txtShatHatchala(true,'')" CssClass="WorkCardSidurTextBox" ></asp:TextBox>
+                        <asp:TextBox ID="txtShatHatchala" runat="server" style="Width:40px;" MaxLength="5" onkeyup="onchange_txtShatHatchala(true,'')" CssClass="WorkCardPeilutTextBox" ></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td  valign="top"  align="center">
-                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onkeyup="onchange_txtShatGmar(true,'')"  CssClass="WorkCardSidurTextBox"></asp:TextBox>
+                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onkeyup="onchange_txtShatGmar(true,'')"  CssClass="WorkCardPeilutTextBox"></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" TargetControlID="txtShatGmar" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatGmar" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatGmar"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     

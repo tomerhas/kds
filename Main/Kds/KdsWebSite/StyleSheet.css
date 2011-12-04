@@ -242,12 +242,11 @@
 	background-position:center;	
 	border:none;
 	width:25px; 
-	height:40px;
+	height:25px;
 	font-size:16px;
 	font-family:Arial;
 	padding-top:0px;
-	padding-bottom:0px;
-	height:19px;
+	padding-bottom:0px;	
 	font-weight:bolder;
 	color:White;
 	cursor:pointer;	
@@ -1375,7 +1374,15 @@ a
 	width:130px;	
 	border-width:1px;
 }
-
+.WorkCardDDLZmanNesiot
+{
+	border-color: #AEC3DA;	 
+	border-style: solid;
+	width:97px;	
+	height:30px;
+	border-width:1px;
+	vertical-align:middle;
+}
 .ajax__validatorcallout_popup_table
 {
    direction:ltr;

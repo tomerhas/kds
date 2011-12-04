@@ -79,10 +79,10 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
         btnIdkunGridHidden.Style.Add("Display", "none");
         txtShatHatchala.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-        txtShatHatchala.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+        txtShatHatchala.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
 
         txtShatGmar.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-        txtShatGmar.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+        txtShatGmar.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
         clUtils oUtils = new clUtils();
         DataTable dtParametrim = new DataTable();
         DataTable dtElements = new DataTable();
