@@ -133,7 +133,7 @@
                                         <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
                                         <input type="hidden" id="hidRefresh" runat="server"/>
                                         <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
-                                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:50px"/>
+                                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:54px"/>
                                             <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
                                     </td>                                            
                                 </tr>                                        
@@ -396,11 +396,11 @@
    
       <asp:UpdatePanel ID="upCollpase" runat="server" RenderMode="Inline" UpdateMode="Always">                                
         <ContentTemplate>
-        <div style="text-align: right; overflow: auto; height:527px">
+        <div style="text-align: right; overflow: auto; height:508px;">
             <table width="100%" id="tbSidur" runat="server" cellpadding="0" cellspacing="0">
                 <tr>                                     
                     <td width="100%">
-                        <div id="divSidur" style="text-align: right; overflow:hidden;height:520px;" >                                        
+                        <div id="divSidur" style="text-align: right; overflow:hidden;height:508px;" >                                        
                             <uc:ucSidurim runat="server" ID="lstSidurim"/> 
                             <input type="hidden" runat="server" id="hidErrChg" /> 
                             <input type="hidden" runat="server" id="hidExecInputChg" />                                        
