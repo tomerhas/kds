@@ -2521,46 +2521,49 @@ namespace KdsBatch
                 }
                 // נתונים מהסידור בכרטיס העבודה 
                 fZmanSidur = float.Parse((oSidur.dFullShatGmar - oSidur.dFullShatHatchala).TotalMinutes.ToString());
-                htPeilut = oSidur.htPeilut;
-                for (int i = 0; i < oSidur.htPeilut.Values.Count; i++)
+                if (fZmanSidur >= 0)
                 {
-                    oPeilut = ((clPeilut)htPeilut[i]);
-                    iTypeMakat = oPeilut.iMakatType;
-                    if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
+                    htPeilut = oSidur.htPeilut;
+                    for (int i = 0; i < oSidur.htPeilut.Values.Count; i++)
                     {
-                        dSumMazanTashlum += oPeilut.iMazanTashlum;
-                    }
-                    else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
-                    {
-                        if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                        oPeilut = ((clPeilut)htPeilut[i]);
+                        iTypeMakat = oPeilut.iMakatType;
+                        if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
                         {
-                           dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
-                       }
+                            dSumMazanTashlum += oPeilut.iMazanTashlum;
+                        }
+                        else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
+                        {
+                            if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                            {
+                                dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                            }
+                        }
                     }
-                }
 
-                if (dSumMazanTashlum >= fZmanSidur)
-                {
-                    if (oSidur.bSidurMyuhad)
+                    if (dSumMazanTashlum >= fZmanSidur)
                     {
-                        if (dSumMazanTashlum >= (fZmanSidur * 2))
+                        if (oSidur.bSidurMyuhad)
+                        {
+                            if (dSumMazanTashlum >= (fZmanSidur * 2))
                                 isSidurValid = false;
+                        }
+                        else
+                        {
+                            if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
+                                if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < _oParameters.fHighPremya)
+                                    isSidurValid = false;
+                        }
                     }
-                    else
-                    {
-                        if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
-                            if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < _oParameters.fHighPremya)
-                              isSidurValid = false;
-                    }
-                }
-              
 
-                if (!isSidurValid)
-                {
-                    drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", enErrors.errHighPremya.GetHashCode());
-                    dtErrors.Rows.Add(drNew);
-                    isValid = false;
+
+                    if (!isSidurValid)
+                    {
+                        drNew = dtErrors.NewRow();
+                        InsertErrorRow(oSidur, ref drNew, "פרמיה גבוהה", enErrors.errHighPremya.GetHashCode());
+                        dtErrors.Rows.Add(drNew);
+                        isValid = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -2569,7 +2572,7 @@ namespace KdsBatch
                 isValid = false;
                 _bSuccsess = false;
             }
-
+        
             return isValid;
         }
 

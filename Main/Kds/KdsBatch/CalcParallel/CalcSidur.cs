@@ -2786,7 +2786,7 @@ namespace KdsBatch
 
                                     }
 
-                                    if (fTempX > 18)
+                                    if (fTempX >= 18)
                                     {
                                         fErech = 18;
                                     }

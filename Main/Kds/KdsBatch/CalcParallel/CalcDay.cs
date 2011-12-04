@@ -265,9 +265,6 @@ namespace KdsBatch
                 //קיזוז נוכחות ( רכיב 142): 
                 CalcRechiv142();
 
-                //דקות רגילות (רכיב 32
-                CalcRechiv32();
-
 
                 // דקות בניהול תנועה בימי שבתון ( רכיב 36)
                 CalcRechiv36();
@@ -408,6 +405,9 @@ namespace KdsBatch
                 CalcRechiv90();
 
                 UpdateRechiv1();
+
+                //דקות רגילות (רכיב 32
+                CalcRechiv32();
 
                 //ימי נוכחות לעובד (רכיב 109)
                 CalcRechiv109();
@@ -3283,8 +3283,9 @@ namespace KdsBatch
 
                                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), objOved.Taarich);
 
-                                    if (fSumDakotRechiv > 18)
+                                    if (fSumDakotRechiv >= 18)
                                     { fSumDakotRechiv = 18; }
+                                    else fSumDakotRechiv = 0;
 
                                     addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), fSumDakotRechiv);
                                 }

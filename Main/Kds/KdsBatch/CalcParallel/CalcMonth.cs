@@ -324,14 +324,14 @@ namespace KdsBatch
                                 drDakotNochehut = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
                                 if (drDakotNochehut.Length > 0)
                                 {
-                                    drDakotNochehut[0]["ERECH_RECHIV"] = (float)(drDakotNochehut[0]["ERECH_RECHIV"]) + fMichsaYomit;
+                                    drDakotNochehut[0]["ERECH_RECHIV"] = (float)(drDakotNochehut[0]["ERECH_RECHIV"]);// +fMichsaYomit;
                                 }
                                 //•	ברמת החודש - = ערך הרכיב הקודם + מכסה יומית מחושבת (רכיב 126) של יום העבודה
                                 objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
                                 drDakotNochehut = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString());
                                 if (drDakotNochehut.Length > 0)
                                 {
-                                    drDakotNochehut[0]["ERECH_RECHIV"] = (float)(drDakotNochehut[0]["ERECH_RECHIV"]) + fMichsaYomit;
+                                    drDakotNochehut[0]["ERECH_RECHIV"] = (float)(drDakotNochehut[0]["ERECH_RECHIV"]);// +fMichsaYomit;
                                 }
 
                                 iSachSidurimKuzezu += 1;
@@ -2534,7 +2534,7 @@ namespace KdsBatch
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
                     fSumDakotRechiv = float.Parse(fSumDakotRechiv.ToString()) - float.Parse(fHashlama.ToString());
-
+                   
                     objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString()); 
                 }
 

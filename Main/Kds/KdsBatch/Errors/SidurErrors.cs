@@ -1555,36 +1555,38 @@ namespace KdsBatch.Errors
                 }
                 // נתונים מהסידור בכרטיס העבודה 
                 fZmanSidur = float.Parse((SidurInstance.dFullShatGmar - SidurInstance.dFullShatHatchala).TotalMinutes.ToString());
-
-                for (int i = 0; i < SidurInstance.Peiluyot.Count; i++)
+                if (fZmanSidur >= 0)
                 {
-                    oPeilut = ((Peilut)SidurInstance.Peiluyot[i]);
-                    iTypeMakat = oPeilut.iMakatType;
-                    if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
+                    for (int i = 0; i < SidurInstance.Peiluyot.Count; i++)
                     {
-                        dSumMazanTashlum += oPeilut.iMazanTashlum;
-                    }
-                    else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
-                    {
-                        if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                        oPeilut = ((Peilut)SidurInstance.Peiluyot[i]);
+                        iTypeMakat = oPeilut.iMakatType;
+                        if ((oPeilut.iMisparKnisa == 0 && iTypeMakat == clKavim.enMakatType.mKavShirut.GetHashCode()) || iTypeMakat == clKavim.enMakatType.mEmpty.GetHashCode() || iTypeMakat == clKavim.enMakatType.mNamak.GetHashCode())
                         {
-                            dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                            dSumMazanTashlum += oPeilut.iMazanTashlum;
+                        }
+                        else if (iTypeMakat == clKavim.enMakatType.mElement.GetHashCode())
+                        {
+                            if (oPeilut.sElementInMinutes == "1" && oPeilut.sKodLechishuvPremia.Trim() == "1:1")
+                            {
+                                dSumMazanTashlum += Int32.Parse(oPeilut.lMakatNesia.ToString().Substring(3, 3));
+                            }
                         }
                     }
-                }
 
-                if (dSumMazanTashlum >= fZmanSidur)
-                {
-                    if (SidurInstance.bSidurMyuhad)
+                    if (dSumMazanTashlum >= fZmanSidur)
                     {
-                        if (dSumMazanTashlum >= (fZmanSidur * 2))
-                            bError = true;
-                    }
-                    else
-                    {
-                        if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
-                            if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < SidurInstance.objDay.oParameters.fHighPremya)
+                        if (SidurInstance.bSidurMyuhad)
+                        {
+                            if (dSumMazanTashlum >= (fZmanSidur * 2))
                                 bError = true;
+                        }
+                        else
+                        {
+                            if ((dSumMazanTashlum >= (fZmanSidur + 90)) || (dSumMazanTashlum >= (fZmanSidur * 2)))
+                                if (((((dSumMazanTashlum - fZmanSidur) / (dSumMazanTichnun - fZmanSidurMapa)) * 100) - 100) < SidurInstance.objDay.oParameters.fHighPremya)
+                                    bError = true;
+                        }
                     }
                 }
             }
