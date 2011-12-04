@@ -168,7 +168,7 @@
                                                             <Paragraph>
                                                               <TextRuns>
                                                                 <TextRun>
-                                                                  <Value>=Replace(Fields!TEUR_RECHIV.Value,"דק ","דקות")</Value>
+                                                                  <Value>=Replace(Fields!TEUR_RECHIV.Value," דק "," דקות ")</Value>
                                                                   <Style />
                                                                 </TextRun>
                                                               </TextRuns>
