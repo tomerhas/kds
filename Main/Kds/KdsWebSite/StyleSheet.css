@@ -1378,8 +1378,8 @@ a
 {
 	border-color: #AEC3DA;	 
 	border-style: solid;
-	width:97px;	
-	height:30px;
+	width:105px;	
+	height:27px;
 	border-width:1px;
 	vertical-align:middle;
 }
@@ -2209,7 +2209,7 @@ a
  outline-color:#9BB0C9;
  outline-style:solid;
  outline-width:0.8px;
- height:20px;
+ height:15px;
  font-family:Arial;
  font-weight:normal;  
 }
@@ -2219,9 +2219,7 @@ a
 	border-style:none;	
 	border:0px;
 	background-image: #7695b7;
-	Outline: white;
-
-	
+	Outline: white;	
 }
 .WorkCardPeilutLabel
 {

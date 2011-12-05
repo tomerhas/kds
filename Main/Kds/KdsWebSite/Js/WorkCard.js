@@ -30,7 +30,8 @@
                     if ($get("ddlTachograph").disabled!=true)
                         $get("ddlTachograph").focus();
                     else
-                        $get("txtId").focus();
+                        if ($get("txtId").disabled == false)
+                            $get("txtId").focus();
                     break;
                 case "divParticipation":
                     document.getElementById("divNetunimLeYom").style.display = 'none';

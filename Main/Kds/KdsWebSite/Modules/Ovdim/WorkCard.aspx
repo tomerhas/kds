@@ -204,11 +204,11 @@
             <ContentTemplate>         
                 <table width="100%" class="WorkCardTable2" cellpadding="0" cellspacing="0" >
                     <tr>
-                        <td width="8px" runat="server" id="tdZmanNesiotErr" style="display:none;"><img id="imgTimeErr"  runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlTravleTime,1,'');" /></td>
+                        <td width="8px" runat="server" id="tdZmanNesiotErr" style="display:none;" ><img id="imgTimeErr"  runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlTravleTime,1,'');" /></td>
                         <td id="tdZmaniNesiot" runat="server" width="70px" class = "WorkCardTable1Label"></td> 
-                        <td width="108px">
+                        <td  class="WorkCardTabs" >
                             <asp:DropDownList runat="server" ID="ddlTravleTime" CssClass="WorkCardDDLZmanNesiot"  onchange="SetBtnChanges();SetLvlChg(1,0);"
-                                ondblclick="GetErrorMessage(this,1,'');" width="100" >
+                                ondblclick="GetErrorMessage(this,1,'');" >
                             </asp:DropDownList>
                         </td>
                         <td width="117px" class="WorkCardTabs"> 
