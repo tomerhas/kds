@@ -396,11 +396,11 @@
    
       <asp:UpdatePanel ID="upCollpase" runat="server" RenderMode="Inline" UpdateMode="Always">                                
         <ContentTemplate>
-        <div style="text-align: right; overflow: auto; height:508px;">
+        <div style="text-align: right; overflow: auto; height:500px;">
             <table width="100%" id="tbSidur" runat="server" cellpadding="0" cellspacing="0">
                 <tr>                                     
                     <td width="100%">
-                        <div id="divSidur" style="text-align: right; overflow:hidden;height:508px;" >                                        
+                        <div id="divSidur" style="text-align: right; overflow:hidden;height:500px;" >                                        
                             <uc:ucSidurim runat="server" ID="lstSidurim"/> 
                             <input type="hidden" runat="server" id="hidErrChg" /> 
                             <input type="hidden" runat="server" id="hidExecInputChg" />                                        

@@ -77,11 +77,11 @@
             alert('מספר אישי לא קיים');                        
             document.getElementById("txtId").select();
             document.getElementById("txtName").value='';
-            document.getElementById("btnRefreshOvedDetails").disabled = true;        
+            SetRefreshBtn(true);      
         }
         else{
-            document.getElementById("txtName").value=result;  
-            document.getElementById("btnRefreshOvedDetails").disabled = false;         
+            document.getElementById("txtName").value=result;
+            SetRefreshBtn(false);       
         }     
     }
     function GetOvedDetailsSucceeded(result){            
@@ -123,7 +123,7 @@
            if (root.childNodes.item(9)){           
              document.getElementById("ddlTravleTime").selectedValue = root.childNodes.item(9).text;  
            }
-            document.getElementById("btnRefreshOvedDetails").disabled = false;  
+            SetRefreshBtn(false); 
           }               
         }                
     }    
@@ -152,13 +152,15 @@
         if (bEnable){
             $get("btnPrevCard").className = "btnPrevDay";
             $get("btnNextCard").className = "btnNextDay";
-            $get("btnPrint").className = "btnWorkCardPrint";             
+            $get("btnPrint").className = "btnWorkCardPrint";
+            $get("btnNextErrCard").className = "btnNextError";          
           }
         else
         {
           $get("btnPrevCard").className = "btnPrevDayDis";
           $get("btnNextCard").className = "btnNextDayDis";
-          $get("btnPrint").className = "btnWorkCardPrintDis";             
+          $get("btnPrint").className = "btnWorkCardPrintDis";
+          $get("btnNextErrCard").className = "btnNextErrorDis";            
         }
    
       $get("btnNextErrCard").disabled = (!bEnable);      
@@ -254,7 +256,7 @@
             $get("btnUpdateCard").className = "btnWorkCardUpadte";
             $get("hidChanges").value = true;
             $get("hidUpdateBtn").value = "false";
-            $get("btnRefreshOvedDetails").disabled = true;
+            SetRefreshBtn(true);
             $get("btnPrevCard").disabled = true;
             $get("btnNextCard").disabled = true;
             $get("btnPrevCard").className = "btnPrevDayDis";
@@ -315,17 +317,24 @@
         {
             var sBehaviorId='vldExBehavior';
             $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);
-            document.getElementById("btnRefreshOvedDetails").disabled = true;
+            $find(sBehaviorId).show(true);            
+            SetRefreshBtn(true);
             document.getElementById("txtDay").value ="";
         }
         else
         {
-           document.getElementById("btnRefreshOvedDetails").disabled = false;         
+           SetRefreshBtn(false);         
            document.getElementById("txtDay").value = arrReturnValue[1];                    
         }
          document.getElementById("txtDay").title = arrReturnValue[1];
-    }       
+     }
+     function SetRefreshBtn(bDisabled) {
+         $get("btnRefreshOvedDetails").disabled = bDisabled;
+         if (bDisabled)
+             $get("btnRefreshOvedDetails").className = "ImgButtonShowDis";
+            else
+                $get("btnRefreshOvedDetails").className = "ImgButtonShow";
+     }     
     function GetErrorMessage(id, level, pKey){   
         oId=id.id;       
     var oObj = document.getElementById(oId);
@@ -720,14 +729,14 @@ function chkTravelTime(){
    }
    SetLvlChg(1,0);
 }
-function isUserIdValid(){  
-    document.getElementById("btnRefreshOvedDetails").disabled = true;  
+function isUserIdValid(){
+    SetRefreshBtn(true);
     var EmpId = document.getElementById("txtId").value;
     var iAdmin=document.getElementById("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeById(EmpId,0,iAdmin,onUsrValidSuccess);
 }
-function isUserNameValid(){  
-    document.getElementById("btnRefreshOvedDetails").disabled = true;  
+function isUserNameValid(){
+    SetRefreshBtn(true); 
     var EmpName = document.getElementById("txtName").value; 
     var iPos= EmpName.indexOf("(");   
     if (iPos!=-1){  
@@ -749,10 +758,10 @@ function onUsrValidSuccess(result){
     if (result.length==0){
         alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
         EnabledAllFrames(false);
-        document.getElementById("btnRefreshOvedDetails").disabled = true;  
+        SetRefreshBtn(true);
     }
     else{
-        document.getElementById("btnRefreshOvedDetails").disabled = false;  
+        SetRefreshBtn(false);
     }
 }
 function onButtonFocusIn(btnID) {

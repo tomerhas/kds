@@ -443,7 +443,23 @@
 	border-style:none;
 	background-color:transparent;
 }
-
+.ImgButtonShowDis
+{
+	background-image: url(Images/showB_Dis.png);		
+	width:55px; 
+	font-size:16px;
+	font-family:Arial;
+	padding-top:0px;
+	padding-bottom:0px;
+	height:30px;
+	font-weight:bolder;
+	color: #627c98;
+	cursor:pointer;
+	background-position:center;
+	background-attachment:inherit;	
+	border-style:none;
+	background-color:transparent;
+}
 .ImgButtonShowPlus
 {
 	background-image: url(Images/tabPlus.png);		
@@ -1822,6 +1838,14 @@ a
     font-size: 17px;
     color: Black; 
 }
+.btnNextErrorDis
+{
+	background-image: url(Images/b_next_error_Dis.png);
+	background-position:center;
+	font-size: 17px;
+	color: Black;
+}
+
 .btnWorkCardPrint
 {
 	background-image: url(Images/B_print.png);		
