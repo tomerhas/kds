@@ -1389,6 +1389,9 @@ namespace KdsBatch
                 //}
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotHeadrut.GetHashCode());
                 fSumDakotRechiv = fSumDakotRechiv / 60;
+                //איפוס ערך רכיב קטן מאוד
+                if (Math.Round( fSumDakotRechiv, 3) == 0)
+                    fSumDakotRechiv = 0;
                 addRowToTable(clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -2459,7 +2462,10 @@ namespace KdsBatch
                     fSumDakotRechiv = fSumDakotRechiv - fHashlama;
               
                  }
-              
+
+                //איפוס ערך רכיב קטן מאוד
+                if (Math.Round(fSumDakotRechiv, 3) == 0)
+                    fSumDakotRechiv = 0;
                 addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -2539,7 +2545,9 @@ namespace KdsBatch
                    
                     objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString()); 
                 }
-
+                //איפוס ערך רכיב קטן מאוד
+                if (Math.Round(fSumDakotRechiv, 3) == 0)
+                    fSumDakotRechiv = 0;
                 addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -4890,6 +4898,9 @@ namespace KdsBatch
                 //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
                 fDakotChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotChofesh.GetHashCode());
                 fSumDakotRechiv = fDakotChofesh / 60;
+                //איפוס ערך רכיב קטן מאוד
+                if (Math.Round(fSumDakotRechiv, 3) == 0)
+                    fSumDakotRechiv = 0;
                 addRowToTable(clGeneral.enRechivim.ShaotChofesh.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)

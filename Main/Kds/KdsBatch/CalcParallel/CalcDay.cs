@@ -2876,6 +2876,7 @@ namespace KdsBatch
         {
             float fErechRechiv, fMichsaYomit, fDakotNochehut, fYomMiluim, fYomHadracha, fYomShmiratHerayon;
             float fYomMachaltHorim, fYomMachalaBoded, fYomMachala, fYomEvel, fYomMachalatYeled, fYomMachalaBenZug, fYomTeuna;
+            DataRow[] rowSidur;
             try
             {
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
@@ -2910,6 +2911,15 @@ namespace KdsBatch
                     {
                         fErechRechiv = 1;
                         addRowToTable(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), fErechRechiv);
+                    }
+                    else
+                    {
+                        rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur=99822");
+                        if (rowSidur.Length > 0)
+                        {
+                            fErechRechiv = 1;
+                            addRowToTable(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), fErechRechiv);
+                        }
                     }
                 }
             }
