@@ -1760,10 +1760,7 @@ function chkMkt(oRow) {
          }     
         i=++i;
         _Sidur = $get("lstSidurim_lblSidur" + i);
-        if ($get('hidNextErrCard').value == '2'){
-            $get('hidNextErrCard').value = '0';
-            alert('לא קיים כרטיס שגוי הבא');           
-        }
+       
     }
    
     //נאפשר הוספת ריקה ממפה במקרים הבאים 
@@ -1789,7 +1786,11 @@ function chkMkt(oRow) {
                 }
             }
         }
-     }
+    }
+    if ($get('hidNextErrCard').value == '2') {
+        $get('hidNextErrCard').value = '0';
+        alert('לא קיים כרטיס שגוי הבא');
+    }
 }
 function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
     var _Sidur = $get("lstSidurim_lblSidur".concat(iIndex));

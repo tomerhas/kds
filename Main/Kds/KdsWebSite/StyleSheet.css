@@ -201,20 +201,20 @@
 
 .ImgButtonSearch
 {
-		background-color:#CE940E;
-		border-style:solid;
-		border-color:#CE940E;
-		border:0px;	
-		width:60px; 
-		font-size:16px;
-		font-family:Arial;
-		padding-top:0px;
-		padding-bottom:0px;
-		margin:0px;
-		height:22px;
-		font-weight:bolder;
-		color:White;
-		cursor:pointer;
+background-color:#CE940E;
+border-style:solid;
+border-color:#CE940E;
+border:0px;	
+width:60px; 
+font-size:16px;
+font-family:Arial;
+padding-top:0px;
+padding-bottom:0px;
+margin:0px;
+height:22px;
+font-weight:bolder;
+color:White;
+cursor:pointer;
 }
 
 
@@ -255,10 +255,10 @@
 {
 	background-image: url(Images/Title_activeV_Dis.png);
 	background-repeat:no-repeat;	
+	background-position:center;	
 	border:none;
 	width:25px; 
-	height:40px;	
-	height:19px;
+	height:25px;		
 	cursor:pointer;	
 }
 
@@ -271,18 +271,18 @@
 	background-color:transparent;	
 	border:none;
 	width:25px; 		
-	height:19px;		
+	height:25px;		
 	cursor:pointer;	
 }
 .ImgCancelDisable
 {
 	background-image: url(Images/activeX_Dis.png);	
-	background-repeat:no-repeat;	
+	background-repeat:no-repeat;
+	background-position:center;		
 	background-color:transparent;
 	border:none;
 	width:25px; 		
-	height:19px;
-	
+	height:25px;	
 	cursor:pointer;	
 }
 
@@ -292,23 +292,23 @@
 	background-image: url(Images/activeV.png);		
 	background-repeat:no-repeat;
 	background-color:transparent;
+	background-position:center;
 	border:none;
 	width:25px; 
-	height:40px;		
-	height:19px;	
+	height:25px;			
 	cursor:pointer;	
 }
 .ImgCheckedDisablePeilut
 {
 	background-image: url(Images/activeV_dis.png);
 	background-repeat:no-repeat;
+	background-position:center;	
 	background-color:transparent;
 	border:none;
 	width:25px; 
-	height:40px;	
+	height:25px;	
 	padding-top:0px;
-	padding-bottom:0px;
-	height:19px;	
+	padding-bottom:0px;		
 	cursor:pointer;	
 }
 
@@ -324,7 +324,7 @@
 	font-family:Arial;
 	padding-top:0px;
 	padding-bottom:0px;
-	height:19px;
+	height:25px;
 	font-weight:bolder;
 	color:White;
 	cursor:pointer;	
@@ -336,7 +336,7 @@
 	background-repeat:no-repeat;	
 	border:none;
 	width:25px; 	
-	font-size:16px;
+	font-size:25px;
 	font-family:Arial;
 	padding-top:0px;
 	padding-bottom:0px;
