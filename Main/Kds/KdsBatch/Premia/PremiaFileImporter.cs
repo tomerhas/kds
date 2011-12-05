@@ -16,7 +16,7 @@ namespace KdsBatch.Premia
     {
         #region Fields
         private const string NOT_VISIBLE_ROW_COMPARE_VALUE = "x";
-        private const int FIRST_DATA_ROW_INDEX = 5;
+        private const int FIRST_DATA_ROW_INDEX = 7;
         private const int YEAR_VALUE_ROW = 3;
         private const string YEAR_VALUE_COL = "B";
         private const int MONTH_VALUE_ROW = 3;

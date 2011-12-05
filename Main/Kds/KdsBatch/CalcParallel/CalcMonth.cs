@@ -289,7 +289,11 @@ namespace KdsBatch
                                 objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
                                 drChofesh = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString());
                                 if (drChofesh.Length > 0)
-                                { drChofesh[0]["ERECH_RECHIV"] = (float)(drChofesh[0]["ERECH_RECHIV"]) - 1; }
+                                {
+                                    if (Math.Round((float)drChofesh[0]["ERECH_RECHIV"]-1, 3) == 0)
+                                        drChofesh[0]["ERECH_RECHIV"] = 0; //איפוס ערך רכיב קטן מאוד -67 
+                                    else drChofesh[0]["ERECH_RECHIV"] = (float)(drChofesh[0]["ERECH_RECHIV"]) - 1; 
+                                }
 
                                 //-	לעדכן את רכיב 221 כדלקמן: 
                                 objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
@@ -333,6 +337,8 @@ namespace KdsBatch
                                 {
                                     drDakotNochehut[0]["ERECH_RECHIV"] = (float)(drDakotNochehut[0]["ERECH_RECHIV"]);// +fMichsaYomit;
                                 }
+
+                               
 
                                 iSachSidurimKuzezu += 1;
 
@@ -1130,12 +1136,13 @@ namespace KdsBatch
 
                 UpdateRechiv146();
 
-                UpdateRechivim67_219_221();
                 //דקות חופש (רכיב 221) 
                 CalcRechiv221();
 
                 //שעות חופש (רכיב 219) 
                 CalcRechiv219();
+
+                UpdateRechivim67_219_221();
 
                 //נוכחות לפרמיה – משק מוסכים (רכיב 211) 
                 CalcRechiv211();

@@ -57,7 +57,7 @@ namespace KdsBatch.Premia
         {
             var item = new PremiaItem();
             item.EmployeeNumber = Convert.ToInt32(dr[PremiaFileImporter.GetExcelColumnIndex("A")]);
-            string strDate = dr[PremiaFileImporter.GetExcelColumnIndex("AR")].ToString();
+            string strDate = dr[PremiaFileImporter.GetExcelColumnIndex("BW")].ToString();
             item.WorkDate = new DateTime(int.Parse(strDate.Substring(0, 4)), 
                 int.Parse(strDate.Substring(4, 2)), 1);
             item.Station = dr[PremiaFileImporter.GetExcelColumnIndex("C")].ToString();
