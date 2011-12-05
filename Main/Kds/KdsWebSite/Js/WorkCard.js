@@ -133,7 +133,7 @@
         $get("tbLblWorkDay").disabled = (!bEnable);
         $get("tbValWorkDay").disabled = (!bEnable);
         $get("tblPart").disabled = (!bEnable);
-        $get("tbSidur").disabled = (!bEnable);
+        $get("lstSidurim_tbSidurim").disabled = (!bEnable);
         $get("btnFindSidur").disabled = (!bEnable);
         $get("btnAddHeadrut").disabled = (!bEnable);
         $get("btnClock").disabled = (!bEnable);
@@ -160,10 +160,9 @@
           $get("btnNextCard").className = "btnNextDayDis";
           $get("btnPrint").className = "btnWorkCardPrintDis";             
         }
-      
-
-        $get("btnNextErrCard").disabled = (!bEnable); 
-        EnabledSidurimListBtn(!bEnable,true);   
+   
+      $get("btnNextErrCard").disabled = (!bEnable);      
+      EnabledSidurimListBtn(!bEnable,true);   
     }
     function GetOvedALLDetails(iKodOved){
        var sCardDate;

@@ -524,7 +524,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 }
                 if ((!Page.IsPostBack) || (RefreshBtn.Equals(1)))
                     Session["SidurimUpdated"]=dtUpdatedSidurim;
-            }                           
+            }               
         }
         catch (Exception ex)
         {
