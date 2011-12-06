@@ -1769,9 +1769,9 @@ function chkMkt(oRow) {
     //שלא הגענו מעמדת נהג, אבל רק במידה והכרטיס הוא עם התייחסות
     // גם אם הכרטיס הוא ללא התייחסות)או שמספר האישי של הכרטיס שווה לגורם שפתח את הכרטיס
 
-    if ((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
+    if ((!bCloseAllBtn) && ((($get("hidDriver").value == '1') || (($get("hidMeasherMistayeg").value != '-1')
         && ($get("hidDriver").value != '1'))
-        || (GoremMEasger == dId))) {
+        || (GoremMEasger == dId)))) {
         i = i - 1;
         _Sidur = $get("lstSidurim_lblSidur" + i);
         _Peilut = $get("lstSidurim_" + padLeft(i, '0', 3));

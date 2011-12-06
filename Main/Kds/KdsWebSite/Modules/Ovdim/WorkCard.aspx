@@ -102,7 +102,7 @@
                                     <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
                                     <td style="width: 15%">
                                         <asp:TextBox ID="txtName" CssClass="WorkCardTextBox" runat="server" AutoComplete="Off"
-                                            Style="width: 110px;" onblur="GetOvedMisparIshiByName();" OnTextChanged="txtName_TextChanged" ></asp:TextBox>
+                                            Style="width: 110px;"  OnTextChanged="txtName_TextChanged" ></asp:TextBox>
                                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
                                             CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
                                             ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"

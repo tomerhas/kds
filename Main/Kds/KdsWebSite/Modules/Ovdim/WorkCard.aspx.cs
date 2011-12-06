@@ -2129,6 +2129,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
     protected void txtName_TextChanged(object sender, EventArgs e)
     {
+        
     }
     protected void clnDate_TextChanged(object sender, EventArgs e)
     {
