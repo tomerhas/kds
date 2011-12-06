@@ -32,13 +32,13 @@
     <form id="form1" runat="server" class="WorkCardRechivim" style="width:650px; height:350px">
          <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true">        
          </asp:ScriptManager>               
-           <asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
-                    <ProgressTemplate>
-                        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
-                              <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/Eggedprogress.gif" style="width: 100px; height: 100px" />מעדכן...
-                        </div>        
-                    </ProgressTemplate>
-           </asp:UpdateProgress>     
+         <asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
+            <ProgressTemplate>
+                <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
+                        <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/Eggedprogress.gif" style="width: 100px; height: 100px" />מעדכן...
+                </div>        
+            </ProgressTemplate>
+         </asp:UpdateProgress>     
     
     <div id="divMeafyenim" runat="server" style="width:650px; height:350px">    
           <asp:Button ID="btnErrors" runat="server" CssClass="ImgButtonUpdate" CausesValidation="false"
@@ -47,7 +47,7 @@
             X="10" Y="10" PopupControlID="paErrorMessage" TargetControlID="btnErrors" runat="server">
         </cc1:ModalPopupExtender>
         <asp:Panel runat="server" Style="display: none" ID="paErrorMessage" CssClass="WorkCardPanelMessageError" Width="520px" height="300px">            
-            <table border="0" width="520px" >
+            <table border="0" width="520px"> 
               <tr style="height:40px">
                   <td class="WorkCardErrMsg" width="520px"><asp:Label ID="lblErrors" runat="server" >פירוט שגיאה</asp:Label></td>
               </tr>
@@ -58,7 +58,7 @@
                    <td id="tbErr" align="right"></td>                      
               </tr>
             </table>
-             <table style="height: 31px; width: 520px">
+            <table style="height: 31px; width: 520px">
                 <tr style="height: 31px" class="WorkCardTopBorder">
                     <td width="500px" align="left" >
                        <asp:Button ID="btnErrClose" runat="server" Text="סגור" CssClass="btnWorkCardCloseWin"
