@@ -37,11 +37,11 @@ namespace KdsBatch.Errors
             }
         }
 
-        public void Run()
+        public void Run(Day oDay)
         {
             try
             {
-               ListOfChecks.ForEach(itemErr => itemErr.Check());
+                ListOfChecks.ForEach(itemErr => itemErr.Check(oDay));
             }
             catch (Exception ex)
             {
@@ -53,12 +53,12 @@ namespace KdsBatch.Errors
             // implement here InsertErrorsToTbShgiot
         }
 
-        public void RemoveShgiotMeusharotFromDt(ref string sArrKodShgia)
+        public void RemoveShgiotMeusharotFromDt(ref string sArrKodShgia, Day oDay)
         {
             clWorkCard.ErrorLevel iErrorLevel;
             bool bMeushar;
             int iCount;
-            iCount = GlobalData.CardErrors.Count;
+            iCount = oDay.CardErrors.Count;
             CardError ErrorItem; //= new CardError();
             int I = 0;
             try
@@ -69,7 +69,7 @@ namespace KdsBatch.Errors
                     do
                     {
                         bMeushar = false;
-                        ErrorItem = GlobalData.CardErrors[I];
+                        ErrorItem = oDay.CardErrors[I];
                         if (ErrorItem.shat_yetzia != DateTime.MinValue)
                         {
                             iErrorLevel = clWorkCard.ErrorLevel.LevelPeilut;
@@ -91,7 +91,7 @@ namespace KdsBatch.Errors
 
                         if (bMeushar)
                         {
-                            GlobalData.CardErrors.Remove(ErrorItem);
+                            oDay.CardErrors.Remove(ErrorItem);
                         }
                         else
                         {
@@ -99,7 +99,7 @@ namespace KdsBatch.Errors
                             I += 1;
                         }
 
-                        iCount = GlobalData.CardErrors.Count;
+                        iCount = oDay.CardErrors.Count;
                     }
                     while (I < iCount);
 

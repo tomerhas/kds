@@ -50,7 +50,7 @@ namespace KdsBatch.Errors
             }
         }
 
-        protected void InsertErrortoCardErrors()
+        protected void InsertErrortoCardErrors(Day oDay)
         {
             CardError ErrorItem = new CardError();
 
@@ -81,16 +81,16 @@ namespace KdsBatch.Errors
                 default:
                     break;
             }
-            GlobalData.CardErrors.Add(ErrorItem);
+            oDay.CardErrors.Add(ErrorItem);
         }
         protected abstract bool IsCorrect();
-        public void Check()
+        public void Check(Day oDay)
         {
             try
             {
                 bIsCorrect = IsCorrect();
                 if (bIsCorrect)
-                    InsertErrortoCardErrors();
+                    InsertErrortoCardErrors(oDay);
             }
             catch (Exception ex)
             {

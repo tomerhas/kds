@@ -26,7 +26,7 @@ namespace KdsBatch.Errors
             string sArrKodShgia;
             try
             {
-                GlobalData.CardErrors.Clear();
+              //  GlobalData.CardErrors.Clear();
                 Day oDay = new Day(mispar_ishi, taarich, true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
            //     oDay.btchRequest = 0;
                 if (oDay.oOved.bOvedDetailsExists)
@@ -39,12 +39,12 @@ namespace KdsBatch.Errors
                             {
                                 foreach (Peilut oPeilut in oSidur.Peiluyot)
                                 {
-                                    oPeilut.Run();
+                                    oPeilut.Run(oDay);
                                 }
-                                oSidur.Run();
+                                oSidur.Run(oDay);
                             }
                         }
-                        oDay.Run();
+                        oDay.Run(oDay);
                     }
                     catch (Exception ex)
                     {
@@ -55,15 +55,15 @@ namespace KdsBatch.Errors
                     oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
 
                     sArrKodShgia = "";
-                    oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia);
+                    oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia, oDay);
                     if (sArrKodShgia.Length > 0)
                     {
                         sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
                         bHaveShgiotLetzuga = oDal.CheckShgiotLetzuga(sArrKodShgia);
                     }
-                    if (GlobalData.CardErrors.Count > 0)
+                    if (oDay.CardErrors.Count > 0)
                     {
-                        oDal.InsertErrorsToTbShgiot(oDay.dCardDate);
+                        oDal.InsertErrorsToTbShgiot(oDay);
                         _CardStatus = clGeneral.enCardStatus.Error;
                     }
                     else
