@@ -346,9 +346,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ErrorImage(imgHalbErr, false);
         ErrorImage(imgDayHaslamaErr, false);
         if (LoginUser.IsLimitedUser)
+        {
             btnDrvErrors.Style.Add("Display", "block");
+            lnkLastUpdateUser.Disabled = true;            
+            lblId.Style.Add("Display", "block");
+            lnkId.Style.Add("Display", "none");
+        }
         else
+        {
             btnDrvErrors.Style.Add("Display", "none");
+            lnkLastUpdateUser.Disabled = false;
+            lblId.Style.Add("Display", "none");
+            lnkId.Style.Add("Display", "block");
+        }
         //btnRefreshOvedDetails.Enabled = false;
     }
     protected void SetIdkuneyRashemet()

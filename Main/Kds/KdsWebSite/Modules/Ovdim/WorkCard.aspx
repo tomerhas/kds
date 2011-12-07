@@ -85,7 +85,8 @@
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="width: 8%">
-                                        <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>                                                    
+                                        <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>  
+                                        <label  runat="server" id="lblId" class = "WorkCardTable1Label">מספר אישי:</label>                                                           
                                     </td>
                                     <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                                     <td style="width: 7%">                                                                                      
