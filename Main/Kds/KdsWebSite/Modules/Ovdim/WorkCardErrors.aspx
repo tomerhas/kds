@@ -19,21 +19,22 @@
         <table style="width:90%;" cellspacing="0">
          <tr>
             <td align="center" style="width:100%;">
-                <asp:Label ID="lblHeaderMessage" runat ="server" CssClass="GridHeader" Width="100%" Height="20px" >שגיאות כלליות ליום עבודה</asp:Label>        
+                <asp:Label ID="lblHeaderMessage" runat ="server" CssClass="WorkCardRechivimGridHeader" Width="100%" Height="20px" >שגיאות כלליות ליום עבודה</asp:Label>        
             </td>
          </tr>   
         <tr>
             <td style="width:100%;">
                 <asp:GridView runat="server" ID="grdWorkDayErrors" AutoGenerateColumns="false"
-                     EmptyDataText="לא נמצאו נתונים!" AllowPaging="true" PageSize="6" 
-                     HeaderStyle-CssClass="GridHeader"
-                     HeaderStyle-ForeColor="White" Width="100%"  >
+                     EmptyDataText="לא נמצאו נתונים!" AllowPaging="true" PageSize="6" CssClass="WorkCardRechivimGridRow"
+                     HeaderStyle-CssClass="WorkCardRechivimGridHeader"
+                     HeaderStyle-ForeColor="White" Width="100%">
+                     <EmptyDataRowStyle CssClass="WorkCardRechivimGridRow" />
                     <Columns>
-                        <asp:BoundField ItemStyle-Width="40%" DataField="TEUR" HeaderText="שדה" />
-                        <asp:BoundField ItemStyle-Width="60%" DataField="Teur_Shgia" HeaderText="תאור השגיאה" />
+                        <asp:BoundField ItemStyle-Width="40%" DataField="TEUR" HeaderText="שדה" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
+                        <asp:BoundField ItemStyle-Width="60%" DataField="Teur_Shgia" HeaderText="תאור השגיאה" ItemStyle-CssClass="WorkCardRechivimGridRow" />
                     </Columns>
-                    <AlternatingRowStyle CssClass="GridAltRow"  />
-                    <RowStyle CssClass="GridRow"   />
+                    <AlternatingRowStyle CssClass="WorkCardRechivimGridRow"  />
+                    <RowStyle CssClass="WorkCardRechivimGridRow"   />
                     <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                     <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/> 
                 </asp:GridView>
@@ -44,7 +45,7 @@
         <table style="width:90%;" cellspacing="0">
         <tr>
             <td align="center" style="width:100%;">
-                <asp:Label ID="Label1" runat ="server" CssClass="GridHeader" Width="100%" Height="20px" >שגיאות בתוך סידורים</asp:Label>
+                <asp:Label ID="Label1" runat ="server" CssClass="WorkCardRechivimGridHeader" Width="100%" Height="20px" >שגיאות בתוך סידורים</asp:Label>
             </td>
         </tr>
         
@@ -52,18 +53,18 @@
             <td style="width:100%;">
                 <asp:GridView runat="server" ID="grdSidurErrors" AutoGenerateColumns="false"  
                     EmptyDataText="לא נמצאו נתונים!" AllowPaging="true" PageSize="6" 
-                    HeaderStyle-CssClass="GridHeader"
+                    HeaderStyle-CssClass="WorkCardRechivimGridHeader" CssClass="WorkCardRechivimGridRow"
                     HeaderStyle-ForeColor="White" Width="100%">
                     <Columns>
-                        <asp:BoundField DataField="Mispar_Sidur" HeaderText="סידור" />
-                        <asp:BoundField DataField="Shat_Hatchala" HeaderText="ש. התחלה" DataFormatString="{0:HH:mm}" />
+                        <asp:BoundField DataField="Mispar_Sidur" HeaderText="סידור" ItemStyle-CssClass="WorkCardRechivimGridRow" />
+                        <asp:BoundField DataField="Shat_Hatchala" HeaderText="ש. התחלה" DataFormatString="{0:HH:mm}" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
                         
-                        <asp:BoundField DataField="Shat_yetzia" HeaderText="ש. יציאה" DataFormatString="{0:HH:mm dd/MM/yyyy}" />
-                        <asp:BoundField DataField="TEUR" HeaderText="שדה" />
-                        <asp:BoundField DataField="Teur_Shgia" HeaderText="תאור השגיאה" />
+                        <asp:BoundField DataField="Shat_yetzia" HeaderText="ש. יציאה" DataFormatString="{0:HH:mm dd/MM/yyyy}" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
+                        <asp:BoundField DataField="TEUR" HeaderText="שדה" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
+                        <asp:BoundField DataField="Teur_Shgia" HeaderText="תאור השגיאה" ItemStyle-CssClass="WorkCardRechivimGridRow"/>
                     </Columns>
-                    <AlternatingRowStyle CssClass="GridAltRow"  />
-                    <RowStyle CssClass="GridRow"   />
+                    <AlternatingRowStyle CssClass="WorkCardRechivimGridRow"  />
+                    <RowStyle CssClass="WorkCardRechivimGridRow"   />
                     <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
                     <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/> 
                 </asp:GridView>
@@ -74,7 +75,7 @@
         <table style="width:90%;">
             <tr>
                 <td style="width:100%;" align="right">
-                    <input type="button" class="ImgButtonSearch" value="סגור" onclick="javascript:window.close();" />
+                    <input type="button" class="btnWorkCardCloseWin" style="width:75px;Height:30px" value="סגור" onclick="javascript:window.close();" />
                 </td>
             </tr>
         </table>

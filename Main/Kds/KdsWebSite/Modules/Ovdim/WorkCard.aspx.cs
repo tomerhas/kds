@@ -1805,7 +1805,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ddlHashlamaReason.Items.Insert(0, Item);
         
         clUtils.BindTooltip(ddlHashlamaReason);
-        ddlHashlamaReason.SelectedValue = oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString() == "0" ? "-1" : oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString();
+        if (oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString() == "0")
+            ddlHashlamaReason.SelectedValue = "-1";
+        else
+        {
+            for (int i = 0; i < ddlHashlamaReason.Items.Count; i++)
+            {
+                if (ddlHashlamaReason.Items[i].Value.Equals(oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString()))
+                    ddlHashlamaReason.SelectedValue = oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString();
+
+            }            
+        }
     }
     private void SetLookUpDDL()
     {
@@ -1894,8 +1904,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             //strImageUrl = "../../Images/btn-ok.jpg";
                             break;
                         case clGeneral.enCardStatus.Calculate:
-                            tdCardStatus.Attributes.Add("class", "CardStatusValid");
-                            tdCardStatus2.Attributes.Add("class", "CardStatusValid");
+                            tdCardStatus.Attributes.Add("class", "CardStatusCalculate");
+                            tdCardStatus2.Attributes.Add("class", "CardStatusCalculate");
                             //strImageUrl = "../../Images/btn-ok.jpg";
                             break;
                     }

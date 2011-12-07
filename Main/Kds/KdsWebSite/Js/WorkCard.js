@@ -262,6 +262,7 @@
             $get("btnPrevCard").className = "btnPrevDayDis";
             $get("btnNextCard").className = "btnNextDayDis"
             $get("btnNextErrCard").disabled = true;
+            $get("btnNextErrCard").className = "btnNextErrorDis";  
             $get("txtId").disabled = true;
             $get("txtName").disabled = true;
             $get("clnDate").disabled = true;

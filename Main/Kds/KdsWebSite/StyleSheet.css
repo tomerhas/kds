@@ -1898,6 +1898,14 @@ a
 	font-size :x-large;
 	font-weight :bolder;
 }
+.CardStatusCalculate
+{
+	background-color:#8dd761;
+	color:White;	
+	font-family: @Arial Unicode MS;
+	font-size :medium;
+	font-weight :bolder;
+}
 .CardStatusError
 {
 	background-color:#e6212f;
