@@ -109,8 +109,7 @@ namespace KdsBatch.Premia
                 foreach (DataRow dr in dt.Rows)
                 {
                     PremiaItem item = PremiaItem.GetItemFromDataRow(dr);
-                    _items.AddItem(item);
-
+                    
                     if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
                         !item.Station.Equals(lastItem.Station)))
                     {
@@ -118,12 +117,13 @@ namespace KdsBatch.Premia
                         stationItems.Clear();
                         daysCounter = 0;
                         minutesCounter = 0;
+                        _items.AddItem(lastItem);
                     }
                     stationItems.Add(item);
-                    lastItem = item;
                     daysCounter++;
                     minutesCounter += Convert.ToInt32(dr["ERECH_RECHIV"]);
-
+                   
+                    lastItem = item;
                 }
                 if (stationItems.Count > 0)
                     UpdateStationCounters(stationItems, daysCounter, minutesCounter);
