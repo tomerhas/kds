@@ -242,7 +242,7 @@ namespace KdsBatch.Entities
             }
         }
 
-        public void InsertErrorsToTbShgiot(DateTime dCardDate)
+        public void InsertErrorsToTbShgiot(Day oDay)
         {
             //כתיבת שגיאות ל-TB_SHGIOT
             clDal oDal = new clDal();
@@ -253,23 +253,23 @@ namespace KdsBatch.Entities
             try
             {
                  int i = 0;
-                oDal.ArrayBindCount = GlobalData.CardErrors.Count; // dtErrors.Rows.Count;
-                int[] arrMisparIshi = new int[GlobalData.CardErrors.Count];
-                int[] arrKodShgia = new int[GlobalData.CardErrors.Count];
-                string[] arrYeshutId = new string[GlobalData.CardErrors.Count];
-                int[] arrMisparSidur = new int[GlobalData.CardErrors.Count];
-                DateTime[] arrTaarich = new DateTime[GlobalData.CardErrors.Count];
-                DateTime[] arrShatHatchala = new DateTime[GlobalData.CardErrors.Count];
-                DateTime[] arrShatYetzia = new DateTime[GlobalData.CardErrors.Count];
-                int[] arrMisparKnisa = new int[GlobalData.CardErrors.Count];
-                string[] arrHeara = new string[GlobalData.CardErrors.Count];
+                 oDal.ArrayBindCount = oDay.CardErrors.Count; // dtErrors.Rows.Count;
+                 int[] arrMisparIshi = new int[oDay.CardErrors.Count];
+                 int[] arrKodShgia = new int[oDay.CardErrors.Count];
+                 string[] arrYeshutId = new string[oDay.CardErrors.Count];
+                 int[] arrMisparSidur = new int[oDay.CardErrors.Count];
+                 DateTime[] arrTaarich = new DateTime[oDay.CardErrors.Count];
+                 DateTime[] arrShatHatchala = new DateTime[oDay.CardErrors.Count];
+                 DateTime[] arrShatYetzia = new DateTime[oDay.CardErrors.Count];
+                 int[] arrMisparKnisa = new int[oDay.CardErrors.Count];
+                string[] arrHeara = new string[oDay.CardErrors.Count];
 
-                foreach (CardError ce in GlobalData.CardErrors)
+                foreach (CardError ce in oDay.CardErrors)
                 {
                     arrMisparIshi[i] = int.Parse(ce.mispar_ishi.ToString());
                     arrKodShgia[i] = int.Parse(ce.check_num.ToString());
                     sbYeshut.Remove(0, sbYeshut.Length);
-                    sbYeshut.Append(string.IsNullOrEmpty(ce.taarich.ToString()) ? dCardDate.ToShortDateString() : DateTime.Parse(ce.taarich.ToString()).ToShortDateString());
+                    sbYeshut.Append(string.IsNullOrEmpty(ce.taarich.ToString()) ? oDay.dCardDate.ToShortDateString() : DateTime.Parse(ce.taarich.ToString()).ToShortDateString());
                     //sbYeshut.Append(DateTime.Parse(dr["Taarich"].ToString()).ToShortDateString());
                     sbYeshut.Append(",");
                     sbYeshut.Append(string.IsNullOrEmpty(ce.mispar_sidur.ToString()) ? "" : string.Concat(ce.mispar_sidur.ToString(), ","));

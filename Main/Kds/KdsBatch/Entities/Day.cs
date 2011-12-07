@@ -47,6 +47,8 @@ namespace KdsBatch.Entities
         public List<Sidur> Sidurim;
     //    public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
+        public List<CardError> CardErrors;
+       
 
         public Day() : base(OriginError.Day)  { }
         public Day(int iMisparIshi, DateTime dDate, bool bInsertToShguim) : base(OriginError.Day)
@@ -56,6 +58,7 @@ namespace KdsBatch.Entities
             oOved = new Oved(iMisparIshi, dDate);
             if (oOved.dtOvedDetails.Rows.Count > 0)
             {
+                CardErrors = new List<CardError>();
                 SetPirteyYom();
                 InitSidurim(bInsertToShguim);
                 InitializeErrors();
