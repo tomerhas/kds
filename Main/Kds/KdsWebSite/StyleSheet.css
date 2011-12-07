@@ -1389,6 +1389,8 @@ a
 	border-style: solid;
 	width:130px;	
 	border-width:1px;
+	font-family:Arial;
+	font-size:12px;
 }
 .WorkCardDDLZmanNesiot
 {
@@ -1398,6 +1400,9 @@ a
 	height:27px;
 	border-width:1px;
 	vertical-align:middle;
+	font-family:Arial;
+	font-size:12px;
+	font-weight:bold;
 }
 .ajax__validatorcallout_popup_table
 {
