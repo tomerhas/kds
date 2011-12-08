@@ -797,11 +797,11 @@ public partial class Modules_Test :Page
          //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
 
          ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
-         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         {
-             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         }
+         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         //{
+         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         //}
          //////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
 
          ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
@@ -819,7 +819,7 @@ public partial class Modules_Test :Page
         clGeneral.enCardStatus _CardStatus;
         bool bHaveShgiotLetzuga = false;
         string sArrKodShgia;
-        DataTable dt = new DataTable();
+      //  DataTable dt = new DataTable();
         try
         {
             GlobalData.InitGlobalData(taarich);
@@ -830,24 +830,24 @@ public partial class Modules_Test :Page
             {
                 try
                 {
-                    //foreach (Sidur oSidur in oDay.Sidurim)
-                    //{
-                    Parallel.ForEach(oDay.Sidurim, oSidur =>
+                    foreach (Sidur oSidur in oDay.Sidurim)
                     {
+                    //Parallel.ForEach(oDay.Sidurim, oSidur =>
+                    //{
                         if (oSidur.bIsSidurLeBdika)
                         {
-                            Parallel.ForEach(oSidur.Peiluyot, oPeilut =>
-                            {
-                                oPeilut.Run(oDay);
-
-                            });
-                            //foreach (Peilut oPeilut in oSidur.Peiluyot)
+                            //Parallel.ForEach(oSidur.Peiluyot, oPeilut =>
                             //{
                             //    oPeilut.Run(oDay);
-                            //}
+
+                            //});
+                            foreach (Peilut oPeilut in oSidur.Peiluyot)
+                            {
+                                oPeilut.Run(oDay);
+                            }
                             oSidur.Run(oDay);
                         }
-                    });
+                    }//);
                     oDay.Run(oDay);
                 }
                 catch (Exception ex)
@@ -879,13 +879,13 @@ public partial class Modules_Test :Page
                 }
 
                 oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
-                dt = oDay.CardErrors.ToDataTable();
+               // dt = oDay.CardErrors.ToDataTable();
             }
             // return oDay.bSuccsess;
         }
         catch (Exception ex)
         {
-            //  clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", 0, dCardDate, "MainOvedErrors: " + ex.Message);
+           // clLogBakashot.InsertErrorToLog(0, iMisparIshi, "E", 0, Date, "MainOvedErrors: " + ex.Message);
             //  return false;
         }
     }
