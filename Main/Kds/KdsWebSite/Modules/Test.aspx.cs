@@ -22,6 +22,7 @@ using KdsLibrary.UDT;
 using KdsWorkFlow.Approvals;
 using KdsBatch.Entities;
 using KdsBatch.Errors;
+using System.Threading.Tasks;
 public partial class Modules_Test :Page
 {
   
@@ -786,30 +787,30 @@ public partial class Modules_Test :Page
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
         EntitiesDal oDal = new EntitiesDal();
-    //    DataTable dt = oDal.getOvdimForShguim();
+        DataTable dt = oDal.getOvdimForShguim();
        // string sMisparim = "77319";
        // DateTime dTaarich = DateTime.Parse("25/08/2011");
         // string[] iMisparim = sMisparim.Split(',');
          clBatchManager oBatchManager = new clBatchManager();
 
-         HafelShguim(26506, DateTime.Parse("15/02/2011"));
-         oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
+         //HafelShguim(26506, DateTime.Parse("15/02/2011"));
+         //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
 
          ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
-         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         //{
-         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //}
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
          //////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
 
-         //////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
-         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         //{
-         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //}
-         ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
+         ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+             HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
+        //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
     }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
@@ -829,17 +830,24 @@ public partial class Modules_Test :Page
             {
                 try
                 {
-                    foreach (Sidur oSidur in oDay.Sidurim)
+                    //foreach (Sidur oSidur in oDay.Sidurim)
+                    //{
+                    Parallel.ForEach(oDay.Sidurim, oSidur =>
                     {
                         if (oSidur.bIsSidurLeBdika)
                         {
-                            foreach (Peilut oPeilut in oSidur.Peiluyot)
+                            Parallel.ForEach(oSidur.Peiluyot, oPeilut =>
                             {
                                 oPeilut.Run(oDay);
-                            }
+
+                            });
+                            //foreach (Peilut oPeilut in oSidur.Peiluyot)
+                            //{
+                            //    oPeilut.Run(oDay);
+                            //}
                             oSidur.Run(oDay);
                         }
-                    }
+                    });
                     oDay.Run(oDay);
                 }
                 catch (Exception ex)

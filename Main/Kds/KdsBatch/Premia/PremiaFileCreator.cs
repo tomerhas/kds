@@ -120,10 +120,16 @@ namespace KdsBatch.Premia
                         _items.AddItem(lastItem);
                     }
                     stationItems.Add(item);
-                    daysCounter++;
+                    if (daysCounter == 0 || (item.EmployeeNumber == lastItem.EmployeeNumber && item.WorkDate != lastItem.WorkDate))
+                        daysCounter++;
                     minutesCounter += Convert.ToInt32(dr["ERECH_RECHIV"]);
                    
                     lastItem = item;
+                }
+                if (lastItem != null) //מוסיפים את האחרון
+                {
+                    UpdateStationCounters(stationItems, daysCounter, minutesCounter);
+                    _items.AddItem(lastItem);
                 }
                 if (stationItems.Count > 0)
                     UpdateStationCounters(stationItems, daysCounter, minutesCounter);

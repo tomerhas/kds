@@ -59,7 +59,7 @@ namespace KdsBatch.Errors
             bool bMeushar;
             int iCount;
             iCount = oDay.CardErrors.Count;
-            CardError ErrorItem; //= new CardError();
+            CardError ErrorItem = new CardError();
             int I = 0;
             try
             {
