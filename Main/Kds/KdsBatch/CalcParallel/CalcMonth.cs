@@ -1262,6 +1262,9 @@ namespace KdsBatch
                 //נוכחות לפרמיית מתכנן תנועה (רכיב 257)  
                 CalcRechiv257();
 
+                //פרמיה תכנון תנועה ( רכיב 205) 
+                CalcRechiv205();
+
                 //נוכחות לפרמיית סדרן (רכיב 258) 
                 CalcRechiv258();
 
@@ -5570,6 +5573,31 @@ namespace KdsBatch
                 throw (ex);
             }
         }
+
+        private void CalcRechiv205()
+        {
+            float fSumDakotRechiv;
+            int iMutaam;
+            try
+            {
+                  iMutaam = objOved.objPirteyOved.iMutamut;
+
+                  if ((objOved.objMeafyeneyOved.iMeafyen60 <= 0) || ((objOved.objMeafyeneyOved.iMeafyen60 > 0) &&
+                      (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())))
+                  {
+
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode());
+                    fSumDakotRechiv = (fSumDakotRechiv * objOved.objParameters.fAchuzPremiaRishum) / 100;
+                    addRowToTable(clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), fSumDakotRechiv);
+                  }
+           }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
 
         private void CalcRechiv258()
         {

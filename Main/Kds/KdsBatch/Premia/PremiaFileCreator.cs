@@ -111,7 +111,7 @@ namespace KdsBatch.Premia
                     PremiaItem item = PremiaItem.GetItemFromDataRow(dr);
                     
                     if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
-                        !item.Station.Equals(lastItem.Station)))
+                        !item.Station.Equals(lastItem.Station) || !item.PremiaCode.Equals(lastItem.PremiaCode)))
                     {
                         UpdateStationCounters(stationItems, daysCounter, minutesCounter);
                         stationItems.Clear();

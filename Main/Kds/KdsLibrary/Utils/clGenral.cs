@@ -714,6 +714,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             DakotPremiaBeShishi = 202,
             DakotPremiaVisaShishi = 203,
             PremiaLariushum = 204,
+            PremiaTichnunTnua = 205,
             PremiaMachsanKatisim = 206,
             MichutzLamichsaTafkidShishi = 207,
             MichutzLamichsaTnuaShishi = 208,

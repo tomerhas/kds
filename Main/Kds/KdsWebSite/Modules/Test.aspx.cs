@@ -786,7 +786,7 @@ public partial class Modules_Test :Page
     protected void ButtonShinuyim_Click(object sender, EventArgs e)
     {
         EntitiesDal oDal = new EntitiesDal();
-        DataTable dt = oDal.getOvdimForShguim();
+    //    DataTable dt = oDal.getOvdimForShguim();
        // string sMisparim = "77319";
        // DateTime dTaarich = DateTime.Parse("25/08/2011");
         // string[] iMisparim = sMisparim.Split(',');
@@ -835,12 +835,12 @@ public partial class Modules_Test :Page
                         {
                             foreach (Peilut oPeilut in oSidur.Peiluyot)
                             {
-                                oPeilut.Run();
+                                oPeilut.Run(oDay);
                             }
-                            oSidur.Run();
+                            oSidur.Run(oDay);
                         }
                     }
-                    oDay.Run();
+                    oDay.Run(oDay);
                 }
                 catch (Exception ex)
                 {
@@ -850,15 +850,15 @@ public partial class Modules_Test :Page
                 oDal.DeleteErrorsFromTbShgiot(oDay.oOved.iMisparIshi, oDay.dCardDate);
 
                 sArrKodShgia = "";
-                oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia);
+                oDay.RemoveShgiotMeusharotFromDt(ref sArrKodShgia, oDay);
                 if (sArrKodShgia.Length > 0)
                 {
                     sArrKodShgia = sArrKodShgia.Substring(0, sArrKodShgia.Length - 1);
                     bHaveShgiotLetzuga = oDal.CheckShgiotLetzuga(sArrKodShgia);
                 }
-                if (GlobalData.CardErrors.Count > 0)
+                if (oDay.CardErrors.Count > 0)
                 {
-                    oDal.InsertErrorsToTbShgiot(oDay.dCardDate);
+                    oDal.InsertErrorsToTbShgiot(oDay);
                     _CardStatus = clGeneral.enCardStatus.Error;
                 }
                 else
@@ -871,7 +871,7 @@ public partial class Modules_Test :Page
                 }
 
                 oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
-                dt = GlobalData.CardErrors.ToDataTable();
+                dt = oDay.CardErrors.ToDataTable();
             }
             // return oDay.bSuccsess;
         }
