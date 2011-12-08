@@ -2508,20 +2508,26 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         lbl.Attributes.Add("onclick", sOnClickScript);
         return lbl;
     }
-    private void CreateNewSidurCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex)
+    private void CreateNewSidurCell(clSidur oSidur, ref HtmlTableCell hCell, 
+                                   ref HtmlTableCell hCollapseCell,
+                                   ref HtmlTableCell hErrCell, int iIndex)
     {
         //הכנסת סידור חדש
-        LiteralControl lDummy = new LiteralControl();
-        lDummy.Text = " ";
-        hCell = CreateTableCell("81px", "", "");
+        //LiteralControl lDummy = new LiteralControl();
+        //lDummy.Text = " ";
+        //hCell = CreateTableCell("81px", "", "");
+        hCell = CreateTableCell("44px", "WorkCardSidur", "");
+        hErrCell = CreateTableCell("21px", "WorkCardSidur", "");
+
         //אם לסידור יש פעילויות, נציג IMG COLLAPSE 
         if (oSidur.htPeilut.Count > 0)
         {
-            hCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
+            hCollapseCell = CreateTableCell("16px", "WorkCardSidurCollapse", "");
+            hCollapseCell.Controls.Add(AddImage("~/images/openArrow.png", "cImgS" + iIndex, "ChgImg(" + iIndex + ")"));
         }
-
-        hCell.Controls.Add(lDummy);
-
+        else
+            hCollapseCell = CreateTableCell("17px", "WorkCardSidurCollapse", "");
+     
         TextBox oTextBox = new TextBox();
         AjaxControlToolkit.AutoCompleteExtender oAutoComplete;
         AjaxControlToolkit.FilteredTextBoxExtender oFilterTextBox;
@@ -2574,7 +2580,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //hCell.Style.Add("border-right", "solid 1px gray");
                 
     }
-    protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell,ref HtmlTableCell hCollapseCell,ref HtmlTableCell hErrCell, int iIndex)
+    protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell,
+                                   ref HtmlTableCell hCollapseCell,
+                                   ref HtmlTableCell hErrCell, int iIndex)
     {
         try
         {
@@ -4375,7 +4383,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             //מספר סידור   
             if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
-                CreateNewSidurCell(oSidur, ref hCell, iIndex); //יצירת סידור חדש - txtBox
+                CreateNewSidurCell(oSidur, ref hCell,ref hCollapseCell, ref hErrCell, iIndex); //יצירת סידור חדש - txtBox
             else
             {                
                 CreateSidurCell(oSidur, ref hCell, ref hCollapseCell, ref hErrCell,  iIndex);                               
