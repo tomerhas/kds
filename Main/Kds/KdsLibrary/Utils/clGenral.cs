@@ -897,7 +897,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enCalcType
         {
-            MonthlyCalc = 1, PremiotCalc = 2
+            MonthlyCalc = 1, PremiotCalc = 2 , ShinuyimVeShguyim = 3, ShinuyimVeSghuimHR =4
         }
         public enum enYechidaIrgunit
         {
@@ -1473,6 +1473,22 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             }
         }
 
+        public static void InsertBakashaParam(long iRequestId, int iParam, string sErech)
+        {
+            clDal dal = new clDal();
+            try
+            {
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, iRequestId, ParameterDir.pdInput);
+                dal.AddParameter("p_param_id", ParameterType.ntOracleInteger, iParam, ParameterDir.pdInput);
+                dal.AddParameter("p_erech", ParameterType.ntOracleVarchar, sErech, ParameterDir.pdInput, 50);
+
+                dal.ExecuteSP(clGeneral.cProInsBakashaParam);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static void LogBatchPopulation(int employeeID, DateTime date, DateTime btchExecutionDate,
            long btchRequest, enGeneralBatchType batchType)
         {
