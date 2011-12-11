@@ -26,7 +26,7 @@ namespace KdsBatch.Premia
 
             List<DateTime> periods = new List<DateTime>(PREMIA_PERIODS_LENGTH);
             DateTime firstPeriod = DateTime.Now.Date.AddMonths(-1);
-            for (int i = 0; i < PREMIA_PERIODS_LENGTH-1; ++i)
+            for (int i = 0; i < PREMIA_PERIODS_LENGTH; ++i)
             {
                 periods.Add(new DateTime(firstPeriod.Year, firstPeriod.Month, 1));
                 firstPeriod = firstPeriod.AddMonths(-1);
