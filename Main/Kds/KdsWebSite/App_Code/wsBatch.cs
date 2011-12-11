@@ -115,6 +115,8 @@ public class wsBatch : System.Web.Services.WebService
         
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         string result = null;
+        clGeneral.InsertBakashaParam(processBtchNumber, 1, lRequestNum.ToString());
+        clGeneral.InsertBakashaParam(processBtchNumber, 2, periodMonth);
         try
         {
             DateTime period = GetPeriodFirstDate(periodMonth);
