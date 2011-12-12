@@ -42,14 +42,15 @@ namespace KdsBatch.Entities
         public int iUserId;
         public bool bSuccsess = true;
         public long btchRequest;
+        public bool IsExecuteErrors = false;
 
         public clParameters oParameters;
         public List<Sidur> Sidurim;
     //    public DataTable dtTmpMeafyeneyElements;
         public Oved oOved;
         public List<CardError> CardErrors;
-       
-
+        public clGeneral.enCardStatus CardStatus;
+        
         public Day() : base(OriginError.Day)  { }
         public Day(int iMisparIshi, DateTime dDate, bool bInsertToShguim) : base(OriginError.Day)
         {
