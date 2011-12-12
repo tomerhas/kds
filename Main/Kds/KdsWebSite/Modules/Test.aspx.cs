@@ -796,21 +796,21 @@ public partial class Modules_Test :Page
          //HafelShguim(26506, DateTime.Parse("15/02/2011"));
          //oBatchManager.MainOvedErrors(26506, DateTime.Parse("15/02/2011"));
 
-         ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
-         //foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
-         //{
-         //    HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //    oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-         //}
-         //////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
+         foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
+         {
+            // HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+         }
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
 
-         ////clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start MainOvedErrors");
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "Start HafelShguim");
          foreach (DataRow dr in dt.Rows) //int i = 0; i < iMisparim.Length; i++)
          {
              HafelShguim(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
-             oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
+           //  oBatchManager.MainOvedErrors(int.Parse(dr["MISPAR_ISHI"].ToString()), DateTime.Parse(dr["taarich"].ToString()));
          }
-        //clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End MainOvedErrors");
+         clLogBakashot.InsertErrorToLog(0, 0, "I", 0, DateTime.Now, "End HafelShguim");
     }
 
     private void HafelShguim(int mispar_ishi,DateTime taarich)
