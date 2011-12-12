@@ -11,6 +11,8 @@ namespace KdsBatch.Errors
 {
     public class MainErrors
     {
+        public Day oDay;
+        public DataTable dtErrors = new DataTable();
 
         public MainErrors(DateTime taarich)
         {
@@ -21,13 +23,13 @@ namespace KdsBatch.Errors
         public bool HafelShguim(int mispar_ishi, DateTime taarich)
         {
             EntitiesDal oDal = new EntitiesDal();
-            clGeneral.enCardStatus _CardStatus;
+            
             bool bHaveShgiotLetzuga = false;
             string sArrKodShgia;
             try
             {
               //  GlobalData.CardErrors.Clear();
-                Day oDay = new Day(mispar_ishi, taarich, true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
+                oDay = new Day(mispar_ishi, taarich, true);// new Day(int.Parse(txtId.Text), DateTime.Parse(clnFromDate.Text), true);
            //     oDay.btchRequest = 0;
                 if (oDay.oOved.bOvedDetailsExists)
                 {
@@ -64,20 +66,22 @@ namespace KdsBatch.Errors
                     if (oDay.CardErrors.Count > 0)
                     {
                         oDal.InsertErrorsToTbShgiot(oDay);
-                        _CardStatus = clGeneral.enCardStatus.Error;
+                        oDay.CardStatus = clGeneral.enCardStatus.Error;
                     }
                     else
                     {
-                        _CardStatus = clGeneral.enCardStatus.Valid;
+                        oDay.CardStatus = clGeneral.enCardStatus.Valid;
                     }
-                    if (_CardStatus.GetHashCode() != oDay.iStatus)
+                    if (oDay.CardStatus.GetHashCode() != oDay.iStatus)
                     {
-                        oDal.UpdateCardStatus(oDay.oOved.iMisparIshi, oDay.dCardDate, _CardStatus, oDay.iUserId);
+                        oDal.UpdateCardStatus(oDay.oOved.iMisparIshi, oDay.dCardDate, oDay.CardStatus, oDay.iUserId);
                     }
 
                     oDal.UpdateRitzatShgiotDate(oDay.oOved.iMisparIshi, oDay.dCardDate, bHaveShgiotLetzuga);
                 }
-                 return oDay.bSuccsess;
+                oDay.IsExecuteErrors = true;
+                dtErrors = oDay.CardErrors.ToDataTable();
+                return oDay.bSuccsess;
             }
             catch (Exception ex)
             {
