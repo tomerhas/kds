@@ -545,6 +545,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DataView dvPeiluyot = new DataView();       
         UpdatePanel up = new UpdatePanel();
         bool bEnableSidur=false; // אם הכרטיס הוא ללא התייחסות וגורם המטפל שונה מבעל הכרטיס הנוכחי ולסידור אין מאפיין 99 לא נאפשר עדכון סידור ופעילויות
+        
         try
         {
             oSidur = (clSidur)htFullEmployeeDetails[iIndex];
@@ -563,6 +564,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tCell = CreateCellForPanel(iIndex);
             tCell.Controls.Add(pnlHeader);
 
+         
             pnlContent = CreatePanel(iIndex, "pnlContent", "CollapseContent");
             //Add Panel
             tCell.Controls.Add(pnlContent);
@@ -2637,9 +2639,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lnkSidur.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
                 lnkSidur.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
                 lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
-
+                
                 hCell.Controls.Add(lnkSidur);
-
+                
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
@@ -4477,7 +4479,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 
                
 
-            return hTable;
+                return hTable;
             
         }
         catch (Exception ex)

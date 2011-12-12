@@ -7,6 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Untitled Page</title>
+     <script src='../../js/jquery.js' type='text/javascript'></script>
     <link href="../../StyleSheet.css"type="text/css" rel="stylesheet" />    
     <script src="../../Js/GeneralFunction.js" type="text/javascript">
     
@@ -15,7 +16,13 @@
    
        
     </script>
-    <script type="text/javascript" language="javascript "> 
+    <script type="text/javascript" language="javascript ">
+        $(document).ready(function () {
+            $("button").click(function () {
+                $("div").load('txtId.txt');
+            });
+        });
+
      function ChangeStatusSidur(id)
     {           
       debugger
@@ -146,7 +153,10 @@
                 oncheckedchanged="rdoTst_CheckedChanged"  />          
     </form>
     
-    
+    <div><h2>Let AJAX change this text</h2></div>
+    <button>Change Content</button>
+
+
 </body>
 
 

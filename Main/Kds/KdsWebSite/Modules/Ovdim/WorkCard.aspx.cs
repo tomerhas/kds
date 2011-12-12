@@ -3216,7 +3216,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oCollIdkunRashemet.Add(_objIdkunRashemet);
                     }
                 }
-
+             
                 //נעבור על כל הפעילויות ונבדוק אילו פעילויות השתנו
                 oGridView = ((GridView)this.FindControl("lstsidurim").FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
                 if (oGridView != null)

@@ -177,6 +177,12 @@
                
                
  <script language="javascript" type="text/javascript">
+     $(document).ready(function () {
+         $("button").click(function () {
+             $("div").load('txt1.txt');
+         });
+     });
+
     function OpenDivuachHeadrut() {
         var sQueryString;
         sQueryString = "?dt=" + Date();

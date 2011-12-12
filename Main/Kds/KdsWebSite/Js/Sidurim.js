@@ -1965,8 +1965,9 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
         }
     }
     function setFocus(focusControlID) {
-        document.getElementById(focusControlID).focus(); 
+        document.getElementById(focusControlID).focus();
     }
+   
     function btnCopyOtoNum(iAction)
     {
      $find("pBehvCopy").hide();
