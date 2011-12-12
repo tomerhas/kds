@@ -1128,8 +1128,6 @@ namespace KdsBatch
                 //יום חופש  (רכיב 67) 
                 CalcRechiv67();
 
-                UpdateRechiv146();
-
                 //צריך להתבצע לפני רכיבים 221,219 ואחרי 67
                 UpdateRechivim67_219_221();
 
@@ -2452,19 +2450,22 @@ namespace KdsBatch
                 else if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() && fNochehutChodshit < fMichsaChodshit)
                 {
                     objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit);
+                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, clGeneral.enRechivim.YomHeadrut);
                     fNosafot100 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Nosafot100); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
 
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHeadrut.GetHashCode());
                     fSumDakotRechiv = fSumDakotRechiv - fHashlama;
-              
+
+                    UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
                  }
 
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round(fSumDakotRechiv, 3) == 0)
                     fSumDakotRechiv = 0;
                 addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fSumDakotRechiv);
+
+                
             }
             catch (Exception ex)
             {
@@ -2472,13 +2473,13 @@ namespace KdsBatch
                 throw (ex);
             }
         }
-        private void CalcNochehutVeMichsaChelkiim(ref float fNochehutChodshitChelkit,ref float fMichsaChodshitChelkit)
+        private void CalcNochehutVeMichsaChelkiim(ref float fNochehutChodshitChelkit,ref float fMichsaChodshitChelkit, clGeneral.enRechivim KodRechiv)
         {
             DataRow[] days,dr;
             DateTime taarich;
             try
             {
-                days = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("ERECH_RECHIV>0 and ERECH_RECHIV<1 and KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString());
+                days = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("ERECH_RECHIV>0 and ERECH_RECHIV<1 and KOD_RECHIV=" + KodRechiv.GetHashCode().ToString());
                 for (int i = 0; i < days.Length; i++)
                 {
                     taarich = DateTime.Parse(days[i]["taarich"].ToString());
@@ -2539,15 +2540,16 @@ namespace KdsBatch
                 }
                 else if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())// && fNochehutChodshit < fMichsaChodshit)
                 {
-                    objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV"); 
-                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit);
+                    objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
+                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, clGeneral.enRechivim.YomChofesh);
                     fNosafot100 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Nosafot100); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
 
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
                     fSumDakotRechiv = float.Parse(fSumDakotRechiv.ToString()) - float.Parse(fHashlama.ToString());
                    
-                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString()); 
+                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString());
+                    UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
                 }
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round(fSumDakotRechiv, 3) == 0)
@@ -2610,18 +2612,18 @@ namespace KdsBatch
                 throw (ex);
             }
         }
-        private void UpdateRechiv146()
+        private void UpdateRechiv146(float fNochehutChodshitChelkit, float fMichsaChodshitChelkit)
         {
-            float fSumDakotRechiv,fHashlama, fNochehutChodshitChelkit, fMichsaChodshitChelkit, fNosafot100;
+            float fSumDakotRechiv,fHashlama, fNosafot100;
             try
             {
                 if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                 {
                     fSumDakotRechiv = 0;
-                    fNochehutChodshitChelkit = 0;
-                    fMichsaChodshitChelkit = 0;
+                  //  fNochehutChodshitChelkit = 0;
+                  //  fMichsaChodshitChelkit = 0;
 
-                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit);
+                  //  CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit);
                     fNosafot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot100.GetHashCode());
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / 60, fNosafot100);
                     fSumDakotRechiv = fNosafot100 - fHashlama;
