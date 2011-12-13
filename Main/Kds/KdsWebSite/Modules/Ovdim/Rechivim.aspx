@@ -53,7 +53,7 @@
                         <asp:BoundField DataField="kod_rechiv" />
                         <asp:BoundField DataField="row_type" />
                     </Columns>
-                    <EmptyDataRowStyle CssClass="GridEmptyData" height="20px"/> 
+                    <EmptyDataRowStyle CssClass="WorkCardRechivimGridRow" height="20px"/> 
                  </asp:GridView>
                </div>
           </td>

@@ -36,7 +36,7 @@
                     <AlternatingRowStyle CssClass="WorkCardRechivimGridRow"  />
                     <RowStyle CssClass="WorkCardRechivimGridRow"   />
                     <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
-                    <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/> 
+                    <EmptyDataRowStyle CssClass="WorkCardRechivimGridRow" height="20px" Wrap="False"/> 
                 </asp:GridView>
             </td>
         </tr>
@@ -66,7 +66,7 @@
                     <AlternatingRowStyle CssClass="WorkCardRechivimGridRow"  />
                     <RowStyle CssClass="WorkCardRechivimGridRow"   />
                     <PagerStyle CssClass="GridPager" HorizontalAlign="Center"  />                          
-                    <EmptyDataRowStyle CssClass="GridEmptyData" height="20px" Wrap="False"/> 
+                    <EmptyDataRowStyle CssClass="WorkCardRechivimGridRow" height="20px" Wrap="False"/> 
                 </asp:GridView>
             </td>
         </tr>
