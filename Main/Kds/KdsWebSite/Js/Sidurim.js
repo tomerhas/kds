@@ -346,12 +346,13 @@ function chkMkt(oRow) {
           }
           return bFound;
      }
-     function FindCarNumInAllSidurim() {
+     function FindCarNumInAllSidurim(){
          var bMultiCarNum = false;
          var iCurrSidurNumber = 0;
          var _Sidur, _Peilut;
          var lCurrCarNumber = 0;
          var lCarNumber = 0;
+         var lCarLicence = 0;
          _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
          while (_Sidur != null) {
              _Peilut = $get("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
@@ -359,8 +360,10 @@ function chkMkt(oRow) {
                  for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
                      lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
                      if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
-                         if (lCarNumber == 0)
+                         if (lCarNumber == 0){
                              lCarNumber = lCurrCarNumber;
+                             lCarLicence=_Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].title;
+                             }
                          else
                              if (lCurrCarNumber != lCarNumber)
                                  bMultiCarNum = true;
@@ -369,11 +372,12 @@ function chkMkt(oRow) {
              iCurrSidurNumber = iCurrSidurNumber + 1;
              _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
          }
-         return bMultiCarNum + "|" + lCarNumber;
+         return bMultiCarNum + "|" + lCarNumber + "|" + lCarLicence;
      }
      function SetCarNumber(iSidurIndex, oRId, iPeilutIndex) {
          var lCarNumber = 0;
          var lCurrCarNumber = 0;
+         var lCurrCarLicence = 0;
          var bMultiCarNum = false;
          var sResult;
          //var iCurrSidurNumber;
@@ -381,7 +385,7 @@ function chkMkt(oRow) {
          if (_Peilut != null) {
              //אם יש פעילות אחת בסידור היא הפעילות שהוספנו ולכן נחפש את מספר הרכב בכל הסידור
              //או שיש מספר פעילויות אבל זו הראשונה שדורשת מספר רכב
-             if ((_Peilut.firstChild.childNodes.length <= 2) || (!CheckIfFirstPeilutWithCarNum(_Peilut, iPeilutIndex))) {
+             if ((_Peilut.firstChild.childNodes.length <= 2) || (!CheckIfFirstPeilutWithCarNum(_Peilut, iPeilutIndex))){
                   sResult = FindCarNumInAllSidurim();
                   sResult = sResult.split("|");
                   if (sResult[0]=='false')
@@ -389,42 +393,26 @@ function chkMkt(oRow) {
                   else
                       bMultiCarNum = true;
                   lCarNumber = sResult[1];
-//                 
-//                  iCurrSidurNumber = 0;
-
-//                  _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
-//                  while (_Sidur != null) {
-//                      _Peilut = $get("lstSidurim_" + padLeft(iCurrSidurNumber, '0', 3));
-//                      if (_Peilut != null) {
-//                          for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
-//                              lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
-//                              if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
-//                                  if (lCarNumber == 0)
-//                                      lCarNumber = lCurrCarNumber;
-//                                  else
-//                                      if (lCurrCarNumber != lCarNumber)
-//                                          bMultiCarNum = true;                                          
-//                          }
-//                        }
-//                          iCurrSidurNumber = iCurrSidurNumber + 1;
-//                          _Sidur = $get("lstSidurim_lblSidur" + iCurrSidurNumber);
-//                  }
+                  lCurrCarLicence = sResult[2];
               }
               else{
-                  for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
+                  for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++){
                       lCurrCarNumber = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].value;
                       if ((lCurrCarNumber != '') && (lCurrCarNumber != '0'))
-                          if (lCarNumber == 0)
+                          if (lCarNumber == 0) {
                               lCarNumber = lCurrCarNumber;
+                              lCurrCarLicence = _Peilut.firstChild.childNodes[j].cells[_COL_CAR_NUMBER].childNodes[0].title;
+                          }
                           else
                               if (lCurrCarNumber != lCarNumber)
                                   bMultiCarNum = true;
                   }
                 }
               }
-              if ((!bMultiCarNum) && (lCarNumber != 0)) {
+              if ((!bMultiCarNum) && (lCarNumber != 0)){
                   $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = lCarNumber;
-                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);                 
+                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("OldV", lCarNumber);
+                  $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = lCurrCarLicence;         
               }
     }                                        
     function chkHashlama(val,args){
