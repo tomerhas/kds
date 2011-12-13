@@ -1256,7 +1256,7 @@ namespace KdsBatch
         {
 
             int iMisparSidur;
-            float fErech216;
+            float fErech216, fSumDakotRechiv;
             DateTime dShatHatchalaSidur;
             DataRow[] _drSidurim;
             iMisparSidur = 0;
@@ -1277,10 +1277,10 @@ namespace KdsBatch
                         iErechElementimReka = oPeilut.CalcElementReka(iMisparSidur, dShatHatchalaSidur);
 
                         fErech216 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and KOD_RECHIV=" + clGeneral.enRechivim.SachKMVisaLepremia.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
-                        if (fErech216 > 0)
-                        {
-                            addRowToTable(clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), dShatHatchalaSidur, iMisparSidur, float.Parse(iErechElementimReka.ToString()));
-                        }
+                        fSumDakotRechiv = float.Parse(Math.Round((((iErechElementimReka / 1.2) + fErech216) / 50) * 60 * 0.33, MidpointRounding.AwayFromZero).ToString());
+
+                        addRowToTable(clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(), dShatHatchalaSidur, iMisparSidur, float.Parse(iErechElementimReka.ToString()));
+                       
                     }
                 }
 
@@ -6751,6 +6751,50 @@ namespace KdsBatch
             }
         }
 
+        public float CalcYemeyHeadrut(int iKodRechiv, float fMichsaYomit)
+        {
+            DataRow[] drSidurim;
+            int iMisparSidur;
+            float fErech, fDakotNochehut;
+            string sSidurimMeyuchadim;
+            DateTime dShatHatchalaSidur = DateTime.MinValue;
+            DateTime dShatGmarLetashlum, dShatHatchalaLetashlum;
+            iMisparSidur = 0;
+            try
+            {
+                fErech = 0;
+                sSidurimMeyuchadim = GetSidurimMeyuchRechiv(iKodRechiv);
+                if (sSidurimMeyuchadim.Length > 0)
+                {
+                   
+                    drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and MISPAR_SIDUR NOT IN(" + sSidurimMeyuchadim + ")");
+                    for (int I = 0; I < drSidurim.Length; I++)
+                    {
+                        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        fDakotNochehut = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                        dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+
+                        if (fDakotNochehut == 0)
+                            fDakotNochehut = Math.Min(fMichsaYomit, float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()));
+
+                        fErech += fDakotNochehut;
+                    }
+                }
+                return fErech;
+            }
+
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, iKodRechiv, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
+            }
+            finally
+            {
+                drSidurim = null;
+            }
+        }
         private void CalcSachDakot(int iKodRechiv)
         {
             string sSidurimMeyuchadim, sSugeySidur;
