@@ -541,16 +541,16 @@
    }
    function ChkCardVld(){   
      var sXML,sSidurDate,dStartHour,dEndHour,SidurTime;   
-     var bValid=true;var sMsg='';var sCallBack='';     
-     var HashForDay = document.getElementById("HashlamaForDayValue").value;
-     var HashReason = document.getElementById("ddlHashlamaReason").value;
+     var bValid=true;var sMsg='';var sCallBack='';
+     var HashForDay = $get("HashlamaForDayValue").value;
+     var HashReason = $get("ddlHashlamaReason").value;
      document.getElementById("hidExecInputChg").value = "0";
-  
-     if ((Number(HashForDay)==1) && (Number(HashReason) == -1)){      
+
+     if ((Number(HashForDay) == 1) && (Number(HashReason) == -1) && (!($get("ddlHashlamaReason").disabled))) {      
         sMsg ='סומנה השלמה ליום, יש לדווח סיבה'; 
         bValid = false;
      }
-     if ((Number(HashForDay)!=1) && (Number(HashReason) > 0)){      
+     if ((Number(HashForDay)!=1) && (Number(HashReason) > 0) && (!($get("ddlHashlamaReason").disabled))){      
         sMsg =sMsg.concat('סומנה סיבת השלמה ללא סימון השלמה');
         bValid = false;
      }  
