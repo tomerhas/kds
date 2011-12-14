@@ -724,7 +724,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oMaskTextBox.DisplayMoney = oMaskEditSymbol;
             oMaskTextBox.ErrorTooltipEnabled = true;
             oMaskTextBox.ID = sTargetControlId + sMaskId + iIndex.ToString();
-            
+            oMaskTextBox.AutoCompleteValue = "00:00";
+
             return oMaskTextBox;
         }
         catch (Exception ex)
