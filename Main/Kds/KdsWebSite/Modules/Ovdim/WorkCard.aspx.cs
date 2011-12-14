@@ -425,7 +425,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     else { 
                         hidErrChg.Value = "0";
-                        oBatchManager.CardStatus = (clGeneral.enCardStatus) ViewState["CardStatus"];
+                        oBatchManager.CardStatus = (clGeneral.enCardStatus)ViewState["CardStatus"];
                     } //נחזיר את הדגל כך שיקראו לשגויים בפעם הבאה }
                 }
             }

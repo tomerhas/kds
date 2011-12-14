@@ -406,7 +406,8 @@ namespace KdsBatch
         private void SetOvedYomAvodaDetails(int iMisparIshi, DateTime dCardDate)
         {
             try{
-           oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dCardDate);
+                  oOvedYomAvodaDetails = new clOvedYomAvoda(iMisparIshi, dCardDate);
+                  _CardStatus =(clGeneral.enCardStatus)oOvedYomAvodaDetails.iStatus;
             }
             catch (Exception ex)
             {
@@ -699,6 +700,8 @@ namespace KdsBatch
                 {
                     _oOvedYomAvodaDetails = oOvedYomAvodaDetails;
 
+                   
+
                     //Check01
                    if (CheckErrorActive(1)) IsHrStatusValid01(dCardDate, iMisparIshi, ref dtErrors);
 
@@ -776,7 +779,8 @@ namespace KdsBatch
                     }
                     else
                     {
-                        _CardStatus = clGeneral.enCardStatus.Valid;
+                        if (!_CardStatus.Equals(clGeneral.enCardStatus.Calculate))
+                            _CardStatus = clGeneral.enCardStatus.Valid;
                     }
                     if (_CardStatus.GetHashCode() != oOvedYomAvodaDetails.iStatus)
                     {
