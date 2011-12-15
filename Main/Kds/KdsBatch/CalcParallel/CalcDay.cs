@@ -356,15 +356,6 @@ namespace KdsBatch
                 // דקות תפקיד בשישי ( רכיב 193)
                 CalcRechiv193();
 
-                //יום היעדרות  (רכיב 66) 
-                CalcRechiv66();
-
-                //דקות היעדרות (רכיב 220) 
-                CalcRechiv220();
-
-                // שעות היעדרות ( רכיב 5) 
-                CalcRechiv5();
-
                 //נוכחות לפרמיה - רישום ( רכיב 209): 
                 CalcRechiv209();
 
@@ -406,6 +397,14 @@ namespace KdsBatch
 
                 UpdateRechiv1();
 
+                //יום היעדרות  (רכיב 66) 
+                CalcRechiv66();
+
+                //דקות היעדרות (רכיב 220) 
+                CalcRechiv220();
+
+                // שעות היעדרות ( רכיב 5) 
+                CalcRechiv5();
                 //דקות רגילות (רכיב 32
                 CalcRechiv32();
 
