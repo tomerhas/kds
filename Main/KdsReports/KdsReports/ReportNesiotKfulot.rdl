@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.65833cm</Width>
+              <Width>20.65831cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.16156cm</Height>
+              <Height>6.41372cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -53,7 +53,7 @@
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>2.5cm</Height>
+                                <Height>2.60529cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -86,60 +86,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.66174cm</Height>
-                                <TablixCells>
-                                  <TablixCell>
-                                    <CellContents>
-                                      <Textbox Name="Textbox8">
-                                        <CanGrow>true</CanGrow>
-                                        <KeepTogether>true</KeepTogether>
-                                        <Paragraphs>
-                                          <Paragraph>
-                                            <TextRuns>
-                                              <TextRun>
-                                                <Value>                     לא נמצאו רשומות לחתך שהתבקש</Value>
-                                                <Style>
-                                                  <FontSize>14pt</FontSize>
-                                                  <Color>Red</Color>
-                                                </Style>
-                                              </TextRun>
-                                            </TextRuns>
-                                            <Style>
-                                              <TextAlign>Center</TextAlign>
-                                            </Style>
-                                          </Paragraph>
-                                        </Paragraphs>
-                                        <rd:DefaultName>Textbox2</rd:DefaultName>
-                                        <ZIndex>1</ZIndex>
-                                        <Visibility>
-                                          <Hidden>=iif(CountRows() &gt; 0, True, False)</Hidden>
-                                        </Visibility>
-                                        <Style>
-                                          <Border>
-                                            <Style>None</Style>
-                                          </Border>
-                                          <PaddingLeft>2pt</PaddingLeft>
-                                          <PaddingRight>2pt</PaddingRight>
-                                          <PaddingTop>2pt</PaddingTop>
-                                          <PaddingBottom>2pt</PaddingBottom>
-                                        </Style>
-                                      </Textbox>
-                                      <ColSpan>10</ColSpan>
-                                    </CellContents>
-                                  </TablixCell>
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
-                                </TablixCells>
-                              </TablixRow>
-                              <TablixRow>
-                                <Height>0.5559cm</Height>
+                                <Height>0.66119cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -173,17 +120,15 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>6</ColSpan>
+                                      <ColSpan>4</ColSpan>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell />
                                   <TablixCell />
                                   <TablixCell />
-                                  <TablixCell />
-                                  <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox132">
+                                      <Textbox Name="Textbox87">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -197,11 +142,11 @@
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Center</TextAlign>
+                                              <TextAlign>Left</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox132</rd:DefaultName>
+                                        <rd:DefaultName>Textbox87</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Style>None</Style>
@@ -213,16 +158,18 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <ColSpan>4</ColSpan>
+                                      <ColSpan>6</ColSpan>
                                     </CellContents>
                                   </TablixCell>
+                                  <TablixCell />
+                                  <TablixCell />
                                   <TablixCell />
                                   <TablixCell />
                                   <TablixCell />
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.34423cm</Height>
+                                <Height>0.44952cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -271,7 +218,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>1.11446cm</Height>
+                                <Height>1.21975cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -654,7 +601,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.91151cm</Height>
+                                <Height>1.0168cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1022,38 +969,14 @@
                           </TablixColumnHierarchy>
                           <TablixRowHierarchy>
                             <TablixMembers>
-                              <TablixMember>
-                                <KeepWithGroup>After</KeepWithGroup>
-                                <RepeatOnNewPage>true</RepeatOnNewPage>
-                              </TablixMember>
+                              <TablixMember />
+                              <TablixMember />
                               <TablixMember>
                                 <Visibility>
                                   <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
                                 </Visibility>
-                                <KeepWithGroup>After</KeepWithGroup>
-                                <RepeatOnNewPage>true</RepeatOnNewPage>
                               </TablixMember>
-                              <TablixMember>
-                                <Visibility>
-                                  <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
-                                </Visibility>
-                                <KeepWithGroup>After</KeepWithGroup>
-                                <RepeatOnNewPage>true</RepeatOnNewPage>
-                              </TablixMember>
-                              <TablixMember>
-                                <Visibility>
-                                  <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
-                                </Visibility>
-                                <KeepWithGroup>After</KeepWithGroup>
-                                <RepeatOnNewPage>true</RepeatOnNewPage>
-                              </TablixMember>
-                              <TablixMember>
-                                <Visibility>
-                                  <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
-                                </Visibility>
-                                <KeepWithGroup>After</KeepWithGroup>
-                                <RepeatOnNewPage>true</RepeatOnNewPage>
-                              </TablixMember>
+                              <TablixMember />
                               <TablixMember>
                                 <TablixMembers>
                                   <TablixMember>
@@ -1063,16 +986,15 @@
                                     </TablixMembers>
                                   </TablixMember>
                                 </TablixMembers>
-                                <Visibility>
-                                  <Hidden>=iif(CountRows() &gt; 0, False, True)</Hidden>
-                                </Visibility>
                               </TablixMember>
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <LayoutDirection>RTL</LayoutDirection>
                           <KeepTogether>true</KeepTogether>
                           <DataSetName>DsNesiotKfulot</DataSetName>
-                          <Height>6.08784cm</Height>
+                          <Top>0.27597cm</Top>
+                          <Left>0cm</Left>
+                          <Height>5.95255cm</Height>
                           <Width>20.65831cm</Width>
                           <Style>
                             <Border>
@@ -1091,6 +1013,9 @@
                         </Tablix>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
+                      <Visibility>
+                        <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0 ,false ,true)</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1120,23 +1045,241 @@
                   <BreakLocation>Between</BreakLocation>
                 </PageBreak>
               </Group>
+              <Visibility>
+                <Hidden>=iif(CountRows("DsNesiotKfulot")&gt;0,false ,true )</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsNesiotKfulot</DataSetName>
-        <Height>6.16156cm</Height>
-        <Width>20.65833cm</Width>
+        <Top>1.38883cm</Top>
+        <Height>6.41372cm</Height>
+        <Width>20.65831cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Tablix>
+      <Tablix Name="Tablix4">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>10.67086cm</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.66646cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Rectangle Name="Rectangle4">
+                      <ReportItems>
+                        <Textbox Name="Textbox58">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="תחנה- " &amp; Fields!KOD_SNIF_TNUAA.Value &amp; Fields!TEUR_SNIF.Value</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox58</rd:DefaultName>
+                          <Top>0.06646cm</Top>
+                          <Height>0.6cm</Height>
+                          <Width>10.67086cm</Width>
+                          <Visibility>
+                            <Hidden>=iif( reportItems!tbNumRows.Value &gt; 0, true,false)</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Rectangle>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details2" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DsSnif</DataSetName>
+        <Top>3.53722cm</Top>
+        <Left>0.03528cm</Left>
+        <Height>0.66646cm</Height>
+        <Width>10.67086cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Textbox Name="tbNumRows">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=CountRows("DsNesiotKfulot")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <Top>7.94366cm</Top>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>2</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Subreport Name="Subreport2">
+        <ReportName>GeneralHeader</ReportName>
+        <Parameters>
+          <Parameter Name="P_Title">
+            <Value>=" נסיעות כפולות מ- " &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value) &amp; " עד " &amp; Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value)</Value>
+          </Parameter>
+        </Parameters>
+        <Left>0cm</Left>
+        <Height>2.87509cm</Height>
+        <Width>20.65831cm</Width>
+        <ZIndex>3</ZIndex>
+        <Visibility>
+          <Hidden>=iif( reportItems!tbNumRows.Value &gt; 0, true,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Subreport>
+      <Textbox Name="Textbox6">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>                לא נמצאו רשומות לחתך שהתבקש                                                </Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>2.82257cm</Top>
+        <Left>0cm</Left>
+        <Height>0.67937cm</Height>
+        <Width>20.65831cm</Width>
+        <ZIndex>4</ZIndex>
+        <Visibility>
+          <Hidden>=iif( reportItems!tbNumRows.Value &gt; 0, true,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox54">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(Parameters!P_EZOR.Value=-1, "  אזור: הכל   ",iif(Parameters!P_EZOR.Value=1,"  אזור: דרום   ",iif(Parameters!P_EZOR.Value=2,"  אזור: צפון   ","  אזור: ירושלים   ")))</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox54</rd:DefaultName>
+        <Top>3.55427cm</Top>
+        <Left>10.70614cm</Left>
+        <Height>0.6cm</Height>
+        <Width>8.71745cm</Width>
+        <ZIndex>5</ZIndex>
+        <Visibility>
+          <Hidden>=iif( reportItems!tbNumRows.Value &gt; 0, true,false)</Hidden>
+        </Visibility>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>6.26739cm</Height>
+    <Height>8.91904cm</Height>
     <Style />
   </Body>
-  <Width>20.65833cm</Width>
+  <Width>20.69359cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -1253,8 +1396,8 @@
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="KOD_SNIF_AV">
-          <DataField>KOD_SNIF_AV</DataField>
+        <Field Name="KOD_SNIF_TNUAA">
+          <DataField>KOD_SNIF_TNUAA</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TEUR_SNIF">
