@@ -471,12 +471,12 @@ function chkMkt(oRow) {
              oColCancel = $get(Row.id).cells[_COL_CANCEL].childNodes[0];
              oColPeilutCancel = $get(Row.id).cells[_COL_CANCEL_PEILUT].childNodes[0];
              if ((oColCancel.className == "ImgCheckedPeilut") || (oColCancel.className == "ImgCheckedDisablePeilut")) {
-                 SetPeilutStatus(Row.id, true, iSidur);
+                 SetPeilutStatus(Row.id, true, iSidur,-1);
                  //oColCancel.className = "ImgCancel";
                  oColPeilutCancel.value = "1";
              }
              else {
-                 SetPeilutStatus(Row.id, false, iSidur);
+                 SetPeilutStatus(Row.id, false, iSidur,-1);
                  //oColCancel.className = "ImgChecked";
                  oColPeilutCancel.value = "0";
              }             
@@ -530,7 +530,7 @@ function chkMkt(oRow) {
      }
      return false;
     }    
-    function SetPeilutStatus(RowId,bFlag, iSidur)
+    function SetPeilutStatus(RowId,bFlag, iSidur, iSidurIndex)
     {   SetBtnChanges();//SetLvlChg(3);
         var oRow=$get(RowId);
         var oColPeilutCancel=oRow.cells[_COL_CANCEL_PEILUT].firstChild;
@@ -560,12 +560,23 @@ function chkMkt(oRow) {
           oColTor.disabled = bFlag;       
         }}
         if (oColCancel.className != undefined){
-            if (bFlag) {
-                if (oColCancel.getAttribute("OrgEnabled") == "1") {
-                    oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+            if (bFlag){
+                //if (oColCancel.getAttribute("OrgEnabled") == "1") {
+                if (iSidur == 1) {//הגענו מביטול סידור
+                    if ($get("lstSidurim_lblSidurCanceled".concat(iSidurIndex)).value == "1") {
+                        oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                    }
+                    else {
+                        oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
+                    }
                 }
                 else {
-                    oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
+                    if (oColCancel.getAttribute("OrgEnabled") == "1") {
+                        oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                    }
+                    else {
+                        oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
+                    }
                 }
             }
             else {
@@ -627,8 +638,8 @@ function chkMkt(oRow) {
      EnableField("lstSidurim_txtSGL", iIndex, bFlag);
      var _AddPeilut = $get("lstSidurim_imgAddPeilut".concat(iIndex));
      if (_AddPeilut != undefined)
-         _AddPeilut.disabled = bFlag;
-
+         _AddPeilut.disabled = bFlag;        
+     
      if ($get("lstSidurim_cImgS".concat(iIndex))!=null){  
         $get("lstSidurim_cImgS".concat(iIndex)).disabled = bFlag;}
      var sIndex = String("00".concat(String(iIndex)));
@@ -636,8 +647,9 @@ function chkMkt(oRow) {
      var oGrid = $get("lstSidurim_".concat(sIndex));
      if (oGrid!=null){     
          for (i=1; i<oGrid.rows.length; i++){ 
-          if ((oGrid.rows[i].id)!=''){        
-          SetPeilutStatus(oGrid.rows[i].id,bFlag,1);}
+          if ((oGrid.rows[i].id)!=''){
+              SetPeilutStatus(oGrid.rows[i].id, bFlag, 1, iIndex);
+          }
       } 
      } 
     }
