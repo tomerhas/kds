@@ -685,15 +685,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ////אם הגענו לשגוי הבא, נעלה הודעה
             //if (bNextCardErrorNotFound)
             //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
-            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
+            
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
-            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);        
-            if (hidUpdateBtn.Value=="false")                
-                btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");  
+            btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
+            if (hidUpdateBtn.Value == "false")
+                sScript = sScript + "$get('btnUpdateCard').className ='btnWorkCardUpadte';";
+            //btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");  
             else
-                btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");  
+                sScript = sScript + "$get('btnUpdateCard').className ='btnWorkCardUpadteDis';";               
+               // btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");  
+
+
+            ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }
         //Before Load page, save field data for compare
         //_WorkCardBeforeChanges = InitWorkCardObject();

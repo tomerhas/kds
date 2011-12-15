@@ -1227,7 +1227,7 @@ function chkMkt(oRow) {
             if (_bScreenChanged) {
                 if (!ChkCardVld())
                     return false;
-                $("#hidSave")[0].value = "1";
+                $("#hidSave")[0].value = "1";          
                 __doPostBack('btnConfirm', '');
             }
             var ReturnWin;
@@ -1242,6 +1242,7 @@ function chkMkt(oRow) {
            
             var dPeilutDate = new Date();
             dPeilutDate.setFullYear(CardDate.substr(6, 4));
+
             dPeilutDate.setMonth((Number(CardDate.substr(3, 2)) - 1).toString());
             dPeilutDate.setDate(CardDate.substr(0, 2));
             dPeilutDate.setDate(dPeilutDate.getDate() + Number(iAddDay));
@@ -1258,7 +1259,7 @@ function chkMkt(oRow) {
                 bScreenChanged = false;
                 RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
-                if (_bScreenChanged) {
+                if (_bScreenChanged){
                     $get("btnUpdateCard").disabled = false;
                     $get("btnUpdateCard").className = "btnWorkCardUpadte";
                 }              
