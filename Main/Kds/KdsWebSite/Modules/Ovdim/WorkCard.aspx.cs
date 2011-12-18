@@ -347,14 +347,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ErrorImage(imgDayHaslamaErr, false);
         if (LoginUser.IsLimitedUser)
         {
-            btnDrvErrors.Style.Add("Display", "block");
+           // btnDrvErrors.Style.Add("Display", "block");
             lnkLastUpdateUser.Disabled = true;            
             lblId.Style.Add("Display", "block");
             lnkId.Style.Add("Display", "none");
         }
         else
         {
-            btnDrvErrors.Style.Add("Display", "none");
+          //  btnDrvErrors.Style.Add("Display", "none");
             lnkLastUpdateUser.Disabled = false;
             lblId.Style.Add("Display", "none");
             lnkId.Style.Add("Display", "block");
@@ -463,6 +463,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clnDate.Text = sNextErrorCardDate;        
         return bFound;
     }
+    protected void SetRashemetVars(bool bRashemet)
+    {
+        Session["ProfileRashemet"] = bRashemet;
+        hidRashemet.Value = bRashemet ? "1" : "0";
+        //כפתור מסך שגיאות
+        //  שאינו מסוג רשמת/רשמת על/מנהל מערכת. הכפתור יוצג גם בכניסה מעמדת נהג וגם בכניסה מ- PC. 
+        if (bRashemet)
+            btnDrvErrors.Style.Add("Display", "none");
+        else
+            btnDrvErrors.Style.Add("Display", "block");
+    }
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
@@ -488,8 +499,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oBatchManager = new clBatchManager(iMisparIshi, dDateCard);
             SetPageDefault();
             bRashemet = LoginUser.IsRashemetProfile(LoginUser);
-            Session["ProfileRashemet"] = bRashemet;
-            hidRashemet.Value = bRashemet ? "1" : "0";
+            
+            SetRashemetVars(bRashemet);
             hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1") ? "true" : "false";
             iMisparIshiIdkunRashemet = ((int.Parse)(LoginUser.UserInfo.EmployeeNumber)).Equals(iMisparIshi) ? iMisparIshi : 0;
 
