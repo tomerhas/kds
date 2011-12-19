@@ -12182,7 +12182,7 @@ namespace KdsBatch
                             if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
                             {
                                 bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && iSidurZakaiLenesiaKnisa == -1))
+                                if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLenesiaKnisa == -1))
                                     iSidurZakaiLenesiaKnisa = i;
                                 bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
                                 if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
@@ -12438,7 +12438,7 @@ namespace KdsBatch
                                 if (bSidurZakaiLHalbash)
                                 {
                                     bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if ((bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) || (oSidur.sHalbashKod == "1" && iSidurZakaiLehalbashaKnisa == -1))
+                                    if ((bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) || (oSidur.sHalbashKod == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLehalbashaKnisa == -1))
                                         iSidurZakaiLehalbashaKnisa = i;
                                     bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bYetizaValid || oSidur.sHalbashKod == "1")
