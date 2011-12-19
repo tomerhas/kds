@@ -548,7 +548,10 @@
                     </td>                                                            
             </tr>
         </table>
-       </ContentTemplate>             
+       </ContentTemplate>      
+       <Triggers>                                                                                                                                               
+           <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                  
+        </Triggers>             
       </asp:UpdatePanel>  
       <%--<asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
@@ -568,7 +571,7 @@
                     <td class="WorkCardErrMsg" width="520px"><asp:Label ID="lblErrors" runat="server" >פירוט שגיאה</asp:Label></td>
                 </tr>
                 <tr style="height: 40px">
-                   <td class="WorkCardPanelTopTableMessage" id="Td1" align="right" width="520px"><asp:Label ID="Label8" runat="server"  >תיאור השגיאה</asp:Label></td>                      
+                   <td class="WorkCardPanelTopTableMessage" id="Td1" align="right" width="520px"><asp:Label ID="Label8" runat="server">תיאור השגיאה</asp:Label></td>                      
                 </tr>
                 <tr style="height: 170px" valign="top">                    
                    <td id="tbErr" align="right"></td>                      
@@ -625,8 +628,7 @@
                             Width="80px" Height="30px" CausesValidation="false" />
                     </td>                                       
                 </tr>              
-            </table>      
-                  
+            </table>                        
       </asp:Panel>     
         <input type="button" ID="btnCopy" runat="server" style="display: none;" />
         <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="500" Y="280" PopupControlID="paCopy"

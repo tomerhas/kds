@@ -622,7 +622,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         Ax.ID = "Ax" + iIndex;
         Ax.Collapsed = false;
         Ax.CollapsedSize = 0;
-        Ax.ExpandedSize = (iPeilutSize)+35;
+        Ax.ExpandedSize = (iPeilutSize)+15;
         Ax.AutoCollapse = false;
         Ax.AutoExpand = false;
         Ax.ScrollContents = false;
@@ -1189,8 +1189,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             grdPeiluyot.RowStyle.CssClass = "WCard_GridRow";//"GridRow";
             
            
-            grdPeiluyot.CellPadding = 5;
-            grdPeiluyot.CellSpacing = 5;
+            grdPeiluyot.CellPadding = 1;
+            grdPeiluyot.CellSpacing = 1;
             //grdPeiluyot.BorderStyle = BorderStyle.Solid;
             
             //רווח
