@@ -151,8 +151,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      else if (e.Row.RowType == DataControlRowType.DataRow)
      {
          e.Row.Cells[(int)COL_AVAR_LASACHAR].Style.Add("display", "none");
-         //if (e.Row.Cells[(int)COL_AVAR_LASACHAR].Text == "1")
-        // ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).Enabled = true;
+         if (e.Row.Cells[(int)COL_AVAR_LASACHAR].Text == "1")
+             ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).Enabled = true;
          ((Button)e.Row.Cells[COL_BUTTON].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
          ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
      }

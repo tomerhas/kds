@@ -7,7 +7,7 @@ using KdsLibrary;
 using KdsLibrary.DAL;
 using System.IO;
 using System.Configuration;
-
+using KdsLibrary.UDT;
 namespace KdsBatch
 {
    public class clTransferToHilan
@@ -47,8 +47,10 @@ namespace KdsBatch
            int iStatus = 0;
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
            string sChodeshIbud,sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakara;
-           
+           PirteyOved oPirteyOved;
            DateTime dChodesh;
+           COLL_MISPAR_ISHI_SUG_CHISHUV objCollMisparIshiSugChishuv = new COLL_MISPAR_ISHI_SUG_CHISHUV();
+           OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv; 
            int iDirug, iDarga;
 
            sFileNameChaverim = "EGD3TEST.txt"; //"EGD3NOCH.txt";
@@ -94,9 +96,14 @@ namespace KdsBatch
                            if (i==0)
                             sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                           _PirteyOved.Add(new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i], dtRechivim));
-                             
-                           if (i%50 ==0)
+                            oPirteyOved = new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i], dtRechivim);
+                            _PirteyOved.Add(oPirteyOved);
+
+                            objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();    
+                            SetSugChishuvUDT(iMisparIshi, dChodesh,oPirteyOved, ref objMisparIshiSugChishuv);
+                            objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
+                           
+                            if (i%50 ==0)
                                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
                        //}
                        //catch (Exception ex)
@@ -118,6 +125,7 @@ namespace KdsBatch
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
                    //DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
+                   InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);
 
                    iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
@@ -144,7 +152,32 @@ namespace KdsBatch
                clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "Transfer: " + ex.Message);
            }
        }
+       private void SetSugChishuvUDT(int mispar_ishi,DateTime dTaarich, PirteyOved oPirteyOved, ref OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv)
+       {
+           try
+           {
+               objMisparIshiSugChishuv.MISPAR_ISHI =mispar_ishi;
+               objMisparIshiSugChishuv.TAARICH = dTaarich;
+               objMisparIshiSugChishuv.BAKASHA_ID = oPirteyOved.iBakashaIdRizatChishuv;
+               objMisparIshiSugChishuv.SUG_CHISHUV = 0;
 
+               if (oPirteyOved.iDirug != 85 && oPirteyOved.iDarga != 30)
+               {
+                   if ((oPirteyOved.oErua413 != null && oPirteyOved.oErua413.bKayamEfreshBErua) ||
+                       (oPirteyOved.oErua415 != null && oPirteyOved.oErua415.bKayamEfreshBErua) ||
+                       (oPirteyOved.oErua416 != null && oPirteyOved.oErua416.bKayamEfreshBErua) || 
+                       (oPirteyOved.oErua417 != null && oPirteyOved.oErua417.bKayamEfreshBErua) ||
+                       (oPirteyOved.oErua418 != null && oPirteyOved.oErua418.bKayamEfreshBErua) || 
+                       (oPirteyOved.oErua419 != null && oPirteyOved.oErua419.bKayamEfreshBErua) ||
+                       (oPirteyOved.oErua589 != null && oPirteyOved.oErua589.bKayamEfreshBErua) )
+                        objMisparIshiSugChishuv.SUG_CHISHUV = 1;
+               }
+           }
+           catch (Exception ex)
+           {
+               throw (ex);
+          }
+       }
        private void CloseFile()
        {
            if (!(sFileStrCh == null))
@@ -1425,6 +1458,27 @@ namespace KdsBatch
 
        //    return fErech;
        //}
+
+       private void InserIntoTableSugChishuv(COLL_MISPAR_ISHI_SUG_CHISHUV objCollMisparIshiSugChishuv, long lRequestNumToTransfer)
+       {
+           DataSet ds = new DataSet();
+           clDal oDal = new clDal();
+
+           try
+           {
+               if (!objCollMisparIshiSugChishuv.IsNull)
+               {
+                   oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNumToTransfer, ParameterDir.pdInput);
+                   oDal.AddParameter("p_coll_chishuv_sug_sidur", ParameterType.ntOracleArray, objCollMisparIshiSugChishuv, ParameterDir.pdInput, "COLL_MISPAR_ISHI_SUG_CHISHUV");
+                   oDal.ExecuteSP(clDefinitions.cProInsertMisparIshiSugChishuv);
+               }
+           }
+           catch (Exception ex)
+           {
+               clLogBakashot.SetError(_lBakashaId, "E", 0, "InserIntoTableSugChishuv: " + ex.Message);
+               throw ex;
+           }
+       }
 
         private DataSet GetOvdimToTransfer(long lBakashaId)
         {

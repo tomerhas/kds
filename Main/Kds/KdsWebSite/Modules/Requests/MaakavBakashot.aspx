@@ -75,10 +75,10 @@
                          <asp:BoundField DataField="TEUR_STATUS_BAKASHA" HeaderText="סטטוס" SortExpression="TEUR_STATUS_BAKASHA" ItemStyle-Width="45px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                          <asp:HyperLinkField  DataTextField="bakasha_id" NavigateUrl="#"  HeaderText="מספר בקשה" SortExpression="bakasha_id" ItemStyle-Width="50px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" />
                          <asp:BoundField DataField="TEUR_SUG_BAKASHA" HeaderText="סוג בקשה" SortExpression="TEUR_SUG_BAKASHA" ItemStyle-Width="80px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                         <asp:BoundField DataField="TEUR" HeaderText="תאור" SortExpression="TEUR" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
+                         <asp:BoundField DataField="TEUR" HeaderText="תאור" SortExpression="TEUR" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-BorderWidth="1px"/>
                          <asp:BoundField DataField="ZMAN_HATCHALA" HeaderText="זמן תחילת ריצה" SortExpression="ZMAN_HATCHALA" ItemStyle-Width="80px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"/>
                          <asp:BoundField DataField="ZMAN_Siyum" HeaderText="זמן סיום ריצה" SortExpression="ZMAN_Siyum" ItemStyle-Width="80px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"   DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"/>
-                          <asp:BoundField DataField="USER_NAME" HeaderText="שם מפעיל הבקשה" SortExpression="USER_NAME" ItemStyle-CssClass="ItemRow" ItemStyle-Width="90px" HeaderStyle-CssClass="GridHeader" />
+                          <asp:BoundField DataField="USER_NAME" HeaderText="שם מפעיל הבקשה" SortExpression="USER_NAME" ItemStyle-CssClass="ItemRow" ItemStyle-Width="90px" HeaderStyle-CssClass="GridHeader" ItemStyle-BorderWidth="1px"/>
                          <asp:BoundField DataField="Taarich_Haavara_Lesachar" HeaderText=" תאריך העברה לשכר" SortExpression="Taarich_Haavara_Lesachar" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" DataFormatString="{0:dd/MM/yyyy  HH:mm}" HtmlEncodeFormatString="true"  ItemStyle-Width="80px" />
                       </Columns> 
                     <AlternatingRowStyle CssClass="GridAltRow"  />

@@ -101,8 +101,8 @@ namespace KdsBatch.Premia
             List<PremiaItem> stationItems = new List<PremiaItem>();
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr[GetExcelColumnIndex("W")].ToString().Equals(NOT_VISIBLE_ROW_COMPARE_VALUE) ||
-                    dt.Rows.IndexOf(dr)<FIRST_DATA_ROW_INDEX) continue;
+              //  if (dr[GetExcelColumnIndex("W")].ToString().Equals(NOT_VISIBLE_ROW_COMPARE_VALUE) ||
+                if (dt.Rows.IndexOf(dr)<FIRST_DATA_ROW_INDEX) continue;
                 var item = PremiaItem.GetItemFromExcelDataRow(dr);
                 item.RechivCode = GetDictionaryValueOfPremiaCode(item.PremiaCode,
                     "KOD_RACHIV_Premia");

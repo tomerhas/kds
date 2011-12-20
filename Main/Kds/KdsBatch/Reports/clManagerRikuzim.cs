@@ -125,9 +125,8 @@ namespace KdsBatch.Reports
 
         protected override string SetNameOfReportFile(clReport CurrentReport)
         {
-            return "Rikuz_" + CurrentReport.Month.Year.ToString().Substring(2, 2) + 
-                    CurrentReport.MisparIshi;
-                                          
+            return CurrentReport.Month.ToString("yyMM") +  CurrentReport.MisparIshi; //, CurrentReport.Month.Year.ToString().Substring(2, 2) +
+                //  CurrentReport.Month.Month.ToString() + CurrentReport.MisparIshi;
         }
 
         protected override List<clDestinationReport> getDestinationReports(clReport CurrentReport)
@@ -142,22 +141,27 @@ namespace KdsBatch.Reports
 
         protected override void FillDestinations()
         {
+            string PathFolderRikuzim; 
+            //string PathFolder = @"C:\\PrintFiles\\kds\\Rikuzim\\";//תקייה כללית לכל הריכוזים
 
-            string PathMainFolder = @"C:\\PrintFiles\\kds\\Rikuzim\\";//תקייה כללית לכל הריכוזים
             DataRow[] drDest;//= new DataRow();
             try
             {
                 foreach (clReport drReport in _Reports)
                 {
+                    drDest = _dtDestinations.Select("MISPAR_ISHI=" + drReport.MisparIshi + " and taarich=Convert('" + drReport.Month.ToShortDateString() + "', 'System.DateTime')");
                    
+                    if (drDest[0]["SUG_CHISHUV"].ToString() == "0")
+                        PathFolderRikuzim = ConfigurationSettings.AppSettings["fullPhysPathRikuzDoc"];
+                    else PathFolderRikuzim = ConfigurationSettings.AppSettings["fullPhysPathHefreshDoc"];
+
                     _DestinationReports.Add(new clDestinationReport(TypeSending.Folder,
                                             drReport.KodReport,
-                                            PathMainFolder,
+                                            PathFolderRikuzim,
                                             drReport.MisparIshi,
                                             drReport.Month));
 
-                    drDest = _dtDestinations.Select("EMAIL IS NOT NULL AND MISPAR_ISHI=" + drReport.MisparIshi + " and taarich=Convert('" + drReport.Month.ToShortDateString() + "', 'System.DateTime')");
-                    if (drDest.Length>0)
+                    if (drDest.Length > 0 && !string.IsNullOrEmpty(drDest[0]["EMAIL"].ToString()))
                     {
                         _DestinationReports.Add(new clDestinationReport(TypeSending.EMail,
                                                 drReport.KodReport,

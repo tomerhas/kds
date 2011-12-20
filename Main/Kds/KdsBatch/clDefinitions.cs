@@ -68,6 +68,7 @@ namespace KdsBatch
         public const string cProGetShgiotNoActive = "pkg_errors.pro_get_shgiot_no_active";
         public const string cProGetPremiaOvdimLechishuv = "pkg_batch.pro_get_ovdim_lehishuv_premiot";
         public const string cProUpdateChishuvPremia = "pkg_batch.pro_update_chishuv_premia";
+        public const string cProInsertMisparIshiSugChishuv = "pkg_batch.pro_ins_misparishi_sug_chishuv";
 
         private static List<int> SpecialSidurim = new List<int> { 99200 };
 

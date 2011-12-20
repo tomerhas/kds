@@ -104,14 +104,14 @@
                     <Columns>
                          <asp:BoundField DataField="sug_hodaa" HeaderText="סוג הודעה" SortExpression="sug_hodaa" ItemStyle-Width="65px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                           <asp:BoundField DataField="bakasha_id" HeaderText="מספר בקשה" SortExpression="bakasha_id, TAARICH_IDKUN_ACHARON" ItemStyle-Width="50px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                         <asp:BoundField DataField="TEUR_SUG_BAKASHA" HeaderText="סוג בקשה" SortExpression="TEUR_SUG_BAKASHA" ItemStyle-Width="60px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                         <asp:BoundField DataField="TEUR_SUG_BAKASHA" HeaderText="סוג בקשה" SortExpression="TEUR_SUG_BAKASHA" ItemStyle-Width="60px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-BorderWidth="1px"  />
                          <asp:BoundField DataField="TEUR_HODAA" HeaderText="תאור" SortExpression="TEUR_HODAA" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Left" />
                          <asp:BoundField DataField="TAARICH_IDKUN_ACHARON" HeaderText="תאריך עדכון" SortExpression="TAARICH_IDKUN_ACHARON" ItemStyle-Width="80px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"/>
                          <asp:BoundField DataField="KOD_YESHUT" HeaderText="קוד ישות" SortExpression="KOD_YESHUT" ItemStyle-CssClass="ItemRow" ItemStyle-Width="50px" HeaderStyle-CssClass="GridHeader" />
-                        <asp:BoundField DataField="mispar_ishi" HeaderText="מ. אישי" SortExpression="mispar_ishi" ItemStyle-CssClass="ItemRow" ItemStyle-Width="50px" HeaderStyle-CssClass="GridHeader" />
+                        <asp:BoundField DataField="mispar_ishi" HeaderText="מ. אישי" SortExpression="mispar_ishi" ItemStyle-CssClass="ItemRow" ItemStyle-Width="50px" HeaderStyle-CssClass="GridHeader" ItemStyle-BorderWidth="1px" />
                         <asp:BoundField DataField="taarich" HeaderText="תאריך" SortExpression="taarich" ItemStyle-Width="75px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"   DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                           <asp:BoundField DataField="MISPAR_SIDUR" HeaderText="מספר סידור" SortExpression="MISPAR_SIDUR" ItemStyle-CssClass="ItemRow" ItemStyle-Width="80px" HeaderStyle-CssClass="GridHeader" />
-                         <asp:BoundField DataField="SHAT_HATCHALA_SIDUR" HeaderText="שעת התחלת סידור" SortExpression="SHAT_HATCHALA_SIDUR" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" DataFormatString="{0:dd/MM/yyyy  HH:mm}" HtmlEncodeFormatString="true"  ItemStyle-Width="80px" />
+                         <asp:BoundField DataField="SHAT_HATCHALA_SIDUR" HeaderText="שעת התחלת סידור" SortExpression="SHAT_HATCHALA_SIDUR" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" DataFormatString="{0:dd/MM/yyyy  HH:mm}" HtmlEncodeFormatString="true" ItemStyle-BorderWidth="1px" ItemStyle-Width="80px" />
                          <asp:BoundField DataField="SHAT_YETZIA" HeaderText="שעת יציאת פעילות" SortExpression="SHAT_YETZIA" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" DataFormatString="{0:dd/MM/yyyy  HH:mm}" HtmlEncodeFormatString="true"  ItemStyle-Width="80px" />
                      
                       </Columns> 

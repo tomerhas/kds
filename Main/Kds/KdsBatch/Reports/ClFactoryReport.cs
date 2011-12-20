@@ -144,7 +144,7 @@ namespace KdsBatch.Reports
                             {
                                     if (!Directory.Exists(dest.Folder))
                                         Directory.CreateDirectory(dest.Folder);
-                                    info.CopyTo(dest.Folder + @"\" + info.Name);
+                                    info.CopyTo(dest.Folder + @"\" + info.Name,true);
                             }
                             else if ( dest.TypeSending == TypeSending.EMail)
                                     SendMailErrorEventArgs(info.FullName, dest.eMail, drReport.Teur);

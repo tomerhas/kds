@@ -25,7 +25,7 @@ namespace KdsBatch
         protected DataTable _dtDetailsChishuv;
         protected DataRow _drPirteyOved;
         private List<string> _sLine;
-        protected bool bKayamEfreshBErua=false;
+        public bool bKayamEfreshBErua=false;
 
         public clErua(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iKodErua)
         {
