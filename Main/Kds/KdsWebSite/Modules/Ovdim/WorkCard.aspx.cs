@@ -400,6 +400,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {       
                 oBatchManager.InitGeneralData();
                 oBatchManager.CardStatus = clGeneral.enCardStatus.Calculate;
+                ViewState["CardStatus"] = clGeneral.enCardStatus.Calculate;
                 bInpuDataResult = true;
                 bResult = true;
             }
@@ -422,6 +423,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         bInpuDataResult = oBatchManager.MainOvedErrors(iMisparIshi, dDateCard);
                         bResult = bInpuDataResult;
                         ViewState["CardStatus"] = oBatchManager.CardStatus;
+                        Session["Errors"] = oBatchManager.dtErrors;
                     }
                     else { 
                         hidErrChg.Value = "0";
@@ -431,7 +433,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             }
             if (!bResult)
             {
-
                 if ((Request.QueryString["Page"] != null) || ((Session["arrParams"] != null)))
                 {
                     //string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.location.href = '" + this.PureUrlRoot + "/Main.aspx';";

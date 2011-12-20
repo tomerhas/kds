@@ -6324,8 +6324,24 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           throw ex;
       }
     }
+    protected bool IsCarEnabled(bool bIdkunRashemet, bool bElementHachanatMechona, bool bBusMustOtoNumber,clKavim.enMakatType oMakatType, int iMisparKnisa)
+    {
+      return  ((!bIdkunRashemet)
+                &&  (!((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
+                && (!bElementHachanatMechona)
+                && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
+    }
+    protected bool IsMakatEnabled(bool bIdkunRashemet, bool bElementHachanatMechona, clKavim.enMakatType oMakatType, int iMisparKnisa)
+    {
+      return  ((!bIdkunRashemet) && 
+               (!bElementHachanatMechona) && 
+               (oMakatType != clKavim.enMakatType.mVisa) 
+               && (oMakatType != clKavim.enMakatType.mVisut)
+               && (!((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa>0))));
+    }
     protected void SetMakatNumber(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, int iSidurIndex, 
                                  bool bElementHachanatMechona,  ref clKavim.enMakatType oMakatType)
+                                
     {
         string sID, sMessage, sTargetControlId, sClientScriptFunction;
         TextBox oTxt;
@@ -6378,7 +6394,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
 
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "MAKAT_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
-            bool bEnabled = ((!bIdkunRashemet) && (!bElementHachanatMechona) && (oMakatType != clKavim.enMakatType.mVisa) && (oMakatType != clKavim.enMakatType.mVisut));
+            bool bEnabled = IsMakatEnabled(bIdkunRashemet, bElementHachanatMechona, oMakatType, iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && (oMakatType != clKavim.enMakatType.mVisa) && (oMakatType != clKavim.enMakatType.mVisut));
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));            
             
@@ -6489,7 +6505,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "OTO_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0]));
-            bool bEnabled = ((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
+            bool bEnabled = IsCarEnabled(bIdkunRashemet, bElementHachanatMechona, bBusMustOtoNumber, oMakatType,iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));
         }

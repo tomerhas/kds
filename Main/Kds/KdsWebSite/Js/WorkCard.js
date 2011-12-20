@@ -266,6 +266,7 @@
             $get("txtId").disabled = true;
             $get("txtName").disabled = true;
             $get("clnDate").disabled = true;
+            $get("hidErrChg").Value = "0";
         }        
     }
     function SetLvlChg(iLvl, iSidurIndex) {

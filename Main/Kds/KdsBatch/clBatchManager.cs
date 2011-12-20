@@ -778,9 +778,8 @@ namespace KdsBatch
                         _CardStatus = clGeneral.enCardStatus.Error;
                     }
                     else
-                    {
-                        if (!_CardStatus.Equals(clGeneral.enCardStatus.Calculate))
-                            _CardStatus = clGeneral.enCardStatus.Valid;
+                    {                        
+                       _CardStatus = clGeneral.enCardStatus.Valid;
                     }
                     if (_CardStatus.GetHashCode() != oOvedYomAvodaDetails.iStatus)
                     {
