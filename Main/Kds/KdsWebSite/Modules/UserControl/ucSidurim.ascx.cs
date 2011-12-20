@@ -256,7 +256,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             return _MisparIshiIdkunRashemet;
         }
     }
-    
+    public Table SidurimTable
+    {
+        get { return tbSidurim; }
+    }
     //protected void Page_PreRender(object sender, EventArgs e)
     //{
     //    //string sConn = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"];
@@ -4101,7 +4104,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected void CreateDDLResonOutCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {
         bool OrgEnable;
-        hCell = CreateTableCell("95px", "", "");
+        hCell = CreateTableCell("98px", "", "");
         DropDownList ddl = new DropDownList();
         ListItem Item = new ListItem();
         Image imgErr = new Image();
@@ -4116,7 +4119,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Items.Insert(0, Item);
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
-        ddl.Style.Add("width", "90px");
+        ddl.Style.Add("width", "80px");
         ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
         ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
@@ -4166,7 +4169,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }
     private void CreateDDLResonInCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {       
-        hCell = CreateTableCell("95px", "", "");
+        hCell = CreateTableCell("98px", "", "");
         DropDownList ddl = new DropDownList();
         ListItem Item = new ListItem();
         Image imgErr = new Image();
@@ -4184,7 +4187,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ddl.Items.Insert(0, Item);
             ddl.SelectedValue = (IsSidurShaon(ref oSidur)) ? oSidur.iKodSibaLedivuchYadaniIn.ToString() : "-1";
             
-            ddl.Style.Add("width", "90px");           
+            ddl.Style.Add("width", "80px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
@@ -6324,10 +6327,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           throw ex;
       }
     }
-    protected bool IsCarEnabled(bool bIdkunRashemet, bool bElementHachanatMechona, bool bBusMustOtoNumber,clKavim.enMakatType oMakatType, int iMisparKnisa)
+    protected bool IsCarEnabled(bool bIdkunRashemet, bool bElementHachanatMechona, bool bBusMustOtoNumber,clKavim.enMakatType oMakatType)
     {
-      return  ((!bIdkunRashemet)
-                &&  (!((oMakatType == clKavim.enMakatType.mKavShirut) && (iMisparKnisa > 0)))
+      return  ((!bIdkunRashemet)               
                 && (!bElementHachanatMechona)
                 && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
     }
@@ -6505,7 +6507,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //iMisparKnisa = int.Parse(e.Row.Cells[_COL_KNISA].Text);
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "OTO_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             oTxt = ((TextBox)(e.Row.Cells[_COL_CAR_NUMBER].Controls[0]));
-            bool bEnabled = IsCarEnabled(bIdkunRashemet, bElementHachanatMechona, bBusMustOtoNumber, oMakatType,iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
+            bool bEnabled = IsCarEnabled(bIdkunRashemet, bElementHachanatMechona, bBusMustOtoNumber, oMakatType);//((!bIdkunRashemet) && (!bElementHachanatMechona) && ((((bBusMustOtoNumber) && (oMakatType == clKavim.enMakatType.mElement)) || (oMakatType != clKavim.enMakatType.mElement))));
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             oTxt.Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));
         }

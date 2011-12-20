@@ -1575,7 +1575,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         
         //tbValWorkDay.Disabled = (!bEnabled);
         tblPart.Disabled = (!bEnabled);
-        tbSidur.Disabled = (!bEnabled);
+        //tbSidur.Disabled = (!bEnabled);
+        lstSidurim.SidurimTable.Enabled = bEnabled;
         //tbBtn.Disabled = (!bEnabled);
         btnFindSidur.Enabled = bEnabled;
         btnAddMyuchad.Enabled = bEnabled;

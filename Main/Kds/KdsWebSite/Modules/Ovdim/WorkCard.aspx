@@ -550,7 +550,7 @@
         </table>
        </ContentTemplate>      
        <Triggers>                                                                                                                                               
-           <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                  
+           <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                  
         </Triggers>             
       </asp:UpdatePanel>  
       <%--<asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
