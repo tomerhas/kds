@@ -1,6 +1,26 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="test5.aspx.cs" Inherits="Modules_test5" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%--<html>
+<head>
+<script type="text/javascript" src='../js/jquery.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button").click(function () {
+            $("p").hide();
+        });
+    });
+</script>
+</head>
+
+<body>
+<h2>This is a heading</h2>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<button>Click me</button>
+</body>
+</html> 
+--%>
 
 <html>
 <head>
