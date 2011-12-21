@@ -12,8 +12,7 @@
     <script src="../../Js/GeneralFunction.js" type="text/javascript"></script>
     <script src="../../Js/WorkCard.js" type="text/javascript"></script>
     <script src="../../Js/String.js" type="text/javascript"></script>
-    <script src='../../js/jquery.js' type='text/javascript'></script>
-    
+    <script src='../../js/jquery.js' type='text/javascript'></script>    
 </head>
 <body dir="rtl" style="margin:0px">
     <form id="frmWorkCard" runat="server" >    
