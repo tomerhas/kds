@@ -66,10 +66,10 @@
                      onrowdatabound="grdLogTahalich_RowDataBound" 
                  onpageindexchanging="grdLogTahalich_PageIndexChanging">
                     <Columns>
-                         <asp:BoundField DataField="TAARICH" HeaderText="תאריך התחלה" SortExpression="TAARICH" DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                         <asp:BoundField DataField="TAARICH" HeaderText="תאריך התחלה" SortExpression="TAARICH" DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader" ItemStyle-BorderWidth="1px"  />
                           <asp:BoundField DataField="TEUR_TAHALICH" HeaderText="תהליך" SortExpression="TEUR_TAHALICH"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                          <asp:BoundField DataField="TEUR_PEILUT_BE_TAHALICH" HeaderText="פעילות בתהליך" SortExpression="TEUR_PEILUT_BE_TAHALICH"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                         <asp:BoundField DataField="TEUR_STATUS_BAKASHA" HeaderText="סטטוס" SortExpression="TEUR_STATUS_BAKASHA" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader"  />
+                         <asp:BoundField DataField="TEUR_STATUS_BAKASHA" HeaderText="סטטוס" SortExpression="TEUR_STATUS_BAKASHA" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Center" />
                           <asp:BoundField DataField="TAARICH_SGIRA" HeaderText="תאריך סיום" SortExpression="TAARICH_SGIRA" DataFormatString="{0:dd/MM/yyyy  HH:mm:ss}" HtmlEncodeFormatString="true"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                          <asp:BoundField DataField="TEUR_TAKALA" HeaderText="תאור התקלה" SortExpression="TEUR_TAKALA" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                          <asp:BoundField DataField="TEUR_TECH" HeaderText="תאור טכני" SortExpression="TEUR_TECH" ItemStyle-CssClass="ItemRow"  HeaderStyle-CssClass="GridHeader" ItemStyle-HorizontalAlign="Left"/>        

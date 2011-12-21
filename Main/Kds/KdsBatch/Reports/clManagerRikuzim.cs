@@ -125,7 +125,7 @@ namespace KdsBatch.Reports
 
         protected override string SetNameOfReportFile(clReport CurrentReport)
         {
-            return CurrentReport.Month.ToString("yyMM") +  CurrentReport.MisparIshi; //, CurrentReport.Month.Year.ToString().Substring(2, 2) +
+            return "Rikuz_" + CurrentReport.Month.ToString("yyMM") + CurrentReport.MisparIshi.ToString().PadLeft(5,'0'); //, CurrentReport.Month.Year.ToString().Substring(2, 2) +
                 //  CurrentReport.Month.Month.ToString() + CurrentReport.MisparIshi;
         }
 
@@ -141,23 +141,30 @@ namespace KdsBatch.Reports
 
         protected override void FillDestinations()
         {
-            string PathFolderRikuzim; 
-            //string PathFolder = @"C:\\PrintFiles\\kds\\Rikuzim\\";//תקייה כללית לכל הריכוזים
-
-            DataRow[] drDest;//= new DataRow();
+            string PathFolderRikuzim="";
+            string PathFolderHefreshim="";
+            string PathFolder;
+            DataRow[] drDest;
             try
             {
+
+                CreateFoldersByMonth(ref PathFolderRikuzim, ref PathFolderHefreshim);
                 foreach (clReport drReport in _Reports)
                 {
                     drDest = _dtDestinations.Select("MISPAR_ISHI=" + drReport.MisparIshi + " and taarich=Convert('" + drReport.Month.ToShortDateString() + "', 'System.DateTime')");
-                   
+
                     if (drDest[0]["SUG_CHISHUV"].ToString() == "0")
-                        PathFolderRikuzim = ConfigurationSettings.AppSettings["fullPhysPathRikuzDoc"];
-                    else PathFolderRikuzim = ConfigurationSettings.AppSettings["fullPhysPathHefreshDoc"];
+                    {
+                        PathFolder = PathFolderRikuzim;
+                    }
+                    else
+                    {
+                        PathFolder = PathFolderHefreshim; // ConfigurationSettings.AppSettings["fullPhysPathHefreshDoc"] + @"\" + drReport.Month.ToString("MMyyyy");
+                    }
 
                     _DestinationReports.Add(new clDestinationReport(TypeSending.Folder,
                                             drReport.KodReport,
-                                            PathFolderRikuzim,
+                                            PathFolder,
                                             drReport.MisparIshi,
                                             drReport.Month));
 
@@ -168,6 +175,38 @@ namespace KdsBatch.Reports
                                                "meravn@egged.co.il", // drDest[0]["EMAIL"].ToString(),
                                                 drReport.MisparIshi,
                                                 drReport.Month));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void CreateFoldersByMonth(ref string PathFolderRikuzim, ref string PathFolderHefreshim)
+        {
+          //  string PathFolderRikuzim; 
+            DataRow[] drDest;
+            try
+            {
+                drDest = _dtDestinations.Select("SUG_CHISHUV=0");
+                if (drDest.Length > 0)
+                {
+                    PathFolderRikuzim = ConfigurationSettings.AppSettings["fullPhysPathRikuzDoc"] + @"\\" + DateTime.Parse(drDest[0]["taarich"].ToString()).ToString("yyyyMM");
+                    if (!Directory.Exists(PathFolderRikuzim))
+                    {
+                        Directory.CreateDirectory(PathFolderRikuzim);
+                    }
+                }
+
+                drDest = _dtDestinations.Select("SUG_CHISHUV=1");
+                if (drDest.Length > 0)
+                {
+                    PathFolderHefreshim = ConfigurationSettings.AppSettings["fullPhysPathHefreshDoc"] + @"\\" + DateTime.Parse(drDest[0]["taarich"].ToString()).ToString("yyyyMM");
+                    if (!Directory.Exists(PathFolderHefreshim))
+                    {
+                        Directory.CreateDirectory(PathFolderHefreshim);
                     }
                 }
             }

@@ -61,14 +61,14 @@
 
  </fieldset>
 
-<asp:UpdatePanel ID="upDivNetunim" runat="server" RenderMode="Inline">
+<asp:UpdatePanel ID="upDivNetunim" runat="server"  RenderMode="Inline">
     <ContentTemplate> 
-         <div id="divNetunim" runat="server"  style="text-align:right;">
+         <div id="divNetunim" runat="server"   style="text-align:right;"    >
              <br /> 
-             <div runat="server" ID="pnlgrdRequest" style="Height:460px;Width:978px;overflow:auto;direction:ltr;">
-                <asp:GridView ID="grdRequest" runat="server"  GridLines="None"  ShowHeader="true"
+             <div runat="server" ID="pnlgrdRequest" style="Height:460px;Width:950px;overflow:auto;direction:ltr;">
+                <asp:GridView ID="grdRequest" runat="server"  GridLines="None"  ShowHeader="true" 
                        CssClass="Grid"  AllowPaging="true"  PageSize="10"  AutoGenerateColumns="false"   AllowSorting="true"
-                       Width="945px"   EmptyDataText="לא נמצאו נתונים!" 
+                       Width="950px"   EmptyDataText="לא נמצאו נתונים!" 
                      EmptyDataRowStyle-CssClass="GridHeader" onsorting="grdRequest_Sorting" 
                      onrowdatabound="grdRequest_RowDataBound">
                     <Columns>
