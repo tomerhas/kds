@@ -7,26 +7,26 @@
             
             switch (DivId){
                 case "divEmployeeDetails":
-                    document.getElementById("divNetunimLeYom").style.display = 'none';
-                    document.getElementById("divParticipation").style.display = 'none';
-                    document.getElementById("tbEmpDetails").style.display = 'block';
-                    document.getElementById("tblPart").style.display = 'none';
-                    document.getElementById("btnPlus1").className = 'ImgButtonShowMinus';
-                    document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
-                    document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
+                    $get("divNetunimLeYom").style.display = 'none';
+                    $get("divParticipation").style.display = 'none';
+                    $get("tbEmpDetails").style.display = 'block';
+                    $get("tblPart").style.display = 'none';
+                    $get("btnPlus1").className = 'ImgButtonShowMinus';
+                    $get("btnPlus3").className = 'ImgButtonShowPlus';
+                    $get("btnPlus2").className = 'ImgButtonShowPlus';
                     if ($get("txtIsuk").disabled != true)
-                         $get("txtIsuk").select();
+                        $get("txtIsuk").select();
                     else
                         $get("txtId").focus();
                     break;
                 case "divNetunimLeYom":
-                    document.getElementById("divEmployeeDetails").style.display = 'none';
-                    document.getElementById("divParticipation").style.display = 'none';
-                    document.getElementById("tblPart").style.display = 'block';
-                    document.getElementById("tbEmpDetails").style.display = 'none';
-                    document.getElementById("btnPlus2").className = 'ImgButtonShowMinus';
-                    document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
-                    document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
+                    $get("divEmployeeDetails").style.display = 'none';
+                    $get("divParticipation").style.display = 'none';
+                    $get("tblPart").style.display = 'block';
+                    $get("tbEmpDetails").style.display = 'none';
+                    $get("btnPlus2").className = 'ImgButtonShowMinus';
+                    $get("btnPlus3").className = 'ImgButtonShowPlus';
+                    $get("btnPlus1").className = 'ImgButtonShowPlus';
                     if ($get("ddlTachograph").disabled!=true)
                         $get("ddlTachograph").focus();
                     else
@@ -34,13 +34,13 @@
                             $get("txtId").focus();
                     break;
                 case "divParticipation":
-                    document.getElementById("divNetunimLeYom").style.display = 'none';
-                    document.getElementById("divEmployeeDetails").style.display = 'none';
-                    document.getElementById("tblPart").style.display = 'block';
-                    document.getElementById("tbEmpDetails").style.display = 'none';
-                    document.getElementById("btnPlus3").className = 'ImgButtonShowMinus';
-                    document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
-                    document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
+                    $get("divNetunimLeYom").style.display = 'none';
+                    $get("divEmployeeDetails").style.display = 'none';
+                    $get("tblPart").style.display = 'block';
+                    $get("tbEmpDetails").style.display = 'none';
+                    $get("btnPlus3").className = 'ImgButtonShowMinus';
+                    $get("btnPlus2").className = 'ImgButtonShowPlus';
+                    $get("btnPlus1").className = 'ImgButtonShowPlus';
                     if ($get("txtFirstPart").disabled != true)
                         $get("txtFirstPart").select();
                     else
@@ -51,17 +51,17 @@
         }
         else{
             oDiv.style.display = 'none';
-            document.getElementById("tbEmpDetails").style.display = 'none';
-            document.getElementById("tblPart").style.display = 'none';
+            $get("tbEmpDetails").style.display = 'none';
+            $get("tblPart").style.display = 'none';
             switch (DivId) {
-                case "divEmployeeDetails":                   
-                     document.getElementById("btnPlus1").className = 'ImgButtonShowPlus';
+                case "divEmployeeDetails":
+                     $get("btnPlus1").className = 'ImgButtonShowPlus';
                      break;
                 case "divNetunimLeYom":
-                     document.getElementById("btnPlus2").className = 'ImgButtonShowPlus';
+                     $get("btnPlus2").className = 'ImgButtonShowPlus';
                      break;
                 case "divParticipation":
-                     document.getElementById("btnPlus3").className = 'ImgButtonShowPlus';
+                     $get("btnPlus3").className = 'ImgButtonShowPlus';
                      break;
             }                      
         }       
