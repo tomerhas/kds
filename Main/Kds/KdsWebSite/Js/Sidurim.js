@@ -1233,6 +1233,8 @@ function chkMkt(oRow) {
             var ReturnWin;
             var id = $("#txtId").val();
             var SidurId = $("#lstSidurim_lblSidur".concat(iSidurIndx)).html();
+            if (SidurId == '')
+                SidurId = $("#lstSidurim_lblSidur".concat(iSidurIndx))[0].value;
             var CardDate = $get("clnDate").value;
             var SidurDate = $("#lstSidurim_lblDate".concat(iSidurIndx)).html();
             var iAddDay = $get(iPeilutIndx.id).cells[_COL_DAY_TO_ADD].childNodes[0].value;
