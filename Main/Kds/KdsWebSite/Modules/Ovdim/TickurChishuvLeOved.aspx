@@ -251,7 +251,7 @@
     }
 
     function OpenEmpWorkCard(EmpId, WCardDate) {
-        var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date;
+        var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
         document.getElementById("divHourglass").style.display = 'block';
         var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no");
         if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
