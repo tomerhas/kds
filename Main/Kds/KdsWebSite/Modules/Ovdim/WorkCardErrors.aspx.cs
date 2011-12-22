@@ -24,9 +24,7 @@ public partial class Modules_Ovdim_WorkCardErrors : KdsPage
     private string[] arrParams;
     private int iMisparIshiKiosk;
     protected override void CreateUser()
-    {
-       
-
+    {       
         if (((Session["arrParams"] != null) && (Request.QueryString["Page"] != null)) || ((((string)Session["hidSource"]) == "1") && (Session["arrParams"] != null)))
         {
             arrParams = (string[])Session["arrParams"];

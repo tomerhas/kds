@@ -90,7 +90,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //}
         //EventLog.WriteEntry("kds","src="+((string)Session["hidSource"]), EventLogEntryType.Error);
        
-        if (((Session["arrParams"] != null) && (Request.QueryString["Page"] != null)) || ((((string)Session["hidSource"]) == "1") && (Session["arrParams"] != null)))
+        if (((Session["arrParams"] != null) && (Request.QueryString["Page"] != null)) || ((((string)Session["hidSource"]) != "0") && (Session["arrParams"] != null)))
         {
             arrParams = (string[])Session["arrParams"];
             SetUserKiosk(arrParams);
@@ -475,6 +475,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         else
             btnDrvErrors.Style.Add("Display", "block");
     }
+    protected void SetDriverSource()
+    {
+        //hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
+        if (Request.QueryString["Page"] != null)
+            hidSource.Value = "2";
+        else
+        {
+            if (Session["arrParams"] != null)
+                hidSource.Value = "1";
+            else
+                hidSource.Value = "0";
+        }
+    }
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
@@ -549,7 +562,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         SetImageForButtonMeasherOMistayeg();
                     }
                     //אם הגענו מעמדת נהג, נשמור 1 אחרת 0
-                    hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
+                    SetDriverSource();
+                    //hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
                     Session["hidSource"] = hidSource.Value;
                     if (dtPakadim == null)
                         if ((DataTable)Session["Pakadim"] == null)
