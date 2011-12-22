@@ -476,19 +476,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             btnDrvErrors.Style.Add("Display", "block");
     }
     protected void SetDriverSource()
-    {
-        //hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
-        Response.Write(Request.QueryString["Page"]);
-        Response.Write(Session["arrParams"]);
-        if (Request.QueryString["Page"] != null)
-            hidSource.Value = "2";
-        else
+    {             
+        if (Request.QueryString["Page"]!=null)
         {
+          if (Request.QueryString["Page"].ToString() == "2") //עמדת נהג דרך חישוב חודשי
+                hidSource.Value = "2";
+          if (Request.QueryString["Page"].ToString() == "1") //עמדת נהג דרך כרטיסי עבודה
+                hidSource.Value = "1";  
+        }       
+        else
+        {            
             if (Session["arrParams"] != null)
-                hidSource.Value = "1";
+                hidSource.Value = "1"; //עמדת נהג
             else
-                hidSource.Value = "0";
-        }
+                hidSource.Value = "0"; // PC
+        }        
     }
     protected void LoadPage()
     {
