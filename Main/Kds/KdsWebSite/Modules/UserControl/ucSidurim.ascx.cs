@@ -2643,9 +2643,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lnkSidur.Attributes.Add("Sidur93", oSidur.iElement1Hova.ToString());
                 lnkSidur.Attributes.Add("Sidur94", oSidur.iElement2Hova.ToString());
                 lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
-                
+
                 hCell.Controls.Add(lnkSidur);
-                
+                hCell.Controls.Add(AddDiv(iIndex));
+
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
@@ -4388,12 +4389,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             hTable.Rows[0].Cells.Add(hCell);
 
             //מספר סידור   
-            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
-                CreateNewSidurCell(oSidur, ref hCell,ref hCollapseCell, ref hErrCell, iIndex); //יצירת סידור חדש - txtBox
-            else
-            {                
-                CreateSidurCell(oSidur, ref hCell, ref hCollapseCell, ref hErrCell,  iIndex);                               
-            }
+            if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))            
+                CreateNewSidurCell(oSidur, ref hCell, ref hCollapseCell, ref hErrCell, iIndex); //יצירת סידור חדש - txtBox               
+            else            
+                CreateSidurCell(oSidur, ref hCell, ref hCollapseCell, ref hErrCell, iIndex);
+            
             hTable.Rows[0].Cells.Add(hCollapseCell);
             hTable.Rows[0].Cells.Add(hCell);
             hTable.Rows[0].Cells.Add(hErrCell);

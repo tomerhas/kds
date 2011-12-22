@@ -478,6 +478,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void SetDriverSource()
     {
         //hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
+        Response.Write(Request.QueryString["Page"]);
+        Response.Write(Session["arrParams"]);
         if (Request.QueryString["Page"] != null)
             hidSource.Value = "2";
         else
