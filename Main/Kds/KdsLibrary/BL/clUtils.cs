@@ -1093,7 +1093,7 @@ namespace KdsLibrary.BL
          }
 
 
-         public void PrepareNetunimToShguyimBatch(DateTime dTaarich,int iType , int iNumProcess)
+         public void PrepareNetunimToShguyimBatch(DateTime dTaarich, int iType, int iNumProcess, long lRequestNum)
          {
              DataTable dt = new DataTable();
              try
@@ -1102,6 +1102,7 @@ namespace KdsLibrary.BL
                  dal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
                  dal.AddParameter("p_type", ParameterType.ntOracleInteger, iType, ParameterDir.pdInput);
                  dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+                 dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
                  dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaMeshek);
              }
              catch (Exception ex)
@@ -1111,7 +1112,7 @@ namespace KdsLibrary.BL
              }
          }
 
-         public void PrepareNetunimToShguyimBatchHR(int iType, int iNumProcess)
+         public void PrepareNetunimToShguyimBatchHR(int iType, int iNumProcess, long lRequestNum)
          {
              DataTable dt = new DataTable();
              try
@@ -1119,6 +1120,7 @@ namespace KdsLibrary.BL
                  clDal dal = new clDal();
                  dal.AddParameter("p_type", ParameterType.ntOracleInteger, iType, ParameterDir.pdInput);
                  dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+                 dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
 
                  dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaShinuiHr);
              }

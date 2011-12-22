@@ -24,7 +24,7 @@ namespace KdsCalcul
             clBatchProcess btchProc = GetBatchProcess(requestSource, execType, workDate, btchRequest);
             if (btchProc != null)
             {
-                if (btchProc.LoadData(iNumProcess))
+                if (btchProc.LoadData(iNumProcess, btchRequest))
                 {
                     var btchStatus = btchProc.Execute(logPopulationOnly);
                     clGeneral.CloseBatchRequest(btchRequest, btchStatus);
@@ -118,7 +118,7 @@ namespace KdsCalcul
             return dt;
         }
 
-        protected abstract DataTable GetData(out string errorMessage, int iNumProcess);
+        protected abstract DataTable GetData(out string errorMessage, int iNumProcess, long btchRequest);
 
         public clGeneral.enBatchExecutionStatus Execute(bool logPopulationOnly)
         {
@@ -186,9 +186,9 @@ namespace KdsCalcul
             return paramVal;
         }
 
-        public bool LoadData(int iNumProcess)
+        public bool LoadData(int iNumProcess, long btchRequest)
         {
-            _data = GetData(out _errorMessage, iNumProcess);
+            _data = GetData(out _errorMessage, iNumProcess, btchRequest);
             return (_data != null && _data.Rows.Count > 0);
         }
 
@@ -274,7 +274,7 @@ namespace KdsCalcul
             _workdate = workDate;
 
         }
-        protected override DataTable GetData(out string errorMessage, int iNumProcess)
+        protected override DataTable GetData(out string errorMessage, int iNumProcess, long btchRequest)
         {
             DataTable dt = new DataTable();
             errorMessage = String.Empty;
@@ -282,7 +282,9 @@ namespace KdsCalcul
             {
                 clDal dal = new clDal();
                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
-                dal.AddParameter("p_type", ParameterType.ntOracleInteger, BatchRequestSource.ImportProcess.GetHashCode(), ParameterDir.pdInput);
+               // dal.AddParameter("p_type", ParameterType.ntOracleInteger, BatchRequestSource.ImportProcess.GetHashCode(), ParameterDir.pdInput);
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, btchRequest, ParameterDir.pdInput);
+
                 dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor,
                    null, ParameterDir.pdOutput);
                 dal.ExecuteSP(KdsLibrary.clGeneral.cProproGetNetunimForProcess, ref dt);
@@ -348,7 +350,7 @@ namespace KdsCalcul
 
 
         }
-        protected override DataTable GetData(out string errorMessage, int iNumProcess)
+        protected override DataTable GetData(out string errorMessage, int iNumProcess, long btchRequest)
         {
             DataTable dt = new DataTable();
             errorMessage = String.Empty;
@@ -356,7 +358,8 @@ namespace KdsCalcul
             {
                 clDal dal = new clDal();
                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
-                dal.AddParameter("p_type", ParameterType.ntOracleInteger, BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), ParameterDir.pdInput);
+               // dal.AddParameter("p_type", ParameterType.ntOracleInteger, BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), ParameterDir.pdInput);
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, btchRequest, ParameterDir.pdInput);
                 dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor,
                    null, ParameterDir.pdOutput);
                 dal.ExecuteSP(KdsLibrary.clGeneral.cProproGetNetunimForProcess, ref dt);

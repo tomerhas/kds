@@ -65,10 +65,10 @@ namespace KdsService
                 switch (TypeShguyim)
                 {
                     case clGeneral.enCalcType.ShinuyimVeShguyim:
-                        oUtils.PrepareNetunimToShguyimBatch(dTaarich, BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses);
+                        oUtils.PrepareNetunimToShguyimBatch(dTaarich, BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses,lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimHR:
-                        oUtils.PrepareNetunimToShguyimBatchHR(BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(),iCntProcesses);
+                        oUtils.PrepareNetunimToShguyimBatchHR(BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                 }
                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
