@@ -207,5 +207,14 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
         return "OK";
     }
+
+    [WebMethod(EnableSession = true)]
+    public string RunShinuimVeShguim(long lRequestNum, DateTime dTaarich,int TypeShguim ,int ExecutionType)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.TahalichHarazatShguimBatch(lRequestNum, dTaarich, TypeShguim, ExecutionType);
+        client.Close();
+        return "OK";
+    }
 }
 

@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
-        <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" /><br /> 
+        <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div>  
     <fieldset class="FilterFieldSet"> 
        <legend> בחירת נתונים להצגה </legend>      
@@ -94,7 +94,7 @@
   <asp:UpdatePanel ID="upCalc" runat="server" RenderMode="Inline">
       <ContentTemplate> 
                 <div class="Progress" id="DivCalc"  style="display:none;text-align:center;position:absolute;left:53%;top:48%; z-index:1000;width:150px" >
-                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" /><br /> מבצע חישוב אנא המתן...
+                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> מבצע חישוב אנא המתן...
                 </div>  
                 <asp:button ID="btnCalc" runat="server" text="" CssClass ="ImgButtonSearch" onclick="btnCalc_Click"/>
      </ContentTemplate>

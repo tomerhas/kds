@@ -1092,7 +1092,42 @@ namespace KdsLibrary.BL
              }
          }
 
-        
+
+         public void PrepareNetunimToShguyimBatch(DateTime dTaarich,int iType , int iNumProcess)
+         {
+             DataTable dt = new DataTable();
+             try
+             {
+                 clDal dal = new clDal();
+                 dal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                 dal.AddParameter("p_type", ParameterType.ntOracleInteger, iType, ParameterDir.pdInput);
+                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+                 dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaMeshek);
+             }
+             catch (Exception ex)
+             {
+                 clGeneral.LogError(ex);
+                 //errorMessage = ex.ToString();
+             }
+         }
+
+         public void PrepareNetunimToShguyimBatchHR(int iType, int iNumProcess)
+         {
+             DataTable dt = new DataTable();
+             try
+             {
+                 clDal dal = new clDal();
+                 dal.AddParameter("p_type", ParameterType.ntOracleInteger, iType, ParameterDir.pdInput);
+                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+
+                 dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaShinuiHr);
+             }
+             catch (Exception ex)
+             {
+                 clGeneral.LogError(ex);
+                 //errorMessage = ex.ToString();
+             }
+         }
         
     } 
 }

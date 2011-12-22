@@ -85,6 +85,21 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="TahalichHarazatShguimBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="TypeShguim" type="xs:int" />
+        <xs:element minOccurs="0" name="ExecutionType" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TahalichHarazatShguimBatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreateConstantsReports">
     <xs:complexType>
       <xs:sequence>

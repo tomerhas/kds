@@ -906,6 +906,25 @@ public partial class Modules_Test :Page
         dTotalTime = (DateTime.Now - dTime).TotalSeconds;
         lblTimeWithVisut.Text = dTotalTime.ToString();       
     }
+
+    protected void btnShguimBatch_click(object sender, EventArgs e)
+    {
+      wsBatch oBatch = new wsBatch();
+        DateTime dTime = DateTime.Now.AddDays(-1);
+
+            //clBatch oBatch = new clBatch();
+            long lRequestNum = 0;
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
+                oBatch.RunShinuimVeShguim(lRequestNum, dTime, clGeneral.enCalcType.ShinuyimVeShguyim.GetHashCode(), BatchExecutionType.All.GetHashCode()); // KdsBatch.BatchRequestSource.ImportProcess.GetHashCode(), KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+                //KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunShguimOfSdrn:" + ex.Message);
+            }
+          }
 }
 
 

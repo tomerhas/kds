@@ -33,6 +33,9 @@ namespace KdsService
         void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim);
 
         [OperationContract]
+        void TahalichHarazatShguimBatch(long lRequestNum, DateTime dTaarich, int TypeShguim,int ExecutionType);
+
+        [OperationContract]
         void CreateConstantsReports(long lRequestNum, string sMonth, int iUserId);
 
         [OperationContract]

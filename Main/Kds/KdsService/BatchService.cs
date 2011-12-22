@@ -41,6 +41,61 @@ namespace KdsService
             LogThreadEnd("ExecuteInputDataAndErrors", btchRequest);
         }
 
+        private void RunSinuyimVeShguimBatch(object param)
+        {
+             clUtils oUtils = new clUtils();
+            string sArguments = "";
+            int iStatus = 0;
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            DateTime dTaarich = (DateTime)args[1];
+            string path, exfile;
+            FileInfo KdsCalcul = null;
+            clGeneral.enCalcType TypeShguyim = ((clGeneral.enCalcType)Enum.Parse(typeof(clGeneral.enCalcType), args[2].ToString()));
+            BatchExecutionType ExecutionTypeShguim = ((BatchExecutionType)Enum.Parse(typeof(BatchExecutionType), args[3].ToString()));
+            try
+            {
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+                int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
+                path = ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
+                exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
+                KdsCalcul = new FileInfo(path + exfile);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+
+                switch (TypeShguyim)
+                {
+                    case clGeneral.enCalcType.ShinuyimVeShguyim:
+                        oUtils.PrepareNetunimToShguyimBatch(dTaarich, BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses);
+                        break;
+                    case clGeneral.enCalcType.ShinuyimVeSghuimHR:
+                        oUtils.PrepareNetunimToShguyimBatchHR(BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(),iCntProcesses);
+                        break;
+                }
+                // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                if (KdsCalcul.Exists)
+                {
+                    sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
+                    iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                    //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
+                }
+                else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunSinuyimVeShguimBatch: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                CheckKdsCalculTerminated(KdsCalcul, lRequestNum, iStatus);
+            }
+            //LogThreadEnd("CalcBatchParallel", lRequestNum);
+        }
+
        //private int RunKdsCalcul(FileInfo FileToRun, long BakashaId, DateTime FromDate, DateTime ToDate, string Maamad, bool RitzaTest, bool RitzaGarefet, int CountOfProcesses)
         private int RunKdsCalcul(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
         {
@@ -456,6 +511,14 @@ namespace KdsService
                 new ParameterizedThreadStart(RunYeziratRikuzimThread));
             LogThreadStart("YeziratRikuzim", lRequestNum);
             runThread.Start(new object[] { lRequestNum, iRequestIdForRikuzim });
+        }
+
+        public void TahalichHarazatShguimBatch(long lRequestNum, DateTime dTaarich, int TypeShguim, int ExecutionType)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunSinuyimVeShguimBatch));
+            LogThreadStart("TahalichHarazatShguimBatch", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, dTaarich, TypeShguim, ExecutionType });
         }
         public void CreateConstantsReports(long lRequestNum, string sMonth, int iUserId)
         {

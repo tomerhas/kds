@@ -116,7 +116,10 @@
                     <asp:Button ID="btnInputAndErrorsBatch" runat="server"
                         Text="שגיאות ונתוני קלט מתהליך לילה" OnClick="btnInputAndErrorsBatch_click" />
                  </td> 
-                         
+               <td>
+                    <asp:Button ID="btnShguimBatch" runat="server"
+                        Text="שגויים batch" OnClick="btnShguimBatch_click" />
+                 </td>      
             </tr>     
             <tr>
                 <td>

@@ -54,7 +54,10 @@ namespace KdsLibrary
         public const string cProDeleteLogTahalichRecords = "pkg_batch.pro_delete_log_tahalich_rcds";
         public const string cProGetDetailsOvdimLeRikuzim = "pkg_batch.Pro_get_pirtey_ovdim_leRikuzim";
         public const string cProGetEmailOvdimLeRikuzim = "pkg_batch.Pro_get_Email_Ovdim_LeRikuzim";
-        
+
+        public const string cProPrepareYameiAvodaMeshek = "pkg_batch.Prepare_yamei_avoda_meshek";
+        public const string cProPrepareYameiAvodaShinuiHr = "pkg_batch.Prepare_yamei_avoda_shinui_hr";
+        public const string cProproGetNetunimForProcess = "pkg_batch.pro_get_netunim_for_process";
 #endregion 
 
 #region pkg_calc constants

@@ -68,7 +68,7 @@
                 </table>
                 
                  <div id="dvLoader" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000; visibility:hidden;"   >
-                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/EggedProgress.gif" style="width: 100px; height: 100px" />
+                    <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" />
         </div>     
             </div>
             <script type="text/javascript">
