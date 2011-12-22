@@ -1571,7 +1571,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void EnabledFrames(bool bEnabled)
     {
-        tbLblWorkDay.Disabled = (!bEnabled);
+       // tbLblWorkDay.Disabled = (!bEnabled);
         if (ddlTravleTime.Enabled){        
             ddlTravleTime.Enabled = bEnabled;
         }

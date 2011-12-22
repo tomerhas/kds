@@ -309,46 +309,42 @@
                 <tr>
                   <td colspan="5">
                     <div id="divNetunimLeYom" runat="server" style="display: none; width: 100%;">
-                      <fieldset class="FilterFieldSet">
-                        <table width="100%" cellpadding="1" runat="server" id="tbLblWorkDay" class="WorkCardTable1">
-                            <tr id="trTab2">                                                      
-                                <td width="120px">טכוגרף:</td>
-                                <td width="8px"><img id="imgLinaErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlLina,1,'');" /></td>
-                                <td width="100px">לינה:</td>
-                                <td width="50px">המרה:</td>
-                                <td width="8px"><img id="imgHalbErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHalbasha,1,'');" /></td>
-                                <td width="120px">הלבשה:</td>
-                                <td width="70px">השלמה ליום</td>                                
-                                <td width="8px"><img id="imgDayHaslamaErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHashlamaReason,1,'');" /></td>
-                                <td>סיבה להשלמה:</td>                                                                 
-                            </tr>
-                        </table>
+                      <fieldset class="FilterFieldSet">                      
                         <table width="100%" cellpadding="1" runat="server" id="tbValWorkDay" class="WorkCardTable1">
-                          <tr>                        
+                          <tr>         
+                            <td width="50px">טכוגרף:</td>               
                             <td width="110px">
                                 <asp:DropDownList runat="server" ID="ddlTachograph"  CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="110px" > </asp:DropDownList>                           
                             </td>
+                            <td width="40px">לינה:</td>
+                            <td width="8px"><img id="imgLinaErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlLina,1,'');" /></td>
                             <td width="110px">
                                 <asp:DropDownList runat="server"
                                  ID="ddlLina" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"
                                     ondblclick="GetErrorMessage(this,1);" width="100px">
                                 </asp:DropDownList>
                             </td>
+                            <td width="40px">המרה:</td>
                             <td width="40px">
-                                <input type="button" runat="server" id="btnHamara" name="btnHamara" class="ImgButtonCheckBoxEmpty" onclick="CheckButton(this,Hamara);SetLvlChg(1,0);" width="30px" />                                        
+                                <input type="button" runat="server" id="btnHamara" name="btnHamara" class="ImgButtonCheckBoxEmpty" onclick="CheckButton(this,Hamara);SetLvlChg(1,0);"  />                                        
                                 <input type="hidden" runat="server" id="Hamara" />
                             </td>
+                            <td width="50px">הלבשה:</td>
+                            <td width="8px"><img id="imgHalbErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHalbasha,1,'');" /></td>
                             <td width="130px">
                                 <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);" 
                                     ondblclick="GetErrorMessage(this,1,'');" width="130px">
                                 </asp:DropDownList>
-                            </td>                                
+                            </td>   
+                            <td width="70px">השלמה ליום</td>      
+                            <td width="8px"><img id="imgDayHaslamaErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHashlamaReason,1,'');" /></td>                         
                             <td align="center" width="50px">
                                 <input type="button" runat="server" id="btnHashlamaForDay" name="btnHashlamaForDay"
-                                    class="ImgButtonCheckBox" onclick="CheckButton(this,HashlamaForDayValue);SetLvlChg(1,0);" width="40px" />
+                                    class="ImgButtonCheckBox" onclick="CheckButton(this,HashlamaForDayValue);SetLvlChg(1,0);" />
                                 <input type="hidden" runat="server" id="HashlamaForDayValue" />
-                            </td>                                                             
-                            <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="180px"></asp:DropDownList></td>
+                            </td>             
+                            <td width="90px">סיבה להשלמה:</td>                                                        
+                            <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="160px"></asp:DropDownList></td>
                             <td>
                                 <%--<input type="button" value="רכיבים מחושבים" name="btnCalcItem" id="btnCalcItem" runat="server" 
                                     onclick="ShowRecivimCalculation();" class="ImgButtonShow" style="width: 120px; height: 25px" />   --%>                                    

@@ -130,7 +130,7 @@
     function EnabledAllFrames(bEnable)
     {
         $get("tbEmpDetails").disabled = (!bEnable);
-        $get("tbLblWorkDay").disabled = (!bEnable);
+       // $get("tbLblWorkDay").disabled = (!bEnable);
         $get("tbValWorkDay").disabled = (!bEnable);
         $get("tblPart").disabled = (!bEnable);
         $get("lstSidurim_tbSidurim").disabled = (!bEnable);
