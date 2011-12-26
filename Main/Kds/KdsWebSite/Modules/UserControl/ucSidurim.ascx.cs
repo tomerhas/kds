@@ -2645,7 +2645,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 lnkSidur.Attributes.Add("Sidur95", oSidur.iElement3Hova.ToString());
 
                 hCell.Controls.Add(lnkSidur);
-                hCell.Controls.Add(AddDiv(iIndex));
+               // hCell.Controls.Add(AddDiv(iIndex));
 
                 switch (_StatusCard)
                 {
