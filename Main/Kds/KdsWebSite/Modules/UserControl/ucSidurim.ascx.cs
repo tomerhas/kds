@@ -1528,10 +1528,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             else
             {
                 //נמצא את הסידור הבא הפעיל
-                while (!bFound)
+                while ((!bFound) && (_NextSidur != null))
                 {
-                    if (_NextSidur != null)
-                    {
+                    //if (_NextSidur != null)
+                    //{
                         sNextSidurStatus = ((TextBox)this.FindControl("lblSidurCanceled" + iSidurIndex)).Text;
                         if (!sNextSidurStatus.Equals("1"))
                         {
@@ -1543,7 +1543,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             iSidurIndex = iSidurIndex + 1;
                             _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
                         }
-                    }                                       
+                  //  }                                       
                 }
             }
         }
@@ -2646,6 +2646,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                 hCell.Controls.Add(lnkSidur);
                // hCell.Controls.Add(AddDiv(iIndex));
+               
 
                 switch (_StatusCard)
                 {

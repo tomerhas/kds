@@ -252,8 +252,9 @@
         var KeyID = event.keyCode;
         if ((KeyID != 45) && (KeyID != 107)) {
             bScreenChanged = true;
-            $get("btnUpdateCard").disabled = false;
-            $get("btnUpdateCard").className = "btnWorkCardUpadte";
+            disableUpdateBtn(false);
+//            $get("btnUpdateCard").disabled = false;
+//            $get("btnUpdateCard").className = "btnWorkCardUpadte";
             $get("hidChanges").value = true;
             $get("hidUpdateBtn").value = "false";
             SetRefreshBtn(true);
@@ -726,8 +727,11 @@ function chkTravelTime(){
          _TravelTime.value = _TravelTime.getAttribute("OrgVal");
          alert('לא קיים מאפיין מתאים');
      }
-     else{       
-       bScreenChanged = true; $get("btnUpdateCard").disabled = false;$get("btnUpdateCard").className = "btnWorkCardUpadte";
+     else{
+         bScreenChanged = true;
+         disableUpdateBtn(false);
+//         $get("btnUpdateCard").disabled = false;
+//         $get("btnUpdateCard").className = "btnWorkCardUpadte";
    }
    SetLvlChg(1,0);
 }

@@ -1261,9 +1261,10 @@ function chkMkt(oRow) {
                 bScreenChanged = false;
                 RefreshBtn();
                 __doPostBack('btnRefreshOvedDetails', '');
-                if (_bScreenChanged){
-                    $get("btnUpdateCard").disabled = false;
-                    $get("btnUpdateCard").className = "btnWorkCardUpadte";
+                if (_bScreenChanged) {
+                    disableUpdateBtn(false);
+//                    $get("btnUpdateCard").disabled = false;
+//                    $get("btnUpdateCard").className = "btnWorkCardUpadte";
                 }              
             }
             return res;    
@@ -1303,7 +1304,7 @@ function chkMkt(oRow) {
 
         $get("divHourglass").style.display = 'block';
         var sQuryString = "?EmpID=" + id + "&CardDate=" + CardDate + "&SidurID=" + SidurId + "&ShatHatchala=" + SidurDate + ' ' + SidurSHour + "&ShatGmar=" + SidurEHour + "&ShatGmarDate=" + GetDateDDMMYYYY(dSidurSGDate) + "&SidurDate=" + SidurDate + "&dt=" + Date();
-        $get("divHourglass").style.display = 'none';
+        $get("divHourglass").style.display = 'none';        
         var res = window.showModalDialog('SadotNosafimLeSidur.aspx' + sQuryString, window, "dialogwidth:650px;dialogheight:350px;dialogtop:210px;dialogleft:220px;status:no;resizable:no;scroll:no");
         if ((bScreenWasChg) || ((res != undefined) && (res != '') && (!bScreenWasChg))) {
             $get("hidExecInputChg").value = "1";
@@ -1889,9 +1890,12 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
        }      
        _CarNum.disabled = false;
    }
-   function disableUpdateBtn() {
-       $get("btnUpdateCard").disabled = true;
-       $get("btnUpdateCard").className = "btnWorkCardUpadteDis";
+   function disableUpdateBtn(bDisabled) {
+       $get("btnUpdateCard").disabled = bDisabled;
+       if (bDisabled==true)
+           $get("btnUpdateCard").className = "btnWorkCardUpadteDis";
+         else
+             $get("btnUpdateCard").className = "btnWorkCardUpadte";
     }
     function SetFocus(id, col) {
         $get(id).cells[col].childNodes[0].select();

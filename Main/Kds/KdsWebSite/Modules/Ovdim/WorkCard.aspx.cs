@@ -492,6 +492,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 hidSource.Value = "0"; // PC
         }        
     }
+    protected void SetUpdateBtnVisibility(string sDisabled)
+    {
+        btnUpdateCard.Attributes.Add("disabled", sDisabled);        
+        hidUpdateBtn.Value = sDisabled;   
+        if (sDisabled.Equals("true"))
+            btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");
+        else
+            btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");
+
+    }
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
@@ -552,14 +562,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     Session["Parameters"] = oBatchManager.oParam;
                     Session["MeafyenyOved"] = oBatchManager.oMeafyeneyOved;
                     dtIdkuneyRashemet = clWorkCard.GetIdkuneyRashemet(iMisparIshi, dDateCard);
-                    btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
-                   
+                    btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);                  
                     if (!Page.IsPostBack)
                     {
-                        btnUpdateCard.Attributes.Add("disabled", "true");
-                        btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadteDis");  
-                        hidUpdateBtn.Value = "true";
-                        // lstSidurim.HasSaveCard = false;
+                        SetUpdateBtnVisibility("true");                                           
                         BindTachograph();
                         SetLookUpDDL();
                         ShowOvedCardDetails(iMisparIshi, dDateCard);
@@ -720,7 +726,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
             btnUpdateCard.Attributes.Add("disabled", hidUpdateBtn.Value);
-            if (hidUpdateBtn.Value == "false")
+            if (hidUpdateBtn.Value == "false") 
                 sScript = sScript + "$get('btnUpdateCard').className ='btnWorkCardUpadte';";
             //btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");  
             else
@@ -2236,6 +2242,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
         hidRefresh.Value = "0";
+        hidUpdateBtn.Value = "true";
         SetImageForButtonMeasherOMistayeg();     
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
@@ -2255,6 +2262,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = true;
         lstSidurim.RefreshBtn = 0;
         hidRefresh.Value = "0";
+        hidUpdateBtn.Value = "true";
         SetImageForButtonMeasherOMistayeg();     
         lstSidurim.ClearControl();
         lstSidurim.BuildPage();
@@ -2638,7 +2646,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         {            
             string sScript = "SetBtnChanges();";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "OpenUpdBtn", sScript, true);
-            hidUpdateBtn.Value = "true";
+           // hidUpdateBtn.Value = "true";
             DefineZmaniNesiotNavigatePage(dDateCard);
           //  lstSidurim.HasSaveCard = false;
         }
@@ -2702,7 +2710,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                                    oCollIdkunRashemet, oCollPeluyotOvdimIns);
                         bResult = true;
                         ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value = "";
-                        hidUpdateBtn.Value = "true";
+                        SetUpdateBtnVisibility("true");
+                        //hidUpdateBtn.Value = "true";
                        // lstSidurim.HasSaveCard = false;
                     }
                     else
