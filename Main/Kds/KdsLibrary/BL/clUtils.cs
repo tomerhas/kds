@@ -1215,6 +1215,7 @@ namespace KdsLibrary.BL
                  clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                  if (KdsCalcul.Exists)
                  {
+                     clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists");
                      sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
                      iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
                      //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
