@@ -14,7 +14,7 @@
     <asp:UpdatePanel runat="server" ID="upMain" ChildrenAsTriggers="true">
     <ContentTemplate>
     <div align="center">
-        <asp:Label runat="server" ID="lblError" ForeColor="Red" Font-Bold="true" Visible="false" Text="נא לרענן את כרטיס העבודה" ></asp:Label>
+        <asp:Label runat="server" ID="lblError" ForeColor="Red" Font-Bold="true" Visible="false" Text="לא נמצאו נתונים!" ></asp:Label>
         <br />
         <table style="width:90%;" cellspacing="0">
          <tr>
