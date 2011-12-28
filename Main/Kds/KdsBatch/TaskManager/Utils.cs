@@ -6,18 +6,23 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Configuration;
 using System.Data;
+
+
 namespace KdsBatch.TaskManager
 {
     public class Utils
     {
         public void RunShguimOfSdrn()
         {
-            clBatch oBatch = new clBatch();
+           // clBatch oBatch = new clBatch();
+            clUtils oUtils = new clUtils();
             long lRequestNum = 0;
             try
             {
-                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
-                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+              //  lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
+                oUtils.RunSinuyimVeShguimBatch(5813, DateTime.Now.AddDays(-1), clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+              //  KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+                
             }
             catch (Exception ex)
             {

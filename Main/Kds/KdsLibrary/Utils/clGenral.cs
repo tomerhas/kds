@@ -59,6 +59,7 @@ namespace KdsLibrary
         public const string cProPrepareYameiAvodaShinuiHr = "pkg_batch.Prepare_yamei_avoda_shinui_hr";
         public const string cProproGetNetunimForProcess = "pkg_batch.pro_get_netunim_for_process";
         public const string cProPrepareYameiAvodaPremiot = "pkg_batch.Prepare_premiot_shguim_batch";
+  
 #endregion 
 
 #region pkg_calc constants

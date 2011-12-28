@@ -180,8 +180,8 @@ namespace KdsService
                     {
                         sArguments = clGeneral.enCalcType.MonthlyCalc.GetHashCode() + " " + lRequestNum.ToString() + " " + dFrom.ToShortDateString() + " " + dAdChodesh.ToShortDateString() + " " +
                                                  sMaamad + " " + bRitzatTest.GetHashCode().ToString() + " " + bRitzaGorefet.GetHashCode().ToString();
-                        iStatus = RunKdsCalcul(lRequestNum,KdsCalcul, sArguments, iCntProcesses);
-                      //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
+                        iStatus = oUtils.RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+                      //  iStatus = RunKdsCalcul(lRequestNum,KdsCalcul, sArguments, iCntProcesses);
                     }
                     else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 }

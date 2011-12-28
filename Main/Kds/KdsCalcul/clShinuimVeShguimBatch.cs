@@ -147,8 +147,8 @@ namespace KdsCalcul
                     * 100.0;
                 clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
                     String.Format(@"Total rows to process={0}. Succesful rows={1}. I(HR) rows={4}. Parameter={2}. 
-                            Ratio={3}",
-                    _data.Rows.Count, successCount, successParam, successRatio, notIncludeInTotal));
+                            Ratio={3}. Bakasha_id = {5}. process ={6}.",
+                    _data.Rows.Count, successCount, successParam, successRatio, notIncludeInTotal, _data.Rows[0]["bakasha_id"], _data.Rows[0]["num_pack"]));
                 clLogBakashot.InsertErrorToLog();
                 if (successRatio >= successParam)
                 {
