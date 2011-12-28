@@ -22,13 +22,13 @@ namespace KdsBatch
         /// <param name="execType">Type of batch to execute</param>
         /// <param name="workDate">Work date</param>
         /// <param name="description">Description of the batch request</param>
-        public static void ExecuteInputDataAndErrors(BatchRequestSource requestSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest)
+        public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest)
         {
             ExecuteInputDataAndErrors(requestSource, execType, workDate, btchRequest, false);
         }
-        public static void ExecuteInputDataAndErrors(BatchRequestSource requestSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly)
+        public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly)
         {
             clBatchProcess btchProc = GetBatchProcess(requestSource, execType, workDate, btchRequest);
             if (btchProc != null)
@@ -57,16 +57,16 @@ namespace KdsBatch
             }
         }
 
-        private static clBatchProcess GetBatchProcess(BatchRequestSource requestSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest)
+        private static clBatchProcess GetBatchProcess(clGeneral.BatchRequestSource requestSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest)
         {
             switch (requestSource)
             {
-                case BatchRequestSource.ImportProcess:
+                case clGeneral.BatchRequestSource.ImportProcess:
                     return new clBatchProcessFromInput(requestSource, execType, workDate, btchRequest);
-                case BatchRequestSource.ErrorExecutionFromUI:
+                case clGeneral.BatchRequestSource.ErrorExecutionFromUI:
                     return new clBatchProcessFromUI(requestSource, execType, btchRequest);
-                case BatchRequestSource.ImportProcessForChangesInHR:
+                case clGeneral.BatchRequestSource.ImportProcessForChangesInHR:
                     return new clBatchProcessFromInputForChangesInHR(requestSource, execType, workDate,
                         btchRequest);
                 default: return null;
@@ -85,15 +85,15 @@ namespace KdsBatch
         #region Fields
         private string _errorMessage;
         private DataTable _dtParameters;
-        protected BatchExecutionType _executionType;
+        protected clGeneral.BatchExecutionType _executionType;
         protected int _userID;
         protected DataTable _data;
-        protected BatchRequestSource _batchSource;
+        protected clGeneral.BatchRequestSource _batchSource;
         protected long _btchRequest;
         #endregion
 
         #region Constractor
-        public clBatchProcess(BatchRequestSource batchSource, BatchExecutionType execType, long btchRequest)
+        public clBatchProcess(clGeneral.BatchRequestSource batchSource, clGeneral.BatchExecutionType execType, long btchRequest)
         {
             _executionType = execType;
             _batchSource = batchSource;
@@ -175,7 +175,7 @@ namespace KdsBatch
                 int employeeID = Convert.ToInt32(dr["mispar_ishi"]);
                 DateTime date = Convert.ToDateTime(dr["taarich"]);
                 clGeneral.LogBatchPopulation(employeeID, date, ExecutionDate, _btchRequest,
-                _batchSource == BatchRequestSource.ErrorExecutionFromUI ?
+                _batchSource == clGeneral.BatchRequestSource.ErrorExecutionFromUI ?
                         KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI :
                         KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess);
             }
@@ -212,8 +212,8 @@ namespace KdsBatch
         //    MainErrors oErrors = new MainErrors(date);
             try
             {
-                if (_executionType == BatchExecutionType.InputData ||
-                    _executionType == BatchExecutionType.All)
+                if (_executionType == clGeneral.BatchExecutionType.InputData ||
+                    _executionType == clGeneral.BatchExecutionType.All)
                 {
                     nextStep = btchMan.MainInputData(employeeID, date, out successCount);
                     //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
@@ -222,8 +222,8 @@ namespace KdsBatch
                     //clLogBakashot.InsertErrorToLog();
                 }
 
-                if (_executionType == BatchExecutionType.ErrorIdentification ||
-                    (_executionType == BatchExecutionType.All && nextStep))
+                if (_executionType == clGeneral.BatchExecutionType.ErrorIdentification ||
+                    (_executionType == clGeneral.BatchExecutionType.All && nextStep))
                 {
                     nextStep = btchMan.MainOvedErrors(employeeID, date);
                    // nextStep = oErrors.HafelShguim(employeeID, date);
@@ -278,8 +278,8 @@ namespace KdsBatch
     {
         private DateTime _workdate;
         
-        public clBatchProcessFromInput(BatchRequestSource batchSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest) :
+        public clBatchProcessFromInput(clGeneral.BatchRequestSource batchSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, btchRequest)
         {
             _workdate = workDate;
@@ -320,7 +320,7 @@ namespace KdsBatch
     /// </summary>
     public class clBatchProcessFromUI : clBatchProcess
     {
-        public clBatchProcessFromUI(BatchRequestSource batchSource, BatchExecutionType execType, long btchRequest)
+        public clBatchProcessFromUI(clGeneral.BatchRequestSource batchSource, clGeneral.BatchExecutionType execType, long btchRequest)
             : base(batchSource, execType, btchRequest)
         {
         }
@@ -352,8 +352,8 @@ namespace KdsBatch
     /// </summary>
     public class clBatchProcessFromInputForChangesInHR : clBatchProcessFromInput
     {
-        public clBatchProcessFromInputForChangesInHR(BatchRequestSource batchSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest) :
+        public clBatchProcessFromInputForChangesInHR(clGeneral.BatchRequestSource batchSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, workDate, btchRequest)
         {
             
@@ -381,19 +381,19 @@ namespace KdsBatch
         }
     }
 
-    public enum BatchRequestSource
-    {
-        ImportProcess=1,
-        ErrorExecutionFromUI=2,
-        ImportProcessForChangesInHR=3
-    }
+    ////public enum clGeneral.BatchRequestSource
+    ////{
+    ////    ImportProcess=1,
+    ////    ErrorExecutionFromUI=2,
+    ////    ImportProcessForChangesInHR=3
+    ////}
 
-    public enum BatchExecutionType
-    {
-        InputData=1,
-        ErrorIdentification=2,
-        All=3
-    }
+    ////public enum clGeneral.BatchExecutionType
+    ////{
+    ////    InputData=1,
+    ////    ErrorIdentification=2,
+    ////    All=3
+    ////}
 
    
 }

@@ -276,7 +276,7 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
                 lblHashlama.Visible = false;
                 taarich = DateTime.Parse(clnHaslama.Text);
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12);
-                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, taarich, lRequestNum);
+                KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, clGeneral.BatchExecutionType.All, taarich, lRequestNum);
             }
             else lblHashlama.Visible = true;// "חובה להכניס תאריך!";
         }

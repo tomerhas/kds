@@ -917,7 +917,7 @@ public partial class Modules_Test :Page
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
-                oBatch.RunShinuimVeShguim(lRequestNum, dTime, clGeneral.enCalcType.ShinuyimVeShguyim.GetHashCode(), BatchExecutionType.All.GetHashCode()); // KdsBatch.BatchRequestSource.ImportProcess.GetHashCode(), KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+                oBatch.RunShinuimVeShguim(lRequestNum, dTime, clGeneral.enCalcType.ShinuyimVeShguyim.GetHashCode(), clGeneral.BatchExecutionType.All.GetHashCode()); // KdsBatch.BatchRequestSource.ImportProcess.GetHashCode(), KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
                 //KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
             }
             catch (Exception ex)

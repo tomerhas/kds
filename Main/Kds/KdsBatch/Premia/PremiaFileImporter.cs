@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using KdsLibrary.DAL;
-
+using KdsLibrary;
 namespace KdsBatch.Premia
 {
     /// <summary>
@@ -82,7 +82,7 @@ namespace KdsBatch.Premia
             System.Diagnostics.EventLog.WriteEntry("KDS",
                   String.Format("Found {0} rows in file", dt.Rows.Count));
             FillItems(dt);
-            ReloadPeriod(dt);
+           // ReloadPeriod(dt);
         }
 
         private void LoadDictionaryTables()
@@ -104,23 +104,36 @@ namespace KdsBatch.Premia
               //  if (dr[GetExcelColumnIndex("W")].ToString().Equals(NOT_VISIBLE_ROW_COMPARE_VALUE) ||
                 if (dt.Rows.IndexOf(dr)<FIRST_DATA_ROW_INDEX) continue;
                 var item = PremiaItem.GetItemFromExcelDataRow(dr);
-                item.RechivCode = GetDictionaryValueOfPremiaCode(item.PremiaCode,
-                    "KOD_RACHIV_Premia");
-                _items.AddItem(item);
-               
-                if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
-                        !item.Station.Equals(lastItem.Station)))
+                if (item != null)
                 {
-                    UpdateStationCounters(stationItems, minutesCounter);
-                    stationItems.Clear();
-                    minutesCounter = 0;
+                    item.RechivCode = GetDictionaryValueOfPremiaCode(item.PremiaCode,
+                        "KOD_RACHIV_Premia");
+
+                    string excelCol = GetDictionaryValueOfPremiaCode(item.PremiaCode,
+                       "EXCEL_FILE_COLUMN");
+                    if (!String.IsNullOrEmpty(excelCol))
+                        if (clGeneral.IsNumeric(dr[GetExcelColumnIndex(excelCol)].ToString()))
+                        {
+                            minutesCounter += Convert.ToInt32(dr[GetExcelColumnIndex(excelCol)]);
+
+                            _items.AddItem(item);
+
+                            if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
+                                   !item.PremiaCode.Equals(lastItem.PremiaCode)))//  !item.Station.Equals(lastItem.Station)))
+                            {
+                                UpdateStationCounters(stationItems, minutesCounter);
+                                stationItems.Clear();
+                                minutesCounter = 0;
+                            }
+                            stationItems.Add(item);
+                            lastItem = item;
+                        }
+                        else lastItem = lastItem;
+                    //string excelCol = GetDictionaryValueOfPremiaCode(item.PremiaCode,
+                    //    "EXCEL_FILE_COLUMN");
+                    //if (!String.IsNullOrEmpty(excelCol))
+                    //    minutesCounter += Convert.ToInt32(dr[GetExcelColumnIndex(excelCol)]);
                 }
-                stationItems.Add(item);
-                lastItem = item;
-                string excelCol = GetDictionaryValueOfPremiaCode(item.PremiaCode, 
-                    "EXCEL_FILE_COLUMN");
-                if (!String.IsNullOrEmpty(excelCol))
-                    minutesCounter += Convert.ToInt32(dr[GetExcelColumnIndex(excelCol)]); 
             }
             if (stationItems.Count > 0)
                 UpdateStationCounters(stationItems, minutesCounter);

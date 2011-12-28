@@ -595,8 +595,12 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     DateTime dTaarich = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString());
                     e.Row.Cells[Coll_lelo_divuach].Text = "אין פעילות";
                     if (bool.Parse(hidFromEmda.Value))
-                        if (DateTime.Now >= dTaarich && DateTime.Now <= dTaarich.AddDays(2)) 
-                            ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("disabled", "true");
+                        if (DateTime.Now >= dTaarich && DateTime.Now <= dTaarich.AddDays(2))
+                        {
+                            ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("onclick", "");
+                            ((HyperLink)e.Row.Cells[0].Controls[0]).Font.Bold = true;
+                            ((HyperLink)e.Row.Cells[0].Controls[0]).Enabled = false; 
+                        }
                 }
                 dt = _Ovdim.GetLastUpdate(int.Parse(txtId.Text), DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString()));
                 if (dt.Rows.Count == 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")

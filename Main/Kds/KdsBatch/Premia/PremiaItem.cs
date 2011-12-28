@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KdsLibrary;
+
 
 namespace KdsBatch.Premia
 {
@@ -55,15 +57,31 @@ namespace KdsBatch.Premia
 
         public static PremiaItem GetItemFromExcelDataRow(System.Data.DataRow dr)
         {
-            var item = new PremiaItem();
-            item.EmployeeNumber = Convert.ToInt32(dr[PremiaFileImporter.GetExcelColumnIndex("A")]);
-            string strDate = dr[PremiaFileImporter.GetExcelColumnIndex("BW")].ToString();
-            item.WorkDate = new DateTime(int.Parse(strDate.Substring(0, 4)), 
-                int.Parse(strDate.Substring(4, 2)), 1);
-            item.Station = dr[PremiaFileImporter.GetExcelColumnIndex("C")].ToString();
-            item.PremiaCode = dr[PremiaFileImporter.GetExcelColumnIndex("B")].ToString();
-            
-            return item;
+            try
+            {
+                var item = new PremiaItem();
+                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex("A")].ToString()))
+                    item.EmployeeNumber = Convert.ToInt32(dr[PremiaFileImporter.GetExcelColumnIndex("A")]);
+                else return null;
+
+                string strDate = dr[PremiaFileImporter.GetExcelColumnIndex("BW")].ToString();
+                if (clGeneral.IsNumeric(strDate) && strDate.Length > 4)
+                {
+                    item.WorkDate = new DateTime(int.Parse(strDate.Substring(0, 4)),
+                    int.Parse(strDate.Substring(4, 2)), 1);
+                }
+                else return null;
+                // item.Station = dr[PremiaFileImporter.GetExcelColumnIndex("C")].ToString();
+                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex("B")].ToString()))
+                    item.PremiaCode = dr[PremiaFileImporter.GetExcelColumnIndex("B")].ToString();
+                else return null;
+
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
     }
 }

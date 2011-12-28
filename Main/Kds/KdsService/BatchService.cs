@@ -25,8 +25,8 @@ namespace KdsService
         private void RunExecuteInputDataAndErrorsThread(object param)
         {
             object[] args = param as object[];
-            KdsBatch.BatchRequestSource requestSource = (KdsBatch.BatchRequestSource)args[0];
-            KdsBatch.BatchExecutionType execType = (KdsBatch.BatchExecutionType)args[1];
+            clGeneral.BatchRequestSource requestSource = (clGeneral.BatchRequestSource)args[0];
+            clGeneral.BatchExecutionType execType = (clGeneral.BatchExecutionType)args[1];
             DateTime workDate = (DateTime)args[2];
             long btchRequest = (long)args[3];
 
@@ -471,8 +471,8 @@ namespace KdsService
                 DateTime.Now,
                 btchRequest);
             LogThreadStart("ExecuteInputDataAndErrors", btchRequest);
-            runThread.Start(new object[] { (KdsBatch.BatchRequestSource)requestSource, 
-                (KdsBatch.BatchExecutionType)execType, 
+            runThread.Start(new object[] { (clGeneral.BatchRequestSource)requestSource, 
+                (clGeneral.BatchExecutionType)execType, 
                 workDate, btchRequest });
 
         }

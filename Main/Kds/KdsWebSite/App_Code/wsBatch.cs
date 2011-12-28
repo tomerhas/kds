@@ -36,8 +36,8 @@ public class wsBatch : System.Web.Services.WebService
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
         client.ExecuteInputDataAndErrors(
-            (int)BatchRequestSource.ErrorExecutionFromUI,
-            (int)BatchExecutionType.All,
+            (int)clGeneral.BatchRequestSource.ErrorExecutionFromUI,
+            (int)clGeneral.BatchExecutionType.All,
             DateTime.Now, lRequestNum);
         client.Close();
         return "OK";
