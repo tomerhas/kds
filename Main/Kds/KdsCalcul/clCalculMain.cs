@@ -21,7 +21,7 @@ namespace KdsCalcul
         private bool bRitzaGorefet;
         private int iNumProcess;
 
-        BatchExecutionType eExecutionType; 
+        clGeneral.BatchExecutionType eExecutionType; 
         #region Properties
         public long RequestNum
         {
@@ -66,7 +66,7 @@ namespace KdsCalcul
             lRequestNum = RequestNum;
             iNumProcess = numProcess;
         }
-        public clCalculMain(long RequestNum, int numProcess, BatchExecutionType ExecutionType)
+        public clCalculMain(long RequestNum, int numProcess, clGeneral.BatchExecutionType ExecutionType)
         {
             lRequestNum = RequestNum;
             iNumProcess = numProcess;
@@ -180,7 +180,7 @@ namespace KdsCalcul
             try
             {
               //  lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "clCalculMain.RunShinuyimVeShguim", -12);
-                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(BatchRequestSource.ImportProcess, eExecutionType, DateTime.Now.AddDays(-1), lRequestNum, iNumProcess);
+                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcess, eExecutionType, DateTime.Now.AddDays(-1), lRequestNum, iNumProcess);
             }
             catch (Exception ex)
             {
@@ -196,15 +196,30 @@ namespace KdsCalcul
             try
             {
               //  lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "clCalculMain.RunShinuyimVeShguimHR", -12);
-                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(BatchRequestSource.ImportProcessForChangesInHR, eExecutionType , DateTime.Now.AddDays(-1), lRequestNum, iNumProcess);
+                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForChangesInHR, eExecutionType, DateTime.Now, lRequestNum, iNumProcess);
             }
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimHR " + iNumProcess + ": " + ex.Message);
             }
-
         }
 
+
+        public void RunShinuyimVeShguimPremiot()
+        {
+            clBatch oBatch = new clBatch();
+            // long lRequestNum = 0;
+            try
+            {
+                //  lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "clCalculMain.RunShinuyimVeShguimHR", -12);
+                clShinuimVeShguimBatch.ExecuteInputDataAndErrors(clGeneral.BatchRequestSource.ImportProcessForPremiot, eExecutionType, DateTime.Now, lRequestNum, iNumProcess);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimHR " + iNumProcess + ": " + ex.Message);
+            }
+        }
     }
 }

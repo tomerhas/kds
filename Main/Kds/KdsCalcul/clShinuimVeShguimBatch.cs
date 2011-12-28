@@ -13,13 +13,13 @@ namespace KdsCalcul
 {
     public static class clShinuimVeShguimBatch
     {
-        public static void ExecuteInputDataAndErrors(BatchRequestSource requestSource,
-          BatchExecutionType execType, DateTime workDate, long btchRequest, int iNumProcess)
+        public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
+          clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, int iNumProcess)
         {
             ExecuteInputDataAndErrors(requestSource, execType, workDate, btchRequest, false, iNumProcess);
         }
-        public static void ExecuteInputDataAndErrors(BatchRequestSource requestSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly, int iNumProcess)
+        public static void ExecuteInputDataAndErrors(clGeneral.BatchRequestSource requestSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest, bool logPopulationOnly, int iNumProcess)
         {
             clBatchProcess btchProc = GetBatchProcess(requestSource, execType, workDate, btchRequest);
             if (btchProc != null)
@@ -48,17 +48,20 @@ namespace KdsCalcul
             }
         }
 
-        private static clBatchProcess GetBatchProcess(BatchRequestSource requestSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest)
+        private static clBatchProcess GetBatchProcess(clGeneral.BatchRequestSource requestSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest)
         {
             switch (requestSource)
             {
-                case BatchRequestSource.ImportProcess:
+                case clGeneral.BatchRequestSource.ImportProcess:
                     return new clBatchProcessFromInput(requestSource, execType, workDate, btchRequest);
                 //case BatchRequestSource.ErrorExecutionFromUI:
                 //    return new clBatchProcessFromUI(requestSource, execType, btchRequest);
-                case BatchRequestSource.ImportProcessForChangesInHR:
+                case clGeneral.BatchRequestSource.ImportProcessForChangesInHR:
                     return new clBatchProcessFromInputForChangesInHR(requestSource, execType, workDate,
+                        btchRequest);
+                case clGeneral.BatchRequestSource.ImportProcessForPremiot:
+                    return new clBatchProcessFromInputForPremiot(requestSource, execType, workDate,
                         btchRequest);
                 default: return null;
             }
@@ -74,15 +77,15 @@ namespace KdsCalcul
         #region Fields
         private string _errorMessage;
         private DataTable _dtParameters;
-        protected BatchExecutionType _executionType;
+        protected clGeneral.BatchExecutionType _executionType;
         protected int _userID;
         protected DataTable _data;
-        protected BatchRequestSource _batchSource;
+        protected clGeneral.BatchRequestSource _batchSource;
         protected long _btchRequest;
         #endregion
 
         #region Constractor
-        public clBatchProcess(BatchRequestSource batchSource, BatchExecutionType execType, long btchRequest)
+        public clBatchProcess(clGeneral.BatchRequestSource batchSource, clGeneral.BatchExecutionType execType, long btchRequest)
         {
             _executionType = execType;
             _batchSource = batchSource;
@@ -201,8 +204,8 @@ namespace KdsCalcul
             //    MainErrors oErrors = new MainErrors(date);
             try
             {
-                if (_executionType == BatchExecutionType.InputData ||
-                    _executionType == BatchExecutionType.All)
+                if (_executionType == clGeneral.BatchExecutionType.InputData ||
+                    _executionType == clGeneral.BatchExecutionType.All)
                 {
                     nextStep = btchMan.MainInputData(employeeID, date, out successCount);
                     //clLogBakashot.SetError(_btchRequest, "I", (int)_batchSource,
@@ -211,8 +214,8 @@ namespace KdsCalcul
                     //clLogBakashot.InsertErrorToLog();
                 }
 
-                if (_executionType == BatchExecutionType.ErrorIdentification ||
-                    (_executionType == BatchExecutionType.All && nextStep))
+                if (_executionType == clGeneral.BatchExecutionType.ErrorIdentification ||
+                    (_executionType == clGeneral.BatchExecutionType.All && nextStep))
                 {
                     nextStep = btchMan.MainOvedErrors(employeeID, date);
                     // nextStep = oErrors.HafelShguim(employeeID, date);
@@ -267,8 +270,8 @@ namespace KdsCalcul
     {
         private DateTime _workdate;
 
-        public clBatchProcessFromInput(BatchRequestSource batchSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest) :
+        public clBatchProcessFromInput(clGeneral.BatchRequestSource batchSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, btchRequest)
         {
             _workdate = workDate;
@@ -343,8 +346,8 @@ namespace KdsCalcul
     /// </summary>
     public class clBatchProcessFromInputForChangesInHR : clBatchProcessFromInput //שגויים אחרי hr
     {
-        public clBatchProcessFromInputForChangesInHR(BatchRequestSource batchSource,
-            BatchExecutionType execType, DateTime workDate, long btchRequest) :
+        public clBatchProcessFromInputForChangesInHR(clGeneral.BatchRequestSource batchSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
             base(batchSource, execType, workDate, btchRequest)
         {
 
@@ -374,18 +377,42 @@ namespace KdsCalcul
     }
 
 
-    public enum BatchRequestSource
-    {
-        ImportProcess = 1,
-        ErrorExecutionFromUI = 2,
-        ImportProcessForChangesInHR = 3
-    }
 
-    public enum BatchExecutionType
+    /// <summary>
+    /// Run batch process for InputData and/or Errors from Import process
+    /// for population that has Premiot
+    /// </summary>
+    public class clBatchProcessFromInputForPremiot : clBatchProcessFromInput //שגויים אחרי hr
     {
-        InputData = 1,
-        ErrorIdentification = 2,
-        All = 3
+        public clBatchProcessFromInputForPremiot(clGeneral.BatchRequestSource batchSource,
+            clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :
+            base(batchSource, execType, workDate, btchRequest)
+        {
+
+
+        }
+        protected override DataTable GetData(out string errorMessage, int iNumProcess, long btchRequest)
+        {
+            DataTable dt = new DataTable();
+            errorMessage = String.Empty;
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+                // dal.AddParameter("p_type", ParameterType.ntOracleInteger, BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), ParameterDir.pdInput);
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, btchRequest, ParameterDir.pdInput);
+                dal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor,
+                   null, ParameterDir.pdOutput);
+                dal.ExecuteSP(KdsLibrary.clGeneral.cProproGetNetunimForProcess, ref dt);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                errorMessage = ex.ToString();
+            }
+            return dt;
+        }
     }
+   
 
 }

@@ -1130,6 +1130,24 @@ namespace KdsLibrary.BL
                  //errorMessage = ex.ToString();
              }
          }
-        
+
+         public void PrepareNetunimToPremiotShguyimBatch(int iType, int iNumProcess, long lRequestNum)
+         {
+             DataTable dt = new DataTable();
+             try
+             {
+                 clDal dal = new clDal();
+                 dal.AddParameter("p_type", ParameterType.ntOracleInteger, iType, ParameterDir.pdInput);
+                 dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
+                 dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+
+                 dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaShinuiHr);
+             }
+             catch (Exception ex)
+             {
+                 clGeneral.LogError(ex);
+                 //errorMessage = ex.ToString();
+             }
+         }
     } 
 }

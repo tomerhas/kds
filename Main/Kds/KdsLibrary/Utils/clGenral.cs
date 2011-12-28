@@ -58,6 +58,7 @@ namespace KdsLibrary
         public const string cProPrepareYameiAvodaMeshek = "pkg_batch.Prepare_yamei_avoda_meshek";
         public const string cProPrepareYameiAvodaShinuiHr = "pkg_batch.Prepare_yamei_avoda_shinui_hr";
         public const string cProproGetNetunimForProcess = "pkg_batch.pro_get_netunim_for_process";
+        public const string cProPrepareYameiAvodaPremiot = "pkg_batch.Prepare_premiot_shguim_batch";
 #endregion 
 
 #region pkg_calc constants
@@ -531,6 +532,21 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             CharigaAvodaWithoutPremmision = 4
         }
 
+        public enum BatchRequestSource
+        {
+            ImportProcess = 1,
+            ErrorExecutionFromUI = 2,
+            ImportProcessForChangesInHR = 3,
+            ImportProcessForPremiot = 4
+        }
+
+        public enum BatchExecutionType
+        {
+            InputData = 1,
+            ErrorIdentification = 2,
+            All = 3
+        }
+
         public enum enVehicleType
         {
             NoTachograph = 1064
@@ -900,7 +916,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enCalcType
         {
-            MonthlyCalc = 1, PremiotCalc = 2 , ShinuyimVeShguyim = 3, ShinuyimVeSghuimHR =4
+            MonthlyCalc = 1, PremiotCalc = 2, ShinuyimVeShguyim = 3, ShinuyimVeSghuimHR = 4, ShinuyimVeSghuimPremiot =5
         }
         public enum enYechidaIrgunit
         {

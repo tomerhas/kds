@@ -52,7 +52,7 @@ namespace KdsService
             string path, exfile;
             FileInfo KdsCalcul = null;
             clGeneral.enCalcType TypeShguyim = ((clGeneral.enCalcType)Enum.Parse(typeof(clGeneral.enCalcType), args[2].ToString()));
-            BatchExecutionType ExecutionTypeShguim = ((BatchExecutionType)Enum.Parse(typeof(BatchExecutionType), args[3].ToString()));
+            clGeneral.BatchExecutionType ExecutionTypeShguim = ((clGeneral.BatchExecutionType)Enum.Parse(typeof(clGeneral.BatchExecutionType), args[3].ToString()));
             try
             {
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
@@ -65,10 +65,13 @@ namespace KdsService
                 switch (TypeShguyim)
                 {
                     case clGeneral.enCalcType.ShinuyimVeShguyim:
-                        oUtils.PrepareNetunimToShguyimBatch(dTaarich, BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses,lRequestNum);
+                        oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimHR:
-                        oUtils.PrepareNetunimToShguyimBatchHR(BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
+                        oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
+                        break;
+                    case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+                        oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                 }
                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);

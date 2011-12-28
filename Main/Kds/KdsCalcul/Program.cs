@@ -27,17 +27,21 @@ namespace KdsCalcul
                          oCalculMain.RunCalcBatchProcessPremiyot();
                     break;
                 case clGeneral.enCalcType.ShinuyimVeShguyim:
-                    oCalculMain = new clCalculMain(5789,1,BatchExecutionType.All);//(long)int.Parse(args[1]), int.Parse(args[3]),(BatchExecutionType)int.Parse(args[2]));
+                    oCalculMain = new clCalculMain(5789,1,clGeneral.BatchExecutionType.All);//(long)int.Parse(args[1]), int.Parse(args[3]),(BatchExecutionType)int.Parse(args[2]));
 
                     oCalculMain.RunShinuyimVeShguim();
                     break;
 
                 case clGeneral.enCalcType.ShinuyimVeSghuimHR:
-                    oCalculMain = new clCalculMain((long)int.Parse(args[1]), int.Parse(args[3]), (BatchExecutionType)int.Parse(args[2]));
+                    oCalculMain = new clCalculMain((long)int.Parse(args[1]), int.Parse(args[3]), (clGeneral.BatchExecutionType)int.Parse(args[2]));
 
                     oCalculMain.RunShinuyimVeShguimHR();
                     break;
+                case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+                    oCalculMain = new clCalculMain((long)int.Parse(args[1]), int.Parse(args[3]), (clGeneral.BatchExecutionType)int.Parse(args[2]));
 
+                    oCalculMain.RunShinuyimVeShguimHR();
+                    break;
             }
 
         }
