@@ -1183,14 +1183,9 @@ namespace KdsLibrary.BL
              clUtils oUtils = new clUtils();
              string sArguments = "";
              int iStatus = 0;
-         //    object[] args = param as object[];
-          //   long lRequestNum = (long)args[0];
-         //    DateTime dTaarich = (DateTime)args[1];
              string path, exfile;
              FileInfo KdsCalcul = null;
-          //   clGeneral.enCalcType TypeShguyim = ((clGeneral.enCalcType)Enum.Parse(typeof(clGeneral.enCalcType), args[2].ToString()));
-          //   clGeneral.BatchExecutionType ExecutionTypeShguim = ((clGeneral.BatchExecutionType)Enum.Parse(typeof(clGeneral.BatchExecutionType), args[3].ToString()));
-             try
+            try
              {
                  clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
                  int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
@@ -1211,14 +1206,14 @@ namespace KdsLibrary.BL
                          oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
                          break;
                  }
-                 // oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
                  clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+                 //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul.Exists);
+                 //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul);
                  if (KdsCalcul.Exists)
                  {
                      clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists");
                      sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
                      iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
-                     //  iStatus = RunKdsCalcul(KdsCalcul, lRequestNum, dFrom, dAdChodesh, sMaamad, bRitzatTest, bRitzaGorefet, iCntProcesses);
                  }
                  else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
 
