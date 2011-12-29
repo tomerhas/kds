@@ -1172,7 +1172,7 @@ namespace KdsBatch
                                 else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
                                 {
                                     fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
-                                    fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv21;
+                                    fSumDakotRechiv20 = fTempX - fMichsaYomit - fSumDakotRechiv21;
                                 }
                                 else if (fDakotTafkidChol <= fMichsaYomit)
                                 {

@@ -1533,8 +1533,10 @@ namespace KdsBatch
                 {
                     if (objOved.objMeafyeneyOved.iMeafyen56 == 52 || objOved.objMeafyeneyOved.iMeafyen56 == 62)
                     {
-                        fDakotNosafot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot100.GetHashCode()); 
-                        if (fDakotNosafot100 > objOved.objParameters.iTamrizNosafotLoLetashlum)
+                        fDakotNosafot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot100.GetHashCode());
+                        fDakotNosafotNahagut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode())/60;
+
+                        if (fDakotNosafot100 > objOved.objParameters.iTamrizNosafotLoLetashlum && fDakotNosafotNahagut > 30)
                         {
                             fSumDakotRechiv = Math.Min(objOved.objParameters.iMaxNosafotNahagut, fDakotNosafot100 - objOved.objParameters.iTamrizNosafotLoLetashlum);
                             addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
