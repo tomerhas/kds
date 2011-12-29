@@ -16,7 +16,7 @@ namespace KdsBatch.Premia
     {
         #region Fields
         private const string NOT_VISIBLE_ROW_COMPARE_VALUE = "x";
-        private const int FIRST_DATA_ROW_INDEX = 7;
+        private const int FIRST_DATA_ROW_INDEX = 6;
         private const int YEAR_VALUE_ROW = 3;
         private const string YEAR_VALUE_COL = "B";
         private const int MONTH_VALUE_ROW = 3;
@@ -60,7 +60,7 @@ namespace KdsBatch.Premia
                     ParameterDir.pdInput);
                 dal.AddParameter("p_kod_rechiv", ParameterType.ntOracleInteger, item.RechivCode,
                     ParameterDir.pdInput);
-                dal.AddParameter("p_erech_rechiv", ParameterType.ntOracleInteger, item.MinutesQuantity,
+                dal.AddParameter("p_erech_rechiv", ParameterType.ntOracleDecimal, item.MinutesQuantity,
                     ParameterDir.pdInput);
                 try
                 {
@@ -114,8 +114,7 @@ namespace KdsBatch.Premia
                     if (!String.IsNullOrEmpty(excelCol))
                         if (clGeneral.IsNumeric(dr[GetExcelColumnIndex(excelCol)].ToString()))
                         {
-                            minutesCounter += Convert.ToDouble(dr[GetExcelColumnIndex(excelCol)]);
-
+                         
                             _items.AddItem(item);
 
                             if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
@@ -125,6 +124,7 @@ namespace KdsBatch.Premia
                                 stationItems.Clear();
                                 minutesCounter = 0;
                             }
+                            minutesCounter += Convert.ToDouble(dr[GetExcelColumnIndex(excelCol)]);
                             stationItems.Add(item);
                             lastItem = item;
                         }

@@ -169,7 +169,10 @@ namespace KdsBatch
                {
                    sErua416.Append(GetBlank(4));
                }
-               sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode()),5,1));
+
+               fErech = GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode());
+               fErech += GetErechRechiv(clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode());
+               sErua416.Append(FormatNumber(fErech, 5, 1));
            }
            else 
            {
