@@ -97,7 +97,7 @@ namespace KdsBatch.Premia
         private void FillItems(DataTable dt)
         {
             PremiaItem lastItem = null;
-            int minutesCounter = 0;
+            double minutesCounter = 0;
             List<PremiaItem> stationItems = new List<PremiaItem>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -114,7 +114,7 @@ namespace KdsBatch.Premia
                     if (!String.IsNullOrEmpty(excelCol))
                         if (clGeneral.IsNumeric(dr[GetExcelColumnIndex(excelCol)].ToString()))
                         {
-                            minutesCounter += Convert.ToInt32(dr[GetExcelColumnIndex(excelCol)]);
+                            minutesCounter += Convert.ToDouble(dr[GetExcelColumnIndex(excelCol)]);
 
                             _items.AddItem(item);
 
@@ -128,7 +128,7 @@ namespace KdsBatch.Premia
                             stationItems.Add(item);
                             lastItem = item;
                         }
-                        else lastItem = lastItem;
+                      
                     //string excelCol = GetDictionaryValueOfPremiaCode(item.PremiaCode,
                     //    "EXCEL_FILE_COLUMN");
                     //if (!String.IsNullOrEmpty(excelCol))
@@ -151,7 +151,7 @@ namespace KdsBatch.Premia
 
         }
 
-        private void UpdateStationCounters(List<PremiaItem> stationItems, int minutesCounter)
+        private void UpdateStationCounters(List<PremiaItem> stationItems, double minutesCounter)
         {
             stationItems.ForEach(delegate(PremiaItem item)
             {

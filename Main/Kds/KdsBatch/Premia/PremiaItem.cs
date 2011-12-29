@@ -24,7 +24,7 @@ namespace KdsBatch.Premia
         public string Char60 { get; set; }
         public string Char74 { get; set; }
         public int DaysQuantity { get; set; }
-        public int MinutesQuantity { get; set; }
+        public double MinutesQuantity { get; set; }
         public string Lastname { get; set; }
         public string Firstname { get; set; }
         public string RechivCode { get; set; }
