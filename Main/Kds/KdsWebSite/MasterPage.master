@@ -29,7 +29,7 @@
 <%--</AjxToolKit:ToolkitScriptManager>--%>
 <asp:UpdateProgress  runat="server" id="Progress1" DisplayAfter="0" >
     <ProgressTemplate>
-        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
+        <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000" >
               <asp:Image runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" />
         </div>        
     </ProgressTemplate>
@@ -125,7 +125,7 @@
      </table>
      <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="XmlSiteMapProvider" ShowStartingNode="false"/>
      
-     <table style="height:480px;width:985px;border:solid 1px;margin:4px;">
+     <table style="height:480px;width:985px;border:solid 1px lightgray;margin:4px;">
             <tr>
                 <td style="width:5px"></td>
                 <td valign="top" align="right">
@@ -161,11 +161,10 @@
                         הודעות מערכת:
                         <table style="border:solid 1px;width:960px; height:50px;margin-bottom:4px">
                             <tr>
-                                <td  style="height:50px;" valign="top">
-                                        
-                                           <asp:DataList ID="lstMessages" runat="server" Width="920px" ItemStyle-ForeColor="#028831">
-                                            <ItemTemplate> * <asp:Label ID="lblMessage" runat="server" ><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
-                                          </asp:DataList>
+                                <td  style="height:50px;" valign="top">                                        
+                                    <asp:DataList ID="lstMessages" runat="server" Width="920px" ItemStyle-ForeColor="#028831">
+                                     <ItemTemplate> * <asp:Label ID="lblMessage" runat="server" ><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
+                                    </asp:DataList>
                                             
                                 </td> 
                             </tr>
