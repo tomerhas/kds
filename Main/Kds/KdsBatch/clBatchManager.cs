@@ -9962,6 +9962,12 @@ namespace KdsBatch
                         oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", oParam.iPrepareFirstMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                     else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
 
+                    ////dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
+                    ////if (oPeilut.dFullShatYetzia >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
+                    ////{
+                    ////    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "005", "00"));
+                    //////    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-3);
+                    ////}
                     oObjPeilutOvdimIns.OTO_NO = oPeilut.lOtoNo;
 
                     clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
@@ -10198,8 +10204,6 @@ namespace KdsBatch
                 throw ex;
             }
         }
-
-        
 
         private OBJ_SIDURIM_OVDIM GetSidurOvdimObject(int iMisparSidur, DateTime dShatHatchala)
         {
