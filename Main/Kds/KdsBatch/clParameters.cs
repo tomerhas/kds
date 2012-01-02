@@ -106,7 +106,10 @@ namespace KdsBatch
         public int iPrepareOtherMechineTotalMaxTime; //122 - מקסימום זמן לסה"כ הכנות מכונה נוספות,
         public int iPrepareAllMechineTotalMaxTimeInDay; //123 - מקסימום זמן לסה"כ הכנות מכונה (ראשונה ונוספות), ביום
         public int iPrepareAllMechineTotalMaxTimeForSidur; //124 - מקסימום הכנות מכונה מותר בסידור     
+
+        public int iMaxZmanRekaNichleletafter8; //126
        
+
         public int iZmanHalbash; //143 -זמן הלבשה
         public int iTosefetZmanGrira; //145 - תוספת זמן לסידור גרירה בפועל בזמן כוננות
         public int iMaxZmanHamtanaEilat; //מקסימום זמן המתנה אילת-  148
@@ -570,7 +573,11 @@ namespace KdsBatch
                 sTmp = GetOneParam(124, dCardDate);
                 iPrepareAllMechineTotalMaxTimeForSidur = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
 
-               
+                //126  
+                sTmp = GetOneParam(126, dCardDate);
+                iMaxZmanRekaNichleletafter8 = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                
                
                 //מכסימום שעורי נהיגה למורה בסידור יחיד141)
                 sTmp = GetOneParam(141, dCardDate);

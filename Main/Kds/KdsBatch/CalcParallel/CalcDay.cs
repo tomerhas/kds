@@ -67,9 +67,6 @@ namespace KdsBatch
                 //דקות מחליף רכז (רכיב 17) 
                 CalcRechiv17();
 
-                //דקות נוכחות בפועל(רכיב 18 
-                CalcRechiv18();
-
                 //דקות מחליף תנועה (רכיב 129): 
                 CalcRechiv129();
 
@@ -144,6 +141,9 @@ namespace KdsBatch
 
                 //דקות נוכחות לתשלום( רכיב 1)
                 CalcRechiv1();
+
+                //דקות נוכחות בפועל(רכיב 18 
+                CalcRechiv18();
 
                 //יום אבל  (רכיב 56) :
                 CalcRechiv56();
@@ -1063,12 +1063,16 @@ namespace KdsBatch
 
         private void CalcRechiv18()
         {
-            float fSumDakotRechiv;
+            float fSumDakotRechiv,fDakotNochechutLeTashlum;
             try
             {
-                oSidur.CalcRechiv18();
-                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), objOved.Taarich); 
-                addRowToTable(clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), fSumDakotRechiv);
+                fDakotNochechutLeTashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+                if (fDakotNochechutLeTashlum > 0)
+                {
+                    oSidur.CalcRechiv18();
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), fSumDakotRechiv);
+                }
             }
             catch (Exception ex)
             {

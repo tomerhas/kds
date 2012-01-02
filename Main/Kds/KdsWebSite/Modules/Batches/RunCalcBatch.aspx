@@ -44,8 +44,7 @@
                 <ContentTemplate>
                  <asp:Button Text="הפעל" ID="btnRun" runat="server" CssClass="ImgButtonSearch" 
                         onclick="btnRun_Click"  /> 
-                    <asp:Button Text="שגויים הפעל" ID="Button1" runat="server" CssClass="ImgButtonSearch" 
-                onclick="btnRunShguiim_Click"  /> 
+                  
                 </ContentTemplate>
             </asp:UpdatePanel>
          </td>
@@ -82,9 +81,15 @@ function RunCalc(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft) {
     wsBatch.CalcBatchParallel(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft); //, RunCalcSucceeded);
 }
 
-function RunShguyim(iRequestId, dChodesh, iCalcType, iBatchExecutionType) {
-    wsBatch.RunShinuimVeShguim(iRequestId, dChodesh, iCalcType, iBatchExecutionType); //, RunCalcSucceeded);
-}
+
+////  <asp:Button Text="שגויים הפעל" ID="Button1" runat="server" CssClass="ImgButtonSearch" 
+////                onclick="btnRunShguiim_Click"  /> 
+////function RunShguyim(iRequestId, dChodesh, iCalcType, iBatchExecutionType) {
+////    wsBatch.RunShinuimVeShguim(iRequestId, dChodesh, iCalcType, iBatchExecutionType); //, RunCalcSucceeded);
+////}
+
+
+
 //function RunCalcSucceeded(result)
 // {
 //    if (result == 'OK')

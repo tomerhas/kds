@@ -99,35 +99,35 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
         ModalPopupEx.Show();
     }
 
-    protected void btnRunShguiim_Click(object sender, EventArgs e)
-    {
-        int iUserId,iRunAll;
-        long  iRequestId;
-        string sMessage, sMaamad;
-        clBatch objBatch = new clBatch();
+    //protected void btnRunShguiim_Click(object sender, EventArgs e)
+    //{
+    //    int iUserId,iRunAll;
+    //    long  iRequestId;
+    //    string sMessage, sMaamad;
+    //    clBatch objBatch = new clBatch();
 
-        iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-        iRunAll=0;
-        sMaamad = "";
-        try
-        {
+    //    iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+    //    iRunAll=0;
+    //    sMaamad = "";
+    //    try
+    //    {
 
-            ServicePath = "~/Modules/WebServices/wsBatch.asmx";
-            iRequestId = objBatch.RunCalcBatch(clGeneral.enGeneralBatchType.Calculation, txtDescription.Text, clGeneral.enStatusRequest.InProcess, iUserId, sMaamad, ddlToMonth.SelectedValue, iRunAll,chkTest.Checked.GetHashCode());
-            ViewState["iRequestId"] = iRequestId;
-            ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunShguyim(" + iRequestId + ",'" + DateTime.Now.ToShortDateString() + "','3','1');", true);
+    //        ServicePath = "~/Modules/WebServices/wsBatch.asmx";
+    //        iRequestId = objBatch.RunCalcBatch(clGeneral.enGeneralBatchType.Calculation, txtDescription.Text, clGeneral.enStatusRequest.InProcess, iUserId, sMaamad, ddlToMonth.SelectedValue, iRunAll,chkTest.Checked.GetHashCode());
+    //        ViewState["iRequestId"] = iRequestId;
+    //        ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunShguyim(" + iRequestId + ",'" + DateTime.Now.ToShortDateString() + "','3','1');", true);
          
 
-            sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
-             lblMessage.Text = sMessage;
-             btnShowMessage_Click(this, new EventArgs());
+    //        sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+    //         lblMessage.Text = sMessage;
+    //         btnShowMessage_Click(this, new EventArgs());
            
-        }
-        catch (Exception ex)
-        {
-            clGeneral.BuildError(Page, ex.Message);
-        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        clGeneral.BuildError(Page, ex.Message);
+    //    }
         
-    }
+    //}
     
 }
