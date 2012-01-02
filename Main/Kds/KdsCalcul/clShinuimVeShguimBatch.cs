@@ -192,6 +192,8 @@ namespace KdsCalcul
         public bool LoadData(int iNumProcess, long btchRequest)
         {
             _data = GetData(out _errorMessage, iNumProcess, btchRequest);
+            clLogBakashot.SetError(btchRequest, "W", (int)btchRequest, "data.Rows=" + _data.Rows.Count + " iNumProcess=" + iNumProcess);
+            clLogBakashot.InsertErrorToLog();
             return (_data != null && _data.Rows.Count > 0);
         }
 
