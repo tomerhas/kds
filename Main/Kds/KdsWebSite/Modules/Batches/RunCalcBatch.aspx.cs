@@ -129,5 +129,9 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
     //    }
         
     //}
+
+    //function RunShguyim(iRequestId, dChodesh, iCalcType, iBatchExecutionType) {
+    //    wsBatch.RunShinuimVeShguim(iRequestId, dChodesh, iCalcType, iBatchExecutionType); //, RunCalcSucceeded);
+    //}
     
 }
