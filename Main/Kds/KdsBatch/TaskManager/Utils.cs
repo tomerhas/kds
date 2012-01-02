@@ -44,7 +44,7 @@ namespace KdsBatch.TaskManager
             }
             catch (Exception ex)
             {
-                throw new Exception("RunShguimOfSdrn:" + ex.Message);
+                throw new Exception("RunShguimOfPremiyotMusachim:" + ex.Message);
             }
         }
         public void RunCalcPremiyotMusachim()
