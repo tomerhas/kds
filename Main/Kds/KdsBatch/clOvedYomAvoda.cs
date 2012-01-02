@@ -49,6 +49,7 @@ namespace KdsBatch
         public string sRishyonAutobus;
         public string sShlilatRishayon;
         public int iSnifTnua;
+        public int iBechishuvSachar;
 
         private DataTable dtOvedCardDetails;
         private bool _bOvedDetailsExists = false;
@@ -128,7 +129,8 @@ namespace KdsBatch
                 iSnifAv = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["snif_av"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["snif_av"].ToString());
                 iKodSectorIsuk = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
                 iSnifTnua = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["Snif_Tnua"].ToString());
-               
+                iBechishuvSachar = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"].ToString());
+
             }
             catch (Exception ex)
             {
