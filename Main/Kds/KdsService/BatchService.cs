@@ -65,12 +65,15 @@ namespace KdsService
                 switch (TypeShguyim)
                 {
                     case clGeneral.enCalcType.ShinuyimVeShguyim:
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
                         oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimHR:
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
                         oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                     case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
                         oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
                         break;
                 }
