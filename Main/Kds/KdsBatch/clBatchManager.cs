@@ -10727,10 +10727,10 @@ namespace KdsBatch
                         j = iPeilutNesiaIndex;
                         do
                         {
-                            j = -1;
+                            j -= 1;
                             oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                         }
-                        while (oNextPeilut == oPeilutMachine);
+                        while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia);
                         oPeilutRekaFirst = (clPeilut)oSidur.htPeilut[j + 1];
 
                         sSugMechona =oPeilutMachine.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
@@ -10751,7 +10751,7 @@ namespace KdsBatch
                                 j = -1;
                                 oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                             }
-                            while (oNextPeilut == oPeilutMachine);
+                            while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia);
                         }
                         else
                         {
