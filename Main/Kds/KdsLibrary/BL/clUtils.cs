@@ -1145,7 +1145,7 @@ namespace KdsLibrary.BL
                  dal.AddParameter("p_num_process", ParameterType.ntOracleInteger, iNumProcess, ParameterDir.pdInput);
                  dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
 
-                 dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaShinuiHr);
+                 dal.ExecuteSP(KdsLibrary.clGeneral.cProPrepareYameiAvodaPremiot);
              }
              catch (Exception ex)
              {
