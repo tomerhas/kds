@@ -690,8 +690,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
             //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
             KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
-            if ((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
-                && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString()))))
+            if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
+                && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
+                || (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode())))
                 EnabledFrames(false);
             else
              //   if (!bDisabledFrame)
@@ -721,7 +722,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ////אם הגענו לשגוי הבא, נעלה הודעה
             //if (bNextCardErrorNotFound)
             //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
-            
+            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+                sScript = sScript + "alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
@@ -1493,7 +1495,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     break;
                }
             }
-
         }
         return bHasPeiluyot;
     }
@@ -2220,6 +2221,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             lstSidurim.BuildPage();
          
             string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+                sScript = sScript + "alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);           
         }
     }
@@ -2695,6 +2698,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                         ref oCollPeluyotOvdimDel, ref oCollPeluyotOvdimIns))
                 {
                     //נמצאו פעילויות זהות
+                    SetUpdateBtnVisibility("true");
                     string sScript = "alert('קיימת פעילות בשעת היציאה שדיווחת, יש לתקן את השעה' )";
                     ScriptManager.RegisterStartupScript(btnUpdateCard, this.GetType(), "Save", sScript, true);
                 }
@@ -2716,6 +2720,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     else
                     {
+                        SetUpdateBtnVisibility("true");
                         string sScript = "alert('קיימים סידורים עם אותו מספר סידור ואותה שעת התחלה, לא ניתן לשמור נתונים' )";
                         ScriptManager.RegisterStartupScript(btnUpdateCard, this.GetType(), "Save", sScript, true);
                     }
@@ -2886,7 +2891,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     bChanged = true;
                 }
                 break;
-            case "MAKAT_NO":
+            case "Makat_nesia":
                 if (!_Peilut.lOldMakatNesia.Equals(_Peilut.lMakatNesia))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
@@ -2910,7 +2915,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     bChanged = true;
                 }
                 break;
-            case "SHAT_YETIZA":
+            case "Shat_yetzia":
                  if (!_Peilut.dOldFullShatYetzia.Equals(_Peilut.dFullShatYetzia))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
@@ -3329,7 +3334,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 oCollIdkunRashemet.Add(_objIdkunRashemet);
             }
            // if (FillObjIdkunRashemet(_TxtShatYetiza, clUtils.GetPakadId(dtPakadim, "SHAT_YETIZA"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
-            if (FillObjIdkunRashemet(oSidur, iRowIndex,"SHAT_YETIZA", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
+            if (FillObjIdkunRashemet(oSidur, iRowIndex, "Shat_yetzia", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
             {
                 //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
                 //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;
@@ -3352,7 +3357,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             }
             //_Txt = ((TextBox)oGridRow.Cells[lstSidurim.COL_MAKAT].Controls[0]);
             //if (FillObjIdkunRashemet(_Txt, clUtils.GetPakadId(dtPakadim, "MAKAT_NO"), iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))
-            if (FillObjIdkunRashemet(oSidur, iRowIndex, "MAKAT_NO", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))  
+            if (FillObjIdkunRashemet(oSidur, iRowIndex, "Makat_nesia", iMisparSidur, dNewShatHatchala, dNewShatYetiza, iMisparKnisa, ref _objIdkunRashemet))  
             {
                 //_objIdkunRashemet.NEW_SHAT_HATCHALA = dNewShatHatchala;
                 //_objIdkunRashemet.SHAT_HATCHALA = dSidurShatHatchala;

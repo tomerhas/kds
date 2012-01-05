@@ -6396,7 +6396,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
 
-            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "MAKAT_NO"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
+            bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "Makat_nesia"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             bool bEnabled = IsMakatEnabled(bIdkunRashemet, bElementHachanatMechona, oMakatType, iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && (oMakatType != clKavim.enMakatType.mVisa) && (oMakatType != clKavim.enMakatType.mVisut));
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
             ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).Enabled = ((bSidurActive) && (bPeilutActive) && (bEnabled));            

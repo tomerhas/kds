@@ -1045,7 +1045,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             DataComparisonImport = 11,
             CalculationForPremiaPopulation = 12
         }
-
+        public enum enBechishuvSachar
+        {
+            bsActive=1
+        }
         public enum enBatchExecutionStatus
         {
             Running = 1,
