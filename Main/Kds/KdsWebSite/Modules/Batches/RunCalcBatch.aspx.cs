@@ -101,37 +101,41 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
 
     //protected void btnRunShguiim_Click(object sender, EventArgs e)
     //{
-    //    int iUserId,iRunAll;
-    //    long  iRequestId;
+    //    int iUserId, iRunAll;
+    //    long iRequestId;
     //    string sMessage, sMaamad;
     //    clBatch objBatch = new clBatch();
 
     //    iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-    //    iRunAll=0;
+    //    iRunAll = 0;
     //    sMaamad = "";
     //    try
     //    {
 
     //        ServicePath = "~/Modules/WebServices/wsBatch.asmx";
-    //        iRequestId = objBatch.RunCalcBatch(clGeneral.enGeneralBatchType.Calculation, txtDescription.Text, clGeneral.enStatusRequest.InProcess, iUserId, sMaamad, ddlToMonth.SelectedValue, iRunAll,chkTest.Checked.GetHashCode());
+    //        iRequestId = objBatch.RunCalcBatch(clGeneral.enGeneralBatchType.Calculation, txtDescription.Text, clGeneral.enStatusRequest.InProcess, iUserId, sMaamad, ddlToMonth.SelectedValue, iRunAll, chkTest.Checked.GetHashCode());
     //        ViewState["iRequestId"] = iRequestId;
-    //        ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunShguyim(" + iRequestId + ",'" + DateTime.Now.ToShortDateString() + "','3','1');", true);
-         
+    //        ScriptManager.RegisterStartupScript(btnRun, this.GetType(), "Run", "RunShguyim(" + iRequestId + ",'" + DateTime.Now.ToShortDateString() + "','5','1');", true);
+
 
     //        sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
-    //         lblMessage.Text = sMessage;
-    //         btnShowMessage_Click(this, new EventArgs());
-           
+    //        lblMessage.Text = sMessage;
+    //        btnShowMessage_Click(this, new EventArgs());
+
     //    }
     //    catch (Exception ex)
     //    {
     //        clGeneral.BuildError(Page, ex.Message);
     //    }
-        
+
     //}
 
-    //function RunShguyim(iRequestId, dChodesh, iCalcType, iBatchExecutionType) {
-    //    wsBatch.RunShinuimVeShguim(iRequestId, dChodesh, iCalcType, iBatchExecutionType); //, RunCalcSucceeded);
-    //}
+//    <asp:Button Text="שגויים" ID="Button1" runat="server" CssClass="ImgButtonSearch" 
+//                        onclick="btnRunShguiim_Click"  /> 
+
     
+
+//function RunShguyim(iRequestId, dChodesh, iCalcType, iBatchExecutionType) {
+//    wsBatch.RunShinuimVeShguim(iRequestId, dChodesh, iCalcType, iBatchExecutionType); //, RunCalcSucceeded);
+//}
 }

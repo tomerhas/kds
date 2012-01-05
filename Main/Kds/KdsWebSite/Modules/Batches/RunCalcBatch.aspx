@@ -44,7 +44,7 @@
                 <ContentTemplate>
                  <asp:Button Text="הפעל" ID="btnRun" runat="server" CssClass="ImgButtonSearch" 
                         onclick="btnRun_Click"  /> 
-                  
+                 
                 </ContentTemplate>
             </asp:UpdatePanel>
          </td>
@@ -80,7 +80,6 @@
 function RunCalc(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft) {
     wsBatch.CalcBatchParallel(iRequestId, dChodesh, sMaamad, bRitzatTest, bRitzaGoreft); //, RunCalcSucceeded);
 }
-
 
 
 
