@@ -91,11 +91,7 @@ namespace KdsBatch
                 //סה"כ פיצול כפול (רכיב 50
                 CalcRechiv50();
 
-                //זמן להמרת שעות שבת (רכיב 53) 
-                CalcRechiv53();
-
-                //חופש זכות (רכיב 132):
-                CalcRechiv132();
+             
 
                 //סהכ דקות הסתגלות (רכיב 214)
                 CalcRechiv214();
@@ -192,6 +188,12 @@ namespace KdsBatch
 
                 //תוספת רציפות 1-1(נהגות)   - רכיב 96:  
                 CalcRechiv96();
+
+                //זמן להמרת שעות שבת (רכיב 53) 
+                CalcRechiv53();
+
+                //חופש זכות (רכיב 132):
+                CalcRechiv132();
 
                 //דקות כיסוי תור (רכיב 218
                 CalcRechiv218();
@@ -2091,15 +2093,16 @@ namespace KdsBatch
 
         private void CalcRechiv53()
         {
-            float fSumDakotRechiv;
+            float fSumDakotRechiv,fTosefetRezifut96;
             try
             {
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                 {
 
                     oSidur.CalcRechiv53();
-                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), objOved.Taarich); 
-                    addRowToTable(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), fSumDakotRechiv);
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), objOved.Taarich);
+                    fTosefetRezifut96 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), fSumDakotRechiv + fTosefetRezifut96);
 
                 }
             }

@@ -6261,7 +6261,7 @@ namespace KdsBatch
                     
                     //שינוי מספר 5
                     //שינוי זה צריך לעבוד לפני שינוי 4
-                    AddElementMechine05();
+                    AddElementMechine05_2();
 
                     // שינוי 04
                     for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -8853,17 +8853,17 @@ namespace KdsBatch
                                             oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = oNewSidurim.ShatHatchalaNew;
                                             oObjPeilutUpd.UPDATE_OBJECT = 1;
                                         }
-                                        if (j == 0)
-                                        {
+                                       // if (j == 0)
+                                       // {
                                             if (SourceObject == SourceObj.Insert)
                                             {
-                                                oObjPeilutUpd.SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes(-(oObjSidurimOvdimUpd.SHAT_HATCHALA - prevSidur.dFullShatGmar).TotalMinutes);
+                                                oObjPeilutUpd.SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes(-(oSidur.dFullShatHatchala - prevSidur.dFullShatGmar).TotalMinutes);
                                                 oPeilut.dFullShatYetzia = oObjPeilutUpd.SHAT_YETZIA;
 
                                             }
                                             else
                                             {
-                                                oObjPeilutUpd.NEW_SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes(-(oObjSidurimOvdimUpd.SHAT_HATCHALA - prevSidur.dFullShatGmar).TotalMinutes);
+                                                oObjPeilutUpd.NEW_SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes(-(oSidur.dFullShatHatchala - prevSidur.dFullShatGmar).TotalMinutes);
                                                 UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);
                                                 UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia, oObjPeilutUpd.NEW_SHAT_YETZIA);           
                                                
@@ -8871,7 +8871,7 @@ namespace KdsBatch
 
                                             }
                                              oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
-                                        }
+                                     //   }
                                         oSidur.htPeilut[j] = oPeilut;
                                     }
                                 }
@@ -10724,50 +10724,56 @@ namespace KdsBatch
                     {
 
                         dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oSidur.dFullShatHatchala);
-                        j = iPeilutNesiaIndex;
-                        do
+                        j = iIndexPeilutMashmautit - 1;
+                        oNextPeilut = (clPeilut)oSidur.htPeilut[j];
+                        while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia)
                         {
                             j -= 1;
                             oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                         }
-                        while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia);
+                        
                         oPeilutRekaFirst = (clPeilut)oSidur.htPeilut[j + 1];
 
                         sSugMechona =oPeilutMachine.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
 
                         if (sSugMechona == "711" || (sSugMechona == "701" &&
-                            ((oFirstPeilutMashmautit.dFullShatYetzia < dRefferenceDate || (oFirstPeilutMashmautit.dFullShatYetzia >= dRefferenceDate && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate))) && (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) < oParam.iMaxZmanRekaAdShmone)) ||
+                            ((oFirstPeilutMashmautit.dFullShatYetzia < dRefferenceDate || (oFirstPeilutMashmautit.dFullShatYetzia >= dRefferenceDate && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate))) && (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaAdShmone)) ||
                             ((oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && !clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)) && (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaNichleletafter8))))
                         {
-                            j = iPeilutNesiaIndex;
+                            j = iIndexPeilutMashmautit - 1; ;// -1;
                             oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                             dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) + oFirstPeilutMashmautit.iKisuyTor));
-                            do
+                            
+                            while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia) 
                             {
                                 //if (!string.IsNullOrEmpty(oNextPeilut.sElementNesiaReka))
                                 dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oNextPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
                                 //else if (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "709")
                                 //dShatHatchala = dShatHatchala.AddMinutes(-int.Parse(oNextPeilut.lMakatNesia.ToString().Substring(3, 3)));
-                                j = -1;
+                                j -= 1;
                                 oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                             }
-                            while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia);
+                           
                         }
                         else
                         {
-                            j = iPeilutNesiaIndex -1 ;
+                            j = iIndexPeilutMashmautit - 1;
                             oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                             dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) + oFirstPeilutMashmautit.iKisuyTor));
-                            do
+
+                            while (oNextPeilut != oPeilutRekaFirst)
                             {
                                 //if (!string.IsNullOrEmpty(oNextPeilut.sElementNesiaReka))
                                 dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oNextPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
                                 //else if (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "709")
                                 //dShatHatchala = dShatHatchala.AddMinutes(-int.Parse(oNextPeilut.lMakatNesia.ToString().Substring(3, 3)));
-                                j = -1;
+                                j -= 1;
                                 oNextPeilut = (clPeilut)oSidur.htPeilut[j];
                             }
-                            while (oNextPeilut == oPeilutMachine);
+                            if (oPeilutRekaFirst.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "709")
+                                dShatHatchala = dShatHatchala.AddMinutes(-int.Parse(oPeilutRekaFirst.lMakatNesia.ToString().PadLeft(8).Substring(3, 3)));
+                               
+                           // while (oNextPeilut == oPeilutMachine);
                         }
 
 
