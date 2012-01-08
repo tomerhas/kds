@@ -16,6 +16,7 @@ namespace KdsBatch.Reports
             int iStatus = 0;
             try
             {
+                _enTypeRepot = clGeneral.enReportType.HeavyReport;
                 _loginUser = 0;
                 _EndProcesSucceed = clGeneral.enStatusRequest.PartEnded;
                 _lBakashaId = iRequestId;

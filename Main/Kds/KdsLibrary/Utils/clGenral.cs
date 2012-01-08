@@ -59,7 +59,9 @@ namespace KdsLibrary
         public const string cProPrepareYameiAvodaShinuiHr = "pkg_batch.Prepare_yamei_avoda_shinui_hr";
         public const string cProproGetNetunimForProcess = "pkg_batch.pro_get_netunim_for_process";
         public const string cProPrepareYameiAvodaPremiot = "pkg_batch.Prepare_premiot_shguim_batch";
-  
+
+        public const string cProSaveRikuzPdf = "pkg_batch.Pro_Save_Rikuz_Pdf";
+        
 #endregion 
 
 #region pkg_calc constants
@@ -1106,6 +1108,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             All 
         }
 
+        public enum enReportType
+        {
+            ConstantReport=0,
+            HeavyReport=1,
+            Rikuz=2
+        }
         public static void BuildError(Page pPage, string sErr, bool DisplayFunctionName)
         {
             string OriginFunction;

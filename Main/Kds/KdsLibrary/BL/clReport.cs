@@ -412,5 +412,20 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public void SaveRikuzmPdf(COLL_RIKUZ_PDF oCollRikuzPdf)
+        {
+            try
+            {
+                clDal dal = new clDal();
+
+                dal.AddParameter("p_coll_rikuz_pdf", ParameterType.ntOracleArray, oCollRikuzPdf, ParameterDir.pdInput, "COLL_RIKUZ_PDF");
+                dal.ExecuteSP(clGeneral.cProSaveRikuzPdf);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

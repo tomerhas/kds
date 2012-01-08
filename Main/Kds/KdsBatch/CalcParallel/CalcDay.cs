@@ -1085,7 +1085,7 @@ namespace KdsBatch
 
         private void CalcRechiv19_20_21()
         {
-            float fSumDakotRechiv19, fTempX, fMichsaYomit, fDakotNahagutChol, fDakotNihulChol, fDakotTafkidChol, fSumDakotRechiv20, fSumDakotRechiv21;
+            float fSumDakotRechiv19, fTempX, fMichsaYomit,fDakotNochechut, fDakotNahagutChol, fDakotNihulChol, fDakotTafkidChol, fSumDakotRechiv20, fSumDakotRechiv21;
             int iCountNihulTnua, iCountNahagutChol, iCountTafkidChol;
             fSumDakotRechiv19 = 0;
             fSumDakotRechiv20 = 0;
@@ -1100,134 +1100,136 @@ namespace KdsBatch
                         {
                             Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
 
-                            fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);  
-                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100);  //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);  
-                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotZikuyChofesh);  //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Taarich); 
-                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotShabat);  //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotShabat.GetHashCode(), objOved.Taarich);
+                            fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  
+                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100);  
+                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotZikuyChofesh);
+                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotShabat); 
 
-                            fMichsaYomit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet);  //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
-
-                            objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-                            iCountNihulTnua = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
-                            iCountNahagutChol = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNehigaChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
-                            iCountTafkidChol = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
-
-                            if (fTempX > fMichsaYomit)
+                            fMichsaYomit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet);  
+                            fDakotNochechut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  
+                            if (fMichsaYomit>0 && fDakotNochechut>0)
                             {
-                                fDakotTafkidChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotTafkidChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
-                                fDakotTafkidChol = fDakotTafkidChol - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich); 
-                                if (fDakotTafkidChol > 0 && (iCountNihulTnua == 0 && iCountNahagutChol == 0))
-                                {
-                                    fSumDakotRechiv21 = fTempX - fMichsaYomit;
-                                }
+                                objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
+                                iCountNihulTnua = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
+                                iCountNahagutChol = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotNehigaChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
+                                iCountTafkidChol = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')").Length;
 
-
-                                fDakotNihulChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNihulTnuaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Taarich); 
-                                if (fDakotNihulChol > 0 && (iCountTafkidChol == 0 && iCountNahagutChol == 0))
+                                if (fTempX > fMichsaYomit)
                                 {
-                                    fSumDakotRechiv20 = fTempX - fMichsaYomit;
-                                }
-
-                                fDakotNahagutChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNehigaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich); 
-                                if (fDakotNahagutChol > 0 && iCountTafkidChol == 0 && iCountNihulTnua == 0)
-                                {
-                                    fSumDakotRechiv19 = fTempX - fMichsaYomit;
-                                }
-
-                                //כלומר ביצע עבודת תפקיד + נהגות
-                                if (fDakotTafkidChol > 0 && fDakotNahagutChol > 0 && iCountNihulTnua == 0)
-                                {
-                                    if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
+                                    fDakotTafkidChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotTafkidChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
+                                    fDakotTafkidChol = fDakotTafkidChol - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich); 
+                                    if (fDakotTafkidChol > 0 && (iCountNihulTnua == 0 && iCountNahagutChol == 0))
                                     {
                                         fSumDakotRechiv21 = fTempX - fMichsaYomit;
                                     }
-                                    else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
-                                    {
-                                        fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
-                                        fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv21;
-                                    }
-                                    else if (fDakotTafkidChol <= fMichsaYomit)
-                                    {
-                                        fSumDakotRechiv19 = fTempX - fMichsaYomit;
-                                    }
-                                }
 
-                                //כלומר ביצע עבודת תנועה + נהגות
-                                if (fDakotNihulChol > 0 && fDakotNahagutChol > 0 && iCountTafkidChol == 0)
-                                {
-                                    if (fDakotNihulChol >= fMichsaYomit && fDakotNihulChol >= fTempX)
+
+                                    fDakotNihulChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNihulTnuaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Taarich); 
+                                    if (fDakotNihulChol > 0 && (iCountTafkidChol == 0 && iCountNahagutChol == 0))
                                     {
                                         fSumDakotRechiv20 = fTempX - fMichsaYomit;
                                     }
-                                    else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
-                                    {
-                                        fSumDakotRechiv20 = fDakotNihulChol - fMichsaYomit;
-                                        fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv20;
-                                    }
-                                    else if (fDakotTafkidChol <= fMichsaYomit)
+
+                                    fDakotNahagutChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNehigaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich); 
+                                    if (fDakotNahagutChol > 0 && iCountTafkidChol == 0 && iCountNihulTnua == 0)
                                     {
                                         fSumDakotRechiv19 = fTempX - fMichsaYomit;
                                     }
-                                }
 
-                                //כלומר ביצע עבודת תנועה + תפקיד
-                                if (fDakotNihulChol > 0 && fDakotTafkidChol > 0 && iCountNahagutChol == 0)
-                                {
-                                    if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
+                                    //כלומר ביצע עבודת תפקיד + נהגות
+                                    if (fDakotTafkidChol > 0 && fDakotNahagutChol > 0 && iCountNihulTnua == 0)
                                     {
-                                        fSumDakotRechiv21 = fTempX - fMichsaYomit;
-                                    }
-                                    else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
-                                    {
-                                        fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
-                                        fSumDakotRechiv20 = fTempX - fMichsaYomit - fSumDakotRechiv21;
-                                    }
-                                    else if (fDakotTafkidChol <= fMichsaYomit)
-                                    {
-                                        fSumDakotRechiv20 = fTempX - fMichsaYomit;
-                                    }
-                                }
-
-
-                                //כלומר ביצע עבודת נהגות + תנועה + תפקיד
-                                if (fDakotNihulChol > 0 && fDakotTafkidChol > 0 && fDakotNahagutChol > 0)
-                                {
-                                    if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
-                                    {
-                                        fSumDakotRechiv21 = fTempX - fMichsaYomit;
-                                    }
-                                    else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
-                                    {
-                                        fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
-                                        fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv21;
-                                        if (fDakotNahagutChol < fSumDakotRechiv19)
+                                        if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
                                         {
-                                            fSumDakotRechiv20 = fSumDakotRechiv19 - fDakotNahagutChol;
-                                            fSumDakotRechiv19 = fDakotNahagutChol;
+                                            fSumDakotRechiv21 = fTempX - fMichsaYomit;
                                         }
-                                    }
-                                    else if (fDakotTafkidChol <= fMichsaYomit)
-                                    {
-                                        fSumDakotRechiv19 = fTempX - fMichsaYomit;
-
-                                        if (fDakotNahagutChol < fSumDakotRechiv19)
+                                        else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
                                         {
-                                            fSumDakotRechiv20 = fSumDakotRechiv19 - fDakotNahagutChol;
-                                            fSumDakotRechiv19 = fDakotNahagutChol;
+                                            fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv21;
+                                        }
+                                        else if (fDakotTafkidChol <= fMichsaYomit)
+                                        {
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit;
                                         }
                                     }
 
-                                }
+                                    //כלומר ביצע עבודת תנועה + נהגות
+                                    if (fDakotNihulChol > 0 && fDakotNahagutChol > 0 && iCountTafkidChol == 0)
+                                    {
+                                        if (fDakotNihulChol >= fMichsaYomit && fDakotNihulChol >= fTempX)
+                                        {
+                                            fSumDakotRechiv20 = fTempX - fMichsaYomit;
+                                        }
+                                        else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
+                                        {
+                                            fSumDakotRechiv20 = fDakotNihulChol - fMichsaYomit;
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv20;
+                                        }
+                                        else if (fDakotTafkidChol <= fMichsaYomit)
+                                        {
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit;
+                                        }
+                                    }
+
+                                    //כלומר ביצע עבודת תנועה + תפקיד
+                                    if (fDakotNihulChol > 0 && fDakotTafkidChol > 0 && iCountNahagutChol == 0)
+                                    {
+                                        if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
+                                        {
+                                            fSumDakotRechiv21 = fTempX - fMichsaYomit;
+                                        }
+                                        else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
+                                        {
+                                            fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
+                                            fSumDakotRechiv20 = fTempX - fMichsaYomit - fSumDakotRechiv21;
+                                        }
+                                        else if (fDakotTafkidChol <= fMichsaYomit)
+                                        {
+                                            fSumDakotRechiv20 = fTempX - fMichsaYomit;
+                                        }
+                                    }
 
 
-                                addRowToTable(clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode(), fSumDakotRechiv19);
-                                addRowToTable(clGeneral.enRechivim.DakotNosafotNihul.GetHashCode(), fSumDakotRechiv20);
-                                if ((objOved.objMeafyeneyOved.sMeafyen74 != "1") || (objOved.objMeafyeneyOved.sMeafyen74 == "1" && objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.Poked.GetHashCode() && oCalcBL.CheckYomShishi(objOved.SugYom)))
-                                {
-                                    addRowToTable(clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), fSumDakotRechiv21);
+                                    //כלומר ביצע עבודת נהגות + תנועה + תפקיד
+                                    if (fDakotNihulChol > 0 && fDakotTafkidChol > 0 && fDakotNahagutChol > 0)
+                                    {
+                                        if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
+                                        {
+                                            fSumDakotRechiv21 = fTempX - fMichsaYomit;
+                                        }
+                                        else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
+                                        {
+                                            fSumDakotRechiv21 = fDakotTafkidChol - fMichsaYomit;
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv21;
+                                            if (fDakotNahagutChol < fSumDakotRechiv19)
+                                            {
+                                                fSumDakotRechiv20 = fSumDakotRechiv19 - fDakotNahagutChol;
+                                                fSumDakotRechiv19 = fDakotNahagutChol;
+                                            }
+                                        }
+                                        else if (fDakotTafkidChol <= fMichsaYomit)
+                                        {
+                                            fSumDakotRechiv19 = fTempX - fMichsaYomit;
+
+                                            if (fDakotNahagutChol < fSumDakotRechiv19)
+                                            {
+                                                fSumDakotRechiv20 = fSumDakotRechiv19 - fDakotNahagutChol;
+                                                fSumDakotRechiv19 = fDakotNahagutChol;
+                                            }
+                                        }
+
+                                    }
+
+
+                                    addRowToTable(clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode(), fSumDakotRechiv19);
+                                    addRowToTable(clGeneral.enRechivim.DakotNosafotNihul.GetHashCode(), fSumDakotRechiv20);
+                                    if ((objOved.objMeafyeneyOved.sMeafyen74 != "1") || (objOved.objMeafyeneyOved.sMeafyen74 == "1" && objOved.objPirteyOved.iIsuk == clGeneral.enIsukOved.Poked.GetHashCode() && oCalcBL.CheckYomShishi(objOved.SugYom)))
+                                    {
+                                        addRowToTable(clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode(), fSumDakotRechiv21);
+                                    }
                                 }
                             }
-
                         }
 
                     }

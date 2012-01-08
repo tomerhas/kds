@@ -12,6 +12,7 @@ using KdsLibrary.UI;
 using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
+using KdsLibrary.UDT;
 namespace KdsBatch.Reports
 {
 
@@ -26,9 +27,15 @@ namespace KdsBatch.Reports
         protected int _loginUser;
         protected DataTable _dtDetailsReport, _dtReportDefinitions, _dtDestinations;
         protected clGeneral.enStatusRequest _EndProcesSucceed;
+        protected clGeneral.enReportType _enTypeRepot;
+
+        private OBJ_RIKUZ_PDF oObjRikuzPdf;
+        private COLL_RIKUZ_PDF oCollRikuzPdf;  
+         
         public ClFactoryReport()
         {
             _BlReport = KdsLibrary.BL.clReport.GetInstance();
+            oCollRikuzPdf = new COLL_RIKUZ_PDF();
         }
         protected enum DetailsReports
         {
@@ -102,7 +109,7 @@ namespace KdsBatch.Reports
             }
         }
 
-               
+
         public void MakeReports(long iRequestId)
         {
             byte[] fileReport;
@@ -119,40 +126,57 @@ namespace KdsBatch.Reports
                 foreach (clReport drReport in _Reports)
                 {
                     fileReport = CreateFile(drReport);
-                    name = SetNameOfReportFile(drReport);
-                    info = _RptModule.CreateOutputFile(path, name);
-
+  
   //                  clGeneral.LogMessage("MakeReports: After CreateOutputFile:" + info.FullName, System.Diagnostics.EventLogEntryType.Information);
-                    if (info != null)
+                    if (fileReport != null)
                     {
-
-                        List<clDestinationReport> tempDest = getDestinationReports(drReport);/* _DestinationReports.FindAll(delegate(clDestinationReport Dest)
+                        switch (_enTypeRepot)
                         {
-                            if ((Dest.Kod == drReport.KodReport) & (Dest.MisparIshi == drReport.MisparIshi)) return true;
-                            else return false;
-                        });
-                        */
-                        if (tempDest.Count == 0)
-                        {
-                            ErrorMessage = "MakeReports::No Destination found for report kod:" + drReport.KodReport + ",BakashaId:" + drReport.BakashaId;
-                            clGeneral.LogMessage(ErrorMessage, System.Diagnostics.EventLogEntryType.Warning);
-                            clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "W", 0, null, ErrorMessage);
-                        }
-                        foreach (clDestinationReport dest in tempDest)
-                        {
-                            if (dest.TypeSending == TypeSending.Folder)
-                            {
-                                    if (!Directory.Exists(dest.Folder))
-                                        Directory.CreateDirectory(dest.Folder);
-                                    info.CopyTo(dest.Folder + @"\" + info.Name,true);
-                            }
-                            else if ( dest.TypeSending == TypeSending.EMail)
-                                    SendMailErrorEventArgs(info.FullName, dest.eMail, drReport.Teur);
-                            else throw new Exception("Missing destination for report " + drReport.RdlName + "(" + drReport.KodReport+ "):" + name);
+                            case clGeneral.enReportType.ConstantReport:
+                            case clGeneral.enReportType.HeavyReport:      
+                                    name = SetNameOfReportFile(drReport);
+                                    info = _RptModule.CreateOutputFile(path, name);
+                                    List<clDestinationReport> tempDest = getDestinationReports(drReport);/* _DestinationReports.FindAll(delegate(clDestinationReport Dest)
+                                    {
+                                        if ((Dest.Kod == drReport.KodReport) & (Dest.MisparIshi == drReport.MisparIshi)) return true;
+                                        else return false;
+                                    });
+                                    */
+                                    if (tempDest.Count == 0)
+                                    {
+                                        ErrorMessage = "MakeReports::No Destination found for report kod:" + drReport.KodReport + ",BakashaId:" + drReport.BakashaId;
+                                        clGeneral.LogMessage(ErrorMessage, System.Diagnostics.EventLogEntryType.Warning);
+                                        clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "W", 0, null, ErrorMessage);
+                                    }
+                                    foreach (clDestinationReport dest in tempDest)
+                                    {
+                                        if (dest.TypeSending == TypeSending.Folder)
+                                        {
+                                                if (!Directory.Exists(dest.Folder))
+                                                    Directory.CreateDirectory(dest.Folder);
+                                                info.CopyTo(dest.Folder + @"\" + info.Name,true);
+                                        }
+                                        else if ( dest.TypeSending == TypeSending.EMail)
+                                                SendMailErrorEventArgs(info.FullName, dest.eMail, drReport.Teur);
+                                        else throw new Exception("Missing destination for report " + drReport.RdlName + "(" + drReport.KodReport+ "):" + name);
+                                    }
+                                    info.Delete();
+                                  break;
+                            case clGeneral.enReportType.Rikuz:
+                                  oObjRikuzPdf = new OBJ_RIKUZ_PDF();
+                                  oObjRikuzPdf.MISPAR_ISHI = drReport.MisparIshi;
+                                  oObjRikuzPdf.BAKASHA_ID = drReport.BakashaId;
+                                  oObjRikuzPdf.TAARICH = drReport.Month;
+                                  oObjRikuzPdf.SUG_CHISHUV = drReport.sug_chishuv;
+                                  oObjRikuzPdf.RIKUZ_PDF = fileReport;
+                                  oCollRikuzPdf.Add(oObjRikuzPdf);
+                                  break;
                         }
                     }
-                    info.Delete();
                 }
+
+                if (_enTypeRepot == clGeneral.enReportType.Rikuz)
+                    _BlReport.SaveRikuzmPdf(oCollRikuzPdf);
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
             }
             catch (Exception ex)

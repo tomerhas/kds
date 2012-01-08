@@ -138,6 +138,7 @@
     <Compile Include="UDT\Coll_Obj_Peilut_Ovdim.cs" />
     <Compile Include="UDT\Coll_Ovdim_Im_Shinuy_Hr.cs" />
     <Compile Include="UDT\Coll_Report_Param.cs" />
+    <Compile Include="UDT\Coll_Rikuz_Pdf.cs" />
     <Compile Include="UDT\Coll_Shgiot_Meusharot.cs" />
     <Compile Include="UDT\Coll_Sidurim_Ovdim.cs" />
     <Compile Include="UDT\Coll_Yamey_Avoda_Ovdim.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="UDT\Obj_Ovdim_Im_Shinuy_Hr.cs" />
     <Compile Include="UDT\Obj_Peilut_Ovdim.cs" />
     <Compile Include="UDT\Obj_Report_Param.cs" />
+    <Compile Include="UDT\Obj_Rikuz_Pdf.cs" />
     <Compile Include="UDT\Obj_Shgiot_Meusharot.cs" />
     <Compile Include="UDT\Obj_Sidurim_Ovdim.cs" />
     <Compile Include="UDT\Obj_Yamey_Avoda_Ovdim.cs" />

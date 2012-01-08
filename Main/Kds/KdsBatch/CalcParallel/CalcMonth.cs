@@ -1437,20 +1437,20 @@ namespace KdsBatch
                 iSachShabatonim = GetSachShabatonimInMonth(_dTaarichChishuv);
 
                 fSachDakot37 = oDay.GetRechiv37OutMichsa();
-                fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen16 > -1 ? objOved.objMeafyeneyOved.iMeafyen16 : 0);
-                if (!objOved.objMeafyeneyOved.Meafyen16Exists)
-                {
+                // fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen16 > -1 ? objOved.objMeafyeneyOved.iMeafyen16 : 0);
+                //if (!objOved.objMeafyeneyOved.Meafyen16Exists)
+                //{
                     fMichsatShabat = iSachShabatonim * 6 * 60;
-                }
+                //}
 
                 fTempY = fSachDakot37 - fMichsatShabat;
 
                 fSachDakot36 = oDay.GetRechiv36OutMichsa();
-                fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen17 > -1 ? objOved.objMeafyeneyOved.iMeafyen17 : 0);
-                if (!objOved.objMeafyeneyOved.Meafyen17Exists)
-                {
+                //fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen17 > -1 ? objOved.objMeafyeneyOved.iMeafyen17 : 0);
+                //if (!objOved.objMeafyeneyOved.Meafyen17Exists)
+                //{
                     fMichsatShabat = iSachShabatonim * 6 * 60;
-                }
+                //}
 
 
                 fTempX = fSachDakot36 - fMichsatShabat;
@@ -1691,7 +1691,7 @@ namespace KdsBatch
         {
             float fSumDakotRechiv19, fSumDakotRechiv20, fSumDakotRechiv21, fDakotNochechutLeTashlum, fMichsaYomitMechushevet;
             float fNochehutChodshitChelkit, fMichsaChodshitChelkit, fNosafotChodshi;
-            float fSumDakotRechiv188, fSumDakotRechiv190, fSumDakotRechiv192, fTempX, fTempY;
+            float fSumDakotRechiv2, fSumDakotRechiv3, fSumDakotRechiv4, fTempX, fTempY;
             string sTnaim="";
             try
             {
@@ -1709,34 +1709,33 @@ namespace KdsBatch
                     sTnaim = "ERECH_RECHIV>0";
                     CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, sTnaim, clGeneral.enRechivim.MichsaYomitMechushevet);
                     fDakotNochechutLeTashlum = fNochehutChodshitChelkit;
-
+                    fNochehutChodshitChelkit = 0; fMichsaChodshitChelkit = 0;
                     CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, sTnaim, clGeneral.enRechivim.DakotNochehutLetashlum);
-                    fDakotNochechutLeTashlum = fNochehutChodshitChelkit;
                     fMichsaYomitMechushevet = fMichsaChodshitChelkit;
 
                     if (fDakotNochechutLeTashlum > fMichsaYomitMechushevet)
                     {
                         fNosafotChodshi = fDakotNochechutLeTashlum - fMichsaYomitMechushevet;
-                        fSumDakotRechiv188 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotNahagut.GetHashCode());
+                        fSumDakotRechiv2 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode());
 
-                        //א. אם [נוספות חודשי] <= סהכ נהגות (רכיב 188) 
-                        if (fNosafotChodshi <= fSumDakotRechiv188)
+                        //אם [נוספות חודשי] <= דקות נהיגה חול (רכיב 2) אזי: ) 
+                        if (fNosafotChodshi <= fSumDakotRechiv2)
                             fSumDakotRechiv19 = fNosafotChodshi;
-                        else fSumDakotRechiv19 = fSumDakotRechiv188;
+                        else fSumDakotRechiv19 = fSumDakotRechiv2;
 
-                        //ב. X = [נוספות חודשי] פחות דקות נוספות בנהגות חול (רכיב 19).
+                        // X = [נוספות חודשי] פחות דקות נוספות בנהגות חול (רכיב 19).
                         fTempX = fNosafotChodshi - fSumDakotRechiv19;
-                        fSumDakotRechiv190 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotNihulTnua.GetHashCode());
-                        if (fTempX <= fSumDakotRechiv190)
+                        fSumDakotRechiv3 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode());
+                        if (fTempX <= fSumDakotRechiv3)
                             fSumDakotRechiv20 = fTempX;
-                        else fSumDakotRechiv20 = fSumDakotRechiv190;
+                        else fSumDakotRechiv20 = fSumDakotRechiv3;
 
-                        //ג. Y = [נוספות חודשי] פחות דקות נוספות בנהגות חול (רכיב 19) - פחות דקות נוספות 
+                        //ג.  Y = [נוספות חודשי] פחות דקות נוספות בנהגות חול (רכיב 19) - פחות דקות נוספות 
                         fTempY = fNosafotChodshi - (fSumDakotRechiv19 + fSumDakotRechiv20);
-                        fSumDakotRechiv192 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.SachDakotTafkid.GetHashCode());
-                        if (fTempY <= fSumDakotRechiv192)
+                        fSumDakotRechiv4 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode());
+                        if (fTempY <= fSumDakotRechiv4)
                             fSumDakotRechiv21 = fTempY;
-                        else fSumDakotRechiv21 = fSumDakotRechiv192;
+                        else fSumDakotRechiv21 = fSumDakotRechiv4;
                     }
                 }
                 addRowToTable(clGeneral.enRechivim.DakotNosafotNihul.GetHashCode(), fSumDakotRechiv20);

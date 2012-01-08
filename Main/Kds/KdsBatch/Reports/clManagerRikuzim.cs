@@ -35,6 +35,7 @@ namespace KdsBatch.Reports
             int iStatus = 0;
             try
             {
+                _enTypeRepot = clGeneral.enReportType.Rikuz;
                 //_Month = Period;
                 //_loginUser = iUserId;
                 _lBakashaIdForRikuzim = iRequestIdForRikuzim;
@@ -64,7 +65,8 @@ namespace KdsBatch.Reports
                 {
                     _Reports.Add(new clReport(_lBakashaIdForRikuzim,
                                  clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
-                                 DateTime.Parse(dr["TAARICH"].ToString())));
+                                 DateTime.Parse(dr["TAARICH"].ToString()),
+                                 int.Parse(dr["sug_chishuv"].ToString()) ));
                 }
                 FillReports();
             }
@@ -215,6 +217,10 @@ namespace KdsBatch.Reports
                 throw ex;
             }
         }
+
+
+      
+
     }
 
    

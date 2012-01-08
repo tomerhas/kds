@@ -53,6 +53,8 @@ namespace KdsBatch.Reports
             int iStatus = 0;
             try
             {
+                _enTypeRepot = clGeneral.enReportType.ConstantReport;
+
                 _Month = Period;
                 _StartDate = DateTime.Parse("01/" + Period);
                 _EndDate = _StartDate.AddMonths(1).AddDays(-1);

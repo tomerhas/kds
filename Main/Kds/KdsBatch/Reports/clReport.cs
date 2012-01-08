@@ -18,11 +18,15 @@ namespace KdsBatch.Reports
         private int _MisparIshi;
 
         private DateTime _Month; //for rikuzim
+        private int _sug_chishuv;
         public DateTime Month
         {
             get { return _Month; }
         }
-
+        public int sug_chishuv
+        {
+            get { return _sug_chishuv; }
+        }
 
         public string RdlName
         {
@@ -80,7 +84,7 @@ namespace KdsBatch.Reports
             _HasPeriodParameters = (HasPeriodParameters == 1) ? true : false;
         }
 
-        public clReport(long BakashaId, int MisparIshi,DateTime Month)//for rikuzim
+        public clReport(long BakashaId, int MisparIshi,DateTime Month, int sug_chishuv)//for rikuzim
         {
             _ReportParams = new List<clReportParam>();
             _sRdlName = "RikuzAvodaChodshi";
@@ -88,6 +92,7 @@ namespace KdsBatch.Reports
             _BakashaId = BakashaId;
             _MisparIshi = MisparIshi;
             _Month = Month;
+            _sug_chishuv = sug_chishuv;
             _sTeur = " ריכוזים ל" + _Month.ToShortDateString();
             _iKodReport = 0;
         }
