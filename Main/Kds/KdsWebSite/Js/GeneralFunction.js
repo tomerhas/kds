@@ -245,6 +245,7 @@ function GetDateDDMMYYYY(dDate){
        Sel.moveStart('character', -ctrl.value.length);
        return Sel.text.length;
    }
+  
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
 
 
