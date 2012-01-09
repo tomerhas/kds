@@ -101,7 +101,7 @@
     </tr> 
     <tr>
         <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button id="btnBack" runat="server" OnClick="btnBack_OnClick" class="ImgButtonSearch" Width="120px" Text="חזרה לדף הראשי" />
+            <asp:Button id="btnBack" runat="server" OnClick="btnBack_OnClick" class="ImgButtonSearch" Width="130px" Text="חזרה לדף הראשי" />
              <%-- <asp:Button ID="btnBack" runat="server" Width="120px" CssClass="ImgButtonSearch" Text="חזרה לדף הראשי" OnClientClick="btnBack_OnClick()"    />  --%>
         </td>
     </tr> 
