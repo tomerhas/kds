@@ -36,11 +36,16 @@
                     $get("btnPlus2").className = 'ImgButtonShowMinus';
                     $get("btnPlus3").className = 'ImgButtonShowPlus';
                     $get("btnPlus1").className = 'ImgButtonShowPlus';
-                    if ($get("ddlTachograph").disabled!=true)
-                        $get("ddlTachograph").focus();
+                    if ($get("ddlTachograph").disabled != true) {
+                        $get("ddlTachograph").focus();                       
+                    }
+                    //                    else {
+                    //                        if ($get("ddlLina").disabled != true)
+                    //                            $get("ddlLina").focus();
                     else
                         if ($get("txtId").disabled == false)
                             $get("txtId").focus();
+                    //  }
                     break;
                 case "divParticipation":
                     $get("divNetunimLeYom").style.display = 'none';
