@@ -32,10 +32,9 @@
                   </asp:UpdatePanel> 
             </td>
             <td style="width:10px"></td>
-              <td class="InternalLabel" style="width:30px">
+              <td class="InternalLabel" style="width:60px">
                    <asp:UpdatePanel ID="UpdatePanel5" runat="server" RenderMode="Inline">
-                       <ContentTemplate> 
-                       
+                       <ContentTemplate>                        
                          <asp:RadioButton runat="server" ID="rdoName" EnableViewState="true" GroupName="grpSearch" Text="שם:" > </asp:RadioButton>
                     </ContentTemplate>
                   </asp:UpdatePanel> 
