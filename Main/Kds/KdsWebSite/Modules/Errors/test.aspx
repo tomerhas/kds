@@ -10,10 +10,12 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+        <asp:TextBox id="a" runat="server"></asp:TextBox>
+        <asp:TextBox ID="b" runat="server"></asp:TextBox>
     </div>
         <cc1:AutoCompleteExtender  ID="AutoCompleteExtender1" runat="server">
         </cc1:AutoCompleteExtender>
+
     </form>
 </body>
 </html>

@@ -1020,11 +1020,12 @@ select
 	font-family:Arial;
 	background-image:url(Images/opening-system-mes.jpg); 
 	text-align:right;
-	height:307px;
+	height:303px;
 	color:#717071;
 	font-size:16px;
 	padding:1px;
 	font-weight:bolder;	
+	background-repeat:no-repeat;
 	}
 
 .opening-quickmenu
@@ -1127,13 +1128,15 @@ legend
 
 .GridPager
 {
+	border-color:#808080;	
 	color:Black;
 	background-color:#FCF9CD;
 	height:20px;	
 	font-size:15px;
 	font-weight:bold;
 	padding-left:10px;
-	border-style:double;	
+	border-style:solid;
+	border-width:1px;
 }
 
 .GridPagerLarge

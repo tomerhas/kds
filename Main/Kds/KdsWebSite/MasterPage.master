@@ -156,15 +156,14 @@
                             </td>
                         </tr>
                     </table>  
-                    <div id="DivMessages" runat="server">
+                    <div id="DivMessages" runat="server" style="border:none">
                         הודעות מערכת:
                         <table style="border:solid 1px lightgray;width:960px; height:50px;margin-bottom:4px">
                             <tr>
                                 <td  style="height:50px;" valign="top">                                        
                                     <asp:DataList ID="lstMessages" runat="server" Width="920px" ItemStyle-ForeColor="#028831">
                                      <ItemTemplate> * <asp:Label ID="lblMessage" runat="server" ><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
-                                    </asp:DataList>
-                                            
+                                    </asp:DataList>                                            
                                 </td> 
                             </tr>
                         </table>

@@ -77,7 +77,7 @@
                     <tr><td style="color:White;font-size:17px;">הודעות מערכת</td></tr>
                      <tr><td>
                          <asp:DataList ID="lstMessages" runat="server" Width="220px">
-                            <ItemTemplate><br /> > <asp:Label ID="lblMessage" runat="server"><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
+                            <ItemTemplate><br />  <asp:Label ID="lblMessage" runat="server"><%#DataBinder.Eval(Container.DataItem, "Melel_Hodaa")%></asp:Label></ItemTemplate>
                          </asp:DataList>
                      </td></tr>
                 </table>
