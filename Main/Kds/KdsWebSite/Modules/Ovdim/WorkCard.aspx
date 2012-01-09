@@ -675,7 +675,21 @@
                   <label id="msgErrCar" runat="server" style="display:none">חסר מספר רכב, כרטיס עבודה לא יועבר לתשלום </label>       
             <br/>
      </asp:Panel>  
-         
+     
+     <%--<div runat="server" id="divAlert" style="display:none;position:absolute;z-index:500;" class="AlertDiv" dir="ltr"> 
+        <table width="100%" height="100%"  border="1">            
+            <tr>
+              <td width='100%' height="90%" valign="top">
+                <label id="lblAlert"></label>
+              </td>
+             </tr>
+             <tr>
+              <td width='100%' align="left"  height="10%">
+                <input type="button" value="אישור" onclick="CloseAlertDiv();"  class="ImgButtonShow" style="width:54px; height:30px" />        
+              </td>  
+            </tr>
+        </table>     
+     </div>    --%>
         <input type="hidden" runat="server" id="hidGoremMeasher" />
         <input type="hidden" runat="server" id="hidSource" />
         <input type="hidden" runat="server" id="hidLvl1Chg" />

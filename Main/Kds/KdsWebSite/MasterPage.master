@@ -10,8 +10,7 @@
     </asp:ContentPlaceHolder>
     <link id="Link1" runat="server" href="StyleSheet.css" type="text/css" rel="stylesheet" />
     <link rel="icon" href="Images/kds.ico" type="image/x-icon"/> 
-    <link rel="shortcut icon" href="Images/kds.ico" type="image/x-icon"/> 
-    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+    <link rel="shortcut icon" href="Images/kds.ico" type="image/x-icon"/>   
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
 </head>
 <body dir="rtl" id="MasterBody" runat="server"> 

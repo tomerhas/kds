@@ -1,4 +1,13 @@
 ﻿var bScreenChanged = false;
+//function alert(sMsg) {
+//    $get("lblAlert").innerHTML = sMsg;
+//    $get("divAlert").style.top = 250;
+//    $get("divAlert").style.left = 400;
+//    $get("divAlert").style.display = 'block';
+//}
+//function CloseAlertDiv() {
+//    $get("divAlert").style.display = 'none';
+//}
     function OpenDiv(DivId, btnId){
         var oDiv = document.getElementById(DivId.toString());
         if (oDiv.style.display=='none'){        

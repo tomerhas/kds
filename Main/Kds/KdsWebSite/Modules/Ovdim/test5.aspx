@@ -32,7 +32,7 @@
              $(".panel").slideToggle("fast");
          });
      });
-
+     
     $(document).ready(function () {
         $("button").click(function () {
             $("div").load('test.aspx');

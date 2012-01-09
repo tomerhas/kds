@@ -723,7 +723,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //if (bNextCardErrorNotFound)
             //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
             if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-                sScript = sScript + "alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+                sScript = sScript + " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
