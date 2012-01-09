@@ -134,15 +134,15 @@
        
      </fieldset>   
  </div>     
-     <table>
+     <table  width="952px">
         <tr>
-            <td>
-                <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline" >
+            <td align="right">
+                <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline"  >
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server" dir="ltr"  style="text-align:right;width:965px;overflow-x:hidden;">
+                     <div id="divNetunim" runat="server" dir="rtl"  style="text-align:right;width:965px;overflow-x:hidden;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
-                                 Width="935px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
+                                 Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
                                  OnRowDataBound="grdEmployee_RowDataBound" OnSorting="grdEmployee_Sorting" OnPageIndexChanging="grdEmployee_PageIndexChanging">
                                 <Columns>                                                            
                                     <asp:HyperLinkField DataTextField="taarich" ItemStyle-CssClass="ItemRow"   ItemStyle-Font-Size="Larger" HeaderStyle-CssClass="GridHeader"  HeaderStyle-Width="250px"  HeaderText="תאריך" SortExpression="taarich" NavigateUrl="#"  />                                          
