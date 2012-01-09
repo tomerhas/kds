@@ -158,7 +158,7 @@
                     </table>  
                     <div id="DivMessages" runat="server">
                         הודעות מערכת:
-                        <table style="border:solid 1px;width:960px; height:50px;margin-bottom:4px">
+                        <table style="border:solid 1px lightgray;width:960px; height:50px;margin-bottom:4px">
                             <tr>
                                 <td  style="height:50px;" valign="top">                                        
                                     <asp:DataList ID="lstMessages" runat="server" Width="920px" ItemStyle-ForeColor="#028831">
