@@ -427,5 +427,33 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+
+        public byte[] getRikuzPdf(int mispar_ishi, DateTime taarich, long bakasha_id)
+        {
+            byte[] bytes;
+            try
+            {
+                clDal dal = new clDal();
+
+                dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInt64, mispar_ishi, ParameterDir.pdInput);
+                dal.AddParameter("p_taarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+                dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, bakasha_id, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+              
+                Oracle.DataAccess.Client.OracleDataReader dataReader = dal.GetDataReader(clGeneral.cProGetRikuzPdf, CommandType.StoredProcedure);
+
+                if (dataReader.Read())
+                   bytes = (Byte[])dataReader["rikuz_pdf"];
+                else bytes = null;
+                
+                dataReader.Close();
+              
+                return bytes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

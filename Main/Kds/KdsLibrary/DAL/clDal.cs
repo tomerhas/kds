@@ -22,7 +22,9 @@ namespace KdsLibrary.DAL
         ntOracleInt64 = OracleDbType.Int64,
         ntOracleDecimal = OracleDbType.Decimal,    
         ntOracleObject = OracleDbType.Object,
-        ntOracleArray = OracleDbType.Array
+        ntOracleArray = OracleDbType.Array,
+        ntOracleClob =  OracleDbType.Clob,
+        ntOracleBlob = OracleDbType.Blob
     }
 
     public enum ParameterDir
@@ -220,10 +222,11 @@ namespace KdsLibrary.DAL
     //    }
     //}
 
-    public OracleDataReader GetDataReader()
+    public OracleDataReader GetDataReader(string cmdText, CommandType cmdType)
     {
       Open();
       cmd.Connection = conn;
+      CreateCommand(cmdText, cmdType);
       return cmd.ExecuteReader();
     }
 

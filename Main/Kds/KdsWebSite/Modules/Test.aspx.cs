@@ -22,7 +22,9 @@ using KdsLibrary.UDT;
 using KdsWorkFlow.Approvals;
 using KdsBatch.Entities;
 using KdsBatch.Errors;
+using System.IO;
 using System.Threading.Tasks;
+using KdsLibrary.Utils.Reports;
 public partial class Modules_Test :Page
 {
   
@@ -925,6 +927,51 @@ public partial class Modules_Test :Page
                 throw new Exception("RunShguimOfSdrn:" + ex.Message);
             }
           }
+
+    protected void btnShlifatRikuz_click(object sender, EventArgs e)
+    {
+        clReport BlReport = new clReport();
+        byte[] x;
+        byte[] buffer;
+        string path;
+        FileInfo info;
+        ReportModule _RptModule = ReportModule.GetInstance();
+        FileStream fs;
+        System.IO.Stream st;
+        long num;
+        try
+        {
+            x = BlReport.getRikuzPdf( 281,DateTime.Parse("01/08/2010") ,5950);
+           // st = BlReport.getRikuzPdf(329, DateTime.Parse("01/08/2010"), 5950);
+            path = ConfigurationSettings.AppSettings["PathFileReports"];
+            //if (!Directory.Exists(path))
+            //    Directory.CreateDirectory(path);
+           // Report = new KdsBatch.Reports.clReport(
+            //info = _RptModule.CreateOutputFile(path, "xxxx");
+            fs = new FileStream (path+"xxx1.pdf", FileMode.Create, FileAccess.Write);
+            ////num = st.Length;
+            ////buffer = new Byte[num];
+            ////int bytesRead = st.Read(buffer, 0, (int)num);
+
+            ////while (bytesRead > 0)
+            ////{
+            ////    fs.Write(buffer, 0, bytesRead);
+            ////    bytesRead = st.Read(buffer, 0, (int)num);
+            ////}
+            ////st.Close();
+            ////fs.Close();
+
+
+            fs.Write(x, 0, x.Length);
+            fs.Flush();
+            fs.Close(); 
+
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("RunShguimOfSdrn:" + ex.Message);
+        }
+    }
 }
 
 

@@ -61,6 +61,7 @@ namespace KdsLibrary
         public const string cProPrepareYameiAvodaPremiot = "pkg_batch.Prepare_premiot_shguim_batch";
 
         public const string cProSaveRikuzPdf = "pkg_batch.Pro_Save_Rikuz_Pdf";
+        public const string cProGetRikuzPdf = "pkg_batch.Pro_Get_Rikuz_Pdf";
         
 #endregion 
 

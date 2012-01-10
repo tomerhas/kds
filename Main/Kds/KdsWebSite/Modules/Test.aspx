@@ -142,7 +142,8 @@
                           ></wccEgged:wccCalendar>--%>                                                                                        
                 </td>
                 <td>           
-                    
+                    <asp:Button ID="Button7" runat="server" onclick="btnShlifatRikuz_click" 
+                        Text="ריכוז" />
                 </td>
                  <td>
                  <asp:Button ID="Button6" runat="server" onclick="Button6_Click" 
