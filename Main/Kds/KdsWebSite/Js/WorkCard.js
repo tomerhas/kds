@@ -39,13 +39,13 @@
                     if ($get("ddlTachograph").disabled != true) {
                         $get("ddlTachograph").focus();                       
                     }
-                    //                    else {
-                    //                        if ($get("ddlLina").disabled != true)
-                    //                            $get("ddlLina").focus();
+                    else {
+                        if ($get("ddlLina").disabled != true)
+                            $get("ddlLina").focus();
                     else
                         if ($get("txtId").disabled == false)
                             $get("txtId").focus();
-                    //  }
+                    }
                     break;
                 case "divParticipation":
                     $get("divNetunimLeYom").style.display = 'none';
