@@ -36,7 +36,7 @@
             <br />
               <span class="TitleLable">סטטוס:</span><br />
           
-                <div runat="server" ID="pnlgrdStatus" style="Height:120px;Width:567px;overflow:auto;direction:ltr;">
+                <div runat="server" ID="pnlgrdStatus" style="Height:120px;Width:567px;overflow:auto;direction:rtl;">
                     <asp:GridView ID="grdStatus" runat="server"  GridLines="None"  ShowHeader="true"
                            CssClass="Grid"   AllowPaging="false" AutoGenerateColumns="false"   AllowSorting="true"
                            Width="550px"   EmptyDataText="לא נמצאו נתונים!" 
