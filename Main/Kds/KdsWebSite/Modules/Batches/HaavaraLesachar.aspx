@@ -73,7 +73,7 @@
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="90px" />
                            <ItemTemplate>
-                                       <asp:button ID="btnYeziratRikuzim"  runat="server"  Width="85px" text="יצירת ריכוזים" Enabled="false" CssClass ="ImgButtonSearch"  OnClick="YeziratRicuzim" />
+                                       <asp:button ID="btnYeziratRikuzim"  runat="server"  Width="95px" text="יצירת ריכוזים" Enabled="false" CssClass ="ImgButtonSearch"  OnClick="YeziratRicuzim" />
                             </ItemTemplate>
                         </asp:TemplateField>
                      </Columns> 
