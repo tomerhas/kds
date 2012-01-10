@@ -798,7 +798,9 @@ function setBorderBtns(){
             aButton[i].onfocusout = function () { onButtonFocusOut(this); };
         }
     }
-    function onTxtIdPress() {
-        var key = document.getElementById("txtId").value;
-    }
+function onTxtIdPress() {
+    var key = document.getElementById("txtId").value;
 }
+
+}
+

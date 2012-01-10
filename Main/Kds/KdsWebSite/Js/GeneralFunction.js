@@ -245,7 +245,11 @@ function GetDateDDMMYYYY(dDate){
        Sel.moveStart('character', -ctrl.value.length);
        return Sel.text.length;
    }
-  
+//   function alert(sMsg) {
+//       $get("btnAlert").click();
+//     //  $find("cbeAlert").ConfirmText = sMsg;
+//      
+//   }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
 
 

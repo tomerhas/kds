@@ -408,7 +408,7 @@
                 </tr>
             </table>
         </div>   
-                                            
+                                
         <table width="100%" class="WorkCardTableBottom" cellspacing="0">
             <tr class="WorkCardTableBottomTrTop">
                 <td width="100%">
@@ -551,6 +551,11 @@
            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                  
         </Triggers>             
       </asp:UpdatePanel>  
+      <asp:Button id="btnAlert" runat="server" style="display:none"  />
+      <ajaxToolkit:ConfirmButtonExtender ID="cbeAlert" runat="server"
+        TargetControlID="btnAlert"
+        ConfirmText="Are you sure you want to click this?"
+        OnClientCancel="CancelClick" />       
       <%--<asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
             <table style="width:980px;height:30px" cellpadding="1">
@@ -675,7 +680,7 @@
                   <label id="msgErrCar" runat="server" style="display:none">חסר מספר רכב, כרטיס עבודה לא יועבר לתשלום </label>       
             <br/>
      </asp:Panel>  
-     
+    
      <%--<div runat="server" id="divAlert" style="display:none;position:absolute;z-index:500;" class="AlertDiv" dir="ltr"> 
         <table width="100%" height="100%"  border="1">            
             <tr>
