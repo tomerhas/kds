@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.42932in</Height>
+              <Height>2.58557in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -27,7 +27,7 @@
                               <Value>=Parameters!P_PERIOD.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0.96241in</Top>
+                          <Top>1.12536in</Top>
                           <Left>0.05208in</Left>
                           <Height>0.23622in</Height>
                           <Width>7.0405in</Width>
@@ -54,8 +54,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
-                          <Top>1.80071cm</Top>
-                          <Left>9.2809cm</Left>
+                          <Top>1.9624cm</Top>
+                          <Left>9.24647cm</Left>
                           <Height>0.6cm</Height>
                           <Width>4.04126cm</Width>
                           <ZIndex>1</ZIndex>
@@ -84,8 +84,8 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.80071cm</Top>
-                          <Left>13.428cm</Left>
+                          <Top>1.9624cm</Top>
+                          <Left>13.46412cm</Left>
                           <Height>0.6cm</Height>
                           <Width>1.44834cm</Width>
                           <ZIndex>2</ZIndex>
@@ -108,7 +108,6 @@
                             </Parameter>
                           </Parameters>
                           <Top>0.02199in</Top>
-                          <Left>0.26724cm</Left>
                           <Height>1.80071cm</Height>
                           <Width>16.79555cm</Width>
                           <ZIndex>3</ZIndex>
@@ -293,6 +292,9 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BottomBorder>
+                                            <Color>Black</Color>
+                                          </BottomBorder>
                                           <BackgroundColor>LightGrey</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -325,6 +327,9 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BottomBorder>
+                                            <Color>Black</Color>
+                                          </BottomBorder>
                                           <BackgroundColor>LightGrey</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -590,21 +595,18 @@
                                         <rd:DefaultName>MISPAR_ISHI</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>White</Color>
-                                            <Style>None</Style>
+                                            <Style>Solid</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>Solid</Style>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
                                           </TopBorder>
                                           <BottomBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                            <Style>None</Style>
                                           </BottomBorder>
-                                          <RightBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                          </RightBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -637,15 +639,12 @@
                                         <rd:DefaultName>FULL_NAME</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Style>Solid</Style>
-                                          </TopBorder>
-                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
                                             <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
-                                          </BottomBorder>
+                                          </TopBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -678,18 +677,13 @@
                                         <rd:DefaultName>TEUR_SNIF_AV</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>White</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>Solid</Style>
-                                          </TopBorder>
-                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
                                             <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
-                                          </BottomBorder>
+                                          </TopBorder>
                                           <LeftBorder>
-                                            <Color>Black</Color>
                                             <Style>Solid</Style>
                                           </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
@@ -699,6 +693,7 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -790,7 +785,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!MISPAR_SIDUR.Value</Value>
+                                                <Value>=iif(Fields!STATUS.Value &lt; 0, Fields!MISPAR_SIDUR.Value,Fields!MISPAR_VISA.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -1183,6 +1178,7 @@
                                             <TablixMembers>
                                               <TablixMember />
                                             </TablixMembers>
+                                            <KeepTogether>true</KeepTogether>
                                           </TablixMember>
                                         </TablixMembers>
                                       </TablixMember>
@@ -1197,6 +1193,8 @@
                           <LayoutDirection>RTL</LayoutDirection>
                           <RepeatColumnHeaders>true</RepeatColumnHeaders>
                           <RepeatRowHeaders>true</RepeatRowHeaders>
+                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
+                          <KeepTogether>true</KeepTogether>
                           <DataSetName>DsDisregardDrivers</DataSetName>
                           <SortExpressions>
                             <SortExpression>
@@ -1210,7 +1208,7 @@
                               <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
-                          <Top>3.18563cm</Top>
+                          <Top>3.59952cm</Top>
                           <Left>0.05208in</Left>
                           <Height>2.96783cm</Height>
                           <Width>17.88287cm</Width>
@@ -1222,13 +1220,14 @@
                           </Style>
                         </Tablix>
                       </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
                       </Style>
                     </Rectangle>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1249,7 +1248,7 @@
                   <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
-                  <BreakLocation>End</BreakLocation>
+                  <BreakLocation>Between</BreakLocation>
                 </PageBreak>
               </Group>
               <SortExpressions>
@@ -1263,8 +1262,6 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <RepeatColumnHeaders>true</RepeatColumnHeaders>
-        <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>DsDisregardDrivers</DataSetName>
         <SortExpressions>
           <SortExpression>
@@ -1275,7 +1272,7 @@
           </SortExpression>
         </SortExpressions>
         <Top>1.10809in</Top>
-        <Height>2.42932in</Height>
+        <Height>2.58557in</Height>
         <Width>7.14467in</Width>
         <Style>
           <Border>
@@ -1327,7 +1324,7 @@
  &amp; Trim(Parameters!P_PERIOD.Value)</Value>
               </Parameter>
             </Parameters>
-            <Top>0.04167in</Top>
+            <Top>0.06944in</Top>
             <Left>0.13229cm</Left>
             <Height>1.80071cm</Height>
             <Width>17.75058cm</Width>
@@ -1354,7 +1351,7 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>3.53741in</Height>
+    <Height>3.69366in</Height>
     <Style />
   </Body>
   <Width>7.15127in</Width>
@@ -1363,8 +1360,8 @@
     <PageWidth>21cm</PageWidth>
     <LeftMargin>1cm</LeftMargin>
     <RightMargin>0.5cm</RightMargin>
-    <TopMargin>1cm</TopMargin>
-    <BottomMargin>1cm</BottomMargin>
+    <TopMargin>0.5cm</TopMargin>
+    <BottomMargin>0.5cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -1381,11 +1378,11 @@
       <Query>
         <DataSourceName>DsKds</DataSourceName>
         <QueryParameters>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!P_PERIOD.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_DISREGARDTYPE">
             <Value>=Parameters!P_DISREGARDTYPE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_PERIOD">
+            <Value>=Parameters!P_PERIOD.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
@@ -1393,6 +1390,10 @@
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="MISPAR_ISHI">
           <DataField>MISPAR_ISHI</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -1401,13 +1402,13 @@
           <DataField>TAARICH</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="DAYOFWEEK">
           <DataField>DAYOFWEEK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="STATUS">
+          <DataField>STATUS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="MISPAR_SIDUR">
           <DataField>MISPAR_SIDUR</DataField>
@@ -1425,21 +1426,25 @@
           <DataField>OTO_NO</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="SECTOR_VISA">
           <DataField>SECTOR_VISA</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
+        <Field Name="MISPAR_VISA">
+          <DataField>MISPAR_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="KOD_EZOR">
           <DataField>KOD_EZOR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -1449,7 +1454,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>08/2009</Value>
+          <Value>09/2011</Value>
         </Values>
       </DefaultValue>
       <Prompt>P PERIOD</Prompt>
