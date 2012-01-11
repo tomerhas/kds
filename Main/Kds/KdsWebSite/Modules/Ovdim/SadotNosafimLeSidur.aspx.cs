@@ -20,17 +20,17 @@ public partial class Modules_Ovdim_SadotNosafimLeSidur : KdsPage
     {
         Mispar_Musach_O_Machsan=1,
         Yom_Visa,
+        Km_visa,
         Achuz_Knas_LePremyat_Visa,
+        Mispar_Visa,
         Achuz_Viza_Besikun,
-        Sug_Hazmanat_Visa,
-        Mispar_shiurey_nehiga,
         Tafkid_Visa,
         Mivtza_Visa,
-        Lina,
-        Km_visa,
-        Mispar_Visa,
+        Sug_Hazmanat_Visa,
+        Mispar_Siduri_Oto,
         Kod_shinuy_premia,
-        Mispar_Siduri_Oto
+        Lina,
+        Mispar_shiurey_nehiga    
     }
     public DataTable ErrorsList
     {

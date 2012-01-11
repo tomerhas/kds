@@ -159,7 +159,7 @@
       </DropDownList>
     </Filter>
   </Report>  
-  <Report  RdlName="PremiotPresence" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נוכחות לפרמיה (עבור פרמיות ידניות)" Orientation="Landscape" ZoomPercent="100">
+  <Report  RdlName="PremiotPresence" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח נוכחות לפרמיה (עבור פרמיות ידניות)" Orientation="Landscape" ZoomPercent="100" ProductionType="Heavy">
     <Filter ParameterName="P_KOD_PREMIA" Caption="סוג פרמיה" BoxeType="DropDown"  DataType="System.Int32" RunAtServer="true">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_UTILS.pro_get_premyot_details" ValueField="Kod_Premia" TextField="Teur_Premia">
         <ParameterOfFunction Name="p_premya_codes" Type="ByReference" ReferenceType="Function" Value="KdsLibrary.clGeneral.GetPremiotOfUser" DataType="System.String" ParameterType="ntOracleVarchar"/>
