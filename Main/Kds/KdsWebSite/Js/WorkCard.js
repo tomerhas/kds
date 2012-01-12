@@ -36,7 +36,7 @@
                     $get("btnPlus2").className = 'ImgButtonShowMinus';
                     $get("btnPlus3").className = 'ImgButtonShowPlus';
                     $get("btnPlus1").className = 'ImgButtonShowPlus';
-                    if ($get("ddlTachograph").disabled != true) {
+                    if (($get("ddlTachograph").disabled != true) && (!($get("ddlTachograph").isDisabled))) {
                         $get("ddlTachograph").focus();                       
                     }
                     else {
@@ -152,11 +152,16 @@
         $get("btnAddHeadrut").disabled = (!bEnable);
         $get("btnClock").disabled = (!bEnable);
         $get("btnApprovalReport").disabled = (!bEnable);
-        $get("ddlTachograph").disabled = (!bEnable);
-        $get("ddlHalbasha").disabled = (!bEnable);
-        $get("ddlLina").disabled = (!bEnable);
-        $get("ddlHashlamaReason").disabled = (!bEnable);
-        $get("btnHashlamaForDay").disabled = (!bEnable);
+        //if ($get("ddlTachograph").disabled == false)
+            $get("ddlTachograph").disabled = (!bEnable);
+        //if ($get("ddlHalbasha").disabled == false)
+            $get("ddlHalbasha").disabled = true; //(!bEnable);
+        //if ($get("ddlLina").disabled == false)
+            $get("ddlLina").disabled = (!bEnable);
+        //if ($get("ddlHashlamaReason").disabled == false)
+            $get("ddlHashlamaReason").disabled = (!bEnable);
+        //if ($get("btnHashlamaForDay").disabled == false)
+            $get("btnHashlamaForDay").disabled = (!bEnable);
         $get("btnCalcItem").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
         $get("btnPrevCard").disabled = (!bEnable);

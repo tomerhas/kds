@@ -95,7 +95,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                        </Triggers> 
                  </asp:UpdatePanel>           
                 </td>                
-                <td class="InternalLabel" style="width:30px;">
+                <td class="InternalLabel" style="width:40px;">
                     <asp:UpdatePanel ID="UpdatePanel4" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate>

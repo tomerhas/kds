@@ -686,21 +686,22 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //bParticipationAllowed = SetParticipation();
             SetMeasherMistayeg();
 
+            bool bChishuvShachar=oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
             clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
             //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
             KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
             if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
                 && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
-                || (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode())))
-                EnabledFrames(false);
+                || (bChishuvShachar))
+                EnabledFrames(false, bChishuvShachar);
             else
              //   if (!bDisabledFrame)
-                    EnabledFrames(true);
+                EnabledFrames(true, bChishuvShachar);
 
 
             btnHamara.Disabled = (!EnabledHamaraForDay());
-            ddlTachograph.Enabled = EnabledTachograph();
+            ddlTachograph.Enabled = (EnabledTachograph() && (!bChishuvShachar));
             EnabledFields();
             SecurityManager.AuthorizePage(this, true);
             BindSibotLehashlamaLeyom();
@@ -709,7 +710,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-
+            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+            {
+                sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
+                sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
+            }
+            else
+            {
+                sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            }
             if (bAddSidur)
                 sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";                         
             if (lstSidurim.AddPeilut != null)
@@ -722,8 +731,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ////אם הגענו לשגוי הבא, נעלה הודעה
             //if (bNextCardErrorNotFound)
             //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
-            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-                sScript = sScript + " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+            //if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+            //    sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
 
             bAddSidur = false;
             lstSidurim.AddPeilut = "";
@@ -747,6 +756,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //   iPeilutIndex = ((clSidur)lstSidurim.DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1 ;
     //   return "lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
     //}
+    private string ChisuvShacharMsg()
+    {
+        return  " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+    }
     private bool HasVehicleTypeWithOutTachograph()
     {
         bool HasVehicleType = false;
@@ -1576,8 +1589,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        
         return bEnabled;
     }
-    protected void EnabledFrames(bool bEnabled)
+    protected void EnabledFrames(bool bEnabled,bool bDisabledTabs)
     {
+        //bDisabledTabs נתונים ליום עבודה,מתייחס לטאבים של נתוני עובד, התייצבות 
        // tbLblWorkDay.Disabled = (!bEnabled);
         if (ddlTravleTime.Enabled){        
             ddlTravleTime.Enabled = bEnabled;
@@ -1606,6 +1620,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         btnFindSidur.Enabled = bEnabled;
         btnAddMyuchad.Enabled = bEnabled;
         btnAddHeadrut.Enabled = bEnabled;
+
+        if (bDisabledTabs)
+        {
+            tbTabs.Style.Add("disabled", "true");           
+        }
     }
     protected void EnabledFields()
     {
@@ -2220,9 +2239,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
          
-            string sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            string sScript;// = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-                sScript = sScript + "alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+            {
+                sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
+                sScript = sScript + ChisuvShacharMsg(); //"alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+            }
+            else
+                sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);           
         }
     }

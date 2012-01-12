@@ -202,7 +202,7 @@
            
       <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
             <ContentTemplate>         
-                <table width="100%" class="WorkCardTable2" cellpadding="0" cellspacing="0" >
+                <table width="100%" id="tbTabs" runat="server" class="WorkCardTable2" cellpadding="0" cellspacing="0" >
                     <tr>
                         <td width="8px" runat="server" id="tdZmanNesiotErr" style="display:none;" ><img id="imgTimeErr"  runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlTravleTime,1,'');" /></td>
                         <td id="tdZmaniNesiot" runat="server" width="70px" class = "WorkCardTable1Label"></td> 

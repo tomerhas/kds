@@ -29,6 +29,7 @@ namespace KdsLibrary.Controls
             _List.ID = _IdName + "ListBoxExtended";
             _List.Width = Unit.Percentage(100);
             _List.BorderWidth = Unit.Pixel(1);
+            _List.BorderColor = System.Drawing.Color.LightGray;
             _List.SelectionMode = ListSelectionMode.Multiple;
             _List.EnableViewState = false;
             _List.Attributes.Add("dir", "rtl");
