@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>19.85523cm</Width>
+              <Width>19.96855cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -772,7 +772,7 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.30939cm</Width>
+                                <Width>1.95963cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.19003cm</Width>
@@ -802,7 +802,7 @@
                                 <Width>0.76252cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.86307cm</Width>
+                                <Width>3.50387cm</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>1.29535cm</Width>
@@ -817,7 +817,7 @@
                                 <Width>0.80016cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.69813cm</Width>
+                                <Width>2.40709cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -1411,9 +1411,10 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"אין דיווח",
+                                                <Value>=iif(Fields!STATUS.Value=0 and Fields!STATUS.Value &lt;&gt; nothing,"כרטיס שגוי",
+iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"חסר דיווח",
  iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" ,
- iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח","")))</Value>
+ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח",""))))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1434,6 +1435,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -2152,7 +2154,7 @@
                             </Parameter>
                           </Parameters>
                           <Top>0.15719in</Top>
-                          <Left>0.07395in</Left>
+                          <Left>0.9802in</Left>
                           <Height>1.2877cm</Height>
                           <Width>12.45264cm</Width>
                           <ZIndex>3</ZIndex>
@@ -2196,11 +2198,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Top>2.67639cm</Top>
-        <Left>0.15831cm</Left>
+        <Left>0.35641cm</Left>
         <Height>6.54287cm</Height>
-        <Width>19.85523cm</Width>
+        <Width>19.96855cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2216,7 +2218,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.5cm</Height>
+              <Height>2.53528cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2239,7 +2241,6 @@
                           </Style>
                         </Subreport>
                         <Textbox Name="Textbox5">
-                          <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -2258,7 +2259,7 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.46409cm</Top>
+                          <Top>1.49937cm</Top>
                           <Left>2.22836cm</Left>
                           <Height>0.89104cm</Height>
                           <Width>10.00911cm</Width>
@@ -2299,9 +2300,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <KeepTogether>true</KeepTogether>
         <DataSetName>DsPirteyPremiya</DataSetName>
-        <Left>1.34043cm</Left>
-        <Height>2.5cm</Height>
+        <Top>6.61343cm</Top>
+        <Left>0.35641cm</Left>
+        <Height>2.53528cm</Height>
         <Width>15.35954cm</Width>
         <ZIndex>1</ZIndex>
         <Visibility>
@@ -2314,10 +2317,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.76992in</Height>
+    <Height>3.60185in</Height>
     <Style />
   </Body>
-  <Width>7.87935in</Width>
+  <Width>8.00195in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -2371,6 +2374,10 @@
         <Field Name="DAYOFWEEK">
           <DataField>DAYOFWEEK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="STATUS">
+          <DataField>STATUS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="BAKASHA_ID">
           <DataField>BAKASHA_ID</DataField>
@@ -2545,7 +2552,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>10/2010</Value>
+          <Value>07/2011</Value>
         </Values>
       </DefaultValue>
       <Prompt>P PERIOD</Prompt>
@@ -2564,11 +2571,11 @@
         Dim ReturnStr As String = String.Empty
         Select Case WorkingDate 
             Case 51
-                ReturnStr = mid(WorkingDate,1,1) &amp;   " ימים יומי"     
+                ReturnStr =  " יומי "   &amp;   mid(WorkingDate,1,1)
             Case 52
-                ReturnStr =  mid(WorkingDate,1,1) &amp; " ימים חודשי "  
+                ReturnStr = " ימים חודשי "  &amp;   mid(WorkingDate,1,1) 
             Case 61
-	ReturnStr =  mid(WorkingDate,1,1) &amp; " ימים יומי "    
+	ReturnStr =    " יומי "  &amp;  mid(WorkingDate,1,1)
             Case Else 		
                 ReturnStr = ""
         End Select
