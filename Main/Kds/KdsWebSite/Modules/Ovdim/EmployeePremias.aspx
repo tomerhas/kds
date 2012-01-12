@@ -52,8 +52,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
             </Triggers>
         </asp:UpdatePanel>        
     </fieldset>
-    <fieldset class="FilterFieldSet"> 
-        <legend >חיפוש לפי</legend>      
+    <fieldset > 
+        <legend>חיפוש לפי</legend>      
         <table class="FilterTable" style="width:100%;"> 
             <tr>
                 <td class="InternalLabel" style="width:80px;">
@@ -74,12 +74,11 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upId" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" onchange="GetOvedNameById()"
-                                AutoComplete="Off" dir="rtl">
+                            <asp:TextBox ID="txtId" runat="server" onchange="GetOvedNameById()" AutoComplete="Off" dir="rtl">
                             </asp:TextBox> 
                             <cc1:AutoCompleteExtender
-                                id="AutoCompleteExtenderID" runat="server"                                     CompletionInterval="100" 
-                                CompletionSetCount="12"                                                        UseContextKey="true" TargetControlID="txtId"                                   MinimumPrefixLength="1" 
+                                id="AutoCompleteExtenderID" runat="server" CompletionInterval="100"
+                                CompletionSetCount="12"   UseContextKey="true" TargetControlID="txtId"   MinimumPrefixLength="1" 
                                 ServiceMethod="GetOvdimById"
                                 EnableCaching="true" 
                                 CompletionListCssClass="autocomplete_completionListElement"
@@ -213,7 +212,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
    <fieldset id="fsGrid" runat="server"  class="FilterFieldSet">
     <legend>רשימת עובדים זכאים לפרמיה</legend>
      
-                        <table Width="920px">
+                        <table width="920px">
                             <tr>
                             <td>            
                   

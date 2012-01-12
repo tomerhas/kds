@@ -608,7 +608,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
         if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
         {
-            int iMisparIshi = int.Parse(prefixText);
+            long iMisparIshi = long.Parse(prefixText);
             dt = HttpContext.Current.Session[SAVED_PREMIAS] as DataTable;
             DataRow[] rows = dt.Select("Mispar_Ishi like '" + prefixText + "%'");
             
