@@ -6,40 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.14467in</Width>
+              <Width>6.87383in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.58557in</Height>
+              <Height>2.59056in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
                     <Rectangle Name="Rectangle3">
                       <ReportItems>
-                        <Subreport Name="Subreport2">
-                          <ReportName>DisrgardDriverGeneralLetter</ReportName>
-                          <Parameters>
-                            <Parameter Name="p_SNIF">
-                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
-                            </Parameter>
-                            <Parameter Name="P_PERIOD">
-                              <Value>=Parameters!P_PERIOD.Value</Value>
-                            </Parameter>
-                          </Parameters>
-                          <Top>1.12536in</Top>
-                          <Left>0.05208in</Left>
-                          <Height>0.23622in</Height>
-                          <Width>7.0405in</Width>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Subreport>
                         <Textbox Name="TEUR_EZOR">
                           <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
@@ -54,11 +33,10 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
-                          <Top>1.9624cm</Top>
-                          <Left>9.24647cm</Left>
+                          <Top>1.85656cm</Top>
+                          <Left>10.97751cm</Left>
                           <Height>0.6cm</Height>
                           <Width>4.04126cm</Width>
-                          <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -84,11 +62,11 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.9624cm</Top>
-                          <Left>13.46412cm</Left>
+                          <Top>1.85656cm</Top>
+                          <Left>15.15988cm</Left>
                           <Height>0.6cm</Height>
                           <Width>1.44834cm</Width>
-                          <ZIndex>2</ZIndex>
+                          <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -107,10 +85,11 @@
  &amp; Trim(Parameters!P_PERIOD.Value)</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0.02199in</Top>
+                          <Top>0.03588in</Top>
+                          <Left>1.04312cm</Left>
                           <Height>1.80071cm</Height>
-                          <Width>16.79555cm</Width>
-                          <ZIndex>3</ZIndex>
+                          <Width>16.41641cm</Width>
+                          <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -121,39 +100,39 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.6798cm</Width>
+                                <Width>1.67579cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.5cm</Width>
+                                <Width>3.06259cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.93624cm</Width>
+                                <Width>2.93223cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.03258cm</Width>
+                                <Width>2.02857cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.6604cm</Width>
+                                <Width>0.65639cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.53459cm</Width>
+                                <Width>1.53058cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.32291cm</Width>
+                                <Width>1.3189cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.21707cm</Width>
+                                <Width>1.21306cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.42875cm</Width>
+                                <Width>1.44151cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.57053cm</Width>
+                                <Width>1.33846cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.6cm</Height>
+                                <Height>0.62423cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -267,7 +246,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>1.18234cm</Height>
+                                <Height>1.20657cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -570,7 +549,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.55049cm</Height>
+                                <Height>0.57472cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -614,6 +593,7 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -693,7 +673,6 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -945,7 +924,7 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value />
+                                                <Value>=iif(Fields!SECTOR_VISA.Value=0,"פנים",iif(Fields!SECTOR_VISA.Value=1,"צה''ל",""))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -970,7 +949,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.635cm</Height>
+                                <Height>0.65923cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -1178,14 +1157,12 @@
                                             <TablixMembers>
                                               <TablixMember />
                                             </TablixMembers>
-                                            <KeepTogether>true</KeepTogether>
                                           </TablixMember>
                                         </TablixMembers>
                                       </TablixMember>
                                     </TablixMembers>
                                   </TablixMember>
                                 </TablixMembers>
-                                <KeepTogether>true</KeepTogether>
                               </TablixMember>
                               <TablixMember />
                             </TablixMembers>
@@ -1193,8 +1170,6 @@
                           <LayoutDirection>RTL</LayoutDirection>
                           <RepeatColumnHeaders>true</RepeatColumnHeaders>
                           <RepeatRowHeaders>true</RepeatRowHeaders>
-                          <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
-                          <KeepTogether>true</KeepTogether>
                           <DataSetName>DsDisregardDrivers</DataSetName>
                           <SortExpressions>
                             <SortExpression>
@@ -1208,20 +1183,39 @@
                               <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
-                          <Top>3.59952cm</Top>
-                          <Left>0.05208in</Left>
-                          <Height>2.96783cm</Height>
-                          <Width>17.88287cm</Width>
-                          <ZIndex>4</ZIndex>
+                          <Top>3.28118cm</Top>
+                          <Left>0.13233cm</Left>
+                          <Height>3.06475cm</Height>
+                          <Width>17.19808cm</Width>
+                          <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
                         </Tablix>
+                        <Subreport Name="Subreport2">
+                          <ReportName>DisrgardDriverGeneralLetter</ReportName>
+                          <Parameters>
+                            <Parameter Name="p_SNIF">
+                              <Value>=Fields!TEUR_SNIF_AV.Value</Value>
+                            </Parameter>
+                            <Parameter Name="P_PERIOD">
+                              <Value>=Parameters!P_PERIOD.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>2.59767cm</Top>
+                          <Left>0.13229cm</Left>
+                          <Height>0.57768cm</Height>
+                          <Width>17.19812cm</Width>
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
                       </ReportItems>
-                      <KeepTogether>true</KeepTogether>
-                      <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1272,8 +1266,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>1.10809in</Top>
-        <Height>2.58557in</Height>
-        <Width>7.14467in</Width>
+        <Height>2.59056in</Height>
+        <Width>6.87383in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1336,7 +1330,6 @@
             </Style>
           </Subreport>
         </ReportItems>
-        <KeepTogether>true</KeepTogether>
         <Left>0.13229cm</Left>
         <Height>2.76458cm</Height>
         <Width>17.88287cm</Width>
@@ -1351,10 +1344,10 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>3.69366in</Height>
+    <Height>3.7299in</Height>
     <Style />
   </Body>
-  <Width>7.15127in</Width>
+  <Width>7.09258in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
