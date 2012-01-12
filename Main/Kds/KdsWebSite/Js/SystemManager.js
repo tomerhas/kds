@@ -1,6 +1,6 @@
 ﻿   function openEdit(){
         var url=$get(queryStringTargetControlID).value;
-        var retVal=window.showModalDialog(url,'editor','dialogHeight:450px;dialogWidth:390px;status:no');
+        var retVal=window.showModalDialog(url,'editor','dialogHeight:450px;dialogWidth:480px;status:no;scroll:no');
         if(retVal=='OK'){
            refresh();
         }
