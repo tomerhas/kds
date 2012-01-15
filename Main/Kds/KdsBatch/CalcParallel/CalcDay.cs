@@ -1161,12 +1161,12 @@ namespace KdsBatch
                                         {
                                             fSumDakotRechiv20 = fTempX - fMichsaYomit;
                                         }
-                                        else if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol < fTempX)
+                                        else if (fDakotNihulChol >= fMichsaYomit && fDakotNihulChol < fTempX)
                                         {
                                             fSumDakotRechiv20 = fDakotNihulChol - fMichsaYomit;
                                             fSumDakotRechiv19 = fTempX - fMichsaYomit - fSumDakotRechiv20;
                                         }
-                                        else if (fDakotTafkidChol <= fMichsaYomit)
+                                        else if (fDakotNihulChol <= fMichsaYomit)
                                         {
                                             fSumDakotRechiv19 = fTempX - fMichsaYomit;
                                         }
@@ -6432,7 +6432,7 @@ namespace KdsBatch
                 //{ fZmanAruchatTzharayim = 30; }
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), objOved.Taarich);
-                fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
+               // fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
                 fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
@@ -6461,7 +6461,7 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaMetachnenTnua.GetHashCode(), objOved.Taarich);
 
-                fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
+               // fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
                 fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
 
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
@@ -6490,7 +6490,7 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaSadran.GetHashCode(), objOved.Taarich);
 
-                fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
+              //  fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
                 fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
@@ -6520,7 +6520,7 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaRakaz.GetHashCode(), objOved.Taarich);
 
-                fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
+              //  fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
                 fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
@@ -6550,7 +6550,7 @@ namespace KdsBatch
 
                 fSumRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutLepremiaPakach.GetHashCode(), objOved.Taarich);
 
-                fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
+             //   fZmanAruchatTzharayim = Math.Min(fZmanAruchatTzharayim, 30 - objOved.fTotalAruchatZaharimForDay); ;
                 fSumRechiv = fSumRechiv - fZmanAruchatTzharayim; // fZmanAruchatErev - fZmanAruchatTzharayim - fZmanAruchatBoker;
                 objOved.fTotalAruchatZaharimForDay += fZmanAruchatTzharayim;
 
