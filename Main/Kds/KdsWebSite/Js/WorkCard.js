@@ -37,7 +37,7 @@
                     $get("btnPlus3").className = 'ImgButtonShowPlus';
                     $get("btnPlus1").className = 'ImgButtonShowPlus';
                     if (($get("ddlTachograph").disabled != true) && (!($get("ddlTachograph").isDisabled))) {
-                        $get("ddlTachograph").focus();                       
+                        $get("ddlTachograph").focus();                    
                     }
                     else {
                         if ($get("ddlLina").disabled != true)

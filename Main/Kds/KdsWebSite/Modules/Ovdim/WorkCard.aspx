@@ -196,7 +196,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
             <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />  
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
-            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                                          
+            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                       
         </Triggers>
       </asp:UpdatePanel>
            

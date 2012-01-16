@@ -245,6 +245,16 @@ function GetDateDDMMYYYY(dDate){
        Sel.moveStart('character', -ctrl.value.length);
        return Sel.text.length;
    }
+
+   function FreezeHeader(DivGridView) {
+       var ListOfTHeader = DivGridView.getElementsByTagName("th");
+       for (var i = 0; i <= ListOfTHeader.length - 1; i++) {
+           ListOfTHeader[i].style.top = DivGridView.scrollTop - 3;
+           ListOfTHeader[i].style.left = ListOfTHeader[i].parentNode.parentNode.parentNode.parentNode.scrollLeft + 1;
+           ListOfTHeader[i].style.position = "relative";
+       }
+   }
+
 //   function alert(sMsg) {
 //       $get("btnAlert").click();
 //     //  $find("cbeAlert").ConfirmText = sMsg;

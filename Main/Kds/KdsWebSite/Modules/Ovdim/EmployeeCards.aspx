@@ -137,9 +137,9 @@
      <table  width="952px">
         <tr>
             <td align="right">
-                <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline"  >
+                <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline">
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server" dir="rtl"  style="text-align:right;width:965px;overflow-x:hidden;">
+                     <div id="divNetunim" runat="server" dir="rtl" onscroll="FreezeHeader(this)" style="text-align:right;width:965px;overflow-x:hidden;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
