@@ -249,7 +249,7 @@ function GetDateDDMMYYYY(dDate){
    function FreezeHeader(DivGridView) {
        var ListOfTHeader = DivGridView.getElementsByTagName("th");
        for (var i = 0; i <= ListOfTHeader.length - 1; i++) {
-           ListOfTHeader[i].style.top = DivGridView.scrollTop - 3;
+           ListOfTHeader[i].style.top = DivGridView.scrollTop-2;
            ListOfTHeader[i].style.left = ListOfTHeader[i].parentNode.parentNode.parentNode.parentNode.scrollLeft + 1;
            ListOfTHeader[i].style.position = "relative";
        }
