@@ -2122,29 +2122,29 @@ namespace KdsBatch
                     }
                 }
 
-                //sSugeySidur = GetSugeySidurRechiv(iKodRechiv);
-                //if (sSugeySidur.Length > 0)
-                //{
-                //    drSidurim = null;
-                //    drSidurim = GetSidurimRegilim();
-                //    for (int I = 0; I < drSidurim.Length; I++)
-                //    {
-                //        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
-                //        dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
+                sSugeySidur = GetSugeySidurRechiv(iKodRechiv);
+                if (sSugeySidur.Length > 0)
+                {
+                    drSidurim = null;
+                    drSidurim = GetSidurimRegilim();
+                    for (int I = 0; I < drSidurim.Length; I++)
+                    {
+                        iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
-                //        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
+                        //SetSugSidur(ref drSidurim[I], objOved.Taarich, iMisparSidur);
 
-                //        iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
+                        iSugSidur = int.Parse(drSidurim[I]["sug_sidur"].ToString());
 
-                //        if (sSugeySidur.IndexOf("," + iSugSidur.ToString() + ",") > -1)
-                //        {
-                //            fDakotNochehutSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        if (sSugeySidur.IndexOf("," + iSugSidur.ToString() + ",") > -1)
+                        {
+                            fDakotNochehutSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                //            addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fDakotNochehutSidur);
+                            addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fDakotNochehutSidur);
 
-                //        }
-                //    }
-                //}
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

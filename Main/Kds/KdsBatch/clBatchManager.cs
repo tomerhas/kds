@@ -11935,7 +11935,7 @@ namespace KdsBatch
             bool bLoLetashlumAutomati = false;
    
              // וגם מדובר בסידור מיוחד עם עם מאפיין לסידורים מיוחדים קוד = 54 עם ערך 1.
-            if (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0")
+            if (oSidur.bSidurMyuhad && oSidur.sShaonNochachut == "1" && oSidur.sChariga == "0") // && oOvedYomAvodaDetails.iIsuk.ToString().Substring(0,1) == "5")
             {
                 //וגם לעובד אין מאפיין 3 ו- 4 ברמה האישית. 
                 if (!oMeafyeneyOved.Meafyen3Exists && !oMeafyeneyOved.Meafyen4Exists)
@@ -11956,7 +11956,8 @@ namespace KdsBatch
             bool bFromMeafyenHatchala, bFromMeafyenGmar;
 
             GetOvedShatHatchalaGmar(oSidur.dFullShatGmar, _oMeafyeneyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out bFromMeafyenGmar);
-            bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
+            if (bFromMeafyenHatchala && bFromMeafyenGmar)
+                bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
 
             return bLoLetashlumAutomati;
         }
@@ -12362,7 +12363,7 @@ namespace KdsBatch
             return bSidurNihulTnua;
         }
 
-        private bool IsSidurZakaiLeNesiot(DataRow[] drSugSidur, clSidur oSidur)
+        private bool IsSidurShonim(DataRow[] drSugSidur, clSidur oSidur)
         {
             bool bSidurZakaiLenesiot = false;
 
@@ -12869,18 +12870,33 @@ namespace KdsBatch
                             oSidur = (clSidur)htEmployeeDetails[i];
                             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
-                            bSidurZakaiLnesiot = IsSidurZakaiLeNesiot(drSugSidur, oSidur);
-
-                            if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
+                            bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
+                            if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
+                            {
+                                if (iSidurZakaiLenesiaKnisa == -1)
+                                    iSidurZakaiLenesiaKnisa = i;
+                                iSidurZakaiLenesiaYetzia = i;
+                            }
+                            else if (bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
                             {
                                 bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLenesiaKnisa == -1))
+                                if (bKnisaValid && iSidurZakaiLenesiaKnisa == -1)
                                     iSidurZakaiLenesiaKnisa = i;
                                 bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
+                                if (bYetizaValid)
                                     iSidurZakaiLenesiaYetzia = i;
-                                else iSidurZakaiLenesiaYetzia = -1;
                             }
+
+                            //if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
+                            //{
+                            //    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                            //    if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLenesiaKnisa == -1))
+                            //        iSidurZakaiLenesiaKnisa = i;
+                            //    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                            //    if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
+                            //        iSidurZakaiLenesiaYetzia = i;
+                            //    else iSidurZakaiLenesiaYetzia = -1;
+                            //}
 
                         }
 
@@ -13084,9 +13100,11 @@ namespace KdsBatch
             //float fDakotInTafkid = 0;
             // bool bStatusChishuv=false;
             bool bSidurZakaiLHalbash = false;
+            bool bSidurMisugShaonim = false;
             int iSidurZakaiLehalbashaKnisa = -1;
             int iSidurZakaiLehalbashaYetzia = -1;
             bool bSidurLoZakaiLHalbash = false;
+            DataRow[] drSugSidur;
             clSidur oSidur;
             bool bHaveHalbasha = false;
             bool bKnisaValid = false;
@@ -13123,22 +13141,41 @@ namespace KdsBatch
                             for (int i = 0; i < htEmployeeDetails.Count; i++)
                             {
                                 oSidur = (clSidur)htEmployeeDetails[i];
+                                drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
                                 bSidurZakaiLHalbash = IsSidurHalbasha(oSidur);
+                                bSidurMisugShaonim = IsSidurShonim(drSugSidur, oSidur);
 
-                                //אם נמצא סידור שזכאי להלבשה, נשמור את האינדקס של הסידור
-                                if (bSidurZakaiLHalbash)
+                                if (!bSidurMisugShaonim && oSidur.sHalbashKod == "1")
+                                {
+                                    if (iSidurZakaiLehalbashaKnisa == -1)
+                                        iSidurZakaiLehalbashaKnisa = i;
+                                    iSidurZakaiLehalbashaKnisa = i;
+                                }
+                                else if (bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
                                     bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if ((bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) || (oSidur.sHalbashKod == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLehalbashaKnisa == -1))
+                                    if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) 
                                         iSidurZakaiLehalbashaKnisa = i;
                                     bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
-                                    if (bYetizaValid || oSidur.sHalbashKod == "1")
+                                    if (bYetizaValid)
                                         iSidurZakaiLehalbashaYetzia = i;
-                                    else iSidurZakaiLehalbashaYetzia = -1;
                                 }
                                 else if (!bSidurLoZakaiLHalbash)
                                 { bSidurLoZakaiLHalbash = IsNotSidurHalbasha(oSidur); }
+                                ////אם נמצא סידור שזכאי להלבשה, נשמור את האינדקס של הסידור
+                                //if (bSidurZakaiLHalbash)
+                                //{
+                                //    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                //    if ((bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) || (oSidur.sHalbashKod == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLehalbashaKnisa == -1))
+                                //        iSidurZakaiLehalbashaKnisa = i;
+                                //    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                //    if (bYetizaValid || oSidur.sHalbashKod == "1")
+                                //        iSidurZakaiLehalbashaYetzia = i;
+                                //    else iSidurZakaiLehalbashaYetzia = -1;
+                                //}
+                                //else if (!bSidurLoZakaiLHalbash)
+                                //{ bSidurLoZakaiLHalbash = IsNotSidurHalbasha(oSidur); }
                             }
 
 
