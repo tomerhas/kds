@@ -11956,8 +11956,7 @@ namespace KdsBatch
             bool bFromMeafyenHatchala, bFromMeafyenGmar;
 
             GetOvedShatHatchalaGmar(oSidur.dFullShatGmar, _oMeafyeneyOved, ref oSidur, ref dShatHatchalaLetashlum, ref dShatGmarLetashlum, out bFromMeafyenHatchala, out bFromMeafyenGmar);
-            if (bFromMeafyenHatchala && bFromMeafyenGmar)
-                bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
+            bLoLetashlumAutomati = CheckLoLetashlumMeafyenim(drSugSidur, oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, bFromMeafyenHatchala, bFromMeafyenGmar);
 
             return bLoLetashlumAutomati;
         }
@@ -11985,8 +11984,12 @@ namespace KdsBatch
                 {
                     //if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
                     //    bLoLetashlumAutomati = true;
-                    if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga=="0")
-                        bLoLetashlumAutomati = true;
+                    if (bFromMeafyenHatchala && bFromMeafyenGmar)
+                    {
+                        if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga == "0")
+                            bLoLetashlumAutomati = true;
+                    }
+                    else bLoLetashlumAutomati = true;
                 }
             }
 
