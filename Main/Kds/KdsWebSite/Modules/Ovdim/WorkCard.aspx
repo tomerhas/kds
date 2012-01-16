@@ -551,11 +551,11 @@
            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                  
         </Triggers>             
       </asp:UpdatePanel>  
-      <asp:Button id="btnAlert" runat="server" style="display:none"  />
+      <%--<asp:Button id="btnAlert" runat="server" style="display:none"  />
       <ajaxToolkit:ConfirmButtonExtender ID="cbeAlert" runat="server"
         TargetControlID="btnAlert"
         ConfirmText="Are you sure you want to click this?"
-        OnClientCancel="CancelClick" />       
+        OnClientCancel="CancelClick" />       --%>
       <%--<asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
         <ContentTemplate>    
             <table style="width:980px;height:30px" cellpadding="1">
