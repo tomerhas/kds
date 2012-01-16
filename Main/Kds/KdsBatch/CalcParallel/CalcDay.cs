@@ -388,9 +388,6 @@ namespace KdsBatch
                 //שבת/שעות 100% (רכיב 131): 
                 CalcRechiv131();
 
-                //כמות גמול חסכון (רכיב 22) 
-                CalcRechiv22();
-
                 //כמות גמול חסכון נוספות (רכיב 44) 
                 CalcRechiv44();
 
@@ -398,6 +395,9 @@ namespace KdsBatch
                 CalcRechiv90();
 
                 UpdateRechiv1();
+
+                //כמות גמול חסכון (רכיב 22) 
+                CalcRechiv22();
 
                 //יום היעדרות  (רכיב 66) 
                 CalcRechiv66();
