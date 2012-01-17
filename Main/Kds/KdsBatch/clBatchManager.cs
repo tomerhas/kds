@@ -11981,15 +11981,16 @@ namespace KdsBatch
             if (!string.IsNullOrEmpty(sMeafyenKizuz) && oSidur.iLoLetashlum == 0)
             {
                 if (sMeafyenKizuz == "1")
-                {
-                    //if (!bFromMeafyenHatchala || !bFromMeafyenGmar)
-                    //    bLoLetashlumAutomati = true;
+                {                   
                     if (bFromMeafyenHatchala && bFromMeafyenGmar)
                     {
                         if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga == "0")
                             bLoLetashlumAutomati = true;
                     }
-                    else bLoLetashlumAutomati = true;
+                    else if ((bFromMeafyenHatchala && !bFromMeafyenGmar) || (!bFromMeafyenHatchala && bFromMeafyenGmar))
+                    {
+                        bLoLetashlumAutomati = true;
+                    }
                 }
             }
 
