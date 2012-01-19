@@ -968,7 +968,7 @@ namespace KdsBatch
             sMeafyen = clGeneral.ConvertToValidHour(sShaaMeafyen);
             if (clGeneral.IsEggedTime(sMeafyen))
             {
-                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen),dTaarich.Date).AddDays(1);
+                dMeafyenDate = clGeneral.GetDateTimeFromStringHour(clGeneral.ConvertFromEggedTime(sMeafyen),dTaarich.Date);//.AddDays(1);
             }
             else
             {
