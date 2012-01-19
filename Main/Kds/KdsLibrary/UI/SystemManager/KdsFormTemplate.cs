@@ -174,12 +174,13 @@ namespace KdsLibrary.UI.SystemManager
 
                     case KdsColumnType.Calendar:
                         KdsCalendar calendar = new KdsCalendar();
-                        calendar.Attributes.Add("dir", "rtl");
-                        td.Attributes.Add("dir", "ltr");
-                        td.Attributes.Add("align", "right");
+                        //calendar.Attributes.Add("dir", "rtl");
+                        //td.Attributes.Add("dir", "ltr");
+                        //td.Attributes.Add("align", "right");
                         calendar.ID = kdsColumn.Name;
                         calendar.Width = Unit.Pixel(CALENDAR_MAX_WIDTH);
                         calendar.Text = GetDefaultValue(kdsColumn);
+                        //calendar.PopupPositionCallOut = AjaxControlToolkit.ValidatorCalloutPosition.Left;
                         Fields.Add(calendar.CalendarId, kdsColumn.Name);
                         td.Controls.Add(calendar);
                         calendar.DataBinding += new EventHandler(calendar_DataBinding);

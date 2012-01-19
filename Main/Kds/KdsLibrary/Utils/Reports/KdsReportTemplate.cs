@@ -282,11 +282,11 @@ namespace KdsLibrary.Utils.Reports
             calendar.Width = Unit.Pixel(CALENDAR_MAX_WIDTH);
             calendar.Text = (DateTime.TryParse(filter.DefaultValue, out cDate)) ? cDate.ToString("dd/MM/yyyy") : DateTime.Now.ToString("dd/MM/yyyy");
             calendar.ID = filter.ParameterName;
-            calendar.Attributes.Add("dir", "rtl");
+           // calendar.Attributes.Add("dir", "rtl");
             calendar.Attributes.Add("runat", "server");
             calendar.LabelName = filter.Caption;
             calendar.CalloutMessageDisplayed = false;
-            calendar.PopupPositionCallOut = AjaxControlToolkit.ValidatorCalloutPosition.TopLeft;
+           // calendar.PopupPositionCallOut = AjaxControlToolkit.ValidatorCalloutPosition.BottomRight;
             if (filter.RunAtServer)
             {
                 calendar.Attributes.Add("OnChange", "FireControlChanged()");

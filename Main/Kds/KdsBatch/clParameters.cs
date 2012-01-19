@@ -200,7 +200,11 @@ namespace KdsBatch
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
-        
+        public float fBasisLechishuvPremiatNehigaETElad; //506 -תעבורה-אלעד-בסיס לחישוב פרמיית נהיגה
+        public float fMaxPremiatNehigaETElad; //507 - תעבורה-אלעד-מכסימום פרמיית נהיגה
+        public float fFactorLetashlumPizulimTaavura; //508 -תעבורה-פקטור לתשלום פיצולים
+        public float fFactorLetashlumPizulimTaavuraElad; //509 -תעבורה-אלעד-פקטור לתשלום פיצולים
+
         private DataTable dtParameters;
         private string _Type="";
         public DateTime _Taarich; 
@@ -965,6 +969,23 @@ namespace KdsBatch
                 sTmp = GetOneParam(505, dCardDate);
                 fMaxPremiatNehiga = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
                
+
+                //506 -תעבורה-אלעד-בסיס לחישוב פרמיית נהיגה
+                sTmp = GetOneParam(506, dCardDate);
+                fBasisLechishuvPremiatNehigaETElad = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
+               
+                //507 - תעבורה-אלעד-מכסימום פרמיית נהיגה
+                sTmp = GetOneParam(507, dCardDate);
+                fMaxPremiatNehigaETElad = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
+
+                //508 -תעבורה-פקטור לתשלום פיצולים
+                sTmp = GetOneParam(508, dCardDate);
+                fFactorLetashlumPizulimTaavura = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
+
+                //509 -תעבורה-אלעד-פקטור לתשלום פיצולים
+                sTmp = GetOneParam(509, dCardDate);
+                fFactorLetashlumPizulimTaavuraElad = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
+
             }
         catch (Exception ex)
             {

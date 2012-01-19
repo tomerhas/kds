@@ -2170,6 +2170,17 @@ namespace KdsBatch
             try
             {
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachPitzul.GetHashCode());
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
+                {
+                    if (objOved.objPirteyOved.iMikumYechida == 141)
+                    {
+                        fSumDakotRechiv = fSumDakotRechiv * objOved.objParameters.fFactorLetashlumPizulimTaavuraElad;
+                    }
+                    else
+                    {
+                        fSumDakotRechiv = fSumDakotRechiv * objOved.objParameters.fFactorLetashlumPizulimTaavura;
+                    }
+                }
                 addRowToTable(clGeneral.enRechivim.SachPitzul.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -3696,8 +3707,18 @@ namespace KdsBatch
                     {
                         fDakotNochehut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutBefoal); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode());
                         fMichsaChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
-                        if (fMichsaChodshit > 0)
-                            fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia) / Math.Min(objOved.objParameters.fMichsatSaotChodshitET * 60, fMichsaChodshit), objOved.objParameters.fMaxPremiatNehiga);
+                           
+                        if (objOved.objPirteyOved.iMikumYechida == 141)
+                        {
+                            if (fMichsaChodshit > 0)
+                                fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremiatNehigaETElad) / Math.Min(objOved.objParameters.fMichsatSaotChodshitET * 60, fMichsaChodshit), objOved.objParameters.fMaxPremiatNehigaETElad);
+                        
+                        }
+                        else
+                        {
+                             if (fMichsaChodshit > 0)
+                                fSumDakotRechiv = Math.Min((fDakotNochehut * objOved.objParameters.fBasisLechishuvPremia) / Math.Min(objOved.objParameters.fMichsatSaotChodshitET * 60, fMichsaChodshit), objOved.objParameters.fMaxPremiatNehiga);
+                        }
                     }
                 }
                 else

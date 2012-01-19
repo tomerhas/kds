@@ -142,14 +142,14 @@ namespace KdsLibrary.Controls
             CalEx.Format = "dd/MM/yyyy";
             CalEx.TargetControlID = _calendar.ID;
             CalEx.PopupButtonID = imgCal.ID;
-            CalEx.PopupPosition = CalendarPosition.BottomLeft;
+            CalEx.PopupPosition = CalendarPosition.BottomRight; 
             CalEx.CssClass = "custom-calendar";
 
             this.Controls.Add(_calendar);
             this.Controls.Add(CalEx);
             //this.Controls.Add(imgSpace);
             this.Controls.Add(imgCal);
-
+            this.Attributes.Add("dir", "rtl");
 
             setOnClickImg();
             setFocusImg();
