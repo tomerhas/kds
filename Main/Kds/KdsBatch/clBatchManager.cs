@@ -7332,11 +7332,10 @@ namespace KdsBatch
                     && oSidur.sSugAvoda==clGeneral.enSugAvoda.Shaon.GetHashCode().ToString() )
                 {
                     GetMeafyeneyMafilim(oSidur,oSidur.dFullShatHatchala, oSidur.dFullShatGmar, out  bFromMeafyenHatchala, out  bFromMeafyenGmar, ref dRequiredShatHatchala, ref dRequiredShatGmar);
-                  
 
                     dShatHatchalaLetashlumToUpd = dRequiredShatHatchala;
                     dShatGmarLetashlumToUpd = dRequiredShatGmar;
-
+                    
                     SetShatHatchalaGmarKizuz(ref oSidur, ref oObjSidurimOvdimUpd, dRequiredShatHatchala, dRequiredShatGmar, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
                     
                     //oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dRequiredShatHatchala;
@@ -13663,7 +13662,7 @@ namespace KdsBatch
             //ואינו מסומן "לא לתשלום", ישנם כמה מקרים:
             try
             {
-                if ((oSidur.bKizuzAlPiHatchalaGmarExists) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
+                if (oSidur.bKizuzAlPiHatchalaGmarExists && oObjSidurimOvdimUpd.LO_LETASHLUM == 0)//|| (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
                 {
                     //1 .אם אין סימון "קוד חריגה" (אין = null או 0) ואין סימון "מחוץ למיכסה" (אין = null או 0), שלושה מקרים:                                                                               
                     if (oObjSidurimOvdimUpd.CHARIGA == 0)
@@ -13675,7 +13674,7 @@ namespace KdsBatch
                     }
                     else //chariga>0
                     {
-                     
+
                         //3. אם יש סימון "קוד חריגה" ולא קבענו את הסידור "לא לתשלום", שלושה מקרים:                                                           
                         if ((oObjSidurimOvdimUpd.CHARIGA != 0) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0))
                         {
@@ -13689,7 +13688,7 @@ namespace KdsBatch
                             {
                                 dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
                                 if (oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarLetashlum)
-                                  dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                                    dShatGmarLetashlumToUpd = dShatGmarLetashlum;
                                 else
                                     dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
                             }
@@ -13711,9 +13710,8 @@ namespace KdsBatch
                                 dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
                                 dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
                             }
-                       }
+                        }
                     }
-
                 }
             }
             catch (Exception ex)
