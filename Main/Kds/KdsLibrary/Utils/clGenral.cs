@@ -1046,7 +1046,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ExecutePremiaCalculationMacro = 9,
             StorePremiaCalculationOutput = 10,
             DataComparisonImport = 11,
-            CalculationForPremiaPopulation = 12
+            CalculationForPremiaPopulation = 12,
+            YeziratRikuzim =13
         }
         public enum enBechishuvSachar
         {

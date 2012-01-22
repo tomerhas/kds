@@ -251,7 +251,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
          iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
-         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
+         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.YeziratRikuzim, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
          ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
 
