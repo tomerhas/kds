@@ -221,7 +221,8 @@ namespace KdsBatch
             errMissingKodMevatzaVisa=178,
             errHightValueDakotBefoal=179,
             IsShatHatchalaLetashlumNull = 180,
-            IsShatGmarLetashlumNull = 181
+            IsShatGmarLetashlumNull = 181,
+            ErrMisparElementimMealHamutar = 185
         }
 
         private enum errNesiaMeshtana
@@ -1109,7 +1110,7 @@ namespace KdsBatch
             //int iPrevLoLetashlum=0;
             float fSidurTime = 0;
             int iTotalHashlamotForSidur = 0;//סה"כ השלמות בכל הסידורים 
-            int iHashlama;
+            int iHashlama,iNumElements;
             bool bSidurNahagut=false;
             bool bHaveSidurNahagut = false;
             int iTotalTimePrepareMechineForSidur = 0;
@@ -1118,6 +1119,7 @@ namespace KdsBatch
             bool bCheckBoolSidur = false;
             clGeneral.enEmployeeType enEmployeeType;           
             DataRow[] drSugSidur;
+            string sMakat;
             //DateTime dPrevStartPeilut=new DateTime();
             //DateTime dPrevEndPeilut = new DateTime();
             try
@@ -1146,7 +1148,7 @@ namespace KdsBatch
                 for (int i = 0; i < htEmployeeDetails.Count; i++)
                 {
                     oSidur = (clSidur)htEmployeeDetails[i];
-
+                    iNumElements=0;
                     ////set dataset sidurim with sidur details
                     //SetSidurDetails(dCardDate, ref oSidur, out iResult);
 
@@ -1255,7 +1257,7 @@ namespace KdsBatch
 
                     if (CheckErrorActive(180)) IsShatHatchalaLetashlumNull180(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
-
+                   
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -1296,7 +1298,13 @@ namespace KdsBatch
                         if (CheckErrorActive(86)) IsTimeForPrepareMechineValid86(ref iTotalTimePrepareMechineForSidur, ref iTotalTimePrepareMechineForDay, ref iTotalTimePrepareMechineForOtherMechines, ref oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(151)) IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(179)) HightValueDakotBefoal179(oSidur, oPeilut, ref dtErrors);
+
+                        sMakat= oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
+                        if (oPeilut.lMakatNesia.ToString().Length == 8 && (sMakat == "730" || sMakat == "740" || sMakat == "750"))
+                            iNumElements += 1;
                     }
+                    if (CheckErrorActive(185)) ErrMisparElementimMealHamutar185(iNumElements,dCardDate, ref oSidur, ref dtErrors);
+
                     if (!bFirstSidur)
                     {
                         //Check55
@@ -1497,6 +1505,37 @@ namespace KdsBatch
             return isValid;
         }
 
+        private bool ErrMisparElementimMealHamutar185(int iNumElements,DateTime dCardDate,ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
+                if (drSugSidur.Length > 0)
+                {
+                    if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+                    {
+                        if (iNumElements > 1)
+                        {
+                            drNew = dtErrors.NewRow();
+                            InsertErrorRow(oSidur, ref drNew, "סידור ניהול תנועה מהמפה המכיל יותר מסוג אחד של אלמנט מסוג ניהול תנועה", enErrors.ErrMisparElementimMealHamutar.GetHashCode());
+                            dtErrors.Rows.Add(drNew);
+                            isValid = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.ErrMisparElementimMealHamutar.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "ErrMisparElementimMealHamutar: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+        
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;
@@ -13982,12 +14021,13 @@ namespace KdsBatch
 
         private void SetShaotLovedMishmeret2(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,  ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
         {
-            DateTime shaa24, shaa23;
+            DateTime shaa24, shaa23,shaa;
           try {
+                 shaa = DateTime.Parse( oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString() + " 18:00:00");
                 if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists)
                     if (oSidur.bKizuzAlPiHatchalaGmarExists)
                          if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour>=11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour<=17)
-                             && ((iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oObjSidurimOvdimUpd.SHAT_GMAR.Hour > 18) || ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode() || CheckErevChag(iSugYom)) && oObjSidurimOvdimUpd.SHAT_GMAR.Hour > 13)))
+                             && ((iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oObjSidurimOvdimUpd.SHAT_GMAR > shaa) || ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
                             {
                                 shaa23 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() + " " + oMeafyeneyOved.sMeafyen23.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen23.Substring(2, 2));
                                 shaa24 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()  + " " + oMeafyeneyOved.sMeafyen24.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen24.Substring(2, 2));
