@@ -14153,7 +14153,7 @@ namespace KdsBatch
                             }
                             if (oMeafyeneyOved.Meafyen8Exists)
                             {
-                                dShatGmarLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(dSidurShatGmar, oMeafyeneyOved.sMeafyen8);
+                                dShatGmarLetashlum = oMeafyeneyOved.ConvertMefyenShaotValid(dShatHatchalaSidur, oMeafyeneyOved.sMeafyen8);
                                 bFromMeafyenGmar = true;
                             }
                             else
