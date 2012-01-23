@@ -1,292 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsRikuz">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>c6ed2d8e-26ff-4430-8311-96cea6f07b25</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="DsFromDataSet">
-      <ConnectionProperties>
-        <DataProvider>DATASET</DataProvider>
-        <ConnectString />
-      </ConnectionProperties>
-      <rd:DataSourceID>429d6b87-4836-423e-986e-f6d94c4494ac</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsPirteyOved">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_MISH">
-          <DataField>SHEM_MISH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_PRAT">
-          <DataField>SHEM_PRAT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MONTH_YEAR">
-          <DataField>MONTH_YEAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MAAMAD">
-          <DataField>MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SNIF_AV">
-          <DataField>SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TACHANAT_SACHAR">
-          <DataField>TACHANAT_SACHAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ISUK">
-          <DataField>ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="GIL">
-          <DataField>GIL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TCHILAT_AVODA">
-          <DataField>TCHILAT_AVODA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DtRikuzChodshi">
-      <Fields>
-        <Field Name="MIYUN_BESIKUM_CHODSHI">
-          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HEARA">
-          <DataField>HEARA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DAY_TAARICH">
-          <DataField>DAY_TAARICH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KIZUZ_MEAL_MICHSA">
-          <DataField>KIZUZ_MEAL_MICHSA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsFromDataSet</DataSourceName>
-        <CommandText>Rikuz</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DsHeadruyot">
-      <Fields>
-        <Field Name="YEMEY_EVEL">
-          <DataField>YEMEY_EVEL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_TEUNA">
-          <DataField>YEMEY_TEUNA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YOM_MACHALA_BODED">
-          <DataField>YOM_MACHALA_BODED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_MACHALA">
-          <DataField>YEMEY_MACHALA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CHOFESH_ZCHUT">
-          <DataField>CHOFESH_ZCHUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CHOFESH_CHOVA">
-          <DataField>CHOFESH_CHOVA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_HEADRUT">
-          <DataField>YEMEY_HEADRUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_MILUIM">
-          <DataField>YEMEY_MILUIM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HERAYON">
-          <DataField>HERAYON</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TIPAT_CHALAV">
-          <DataField>TIPAT_CHALAV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_HORE">
-          <DataField>MACHALAT_HORE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_YELED">
-          <DataField>MACHALAT_YELED</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_BEN_ZUG">
-          <DataField>MACHALAT_BEN_ZUG</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:UserDefined>true</rd:UserDefined>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsFromDataSet</DataSourceName>
-        <CommandText>Headruyot</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DtRechivimChodshiyim">
-      <Fields>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LETZUGA_BETIHKUR_RASHEMET">
-          <DataField>LETZUGA_BETIHKUR_RASHEMET</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsFromDataSet</DataSourceName>
-        <CommandText>Chodshi</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix12">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.03125in</Width>
+              <Width>0.07938cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.72057in</Width>
+              <Width>1.83025cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.78166in</Width>
+              <Width>1.98542cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7815in</Width>
+              <Width>1.98501cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77259in</Width>
+              <Width>1.96238cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.72717in</Width>
+              <Width>1.84701cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75621in</Width>
+              <Width>1.92077cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75037in</Width>
+              <Width>1.90594cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.78782in</Width>
+              <Width>2.00106cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74335in</Width>
+              <Width>1.88811cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7409in</Width>
+              <Width>1.88189cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75756in</Width>
+              <Width>1.9242cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7342in</Width>
+              <Width>1.86487cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.73535in</Width>
+              <Width>1.86779cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75881in</Width>
+              <Width>1.92738cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7874in</Width>
+              <Width>2cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.47748in</Height>
+              <Height>1.2128cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -688,12 +458,12 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.7874in</Width>
+                            <Width>2cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.47748in</Height>
+                            <Height>1.2128cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -701,12 +471,12 @@
                                     <TablixBody>
                                       <TablixColumns>
                                         <TablixColumn>
-                                          <Width>0.7874in</Width>
+                                          <Width>2cm</Width>
                                         </TablixColumn>
                                       </TablixColumns>
                                       <TablixRows>
                                         <TablixRow>
-                                          <Height>0.47748in</Height>
+                                          <Height>1.2128cm</Height>
                                           <TablixCells>
                                             <TablixCell>
                                               <CellContents>
@@ -714,12 +484,12 @@
                                                   <TablixBody>
                                                     <TablixColumns>
                                                       <TablixColumn>
-                                                        <Width>0.7874in</Width>
+                                                        <Width>2cm</Width>
                                                       </TablixColumn>
                                                     </TablixColumns>
                                                     <TablixRows>
                                                       <TablixRow>
-                                                        <Height>0.23874in</Height>
+                                                        <Height>0.6064cm</Height>
                                                         <TablixCells>
                                                           <TablixCell>
                                                             <CellContents>
@@ -769,7 +539,7 @@
                                                           </GroupExpressions>
                                                         </Group>
                                                         <TablixHeader>
-                                                          <Size>0.23874in</Size>
+                                                          <Size>0.6064cm</Size>
                                                           <CellContents>
                                                             <Textbox Name="TEUR_RECHIV1">
                                                               <CanGrow>true</CanGrow>
@@ -895,7 +665,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox1">
                     <CanGrow>true</CanGrow>
@@ -934,7 +704,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox114">
                     <CanGrow>true</CanGrow>
@@ -970,7 +740,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox112">
                     <CanGrow>true</CanGrow>
@@ -1006,7 +776,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox109">
                     <CanGrow>true</CanGrow>
@@ -1042,7 +812,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox97">
                     <CanGrow>true</CanGrow>
@@ -1078,7 +848,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox34">
                     <CanGrow>true</CanGrow>
@@ -1114,7 +884,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox30">
                     <CanGrow>true</CanGrow>
@@ -1150,7 +920,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox32">
                     <CanGrow>true</CanGrow>
@@ -1186,7 +956,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox28">
                     <CanGrow>true</CanGrow>
@@ -1222,7 +992,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox87">
                     <CanShrink>true</CanShrink>
@@ -1258,7 +1028,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox79">
                     <CanShrink>true</CanShrink>
@@ -1294,7 +1064,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox76">
                     <CanShrink>true</CanShrink>
@@ -1330,7 +1100,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox66">
                     <CanShrink>true</CanShrink>
@@ -1369,7 +1139,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox81">
                     <CanShrink>true</CanShrink>
@@ -1405,7 +1175,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox83">
                     <CanShrink>true</CanShrink>
@@ -1441,7 +1211,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox73">
                     <CanShrink>true</CanShrink>
@@ -1482,7 +1252,7 @@
         <DataSetName>DtRechivimChodshiyim</DataSetName>
         <Top>9.24496cm</Top>
         <Height>1.29217cm</Height>
-        <Width>28.87145cm</Width>
+        <Width>28.87144cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1761,27 +1531,27 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.0955in</Width>
+                  <Width>2.78257cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.03953in</Width>
+                  <Width>2.64041cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84102in</Width>
+                  <Width>2.13619cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.77826in</Width>
+                  <Width>1.97678cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.83281in</Width>
+                  <Width>2.11534cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84323in</Width>
+                  <Width>2.1418cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2014,7 +1784,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2334,30 +2104,30 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.677in</Width>
+                  <Width>1.71958cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.77171in</Width>
+                  <Width>1.96014cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.03953in</Width>
+                  <Width>2.64041cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84102in</Width>
+                  <Width>2.13619cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.77826in</Width>
+                  <Width>1.97678cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.83281in</Width>
+                  <Width>2.11534cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84323in</Width>
+                  <Width>2.1418cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2628,7 +2398,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -2929,30 +2699,30 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.76147in</Width>
+                  <Width>1.93413cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.71316in</Width>
+                  <Width>1.81143cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.04427in</Width>
+                  <Width>2.65245cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84576in</Width>
+                  <Width>2.14823cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.783in</Width>
+                  <Width>1.98882cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.83755in</Width>
+                  <Width>2.12738cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84797in</Width>
+                  <Width>2.15384cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3209,7 +2979,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.21875in</Height>
+                  <Height>0.55562cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -3587,60 +3357,60 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.03125in</Width>
+              <Width>0.07938cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64961in</Width>
+              <Width>1.65001cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66219in</Width>
+              <Width>1.68196cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.73263in</Width>
+              <Width>1.86088cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66637in</Width>
+              <Width>1.69258cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.67009in</Width>
+              <Width>1.70203cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64389in</Width>
+              <Width>1.63548cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.72295in</Width>
+              <Width>1.83629cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65345in</Width>
+              <Width>1.65976cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64108in</Width>
+              <Width>1.62834cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.61259in</Width>
+              <Width>1.55598cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64977in</Width>
+              <Width>1.65042cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63789in</Width>
+              <Width>1.62024cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63953in</Width>
+              <Width>1.62441cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.6405in</Width>
+              <Width>1.62687cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74421in</Width>
+              <Width>1.89029cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.81952in</Width>
+              <Width>4.62158cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>1.57959in</Height>
+              <Height>4.01216cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4230,15 +4000,15 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.04167in</Width>
+                            <Width>0.10584cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.61139in</Width>
+                            <Width>1.55293cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.23228in</Height>
+                            <Height>0.58999cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -4308,7 +4078,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.23622in</Height>
+                            <Height>0.6cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -4377,7 +4147,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.23622in</Height>
+                            <Height>0.6cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -4446,7 +4216,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.23622in</Height>
+                            <Height>0.6cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -4515,7 +4285,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.23622in</Height>
+                            <Height>0.6cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -4610,7 +4380,7 @@
                               </SortExpression>
                             </SortExpressions>
                             <TablixHeader>
-                              <Size>0.40242in</Size>
+                              <Size>1.02215cm</Size>
                               <CellContents>
                                 <Textbox Name="Group1">
                                   <CanGrow>true</CanGrow>
@@ -4674,7 +4444,7 @@
                               </SortExpression>
                             </SortExpressions>
                             <TablixHeader>
-                              <Size>0.40242in</Size>
+                              <Size>1.02215cm</Size>
                               <CellContents>
                                 <Textbox Name="TEUR_RECHIV">
                                   <CanGrow>true</CanGrow>
@@ -4729,7 +4499,7 @@
                               </GroupExpressions>
                             </Group>
                             <TablixHeader>
-                              <Size>0.5068in</Size>
+                              <Size>1.28727cm</Size>
                               <CellContents>
                                 <Textbox Name="TAARICH">
                                   <KeepTogether>true</KeepTogether>
@@ -4766,7 +4536,7 @@
                             <TablixMembers>
                               <TablixMember>
                                 <TablixHeader>
-                                  <Size>0.65966in</Size>
+                                  <Size>1.67554cm</Size>
                                   <CellContents>
                                     <Textbox Name="ERECH_RECHIV2">
                                       <KeepTogether>true</KeepTogether>
@@ -4811,7 +4581,7 @@
                           </TablixMember>
                           <TablixMember>
                             <TablixHeader>
-                              <Size>1.16646in</Size>
+                              <Size>2.96281cm</Size>
                               <CellContents>
                                 <Textbox Name="Textbox181">
                                   <CanGrow>true</CanGrow>
@@ -4854,7 +4624,7 @@
                           </TablixMember>
                           <TablixMember>
                             <TablixHeader>
-                              <Size>1.16646in</Size>
+                              <Size>2.96281cm</Size>
                               <CellContents>
                                 <Textbox Name="Textbox187">
                                   <CanGrow>true</CanGrow>
@@ -4898,7 +4668,7 @@
                           </TablixMember>
                           <TablixMember>
                             <TablixHeader>
-                              <Size>1.16646in</Size>
+                              <Size>2.96281cm</Size>
                               <CellContents>
                                 <Textbox Name="Textbox189">
                                   <CanGrow>true</CanGrow>
@@ -4940,7 +4710,7 @@
                           </TablixMember>
                           <TablixMember>
                             <TablixHeader>
-                              <Size>1.16646in</Size>
+                              <Size>2.96281cm</Size>
                               <CellContents>
                                 <Textbox Name="Textbox191">
                                   <CanGrow>true</CanGrow>
@@ -5027,7 +4797,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Group5">
                     <CanGrow>true</CanGrow>
@@ -5066,7 +4836,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox162">
                     <CanGrow>true</CanGrow>
@@ -5102,7 +4872,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox160">
                     <CanGrow>true</CanGrow>
@@ -5138,7 +4908,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox103">
                     <CanGrow>true</CanGrow>
@@ -5174,7 +4944,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox20">
                     <CanGrow>true</CanGrow>
@@ -5210,7 +4980,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox8">
                     <CanGrow>true</CanGrow>
@@ -5246,7 +5016,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox10">
                     <CanGrow>true</CanGrow>
@@ -5282,7 +5052,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox4">
                     <CanGrow>true</CanGrow>
@@ -5318,7 +5088,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox125">
                     <CanGrow>true</CanGrow>
@@ -5356,7 +5126,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox121">
                     <CanGrow>true</CanGrow>
@@ -5392,7 +5162,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox117">
                     <CanGrow>true</CanGrow>
@@ -5428,7 +5198,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox127">
                     <CanGrow>true</CanGrow>
@@ -5464,7 +5234,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox129">
                     <CanGrow>true</CanGrow>
@@ -5500,7 +5270,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox131">
                     <CanGrow>true</CanGrow>
@@ -5536,7 +5306,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox135">
                     <CanGrow>true</CanGrow>
@@ -5572,7 +5342,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox133">
                     <CanGrow>true</CanGrow>
@@ -5608,7 +5378,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03125in</Size>
+                <Size>0.07938cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox116">
                     <CanGrow>true</CanGrow>
@@ -5654,7 +5424,7 @@
         <DataSetName>DtRikuzChodshi</DataSetName>
         <Top>4.42851cm</Top>
         <Height>4.09153cm</Height>
-        <Width>30.01649cm</Width>
+        <Width>30.0165cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -5667,36 +5437,36 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.0501in</Width>
+              <Width>2.66725cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66242in</Width>
+              <Width>1.68255cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74962in</Width>
+              <Width>1.90403cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99325in</Width>
+              <Width>2.52286cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.99325in</Width>
+              <Width>2.52286cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.71846in</Width>
+              <Width>1.82489cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83235in</Width>
+              <Width>2.11417cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05071in</Width>
+              <Width>2.6688cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75287in</Width>
+              <Width>1.91229cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.19271in</Height>
+              <Height>0.48948cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -6016,7 +5786,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.22396in</Height>
+              <Height>0.56886cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -6379,6 +6149,252 @@
     <Height>16.50789cm</Height>
     <Style />
   </Body>
+  <Width>30.0165cm</Width>
+  <Page>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <InteractiveHeight>21cm</InteractiveHeight>
+    <InteractiveWidth>29.7cm</InteractiveWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.2cm</TopMargin>
+    <BottomMargin>0.1cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsRikuz">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>c6ed2d8e-26ff-4430-8311-96cea6f07b25</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="DsFromDataSet">
+      <ConnectionProperties>
+        <DataProvider>DATASET</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>429d6b87-4836-423e-986e-f6d94c4494ac</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsPirteyOved">
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_MISH">
+          <DataField>SHEM_MISH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_PRAT">
+          <DataField>SHEM_PRAT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MONTH_YEAR">
+          <DataField>MONTH_YEAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MAAMAD">
+          <DataField>MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_AV">
+          <DataField>SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TACHANAT_SACHAR">
+          <DataField>TACHANAT_SACHAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ISUK">
+          <DataField>ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GIL">
+          <DataField>GIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCHILAT_AVODA">
+          <DataField>TCHILAT_AVODA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DtRikuzChodshi">
+      <Query>
+        <DataSourceName>DsFromDataSet</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Rikuz</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MIYUN_BESIKUM_CHODSHI">
+          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DAY_TAARICH">
+          <DataField>DAY_TAARICH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KIZUZ_MEAL_MICHSA">
+          <DataField>KIZUZ_MEAL_MICHSA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsHeadruyot">
+      <Query>
+        <DataSourceName>DsFromDataSet</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Headruyot</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="YEMEY_EVEL">
+          <DataField>YEMEY_EVEL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_TEUNA">
+          <DataField>YEMEY_TEUNA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YOM_MACHALA_BODED">
+          <DataField>YOM_MACHALA_BODED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_MACHALA">
+          <DataField>YEMEY_MACHALA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CHOFESH_ZCHUT">
+          <DataField>CHOFESH_ZCHUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CHOFESH_CHOVA">
+          <DataField>CHOFESH_CHOVA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_HEADRUT">
+          <DataField>YEMEY_HEADRUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_MILUIM">
+          <DataField>YEMEY_MILUIM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HERAYON">
+          <DataField>HERAYON</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TIPAT_CHALAV">
+          <DataField>TIPAT_CHALAV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_HORE">
+          <DataField>MACHALAT_HORE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_YELED">
+          <DataField>MACHALAT_YELED</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_BEN_ZUG">
+          <DataField>MACHALAT_BEN_ZUG</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DtRechivimChodshiyim">
+      <Query>
+        <DataSourceName>DsFromDataSet</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Chodshi</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LETZUGA_BETIHKUR_RASHEMET">
+          <DataField>LETZUGA_BETIHKUR_RASHEMET</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
@@ -6460,19 +6476,6 @@
 sDay= dTaarich.Day.ToString()  &amp; " - " &amp; sDay  
 return sDay
 end function</Code>
-  <Width>30.01649cm</Width>
-  <Page>
-    <PageHeight>21cm</PageHeight>
-    <PageWidth>29.7cm</PageWidth>
-    <InteractiveHeight>21cm</InteractiveHeight>
-    <InteractiveWidth>29.7cm</InteractiveWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0.2cm</TopMargin>
-    <BottomMargin>0.1cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -6483,6 +6486,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>73172f5e-7e4f-4f80-a518-d8cae67b8b94</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>73172f5e-7e4f-4f80-a518-d8cae67b8b94</rd:ReportID>
 </Report>
