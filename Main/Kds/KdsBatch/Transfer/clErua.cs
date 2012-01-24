@@ -232,7 +232,8 @@ namespace KdsBatch
             {
                 fErech = float.Parse(drRechiv[0][col].ToString());
 
-                if (!bKayamEfreshBErua && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech != 0)
+                if ( fErech != 0 && ((!bKayamEfreshBErua && _iKodErua != 413 && _iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 ) ||
+                                     (!bKayamEfreshBErua && _iKodErua == 413 && col =="erech_rechiv")))
                 {
                     CheckHefresh(drRechiv[0]);
                 }

@@ -876,14 +876,15 @@ namespace KdsBatch
 
         private void CalcRechiv7()
         {
-            float fSumDakotRechiv;
+            float fSumDakotRechiv, fTosefetRezifut96;
             try
             {
                 oSidur.CalcRechiv7();
-                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Taarich); 
-                if (fSumDakotRechiv != 0)
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), objOved.Taarich);
+                if (fSumDakotRechiv > 0)
                 {
-                    addRowToTable(clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), fSumDakotRechiv);
+                    fTosefetRezifut96 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanRetzifutNehiga.GetHashCode(), objOved.Taarich);
+                    addRowToTable(clGeneral.enRechivim.DakotZikuyChofesh.GetHashCode(), fSumDakotRechiv + fTosefetRezifut96);
                 }
             }
             catch (Exception ex)
@@ -1102,7 +1103,7 @@ namespace KdsBatch
 
                             fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  
                             fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100);  
-                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotZikuyChofesh);
+                           // fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotZikuyChofesh);
                             fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotShabat); 
 
                             fMichsaYomit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet);  

@@ -1430,20 +1430,20 @@ namespace KdsBatch
             //•	X (קיזוז נוספות תנועה בשבת) = [דקות שבת בתנועה ללא מחוץ למכסה] מינוס מכסת תנועה בשבת (סך שבתונים בחודש [זיהוי שבתון (תאריך)] * 6).
             //•	Y (קיזוז נוספות תפקיד בשבת) =  [דקות שבת בתפקיד ללא מחוץ למכסה] מינוס מכסת תפקיד בשבת (סך שבתונים בחודש [זיהוי שבתון (תאריך)] * 6).
             //יש לכלול בחישוב רק סידורים עבורם שדה מחוץ למכסה [[TB_Sidurim_Ovedim.Out_michsa = 0 או Null.
-            float fSumDakotRechiv, fTempX, fTempY, fSachDakot36, fSachDakot37, fMichsatShabat;
+            float fSumDakotRechiv, fTempX, fSachDakot36, fSachDakot37, fMichsatShabat;
             int iSachShabatonim;
             try
             {
                 iSachShabatonim = GetSachShabatonimInMonth(_dTaarichChishuv);
 
-                fSachDakot37 = oDay.GetRechiv37OutMichsa();
-                // fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen16 > -1 ? objOved.objMeafyeneyOved.iMeafyen16 : 0);
-                //if (!objOved.objMeafyeneyOved.Meafyen16Exists)
-                //{
-                    fMichsatShabat = iSachShabatonim * 6 * 60;
-                //}
+                //fSachDakot37 = oDay.GetRechiv37OutMichsa();
+                //// fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen16 > -1 ? objOved.objMeafyeneyOved.iMeafyen16 : 0);
+                ////if (!objOved.objMeafyeneyOved.Meafyen16Exists)
+                ////{
+                //    fMichsatShabat = iSachShabatonim * 6 * 60;
+                ////}
 
-                fTempY = fSachDakot37 - fMichsatShabat;
+                //fTempY = fSachDakot37 - fMichsatShabat;
 
                 fSachDakot36 = oDay.GetRechiv36OutMichsa();
                 //fMichsatShabat = (objOved.objMeafyeneyOved.iMeafyen17 > -1 ? objOved.objMeafyeneyOved.iMeafyen17 : 0);
@@ -1455,9 +1455,9 @@ namespace KdsBatch
 
                 fTempX = fSachDakot36 - fMichsatShabat;
 
-                if ((fTempY + fTempX) > 0)
+                if (fTempX > 0)
                 {
-                    fSumDakotRechiv = fTempY + fTempX;
+                    fSumDakotRechiv =  fTempX;
                     if (fSumDakotRechiv != 0)
                     {
                         addRowToTable(clGeneral.enRechivim.KizuzZchutChofesh.GetHashCode(), fSumDakotRechiv);
