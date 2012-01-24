@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.32717in</Width>
+              <Width>7.0405in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.39485in</Height>
+              <Height>2.46739in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -54,47 +54,109 @@
                             </Border>
                           </Style>
                         </Subreport>
-                        <Tablix Name="Tablix3">
+                        <Textbox Name="TEUR_EZOR">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!TEUR_EZOR.Value)</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
+                          <Top>1.80071cm</Top>
+                          <Left>9.14861cm</Left>
+                          <Height>0.6cm</Height>
+                          <Width>4.04126cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>:איזור</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Top>1.80071cm</Top>
+                          <Left>13.2957cm</Left>
+                          <Height>0.6cm</Height>
+                          <Width>1.44834cm</Width>
+                          <ZIndex>3</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Tablix Name="Tablix4">
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.6798cm</Width>
+                                <Width>1.74427cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.5cm</Width>
+                                <Width>3.13107cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.93624cm</Width>
+                                <Width>3.00071cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.03258cm</Width>
+                                <Width>2.09705cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.6604cm</Width>
+                                <Width>0.72487cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.53459cm</Width>
+                                <Width>1.59906cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.32291cm</Width>
+                                <Width>1.38738cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.21707cm</Width>
+                                <Width>1.28154cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.42875cm</Width>
+                                <Width>1.50999cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.57053cm</Width>
+                                <Width>1.40694cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.6cm</Height>
+                                <Height>0.62423cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox77">
+                                      <Textbox Name="Textbox79">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -129,14 +191,14 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox35">
+                                      <Textbox Name="Textbox36">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>פרטי השיבוץ</Value>
+                                                <Value>פרטי התעודה</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -170,7 +232,7 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox12">
+                                      <Textbox Name="Textbox14">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -204,11 +266,11 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>1.18234cm</Height>
+                                <Height>1.20657cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox78">
+                                      <Textbox Name="Textbox82">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -229,6 +291,9 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BottomBorder>
+                                            <Color>Black</Color>
+                                          </BottomBorder>
                                           <BackgroundColor>LightGrey</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -240,7 +305,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox83">
+                                      <Textbox Name="Textbox84">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -261,6 +326,9 @@
                                           <Border>
                                             <Style>Solid</Style>
                                           </Border>
+                                          <BottomBorder>
+                                            <Color>Black</Color>
+                                          </BottomBorder>
                                           <BackgroundColor>LightGrey</BackgroundColor>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -272,7 +340,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox88">
+                                      <Textbox Name="Textbox89">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -304,7 +372,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox60">
+                                      <Textbox Name="Textbox62">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -339,7 +407,7 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox34">
+                                      <Textbox Name="Textbox37">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -371,7 +439,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox41">
+                                      <Textbox Name="Textbox43">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -403,7 +471,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox45">
+                                      <Textbox Name="Textbox46">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -435,7 +503,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox49">
+                                      <Textbox Name="Textbox51">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -467,7 +535,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox13">
+                                      <Textbox Name="Textbox15">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -501,18 +569,18 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.55049cm</Height>
+                                <Height>0.57472cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="MISPAR_ISHI">
+                                      <Textbox Name="MISPAR_ISHI2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"",Fields!MISPAR_ISHI.Value)</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value, "", Fields!MISPAR_ISHI.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -526,21 +594,18 @@
                                         <rd:DefaultName>MISPAR_ISHI</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>White</Color>
-                                            <Style>None</Style>
+                                            <Style>Solid</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>Solid</Style>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
+                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
                                           </TopBorder>
                                           <BottomBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
+                                            <Style>None</Style>
                                           </BottomBorder>
-                                          <RightBorder>
-                                            <Color>Black</Color>
-                                            <Style>Solid</Style>
-                                          </RightBorder>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -548,19 +613,18 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="FULL_NAME">
+                                      <Textbox Name="FULL_NAME2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"",  Fields!FULL_NAME.Value)</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value, "", Fields!FULL_NAME.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -574,15 +638,12 @@
                                         <rd:DefaultName>FULL_NAME</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Style>Solid</Style>
-                                          </TopBorder>
-                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
                                             <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
-                                          </BottomBorder>
+                                          </TopBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -594,14 +655,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_SNIF_AV">
+                                      <Textbox Name="TEUR_SNIF_AV2">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"", Fields!TEUR_SNIF_AV.Value)</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value, "", Fields!TEUR_SNIF_AV.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -615,18 +676,13 @@
                                         <rd:DefaultName>TEUR_SNIF_AV</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Color>White</Color>
                                             <Style>None</Style>
                                           </Border>
                                           <TopBorder>
-                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"White","Black")</Color>
-                                            <Style>Solid</Style>
-                                          </TopBorder>
-                                          <BottomBorder>
+                                            <Color>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"Transparent","Black")</Color>
                                             <Style>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value ,"None","Solid")</Style>
-                                          </BottomBorder>
+                                          </TopBorder>
                                           <LeftBorder>
-                                            <Color>Black</Color>
                                             <Style>Solid</Style>
                                           </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
@@ -640,14 +696,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox61">
+                                      <Textbox Name="Textbox63">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value and Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value,"",Trim(FormatDateTime(Fields!TAARICH.Value,2)))</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value And Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value, "", Trim(FormatDateTime(Fields!TAARICH.Value, 2)))</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -680,14 +736,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox4">
+                                      <Textbox Name="Textbox7">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value and Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value,"","- " + Fields!DAYOFWEEK.Value)</Value>
+                                                <Value>=iif(Previous(Fields!MISPAR_ISHI.Value) = Fields!MISPAR_ISHI.Value And Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value, "", "- " + Fields!DAYOFWEEK.Value)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -720,7 +776,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="MISPAR_SIDUR2">
+                                      <Textbox Name="MISPAR_SIDUR3">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -760,14 +816,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox42">
+                                      <Textbox Name="Textbox44">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=FormatDateTime(Fields!SHAT_HATCHALA.Value,4)</Value>
+                                                <Value>=FormatDateTime(Fields!SHAT_HATCHALA.Value, 4)</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -800,14 +856,14 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox50">
+                                      <Textbox Name="Textbox52">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(FormatDateTime(Fields!SHAT_GMAR.Value,4)="00:00","", FormatDateTime(Fields!SHAT_GMAR.Value,4))</Value>
+                                                <Value>=iif(FormatDateTime(Fields!SHAT_GMAR.Value, 4) = "00:00", "", FormatDateTime(Fields!SHAT_GMAR.Value, 4))</Value>
                                                 <Style>
                                                   <Language>he-IL</Language>
                                                 </Style>
@@ -840,7 +896,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="OTO_NO2">
+                                      <Textbox Name="OTO_NO3">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -880,7 +936,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_SNIF_AV5">
+                                      <Textbox Name="TEUR_SNIF_AV6">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -912,18 +968,18 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.635cm</Height>
+                                <Height>0.65923cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox81">
+                                      <Textbox Name="Textbox85">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>= "סה""כ סניף: " &amp; "          " &amp;  Fields!TEUR_SNIF_AV.Value</Value>
+                                                <Value>="סה''כ סניף: " &amp; "          " &amp; Fields!TEUR_SNIF_AV.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -950,7 +1006,7 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox80">
+                                      <Textbox Name="Textbox86">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -990,7 +1046,7 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox5">
+                                      <Textbox Name="Textbox8">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -1030,7 +1086,7 @@
                                   <TablixCell />
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox87">
+                                      <Textbox Name="Textbox90">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -1088,10 +1144,10 @@
                                 <RepeatOnNewPage>true</RepeatOnNewPage>
                               </TablixMember>
                               <TablixMember>
-                                <Group Name="Group6">
+                                <Group Name="Group7">
                                   <GroupExpressions>
                                     <GroupExpression>=Fields!KOD_EZOR.Value</GroupExpression>
-                                    <GroupExpression>=Fields!TEUR_SNIF_AV.Value</GroupExpression>
+                                    <GroupExpression>=Fields!TEUR_EZOR.Value</GroupExpression>
                                   </GroupExpressions>
                                 </Group>
                                 <SortExpressions>
@@ -1105,7 +1161,7 @@
                                       <TablixMember>
                                         <TablixMembers>
                                           <TablixMember>
-                                            <Group Name="Details2" />
+                                            <Group Name="Details4" />
                                             <SortExpressions>
                                               <SortExpression>
                                                 <Value>=Fields!MISPAR_ISHI.Value</Value>
@@ -1126,7 +1182,6 @@
                                     </TablixMembers>
                                   </TablixMember>
                                 </TablixMembers>
-                                <KeepTogether>true</KeepTogether>
                               </TablixMember>
                               <TablixMember />
                             </TablixMembers>
@@ -1147,78 +1202,17 @@
                               <Direction>Descending</Direction>
                             </SortExpression>
                           </SortExpressions>
-                          <Top>3.11508cm</Top>
-                          <Height>2.96783cm</Height>
+                          <Top>3.0798cm</Top>
+                          <Left>0.00001cm</Left>
+                          <Height>3.06475cm</Height>
                           <Width>17.88287cm</Width>
-                          <ZIndex>2</ZIndex>
+                          <ZIndex>4</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
                           </Style>
                         </Tablix>
-                        <Textbox Name="TEUR_EZOR">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=First(Fields!TEUR_EZOR.Value)</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>TEUR_EZOR</rd:DefaultName>
-                          <Top>1.80071cm</Top>
-                          <Left>9.14861cm</Left>
-                          <Height>0.6cm</Height>
-                          <Width>4.04126cm</Width>
-                          <ZIndex>3</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <Textbox Name="Textbox3">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>:איזור</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
-                          <Top>1.80071cm</Top>
-                          <Left>13.2957cm</Left>
-                          <Height>0.6cm</Height>
-                          <Width>1.44834cm</Width>
-                          <ZIndex>4</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
                       </ReportItems>
                       <Style>
                         <Border>
@@ -1264,8 +1258,8 @@
           </SortExpression>
         </SortExpressions>
         <Top>1.20588in</Top>
-        <Height>2.39485in</Height>
-        <Width>7.32717in</Width>
+        <Height>2.46739in</Height>
+        <Width>7.0405in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1327,7 +1321,7 @@
           </Subreport>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Left>0.03445cm</Left>
+        <Left>0.00001cm</Left>
         <Height>2.76458cm</Height>
         <Width>17.88287cm</Width>
         <ZIndex>1</ZIndex>
@@ -1341,10 +1335,10 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>9.14586cm</Height>
+    <Height>9.62211cm</Height>
     <Style />
   </Body>
-  <Width>18.61103cm</Width>
+  <Width>17.88288cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -1400,6 +1394,10 @@
           <DataField>MISPAR_SIDUR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="STATUS">
+          <DataField>STATUS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="SHAT_HATCHALA">
           <DataField>SHAT_HATCHALA</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -1415,6 +1413,10 @@
         <Field Name="TEUR_EZOR">
           <DataField>TEUR_EZOR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_VISA">
+          <DataField>MISPAR_VISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="SECTOR_VISA">
           <DataField>SECTOR_VISA</DataField>
