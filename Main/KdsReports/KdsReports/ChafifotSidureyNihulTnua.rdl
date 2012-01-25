@@ -235,8 +235,8 @@
         <LayoutDirection>RTL</LayoutDirection>
         <DataSetName>DsChafifotSidurim</DataSetName>
         <Left>0.00001cm</Left>
-        <Height>3.77cm</Height>
-        <Width>18.6102cm</Width>
+        <Height>3.76999cm</Height>
+        <Width>18.61021cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -798,9 +798,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <RightBorder>
                                             <Style>Solid</Style>
                                           </RightBorder>
@@ -810,6 +811,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -835,15 +837,17 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -868,9 +872,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <RightBorder>
                                             <Style>Solid</Style>
                                           </RightBorder>
@@ -880,6 +885,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -905,9 +911,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -920,6 +927,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -944,9 +952,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -959,6 +968,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -986,9 +996,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -1001,6 +1012,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1025,9 +1037,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -1041,6 +1054,7 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1067,9 +1081,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -1082,6 +1097,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1106,9 +1122,10 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
-                                          <BottomBorder>
+                                          <TopBorder>
                                             <Style>Solid</Style>
-                                          </BottomBorder>
+                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                          </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
                                           </LeftBorder>
@@ -1121,6 +1138,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
@@ -1168,11 +1186,14 @@
                           <DataSetName>DsChafifotSidurim</DataSetName>
                           <Top>0.26776cm</Top>
                           <Height>4.66707cm</Height>
-                          <Width>18.6102cm</Width>
+                          <Width>18.61021cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
                           </Style>
                         </Tablix>
                       </ReportItems>
