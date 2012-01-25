@@ -1,152 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>da00d638-2f31-4149-b656-0503db5a3376</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsChafifotSidurim">
-      <Fields>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SIDUR_AVODA">
-          <DataField>TEUR_SIDUR_AVODA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_YOM">
-          <DataField>TEUR_YOM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SNIF_MIYUN">
-          <DataField>SNIF_MIYUN</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EZOR_MIYUN">
-          <DataField>EZOR_MIYUN</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ROW_NUM">
-          <DataField>ROW_NUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NUM">
-          <DataField>NUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_CHAFIFOTBESIDUREYNIHULTNUA</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="DsSnif">
-      <Fields>
-        <Field Name="KOD_SNIF_AV">
-          <DataField>KOD_SNIF_AV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF">
-          <DataField>TEUR_SNIF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_UTILS.PRO_GET_SNIF_TNUA_BY_KOD</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_KOD_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix13">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.75446in</Width>
+              <Width>1.91633cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.6937in</Width>
+              <Width>1.762cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.53277in</Width>
+              <Width>1.35324cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>2.54cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.67578in</Width>
+              <Width>1.71648cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1839in</Width>
+              <Width>3.00711cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.36718in</Width>
+              <Width>3.47264cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.55317in</Width>
+              <Width>1.40505cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.56589in</Width>
+              <Width>1.43736cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.98425in</Height>
+              <Height>2.49999cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -179,7 +68,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.635cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -273,7 +162,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.25in</Height>
+              <Height>0.635cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -346,8 +235,8 @@
         <LayoutDirection>RTL</LayoutDirection>
         <DataSetName>DsChafifotSidurim</DataSetName>
         <Left>0.00001cm</Left>
-        <Height>3.76999cm</Height>
-        <Width>18.61021cm</Width>
+        <Height>3.77cm</Height>
+        <Width>18.6102cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsChafifotSidurim")&gt;0 ,true ,false)</Hidden>
         </Visibility>
@@ -361,12 +250,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.32685in</Width>
+              <Width>18.6102cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.07826in</Height>
+              <Height>5.27878cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -376,36 +265,36 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.75446in</Width>
+                                <Width>1.91633cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.6937in</Width>
+                                <Width>1.762cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.53277in</Width>
+                                <Width>1.35324cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1in</Width>
+                                <Width>2.54cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.67578in</Width>
+                                <Width>1.71648cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.1839in</Width>
+                                <Width>3.00711cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.36718in</Width>
+                                <Width>3.47264cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.55317in</Width>
+                                <Width>1.40505cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.56589in</Width>
+                                <Width>1.43736cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.98425in</Height>
+                                <Height>2.49999cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -437,7 +326,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.25in</Height>
+                                <Height>0.635cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -531,7 +420,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.34154in</Height>
+                                <Height>0.86751cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -885,7 +774,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.26164in</Height>
+                                <Height>0.66457cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -911,7 +800,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <RightBorder>
                                             <Style>Solid</Style>
@@ -949,7 +838,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -957,6 +846,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -983,7 +873,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <RightBorder>
                                             <Style>Solid</Style>
@@ -994,6 +884,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1021,7 +912,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1035,6 +926,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1061,7 +953,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1075,6 +967,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1104,7 +997,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1118,6 +1011,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1144,7 +1038,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1159,6 +1053,7 @@
                                           <Direction>RTL</Direction>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1187,7 +1082,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1201,6 +1096,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1227,7 +1123,7 @@
                                           </Border>
                                           <TopBorder>
                                             <Style>Solid</Style>
-                                            <Width>=iif(RowNumber("DsChafifotSidurim") =1 or (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value ),"1pt","3pt")</Width>
+                                            <Width>=iif( (Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MISPAR_SIDUR.Value) = Fields!MISPAR_SIDUR.Value) or Fields!NUM.Value=1 ,"1pt","3pt")</Width>
                                           </TopBorder>
                                           <LeftBorder>
                                             <Style>Solid</Style>
@@ -1241,6 +1137,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
@@ -1288,7 +1185,7 @@
                           <DataSetName>DsChafifotSidurim</DataSetName>
                           <Top>0.26776cm</Top>
                           <Height>4.66707cm</Height>
-                          <Width>18.61021cm</Width>
+                          <Width>18.6102cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1355,6 +1252,130 @@
     <Height>9.74707cm</Height>
     <Style />
   </Body>
+  <Width>18.61022cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>da00d638-2f31-4149-b656-0503db5a3376</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsChafifotSidurim">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_CHAFIFOTBESIDUREYNIHULTNUA</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SIDUR_AVODA">
+          <DataField>TEUR_SIDUR_AVODA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_YOM">
+          <DataField>TEUR_YOM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_MIYUN">
+          <DataField>SNIF_MIYUN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR_MIYUN">
+          <DataField>EZOR_MIYUN</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ROW_NUM">
+          <DataField>ROW_NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NUM">
+          <DataField>NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DsSnif">
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KOD_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_UTILS.PRO_GET_SNIF_TNUA_BY_KOD</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="KOD_SNIF_AV">
+          <DataField>KOD_SNIF_AV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF">
+          <DataField>TEUR_SNIF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_DT">
       <DataType>DateTime</DataType>
@@ -1404,17 +1425,6 @@
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>18.61022cm</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>1cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
-    <ColumnSpacing>1.27cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -1424,6 +1434,6 @@ vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANk
 FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>205248a3-d4a9-4f95-9e84-0e6259d73b55</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>205248a3-d4a9-4f95-9e84-0e6259d73b55</rd:ReportID>
 </Report>
