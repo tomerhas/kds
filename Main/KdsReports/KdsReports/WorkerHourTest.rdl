@@ -341,7 +341,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Format(Fields!TAARICH.Value,"dd/MM")</Value>
+                              <Value>= Code.GetWeekDay(WeekDay(Fields!TAARICH.Value)) + Format(Fields!TAARICH.Value," dd/MM")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -411,7 +411,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="מתוך " &amp; CountRows() * 9 &amp; " שעות , בוצעו"</Value>
+                              <Value>="מתוך " &amp; CountDistinct(Fields!TAARICH.Value) * 9 &amp; " שעות , בוצעו"</Value>
                               <Style>
                                 <Language>he-IL</Language>
                               </Style>
@@ -434,7 +434,6 @@
                       </Style>
                     </Textbox>
                     <ColSpan>3</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -494,7 +493,7 @@
         <Top>2.36333cm</Top>
         <Left>0.70224cm</Left>
         <Height>2.22334cm</Height>
-        <Width>9.84793cm</Width>
+        <Width>9.84794cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -592,7 +591,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.18077in</Height>
+    <Height>1.81425in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -615,7 +614,29 @@
       <Prompt>מספר עובד תאילנדי</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Code>    Public Function GetFormatedTime(ByVal dblSeconds As Double) As String
+  <Code>Public Shared  Function GetWeekDay(ByVal Day As Integer) As String
+	Dim sDay as string
+        Select Case Day 
+            Case 1
+                sDay = "א"
+            Case 2
+                sDay = "ב"
+            Case 3
+                sDay = "ג"
+            Case 4
+                sDay = "ד"
+            Case 5
+                sDay = "ה"
+            Case 6
+                sDay = "ו"
+            Case 7
+                sDay = "ש"
+        End Select
+        Return sDay  
+    End Function
+
+
+    Public Function GetFormatedTime(ByVal dblSeconds As Double) As String
         Dim result As String
         Dim Hour As String, Minute As String
         Hour = (Int(dblSeconds / 3600)).ToString("00")
@@ -718,10 +739,10 @@
         Return Hour
 
     End Function</Code>
-  <Width>4.15361in</Width>
+  <Width>4.26701in</Width>
   <Page>
     <PageFooter>
-      <Height>1.29153cm</Height>
+      <Height>1.26507cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <Style>
