@@ -27,7 +27,7 @@ namespace KdsBatch
           DataTable dtChishuv;
           DateTime dTarMe, dTarAd;
           float fErech;
-          int iSugYom, iCountDays;
+          int iSugYom, iCountDays,iDay;
 
           try
           {
@@ -174,7 +174,13 @@ namespace KdsBatch
                   dTarMe = dTarMe.AddDays(1);
               }
               while (dTarMe <= dTarAd);
-
+              
+              iDay=dTarAd.Day;
+              while (iDay < 31)
+              {
+                  iDay++;
+                  sErua589.Append(".");  
+              }
               sErua589.Append(GetBlank(31));
         //   sErua589.Append(GetBlank(74-iCountDays));
            if (!IsEmptyErua(sErua589.ToString()))
