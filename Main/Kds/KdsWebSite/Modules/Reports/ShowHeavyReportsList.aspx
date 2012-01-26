@@ -11,10 +11,10 @@
         <%-- <iframe height="700px" width="100%">--%>
          <div id="divNetunim" runat="server"  style="text-align:right;">
              <br /> 
-             <div runat="server" ID="pnlgrdReports" style="Height:460px;Width:978px;overflow:auto;direction:ltr;">
+             <div runat="server" ID="pnlgrdReports" style="Height:460px;Width:978px;overflow:auto;direction:rtl;">
                 <asp:GridView ID="grdReports" runat="server"  GridLines="None"  ShowHeader="true"
                        CssClass="Grid"   AllowPaging="true" PageSize="11" AutoGenerateColumns="false"   AllowSorting="true"
-                       Width="945px"   EmptyDataText="לא נמצאו נתונים!" 
+                       Width="978px"   EmptyDataText="לא נמצאו נתונים!" 
                      EmptyDataRowStyle-CssClass="GridHeader"
                      onrowdatabound="grdReports_RowDataBound" >
                     <Columns>
