@@ -37,7 +37,7 @@
        <asp:UpdateProgress  runat="server" id="UpdateProgress1" DisplayAfter="0" >
             <ProgressTemplate>
                 <div id="divProgress" class="Progress"  style="text-align:right;position:absolute;left:52%;top:48%; z-index:1000"   >
-                      <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/progress.gif" style="width: 100px; height: 100px" />טוען...
+                      <asp:Image ID="Image2" runat="server" ImageUrl="../../Images/progress.gif" style="width: 100px; height: 100px" />
                 </div>        
             </ProgressTemplate>
        </asp:UpdateProgress>
