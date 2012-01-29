@@ -304,8 +304,14 @@ function ChangeKeyCode()
         var StartDateSplit = document.getElementById('ctl00_KdsContent_clnFromDate').value.split('/');
         var StartDate = new Date(StartDateSplit[2], StartDateSplit[1]-1, StartDateSplit[0], 0, 0, 0, 0);
         var minDate = new Date();
+        minDate.setDate(1);
         minDate.setMonth(minDate.getMonth() - Param100);
-        if (StartDate < minDate) {
+        minDate.setHours(0);
+        minDate.setMinutes(0);
+        minDate.setSeconds(0);
+        minDate.setMilliseconds(0);
+
+        if (StartDate.getTime() < minDate.getTime()) {
             var sBehaviorId = 'vldExFromDate';
             document.getElementById("ctl00_KdsContent_vldFrom").errormessage = " לא ניתן להזין תאריך מעבר ל " + Param100  + " חודשים אחורה";
             $find(sBehaviorId)._ensureCallout();

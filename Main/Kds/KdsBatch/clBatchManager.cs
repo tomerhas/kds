@@ -10501,7 +10501,7 @@ namespace KdsBatch
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
             clPeilut oPeilut;
-            DateTime dRefferenceDate, dShatYetziaPeilut;
+            DateTime dRefferenceDate, dShatYetziaPeilut,dShatKisuyTor;
             try
             {
                 oPeilut = (clPeilut)oSidur.htPeilut[iPeilutNesiaIndex];
@@ -10514,7 +10514,8 @@ namespace KdsBatch
                     // else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
 
                     dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
-                    if (oPeilut.dFullShatYetzia >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
+                    dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
+                    if (oPeilut.dFullShatYetzia >= dRefferenceDate && dShatKisuyTor >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
                     {
                         oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                         //    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-3);
@@ -14025,7 +14026,7 @@ namespace KdsBatch
                 if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists)
                     if (oSidur.bKizuzAlPiHatchalaGmarExists)
                          if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour>=11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour<=17)
-                             && ((iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oObjSidurimOvdimUpd.SHAT_GMAR > shaa) || ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
+                             && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oObjSidurimOvdimUpd.SHAT_GMAR > shaa) ) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
                             {
                                 shaa23 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() + " " + oMeafyeneyOved.sMeafyen23.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen23.Substring(2, 2));
                                 shaa24 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()  + " " + oMeafyeneyOved.sMeafyen24.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen24.Substring(2, 2));

@@ -672,10 +672,21 @@ public class wsGeneral : System.Web.Services.WebService
         DataRow[] drSelect;
         clUtils oUtils = new clUtils();
         string sSQL = "";
-
+        DataRow drNew;
         try
         {
             dt = oUtils.GetSnifAv(int.Parse(contextKey));
+
+            drNew = dt.NewRow();
+            drNew["code"] = "100";
+            drNew["Description"] = "אגפים (כולם)";
+            dt.Rows.Add(drNew);
+
+            drNew = dt.NewRow();
+            drNew["code"] = "101";
+            drNew["Description"] = "מוסכים (כולם)";
+            dt.Rows.Add(drNew);
+
             sSQL = string.Concat("Description like '", prefixText, "%'");
             drSelect = dt.Select(sSQL);
             string[] items = new string[drSelect.Length];

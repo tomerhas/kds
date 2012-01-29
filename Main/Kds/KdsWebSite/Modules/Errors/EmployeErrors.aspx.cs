@@ -76,8 +76,8 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
     {
         try
         {
-            DateTime dDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            clnFromDate.Text = dDate.AddMonths(-10).ToShortDateString();
+          //  DateTime dDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            clnFromDate.Text = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).ToShortDateString();
             clnToDate.Text = DateTime.Now.ToShortDateString();
         }
         catch (Exception ex)
@@ -305,31 +305,44 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
         //מציאת קוד סניף
         string sTemp = "";
         string[] arr;
-
-        arr = sSnif.Split(char.Parse("("));
-        if (arr.Length > 1)
+        int kod=0;
+        if (sSnif.IndexOf("אגפים") > -1)
+            kod = 100;
+        else if (sSnif.IndexOf("מוסכים") > -1)
+            kod = 101;
+        else 
         {
-            sTemp = arr[1];
-            arr = sTemp.Split(char.Parse(")"));
-            return int.Parse(arr[0]);
+            arr = sSnif.Split(char.Parse("("));
+            if (arr.Length > 1)
+            {
+                sTemp = arr[1];
+                arr = sTemp.Split(char.Parse(")"));
+                kod = int.Parse(arr[0]);
+            }
         }
-        else
-        {
-            return 0;
-        }
+       
+       return kod;
+        
     }
     private int GetKodHevra(string sSnif)
     {      
         //מציאת קוד החברה- מתוך תיאור סניף
         string sTemp = "";
         string[] arr;
-       
-        arr = sSnif.Split(char.Parse("("));
 
-        if (arr.Length > 1)
+        if (sSnif.IndexOf("אגפים") > -1)
+            sTemp = string.Empty;
+        else if (sSnif.IndexOf("מוסכים") > -1)
+            sTemp = string.Empty;
+        else
         {
-            sTemp = arr[arr.Length - 1].Substring(0, arr[arr.Length - 1].Length - 1);
+            arr = sSnif.Split(char.Parse("("));
+            if (arr.Length > 1)
+            {
+                sTemp = arr[arr.Length - 1].Substring(0, arr[arr.Length - 1].Length - 1);
+            }
         }
+
         if (sTemp == string.Empty)
         {
             return 0;
