@@ -1075,7 +1075,8 @@ legend
 
 .GridHeader
 {
-	color:White;	
+	color:White;
+	background-color: #808080;	
 	border-right:solid 1px #3F3F3F;
 	height:20px;
 	font-size:14px;
@@ -1160,6 +1161,7 @@ legend
 .ItemRow
 {
  border-right:solid 1px #3F3F3F;
+ border-left:solid 1px #3F3F3F;
  border-bottom:solid 1px #3F3F3F;
  padding-right:3px;
  font-size:14px;
