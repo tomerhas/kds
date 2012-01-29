@@ -1656,7 +1656,8 @@ function chkMkt(oRow) {
      while (_Sidur != null) {
          if ($get("hidDriver").value == "1") //אם עמדת נהג נשים פוקוס על שעת התחלה של הסידור  הראשון            
              if (i == 0)
-                 $get("lstSidurim_tbSidurim").focus();
+                 if ($get("lstSidurim_tbSidurim").disabled==false)
+                    $get("lstSidurim_tbSidurim").focus();
 
 
         _Img = $get("lstSidurim_cImgS" + i);
