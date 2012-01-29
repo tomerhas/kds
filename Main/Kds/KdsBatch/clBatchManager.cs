@@ -12004,7 +12004,7 @@ namespace KdsBatch
         {
             bool bLoLetashlumAutomati = false;
             string sMeafyenKizuz = "";
-            
+            DateTime shaa;
             if (oSidur.bSidurMyuhad)
             {
                 sMeafyenKizuz = oSidur.sKizuzAlPiHatchalaGmar;
@@ -12024,7 +12024,17 @@ namespace KdsBatch
                     if (bFromMeafyenHatchala && bFromMeafyenGmar)
                     {
                         if (((oSidur.dFullShatGmar != DateTime.MinValue && (oSidur.dFullShatGmar <= dShatHatchalaLetashlum)) || (oSidur.dFullShatHatchala != DateTime.MinValue && oSidur.dFullShatHatchala >= dShatGmarLetashlum)) && oSidur.sChariga == "0")
-                            bLoLetashlumAutomati = true;
+                        {
+                            shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
+                            if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists){
+                                if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17)
+                                    && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oSidur.dFullShatGmar > shaa))
+                                     bLoLetashlumAutomati = false;
+                                 else bLoLetashlumAutomati = true;
+                             }
+                             else
+                                bLoLetashlumAutomati = true;
+                        }
                     }
                     else if ((bFromMeafyenHatchala && !bFromMeafyenGmar) || (!bFromMeafyenHatchala && bFromMeafyenGmar))
                     {
