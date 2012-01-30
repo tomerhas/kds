@@ -20,14 +20,15 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" AutoPostBack="true" 
-                                Width="55px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" 
+                                Width="55px"  EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
+                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  FirstRowSelected="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
-                            </cc1:AutoCompleteExtender>                              
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"  
+                               OnClientHidden="onClientHiddenHandler_getName">  
+                            </cc1:AutoCompleteExtender>                        
                        </ContentTemplate>
                   </asp:UpdatePanel> 
             </td>
@@ -42,13 +43,14 @@
             <td style="width:120px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:110px" EnableViewState="true" AutoPostBack="true"  ontextchanged="txtName_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:110px" EnableViewState="true"  ></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" >                               
+                                        CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                       OnClientHidden="onClientHiddenHandler_getId">
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                    </asp:UpdatePanel>    
@@ -79,8 +81,9 @@
             <td> 
                 <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline">
                   <ContentTemplate> 
-                        <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"  onclick="btnShow_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
-                        <asp:button ID="btnInputData" runat="server" text="הרצה" CssClass ="ImgButtonSearch"  onclick="btnInputData_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
+                        <asp:button ID="btnShow" runat="server" Enabled="false" text="הצג" CssClass ="ImgButtonSearch"  onclick="btnShow_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
+                        <asp:button ID="btnInputData" runat="server" Enabled="false" text="הרצה" CssClass ="ImgButtonSearch"  onclick="btnInputData_Click" OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
+                         <asp:Button ID="btnHidden" runat="server" OnClick="btnHidden_OnClick"  />
                  </ContentTemplate>
               </asp:UpdatePanel> 
             </td>
@@ -225,8 +228,18 @@
           
    </ContentTemplate>
 </asp:UpdatePanel> 
+  
 <script language="javascript" type="text/javascript">
+//    var oTxtId = document.getElementById("ctl00_KdsContent_txtEmpId");
+//    var oTxtName = document.getElementById("ctl00_KdsContent_txtName");
+//    var obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
+    function sss() {
+        alert("sss");
+    }
 
+    function aaa() {
+        alert("aaa");
+    }
     function SetTextBox() {
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
@@ -256,7 +269,60 @@
         if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
         document.getElementById("divHourglass").style.display = 'none';
         return ReturnWin;
-    } 
+    }
+
+    function onClientHiddenHandler_getName() {
+//        var txtid = document.getElementById("ctl00_KdsContent_txtEmpId").value;
+//        if (txtid.length == 0 || trim(txtid) == "") {
+//            alert('חובה להזין מספר אישי או שם');
+//            return false;
+//        }
+//        else {
+        GetOvedNameById(document.getElementById("ctl00_KdsContent_txtEmpId"));//, document.getElementById("ctl00_KdsContent_txtName"));
+//        }
+    }
+
+    function onClientHiddenHandler_getId() {
+//        var txtname = document.getElementById("ctl00_KdsContent_txtName").value;
+
+//        if (txtname.length == 0 || trim(txtname) == "") {
+//            alert('חובה להזין מספר אישי או שם');
+//            return false;
+//        }
+//        else {
+            GetOvedIdByName(document.getElementById("ctl00_KdsContent_txtName"));//, document.getElementById("ctl00_KdsContent_txtEmpId"));
+//        }
+        }
+
+        function GetOvedNameByIdSucceeded(result) {
+            obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
+            if (result == '') {
+                alert('מספר אישי לא קיים');
+                oTxtName.select();
+            }
+            else {
+              //   alert(result);
+                document.getElementById("ctl00_KdsContent_txtName").value = result;
+                if (obtnHdn != null) {
+                    obtnHdn.click();
+                    //  alert("after");
+                }
+            }
+            // alert("sof");
+        }
+
+        function GetOvedIdByNameSucceeded(result) {
+            obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
+            if (result == '') {
+                alert('מספר אישי לא קיים');
+                document.getElementById("ctl00_KdsContent_txtEmpId").select();
+            }
+            else {
+                document.getElementById("ctl00_KdsContent_txtEmpId").value = result;
+                if (obtnHdn != null)
+                    obtnHdn.click();
+            }
+        }
    </script>
 
 </asp:Content>

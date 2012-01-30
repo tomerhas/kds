@@ -122,6 +122,9 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
               Item.Value = "0";
               ddlRitzatChishuv.Items.Add(Item);
               ddlRitzatChishuv.SelectedValue = "0";
+
+              btnShow.Enabled = true;
+              btnInputData.Enabled = true;
          }
          else { ddlRitzatChishuv.Enabled = false; }
      }
@@ -307,7 +310,9 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
             }
            
     }
+
    
+
     protected void btnShow_Click(object sender, EventArgs e)
     {
         clOvdim oOvdim = new clOvdim();
@@ -543,139 +548,139 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
      }
 
     
-     protected void txtEmpId_TextChanged(object sender, EventArgs e)
-     {
-         DataTable dt;
-         string sOvedName="";
-         clOvdim oOvdim = new clOvdim();
+     //protected void txtEmpId_TextChanged(object sender, EventArgs e)
+     //{
+     //    DataTable dt;
+     //    string sOvedName="";
+     //    clOvdim oOvdim = new clOvdim();
 
-         if (rdoId.Checked)
-         {
-             if ((txtEmpId.Text).Length == 0)
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtName.Text = "";
-             }
-             else if (!(clGeneral.IsNumeric(txtEmpId.Text)))
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtName.Text = "";
+     //    if (rdoId.Checked)
+     //    {
+     //        if ((txtEmpId.Text).Length == 0)
+     //        {
+     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
+     //            btnShow.Enabled = false;
+     //            txtName.Text = "";
+     //        }
+     //        else if (!(clGeneral.IsNumeric(txtEmpId.Text)))
+     //        {
+     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
+     //            btnShow.Enabled = false;
+     //            txtName.Text = "";
                 
-                 ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
+     //            ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
 
-             }
-             else
-             {
-                 if (AutoCompleteExtenderID.ContextKey.Length > 0)
-                 {
-                     dt = oOvdim.GetOvdimToUser(txtEmpId.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-                     if (dt.Rows.Count > 0)
-                     {
-                         sOvedName = dt.Rows[0]["OVED_NAME"].ToString();
-                     }
-                 }
-                 else
-                 {
-                     sOvedName = oOvdim.GetOvedFullName(clGeneral.GetIntegerValue(txtEmpId.Text));
-                 }
+     //        }
+     //        else
+     //        {
+     //            if (AutoCompleteExtenderID.ContextKey.Length > 0)
+     //            {
+     //                dt = oOvdim.GetOvdimToUser(txtEmpId.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
+     //                if (dt.Rows.Count > 0)
+     //                {
+     //                    sOvedName = dt.Rows[0]["OVED_NAME"].ToString();
+     //                }
+     //            }
+     //            else
+     //            {
+     //                sOvedName = oOvdim.GetOvedFullName(clGeneral.GetIntegerValue(txtEmpId.Text));
+     //            }
 
-                 if (sOvedName.Length > 0 && sOvedName!="null")
-                 {
-                     txtName.Text = sOvedName;
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-                     btnShow.Enabled = true;
-                 }
-                 else
-                 {
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                     btnShow.Enabled = false;
-                     txtName.Text = "";
+     //            if (sOvedName.Length > 0 && sOvedName!="null")
+     //            {
+     //                txtName.Text = sOvedName;
+     //                btnShow.ControlStyle.CssClass = "ImgButtonSearch";
+     //                btnShow.Enabled = true;
+     //            }
+     //            else
+     //            {
+     //                btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
+     //                btnShow.Enabled = false;
+     //                txtName.Text = "";
                     
-                     ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא קיים');", true);
-                     txtEmpId.Focus();
-                 }
-             }
-             LoadDdlMonth();
+     //                ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא קיים');", true);
+     //                txtEmpId.Focus();
+     //            }
+     //        }
+     //        LoadDdlMonth();
 
 
-             divNetunim.Visible = false;
+     //        divNetunim.Visible = false;
 
-             if (rdoId.Checked)
-             {
-                 txtName.Enabled = false;
-             }
-             txtEmpId.Enabled = true;
-         }
-     }
+     //        if (rdoId.Checked)
+     //        {
+     //            txtName.Enabled = false;
+     //        }
+     //        txtEmpId.Enabled = true;
+     //    }
+     //}
 
-     protected void txtName_TextChanged(object sender, EventArgs e)
-     {
-         DataTable dt; 
-         string sMisparIshi="";
-         try
-         {
+     //protected void txtName_TextChanged(object sender, EventArgs e)
+     //{
+     //    DataTable dt; 
+     //    string sMisparIshi="";
+     //    try
+     //    {
              
-             clOvdim oOvdim = new clOvdim();
-             if (rdoName.Checked && (txtName.Text).Length > 0)
-             {
-                 if (txtName.Text.IndexOf("(") == -1)
-                 {
-                     if (AutoCompleteExtenderID.ContextKey.Length > 0)
-                     {
-                         dt = oOvdim.GetOvdimToUserByName(txtName.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-                         if (dt.Rows.Count > 0)
-                         {
-                             sMisparIshi = dt.Rows[0]["MISPAR_ISHI"].ToString();
-                         }
-                     }
-                     else
-                     {
-                         sMisparIshi = oOvdim.GetOvedMisparIshi(txtName.Text);
-                     }
-                 }
-                 else
-                 {
-                     sMisparIshi = (txtName.Text.Substring(txtName.Text.IndexOf("(") + 1)).Replace(")", "");
-                 }
+     //        clOvdim oOvdim = new clOvdim();
+     //        if (rdoName.Checked && (txtName.Text).Length > 0)
+     //        {
+     //            if (txtName.Text.IndexOf("(") == -1)
+     //            {
+     //                if (AutoCompleteExtenderID.ContextKey.Length > 0)
+     //                {
+     //                    dt = oOvdim.GetOvdimToUserByName(txtName.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
+     //                    if (dt.Rows.Count > 0)
+     //                    {
+     //                        sMisparIshi = dt.Rows[0]["MISPAR_ISHI"].ToString();
+     //                    }
+     //                }
+     //                else
+     //                {
+     //                    sMisparIshi = oOvdim.GetOvedMisparIshi(txtName.Text);
+     //                }
+     //            }
+     //            else
+     //            {
+     //                sMisparIshi = (txtName.Text.Substring(txtName.Text.IndexOf("(") + 1)).Replace(")", "");
+     //            }
 
-                 if (sMisparIshi.Length > 0 && sMisparIshi != "null")
-                 {
-                     txtEmpId.Text = sMisparIshi;
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-                     btnShow.Enabled = true;
-                 }
-                 else
-                 {
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                     btnShow.Enabled = false;
-                     txtEmpId.Text = "";
+     //            if (sMisparIshi.Length > 0 && sMisparIshi != "null")
+     //            {
+     //                txtEmpId.Text = sMisparIshi;
+     //                btnShow.ControlStyle.CssClass = "ImgButtonSearch";
+     //                btnShow.Enabled = true;
+     //            }
+     //            else
+     //            {
+     //                btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
+     //                btnShow.Enabled = false;
+     //                txtEmpId.Text = "";
                     
-                     ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים');", true);
-                     }
+     //                ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים');", true);
+     //                }
 
-             }
-             if (rdoName.Checked && txtName.Text.Length>0)
-             {
-                 txtEmpId.Enabled = false;
-             }
-             txtName.Enabled = true;
-             if ((txtName.Text).Length == 0)
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtEmpId.Text = "";
-             }
-             divNetunim.Visible = false;
-             LoadDdlMonth();
+     //        }
+     //        if (rdoName.Checked && txtName.Text.Length>0)
+     //        {
+     //            txtEmpId.Enabled = false;
+     //        }
+     //        txtName.Enabled = true;
+     //        if ((txtName.Text).Length == 0)
+     //        {
+     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
+     //            btnShow.Enabled = false;
+     //            txtEmpId.Text = "";
+     //        }
+     //        divNetunim.Visible = false;
+     //        LoadDdlMonth();
         
-         }
-         catch (Exception ex)
-         { clGeneral.BuildError(Page, ex.Message); }
+     //    }
+     //    catch (Exception ex)
+     //    { clGeneral.BuildError(Page, ex.Message); }
           
 
-     }
+     //}
      protected void ddlMonth_SelectedIndexChanged(object sender, EventArgs e)
      {
          LoadDdlRitzotChishuv();
@@ -739,5 +744,11 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          catch (Exception ex)
          { clGeneral.BuildError(Page, ex.Message); }
 
+     }
+
+     protected void btnHidden_OnClick(object sender, EventArgs e)
+     {
+         divNetunim.Visible = false;
+         LoadDdlMonth();
      }
 }

@@ -260,6 +260,50 @@ function GetDateDDMMYYYY(dDate){
 //     //  $find("cbeAlert").ConfirmText = sMsg;
 //      
 //   }
-   if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded(); 
+   if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
+   
+   
+   /*******************************************************************************************/
 
+   function GetOvedNameById(oTxtId ) {
+//       alert(evarg.get_value());
+//       if (oTxtId.value != evarg.get_value())
+//            oTxtId.value = evarg.get_value();
+       var iKodOved = oTxtId.value;
+       if (iKodOved != "") {
+           if (IsNumeric(trim(iKodOved))) {
+               wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
+           }
+           else {
+               alert("מספר אישי לא חוקי");
+               oTxtId.select();
+           }
+       }
+   }
 
+   function GetOvedIdByName(oTxtName ) {
+//   
+//        if ( oTxtName.value = evarg.get_value())
+//            oTxtName.value = evarg.get_value();
+       var sOvedname = oTxtName.value;
+       //if (sOvedname != "") {
+       if (sOvedname.indexOf('(') > -1) {
+        //   alert(sOvedname.split('(')[0].replace(")", "").replace("(", ""));
+           wsGeneral.GetOvedMisparIshi(trim(sOvedname.split('(')[0].replace(")", "").replace("(", "")), GetOvedIdByNameSucceeded);
+            ///   oTxtId.value = sOvedname.split('(')[1].replace(")", "");
+//               if (obtnHdn != null) {
+//                   obtnHdn.click();
+//               }
+           }
+           else {
+               wsGeneral.GetOvedMisparIshi(sOvedname, GetOvedIdByNameSucceeded);
+           }
+
+      // }
+     //  else {
+    //       alert("שם לא חוקי");
+     //      oTxtName.select();
+     //  }
+   }
+
+  
