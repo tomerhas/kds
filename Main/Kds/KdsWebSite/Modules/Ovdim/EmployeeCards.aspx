@@ -130,7 +130,6 @@
                             <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6" style="display:none"
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnShowApproval_Click" 
                                 Width="112px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
-                                <asp:Button ID="btnHidden" runat="server" OnClick="btnHidden_OnClick"  />                                                                                                              
                        </ContentTemplate>                                              
                     </asp:UpdatePanel>    
                 </td>
@@ -185,8 +184,7 @@
   
                      
        <script type="text/javascript" language="javascript" >        
-       function checkID()
-       {
+       function checkID() {
         var iId = document.getElementById("ctl00_KdsContent_txtId").value;
         if (iId.length==0)
         {
@@ -324,12 +322,12 @@
              
             document.getElementById("ctl00_KdsContent_txtId").disabled = false;
             document.getElementById("ctl00_KdsContent_txtName").disabled = true;
-            document.getElementById("ctl00_KdsContent_txtId").select();
+           // document.getElementById("ctl00_KdsContent_txtId").select();
         }
         else {
             document.getElementById("ctl00_KdsContent_txtName").disabled = false;
             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
-                document.getElementById("ctl00_KdsContent_txtName").select();
+            //    document.getElementById("ctl00_KdsContent_txtName").select();
         }
     }
     
@@ -362,7 +360,7 @@
      }
 
      function continue_click() {
-         document.getElementById("ctl00_KdsContent_btnHidden").click();
+        // SetTextBox();
      }  
    </script>
 </asp:Content>

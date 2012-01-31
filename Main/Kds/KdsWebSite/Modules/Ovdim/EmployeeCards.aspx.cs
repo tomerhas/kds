@@ -102,7 +102,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
                 txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
                 txtPageIndex.Value = "0";
-                btnHidden.Style.Add("Display", "None");
+             //   btnHidden.Style.Add("Display", "None");
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
                
@@ -186,159 +186,6 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         }
     }
 
-    //protected void txtId_TextChanged(object sender, EventArgs e)
-    //{        
-    //    string sOvedName = "";
-    //    clOvdim oOvdim = new clOvdim();
-    //    bool flag = true;
-
-    //    ViewState["SortDirection"] = SortDirection.Descending;
-    //    ViewState["SortExp"] = "taarich";
-    //    grdEmployee.PageIndex = int.Parse(txtPageIndex.Value);
-         
-    //    txtPageIndex.Value = "0";
-    //    if (rdoId.Checked)
-    //    {
-    //        if ((txtId.Text).Length == 0)
-    //        {
-    //            btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-    //            btnExecute.Enabled = false;
-    //            txtName.Text = "";
-    //            txtSnifUnit.Text = "";
-    //        }
-    //        else if (!(clGeneral.IsNumeric(txtId.Text)))
-    //        {
-    //            btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-    //            btnExecute.Enabled = false;
-    //            txtName.Text = "";
-    //            txtSnifUnit.Text = "";
-    //            ScriptManager.RegisterStartupScript(txtId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
-    //            txtId.Focus();
-    //            flag = false;
-    //        }
-    //        else
-    //        {
-    //            if (AutoCompleteExtenderID.ContextKey.Length > 0)
-    //            {                   
-    //                sOvedName = SetEmployeeName();
-    //            }
-    //            else
-    //            {
-    //                sOvedName = oOvdim.GetOvedFullName(clGeneral.GetIntegerValue(txtId.Text));
-    //            }
-
-    //            if (sOvedName.Length > 0)
-    //            {
-    //                txtName.Text = sOvedName;
-    //                btnExecute.ControlStyle.CssClass = "ImgButtonSearch";
-    //                btnExecute.Enabled = true;
-    //                divNetunim.Visible = true;
-    //                if (txtId.Text != "")
-    //                    txtSnifUnit.Text = SetSnifName(clGeneral.GetIntegerValue(txtId.Text));
-                   
-    //            }
-    //            else
-    //            {
-    //                btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-    //                btnExecute.Enabled = false;
-    //                txtName.Text = "";
-    //                txtSnifUnit.Text = "";
-    //                ScriptManager.RegisterStartupScript((System.Web.UI.WebControls.TextBox) sender, this.GetType(), "errName", "alert('!מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');", true);
-    //                divNetunim.Visible = false;
-    //                txtId.Focus();
-    //                flag = false;
-    //            }
-    //        }
-         
-    //        if (rdoId.Checked)
-    //        {
-    //            txtName.Enabled = false;
-    //        }
-    //        txtId.Enabled = true;
-    //    }
-    //    divNetunim.Visible = false;
-    //    //if (flag)
-    //    // btnExecute_Click(sender, e);
-      
-    //}
-    //protected void txtName_TextChanged(object sender, EventArgs e)
-    //{
-    //    DataTable dt;
-    //    string sMisparIshi = "";
-    //    bool flag = true;
-    //    try
-    //    {
-    //        txtPageIndex.Value = "0";
-    //        ViewState["SortDirection"] = SortDirection.Descending;
-    //        ViewState["SortExp"] = "taarich";
-
-        
-    //        clOvdim oOvdim = new clOvdim();
-    //        if (rdoName.Checked && (txtName.Text).Length > 0)
-    //        {
-    //            if (txtName.Text.IndexOf("(") == -1)
-    //            {
-    //                if (AutoCompleteExtenderID.ContextKey.Length > 0)
-    //                {
-    //                    dt = oOvdim.GetOvdimToUserByName(txtName.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-    //                    if (dt.Rows.Count > 0)
-    //                    {
-    //                        sMisparIshi = dt.Rows[0]["MISPAR_ISHI"].ToString();
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    sMisparIshi = oOvdim.GetOvedMisparIshi(txtName.Text);
-    //                }
-    //            }
-    //            else
-    //            {
-    //                sMisparIshi = (txtName.Text.Substring(txtName.Text.IndexOf("(") + 1)).Replace(")", "");
-    //            }
-
-    //            if (sMisparIshi.Length > 0)
-    //            {
-    //                txtId.Text = sMisparIshi;
-    //                btnExecute.ControlStyle.CssClass = "ImgButtonSearch";
-    //                btnExecute.Enabled = true;
-    //                if (txtId.Text != "")
-    //                    txtSnifUnit.Text = SetSnifName(int.Parse(txtId.Text));
-                    
-    //            }
-    //            else
-    //            {
-    //                btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-    //                btnExecute.Enabled = false;
-    //                txtId.Text = "";
-
-    //                ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים/אינך מורשה לצפות בעובד זה');", true);
-    //                txtName.Focus();
-    //                flag = false;
-    //            }
-
-    //        }
-    //        if (rdoName.Checked)
-    //        {
-    //            txtName.Enabled = true;
-    //            txtId.Enabled = false;
-    //        }
-    //        else
-    //        {
-    //            txtName.Enabled = false;
-    //            txtId.Enabled = true;
-    //        }
-    //        if (flag)
-    //        {
-    //           // btnExecute_Click(sender, e);
-    //             if (rdoMonth.Checked == true)
-    //                ddlMonth.Focus();
-    //            else btnExecute.Focus();
-    //        }
-    //        divNetunim.Visible = false;
-    //    }
-    //    catch (Exception ex)
-    //    { clGeneral.BuildError(Page, ex.Message); }
-    //}
     private string SetSnifName(int iMisparIshi)
     {
         string sSnif="";
@@ -407,6 +254,16 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
             grdEmployee.Focus();
             divNetunim.Visible = true;
 
+            if (rdoId.Checked)
+            {
+                txtName.Enabled = false;
+                txtId.Enabled = true;
+            }
+            else
+            {
+                txtName.Enabled = true;
+                txtId.Enabled = false;
+            }
         }
         catch (Exception ex)
         {
@@ -711,19 +568,5 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
     }
 
 
-    protected void btnHidden_OnClick(object sender, EventArgs e)
-    {
-        divNetunim.Visible = false;
-
-        if (rdoId.Checked)
-        {
-            txtName.Enabled = false;
-            txtId.Enabled = true;
-        }
-        else
-        {
-            txtName.Enabled = true;
-            txtId.Enabled = false;
-        }
-    }
+    
 }

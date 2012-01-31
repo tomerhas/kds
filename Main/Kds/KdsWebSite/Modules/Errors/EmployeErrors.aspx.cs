@@ -94,7 +94,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             LoadEzorim();
 
             //נשמור ברירת מחדל של איזורים
-            txtSnif.Attributes.Add("onchange", "GetMaamad();");
+         //   txtSnif.Attributes.Add("onchange", "GetMaamad();");
             if (int.Parse(ddlSite.SelectedValue) == -1)
             {
                 AutoCompleteSnif.ContextKey = "0";

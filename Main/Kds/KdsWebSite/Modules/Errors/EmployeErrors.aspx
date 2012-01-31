@@ -55,13 +55,14 @@ function ChangeKeyCode()
                 <td style="width:320px">
                     <asp:UpdatePanel ID="upSnif" runat="server" RenderMode="Inline" UpdateMode="Conditional"   >
                         <ContentTemplate>                         
-                            <asp:TextBox ID="txtSnif" runat="server" AutoComplete="Off" TabIndex="2" dir="rtl" style="width:300px" onblur="CheckSnif();"></asp:TextBox>
+                            <asp:TextBox ID="txtSnif" runat="server" AutoComplete="Off" TabIndex="2" dir="rtl" style="width:300px" ></asp:TextBox>
                             
                             <cc1:AutoCompleteExtender id="AutoCompleteSnif"  runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  DelimiterCharacters=";" 
                                 TargetControlID="txtSnif" MinimumPrefixLength="1" ServiceMethod="GetSnifim" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement" >                                
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"
+                               OnClientHidden="CheckSnif" >                                
                             </cc1:AutoCompleteExtender>
                             <asp:button id="btnMaamad" runat="server" onclick="btnMaamad_Click"  />
                             <input type="hidden" id="txtCurrSnifKod" runat="server" />
@@ -276,9 +277,9 @@ function ChangeKeyCode()
            if (sSnifName.indexOf(')')==-1) 
            {
                alert('סניף לא נמצא');
-               document.getElementById("ctl00_KdsContent_txtSnif").value='';
-               document.getElementById("ctl00_KdsContent_txtSnif").focus();        
-           }
+              // document.getElementById("ctl00_KdsContent_txtSnif").value='';
+               document.getElementById("ctl00_KdsContent_txtSnif").focus();
+           } else document.getElementById("ctl00_KdsContent_btnMaamad").click();  
        }   
     }
     function GetMaamad()
@@ -404,15 +405,7 @@ function ChangeKeyCode()
      }
 
      function continue_click() {
-         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
-         if (rdo.checked) {
-             document.getElementById("ctl00_KdsContent_txtId").disabled = false;
-             document.getElementById("ctl00_KdsContent_txtName").disabled = true;
-         }
-         else {
-             document.getElementById("ctl00_KdsContent_txtName").disabled = false;
-             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
-         }
+        // SetTextBox();
      }  
    </script>
 </asp:Content>
