@@ -455,8 +455,11 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
             if (ezor != "-1")
                 ezor = ddlSite.SelectedItem.Text.Split('-')[1].Replace(" ", "");
             snif =txtSnif.Text;
-            if (snif != "")
+            if (snif != "" && snif.IndexOf("אגפים") == -1 && snif.IndexOf("מוסכים") == -1)
+            {
                 snif = txtSnif.Text.Split(')')[0].Split('(')[1];
+            }
+            else snif = "";
 
             maamad = ddlMaamad.SelectedValue;
             if (maamad != "-1")

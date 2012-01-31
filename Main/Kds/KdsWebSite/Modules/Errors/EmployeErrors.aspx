@@ -24,7 +24,11 @@ function ChangeKeyCode()
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">      
+<asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server"> 
+   <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtId.ClientID%>";
+       var oTxtName = "<%=txtName.ClientID%>";
+   </script>     
     <fieldset class="FilterFieldSet" >          
         <legend>חיתוך לפי</legend>
          
@@ -135,7 +139,8 @@ function ChangeKeyCode()
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  CompletionSetCount="25"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" >                               
+                                CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                 OnClientHidden="GetOvedNameById">                                  
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
                        <Triggers>
@@ -150,12 +155,13 @@ function ChangeKeyCode()
                 <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  style="width:200px" TabIndex="8" onblur="GetOvedMisparIshiByName();" ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  style="width:200px" TabIndex="8" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                         CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName" >                               
+                                        CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                         OnClientHidden="GetOvedIdByName">                                 
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                        <Triggers>
@@ -397,7 +403,17 @@ function ChangeKeyCode()
 //         window.open("EmployeeDetails.aspx" + sQuryString,"","dialogwidth:960px;dialogheight:690px;dialogtop:" + (document.body.clientWidth/10) + "px;dialogleft:" + sLeft + "px;status:no")
      }
 
-   
+     function continue_click() {
+         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+         if (rdo.checked) {
+             document.getElementById("ctl00_KdsContent_txtId").disabled = false;
+             document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+         }
+         else {
+             document.getElementById("ctl00_KdsContent_txtName").disabled = false;
+             document.getElementById("ctl00_KdsContent_txtId").disabled = true;
+         }
+     }  
    </script>
 </asp:Content>
 
