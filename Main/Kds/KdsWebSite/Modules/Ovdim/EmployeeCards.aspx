@@ -34,6 +34,10 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
+  <script type="text/javascript" language="javascript">
+      var oTxtId = "<%=txtId.ClientID%>";
+      var oTxtName = "<%=txtName.ClientID%>";
+  </script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div> 
@@ -54,12 +58,13 @@
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ontextchanged="txtId_TextChanged"  MaxLength="5" style="width:100px;" TabIndex="1" autopostback="true" onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl"   MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                             CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID"  OnClientShown="onClientShownHandler_getID">                               
+                                            CompletionListItemCssClass="autocomplete_completionListItemElement"   
+                                              OnClientHidden="GetOvedNameById">                         
                                           </cc1:AutoCompleteExtender>                      
                                       <%-- </ContentTemplate>                       
                                     </asp:UpdatePanel>    --%>       
@@ -75,12 +80,13 @@
                                 <td style="width:220px;">
                                    <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate>--%> 
-                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();" autopostback="true" ontextchanged="txtName_TextChanged"></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();" ></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement" FirstRowSelected="true"
                                                         CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName" >                                                             
+                                                        CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                                        OnClientHidden="GetOvedIdByName">                                                              
                                             </cc1:AutoCompleteExtender> 
                                         <%-- </ContentTemplate>                       
                                  </asp:UpdatePanel>     --%>  
@@ -124,7 +130,7 @@
                             <asp:Button Text="הצג אישורים" ID="btnShowApproval" runat="server" TabIndex="6" style="display:none"
                                 CssClass ="ImgButtonSearch" autopostback="true" onclick="btnShowApproval_Click" 
                                 Width="112px" onfocusin="this.style.border ='1px solid black';" onfocusout="this.style.border ='none';" /> 
-                                                                                                                                            
+                                <asp:Button ID="btnHidden" runat="server" OnClick="btnHidden_OnClick"  />                                                                                                              
                        </ContentTemplate>                                              
                     </asp:UpdatePanel>    
                 </td>
@@ -132,7 +138,7 @@
             </tr>
          </table> 
        
-     </fieldset>   
+     </fieldset>    
  </div>     
      <table  width="952px">
         <tr>
@@ -355,7 +361,9 @@
         return ReturnWin;
      }
 
-   
+     function continue_click() {
+         document.getElementById("ctl00_KdsContent_btnHidden").click();
+     }  
    </script>
 </asp:Content>
 
