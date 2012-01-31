@@ -270,6 +270,7 @@
     }
 
     function continue_click() {
+        document.getElementById("ctl00_KdsContent_btnHidden").click();
     } 
    </script>
 
