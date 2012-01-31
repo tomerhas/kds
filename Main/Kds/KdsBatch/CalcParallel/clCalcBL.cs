@@ -296,14 +296,14 @@ namespace KdsBatch
             }
         }
 
-        public int GetPremiaYadanit(DataTable dtPremyotYadaniyot, int iSugPremia)
+        public float GetPremiaYadanit(DataTable dtPremyotYadaniyot, int iSugPremia)
         {
             DataRow[] drPremia;
             try
             {
                 drPremia = dtPremyotYadaniyot.Select("Sug_premya=" + iSugPremia);
                 if (drPremia.Length > 0)
-                { return int.Parse(drPremia[0]["Dakot_premya"].ToString()); }
+                { return float.Parse(drPremia[0]["Dakot_premya"].ToString()); }
                 else
                 {
                     return 0;
