@@ -12,6 +12,11 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
+  
+   <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtEmpId.ClientID%>";
+       var oTxtName = "<%=txtName.ClientID%>";
+</script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div>  
@@ -29,13 +34,14 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" AutoPostBack="true" 
-                                Width="80px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';"></asp:TextBox>                            
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" 
+                                Width="80px"   EnableViewState="true" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"  
+                                 OnClientHidden="GetOvedNameById">                               
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
                   </asp:UpdatePanel> 
@@ -52,13 +58,14 @@
             <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" EnableViewState="true" AutoPostBack="true"  ontextchanged="txtName_TextChanged" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';"></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" >                               
+                                        CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                         OnClientHidden="GetOvedIdByName">                         
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                    </asp:UpdatePanel>    
@@ -96,6 +103,7 @@
                         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> מבצע חישוב אנא המתן...
                 </div>  
                 <asp:button ID="btnCalc" runat="server" text="" CssClass ="ImgButtonSearch" onclick="btnCalc_Click"/>
+                 <asp:Button ID="btnHidden" runat="server" OnClick="btnHidden_OnClick"  />
      </ContentTemplate>
   </asp:UpdatePanel> 
            
@@ -240,7 +248,11 @@
         if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
         document.getElementById("divHourglass").style.display = 'none';
         return ReturnWin;
-    }   
+    }
+
+    function continue_click() {
+        document.getElementById("ctl00_KdsContent_btnHidden").click();
+    }  
    </script>
 
 </asp:Content>

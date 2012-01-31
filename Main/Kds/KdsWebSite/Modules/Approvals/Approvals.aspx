@@ -47,7 +47,10 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server" >
-
+   <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtId.ClientID%>";
+       var oTxtName = "<%=txtName.ClientID%>";   
+</script>
     <asp:UpdateProgress  runat="server" id="GridProgress" DisplayAfter="0" 
                 AssociatedUpdatePanelID="upShow"  >
     <ProgressTemplate>
@@ -122,7 +125,8 @@
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" >                               
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                OnClientHidden="GetOvedNameById">                               
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
                        <Triggers>
@@ -137,12 +141,13 @@
                 <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:200px" onblur="GetOvedMisparIshiByName();" ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:200px" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
                                         CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName" >                               
+                                        CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                         OnClientHidden="GetOvedIdByName">                              
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                        <Triggers>
@@ -515,34 +520,34 @@
     }
     
  
-    function onClientHiddenHandler_getID(sender, eventArgs)
-    {
-     GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
-    }     
-    
-    function onClientHiddenHandler_getName(sender, eventArgs)
-    {
-     var iMisparIshi, iPos;
-     var sOvedName=document.getElementById("ctl00_KdsContent_txtName").value;  
-     if (sOvedName!='')
-      {  
-         iPos = sOvedName.indexOf('(');
-         if (iPos==-1)
-         {           
+//    function onClientHiddenHandler_getID(sender, eventArgs)
+//    {
+//     GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
+//    }     
+//    
+//    function onClientHiddenHandler_getName(sender, eventArgs)
+//    {
+//     var iMisparIshi, iPos;
+//     var sOvedName=document.getElementById("ctl00_KdsContent_txtName").value;  
+//     if (sOvedName!='')
+//      {  
+//         iPos = sOvedName.indexOf('(');
+//         if (iPos==-1)
+//         {           
 
-         }
-         else{
-            iMisparIshi = sOvedName.substr(iPos+1, sOvedName.length-iPos-2);
-            document.getElementById("ctl00_KdsContent_txtId").value=iMisparIshi;
-            document.getElementById("ctl00_KdsContent_txtName").value=sOvedName.substr(0,iPos-1);
-            }
-       }     
-    }
-      
-     function GetOvedMisparIshiByName()
-     {
-      GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
-     } 
+//         }
+//         else{
+//            iMisparIshi = sOvedName.substr(iPos+1, sOvedName.length-iPos-2);
+//            document.getElementById("ctl00_KdsContent_txtId").value=iMisparIshi;
+//            document.getElementById("ctl00_KdsContent_txtName").value=sOvedName.substr(0,iPos-1);
+//            }
+//       }     
+//    }
+//      
+//     function GetOvedMisparIshiByName()
+//     {
+//      GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
+//     } 
    
     function GetOvedMisparSucc(result)
     {
@@ -574,6 +579,10 @@
         {
             document.getElementById('<%=btnExecute.ClientID%>').click();
         }
+    }
+
+    function continue_click() {
+        SetTextBox();
     }
    </script>
 </asp:Content>

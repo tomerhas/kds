@@ -265,45 +265,59 @@ function GetDateDDMMYYYY(dDate){
    
    /*******************************************************************************************/
 
-   function GetOvedNameById(oTxtId ) {
-//       alert(evarg.get_value());
-//       if (oTxtId.value != evarg.get_value())
-//            oTxtId.value = evarg.get_value();
-       var iKodOved = oTxtId.value;
+   function GetOvedNameById(sorce, evarg) {
+       var iKodOved = document.getElementById(oTxtId).value;
        if (iKodOved != "") {
            if (IsNumeric(trim(iKodOved))) {
                wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
            }
            else {
                alert("מספר אישי לא חוקי");
-               oTxtId.select();
+               document.getElementById(oTxtId).select();
            }
        }
    }
 
-   function GetOvedIdByName(oTxtName ) {
-//   
-//        if ( oTxtName.value = evarg.get_value())
-//            oTxtName.value = evarg.get_value();
-       var sOvedname = oTxtName.value;
-       //if (sOvedname != "") {
+   function GetOvedIdByName(sorce,evarg ) {
+       var sOvedname = document.getElementById(oTxtName).value;
+       if (sOvedname != "") {
        if (sOvedname.indexOf('(') > -1) {
-        //   alert(sOvedname.split('(')[0].replace(")", "").replace("(", ""));
-           wsGeneral.GetOvedMisparIshi(trim(sOvedname.split('(')[0].replace(")", "").replace("(", "")), GetOvedIdByNameSucceeded);
-            ///   oTxtId.value = sOvedname.split('(')[1].replace(")", "");
-//               if (obtnHdn != null) {
-//                   obtnHdn.click();
-//               }
+           document.getElementById(oTxtId).value = trim(sOvedname.split('(')[1].replace(")", ""));
+           continue_click();
            }
            else {
                wsGeneral.GetOvedMisparIshi(sOvedname, GetOvedIdByNameSucceeded);
            }
 
-      // }
-     //  else {
-    //       alert("שם לא חוקי");
-     //      oTxtName.select();
-     //  }
+       }
+       else {
+           alert("שם לא חוקי");
+           document.getElementById(oTxtName).select();
+       }
    }
 
-  
+
+
+   function GetOvedNameByIdSucceeded(result) {
+      
+       if (result == '') {
+           alert('מספר אישי לא קיים');
+           document.getElementById(oTxtId).select();
+       }
+       else {
+           document.getElementById(oTxtName).value = result;
+           continue_click();
+       }
+   }
+
+   function GetOvedIdByNameSucceeded(result) {
+      // obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
+       if (result == '') {
+           alert('מספר אישי לא קיים');
+           document.getElementById(oTxtName).select();
+       }
+       else {
+           document.getElementById(oTxtId).value = result;
+           continue_click();
+       }
+   }

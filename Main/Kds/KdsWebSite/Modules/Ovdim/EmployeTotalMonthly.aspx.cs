@@ -96,6 +96,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 divNetunim.Visible = false;
 
                 btnCalc.Style.Add("Display", "None");
+                btnHidden.Style.Add("Display", "None");
                 SetFixedHeaderGrid(pnlTotalMonthly.ClientID, mp.HeadPage);
                 SetFixedHeaderGrid(pnlMonthlyComponents.ClientID, mp.HeadPage);
 
@@ -501,140 +502,6 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          grdTotalMonthly.DataBind();
      }
 
-    
-     protected void txtEmpId_TextChanged(object sender, EventArgs e)
-     {
-         DataTable dt;
-         string sOvedName="";
-         clOvdim oOvdim = new clOvdim();
-
-         if (rdoId.Checked)
-         {
-             if ((txtEmpId.Text).Length == 0)
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtName.Text = "";
-             }
-             else if (!(clGeneral.IsNumeric(txtEmpId.Text)))
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtName.Text = "";
-                
-                 ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
-
-             }
-             else
-             {
-                 if (AutoCompleteExtenderID.ContextKey.Length > 0)
-                 {
-                     dt = oOvdim.GetOvdimToUser(txtEmpId.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-                     if (dt.Rows.Count > 0)
-                     {
-                         sOvedName = dt.Rows[0]["OVED_NAME"].ToString();
-                     }
-                 }
-                 else
-                 {
-                     sOvedName = oOvdim.GetOvedFullName(clGeneral.GetIntegerValue(txtEmpId.Text));
-                 }
-
-                 if (sOvedName.Length > 0 && sOvedName != "null")
-                 {
-                     txtName.Text = sOvedName;
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-                     btnShow.Enabled = true;
-                 }
-                 else
-                 {
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                     btnShow.Enabled = false;
-                     txtName.Text = "";
-                    
-                     ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');", true);
-
-                 }
-             }
-             LoadDdlMonth();
-
-
-             divNetunim.Visible = false;
-
-             if (rdoId.Checked)
-             {
-                 txtName.Enabled = false;
-             }
-             txtEmpId.Enabled = true;
-         }
-     }
-
-     protected void txtName_TextChanged(object sender, EventArgs e)
-     {
-         DataTable dt; 
-         string sMisparIshi="";
-         try
-         {
-             
-             clOvdim oOvdim = new clOvdim();
-             if (rdoName.Checked && (txtName.Text).Length > 0)
-             {
-                 if (txtName.Text.IndexOf("(") == -1)
-                 {
-                     if (AutoCompleteExtenderID.ContextKey.Length > 0)
-                     {
-                         dt = oOvdim.GetOvdimToUserByName(txtName.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-                         if (dt.Rows.Count > 0)
-                         {
-                             sMisparIshi = dt.Rows[0]["MISPAR_ISHI"].ToString();
-                         }
-                     }
-                     else
-                     {
-                         sMisparIshi = oOvdim.GetOvedMisparIshi(txtName.Text);
-                     }
-                 }
-                 else
-                 {
-                     sMisparIshi = (txtName.Text.Substring(txtName.Text.IndexOf("(") + 1)).Replace(")", "");
-                 }
-
-                 if (sMisparIshi.Length > 0 && sMisparIshi != "null")
-                 {
-                     txtEmpId.Text = sMisparIshi;
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-                     btnShow.Enabled = true;
-                 }
-                 else
-                 {
-                     btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                     btnShow.Enabled = false;
-                     txtEmpId.Text = "";
-                    
-                     ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים/אינך מורשה לצפות בעובד זה');", true);
-                     }
-
-             }
-             if (rdoName.Checked && txtName.Text.Length>0)
-             {
-                 txtEmpId.Enabled = false;
-             }
-             txtName.Enabled = true;
-             if ((txtName.Text).Length == 0)
-             {
-                 btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                 btnShow.Enabled = false;
-                 txtEmpId.Text = "";
-             }
-             divNetunim.Visible = false;
-             LoadDdlMonth();
-        
-         }
-         catch (Exception ex)
-         { clGeneral.BuildError(Page, ex.Message); }
-          
-
-     }
      protected void btnCalc_Click(object sender, EventArgs e)
      {
          DateTime dTaarich;
@@ -679,5 +546,22 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          catch (Exception ex)
          { clGeneral.BuildError(Page, ex.Message); }
           
+     }
+
+     protected void btnHidden_OnClick(object sender, EventArgs e)
+     {
+         LoadDdlMonth();
+         divNetunim.Visible = false;
+
+         if (rdoId.Checked)
+         {
+             txtName.Enabled = false;
+             txtEmpId.Enabled = true;
+         }
+         else
+         {
+             txtName.Enabled = true;
+             txtEmpId.Enabled = false;
+         }
      }
 }

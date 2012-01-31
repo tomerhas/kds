@@ -275,7 +275,17 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             SearchOvedInGrid();
         else
            ScriptManager.RegisterStartupScript(btnSearch, btnSearch.GetType(), "err", " alert('מספר אישי לא קיים לפרמיה שנבחרה');", true);
-   
+
+        if (rdoId.Checked)
+        {
+            txtName.Enabled = false;
+            txtId.Enabled = true;
+        }
+        else
+        {
+            txtName.Enabled = true;
+            txtId.Enabled = false;
+        }
     }
 
     void btnExecute_Click(object sender, EventArgs e)
@@ -827,4 +837,5 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         return newSortDirection;
     }
     /********************/
+
 }

@@ -1,8 +1,15 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master"  AsyncTimeout="1500"  AutoEventWireup="true" CodeFile="TickurChishuvLeOved.aspx.cs" Inherits="Modules_Ovdim_TickurChishuvLeOved" Title="תחקור חישוב לעובד" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
+  
+   <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtEmpId.ClientID%>";
+       var oTxtName = "<%=txtName.ClientID%>";   
+</script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div>  
@@ -27,7 +34,7 @@
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  FirstRowSelected="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
                                 CompletionListItemCssClass="autocomplete_completionListItemElement"  
-                               OnClientHidden="onClientHiddenHandler_getName">  
+                               OnClientHidden="GetOvedNameById">  
                             </cc1:AutoCompleteExtender>                        
                        </ContentTemplate>
                   </asp:UpdatePanel> 
@@ -50,7 +57,7 @@
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
                                         CompletionListItemCssClass="autocomplete_completionListItemElement"
-                                       OnClientHidden="onClientHiddenHandler_getId">
+                                       OnClientHidden="GetOvedIdByName">
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                    </asp:UpdatePanel>    
@@ -230,16 +237,7 @@
 </asp:UpdatePanel> 
   
 <script language="javascript" type="text/javascript">
-//    var oTxtId = document.getElementById("ctl00_KdsContent_txtEmpId");
-//    var oTxtName = document.getElementById("ctl00_KdsContent_txtName");
-//    var obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
-    function sss() {
-        alert("sss");
-    }
 
-    function aaa() {
-        alert("aaa");
-    }
     function SetTextBox() {
         var rdo = document.getElementById("ctl00_KdsContent_rdoId");
         if (rdo.checked) {
@@ -271,58 +269,8 @@
         return ReturnWin;
     }
 
-    function onClientHiddenHandler_getName() {
-//        var txtid = document.getElementById("ctl00_KdsContent_txtEmpId").value;
-//        if (txtid.length == 0 || trim(txtid) == "") {
-//            alert('חובה להזין מספר אישי או שם');
-//            return false;
-//        }
-//        else {
-        GetOvedNameById(document.getElementById("ctl00_KdsContent_txtEmpId"));//, document.getElementById("ctl00_KdsContent_txtName"));
-//        }
-    }
-
-    function onClientHiddenHandler_getId() {
-//        var txtname = document.getElementById("ctl00_KdsContent_txtName").value;
-
-//        if (txtname.length == 0 || trim(txtname) == "") {
-//            alert('חובה להזין מספר אישי או שם');
-//            return false;
-//        }
-//        else {
-            GetOvedIdByName(document.getElementById("ctl00_KdsContent_txtName"));//, document.getElementById("ctl00_KdsContent_txtEmpId"));
-//        }
-        }
-
-        function GetOvedNameByIdSucceeded(result) {
-            obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
-            if (result == '') {
-                alert('מספר אישי לא קיים');
-                oTxtName.select();
-            }
-            else {
-              //   alert(result);
-                document.getElementById("ctl00_KdsContent_txtName").value = result;
-                if (obtnHdn != null) {
-                    obtnHdn.click();
-                    //  alert("after");
-                }
-            }
-            // alert("sof");
-        }
-
-        function GetOvedIdByNameSucceeded(result) {
-            obtnHdn = document.getElementById("ctl00_KdsContent_btnHidden");
-            if (result == '') {
-                alert('מספר אישי לא קיים');
-                document.getElementById("ctl00_KdsContent_txtEmpId").select();
-            }
-            else {
-                document.getElementById("ctl00_KdsContent_txtEmpId").value = result;
-                if (obtnHdn != null)
-                    obtnHdn.click();
-            }
-        }
+    function continue_click() {
+    } 
    </script>
 
 </asp:Content>

@@ -38,6 +38,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
 
                 btnCalc.Style.Add("Display", "None");
+                btnHidden.Style.Add("Display", "None");
 
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 
@@ -125,6 +126,17 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
               btnShow.Enabled = true;
               btnInputData.Enabled = true;
+
+              if (rdoId.Checked)
+              {
+                  txtName.Enabled = false;
+                  txtEmpId.Enabled = true;
+              }
+              else
+              {
+                  txtName.Enabled = true;
+                  txtEmpId.Enabled = false;
+              }
          }
          else { ddlRitzatChishuv.Enabled = false; }
      }
@@ -547,140 +559,6 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          grdTotalMonthly.DataBind();
      }
 
-    
-     //protected void txtEmpId_TextChanged(object sender, EventArgs e)
-     //{
-     //    DataTable dt;
-     //    string sOvedName="";
-     //    clOvdim oOvdim = new clOvdim();
-
-     //    if (rdoId.Checked)
-     //    {
-     //        if ((txtEmpId.Text).Length == 0)
-     //        {
-     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-     //            btnShow.Enabled = false;
-     //            txtName.Text = "";
-     //        }
-     //        else if (!(clGeneral.IsNumeric(txtEmpId.Text)))
-     //        {
-     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-     //            btnShow.Enabled = false;
-     //            txtName.Text = "";
-                
-     //            ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא חוקי');", true);
-
-     //        }
-     //        else
-     //        {
-     //            if (AutoCompleteExtenderID.ContextKey.Length > 0)
-     //            {
-     //                dt = oOvdim.GetOvdimToUser(txtEmpId.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-     //                if (dt.Rows.Count > 0)
-     //                {
-     //                    sOvedName = dt.Rows[0]["OVED_NAME"].ToString();
-     //                }
-     //            }
-     //            else
-     //            {
-     //                sOvedName = oOvdim.GetOvedFullName(clGeneral.GetIntegerValue(txtEmpId.Text));
-     //            }
-
-     //            if (sOvedName.Length > 0 && sOvedName!="null")
-     //            {
-     //                txtName.Text = sOvedName;
-     //                btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-     //                btnShow.Enabled = true;
-     //            }
-     //            else
-     //            {
-     //                btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-     //                btnShow.Enabled = false;
-     //                txtName.Text = "";
-                    
-     //                ScriptManager.RegisterStartupScript(txtEmpId, this.GetType(), "errName", "alert('!מספר אישי לא קיים');", true);
-     //                txtEmpId.Focus();
-     //            }
-     //        }
-     //        LoadDdlMonth();
-
-
-     //        divNetunim.Visible = false;
-
-     //        if (rdoId.Checked)
-     //        {
-     //            txtName.Enabled = false;
-     //        }
-     //        txtEmpId.Enabled = true;
-     //    }
-     //}
-
-     //protected void txtName_TextChanged(object sender, EventArgs e)
-     //{
-     //    DataTable dt; 
-     //    string sMisparIshi="";
-     //    try
-     //    {
-             
-     //        clOvdim oOvdim = new clOvdim();
-     //        if (rdoName.Checked && (txtName.Text).Length > 0)
-     //        {
-     //            if (txtName.Text.IndexOf("(") == -1)
-     //            {
-     //                if (AutoCompleteExtenderID.ContextKey.Length > 0)
-     //                {
-     //                    dt = oOvdim.GetOvdimToUserByName(txtName.Text, int.Parse(AutoCompleteExtenderID.ContextKey));
-     //                    if (dt.Rows.Count > 0)
-     //                    {
-     //                        sMisparIshi = dt.Rows[0]["MISPAR_ISHI"].ToString();
-     //                    }
-     //                }
-     //                else
-     //                {
-     //                    sMisparIshi = oOvdim.GetOvedMisparIshi(txtName.Text);
-     //                }
-     //            }
-     //            else
-     //            {
-     //                sMisparIshi = (txtName.Text.Substring(txtName.Text.IndexOf("(") + 1)).Replace(")", "");
-     //            }
-
-     //            if (sMisparIshi.Length > 0 && sMisparIshi != "null")
-     //            {
-     //                txtEmpId.Text = sMisparIshi;
-     //                btnShow.ControlStyle.CssClass = "ImgButtonSearch";
-     //                btnShow.Enabled = true;
-     //            }
-     //            else
-     //            {
-     //                btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-     //                btnShow.Enabled = false;
-     //                txtEmpId.Text = "";
-                    
-     //                ScriptManager.RegisterStartupScript(txtName, this.GetType(), "errName", "alert('!שם לא קיים');", true);
-     //                }
-
-     //        }
-     //        if (rdoName.Checked && txtName.Text.Length>0)
-     //        {
-     //            txtEmpId.Enabled = false;
-     //        }
-     //        txtName.Enabled = true;
-     //        if ((txtName.Text).Length == 0)
-     //        {
-     //            btnShow.ControlStyle.CssClass = "ImgButtonSearchDisable";
-     //            btnShow.Enabled = false;
-     //            txtEmpId.Text = "";
-     //        }
-     //        divNetunim.Visible = false;
-     //        LoadDdlMonth();
-        
-     //    }
-     //    catch (Exception ex)
-     //    { clGeneral.BuildError(Page, ex.Message); }
-          
-
-     //}
      protected void ddlMonth_SelectedIndexChanged(object sender, EventArgs e)
      {
          LoadDdlRitzotChishuv();

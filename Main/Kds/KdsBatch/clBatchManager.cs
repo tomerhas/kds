@@ -12027,8 +12027,8 @@ namespace KdsBatch
                         {
                             shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
                             if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists){
-                                if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17)
-                                    && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oSidur.dFullShatGmar > shaa))
+                                if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17 && oSidur.dFullShatGmar > shaa)
+                                    && (oSidur.sShabaton != "1" && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode())))
                                      bLoLetashlumAutomati = false;
                                  else bLoLetashlumAutomati = true;
                              }
@@ -13671,6 +13671,8 @@ namespace KdsBatch
             //5. סידור מסומן במאפיין 78
             //אם הסידור מסומן במאפיין 78 (קיזוז התחלה / גמר)
             //ואינו מסומן "לא לתשלום", ישנם כמה מקרים:
+            bool flag = false;
+            DateTime dShatHatchalaMeafyen, dShatGmarMeafyen;
             try
             {
                 if (oSidur.bKizuzAlPiHatchalaGmarExists && oObjSidurimOvdimUpd.LO_LETASHLUM == 0)//|| (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
@@ -13680,12 +13682,14 @@ namespace KdsBatch
                     {
                         SetShaotHatchalaGmar_2(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
                         //אם חריגה=0 וגם עובד עם מאפייני משמרת שניה
-                        SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+                        SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd,ref flag);
 
                     }
                     else //chariga>0
                     {
-
+                        SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref flag);
+                        dShatHatchalaMeafyen = flag ? dShatHatchalaLetashlumToUpd : dShatHatchalaLetashlum;
+                        dShatGmarMeafyen = flag ? dShatGmarLetashlumToUpd : dShatGmarLetashlum;
                         //3. אם יש סימון "קוד חריגה" ולא קבענו את הסידור "לא לתשלום", שלושה מקרים:                                                           
                         if ((oObjSidurimOvdimUpd.CHARIGA != 0) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0))
                         {
@@ -13698,8 +13702,8 @@ namespace KdsBatch
                             if (oObjSidurimOvdimUpd.CHARIGA == 1)
                             {
                                 dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
-                                if (oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarLetashlum)
-                                    dShatGmarLetashlumToUpd = dShatGmarLetashlum;
+                                if (oObjSidurimOvdimUpd.SHAT_GMAR > dShatGmarMeafyen)
+                                    dShatGmarLetashlumToUpd = dShatGmarMeafyen;
                                 else
                                     dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
                             }
@@ -13708,8 +13712,8 @@ namespace KdsBatch
                             if (oObjSidurimOvdimUpd.CHARIGA == 2)
                             {
                                 dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
-                                if (oSidur.dFullShatHatchala < dShatHatchalaLetashlum)
-                                    dShatHatchalaLetashlumToUpd = dShatHatchalaLetashlum;
+                                if (oSidur.dFullShatHatchala < dShatHatchalaMeafyen)
+                                    dShatHatchalaLetashlumToUpd = dShatHatchalaMeafyen;
                                 else
                                     dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA;
                             }
@@ -13941,6 +13945,7 @@ namespace KdsBatch
             //5. סידור מסומן במאפיין 78
             //אם הסידור מסומן במאפיין 78 (קיזוז התחלה / גמר)
             //ואינו מסומן "לא לתשלום", ישנם כמה מקרים:
+            bool flag=false;
            try{
                if ((oSidur.bKizuzAlPiHatchalaGmarExists) && (oObjSidurimOvdimUpd.LO_LETASHLUM == 0 || (oObjSidurimOvdimUpd.LO_LETASHLUM == 1 && oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM == 1)))
             {
@@ -13949,7 +13954,7 @@ namespace KdsBatch
                 if (oObjSidurimOvdimUpd.CHARIGA == 0 )
                 {
                     SetShaotHatchalaGmar_2(ref oSidur, dShatHatchalaLetashlum, dShatGmarLetashlum, ref oObjSidurimOvdimUpd,ref dShatHatchalaLetashlumToUpd,ref dShatGmarLetashlumToUpd);
-                    SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd);
+                    SetShaotLovedMishmeret2(ref oSidur, ref oObjSidurimOvdimUpd, ref dShatHatchalaLetashlumToUpd, ref dShatGmarLetashlumToUpd, ref flag);
 
                 }
                 else
@@ -14028,20 +14033,22 @@ namespace KdsBatch
            }
         }
 
-        private void SetShaotLovedMishmeret2(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,  ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd)
+        private void SetShaotLovedMishmeret2(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,  ref DateTime dShatHatchalaLetashlumToUpd, ref DateTime dShatGmarLetashlumToUpd,ref bool bflag)
         {
             DateTime shaa24, shaa23,shaa;
+            bflag = false;
           try {
                  shaa = DateTime.Parse( oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString() + " 18:00:00");
                 if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists)
                     if (oSidur.bKizuzAlPiHatchalaGmarExists)
-                         if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour>=11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour<=17)
-                             && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() && oObjSidurimOvdimUpd.SHAT_GMAR > shaa) ) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
+                        if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour >= 11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour <= 17 && oObjSidurimOvdimUpd.SHAT_GMAR > shaa)
+                             && (oSidur.sShabaton != "1" && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
                             {
                                 shaa23 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() + " " + oMeafyeneyOved.sMeafyen23.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen23.Substring(2, 2));
                                 shaa24 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()  + " " + oMeafyeneyOved.sMeafyen24.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen24.Substring(2, 2));
                                 dShatHatchalaLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_HATCHALA > shaa23 ? oObjSidurimOvdimUpd.SHAT_HATCHALA : shaa23;
                                 dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR < shaa24 ? oObjSidurimOvdimUpd.SHAT_GMAR : shaa24;
+                                bflag = true;
                             }
 
             }

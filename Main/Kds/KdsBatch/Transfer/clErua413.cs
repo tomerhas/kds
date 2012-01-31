@@ -69,7 +69,7 @@ namespace KdsBatch
                   //CreateData413("312", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(),"erech_rechiv", 7, 2);
                   //CreateData413("313", clGeneral.enRechivim.DakotPremiaVisa.GetHashCode() +
                   //               ',' + clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(),"erech_rechiv", 7, 2);
-                  CreateData413("314", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(),"erech_rechiv", 7, 2);
+                 // CreateData413("314", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(),"erech_rechiv", 7, 2);
                 //  CreateData413("315", clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 //  CreateData413("316", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 //  CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);
@@ -100,7 +100,7 @@ namespace KdsBatch
                  // CreateData413("312", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(),"erech_rechiv", 7, 2);
                   //CreateData413("313", clGeneral.enRechivim.DakotPremiaVisa.GetHashCode() +
                   //               ',' + clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode(),"erech_rechiv", 7, 2);
-                  CreateData413("314", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(),"erech_rechiv", 7, 2);
+                 // CreateData413("314", clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode(),"erech_rechiv", 7, 2);
                   //CreateData413("315", clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a", 7, 2);
                   //CreateData413("316", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a", 7, 2);
                   //CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);

@@ -14,6 +14,11 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
+   <script type="text/javascript" language="javascript">
+       var oTxtId = "<%=txtId.ClientID%>";
+       var oTxtName = "<%=txtName.ClientID%>";
+
+</script>
     <fieldset class="FilterFieldSet">          
         <legend>פרמיה לעדכון</legend>
         <asp:UpdatePanel ID="upTypes" runat="server" RenderMode="Inline">
@@ -74,7 +79,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upId" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" onchange="GetOvedNameById()" AutoComplete="Off" dir="rtl">
+                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl">
                             </asp:TextBox> 
                             <cc1:AutoCompleteExtender
                                 id="AutoCompleteExtenderID" runat="server" CompletionInterval="100"
@@ -83,8 +88,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 EnableCaching="true" 
                                 CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement">
-                                <%--OnClientHidden="onClientHiddenHandler_getID">--%>
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                  OnClientHidden="GetOvedNameById">        
                             </cc1:AutoCompleteExtender>     
                        </ContentTemplate>
                        <Triggers>
@@ -112,7 +117,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtName" runat="server"  
-                                style="width:200px;" AutoComplete="Off" onchange="GetOvedMisparIshiByName()">
+                                style="width:200px;" AutoComplete="Off">
                                <%-- onblur="if(this.value != ''){onClientHiddenHandler_getName(this,null);}"--%>
                             </asp:TextBox>
                             <cc1:AutoCompleteExtender 
@@ -122,7 +127,9 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 EnableCaching="true" 
                                 CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  > </cc1:AutoCompleteExtender> 
+                                CompletionListItemCssClass="autocomplete_completionListItemElement"  
+                                OnClientHidden="GetOvedIdByName">    
+                            </cc1:AutoCompleteExtender> 
                              <%--   OnClientHidden="onClientHiddenHandler_getName"--%>
                          </ContentTemplate>
                        <Triggers>
@@ -174,7 +181,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 
                                 OnClientClick="if(document.getElementById('ctl00_KdsContent_txtPremiaMinutes').value == '') { alert('חובה להזין ערך בשדה דקות פרמיה'); document.getElementById('ctl00_KdsContent_txtPremiaMinutes').focus(); return false;}" onclick="btnUpdate_Click" 
                                />
-                       </ContentTemplate>
+                        </ContentTemplate>
                          <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                             <asp:AsyncPostBackTrigger ControlID="btnExecute" />
@@ -324,10 +331,10 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
          }
     }
 
-    function GetOvedNameById() {
-        
-        GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
-    }             
+//    function GetOvedNameById() {
+//        
+//        GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
+//    }             
 //    function onClientHiddenHandler_getID(sender, eventArgs)
 //    {
 //     GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
@@ -425,6 +432,9 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
         }
         else
             document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
+    }
+    //יש להשאיר פונקציה זו ריקה!!
+    function  continue_click() {
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;

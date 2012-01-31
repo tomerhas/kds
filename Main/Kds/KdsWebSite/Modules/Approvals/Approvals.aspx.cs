@@ -437,10 +437,21 @@ public partial class Modules_Approvals_Approvals : KdsPage
             }
             else
             {
-                txtName.Text = "";
-                txtId.Text = "";
+                //txtName.Text = "";
+                //txtId.Text = "";
                 vldEmpNotExists.IsValid = false;
             }
+        }
+
+        if (rdoId.Checked)
+        {
+            txtName.Enabled = false;
+            txtId.Enabled = true;
+        }
+        else
+        {
+            txtName.Enabled = true;
+            txtId.Enabled = false;
         }
 
     }
