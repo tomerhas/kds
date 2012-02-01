@@ -8,7 +8,8 @@
   
    <script type="text/javascript" language="javascript">
        var oTxtId = "<%=txtEmpId.ClientID%>";
-       var oTxtName = "<%=txtName.ClientID%>";   
+       var oTxtName = "<%=txtName.ClientID%>";
+       var flag = false;
 </script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
@@ -27,14 +28,14 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" 
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  onchange="GetOvedNameById();"
                                 Width="55px"  EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  FirstRowSelected="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
                                 CompletionListItemCssClass="autocomplete_completionListItemElement"  
-                               OnClientHidden="GetOvedNameById">  
+                               OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >  
                             </cc1:AutoCompleteExtender>                        
                        </ContentTemplate>
                   </asp:UpdatePanel> 
@@ -50,14 +51,14 @@
             <td style="width:120px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:110px" EnableViewState="true"  ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName();"  AutoComplete="Off" style="width:110px" EnableViewState="true"  ></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
                                         CompletionListItemCssClass="autocomplete_completionListItemElement"
-                                       OnClientHidden="GetOvedIdByName">
+                                       OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >   
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                    </asp:UpdatePanel>    

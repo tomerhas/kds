@@ -17,7 +17,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
    <script type="text/javascript" language="javascript">
        var oTxtId = "<%=txtId.ClientID%>";
        var oTxtName = "<%=txtName.ClientID%>";
-
+       var flag = false;
 </script>
     <fieldset class="FilterFieldSet">          
         <legend>פרמיה לעדכון</legend>
@@ -79,7 +79,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upId" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl">
+                            <asp:TextBox ID="txtId" runat="server" MaxLength="5" onchange="GetOvedNameById();" AutoComplete="Off" dir="rtl">
                             </asp:TextBox> 
                             <cc1:AutoCompleteExtender
                                 id="AutoCompleteExtenderID" runat="server" CompletionInterval="100"
@@ -89,7 +89,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
                                 CompletionListItemCssClass="autocomplete_completionListItemElement"
-                                  OnClientHidden="GetOvedNameById">        
+                                OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >   
                             </cc1:AutoCompleteExtender>     
                        </ContentTemplate>
                        <Triggers>
@@ -116,7 +116,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upName" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  
+                            <asp:TextBox ID="txtName" runat="server"    onchange="GetOvedIdByName();" 
                                 style="width:200px;" AutoComplete="Off">
                                <%-- onblur="if(this.value != ''){onClientHiddenHandler_getName(this,null);}"--%>
                             </asp:TextBox>
@@ -128,7 +128,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 CompletionListCssClass="autocomplete_completionListElement"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
                                 CompletionListItemCssClass="autocomplete_completionListItemElement"  
-                                OnClientHidden="GetOvedIdByName">    
+                                 OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >      
                             </cc1:AutoCompleteExtender> 
                              <%--   OnClientHidden="onClientHiddenHandler_getName"--%>
                          </ContentTemplate>
@@ -433,8 +433,20 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
         else
             document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
     }
-    //יש להשאיר פונקציה זו ריקה!!
-    function  continue_click() {
+     
+    function continue_click() {
+        var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+        if (rdo.checked) {
+
+            document.getElementById("ctl00_KdsContent_txtId").disabled = false;
+            document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+            // document.getElementById("ctl00_KdsContent_txtId").select();
+        }
+        else {
+            document.getElementById("ctl00_KdsContent_txtName").disabled = false;
+            document.getElementById("ctl00_KdsContent_txtId").disabled = true;
+            //    document.getElementById("ctl00_KdsContent_txtName").select();
+        }
     }
 //    function onchange_ddStatuses() {
 //        document.getElementById("ctl00_KdsContent_ddMonths").selectedIndex = 0;

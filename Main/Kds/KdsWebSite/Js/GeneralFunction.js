@@ -264,35 +264,55 @@ function GetDateDDMMYYYY(dDate){
    
    
    /*******************************************************************************************/
+  
+   function SimunExtendeOpen(sorce, evarg) {
+       flag = true;
+   }
+   function SimunExtendeIdClose(sorce, evarg) {
+       flag = false;
+       GetOvedNameById(sorce, evarg);
+   }
 
+   function SimunExtendeNameClose(sorce, evarg) {
+       flag = false;
+       GetOvedIdByName(sorce, evarg);
+   }
    function GetOvedNameById(sorce, evarg) {
-       var iKodOved = document.getElementById(oTxtId).value;
-       if (iKodOved != "") {
-           if (IsNumeric(trim(iKodOved))) {
-               wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
-           }
-           else {
-               alert("מספר אישי לא חוקי");
-               document.getElementById(oTxtId).select();
+    
+       if (flag == false) {
+           var iKodOved = document.getElementById(oTxtId).value;
+           // alert(iKodOved);
+           if (iKodOved != "") {
+               if (IsNumeric(trim(iKodOved))) {
+                   wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
+               }
+               else {
+                   alert("מספר אישי לא חוקי");
+                   document.getElementById(oTxtId).select();
+                   document.getElementById(oTxtName).value = "";
+               }
            }
        }
    }
 
-   function GetOvedIdByName(sorce,evarg ) {
-       var sOvedname = document.getElementById(oTxtName).value;
-       if (sOvedname != "") {
-       if (sOvedname.indexOf('(') > -1) {
-           document.getElementById(oTxtId).value = trim(sOvedname.split('(')[1].replace(")", ""));
-           continue_click();
+   function GetOvedIdByName(sorce, evarg) {
+       if (flag == false) {
+           var sOvedname = document.getElementById(oTxtName).value;
+           if (sOvedname != "") {
+               if (sOvedname.indexOf('(') > -1) {
+                   document.getElementById(oTxtId).value = trim(sOvedname.split('(')[1].replace(")", ""));
+                   continue_click();
+               }
+               else {
+                   wsGeneral.GetOvedMisparIshi(sOvedname, GetOvedIdByNameSucceeded);
+               }
+
            }
            else {
-               wsGeneral.GetOvedMisparIshi(sOvedname, GetOvedIdByNameSucceeded);
+               alert("שם לא חוקי");
+               document.getElementById(oTxtName).select();
+               document.getElementById(oTxtId).value = "";
            }
-
-       }
-       else {
-           alert("שם לא חוקי");
-           document.getElementById(oTxtName).select();
        }
    }
 
@@ -303,6 +323,7 @@ function GetDateDDMMYYYY(dDate){
        if (result == '') {
            alert('מספר אישי לא קיים');
            document.getElementById(oTxtId).select();
+           document.getElementById(oTxtName).value = "";
        }
        else {
            document.getElementById(oTxtName).value = result;
@@ -315,6 +336,7 @@ function GetDateDDMMYYYY(dDate){
        if (result == '') {
            alert('מספר אישי לא קיים');
            document.getElementById(oTxtName).select();
+           document.getElementById(oTxtId).value = "";
        }
        else {
            document.getElementById(oTxtId).value = result;
