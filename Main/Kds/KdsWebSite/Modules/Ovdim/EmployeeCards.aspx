@@ -252,7 +252,16 @@
         }
 
         function setMonthFocus() {
-            if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {
+        var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+        if (rdo.checked && document.getElementById("ctl00_KdsContent_txtId").value == "")
+            document.getElementById("ctl00_KdsContent_txtId").focus();
+        else if (document.getElementById("ctl00_KdsContent_rdoName").checked) {
+            if (document.getElementById("ctl00_KdsContent_txtId").value == "")
+                document.getElementById("ctl00_KdsContent_txtId").focus();
+            else if(document.getElementById("ctl00_KdsContent_txtName").value == "")
+                document.getElementById("ctl00_KdsContent_txtName").focus();
+            }
+        else if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {
               if (document.getElementById("ctl00_KdsContent_btnExecute").disabled == false)
                 document.getElementById("ctl00_KdsContent_ddlMonth").focus();
             }
@@ -361,8 +370,9 @@
      }
 
      function continue_click() {
-         var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value 
+         var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
          wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
+         document.getElementById("ctl00_KdsContent_ddlMonth").focus();
      }  
    </script>
 </asp:Content>

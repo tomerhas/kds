@@ -36,7 +36,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  
-                                Width="80px"   EnableViewState="true" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';GetOvedNameById(iUserId);"></asp:TextBox>                            
+                                Width="80px"   EnableViewState="true" onchange="onchange_txtid();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
@@ -251,6 +251,15 @@
         return ReturnWin;
     }
 
+    function onchange_txtid() {
+        document.getElementById('ctl00_KdsContent_btnShow').disabled=true;
+        document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';
+        GetOvedNameById(iUserId);
+//        if (trim(document.getElementById("ctl00_KdsContent_txtEmpId").value) == "") {
+//            document.getElementById("ctl00_KdsContent_txtEmpId").select();
+//        }
+    }
+    
     function continue_click() {
         document.getElementById("ctl00_KdsContent_btnHidden").click();
     }  

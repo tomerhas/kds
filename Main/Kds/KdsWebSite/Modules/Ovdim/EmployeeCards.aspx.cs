@@ -120,6 +120,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     divNetunim.Style["overflow-y"] = "hidden";
                     grdEmployee.PageSize = 8;
                     grdEmployee.AllowPaging = true;
+                    txtId.Enabled = false;
                 }
                
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
@@ -242,27 +243,31 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         DataView dv;
         try
         {
-            
-            dv = ShowCards(ViewState["SortExp"].ToString(), ViewState["SortDirection"].ToString());//taarich","asc");
-            grdEmployee.PageIndex = int.Parse(txtPageIndex.Value); 
-       
-            grdEmployee.DataSource = dv;
-            grdEmployee.DataBind();
-            if (!bool.Parse(hidFromEmda.Value) && grdEmployee.Rows.Count > (grdEmployee.PageSize + 1))
-                divNetunim.Style["overflow-y"] = "scroll";
-            else divNetunim.Style["overflow-y"] = "hidden";
-            grdEmployee.Focus();
-            divNetunim.Visible = true;
+            if ( txtId.Text.Trim() != "" && txtId.Text.Trim() != "0")
+            {
+                dv = ShowCards(ViewState["SortExp"].ToString(), ViewState["SortDirection"].ToString());//taarich","asc");
+                grdEmployee.PageIndex = int.Parse(txtPageIndex.Value);
 
-            if (rdoId.Checked)
-            {
-                txtName.Enabled = false;
-                txtId.Enabled = true;
+                grdEmployee.DataSource = dv;
+                grdEmployee.DataBind();
+                if (!bool.Parse(hidFromEmda.Value) && grdEmployee.Rows.Count > (grdEmployee.PageSize + 1))
+                    divNetunim.Style["overflow-y"] = "scroll";
+                else divNetunim.Style["overflow-y"] = "hidden";
+                grdEmployee.Focus();
+                divNetunim.Visible = true;
             }
-            else
+            if (txtId.Enabled == true || txtName.Enabled == true)
             {
-                txtName.Enabled = true;
-                txtId.Enabled = false;
+                if (rdoId.Checked)
+                {
+                    txtName.Enabled = false;
+                    txtId.Enabled = true;
+                }
+                else
+                {
+                    txtName.Enabled = true;
+                    txtId.Enabled = false;
+                }
             }
         }
         catch (Exception ex)
