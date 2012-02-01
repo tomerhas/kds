@@ -36,7 +36,7 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
                             <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  
-                                Width="80px"   EnableViewState="true" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';GetOvedNameById();"></asp:TextBox>                            
+                                Width="80px"   EnableViewState="true" onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';GetOvedNameById(iUserId);"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
@@ -59,7 +59,7 @@
             <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName();"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName(iUserId);"></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 

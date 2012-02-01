@@ -553,15 +553,15 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
          LoadDdlMonth();
          divNetunim.Visible = false;
 
-         if (rdoId.Checked)
-         {
-             txtName.Enabled = false;
-             txtEmpId.Enabled = true;
-         }
-         else
-         {
-             txtName.Enabled = true;
-             txtEmpId.Enabled = false;
-         }
+         //if (rdoId.Checked)
+         //{
+         //    txtName.Enabled = false;
+         //    txtEmpId.Enabled = true;
+         //}
+         //else
+         //{
+         //    txtName.Enabled = true;
+         //    txtEmpId.Enabled = false;
+         //}
      }
 }

@@ -31,7 +31,7 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
 
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
                  divNetunim.Visible = false;
-
+                 btnHidden.Style.Add("Display", "None");
                 
                 SetFixedHeaderGrid("ctl00_KdsContent_TabContainer1_pMeafyeneyBitzua_ucMeafyeneyBitzua_pnlContainer", mp.HeadPage);
                 SetFixedHeaderGrid("ctl00_KdsContent_TabContainer1_pMeafyeneyBitzua_ucMeafyeneyBitzua_pnlGridHistoria", mp.HeadPage);
@@ -330,6 +330,22 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
         catch (Exception ex)
         {
             clGeneral.BuildError(Page, ex.Message);
+        }
+    }
+
+    protected void btnHidden_OnClick(object sender, EventArgs e)
+    {
+        divNetunim.Visible = false;
+        LoadDdlMonth();
+        if (rdoId.Checked)
+        {
+            txtName.Enabled = false;
+            txtEmpId.Enabled = true;
+        }
+        else
+        {
+            txtName.Enabled = true;
+            txtEmpId.Enabled = false;
         }
     }
 }

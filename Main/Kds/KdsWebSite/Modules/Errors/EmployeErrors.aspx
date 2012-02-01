@@ -136,7 +136,7 @@ function ChangeKeyCode()
                 <td style="width:200px;">
                 <asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline" UpdateMode="Conditional" >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" onchange="GetOvedNameById();" MaxLength="5" dir="rtl"  TabIndex="7"  ></asp:TextBox>                            
+                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" onchange="GetOvedNameById(0);" MaxLength="5" dir="rtl"  TabIndex="7"  ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0"  UseContextKey="true"  
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  CompletionSetCount="25"
@@ -157,7 +157,7 @@ function ChangeKeyCode()
                 <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline" UpdateMode="Conditional"  >
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  onchange="GetOvedIdByName();"  style="width:200px" TabIndex="8" ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  onchange="GetOvedIdByName(0);"  style="width:200px" TabIndex="8" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"

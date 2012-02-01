@@ -79,7 +79,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upId" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtId" runat="server" MaxLength="5" onchange="GetOvedNameById();" AutoComplete="Off" dir="rtl">
+                            <asp:TextBox ID="txtId" runat="server" MaxLength="5" onchange="GetOvedNameById(0);" AutoComplete="Off" dir="rtl">
                             </asp:TextBox> 
                             <cc1:AutoCompleteExtender
                                 id="AutoCompleteExtenderID" runat="server" CompletionInterval="100"
@@ -116,7 +116,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upName" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"    onchange="GetOvedIdByName();" 
+                            <asp:TextBox ID="txtName" runat="server"    onchange="GetOvedIdByName(0);" 
                                 style="width:200px;" AutoComplete="Off">
                                <%-- onblur="if(this.value != ''){onClientHiddenHandler_getName(this,null);}"--%>
                             </asp:TextBox>

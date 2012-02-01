@@ -57,7 +57,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
-     
+     <script type="text/javascript" language="javascript">
+         var oTxtId = "<%=txtEmpId.ClientID%>";
+         var oTxtName = "<%=txtName.ClientID%>";
+         var flag = false;
+    </script>
    <fieldset class="FilterFieldSet" style="height:50px;width:940px" > 
        <legend> בחירת עובד לתצוגה </legend>      
     <table style="margin-top:4px">
@@ -72,13 +76,14 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" AutoPostBack="true" 
-                                Width="70px" ontextchanged="txtEmpId_TextChanged" EnableViewState="true" ></asp:TextBox>                            
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById(iUserId);"
+                                Width="70px"   EnableViewState="true" ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"   OnClientItemSelected="ItemSelectedOved">                               
+                                CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                  OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                                 
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
                   </asp:UpdatePanel> 
@@ -96,13 +101,14 @@
             <td class="style2">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:160px" EnableViewState="true" AutoPostBack="true"  ontextchanged="txtName_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server" onchange="GetOvedIdByName(iUserId);"   AutoComplete="Off" style="width:160px" EnableViewState="true" ></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientItemSelected="ItemSelectedOved">                               
+                                        CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                        OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >                                
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>
                    </asp:UpdatePanel>    
@@ -125,6 +131,7 @@
                 <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline" UpdateMode="Conditional">
                   <ContentTemplate> 
                         <asp:button ID="btnShow" runat="server" text="הצג" CssClass="ImgButtonSearch" onclick="btnShow_Click" OnClientClick="if (!CheckEmployeeId()) return false;" />
+                          <asp:Button ID="btnHidden" runat="server" OnClick="btnHidden_OnClick"  />
                 </ContentTemplate>
                  <Triggers>
                       <asp:AsyncPostBackTrigger ControlID="txtEmpId" />
@@ -214,7 +221,9 @@
     function ItemSelectedOved(sender, e) {
         document.getElementById("ctl00_KdsContent_ddlMonth").focus();
     }
-     
+    function continue_click() {
+        document.getElementById("ctl00_KdsContent_btnHidden").click();
+    } 
    </script>
       
 </asp:Content>

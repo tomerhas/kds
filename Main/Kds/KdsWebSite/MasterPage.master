@@ -14,6 +14,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
 </head>
 <body dir="rtl" id="MasterBody" runat="server"> 
+   <script type="text/javascript" language="javascript">
+       var iUserId = "<%=UserId%>";
+    </script>
     <form id="form1" runat="server">
 <%--    <AjxToolKit:ToolkitScriptManager ID="ScriptManagerKds" runat="server" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >--%>
     <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true" EnablePageMethods="true"  EnableScriptGlobalization="true"  EnableScriptLocalization="true" >        
@@ -23,6 +26,7 @@
     <asp:ScriptReference Path="~/Js/jquery.js" />
     <asp:ScriptReference Path="~/Js/jquery.simplemodal.js" />
     <asp:ScriptReference Path="~/Js/basic.js" />
+
     </Scripts>
   </asp:ScriptManager>
 <%--</AjxToolKit:ToolkitScriptManager>--%>

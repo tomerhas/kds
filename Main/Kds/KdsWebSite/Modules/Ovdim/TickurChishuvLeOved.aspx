@@ -28,7 +28,7 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  onchange="GetOvedNameById();"
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  onchange="GetOvedNameById(0);"
                                 Width="55px"  EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -51,7 +51,7 @@
             <td style="width:120px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName();"  AutoComplete="Off" style="width:110px" EnableViewState="true"  ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName(0);"  AutoComplete="Off" style="width:110px" EnableViewState="true"  ></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 

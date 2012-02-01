@@ -89,6 +89,42 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
 
+
+
+    [WebMethod]
+    public string GetOvedToUser(string sNameOrID, int idUser)
+    {
+        string sOveId;
+        string sResult = "";
+        DataTable dt = new DataTable();
+        clOvdim oOvdim = new clOvdim();
+        try
+        {
+
+            if (clGeneral.IsNumeric(sNameOrID))
+            {
+                dt = oOvdim.GetOvdimToUser(sNameOrID, idUser);
+                if (dt.Rows.Count > 0)
+                    sResult = dt.Rows[0]["OVED_NAME"].ToString();
+            }
+            else
+            {
+                sOveId = oOvdim.GetOvedMisparIshi(sNameOrID);
+                dt = oOvdim.GetOvdimToUser(sOveId, idUser);
+                 if (dt.Rows.Count > 0)
+                    sResult = dt.Rows[0]["MISPAR_ISHI"].ToString();
+            }
+
+
+            return sResult;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
     [WebMethod]
     public string GetOvedSnifAndUnit(int iMisparIshi)
     {

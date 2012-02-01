@@ -19,7 +19,7 @@ using KdsLibrary.Security;
 
 public partial class MasterPage : System.Web.UI.MasterPage
 {
- 
+    public int UserId;
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
@@ -39,6 +39,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
         ImageExit.Attributes.Add("onClick","if (window.confirm(' ?האם אתה בטוח שאתה רוצה לצאת מהמערכת ')){this.focus();self.opener = this;self.close();}");
         ImageExit.Style.Add("cursor", "hand");
         KdsPage kdsPage = this.Page as KdsPage;
+        if (clGeneral.IsNumeric(LoginUser.GetLoginUser().UserInfo.EmployeeNumber))
+            UserId = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
+        else UserId = 0;
         if (kdsPage != null)
         {
             if (ConfigurationManager.AppSettings["ImpersonateUser"] == "true")
