@@ -361,7 +361,9 @@
      }
 
      function continue_click() {
-        // SetTextBox();
+         alert("55");
+         var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value 
+         wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
      }  
    </script>
 </asp:Content>
