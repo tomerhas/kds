@@ -159,27 +159,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     btnExecute_Click(this, new EventArgs());
                 }
             }
-
-            if (txtId.Text.Length > 0) 
-            {
-                btnExecute.ControlStyle.CssClass = "ImgButtonSearch";
-                btnExecute.Enabled = true;
-                if (AutoCompleteExtenderID.ContextKey.Length > 0)
-                {
-                    txtName.Text = SetEmployeeName();
-                    if (txtName.Text != string.Empty)
-                    {
-                        txtSnifUnit.Text = SetSnifName(int.Parse(txtId.Text));
-                    }
-                }
-            }
-            else
-            {
-                btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
-                btnExecute.Enabled = false;
-            }
-
-          
+            checkHaveHarshaa();
         }
         catch(Exception ex)
         {
@@ -187,6 +167,31 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         }
     }
 
+    private bool checkHaveHarshaa()
+    {
+        bool flag = true;
+        if (txtId.Text.Length > 0)
+        {
+            btnExecute.ControlStyle.CssClass = "ImgButtonSearch";
+            btnExecute.Enabled = true;
+            if (AutoCompleteExtenderID.ContextKey.Length > 0)
+            {
+                txtName.Text = SetEmployeeName();
+                if (txtName.Text != string.Empty)
+                {
+                    txtSnifUnit.Text = SetSnifName(int.Parse(txtId.Text));
+                }
+                else flag = false;
+            }
+        }
+        else
+        {
+            btnExecute.ControlStyle.CssClass = "ImgButtonSearchDisable";
+            btnExecute.Enabled = false;
+            flag = false;
+        }
+        return flag;
+    }
     private string SetSnifName(int iMisparIshi)
     {
         string sSnif="";
@@ -243,7 +248,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
         DataView dv;
         try
         {
-            if ( txtId.Text.Trim() != "" && txtId.Text.Trim() != "0")
+            if (checkHaveHarshaa()) // && txtId.Text.Trim() != "" && txtId.Text.Trim() != "0")
             {
                 dv = ShowCards(ViewState["SortExp"].ToString(), ViewState["SortDirection"].ToString());//taarich","asc");
                 grdEmployee.PageIndex = int.Parse(txtPageIndex.Value);
