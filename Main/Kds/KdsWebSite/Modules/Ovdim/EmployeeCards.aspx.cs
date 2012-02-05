@@ -133,7 +133,6 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 {
                     AutoCompleteExtenderID.ContextKey = LoginUser.UserInfo.EmployeeNumber;
                     AutoCompleteExtenderByName.ContextKey = LoginUser.UserInfo.EmployeeNumber;
-
                 }
                 else
                 {
@@ -261,6 +260,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 grdEmployee.Focus();
                 divNetunim.Visible = true;
             }
+            else divNetunim.Visible = false;
             if (txtId.Enabled == true || txtName.Enabled == true)
             {
                 if (rdoId.Checked)

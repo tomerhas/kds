@@ -39,6 +39,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
                 btnCalc.Style.Add("Display", "None");
                 btnHidden.Style.Add("Display", "None");
+               // txtEmpId.Attributes.Add("onfocus", "document.getElementById('" + txtEmpId.ClientID + "').select();");
+                //txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
 
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
 
@@ -628,5 +630,6 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
      {
          divNetunim.Visible = false;
          LoadDdlMonth();
+         ddlMonth.Focus();
      }
 }

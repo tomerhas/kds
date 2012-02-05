@@ -51,7 +51,7 @@ public partial class Modules_Errors_EmployeErrors : KdsPage
                 PageHeader = "רשימת עובדים בעלי כרטיסי עבודה לטיפול";
                 SetFields();
                 LoadMessages((DataList)Master.FindControl("lstMessages"));
-                
+             //   txtSnif.Attributes.Add("onfocus", "document.getElementById('" + txtSnif.ClientID + "').select();");
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)
                     Params.Attributes.Add("Param" + dtParametrim.Rows[i]["KOD_PARAM"].ToString(), dtParametrim.Rows[i]["ERECH_PARAM"].ToString());

@@ -373,6 +373,7 @@
          var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
          wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
          document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+
      }  
    </script>
 </asp:Content>
