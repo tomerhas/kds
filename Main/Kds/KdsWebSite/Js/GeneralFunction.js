@@ -272,26 +272,25 @@ function GetDateDDMMYYYY(dDate){
    }
    function SimunExtendeIdClose(sorce, evarg) {
        flag = false;
-       GetOvedNameById(0);
+       GetOvedNameById();
    }
 
    function SimunExtendeNameClose(sorce, evarg) {
        flag = false;
-       GetOvedIdByName(0);
+       GetOvedIdByName();
    }
-   function GetOvedNameById(user) {
-     
+   function GetOvedNameById() {
        if (flag == false) {
            var iKodOved = document.getElementById(oTxtId).value;
-           // alert(iKodOved);
            if (iKodOved != "") {
                if (IsNumeric(trim(iKodOved))) {
-                   if (user > 0)
-                       wsGeneral.GetOvedToUser(iKodOved, user,GetOvedNameByIdSucceeded);
+                   if (userId > 0)
+                       wsGeneral.GetOvedToUser(iKodOved, userId, GetOvedNameByIdSucceeded);
                    else
                        wsGeneral.GetOvedName(iKodOved, GetOvedNameByIdSucceeded);
                }
                else {
+                   //alert("1212");
                    alert("מספר אישי לא חוקי");
                    document.getElementById(oTxtId).value = "";
                    document.getElementById(oTxtId).focus();
@@ -300,7 +299,7 @@ function GetDateDDMMYYYY(dDate){
        }
    }
 
-   function GetOvedIdByName(user) {
+   function GetOvedIdByName() {
        if (flag == false) {
            var sOvedname = document.getElementById(oTxtName).value;
            if (sOvedname != "") {
@@ -309,8 +308,8 @@ function GetDateDDMMYYYY(dDate){
                    continue_click();
                }
                else {
-                   if (user > 0)
-                       wsGeneral.GetOvedToUser(sOvedname, user, GetOvedIdByNameSucceeded); 
+                   if (userId > 0)
+                       wsGeneral.GetOvedToUser(sOvedname, userId, GetOvedIdByNameSucceeded); 
                    else
                         wsGeneral.GetOvedMisparIshi(sOvedname, GetOvedIdByNameSucceeded);
                }
@@ -327,7 +326,7 @@ function GetDateDDMMYYYY(dDate){
 
 
    function GetOvedNameByIdSucceeded(result) {
-      
+      // alert(result);
        if (result == '') {
            alert('מספר אישי לא קיים/אינך מורשה לצפות בעובד זה');
            document.getElementById(oTxtId).focus();
