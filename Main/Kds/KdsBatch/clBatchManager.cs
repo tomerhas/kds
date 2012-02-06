@@ -6398,7 +6398,19 @@ namespace KdsBatch
 
                     //נבצע את הבדיקות לכל הסידורים, מלבד הראשון - שינוי 08
                     FixedSidurHours08();
-                   
+
+                    //חישוב שעת התחלה - שינוי 30
+                    ////for (i = 0; i < htEmployeeDetails.Count; i++)
+                    ////{
+                    ////    oSidur = (clSidur)htEmployeeDetails[i];
+                    ////    if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                    ////    {
+                    ////        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+
+                    ////        ChishuvShatHatchala30(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
+                    ////        htEmployeeDetails[i] = oSidur;
+                    ////    }
+                    ////}
                     //בוטל 04/07/2011
                     //-שינוי 22
                     ////for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -8205,7 +8217,7 @@ namespace KdsBatch
             SourceObj SourceObject;
             try
             {
-                 if (dShatHatchalaNew!=oSidur.dFullShatHatchala)
+                if (dShatHatchalaNew!=oSidur.dFullShatHatchala)
                 {
                    clNewSidurim oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
 
@@ -14130,6 +14142,153 @@ namespace KdsBatch
            }     
         }
 
+        private void ChishuvShatHatchala30(ref clSidur oSidur, int iIndexSidur, ref  bool bUsedMazanTichnun, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        {
+            int i = 0, indexPeilutMechona = -1, iIndexPeilutMashmautit=-1;
+            clPeilut oPeilut, oFirstPeilutMashmautit;
+            long oMakatType, otoNum;
+            bool bPeilutHachanatMechona = false;
+            DateTime dShatHatchala;
+            bool bUsedMazanTichnunInSidur = false;
+            try
+            {
+                if (oSidur.htPeilut.Count > 0 && oSidur.iMisparSidur > 1000 && string.IsNullOrEmpty(oSidur.sSidurVisaKod))
+                {
+                    while (indexPeilutMechona < 0)
+                    {
+                        oPeilut = (clPeilut)oSidur.htPeilut[i];
+                        oMakatType = oPeilut.lMakatNesia;
+                        if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "701" || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "712" || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "711")
+                            indexPeilutMechona = i;
+                        i++;
+                    }
+                    if (indexPeilutMechona == 0)
+                        bPeilutHachanatMechona = true;
+                    else if (indexPeilutMechona > 0)
+                    {
+                        oPeilut = (clPeilut)oSidur.htPeilut[0];
+                        if (oPeilut.IsMustBusNumber() && !isPeilutMashmautit(oPeilut))
+                        {
+                            oPeilut = (clPeilut)oSidur.htPeilut[indexPeilutMechona];
+                            otoNum = oPeilut.lOtoNo;
+                            i = indexPeilutMechona - 1;
+                            while (i >= 0)
+                            {
+                                oPeilut = (clPeilut)oSidur.htPeilut[i];
+                                if (oPeilut.lOtoNo != otoNum)
+                                    break;
+                                i--;
+                            }
+                            if (i== -1)
+                                bPeilutHachanatMechona = true;
+                        }
+                    }
+
+                    if (!bPeilutHachanatMechona)
+                    {
+                        //קיימת פעילות משמעותית
+                        oFirstPeilutMashmautit = null;
+                        for (i = 0; i <= oSidur.htPeilut.Values.Count - 1; i++)
+                        {
+                            oPeilut = (clPeilut)oSidur.htPeilut[i];
+                            if (isPeilutMashmautit(oPeilut)) //oPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                            {
+                                oFirstPeilutMashmautit = oPeilut;
+                                iIndexPeilutMashmautit = i;
+                                break;
+                            }
+                        }
+
+                        if (oFirstPeilutMashmautit != null)
+                        {
+                            if (iIndexPeilutMashmautit == 0)
+                            {
+                                dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
+                            }
+                            else
+                            {
+                                dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor);
+
+                                for (i = iIndexPeilutMashmautit-1; i >= 0; i--)
+                                {
+                                    oPeilut = (clPeilut)oSidur.htPeilut[i];
+                                    dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            oPeilut = (clPeilut)oSidur.htPeilut[0];
+                            dShatHatchala = oPeilut.dFullShatYetzia;
+                        }
+
+                        UpdateShatHatchala(ref oSidur, iIndexSidur, dShatHatchala, ref oObjSidurimOvdimUpd);
+                    }
+                }
+                  
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 30, _dCardDate, "ChishuvShatHatchala30: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
+
+        private void UpdateShatHatchala(ref clSidur oSidur, int iSidurIndex, DateTime dShatHatchalaNew, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
+        {
+            OBJ_PEILUT_OVDIM oObjPeilutUpd;
+            clPeilut oPeilut;
+            SourceObj SourceObject;
+            try
+            {
+                clNewSidurim oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+
+                oNewSidurim.SidurIndex = iSidurIndex;
+                oNewSidurim.SidurNew = oSidur.iMisparSidur;
+                oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
+
+                UpdateObjectUpdSidurim(oNewSidurim);
+                //עדכון שעת התחלה סידור של כל הפעילויות לסידור
+                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                {
+                    oPeilut = (clPeilut)oSidur.htPeilut[j];
+                    if (!CheckPeilutObjectDelete(iSidurIndex, j))
+                    {
+                        oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
+                        if (SourceObject == SourceObj.Insert)
+                        {
+                            oObjPeilutUpd.SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
+                        }
+                        else
+                        {
+                            oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
+                            oObjPeilutUpd.UPDATE_OBJECT = 1;
+                        }
+
+                    }
+                }
+                //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
+                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
+                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
+
+                oSidur.dFullShatHatchala = dShatHatchalaNew;
+                oSidur.sShatHatchala = dShatHatchalaNew.ToString("HH:mm");
+                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = dShatHatchalaNew;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 0, _dCardDate, "UpdateShatHatchala: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
+        private bool isPeilutMashmautit(clPeilut oPeilut)
+        {
+            if (oPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() ||
+                (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
+                                && (oPeilut.iElementLeShatGmar > 0 || oPeilut.iElementLeShatGmar == -1 || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                return true;
+            else return false;          
+        }
         public void GetOvedShatHatchalaGmar(DateTime dSidurShatGmar, clMeafyenyOved oMeafyeneyOved, ref clSidur oSidur,
                                              ref DateTime dShatHatchalaLetashlum, ref DateTime dShatGmarLetashlum,out bool bFromMeafyenHatchala,out bool bFromMeafyenGmar)
         {

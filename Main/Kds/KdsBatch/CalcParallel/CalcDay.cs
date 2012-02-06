@@ -3310,7 +3310,7 @@ namespace KdsBatch
 
                                         if (fSumDakotRechiv >= 18)
                                         { fSumDakotRechiv = 18; }
-                                        else fSumDakotRechiv = 0;
+                                       // else fSumDakotRechiv = 0;
 
                                         addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), fSumDakotRechiv);
                                     }

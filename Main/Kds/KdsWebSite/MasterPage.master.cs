@@ -39,11 +39,17 @@ public partial class MasterPage : System.Web.UI.MasterPage
         ImageExit.Attributes.Add("onClick","if (window.confirm(' ?האם אתה בטוח שאתה רוצה לצאת מהמערכת ')){this.focus();self.opener = this;self.close();}");
         ImageExit.Style.Add("cursor", "hand");
         KdsPage kdsPage = this.Page as KdsPage;
-        if (clGeneral.IsNumeric(LoginUser.GetLoginUser().UserInfo.EmployeeNumber))
-            UserId = int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
-        else UserId = 0;
+
+       
         if (kdsPage != null)
         {
+            KdsSecurityLevel iSecurity = kdsPage.PageModule.SecurityLevel;
+            if (iSecurity == KdsSecurityLevel.ViewAll)
+                UserId=0;
+            else if (clGeneral.IsNumeric(LoginUser.GetLoginUser().UserInfo.EmployeeNumber))
+                UserId =int.Parse(LoginUser.GetLoginUser().UserInfo.EmployeeNumber);
+            else UserId = 0;
+
             if (ConfigurationManager.AppSettings["ImpersonateUser"] == "true")
                 kdsPage.SetImpersonatePanel();
         }

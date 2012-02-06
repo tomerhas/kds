@@ -43,14 +43,14 @@ namespace KdsBatch
                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,0));
                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));          //sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,0));
-               sErua417.Append(GetBlank(4));            // sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayim.GetHashCode()),4,0));
+               sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a"), 4, 0));
                sErua417.Append(GetBlank(4));            // sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErev.GetHashCode()),4,0));
                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode()),4,0));
 
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  sErua417.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()) / 60), 4, 0));
+                  sErua417.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode()) / 60), 4, 0));
               }
               else if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
               {

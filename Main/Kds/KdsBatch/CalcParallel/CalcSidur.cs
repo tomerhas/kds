@@ -7212,7 +7212,7 @@ namespace KdsBatch
         {
             bool bShabat, bNextShabat;
             DateTime dShatGmarShabat, dNextDay;
-
+       
             bNextShabat = false;
             bShabat = false;
 
@@ -7261,13 +7261,44 @@ namespace KdsBatch
                 fErechChol = float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString());
                 fErechShabat = 0;
             }
-            if (fErechChol > 0)
-                fErechChol -= ZmanHafsaka;
-            if (fErechShabat > 0)
-                fErechShabat -= ZmanHafsaka;
+        //    HoradatZmanHafsaka(kodRechiv, bShabat, iMisparSidur, dShatHatchalaSidur, dShatGmarShabat, ref  fErechChol);
             return bShabat;
         }
+        //private void HoradatZmanHafsaka(int kodRechiv, bool bShabat, int iMisparSidur, DateTime dShatHatchalaSidur, DateTime dShatGmarShabat,ref float fErechChol)
+        //{
+        //    switch (kodRechiv)
+        //    {
+        //        case 2:
+        //        case 3:
+        //               HoradatZmanHafsakaBechol( iMisparSidur, bShabat, dShatHatchalaSidur,  dShatGmarShabat, ref  fErechChol);
+        //               break;
+        //    }
+        //}
+        //private void HoradatZmanHafsakaBechol(int iMisparSidur,bool bShabat, DateTime dShatHatchalaSidur, DateTime dShatGmarShabat, ref float fErechChol)
+        //{
+        //    DataRow[] dr790;
+        //    DateTime shat_yetzia;
+        //    string sQury;
+        //    int meshec790;
+          
+        //        sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dShatHatchalaSidur.ToShortDateString() + "', 'System.DateTime') and ";
+        //        sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
+        //        dr790 = clCalcData.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
 
+        //        if (dr790.Length > 0)
+        //        {
+        //            shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
+        //            meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(4, 3));
+        //            if (bShabat)
+        //            {
+        //                if (shat_yetzia > dShatGmarShabat)
+        //                    fErechChol -= meshec790;
+        //                else if (shat_yetzia < dShatGmarShabat && shat_yetzia.AddMinutes(meshec790) > dShatGmarShabat)
+        //                    fErechChol -= (meshec790 + int.Parse((dShatGmarShabat - shat_yetzia).TotalMinutes.ToString()));
+        //            }
+        //            else fErechChol -= meshec790;
+        //        }      
+        //}
         private bool CheckErevShabatChag(int iSugYom, DateTime dShatHatchalaSidur, DateTime dShatGmarSidur, ref float fErechChol, ref float fErechShabat, float ZmanHafsaka)
         {
             bool bErevShabatChag;

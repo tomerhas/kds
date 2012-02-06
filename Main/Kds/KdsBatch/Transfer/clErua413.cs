@@ -75,10 +75,10 @@ namespace KdsBatch
                 //  CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), "erech_rechiv_a", 7, 2);
                   //CreateData413("330", clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a", 7, 2);
-                  CreateData413("331", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
+               //   CreateData413("331", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("339", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("340", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),"erech_rechiv", 7, 2);
-                  CreateData413("324", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a", 7, 2);
+            //      CreateData413("324", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("331", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),"erech_rechiv",  7, 2);
                   CreateData413("331", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),"erech_rechiv",  7, 2);
                   CreateData413("331", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),"erech_rechiv",  7, 2);
@@ -106,11 +106,11 @@ namespace KdsBatch
                   //CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 // CreateData413("319", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), "erech_rechiv_a", 7, 2);
-                  CreateData413("322", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
+               //   CreateData413("322", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
                  // CreateData413("330", clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("339", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("340", clGeneral.enRechivim.PremyatMevakrimBadrachim.GetHashCode(),"erech_rechiv", 7, 2);
-                  CreateData413("324", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a", 7, 2);
+                //  CreateData413("324", clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("322", clGeneral.enRechivim.PremyatMifalYetzur.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("322", clGeneral.enRechivim.PremyatNehageyTovala.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("322", clGeneral.enRechivim.PremyatNehageyTenderim.GetHashCode(),"erech_rechiv", 7, 2);

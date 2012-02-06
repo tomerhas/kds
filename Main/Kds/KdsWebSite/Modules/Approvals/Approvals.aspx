@@ -50,7 +50,8 @@
    <script type="text/javascript" language="javascript">
        var oTxtId = "<%=txtId.ClientID%>";
        var oTxtName = "<%=txtName.ClientID%>";
-       var flag = false; 
+       var flag = false;
+       var userId = 0;
 </script>
     <asp:UpdateProgress  runat="server" id="GridProgress" DisplayAfter="0" 
                 AssociatedUpdatePanelID="upShow"  >

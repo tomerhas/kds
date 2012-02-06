@@ -37,7 +37,8 @@
   <script type="text/javascript" language="javascript">
       var oTxtId = "<%=txtId.ClientID%>";
       var oTxtName = "<%=txtName.ClientID%>";
-      var flag=false;
+      var flag = false;
+      var userId = iUserId;
   </script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
@@ -59,7 +60,7 @@
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById(iUserId);"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
@@ -81,7 +82,7 @@
                                 <td style="width:220px;">
                                    <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate>--%> 
-                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName(iUserId);" ></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();" ></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                                         EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement" FirstRowSelected="true"
