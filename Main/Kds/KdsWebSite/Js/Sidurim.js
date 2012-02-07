@@ -1740,10 +1740,16 @@ function chkMkt(oRow) {
                }
                else {
                    if (_imgAddNesiaRekaUp.childNodes[0].disabled != undefined) {
-                       if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
-                           _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
-                       if (_imgAddNesiaRekaUp.childNodes[0].disabled)
+                       if (bCloseAllBtn) {
+                           _imgAddNesiaRekaUp.childNodes[0].disabled = true;
                            _imgAddNesiaRekaUp.childNodes[0].src = "../../images/up_Dis.png";
+                       }
+                       else {
+                           if (!_imgAddNesiaRekaUp.childNodes[0].disabled)
+                               _imgAddNesiaRekaUp.childNodes[0].disabled = bDisabled;
+                           if (_imgAddNesiaRekaUp.childNodes[0].disabled)
+                               _imgAddNesiaRekaUp.childNodes[0].src = "../../images/up_Dis.png";
+                       }
                    }
                }
                if (_imgCancelPeilut.firstChild.disabled!=undefined)
