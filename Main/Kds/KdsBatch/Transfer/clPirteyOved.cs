@@ -67,6 +67,8 @@ namespace KdsBatch
                     
                     oErua416 = new clErua416(iBakashaId, _drPirteyOved, _dtRechivim);
                     oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim);
+                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim);
+
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
                         oErua418 = new clErua418(iBakashaId, _drPirteyOved, _dtRechivim);
@@ -75,8 +77,6 @@ namespace KdsBatch
                     if (iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
                         oErua419 = new clErua419(iBakashaId, _drPirteyOved, _dtRechivim);
-                        oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim);
-
                     }
                 }
             }
