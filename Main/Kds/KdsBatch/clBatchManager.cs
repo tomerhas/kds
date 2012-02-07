@@ -6400,17 +6400,17 @@ namespace KdsBatch
                     FixedSidurHours08();
 
                     //חישוב שעת התחלה - שינוי 30
-                    ////for (i = 0; i < htEmployeeDetails.Count; i++)
-                    ////{
-                    ////    oSidur = (clSidur)htEmployeeDetails[i];
-                    ////    if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                    ////    {
-                    ////        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                    //for (i = 0; i < htEmployeeDetails.Count; i++)
+                    //{
+                    //    oSidur = (clSidur)htEmployeeDetails[i];
+                    //    if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                    //    {
+                    //        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                    ////        ChishuvShatHatchala30(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
-                    ////        htEmployeeDetails[i] = oSidur;
-                    ////    }
-                    ////}
+                    //        ChishuvShatHatchala30(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
+                    //        htEmployeeDetails[i] = oSidur;
+                    //    }
+                    //}
                     //בוטל 04/07/2011
                     //-שינוי 22
                     ////for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -6787,6 +6787,9 @@ namespace KdsBatch
             drIdkunim = _dtIdkuneyRashemet.Select("shem_db='" + sFieldToChange.ToUpper() + "' AND MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime')");
             if (drIdkunim.Length > 0)
                 bHaveIdkun = true;
+
+            //if (sFieldToChange.ToUpper() == "SHAT_HATCHALA")
+            //    bHaveIdkun = true;
             }
             catch (Exception ex)
             {
@@ -8843,8 +8846,8 @@ namespace KdsBatch
                                                 oObjPeilutUpd.UPDATE_OBJECT = 1;
                                             }
 
-                                            if (j == 0)
-                                            {
+                                            //if (j == 0)
+                                            //{
                                                 if (SourceObject == SourceObj.Insert)
                                                 {
                                                     oObjPeilutUpd.SHAT_YETZIA = oObjPeilutUpd.SHAT_YETZIA.AddMinutes((oNewSidurim.ShatHatchalaNew - oObjSidurimOvdimUpd.SHAT_HATCHALA).TotalMinutes);
@@ -8861,7 +8864,7 @@ namespace KdsBatch
 
                                                 }
                                                 oPeilut.sShatYetzia = oPeilut.dFullShatYetzia.ToString("HH:mm");
-                                            }
+                                            //}
                                             oSidur.htPeilut[j] = oPeilut;
                                         }
                                     }
@@ -14175,7 +14178,7 @@ namespace KdsBatch
                             while (i >= 0)
                             {
                                 oPeilut = (clPeilut)oSidur.htPeilut[i];
-                                if (oPeilut.lOtoNo != otoNum)
+                                if (oPeilut.IsMustBusNumber() && oPeilut.lOtoNo != otoNum)
                                     break;
                                 i--;
                             }

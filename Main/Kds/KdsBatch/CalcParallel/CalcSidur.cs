@@ -2808,10 +2808,11 @@ namespace KdsBatch
             int iMisparSidur, iHashlama;
             float fErech, fTempX;
             DateTime dShatHatchalaSidur, dShatHatchalaLetashlum, dShatGmarLetashlum;
-            DateTime dStartHafsaketZaharim, dEndHafsaketZaharim;
+            DateTime dStartHafsaketZaharim, dEndHafsaketZaharim, dShaa;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             string sSidurim;
+            bool flag;
             try
             {
                 sSidurim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode());
@@ -2820,6 +2821,7 @@ namespace KdsBatch
                     drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0  AND MISPAR_SIDUR IN(" + sSidurim + ")");
                     for (int I = 0; I < drSidurim.Length; I++)
                     {
+                        flag = true;
                         fTempX = 0;
 
                         iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
@@ -2836,43 +2838,51 @@ namespace KdsBatch
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                                if (objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode() || objOved.objPirteyOved.iMikumYechida == 180)
-                                {
-                                    dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim246;
-                                    dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim247;
-                                }
-                                else
-                                {
-                                    dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim;
-                                    dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim;
-                                }
+                                dShaa = DateTime.Parse(dShatHatchalaLetashlum.ToShortDateString() + " 18:00:00");
 
-                                if ((dShatHatchalaLetashlum <= dEndHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
+                                if (dShatHatchalaLetashlum >= dShaa.AddHours(-7) && dShatHatchalaLetashlum <= dShaa.AddHours(-1) && dShatGmarLetashlum > dShaa)
+                                    flag= false;
+                                
+                                if(flag)
                                 {
-                                    if ((dShatHatchalaLetashlum <= dStartHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
+                                    if (objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode() || objOved.objPirteyOved.iMikumYechida == 180)
                                     {
-                                        fTempX = float.Parse((dShatGmarLetashlum - dStartHafsaketZaharim).TotalMinutes.ToString());
-                                    }
-                                    else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatHatchalaLetashlum < dEndHafsaketZaharim) && (dShatGmarLetashlum > dEndHafsaketZaharim))
-                                    {
-                                        fTempX = float.Parse((dEndHafsaketZaharim - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                                    }
-                                    else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatGmarLetashlum < dEndHafsaketZaharim))
-                                    {
-                                        fTempX = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-
-                                    }
-
-                                    if (fTempX >= 18)
-                                    {
-                                        fErech = 18;
+                                        dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim246;
+                                        dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim247;
                                     }
                                     else
                                     {
-                                        fErech = fTempX;
+                                        dStartHafsaketZaharim = objOved.objParameters.dStartAruchatTzaharayim;
+                                        dEndHafsaketZaharim = objOved.objParameters.dEndAruchatTzaharayim;
                                     }
 
-                                    addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                                    if ((dShatHatchalaLetashlum <= dEndHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
+                                    {
+                                        if ((dShatHatchalaLetashlum <= dStartHafsaketZaharim) && (dShatGmarLetashlum >= dStartHafsaketZaharim))
+                                        {
+                                            fTempX = float.Parse((dShatGmarLetashlum - dStartHafsaketZaharim).TotalMinutes.ToString());
+                                        }
+                                        else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatHatchalaLetashlum < dEndHafsaketZaharim) && (dShatGmarLetashlum > dEndHafsaketZaharim))
+                                        {
+                                            fTempX = float.Parse((dEndHafsaketZaharim - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                                        }
+                                        else if ((dShatHatchalaLetashlum > dStartHafsaketZaharim) && (dShatGmarLetashlum < dEndHafsaketZaharim))
+                                        {
+                                            fTempX = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+
+                                        }
+
+                                        if (fTempX >= 18)
+                                        {
+                                            fErech = 18;
+                                        }
+                                        else
+                                        {
+                                            fErech = fTempX;
+                                        }
+
+                                        addRowToTable(clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                                    }
                                 }
                             }
 

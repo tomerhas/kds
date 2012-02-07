@@ -29,6 +29,7 @@ function ChangeKeyCode()
        var oTxtId = "<%=txtId.ClientID%>";
        var oTxtName = "<%=txtName.ClientID%>";
        var flag = false;
+       var userId = iUserId;
    </script>     
     <fieldset class="FilterFieldSet" >          
         <legend>חיתוך לפי</legend>
