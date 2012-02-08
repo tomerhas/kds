@@ -506,15 +506,15 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         string sToolTip = "";
         if (oBatchManager.oMeafyeneyOved.Meafyen3Exists)
-            sToolTip = "שעת התחלה מותרת (מאפיין 3): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen3) + "\n";
+            sToolTip = "שעת התחלה מותרת (3): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen3) + "\n";
         else
-            sToolTip = "שעת התחלה מותרת (מאפיין 3): 0 \n";
+            sToolTip = "שעת התחלה מותרת (3): 0 \n";
 
         
         if (oBatchManager.oMeafyeneyOved.Meafyen4Exists)
-            sToolTip = sToolTip + "שעת גמר מותרת (מאפיין 4): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen4);
+            sToolTip = sToolTip + "שעת גמר מותרת (4): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen4);
         else
-            sToolTip = sToolTip + "שעת גמר מותרת (מאפיין 4): 0 ";
+            sToolTip = sToolTip + "שעת גמר מותרת (4): 0 ";
 
 
         txtId.ToolTip = sToolTip;

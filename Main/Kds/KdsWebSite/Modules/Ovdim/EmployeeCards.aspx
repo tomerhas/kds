@@ -43,7 +43,7 @@
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:1000;width:150px" >
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div> 
-<div id="divSinun" runat="server" onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
+<div id="divSinun" runat="server"  onkeydown="if (event.keyCode==107) {event.keyCode=9; return event.keyCode }">
       <fieldset class="FilterFieldSet" style="width:950px;height:80px">
         <legend>רשימת כרטיסי עבודה עבור</legend> 
         <table cellpadding="2" cellspacing="0" border="0" style="margin-top:4px"  >
@@ -146,7 +146,7 @@
             <td align="right">
                 <asp:UpdatePanel ID="upGrid" runat="server" RenderMode="Inline">
                    <ContentTemplate> 
-                     <div id="divNetunim" runat="server" dir="rtl" style="text-align:right;width:965px;overflow-x:hidden;">
+                     <div id="divNetunim" runat="server" onscroll="FreezeHeader(this)" dir="rtl" style="text-align:right;width:965px;overflow-x:hidden;">
                         <asp:GridView ID="grdEmployee" runat="server" AllowSorting="true" 
                                  AllowPaging="true" PageSize="8" AutoGenerateColumns="false" CssClass="Grid"  
                                  Width="950px" EmptyDataText="לא נמצאו נתונים!" ShowHeader="true" 
@@ -185,197 +185,184 @@
      </div>     
   
                      
-       <script type="text/javascript" language="javascript" >        
-       function checkID() {
-        var iId = document.getElementById("ctl00_KdsContent_txtId").value;
-        if (iId.length==0)
-        {
-         document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearchDisable";
-         document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
-        }
-        else{
-            document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearch";
-            document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
-        }
-      //  document.getElementById("ctl00_KdsContent_divNetunim").style
-    }
-    function ddlMonth_onchange() {
-        document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0'; 
-        if (document.getElementById('ctl00_KdsContent_divNetunim') != null)
-            document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';
-    }
-       function ClearScreen()
-       {
-            if (document.getElementById("ctl00_KdsContent_grdEmployee")!=null)
-            {
-                document.getElementById("ctl00_KdsContent_grdEmployee").style.display='none';
-                document.getElementById("ctl00_KdsContent_ddlMonth").selectedIndex=0;
-                document.getElementById("ctl00_KdsContent_rdoMonth").checked=true;                
-            }          
-        }      
-        
-        function onClientShownHandler_getID(sender,eventArgs)
-        {
-         //document.getElementById("ctl00_KdsContent_ddlMonth").style.display='none';   
-        }
-        
-        function onClientHiddenHandler_getID(sender, eventArgs)
-        {
-         GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
-         document.getElementById("ctl00_KdsContent_ddlMonth").style.display='block';
-        }     
-        
-        function onClientHiddenHandler_getName(sender, eventArgs)
-        {          
-         var iMisparIshi, iPos;
-         var sOvedName=document.getElementById("ctl00_KdsContent_txtName").value;
-         
-         if (sOvedName!='')
-         {
-             iPos = sOvedName.indexOf('(');
-             if (iPos==-1)
-             {
-                //GetOvedMisparSucc();
-              //  GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
-             }
-             else{
-                iMisparIshi = sOvedName.substr(iPos+1, sOvedName.length-iPos-2);
-                document.getElementById("ctl00_KdsContent_txtId").value=iMisparIshi;
-                document.getElementById("ctl00_KdsContent_txtName").value =  sOvedName.substr(0,iPos-1);
-                wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi),GetOvedSnifAndUnitSucceeded);
-                }
-          }      
-        }
-        
-        function GetOvedNameByMisparIshi()
-        {
-          //document.getElementById("ctl00_KdsContent_txtName").value="";              
-        }
+       <script type="text/javascript" language="javascript" >
+           function checkID() {
+               var iId = document.getElementById("ctl00_KdsContent_txtId").value;
+               if (iId.length == 0) {
+                   document.getElementById("ctl00_KdsContent_btnExecute").className = "ImgButtonSearchDisable";
+                   document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+               }
+               else {
+                   document.getElementById("ctl00_KdsContent_btnExecute").className = "ImgButtonSearch";
+                   document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
+               }
+               //  document.getElementById("ctl00_KdsContent_divNetunim").style
+           }
+           function ddlMonth_onchange() {
+               document.getElementById('ctl00_KdsContent_txtPageIndex').value = '0';
+               if (document.getElementById('ctl00_KdsContent_divNetunim') != null)
+                   document.getElementById('ctl00_KdsContent_divNetunim').style.display = 'none';
+           }
+           function ClearScreen() {
+               if (document.getElementById("ctl00_KdsContent_grdEmployee") != null) {
+                   document.getElementById("ctl00_KdsContent_grdEmployee").style.display = 'none';
+                   document.getElementById("ctl00_KdsContent_ddlMonth").selectedIndex = 0;
+                   document.getElementById("ctl00_KdsContent_rdoMonth").checked = true;
+               }
+           }
 
-        function setMonthFocus() {
-        var rdo = document.getElementById("ctl00_KdsContent_rdoId");
-        if (rdo.checked && document.getElementById("ctl00_KdsContent_txtId").value == "")
-            document.getElementById("ctl00_KdsContent_txtId").focus();
-        else if (document.getElementById("ctl00_KdsContent_rdoName").checked) {
-            if (document.getElementById("ctl00_KdsContent_txtId").value == "")
-                document.getElementById("ctl00_KdsContent_txtId").focus();
-            else if(document.getElementById("ctl00_KdsContent_txtName").value == "")
-                document.getElementById("ctl00_KdsContent_txtName").focus();
-            }
-        else if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {
-              if (document.getElementById("ctl00_KdsContent_btnExecute").disabled == false)
-                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
-            }
-            else document.getElementById("ctl00_KdsContent_btnExecute").focus();
+           function onClientShownHandler_getID(sender, eventArgs) {
+               //document.getElementById("ctl00_KdsContent_ddlMonth").style.display='none';   
+           }
 
-        }                
-        function GetOvedMisparSucc(result)
-        {
-            if (result==''){
-                alert('שם לא נמצא');                        
-                document.getElementById("ctl00_KdsContent_txtName").value='';
-                document.getElementById("ctl00_KdsContent_txtName").select();                
-                document.getElementById("ctl00_KdsContent_txtId").value='';
-               // document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
-                document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
-                document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearchDisable";
-                document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
-               
-            }
-            else {
-                
-                document.getElementById("ctl00_KdsContent_txtId").value = result;
-                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
-              wsGeneral.GetOvedSnifAndUnit(Number(result),GetOvedSnifAndUnitSucceeded);
-            }
-        }
-        
-        function GetOvedNameSucceeded(result) {
-             
-           if ((result=='') || (result=='null')){
-                alert('מספר אישי לא קיים');                        
-                document.getElementById("ctl00_KdsContent_txtId").select();
-                document.getElementById("ctl00_KdsContent_txtName").value='';
-              //  document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
-                document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
-                document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearchDisable";
-                document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
-            }
-            else{
-                document.getElementById("ctl00_KdsContent_txtName").value=result;
-                var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value;
-                document.getElementById("ctl00_KdsContent_txtName").disabled = true;
-                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
-                wsGeneral.GetOvedSnifAndUnit(iMisparIshi,GetOvedSnifAndUnitSucceeded);
-            }
-        }
-        
-        function GetOvedSnifAndUnitSucceeded(result)
-        {
-         if ((result!='') && (result.toString().length>1)){
-           //  document.getElementById("ctl00_KdsContent_txtSnifUnit").value = result;
-             document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = result;
-         }
-         else
-         {
-          //   document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
-             document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
-         }
-         document.getElementById("ctl00_KdsContent_btnExecute").className= "ImgButtonSearch";
-         document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
-   
-     //    ClearScreen();
-        }
-      function SetTextBox() 
-      {
-        var rdo = document.getElementById("ctl00_KdsContent_rdoId");
-        if (rdo.checked) {
-             
-            document.getElementById("ctl00_KdsContent_txtId").disabled = false;
-            document.getElementById("ctl00_KdsContent_txtName").disabled = true;
-           // document.getElementById("ctl00_KdsContent_txtId").select();
-        }
-        else {
-            document.getElementById("ctl00_KdsContent_txtName").disabled = false;
-            document.getElementById("ctl00_KdsContent_txtId").disabled = true;
-            //    document.getElementById("ctl00_KdsContent_txtName").select();
-        }
-    }
-    
+           function onClientHiddenHandler_getID(sender, eventArgs) {
+               GetOvedName(document.getElementById("ctl00_KdsContent_txtId"));
+               document.getElementById("ctl00_KdsContent_ddlMonth").style.display = 'block';
+           }
 
-    function CheckEmployeeId() {
-        if (document.getElementById("ctl00_KdsContent_txtId").value.length == 0 && document.getElementById("ctl00_KdsContent_txtId").value.length == 0) {
-            alert('חובה להזין מספר אישי או שם');
-            return false;
-            }
-        else { return true };
+           function onClientHiddenHandler_getName(sender, eventArgs) {
+               var iMisparIshi, iPos;
+               var sOvedName = document.getElementById("ctl00_KdsContent_txtName").value;
 
-    }
+               if (sOvedName != '') {
+                   iPos = sOvedName.indexOf('(');
+                   if (iPos == -1) {
+                       //GetOvedMisparSucc();
+                       //  GetOvedMisparIshi(document.getElementById("ctl00_KdsContent_txtName"));
+                   }
+                   else {
+                       iMisparIshi = sOvedName.substr(iPos + 1, sOvedName.length - iPos - 2);
+                       document.getElementById("ctl00_KdsContent_txtId").value = iMisparIshi;
+                       document.getElementById("ctl00_KdsContent_txtName").value = sOvedName.substr(0, iPos - 1);
+                       wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
+                   }
+               }
+           }
 
-    function refresh() {
-      $get("<%=btnExecute.ClientID %>").click();
-    }
+           function GetOvedNameByMisparIshi() {
+               //document.getElementById("ctl00_KdsContent_txtName").value="";              
+           }
+
+           function setMonthFocus() {
+               var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+               if (rdo.checked && document.getElementById("ctl00_KdsContent_txtId").value == "")
+                   document.getElementById("ctl00_KdsContent_txtId").focus();
+               else if (document.getElementById("ctl00_KdsContent_rdoName").checked) {
+                   if (document.getElementById("ctl00_KdsContent_txtId").value == "")
+                       document.getElementById("ctl00_KdsContent_txtId").focus();
+                   else if (document.getElementById("ctl00_KdsContent_txtName").value == "")
+                       document.getElementById("ctl00_KdsContent_txtName").focus();
+               }
+               else if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {
+                   if (document.getElementById("ctl00_KdsContent_btnExecute").disabled == false)
+                       document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+               }
+               else document.getElementById("ctl00_KdsContent_btnExecute").focus();
+
+           }
+           function GetOvedMisparSucc(result) {
+               if (result == '') {
+                   alert('שם לא נמצא');
+                   document.getElementById("ctl00_KdsContent_txtName").value = '';
+                   document.getElementById("ctl00_KdsContent_txtName").select();
+                   document.getElementById("ctl00_KdsContent_txtId").value = '';
+                   // document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
+                   document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
+                   document.getElementById("ctl00_KdsContent_btnExecute").className = "ImgButtonSearchDisable";
+                   document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+
+               }
+               else {
+
+                   document.getElementById("ctl00_KdsContent_txtId").value = result;
+                   document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+                   wsGeneral.GetOvedSnifAndUnit(Number(result), GetOvedSnifAndUnitSucceeded);
+               }
+           }
+
+           function GetOvedNameSucceeded(result) {
+
+               if ((result == '') || (result == 'null')) {
+                   alert('מספר אישי לא קיים');
+                   document.getElementById("ctl00_KdsContent_txtId").select();
+                   document.getElementById("ctl00_KdsContent_txtName").value = '';
+                   //  document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
+                   document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
+                   document.getElementById("ctl00_KdsContent_btnExecute").className = "ImgButtonSearchDisable";
+                   document.getElementById("ctl00_KdsContent_btnExecute").disabled = true;
+               }
+               else {
+                   document.getElementById("ctl00_KdsContent_txtName").value = result;
+                   var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value;
+                   document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+                   document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+                   wsGeneral.GetOvedSnifAndUnit(iMisparIshi, GetOvedSnifAndUnitSucceeded);
+               }
+           }
+
+           function GetOvedSnifAndUnitSucceeded(result) {
+               if ((result != '') && (result.toString().length > 1)) {
+                   //  document.getElementById("ctl00_KdsContent_txtSnifUnit").value = result;
+                   document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = result;
+               }
+               else {
+                   //   document.getElementById("ctl00_KdsContent_txtSnifUnit").value = '';
+                   document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = '';
+               }
+               document.getElementById("ctl00_KdsContent_btnExecute").className = "ImgButtonSearch";
+               document.getElementById("ctl00_KdsContent_btnExecute").disabled = false;
+
+               //    ClearScreen();
+           }
+           function SetTextBox() {
+               var rdo = document.getElementById("ctl00_KdsContent_rdoId");
+               if (rdo.checked) {
+
+                   document.getElementById("ctl00_KdsContent_txtId").disabled = false;
+                   document.getElementById("ctl00_KdsContent_txtName").disabled = true;
+                   // document.getElementById("ctl00_KdsContent_txtId").select();
+               }
+               else {
+                   document.getElementById("ctl00_KdsContent_txtName").disabled = false;
+                   document.getElementById("ctl00_KdsContent_txtId").disabled = true;
+                   //    document.getElementById("ctl00_KdsContent_txtName").select();
+               }
+           }
 
 
-    function OpenEmpWorkCard(RowDate) {
-       // debugger;
-        var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
-        var WCardDate = RowDate;
-        var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
-        document.getElementById("divHourglass").style.display = 'block';
-        var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no");
-        if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
-        document.getElementById("divHourglass").style.display = 'none';
-        document.getElementById("ctl00_KdsContent_btnExecute").click();
-        return ReturnWin;
-     }
+           function CheckEmployeeId() {
+               if (document.getElementById("ctl00_KdsContent_txtId").value.length == 0 && document.getElementById("ctl00_KdsContent_txtId").value.length == 0) {
+                   alert('חובה להזין מספר אישי או שם');
+                   return false;
+               }
+               else { return true };
 
-     function continue_click() {
-         var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
-         wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
-         document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+           }
 
-     }  
+           function refresh() {
+               $get("<%=btnExecute.ClientID %>").click();
+           }
+
+
+           function OpenEmpWorkCard(RowDate) {
+               // debugger;
+               var EmpId = document.getElementById("ctl00_KdsContent_txtId").value;
+               var WCardDate = RowDate;
+               var sQuryString = "?EmpID=" + EmpId + "&WCardDate=" + WCardDate + "&dt=" + Date();
+               document.getElementById("divHourglass").style.display = 'block';
+               var ReturnWin = window.showModalDialog('WorkCard.aspx' + sQuryString, window, "dialogHeight: 680px; dialogWidth: 1010px; scroll: no");
+               if (ReturnWin == '' || ReturnWin == 'undefined') ReturnWin = false;
+               document.getElementById("divHourglass").style.display = 'none';
+               document.getElementById("ctl00_KdsContent_btnExecute").click();
+               return ReturnWin;
+           }
+
+           function continue_click() {
+               var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
+               wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
+               document.getElementById("ctl00_KdsContent_ddlMonth").focus();
+
+           }  
    </script>
 </asp:Content>
 
