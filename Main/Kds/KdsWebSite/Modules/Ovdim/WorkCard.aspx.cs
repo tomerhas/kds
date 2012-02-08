@@ -502,6 +502,23 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             btnUpdateCard.Attributes.Add("class", "btnWorkCardUpadte");
 
     }
+    protected void SetToolTipForID()
+    {
+        string sToolTip = "";
+        if (oBatchManager.oMeafyeneyOved.Meafyen3Exists)
+            sToolTip = "שעת התחלה מותרת (מאפיין 3): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen3) + "\n";
+        else
+            sToolTip = "שעת התחלה מותרת (מאפיין 3): 0 \n";
+
+        
+        if (oBatchManager.oMeafyeneyOved.Meafyen4Exists)
+            sToolTip = sToolTip + "שעת גמר מותרת (מאפיין 4): " + clGeneral.ConvertToValidHour(oBatchManager.oMeafyeneyOved.sMeafyen4);
+        else
+            sToolTip = sToolTip + "שעת גמר מותרת (מאפיין 4): 0 ";
+
+
+        txtId.ToolTip = sToolTip;
+    }
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
@@ -542,6 +559,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //רוטינת שגויים                            
                 //נתונים כללים שמגיעים מאובייקט שגויים ושינויי קלט
                 SetGeneralData(oBatchManager);
+
+                //set tool tip for txtId
+                SetToolTipForID();
 
                 //איתחול ה- USERCONTROL
                 InitSidurimUserControl();
