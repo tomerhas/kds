@@ -647,8 +647,19 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         LoadPage();
     }
+    protected bool DisabledCard()
+    {
+      //  בפתיחת כרטיס עבודה עם TB_YAMEY_AVODA_OVDIM.STATUS=2  (הועבר לשכר) והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת - יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות במי ומאיפה פתחו את הכרטיס).   
+      //4. בפתיחת כרטיס עבודה ללא סידורים ו- sysdate הוא בטווח תאריך כרטיס עבודה + 2 והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת- יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות מאיפה פתחו את הכרטיס). 
+      TimeSpan ts = DateTime.Now-oBatchManager.CardDate;
+      int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
+
+      return ((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
+            || ((iDays <= 2) && (!bRashemet) && (oBatchManager.htEmployeeDetails.Count == 0));
+    }
     protected void RenderPage()
     {
+        bool bCalculateAndNotRashemet=false;
         string[] sPeilutDetails;
         if (bInpuDataResult)
         {
@@ -685,20 +696,23 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             // }
             //bParticipationAllowed = SetParticipation();
             SetMeasherMistayeg();
-
-            bool bChishuvShachar=oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
+            bool bChishuvShachar = oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
+            //במידה והכרטיס בסטטוס הועבר לשכר והמשתמש הוא לא רשמת על.רשמת או מנהל מערכת,  נחסום את כל הכרטיס 
+            //או שהכרטיס הוא ללא סידורים והתאריך הכרטיס הוא של היום + 2 והמשתמש הוא לא רשמת\רשמת על\מנהל מערכת
+            if (DisabledCard())            
+                bCalculateAndNotRashemet = true;
+                         
             clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
             //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
             KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
             if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
                 && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
-                || (bChishuvShachar))
-                EnabledFrames(false, bChishuvShachar);
+                || (bChishuvShachar) || (bCalculateAndNotRashemet))
+                EnabledFrames(false, (bChishuvShachar || bCalculateAndNotRashemet));
             else
-             //   if (!bDisabledFrame)
-                EnabledFrames(true, bChishuvShachar);
-
+                EnabledFrames(true, (bChishuvShachar || bCalculateAndNotRashemet));
+           
 
             btnHamara.Disabled = (!EnabledHamaraForDay());
             ddlTachograph.Enabled = (EnabledTachograph() && (!bChishuvShachar));
@@ -710,10 +724,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+            if ((bChishuvShachar) || (bCalculateAndNotRashemet))
             {
                 sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
-                sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
+                if (bChishuvShachar)
+                    sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
             }
             else
             {
