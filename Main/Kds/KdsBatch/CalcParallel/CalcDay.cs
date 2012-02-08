@@ -1640,7 +1640,7 @@ namespace KdsBatch
                         fSumDakotRechiv = 0;
                         if (fMichsaYomit126 > 0 && fDakotNochehut1>0)
                         {
-                            fSumDakotRechiv = Math.Min(fMichsaYomit126, fDakotNochehut1 - fAruchatZaharim88);  
+                            fSumDakotRechiv = Math.Min(fMichsaYomit126, fDakotNochehut1);  
                         }
                     }
 
@@ -2575,7 +2575,8 @@ namespace KdsBatch
 
                             if (fDakotNochehut < fMichsaYomit && fDakotNochehut > 0 && fMichsaYomit > 0 && objOved.objMeafyeneyOved.iMeafyen33 == 1)
                             {
-                                fErechRechiv = (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
+                                if (!HaveRechivimInDay(objOved.Taarich))
+                                    fErechRechiv = (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
                             }
 
                             if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
@@ -2626,7 +2627,7 @@ namespace KdsBatch
                                         rowSidur = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur in(99820,99822,99821)");
                                         if (rowSidur.Length == 0)
                                         {
-                                            fErechRechiv = fErechRechiv + ((fMichsaYomit - fMichsatMutamBitachon) / fMichsaYomit);
+                                            fErechRechiv = ((fMichsaYomit - fMichsatMutamBitachon) / fMichsaYomit);
                                         }
                                     }
                                 }
@@ -2679,7 +2680,8 @@ namespace KdsBatch
 
                         if (fDakotNochehut < fMichsaYomit && fDakotNochehut > 0 && fMichsaYomit > 0 && objOved.objMeafyeneyOved.iMeafyen33 == 0)
                         {
-                            fErechRechiv = (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
+                            if (!HaveRechivimInDay(objOved.Taarich))
+                                fErechRechiv = (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
                         }
 
                         if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
@@ -2737,7 +2739,7 @@ namespace KdsBatch
                                     {
                                         if (fDakotNochehut < fMichsatMutamBitachon)
                                         {
-                                            fErechRechiv = fErechRechiv + (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
+                                            fErechRechiv =  (fMichsaYomit - fDakotNochehut) / fMichsaYomit;
                                         }
                                     }
                                     if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
@@ -2745,7 +2747,7 @@ namespace KdsBatch
                                         fDakotNochehutLeloKizuz = oCalcBL.GetSumErechEzer(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                                         if (fDakotNochehutLeloKizuz < fMichsatMutamBitachon)
                                         {
-                                            fErechRechiv = fErechRechiv + (fMichsatMutamBitachon - fDakotNochehutLeloKizuz) / fMichsaYomit;
+                                            fErechRechiv = (fMichsatMutamBitachon - fDakotNochehutLeloKizuz) / fMichsaYomit;
                                         }
                                     }
                                 }
@@ -5952,7 +5954,7 @@ namespace KdsBatch
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                 if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
                 {
-                    fSumDakotRechiv = fYomHeadrut * fMichsaYomit * objOved.fMekademNipuach;
+                    fSumDakotRechiv = fYomHeadrut * fMichsaYomit * (1 / objOved.fMekademNipuach);
                 }
                 else
                 {
@@ -5976,7 +5978,7 @@ namespace KdsBatch
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                 if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
                 {
-                    fSumDakotRechiv = fYomChofesh * fMichsaYomit * objOved.fMekademNipuach;
+                    fSumDakotRechiv = fYomChofesh * fMichsaYomit *(1/objOved.fMekademNipuach);
                 }
                 else
                 {
@@ -6884,6 +6886,33 @@ namespace KdsBatch
             }
         }
 
+        private bool HaveRechivimInDay(DateTime taarich)
+        {
+            float fYomMachala, fYomMachalaBoded, fYomMachalatYeled, fYomMachaltHorim, fYomMachalaBenZug, fYomShmiratHerayon, fYomMiluim;
+
+            try
+            {
+                Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], taarich);
+
+                fYomMachala = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMachla);
+                fYomMachalaBoded = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMachalaBoded);
+                fYomMachalatYeled = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMachalaYeled);
+                fYomMachaltHorim = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMachalatHorim);
+                fYomMachalaBenZug = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMachalatBenZug);
+                fYomShmiratHerayon = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomShmiratHerayon);
+                fYomMiluim = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.YomMiluim);
+
+                if (fYomMachala == 0 && fYomMachalaBoded == 0 && fYomMachalatYeled == 0 && fYomMachaltHorim == 0
+                    && fYomMachalaBenZug == 0 && fYomShmiratHerayon == 0 && fYomMiluim == 0)
+                {
+                    return false;
+                } return true;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         private bool CheckShishiMuchlaf(int iSugYom, DateTime dTaarich)
         {
             bool bShishiMuchlaf = false;

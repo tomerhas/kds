@@ -6771,6 +6771,9 @@ namespace KdsBatch
             drIdkunim = _dtIdkuneyRashemet.Select("shem_db='" + sFieldToChange.ToUpper() + "'");
             if (drIdkunim.Length > 0)
                 bHaveIdkun = true;
+
+                //if (sFieldToChange.ToUpper() == "SHAT_HATCHALA")
+                //    bHaveIdkun = true;
             }
             catch (Exception ex)
             {
@@ -10599,7 +10602,7 @@ namespace KdsBatch
             bool bHavePeilutMustRechev = false;
             int l, iCountPeiluyot;
             bool bAddElementPitzul = false;
-            bool bAddElementHamtana = true;
+            bool bAddElementHamtana = false;
             int j = 0;
             long lMakat;
             try
@@ -10667,7 +10670,7 @@ namespace KdsBatch
                                     if (!CheckHaveElementHachanatMechona_2(ref oSidur, iPeilutNesiaIndex) && !bAddElementHamtana)
                                     {
                                         lMakat = ((clPeilut)oLocalSidur.htPeilut[oLocalSidur.htPeilut.Count - 1]).lMakatNesia;
-                                        if (oLocalSidur != oSidur && iSidurIndex == i + 1 && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > _oParameters.iMinTimeBetweenSidurim
+                                        if (oLocalSidur != oSidur && iSidurIndex == i + 1 && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes <= _oParameters.iMinTimeBetweenSidurim
                                              && lMakat.ToString().PadLeft(8).Substring(0, 3) == "724" && int.Parse(lMakat.ToString().PadLeft(8).Substring(4, 3)) > 60)
                                         {
                                             AddElementHachanatMechine711_2(ref oSidur, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona,ref iNumHachanotMechonaForSidur,ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, ref oObjSidurimOvdimUpd);
@@ -10723,7 +10726,8 @@ namespace KdsBatch
                 oPeilut = (clPeilut)oSidur.htPeilut[iPeilutNesiaIndex];
                 InsertToObjPeilutOvdimForInsert(ref oSidur, ref oObjPeilutOvdimIns);
 
-                if (iMeshechHachanotMechona < oParam.iPrepareAllMechineTotalMaxTimeInDay || iNumHachanotMechonaForSidur < oParam.iPrepareAllMechineTotalMaxTimeForSidur ||
+                if (iMeshechHachanotMechona < oParam.iPrepareAllMechineTotalMaxTimeInDay && 
+                    iNumHachanotMechonaForSidur < oParam.iPrepareAllMechineTotalMaxTimeForSidur &&
                     iMeshechHachanotMechonaNosafot < oParam.iPrepareOtherMechineTotalMaxTime)
                 {
                     oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("711", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
