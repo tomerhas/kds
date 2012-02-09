@@ -2379,8 +2379,11 @@ namespace KdsBatch
                                 fErech = float.Parse((objOved.objParameters.dSiyumTosefetLaila - objOved.objParameters.dTchilatTosefetLaila).TotalMinutes.ToString());
                             }
 
-
-                            addRowToTable(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                            if (fErech > 0)
+                            {
+                                HachsaratPeilut790LaylaEgged(iMisparSidur, dShatHatchalaSidur, ref fErech);
+                                addRowToTable(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                            }
                         }
 
                     }
@@ -2397,6 +2400,39 @@ namespace KdsBatch
             }
         }
 
+        private void HachsaratPeilut790LaylaEgged(int iMisparSidur, DateTime dShatHatchalaSidur,ref float fErechRechiv)
+        {
+            DataRow[] dr790;
+            string sQury;
+            DateTime shat_yetzia;
+            int meshec790;
+            try
+            {
+                sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dShatHatchalaSidur.ToShortDateString() + "', 'System.DateTime') and ";
+                sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
+                dr790 = objOved.DtPeiluyotYomi.Select(sQury, "shat_yetzia asc");
+
+                if (dr790.Length > 0)
+                {
+                    shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
+                    meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
+                    if (shat_yetzia > objOved.objParameters.dTchilatTosefetLaila && shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok)
+                        fErechRechiv -= meshec790;
+                    else if (shat_yetzia < objOved.objParameters.dTchilatTosefetLaila && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLaila)
+                        fErechRechiv -= int.Parse((shat_yetzia.AddMinutes(meshec790) - objOved.objParameters.dTchilatTosefetLaila).TotalMinutes.ToString());
+                    else if (shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLailaChok)
+                        fErechRechiv -= int.Parse((objOved.objParameters.dTchilatTosefetLailaChok - shat_yetzia).TotalMinutes.ToString());
+               
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
+            }
+        }
+
+       
         public void CalcRechiv55()
         {
             DataRow[] drSidurim;
@@ -2490,10 +2526,11 @@ namespace KdsBatch
                                 {
                                     fErech = float.Parse((dZmanSiyuomTosLila - dZmatTchilatTosLila).TotalMinutes.ToString());
                                 }
-
-
-
-                                addRowToTable(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                                if (fErech > 0)
+                                {
+                                    HachsaratPeilut790LaylaChok(iMisparSidur, dShatHatchalaSidur, ref fErech);
+                                    addRowToTable(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                                }
                             }
                         }
 
@@ -2511,6 +2548,37 @@ namespace KdsBatch
             }
         }
 
+        private void HachsaratPeilut790LaylaChok(int iMisparSidur, DateTime dShatHatchalaSidur, ref float fErechRechiv)
+        {
+            DataRow[] dr790;
+            string sQury;
+            DateTime shat_yetzia;
+            int meshec790;
+            try
+            {
+                sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dShatHatchalaSidur.ToShortDateString() + "', 'System.DateTime') and ";
+                sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
+                dr790 = objOved.DtPeiluyotYomi.Select(sQury, "shat_yetzia asc");
+
+                if (dr790.Length > 0)
+                {
+                    shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
+                    meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
+                    if (shat_yetzia > objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) < objOved.objParameters.dSiyumTosefetLailaChok)
+                        fErechRechiv -= meshec790;
+                    else if (shat_yetzia > objOved.objParameters.dTchilatTosefetLaila && shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLailaChok)
+                        fErechRechiv -= int.Parse((shat_yetzia.AddMinutes(meshec790) - objOved.objParameters.dTchilatTosefetLailaChok).TotalMinutes.ToString());
+                    else if (shat_yetzia > objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia > objOved.Taarich &&  shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dSiyumTosefetLailaChok)
+                        fErechRechiv -= int.Parse((objOved.objParameters.dSiyumTosefetLailaChok - shat_yetzia).TotalMinutes.ToString());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
+            }
+        }
         public float CalcRechiv62(out int iCount)
         {
             DataRow[] drSidurim;
@@ -6517,8 +6585,11 @@ namespace KdsBatch
                                 fErech = float.Parse((dZmanSiyuomTosLila - dZmanTchilatTosLila).TotalMinutes.ToString());
                             }
 
-
-                            addRowToTable(clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                            if (fErech > 0)
+                            {
+                                HachsaratPeilut790SidureyBoker(iMisparSidur, dShatHatchalaSidur, ref fErech);
+                                addRowToTable(clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                            }
                         }
 
 
@@ -6533,6 +6604,39 @@ namespace KdsBatch
             finally
             {
                 drSidurim = null;
+            }
+        }
+
+        private void HachsaratPeilut790SidureyBoker(int iMisparSidur, DateTime dShatHatchalaSidur, ref float fErechRechiv)
+        {
+            DataRow[] dr790;
+            string sQury;
+            DateTime shat_yetzia;
+            int meshec790;
+            try
+            {
+                sQury = "MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dShatHatchalaSidur.ToShortDateString() + "', 'System.DateTime') and ";
+                sQury += "SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
+                dr790 = objOved.DtPeiluyotYomi.Select(sQury, "shat_yetzia asc");
+
+                if (dr790.Length > 0)
+                {
+                    shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
+                    meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
+                    if (shat_yetzia.ToShortDateString() == objOved.Taarich.ToShortDateString() &&
+                        shat_yetzia < objOved.objParameters.dSiyumTosefetLailaChok)
+                    {
+                        if (shat_yetzia.AddMinutes(meshec790) < objOved.objParameters.dSiyumTosefetLailaChok)
+                            fErechRechiv -= meshec790;
+                        else if (shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dSiyumTosefetLailaChok)
+                            fErechRechiv -= int.Parse((objOved.objParameters.dSiyumTosefetLailaChok - shat_yetzia).TotalMinutes.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
             }
         }
 
