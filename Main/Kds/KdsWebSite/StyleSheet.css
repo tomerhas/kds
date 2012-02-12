@@ -286,7 +286,17 @@ cursor:pointer;
 	cursor:pointer;	
 }
 
-
+.ImgKnisaS
+{
+	background-image: url(Images/KnisotS.png);
+	background-repeat:no-repeat;
+	background-color:transparent;
+	background-position:center;	
+	border:none;
+	width:25px; 
+	height:25px;		
+	cursor:pointer;	
+}
 .ImgCheckedPeilut
 {
 	background-image: url(Images/activeV.png);		

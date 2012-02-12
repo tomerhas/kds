@@ -6296,15 +6296,26 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected void SetCancelColumn(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, bool bElementHachanatMechona)
     {
       Button oCancelButton;
-      //bool bPeilutActive;
-
+      string[] arrKnisaVal;
+      int iMisparKnisa;
+      int iKnisaType;
       try
       {
+          arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+          iMisparKnisa = int.Parse(arrKnisaVal[0]);//int.Parse(e.Row.Cells[_COL_KNISA].Text);
+          iKnisaType = int.Parse(arrKnisaVal[1]);
+
           oCancelButton = AddImageButton();
-          oCancelButton.OnClientClick = "if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0"  + ")) {return false;} else {return true;} ";
-        //  bPeilutActive = (((System.Data.DataRowView)(e.Row.DataItem)).Row["bitul_o_hosafa"].ToString() == "0");
-          oCancelButton.CssClass = bPeilutActive ? "ImgCheckedPeilut" : "ImgCancel";
-          //oCancelButton.Attributes.Add("cancel", (!bPeilutActive).GetHashCode().ToString());
+          oCancelButton.OnClientClick = "if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0"  + ")) {return false;} else {return true;} ";        
+          if (bPeilutActive){
+              //if ((iMisparKnisa > 0) && (iKnisaType == 1)) //כניסה לפי צורך
+              //    oCancelButton.CssClass = "ImgKnisaS";
+              //else
+                  oCancelButton.CssClass = "ImgCheckedPeilut";           
+          }
+          else
+            oCancelButton.CssClass = "ImgCancel";
+          
           e.Row.Cells[_COL_CANCEL].Controls.Add(oCancelButton);
           oCancelButton = ((Button)(e.Row.Cells[_COL_CANCEL].Controls[0]));
 
@@ -6316,10 +6327,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
               oCancelButton.Attributes.Add("disabled", "true");
               oCancelButton.Attributes.Add("OrgEnabled", "0");
           }
-          else
-          {
-              oCancelButton.Attributes.Add("OrgEnabled", "1");
-          }
+          else          
+              oCancelButton.Attributes.Add("OrgEnabled", "1");          
          
           oCancelButton.ToolTip = e.Row.Cells[_COL_LAST_UPDATE].Text == "&nbsp;" ? "" : e.Row.Cells[_COL_LAST_UPDATE].Text;
       }

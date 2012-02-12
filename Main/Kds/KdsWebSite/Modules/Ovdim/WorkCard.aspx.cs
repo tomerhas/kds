@@ -121,7 +121,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             SetServiceRefference();
         }
     }
-    protected void SetMeasherMistayeg()
+    protected void SetMeasherMistayeg(bool bChishuvShachar, bool bCalculateAndNotRashemet)
     {
         //במידה ותאריך הכרטיס הוא התאריך של היום לא נאפשר את כפתורי מאשר מסתייג
         if (dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())){        
@@ -129,7 +129,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             btnNotApprove.Disabled = true;
         }
         else{                  
-                if (iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)){                                   
+                if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bCalculateAndNotRashemet)){                                   
                     //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                     //רק במידה ולא נעשה שינוי בכרטיס
                     btnApprove.Disabled = bWorkCardWasUpdate;
@@ -715,13 +715,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 bWorkCardWasUpdate = IsWorkCardWasUpdate();
             // }
             //bParticipationAllowed = SetParticipation();
-            SetMeasherMistayeg();
+            
             bool bChishuvShachar = oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
             //במידה והכרטיס בסטטוס הועבר לשכר והמשתמש הוא לא רשמת על.רשמת או מנהל מערכת,  נחסום את כל הכרטיס 
             //או שהכרטיס הוא ללא סידורים והתאריך הכרטיס הוא של היום + 2 והמשתמש הוא לא רשמת\רשמת על\מנהל מערכת
             if (DisabledCard())            
                 bCalculateAndNotRashemet = true;
-                         
+            SetMeasherMistayeg(bChishuvShachar, bCalculateAndNotRashemet);             
             clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
             //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
