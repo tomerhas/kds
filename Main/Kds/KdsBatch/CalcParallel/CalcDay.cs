@@ -391,13 +391,13 @@ namespace KdsBatch
                 //כמות גמול חסכון נוספות (רכיב 44) 
                 CalcRechiv44();
 
+                //כמות גמול חסכון (רכיב 22) 
+                CalcRechiv22();
+
                 UpdateRechiv1();
 
                 //קיזוז לעובד מותאם (רכיב 90
                 CalcRechiv90();
-
-                //כמות גמול חסכון (רכיב 22) 
-                CalcRechiv22();
 
                 //יום היעדרות  (רכיב 66) 
                 CalcRechiv66();
@@ -1290,7 +1290,11 @@ namespace KdsBatch
         private void CalcRechiv22()
         {
             //יש לפתוח רכיב רק אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך כלשהו ו/או קיים סידור מזכה לגמול 
-            float fSumDakotRechiv, fDakotNehiga, fMichsaYomit126, fNochechtLeTashlum;
+            float fSumDakotRechiv, fDakotNehiga, fMichsaYomit126, fNochechtLeTashlum,sum;
+            DataRow[] drSidurim;
+            DataRow[] dr;
+            int iSugSidur;
+            clCalcBL oCalcBL = new clCalcBL();
             try
             {
                 //יש לחשב רק בתנאים אלו:
@@ -1310,6 +1314,21 @@ namespace KdsBatch
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
                             fNochechtLeTashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND (MISPAR_SIDUR=99207 or MISPAR_SIDUR=99007 or MISPAR_SIDUR=99011 )")); 
                             fSumDakotRechiv = fSumDakotRechiv - fNochechtLeTashlum;
+                            drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and SUG_AVODA=7");
+                            for (int i=0;i<drSidurim.Length;i++){
+                                sum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR="+ drSidurim[i]["mispar_sidur"].ToString() +" )"));
+                                fSumDakotRechiv += sum;
+                            }
+                            drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)<>99");
+                            for (int i = 0; i < drSidurim.Length; i++)
+                            {
+                                iSugSidur = int.Parse(drSidurim[i]["sug_sidur"].ToString());
+                                if (oCalcBL.CheckSugSidur(objOved, clGeneral.enMeafyen.SugAvoda.GetHashCode(), clGeneral.enSugAvoda.Kupai.GetHashCode(), iSugSidur))
+                                {
+                                    sum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR=" + drSidurim[i]["mispar_sidur"].ToString() ));
+                                    fSumDakotRechiv += sum;
+                                }
+                            }
                         }
                         else
                         {
@@ -3380,7 +3399,10 @@ namespace KdsBatch
                     { fDakotRechiv = fDakotNehiga - fMichsatMutam; }
                     if (iMutam == 3) // && fMichsatMutam < fDakotNochehut1)
                     {
-                        fTempZ = fDakotNehiga - fMichsatMutam;
+                        if ((fDakotNehiga - fMichsatMutam) < 0)
+                            fTempZ = 0;
+                        else fTempZ = fDakotNehiga - fMichsatMutam;
+
                         fDakotRechiv = fTempZ;
                         fTempY = fDakotNochehut1 - fTempZ;
                         if(fTempY > fMichsaYomit)

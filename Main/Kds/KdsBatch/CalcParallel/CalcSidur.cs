@@ -2416,11 +2416,11 @@ namespace KdsBatch
                 {
                     shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
                     meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
-                    if (shat_yetzia > objOved.objParameters.dTchilatTosefetLaila && shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok)
+                    if (shat_yetzia >= objOved.objParameters.dTchilatTosefetLaila && shat_yetzia.AddMinutes(meshec790) <= objOved.objParameters.dTchilatTosefetLailaChok)
                         fErechRechiv -= meshec790;
                     else if (shat_yetzia < objOved.objParameters.dTchilatTosefetLaila && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLaila)
                         fErechRechiv -= int.Parse((shat_yetzia.AddMinutes(meshec790) - objOved.objParameters.dTchilatTosefetLaila).TotalMinutes.ToString());
-                    else if (shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLailaChok)
+                    else if (shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) >= objOved.objParameters.dTchilatTosefetLailaChok)
                         fErechRechiv -= int.Parse((objOved.objParameters.dTchilatTosefetLailaChok - shat_yetzia).TotalMinutes.ToString());
                
                 }
@@ -2564,7 +2564,7 @@ namespace KdsBatch
                 {
                     shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
                     meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
-                    if (shat_yetzia > objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) < objOved.objParameters.dSiyumTosefetLailaChok)
+                    if (shat_yetzia >= objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) <= objOved.objParameters.dSiyumTosefetLailaChok)
                         fErechRechiv -= meshec790;
                     else if (shat_yetzia > objOved.objParameters.dTchilatTosefetLaila && shat_yetzia < objOved.objParameters.dTchilatTosefetLailaChok && shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dTchilatTosefetLailaChok)
                         fErechRechiv -= int.Parse((shat_yetzia.AddMinutes(meshec790) - objOved.objParameters.dTchilatTosefetLailaChok).TotalMinutes.ToString());
@@ -6624,12 +6624,12 @@ namespace KdsBatch
                     shat_yetzia = DateTime.Parse(dr790[0]["shat_yetzia"].ToString());
                     meshec790 = int.Parse(dr790[0]["makat_nesia"].ToString().Substring(3, 3));
                     if (shat_yetzia.ToShortDateString() == objOved.Taarich.ToShortDateString() &&
-                        shat_yetzia < objOved.objParameters.dSiyumTosefetLailaChok)
+                        shat_yetzia < objOved.objParameters.dTchilatTosefetLailaYomNochechi)
                     {
-                        if (shat_yetzia.AddMinutes(meshec790) < objOved.objParameters.dSiyumTosefetLailaChok)
+                        if (shat_yetzia.AddMinutes(meshec790) <= objOved.objParameters.dSiyumTosefetLailaYomNochechi)
                             fErechRechiv -= meshec790;
-                        else if (shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dSiyumTosefetLailaChok)
-                            fErechRechiv -= int.Parse((objOved.objParameters.dSiyumTosefetLailaChok - shat_yetzia).TotalMinutes.ToString());
+                        else if (shat_yetzia.AddMinutes(meshec790) > objOved.objParameters.dSiyumTosefetLailaYomNochechi)
+                            fErechRechiv -= int.Parse((objOved.objParameters.dSiyumTosefetLailaYomNochechi - shat_yetzia).TotalMinutes.ToString());
                     }
                 }
             }

@@ -409,6 +409,25 @@ namespace KdsBatch
             }
         }
 
+        public bool CheckSugSidur(Oved objOved, int iMeafyen, int iErech, int iSugSidur)
+        {   //הפונקציה מקבלת קוד מאפיין,סוג סידור,ערך מאפיין ותאריך ומחזירה האם קיים כזה סוג סידור
+
+            DataRow[] dr;
+            try
+            {
+                dr = objOved.oGeneralData.dtMeafyeneySugSidurAll.Select("kod_meafyen=" + iMeafyen.ToString() + " and erech=" + iErech + " and Convert('" + objOved.Taarich.ToShortDateString() + "','System.DateTime') >= me_taarich and Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') <= ad_taarich and sug_sidur=" + iSugSidur.ToString());
+
+                return ((dr.Length > 0) ? true : false);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dr = null;
+            }
+        }
         public void ChishuvMichsatYom(Oved oved)
         {
             DateTime taarich = oved.Month;

@@ -19,6 +19,9 @@ namespace KdsBatch
         public DateTime dSiyumTosefetLaila; //10	סיום תוספת לילה אגד	שעה	22:00
         public DateTime dTchilatTosefetLailaChok;//11	תחילת תוספת לילה חוק	שעה	22:01
         public DateTime dSiyumTosefetLailaChok;//12	סיום תוספת לילה חוק	שעה	06:00
+        public DateTime dTchilatTosefetLailaYomNochechi;//13	תחילת תוספת לילה יום נוכחי 
+        public DateTime dSiyumTosefetLailaYomNochechi;//14	סיום תוספת לילה יום נוכחי 
+
 
         public DateTime dStartAruchatTzaharayim;//18 - תחילת ארוחת צהריים
         public DateTime dEndAruchatTzaharayim;//19 - סיום ארוחת צהריים
@@ -287,6 +290,14 @@ namespace KdsBatch
                 //12	סיום תוספת לילה חוק	שעה	
                 sTmp = GetOneParam(12, dCardDate.AddDays(1));
                 dSiyumTosefetLailaChok = GetParamHour(sTmp, dCardDate.AddDays(1));
+
+                //13	תחילת תוספת לילה יום נוכחי 
+                sTmp = GetOneParam(13, dCardDate);
+                dTchilatTosefetLailaYomNochechi = GetParamHour(sTmp, dCardDate);
+
+                //14	סיום תוספת לילה יום נוכחי 
+                sTmp = GetOneParam(14, dCardDate);
+                dSiyumTosefetLailaYomNochechi = GetParamHour(sTmp, dCardDate);
 
                 //18 - תחילת ארוחת צהריים
                 sTmp = GetOneParam(18, dCardDate);
