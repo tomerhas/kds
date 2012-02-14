@@ -743,17 +743,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 CreateChangeAttributs();
 
             SetDDLToolTip();
-            string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            if ((bChishuvShachar) || (bCalculateAndNotRashemet))
-            {
-                sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
-                if (bChishuvShachar)
-                    sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
-            }
-            else
-            {
-                sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            }
+            string sScript = SendScript(bChishuvShachar, bCalculateAndNotRashemet);
+            //string sScript;// = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            //if ((bChishuvShachar) || (bCalculateAndNotRashemet))
+            //{
+            //    sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
+            //    if (bChishuvShachar)
+            //        sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
+            //}
+            //else
+            //{
+            //    sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            //}
             if (bAddSidur)
                 sScript = sScript + "SetNewSidurFocus(" + (lstSidurim.DataSource.Count - 1).ToString() + ");";                         
             if (lstSidurim.AddPeilut != null)
@@ -783,7 +784,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
         }
         //Before Load page, save field data for compare
-        //_WorkCardBeforeChanges = InitWorkCardObject();
+        //_WorkCardBeforeChanges = InitWorkCardObject();             
+
+    }
+
+    private string SendScript(bool bChishuvShachar, bool bCalculateAndNotRashemet)
+    {
+        string sScript = "";
+        if ((bChishuvShachar) || (bCalculateAndNotRashemet))
+        {
+            sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
+            if (bChishuvShachar)
+                sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
+        }
+        else
+        {
+            sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+        }
+        return sScript;
     }
     //private string GetPeilutClientKey(string[] sPeilutDetails)
     //{
@@ -2254,10 +2272,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = false;
     }
     protected void btnRefreshOvedDetails_Click(object sender, EventArgs e)
-    {       
+    {
+        bool bCalculateAndNotRashemet = false;
+        bool bChishuvShachar = false;
+
         if (bInpuDataResult)
-        {
-          
+        {          
             if (hidSave.Value.Equals("1"))
             {
                 RunBatchFunctions();
@@ -2273,15 +2293,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
           
             lstSidurim.ClearControl();
             lstSidurim.BuildPage();
-         
-            string sScript;// = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-            {
-                sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
-                sScript = sScript + ChisuvShacharMsg(); //"alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
-            }
-            else
-                sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+
+            if (DisabledCard())
+                bCalculateAndNotRashemet = true;
+
+            // string sScript;// = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+            bChishuvShachar = oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
+            string sScript = SendScript(bChishuvShachar, bCalculateAndNotRashemet);
+            //if ((bChishuvShachar) || (bCalculateAndNotRashemet))
+            //{
+            //    sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
+            //    if (bChishuvShachar)
+            //        sScript = sScript + ChisuvShacharMsg(); //"alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+            //}
+            //else
+            //    sScript = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
             ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);           
         }
     }

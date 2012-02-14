@@ -1962,7 +1962,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                   ChangePeiluyotIndex(iPos, ref _Sidur.htPeilut, ref _Peilut);
             }
             Session["Sidurim"] = _DataSource;
-           
+
             ClearControl();
             BuildPage();
            
@@ -2227,7 +2227,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //נציין כאילו שינוי הקלט עבדו בהצלחה
         if (btnHandler != null)
-            btnHandler(string.Empty, (bOpenUpdateBtn ));
+            btnHandler(string.Empty, (bOpenUpdateBtn));
 
     }
     void imgAddPeilut_Click(object sender, ImageClickEventArgs e)
@@ -2395,16 +2395,19 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (!String.IsNullOrEmpty(((TextBox)_GridRow.Cells[COL_MAKAT].Controls[0]).Text))
             lMakat = long.Parse(((TextBox)_GridRow.Cells[COL_MAKAT].Controls[0]).Text);
 
+       
         if (FindPeilutInMapa(_Sidur, _Peilut, _Direction, lMakat,  sShatYetiza,iAddDay, ref _PeilutReka))
         {
             OrderedDictionary hashSidurimPeiluyot = DataSource;
             UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-            InsertPeilutRekaFromMapa(iSidurIndex, iPeilutIndex, _PeilutReka, _Direction, ref iNewPeilutIndex);
+            InsertPeilutRekaFromMapa(iSidurIndex, iPeilutIndex, _PeilutReka, _Direction, ref iNewPeilutIndex);            
             bOpenUpdateBtn = true;
         }
         else
-            sScript = "alert('לא נמצאה נסיעה ריקה שתוכננה במפה');";        
+            sScript = "alert('לא נמצאה נסיעה ריקה שתוכננה במפה');";
 
+
+       
         return sScript;
     }
     protected string AddRekaByXYUP(int iSidurIndex, int iPeilutIndex, ref bool bOpenUpdateBtn)
@@ -2429,6 +2432,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
          if (iSidurIndexOrg != 0)
             lMakatStart = GetMakatStartForReaka(ref lCarNum,ref iSidurIndex, ref iPeilutIndex);
 
+        
         if ((lMakatStart == 0) || (iSidurIndexOrg==0))       
             sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";                
         else
@@ -2444,6 +2448,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             else            
                 sScript = "alert('לא נמצאה ריקה מתאימה');";                          
         }
+        
         return sScript;
     }
     protected string AddRekaByXY(int iSidurIndex, int iPeilutIndex,  ref bool bOpenUpdateBtn)
@@ -2457,6 +2462,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //נמצא את מספר המק"ט הבא שביניהם תכנס הנסיעה הריקה
         lMakatEnd = GetMakatEndForReaka(ref iSidurIndex, ref iPeilutIndex, ref lCarNum);
+        
         if (lMakatEnd == 0)
         {
             sScript = "alert(' לא ניתן להשלים נסיעה ריקה');";
@@ -2478,6 +2484,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                // ScriptManager.RegisterStartupScript((ImageButton)sender, sender.GetType(), "GetRekaFromTnua", sScript, true);
             }
         }
+       
         return sScript;
     }
     public string GetPeilutClientKey(string[] sPeilutDetails)
