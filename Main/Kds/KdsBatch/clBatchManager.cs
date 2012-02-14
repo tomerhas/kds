@@ -6400,17 +6400,17 @@ namespace KdsBatch
                     FixedSidurHours08();
 
                     //חישוב שעת התחלה - שינוי 30
-                    //for (i = 0; i < htEmployeeDetails.Count; i++)
-                    //{
-                    //    oSidur = (clSidur)htEmployeeDetails[i];
-                    //    if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                    //    {
-                    //        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                    for (i = 0; i < htEmployeeDetails.Count; i++)
+                    {
+                        oSidur = (clSidur)htEmployeeDetails[i];
+                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                        {
+                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                    //        ChishuvShatHatchala30(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
-                    //        htEmployeeDetails[i] = oSidur;
-                    //    }
-                    //}
+                            ChishuvShatHatchala30(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
+                            htEmployeeDetails[i] = oSidur;
+                        }
+                    }
                     //בוטל 04/07/2011
                     //-שינוי 22
                     ////for (i = 0; i < htEmployeeDetails.Count; i++)
