@@ -14252,7 +14252,7 @@ namespace KdsBatch
             {
                 if (oSidur.htPeilut.Count > 0 && oSidur.iMisparSidur > 1000 && string.IsNullOrEmpty(oSidur.sSidurVisaKod))
                 {
-                    while (indexPeilutMechona < 0)
+                    while (indexPeilutMechona < 0 && i < oSidur.htPeilut.Count)
                     {
                         oPeilut = (clPeilut)oSidur.htPeilut[i];
                         oMakatType = oPeilut.lMakatNesia;
@@ -14339,39 +14339,42 @@ namespace KdsBatch
             SourceObj SourceObject;
             try
             {
-                clNewSidurim oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
-
-                oNewSidurim.SidurIndex = iSidurIndex;
-                oNewSidurim.SidurNew = oSidur.iMisparSidur;
-                oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
-
-                UpdateObjectUpdSidurim(oNewSidurim);
-                //עדכון שעת התחלה סידור של כל הפעילויות לסידור
-                for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                if (dShatHatchalaNew != oSidur.dFullShatHatchala)
                 {
-                    oPeilut = (clPeilut)oSidur.htPeilut[j];
-                    if (!CheckPeilutObjectDelete(iSidurIndex, j))
+                    clNewSidurim oNewSidurim = FindSidurOnHtNewSidurim(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+
+                    oNewSidurim.SidurIndex = iSidurIndex;
+                    oNewSidurim.SidurNew = oSidur.iMisparSidur;
+                    oNewSidurim.ShatHatchalaNew = dShatHatchalaNew;
+
+                    UpdateObjectUpdSidurim(oNewSidurim);
+                    //עדכון שעת התחלה סידור של כל הפעילויות לסידור
+                    for (int j = 0; j < oSidur.htPeilut.Count; j++)
                     {
-                        oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
-                        if (SourceObject == SourceObj.Insert)
+                        oPeilut = (clPeilut)oSidur.htPeilut[j];
+                        if (!CheckPeilutObjectDelete(iSidurIndex, j))
                         {
-                            oObjPeilutUpd.SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
-                        }
-                        else
-                        {
-                            oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
-                            oObjPeilutUpd.UPDATE_OBJECT = 1;
-                        }
+                            oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
+                            if (SourceObject == SourceObj.Insert)
+                            {
+                                oObjPeilutUpd.SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
+                            }
+                            else
+                            {
+                                oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = dShatHatchalaNew;
+                                oObjPeilutUpd.UPDATE_OBJECT = 1;
+                            }
 
+                        }
                     }
-                }
-                //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
-                UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
-                UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
+                    //UpdatePeiluyotMevutalotYadani(iSidurIndex,oNewSidurim, oObjSidurimOvdimUpd);
+                    UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
+                    UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, dShatHatchalaNew);
 
-                oSidur.dFullShatHatchala = dShatHatchalaNew;
-                oSidur.sShatHatchala = dShatHatchalaNew.ToString("HH:mm");
-                oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = dShatHatchalaNew;
+                    oSidur.dFullShatHatchala = dShatHatchalaNew;
+                    oSidur.sShatHatchala = dShatHatchalaNew.ToString("HH:mm");
+                    oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = dShatHatchalaNew;
+                }
             }
             catch (Exception ex)
             {
