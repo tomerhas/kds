@@ -845,7 +845,7 @@ namespace KdsBatch
              }
          }
 
-         public void CalcZmaneyAruchot(DataRow[] drPeiluyot, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum, out float fZmanAruchatTzharim)
+         public void CalcZmaneyAruchot(DataRow[] drPeiluyot, DateTime dShatHatchalaLetaslum, DateTime dShatGmarLetashlum, out float fZmanAruchatTzharim, int iMaxDakot)
         { 
             float fTempY = 0;
             DateTime dTempM1, dTempM2,dShatHatchla,dShatYetzia;
@@ -901,8 +901,7 @@ namespace KdsBatch
 
               }
 
-              if (fZmanAruchatTzharim > 30)
-              { fZmanAruchatTzharim = 30; }
+              fZmanAruchatTzharim = fZmanAruchatTzharim > iMaxDakot ? iMaxDakot : fZmanAruchatTzharim;
      
             }
             catch (Exception ex)
