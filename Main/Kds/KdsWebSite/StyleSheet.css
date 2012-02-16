@@ -694,7 +694,7 @@ cursor:pointer;
 .ImgButtonDisApprovalRegularDisabled
 {
 	background-image: url(Images/B_Disapprove_Dis.png);	
-	color: black;
+	color: white;
 	text-align:center;		
 	font-weight:bold;
 	font-size:19px;	

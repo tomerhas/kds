@@ -169,8 +169,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 //if (btnApprove.Disabled)
                    // btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
                 if (!btnApprove.Disabled)
+                {
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
-
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
+                }
                 //if (btnNotApprove.Disabled)
                 //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled");
                 //if (!btnNotApprove.Disabled)
@@ -183,8 +185,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
                  //if (btnNotApprove.Disabled)
                     // btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalCheckedDisabled");
-                 if (!btnNotApprove.Disabled)
-                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
+                if (!btnNotApprove.Disabled)
+                {
+                    btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
+                    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+                }
                 break;
 
             default:
