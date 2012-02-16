@@ -2491,19 +2491,28 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
    
     protected void btnPrint_click(object sender, EventArgs e)
     {
-        string sCloseAllBtn = "";
+        //string sCloseAllBtn = "";
+        bool bChishuvShachar = false;
+        bool  bCalculateAndNotRashemet = false;
 
         if (hidChanges.Value.ToLower() == "true")
             btnShowPrintMsg_Click(sender, e);
         else
             PrintCard(sender, e);
 
-        if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-            sCloseAllBtn = "true";
-        else
-            sCloseAllBtn = "false";
+        //if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
+        //    sCloseAllBtn = "true";
+        //else
+        //    sCloseAllBtn = "false";
 
-        string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + "," + sCloseAllBtn + ");";
+        if (DisabledCard())
+            bCalculateAndNotRashemet = true;
+
+        // string sScript;// = "document.getElementById('divHourglass').style.display = 'none'; SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
+        bChishuvShachar = oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode());
+        string sScript = SendScript(bChishuvShachar, bCalculateAndNotRashemet);
+
+        //string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + "," + sCloseAllBtn + ");";
         ScriptManager.RegisterStartupScript(btnPrint, this.GetType(), "PrintCard", sScript, true);  
     }
     protected void btnConfirm_click(object sender, EventArgs e)
