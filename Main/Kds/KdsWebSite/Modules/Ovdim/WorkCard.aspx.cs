@@ -63,6 +63,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
    // private AsyncPostBackTrigger[] TriggerToAdd;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
+    public const int SIDUR_HITYAZVUT = 99200;
     private bool bAddSidur;
     //private WorkCardObj _WorkCardBeforeChanges, _WorkCardAfterChanges;
 
@@ -680,7 +681,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
       int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
 
       return ((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
-            || ((iDays <= 2) && (!bRashemet) && (oBatchManager.htEmployeeDetails.Count == 0));
+            || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
     }
     protected void RenderPage()
     {
