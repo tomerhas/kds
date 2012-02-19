@@ -161,9 +161,9 @@ namespace KdsBatch
 
                   if (bKayamEfreshBErua)
                   {
-                      iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Length - 1, 1));
-                      _sFooter = _sFooter.Substring(0, _sFooter.Length - 1);
-                      _sFooter += GetSimanEfresh(iLastDigit);
+                      iLastDigit =  int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
+                      _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
+                     // _sFooter += GetSimanEfresh(iLastDigit);
                   }
                   if (!IsEmptyErua(sErua413.ToString()))
                   {
