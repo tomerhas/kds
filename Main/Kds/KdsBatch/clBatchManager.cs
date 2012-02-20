@@ -11567,7 +11567,7 @@ namespace KdsBatch
                         if ((oPrevObjSidurimOvdimUpd.SHAT_GMAR != DateTime.MinValue) && (oObjSidurimOvdimUpd.SHAT_HATCHALA.Year > clGeneral.cYearNull))
                         {
                             datePrevShatGmar = oPrevObjSidurimOvdimUpd.SHAT_GMAR;
-                            dateCurrShatHatchala = oObjSidurimOvdimUpd.SHAT_HATCHALA;
+                            dateCurrShatHatchala = oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA;
                             if (dateCurrShatHatchala < datePrevShatGmar)
                             {//קיימת חפיפה בין הסידורים 
                                 if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))

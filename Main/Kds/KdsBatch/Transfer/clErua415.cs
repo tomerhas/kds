@@ -51,14 +51,12 @@ namespace KdsBatch
 
              // 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode());
-              fErech -= (GetErechRechiv(clGeneral.enRechivim.Kizuz125.GetHashCode()) * 60);
               if (sMeafyen83.Trim() == "1")
                   fErech = 0;
               sErua415.Append(FormatNumber((fErech / 60), 4, 1));
 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode());
-              fErech -= (GetErechRechiv(clGeneral.enRechivim.Kizuz150.GetHashCode()) * 60);
-              if (sMeafyen83.Trim() == "1")
+             if (sMeafyen83.Trim() == "1")
                   fErech = 0;
               sErua415.Append(FormatNumber((fErech/60), 4, 1));
 
