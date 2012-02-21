@@ -5650,8 +5650,8 @@ namespace KdsBatch
             try
             {
 
-                _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
-
+               // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
+                _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur>=0");
                 for (int I = 0; I < _drSidurim.Length; I++)
                 {
                     iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
