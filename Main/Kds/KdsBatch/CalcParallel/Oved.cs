@@ -339,9 +339,12 @@ namespace KdsBatch
                     sQury += " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TAARICH";
                 
                     drMeafyn = oGeneralData.dtMeafyenyOvedAll.Select(sQury);
-                    MeafyenimLeYom = drMeafyn.CopyToDataTable();
-                    itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
-                    MeafyeneyOved.Add(itemMeafyenyOved);
+                    if (drMeafyn.Length > 0)
+                    {
+                        MeafyenimLeYom = drMeafyn.CopyToDataTable();
+                        itemMeafyenyOved = new clMeafyenyOved(Mispar_ishi, dTarMe, "Calc", MeafyenimLeYom);
+                        MeafyeneyOved.Add(itemMeafyenyOved);
+                    }
                     dTarMe = dTarMe.AddDays(1);
                     itemMeafyenyOved = null;
                     drMeafyn = null;
