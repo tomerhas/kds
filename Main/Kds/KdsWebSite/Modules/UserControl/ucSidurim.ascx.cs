@@ -2813,7 +2813,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             btnImage.Enabled = true;
         }
         else
-            if ((!_ProfileRashemet) || (!bEnableSidur)){        
+            //if ((!_ProfileRashemet) || (!bEnableSidur)){        
+            if ((!bEnableSidur))
+            {        
                 btnImage.Attributes.Add("disabled", "true");
         }
         if (oSidur.bCancelSidurDisabled)
@@ -6315,9 +6317,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           oCancelButton = AddImageButton();
           oCancelButton.OnClientClick = "if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0"  + ")) {return false;} else {return true;} ";        
           if (bPeilutActive){
-              //if ((iMisparKnisa > 0) && (iKnisaType == 1)) //כניסה לפי צורך
-              //    oCancelButton.CssClass = "ImgKnisaS";
-              //else
+              if ((iMisparKnisa > 0) && (iKnisaType == 1)) //כניסה לפי צורך
+                  oCancelButton.CssClass = "ImgKnisaS";
+              else
                   oCancelButton.CssClass = "ImgCheckedPeilut";           
           }
           else
