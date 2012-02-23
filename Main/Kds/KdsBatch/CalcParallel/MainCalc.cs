@@ -37,15 +37,24 @@ namespace KdsBatch
         }
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc, int numProcess)
         {
-            _iBakashaId = iBakashaId;
-            _dTarMe = dTarMe;
-            _dTarAd = dTarAd;
-            _sMaamad = sMaamad;
-            _bRitzaGorefet = bRitzaGorefet;
-            _iTypeCalc = iTypeCalc;
-            _numProcess = numProcess;
-            _Ovdim = new List<Oved>();
-            SetListOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet, iBakashaId, numProcess);
+            try
+            {
+                _iBakashaId = iBakashaId;
+                _dTarMe = dTarMe;
+                _dTarAd = dTarAd;
+                _sMaamad = sMaamad;
+                _bRitzaGorefet = bRitzaGorefet;
+                _iTypeCalc = iTypeCalc;
+                _numProcess = numProcess;
+                _Ovdim = new List<Oved>();
+                SetListOvdimLechishuv(dTarMe, dTarAd, sMaamad, bRitzaGorefet, iBakashaId, numProcess);
+            }
+            catch (Exception ex)
+            {
+
+                clLogBakashot.InsertErrorToLog(_iBakashaId, 0, "E", 0, _dTarMe, "MainCalc: " + ex.StackTrace + "\n message: " + ex.Message);
+            }
+               
         }
 
         private void SetListOvdimLechishuv(DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, long iBakashaId ,int numProcess)

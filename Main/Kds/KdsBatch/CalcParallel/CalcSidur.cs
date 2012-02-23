@@ -151,7 +151,7 @@ namespace KdsBatch
         {
             float fErechRechiv, fErechPeiluyot;
             int iMisparSidur;//, iSugYom;
-            DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dTempDtFrom, dTempDtTo, dShatHatchalaSidur;
+            DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dTempDtFrom, dTempDtTo, dShatHatchalaSidur,shaa;
 
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
@@ -366,12 +366,19 @@ namespace KdsBatch
                         }
                         else if (int.Parse(drSidur["yom_VISA"].ToString()) == 3 && !clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich) && (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode()))
                         {
+                           
                             fErechRechiv = Math.Min(objOved.objParameters.iMaxNochehutVisaPnimAcharon, Math.Max(fErechRechiv, objOved.objParameters.iMinNochehutVisaPnimAcharon));
                             if (fErechRechiv == objOved.objParameters.iMaxNochehutVisaPnimAcharon)
                             { fErechRechiv = fErechRechiv + fErechPeiluyot; }
                         }
                         else if (int.Parse(drSidur["yom_VISA"].ToString()) == 3 && clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
                         {
+                            shaa = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 09:00:00");
+                            if (dShatGmarLetashlum < shaa)
+                                dShatHatchalaLetashlum = shaa.AddHours(-5);
+                            else dShatHatchalaLetashlum = shaa.AddHours(6);
+                            fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                           
                             fErechRechiv = Math.Min(objOved.objParameters.iMaxNochehutVisaPnimEmtzai, Math.Max(fErechRechiv, objOved.objParameters.iMinNochehutVisaPnimAcharon));
                             if (fErechRechiv == objOved.objParameters.iMaxNochehutVisaPnimEmtzai)
                             { fErechRechiv = fErechRechiv + fErechPeiluyot; }
@@ -5645,26 +5652,30 @@ namespace KdsBatch
             int iMisparSidur;
             DateTime dShatHatchalaSidur, dShatGmarLetashlum, dShatHatchalaLetashlum;
             float fErech;
+            string sSidurimMeyuchadim="";
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             try
             {
-
-               // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
-                _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur>=0");
-                for (int I = 0; I < _drSidurim.Length; I++)
+                sSidurimMeyuchadim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode());
+                if (sSidurimMeyuchadim.Length > 0)
                 {
-                    iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
-                    dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
-                    dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                    dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
+                    _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")");
+                    // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
+                    // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur>=0");
+                    for (int I = 0; I < _drSidurim.Length; I++)
+                    {
+                        iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                        dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                    addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                        addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
 
+                    }
                 }
-
             }
             catch (Exception ex)
             {

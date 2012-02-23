@@ -56,11 +56,10 @@ namespace KdsBatch
 
                     _dTaarichChishuv = objOved.Month;
 
+                    AddRowZmanLeloHafsaka();
                     if (!objOved.bChishuvYom)
-                    {
+                    {                   
                         SimunSidurimLoLetashlum();
-                        ////סימון "לא לתשלום" עבור סידורי רציפות
-                        //SimunLoLetashlumRetzifut();
                     }
 
                     
@@ -170,7 +169,7 @@ namespace KdsBatch
                     else objOved.DtPeiluyotTnuaYomi = objOved.DtPeiluyotFromTnua.Clone();
                     drs = null;
                 }
-                AddRowZmanLeloHafsaka();
+               
             }
             catch (Exception ex)
             {
@@ -189,20 +188,20 @@ namespace KdsBatch
             {
                 oPeilut = new CalcPeilut(objOved);
 
-                objOved.DtYemeyAvodaYomi.Columns.Add("ZMAN_LELO_HAFSAKA", System.Type.GetType("System.Single"));
-                objOved.DtYemeyAvodaYomi.Columns.Add("ZMAN_HAFSAKA_BESIDUR", System.Type.GetType("System.Single"));
-                for (int i = 0; i < objOved.DtYemeyAvodaYomi.Rows.Count; i++)
+                objOved.DtYemeyAvoda.Columns.Add("ZMAN_LELO_HAFSAKA", System.Type.GetType("System.Single"));
+                objOved.DtYemeyAvoda.Columns.Add("ZMAN_HAFSAKA_BESIDUR", System.Type.GetType("System.Single"));
+                for (int i = 0; i < objOved.DtYemeyAvoda.Rows.Count; i++)
                 {
                     try
                     {
-                        dr = objOved.DtYemeyAvodaYomi.Rows[i];
+                        dr = objOved.DtYemeyAvoda.Rows[i];
                         if (dr["shat_hatchala_sidur"].ToString() != "")
                         {
                             taarich = DateTime.Parse(dr["taarich"].ToString());
                             zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(dr["mispar_sidur"].ToString()), DateTime.Parse(dr["shat_hatchala_sidur"].ToString()));
                             zmanSidur = float.Parse((DateTime.Parse(dr["shat_gmar_letashlum"].ToString()) - DateTime.Parse(dr["shat_hatchala_letashlum"].ToString())).TotalMinutes.ToString());
-                            objOved.DtYemeyAvodaYomi.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
-                            objOved.DtYemeyAvodaYomi.Rows[i]["ZMAN_HAFSAKA_BESIDUR"] = zmanHafsaka;
+                            objOved.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = zmanSidur - zmanHafsaka;
+                            objOved.DtYemeyAvoda.Rows[i]["ZMAN_HAFSAKA_BESIDUR"] = zmanHafsaka;
                         }
                         //else clCalcData.DtYemeyAvoda.Rows[i]["ZMAN_LELO_HAFSAKA"] = 0;
                     }
@@ -869,7 +868,7 @@ namespace KdsBatch
                 CalcRechiv88();
 
                 //קיזוז זמן בויזות (רכיב 89) 
-                CalcRechiv89();
+               // CalcRechiv89();
 
                 //קיזוז לעובד מותאם (רכיב 90
                 CalcRechiv90();
@@ -2938,11 +2937,11 @@ namespace KdsBatch
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
 
                 fKizuzHatchalaGmar = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.KizuzDakotHatchalaGmar); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.KizuzDakotHatchalaGmar.GetHashCode());
-                fKizuzVisa = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.KizuzBevisa); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.KizuzBevisa.GetHashCode());
+               // fKizuzVisa = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.KizuzBevisa); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.KizuzBevisa.GetHashCode());
                 fKizuzMutam = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.KizuzOvedMutam); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.KizuzOvedMutam.GetHashCode());
                 fZmanAruchatTzaharayim = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanAruchatTzaraim); // oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanAruchatTzaraim.GetHashCode());
 
-                fSumDakotRechiv = (fKizuzHatchalaGmar + fKizuzVisa + fKizuzMutam + fZmanAruchatTzaharayim) / 60;
+                fSumDakotRechiv = (fKizuzHatchalaGmar  + fKizuzMutam + fZmanAruchatTzaharayim) / 60;
                 addRowToTable(clGeneral.enRechivim.SachKizuzim.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)

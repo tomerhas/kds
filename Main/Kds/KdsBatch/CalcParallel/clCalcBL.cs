@@ -432,17 +432,24 @@ namespace KdsBatch
         {
             DateTime taarich = oved.Month;
             DataRow[] dr;
-            int i = 0;
-            while (oved.fmichsatYom == 0)
+         //   int i = 0;
+            try
             {
-                dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')");
-                if (dr.Length > 0)
+                while (oved.fmichsatYom == 0)
                 {
-                    oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
-                    break;
+                    dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')");
+                    if (dr.Length > 0)
+                    {
+                        oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                        break;
+                    }
+                    // i++;
+                    taarich = taarich.AddDays(1);
                 }
-                i++;
-                taarich = taarich.AddDays(1);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

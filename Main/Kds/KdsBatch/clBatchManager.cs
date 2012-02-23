@@ -6555,7 +6555,7 @@ namespace KdsBatch
                         FixedShatHatchalaAndGmarSidurMapa27(ref oSidur, ref oObjSidurimOvdimUpd);
 
                         //שינוי 21
-                        FixedShatHatchalaForSidurVisa21(ref oSidur, ref oObjSidurimOvdimUpd);
+                       // FixedShatHatchalaForSidurVisa21(ref oSidur, ref oObjSidurimOvdimUpd);
                         htEmployeeDetails[i] = oSidur;
                     }
 
