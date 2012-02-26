@@ -161,8 +161,15 @@ namespace KdsBatch.Premia
 
         protected override void RunRoutine()
         {
-            LoadItemsFromDB();
-            ExportToFile();
+            try
+            {
+                LoadItemsFromDB();
+                ExportToFile();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
