@@ -430,21 +430,23 @@ namespace KdsBatch
         }
         public void ChishuvMichsatYom(Oved oved)
         {
-            DateTime taarich = oved.Month;
+            DateTime d_taarich = oved.Month;
             DataRow[] dr;
-         //   int i = 0;
             try
             {
-                while (oved.fmichsatYom == 0)
+                dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString());
+                if (dr.Length > 0)
                 {
-                    dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')");
-                    if (dr.Length > 0)
+                    while (oved.fmichsatYom == 0)
                     {
-                        oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
-                        break;
+                        dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + d_taarich.ToShortDateString() + "', 'System.DateTime')");
+                        if (dr.Length > 0)
+                        {
+                            oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                            break;
+                        }
+                        d_taarich = d_taarich.AddDays(1);
                     }
-                    // i++;
-                    taarich = taarich.AddDays(1);
                 }
             }
             catch (Exception ex)
