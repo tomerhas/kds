@@ -173,7 +173,7 @@ namespace KdsService
                 KdsCalcul = new FileInfo(path + exfile);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from "+KdsCalcul.FullName );
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
-                dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) * -1);
+                dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString())-1) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
                 result = oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
