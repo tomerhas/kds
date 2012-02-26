@@ -184,6 +184,7 @@ namespace KdsBatch
             CalcPeilut oPeilut;
             DateTime taarich = DateTime.Now;
             DataRow dr;
+            string lo_letaslum = "";
             try
             {
                 oPeilut = new CalcPeilut(objOved);
@@ -195,7 +196,8 @@ namespace KdsBatch
                     try
                     {
                         dr = objOved.DtYemeyAvoda.Rows[i];
-                        if (dr["shat_hatchala_sidur"].ToString() != "")
+                        lo_letaslum = dr["Lo_letashlum"].ToString().Trim();
+                        if (dr["shat_hatchala_sidur"].ToString() != "" && lo_letaslum =="0")
                         {
                             taarich = DateTime.Parse(dr["taarich"].ToString());
                             zmanHafsaka = oPeilut.getZmanHafsakaBesidur(int.Parse(dr["mispar_sidur"].ToString()), DateTime.Parse(dr["shat_hatchala_sidur"].ToString()));
@@ -207,7 +209,7 @@ namespace KdsBatch
                     }
                     catch (Exception ex)
                     {
-                        clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: "+ ex.Message);
+                        clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, taarich, "AddRowZmanLeloHafsaka: " + ex.StackTrace + "\n message: " + ex.Message);
                         throw ex;
                     }
                 }
