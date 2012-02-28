@@ -39,8 +39,8 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.DisplayName = "Kds Listener";
-            this.serviceInstaller1.ServiceName = "KdsListener";
+            this.serviceInstaller1.DisplayName = "Kds Listener Prod";
+            this.serviceInstaller1.ServiceName = "KdsListenerProd";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
