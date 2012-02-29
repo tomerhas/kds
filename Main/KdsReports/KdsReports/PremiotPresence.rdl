@@ -1413,8 +1413,8 @@
                                               <TextRun>
                                                 <Value>=iif(Fields!STATUS.Value=0 and Fields!STATUS.Value &lt;&gt; nothing,"כרטיס שגוי",
 iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"חסר דיווח",
-iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר דיווח" ,"")))
- 'iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח",""))))</Value>
+iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" , 
+ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח",""))))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -2134,8 +2134,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>0.39926cm</Top>
-                          <Left>0.38286cm</Left>
+                          <Top>0.03528cm</Top>
                           <Height>0.6cm</Height>
                           <Width>2.5cm</Width>
                           <ZIndex>2</ZIndex>
@@ -2152,7 +2151,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר
                               <Value>="דוח נוכחות לפרמיה " + ReportItems!TEUR_PREMIA.Value + " לחודש " + Parameters!P_PERIOD.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0.15719in</Top>
+                          <Top>0.02778in</Top>
                           <Left>0.9802in</Left>
                           <Height>1.2877cm</Height>
                           <Width>12.45264cm</Width>
@@ -2199,7 +2198,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר
         </TablixRowHierarchy>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Left>0.35641cm</Left>
+        <Left>0.40971cm</Left>
         <Height>6.54287cm</Height>
         <Width>19.96855cm</Width>
         <Style>
@@ -2302,7 +2301,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsPirteyPremiya</DataSetName>
         <Top>6.61343cm</Top>
-        <Left>0.35641cm</Left>
+        <Left>0.40971cm</Left>
         <Height>2.53528cm</Height>
         <Width>15.35954cm</Width>
         <ZIndex>1</ZIndex>
@@ -2319,14 +2318,57 @@ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing,"חסר
     <Height>3.60185in</Height>
     <Style />
   </Body>
-  <Width>8.00195in</Width>
+  <Width>8.02294in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.47625cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="דף מספר " &amp; Globals!PageNumber</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.02618cm</Top>
+          <Left>0.40971cm</Left>
+          <Height>0.30896cm</Height>
+          <Width>2.5cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0.3cm</LeftMargin>
     <RightMargin>0.3cm</RightMargin>
-    <TopMargin>0.3cm</TopMargin>
-    <BottomMargin>0.3cm</BottomMargin>
+    <TopMargin>0.1cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
