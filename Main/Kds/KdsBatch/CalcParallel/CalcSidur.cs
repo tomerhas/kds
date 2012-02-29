@@ -395,16 +395,23 @@ namespace KdsBatch
                         //•	: סידורים מיוחדים בעלי שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1. 
                         else if (int.Parse(drSidur["yom_VISA"].ToString()) == 1)
                         {
+                            dShatGmarLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00").AddDays(1);
+                            fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                           
                             fErechRechiv = objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon;
                             fErechRechiv = fErechRechiv + fErechPeiluyot;
                         }
                         if (int.Parse(drSidur["yom_VISA"].ToString()) == 2)
                         {
+                          
                             fErechRechiv = objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon;
                             fErechRechiv = fErechRechiv - (int.Parse(drSidur["Hafhatat_Nochechut_Visa"].ToString()) * 60);
                         }
                         else if (int.Parse(drSidur["yom_VISA"].ToString()) == 3)
                         {
+                            dShatGmarLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00").AddDays(1);
+                            fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                           
                             fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon);
                             if (fErechRechiv == objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon)
                             { fErechRechiv = fErechRechiv + fErechPeiluyot; }
@@ -5197,65 +5204,65 @@ namespace KdsBatch
 
                     addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fErech);
 
-                    if (iKodRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
-                    { dShatHatchalaSidur = dShatHatchalaLetaslum; }
+                    //if (iKodRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
+                    //{ dShatHatchalaSidur = dShatHatchalaLetaslum; }
 
-                    dTempM1 = clGeneral.GetDateTimeFromStringHour("09:00", objOved.Taarich.Date);
-                    dTempM2 = clGeneral.GetDateTimeFromStringHour("09:20", objOved.Taarich.Date);
+                    ////dTempM1 = clGeneral.GetDateTimeFromStringHour("09:00", objOved.Taarich.Date);
+                    ////dTempM2 = clGeneral.GetDateTimeFromStringHour("09:20", objOved.Taarich.Date);
 
-                    if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
-                    { fZmanAruchatBokerSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
-                    { fZmanAruchatBokerSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
-                    { fZmanAruchatBokerSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (fZmanAruchatBokerSidur > 20)
-                    { fZmanAruchatBokerSidur = 20; }
-                    else { fZmanAruchatBokerSidur = 0; }
+                    ////if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
+                    ////{ fZmanAruchatBokerSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
+                    ////{ fZmanAruchatBokerSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
+                    ////{ fZmanAruchatBokerSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (fZmanAruchatBokerSidur > 20)
+                    ////{ fZmanAruchatBokerSidur = 20; }
+                    ////else { fZmanAruchatBokerSidur = 0; }
 
-                    //חישוב זמן ארוחת צהריים
-                    dTempM1 = objOved.objParameters.dStartAruchatTzaharayim;
-                    dTempM2 = objOved.objParameters.dEndAruchatTzaharayim;
+                    //////חישוב זמן ארוחת צהריים
+                    ////dTempM1 = objOved.objParameters.dStartAruchatTzaharayim;
+                    ////dTempM2 = objOved.objParameters.dEndAruchatTzaharayim;
 
-                    if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
-                    { fZmanAruchatTzharimSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
-                    { fZmanAruchatTzharimSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
-                    { fZmanAruchatTzharimSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (fZmanAruchatTzharimSidur > 30)
-                    { fZmanAruchatTzharimSidur = 30; }
-                    else { fZmanAruchatTzharimSidur = 0; }
+                    ////if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
+                    ////{ fZmanAruchatTzharimSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
+                    ////{ fZmanAruchatTzharimSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
+                    ////{ fZmanAruchatTzharimSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (fZmanAruchatTzharimSidur > 30)
+                    ////{ fZmanAruchatTzharimSidur = 30; }
+                    ////else { fZmanAruchatTzharimSidur = 0; }
 
-                    //חישוב זמן ארוחת ערב
-                    dTempM1 = clGeneral.GetDateTimeFromStringHour("19:00", objOved.Taarich.Date);
-                    dTempM2 = clGeneral.GetDateTimeFromStringHour("19:20", objOved.Taarich.Date);
+                    //////חישוב זמן ארוחת ערב
+                    ////dTempM1 = clGeneral.GetDateTimeFromStringHour("19:00", objOved.Taarich.Date);
+                    ////dTempM2 = clGeneral.GetDateTimeFromStringHour("19:20", objOved.Taarich.Date);
 
-                    if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
-                    { fZmanAruchatErevSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
-                    { fZmanAruchatErevSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
-                    { fZmanAruchatErevSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
-                    if (fZmanAruchatErevSidur > 20)
-                    { fZmanAruchatErevSidur = 20; }
-                    else { fZmanAruchatErevSidur = 0; }
+                    ////if (dShatHatchalaSidur <= dTempM1 && dShatGmarLetashlum >= dTempM1)
+                    ////{ fZmanAruchatErevSidur = float.Parse((dShatGmarLetashlum - dTempM1).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatHatchalaSidur <= dTempM2 && dShatGmarLetashlum >= dTempM2)
+                    ////{ fZmanAruchatErevSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (dShatHatchalaSidur >= dTempM1 && dShatGmarLetashlum <= dTempM2)
+                    ////{ fZmanAruchatErevSidur = float.Parse((dShatGmarLetashlum - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                    ////if (fZmanAruchatErevSidur > 20)
+                    ////{ fZmanAruchatErevSidur = 20; }
+                    ////else { fZmanAruchatErevSidur = 0; }
 
-                    if (fZmanAruchatBoker == 0 && fZmanAruchatBokerSidur > 0)
-                    {
-                        iBokerRechiv = iKodRechiv;
-                    }
-                    if (fZmanAruchatTzharim == 0 && fZmanAruchatTzharimSidur > 0)
-                    {
-                        iTzharyimRechiv = iKodRechiv;
-                    }
-                    if (fZmanAruchatErev == 0 && fZmanAruchatErevSidur > 0)
-                    {
-                        iErevRechiv = iKodRechiv;
-                    }
-                    fZmanAruchatBoker += fZmanAruchatBokerSidur;
-                    fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
-                    fZmanAruchatErev += fZmanAruchatErevSidur;
+                    ////if (fZmanAruchatBoker == 0 && fZmanAruchatBokerSidur > 0)
+                    ////{
+                    ////    iBokerRechiv = iKodRechiv;
+                    ////}
+                    ////if (fZmanAruchatTzharim == 0 && fZmanAruchatTzharimSidur > 0)
+                    ////{
+                    ////    iTzharyimRechiv = iKodRechiv;
+                    ////}
+                    ////if (fZmanAruchatErev == 0 && fZmanAruchatErevSidur > 0)
+                    ////{
+                    ////    iErevRechiv = iKodRechiv;
+                    ////}
+                    ////fZmanAruchatBoker += fZmanAruchatBokerSidur;
+                    ////fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
+                    ////fZmanAruchatErev += fZmanAruchatErevSidur;
 
                 }
 
