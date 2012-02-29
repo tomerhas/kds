@@ -5839,35 +5839,35 @@ namespace KdsBatch
                 {
                     oSidur.CalcRechiv211_212(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iBokerRechiv, out  iTzharyimRechiv, out  iErevRechiv);
 
-                    if (fZmanAruchatBoker > 20)
-                    { fZmanAruchatBoker = 20; }
-                    if (fZmanAruchatTzharayim > 30)
-                    { fZmanAruchatTzharayim = 30; }
-                    if (fZmanAruchatErev > 20)
-                    { fZmanAruchatErev = 20; }
+                    ////if (fZmanAruchatBoker > 20)
+                    ////{ fZmanAruchatBoker = 20; }
+                    ////if (fZmanAruchatTzharayim > 30)
+                    ////{ fZmanAruchatTzharayim = 30; }
+                    ////if (fZmanAruchatErev > 20)
+                    ////{ fZmanAruchatErev = 20; }
 
                     fSumRechivMusachim = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), objOved.Taarich);
                     fSumRechivAchsana = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode(), objOved.Taarich);
-                    if (iBokerRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
-                    {
-                        fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatBoker;
-                    }
-                    else
-                    { fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatBoker; }
+                    //if (iBokerRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
+                    //{
+                    //    fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatBoker;
+                    //}
+                    //else
+                    //{ fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatBoker; }
 
-                    if (iTzharyimRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
-                    {
-                        fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatTzharayim;
-                    }
-                    else
-                    { fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatTzharayim; }
+                    //if (iTzharyimRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
+                    //{
+                    //    fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatTzharayim;
+                    //}
+                    //else
+                    //{ fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatTzharayim; }
 
-                    if (iErevRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
-                    {
-                        fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatErev;
-                    }
-                    else
-                    { fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatErev; }
+                    //if (iErevRechiv == clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode())
+                    //{
+                    //    fSumRechivMusachim = fSumRechivMusachim - fZmanAruchatErev;
+                    //}
+                    //else
+                    //{ fSumRechivAchsana = fSumRechivAchsana - fZmanAruchatErev; }
 
 
                     addRowToTable(clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode(), fSumRechivAchsana);
