@@ -2548,8 +2548,8 @@ namespace KdsBatch
                     for (int i = 0; i < days.Length; i++)
                     {
                         taarich = DateTime.Parse(days[i]["taarich"].ToString());
-                        if (!HaveRechivimInDay(taarich))
-                        {
+                        //if (!HaveRechivimInDay(taarich))
+                        //{
                             fErechYomi66 = float.Parse(days[i]["ERECH_RECHIV"].ToString());
                             if (objOved.fHashlamaAlCheshbonNosafot > 0)
                             {
@@ -2577,7 +2577,7 @@ namespace KdsBatch
                                     objOved.fHashlamaAlCheshbonNosafot = 0;
                                 }
                             }
-                        }
+                       // }
                     }
                 }
             }
@@ -2666,8 +2666,8 @@ namespace KdsBatch
                     for (int i = 0; i < days.Length; i++)
                     {
                         taarich = DateTime.Parse(days[i]["taarich"].ToString());
-                        if (!HaveRechivimInDay(taarich))
-                        {
+                        //if (!HaveRechivimInDay(taarich))
+                        //{
                             fErechYomi67 = float.Parse(days[i]["ERECH_RECHIV"].ToString());
                             if (objOved.fHashlamaAlCheshbonNosafot > 0)
                             {
@@ -2695,7 +2695,7 @@ namespace KdsBatch
                                     objOved.fHashlamaAlCheshbonNosafot = 0;
                                 }
                             }
-                        }
+                      //  }
                     }
                 }
             }
