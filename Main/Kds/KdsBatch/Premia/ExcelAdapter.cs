@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using Excel;
 using System.Threading;
-using System.Globalization; 
+using System.Globalization;
+using KdsLibrary;
+
 
 namespace KdsBatch.Premia
 {
@@ -31,6 +33,7 @@ namespace KdsBatch.Premia
         #region Methods
         public void OpenNewWorkBook()
         {
+            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In OpenNewWorkBook ");
             //CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             _workBook = _application.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
@@ -41,10 +44,10 @@ namespace KdsBatch.Premia
 
         public void SaveNewWorkBook(DateTime _periodDate)
         {
+            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In SaveNewWorkBook with period" + _periodDate + ",_filename:" + _filename);
             object misValue = System.Reflection.Missing.Value;
-
-            if (System.IO.File.Exists(_filename))
-                System.IO.File.Delete(_filename);
+            LocalProcesses.wsLocalProcesses _wsLocalProcesses= new LocalProcesses.wsLocalProcesses();
+            _wsLocalProcesses.DeleteFile(_filename);
             _excelSheet.Name = "TCT_ATTEND2";// +_periodDate.ToString("MMyyyy");
             _excelSheet.SaveAs(_filename, misValue, misValue, misValue, misValue, misValue, misValue, misValue,
                 misValue, misValue);
