@@ -5,25 +5,25 @@ pause
 @echo KdsCalcul install in progress ....
 @echo copy backup KdsCalcul to old folder ....
 @echo off 
-copy \\kdscalc01\KdsCalcul\*.exe \\kdscalc01\KdsCalcul\old\
-copy \\kdscalc01\KdsCalcul\*.dll \\kdscalc01\KdsCalcul\old\
-copy \\kdscalc01\KdsCalcul\*.config \\kdscalc01\KdsCalcul\old\
+copy \\kdscalc01\KdsCalculProd\*.exe \\kdscalc01\KdsCalculProd\old\
+copy \\kdscalc01\KdsCalculProd\*.dll \\kdscalc01\KdsCalculProd\old\
+copy \\kdscalc01\KdsCalculProd\*.config \\kdscalc01\KdsCalculProd\old\
 @echo install KdsCalcul files to kdscalc01 ....
 @echo off 
-copy \\kdstst02\KdsCalcul\*.exe  \\kdscalc01\KdsCalcul\
-copy \\kdstst02\KdsCalcul\*.dll  \\kdscalc01\KdsCalcul\
+copy \\kdscalc01\KdsCalculTest\*.exe  \\kdscalc01\KdsCalculProd\
+copy \\kdscalc01\KdsCalculTest\*.dll  \\kdscalc01\KdsCalculProd\
 @echo KdsCalcul was installed in kdscalc01 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsService install in progress ....
 @echo copy backup KdsService to old folder ....
 @echo off 
-copy \\kdscalc01\KdsService\*.exe \\kdscalc01\KdsService\old\
-copy \\kdscalc01\KdsService\*.dll \\kdscalc01\KdsService\old\
-copy \\kdscalc01\KdsService\*.config \\kdscalc01\KdsService\old\
-copy \\kdscalc01\KdsService\*.xml \\kdscalc01\KdsService\old\
+copy \\kdscalc01\KdsServiceProd\*.exe \\kdscalc01\KdsServiceProd\old\
+copy \\kdscalc01\KdsServiceProd\*.dll \\kdscalc01\KdsServiceProd\old\
+copy \\kdscalc01\KdsServiceProd\*.config \\kdscalc01\KdsServiceProd\old\
+copy \\kdscalc01\KdsServiceProd\*.xml \\kdscalc01\KdsServiceProd\old\
 @echo install KdsService to kdscalc01 ....
-copy \\kdstst02\KdsService\*.exe  \\kdscalc01\KdsService\
-copy \\kdstst02\KdsService\*.dll  \\kdscalc01\KdsService\
+copy \\kdscalc01\KdsServiceTest\*.exe  \\kdscalc01\KdsServiceProd\
+copy \\kdscalc01\KdsServiceTest\*.dll  \\kdscalc01\KdsServiceProd\
 @echo KdsService was installed in kdscalc01 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsTaskManager install in progress ....
