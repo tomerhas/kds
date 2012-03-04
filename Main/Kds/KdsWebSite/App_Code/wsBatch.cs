@@ -112,8 +112,8 @@ public class wsBatch : System.Web.Services.WebService
     public string RunPremiaRoutine(KdsLibrary.clGeneral.enGeneralBatchType btchType,
         long lRequestNum, string periodMonth, int userId, long processBtchNumber)
     {
-        
-        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+
+        KdsLocalServiceProxy.BatchServiceClient client = new KdsLocalServiceProxy.BatchServiceClient();
         string result = null;
         clGeneral.InsertBakashaParam(processBtchNumber, 1, lRequestNum.ToString());
         clGeneral.InsertBakashaParam(processBtchNumber, 2, periodMonth);

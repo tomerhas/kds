@@ -46,8 +46,10 @@ namespace KdsBatch.Premia
         {
             clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In SaveNewWorkBook with period" + _periodDate + ",_filename:" + _filename);
             object misValue = System.Reflection.Missing.Value;
-            LocalProcesses.wsLocalProcesses _wsLocalProcesses= new LocalProcesses.wsLocalProcesses();
-            _wsLocalProcesses.DeleteFile(_filename);
+           // LocalProcesses.wsLocalProcesses _wsLocalProcesses= new LocalProcesses.wsLocalProcesses();
+           // _wsLocalProcesses.DeleteFile(_filename);
+            if (System.IO.File.Exists(_filename))
+                System.IO.File.Delete(_filename);
             _excelSheet.Name = "TCT_ATTEND2";// +_periodDate.ToString("MMyyyy");
             _excelSheet.SaveAs(_filename, misValue, misValue, misValue, misValue, misValue, misValue, misValue,
                 misValue, misValue);
