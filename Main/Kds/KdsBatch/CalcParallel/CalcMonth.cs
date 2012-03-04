@@ -67,8 +67,8 @@ namespace KdsBatch
                     dTaarich = dTarMe;
                     while (dTaarich <= dTarAd)
                     {
-                        if (IsDayExist(dTaarich))
-                        {
+                      //  if (IsDayExist(dTaarich))
+                       // {
                             objOved.Taarich = dTaarich;
                             objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
@@ -80,7 +80,7 @@ namespace KdsBatch
                             objOved.DtYemeyAvodaYomi = null;
                             objOved.DtPeiluyotYomi = null;
                             objOved.DtPeiluyotTnuaYomi = null;
-                        }
+                       // }
                         dTaarich = dTaarich.AddDays(1);
                     }
                     
