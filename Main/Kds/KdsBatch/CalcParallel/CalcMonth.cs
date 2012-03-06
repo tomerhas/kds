@@ -2725,6 +2725,8 @@ namespace KdsBatch
                     fSumDakotRechiv = fNosafot100 - fHashlama;
                     addRowToTable(clGeneral.enRechivim.Nosafot100.GetHashCode(), fSumDakotRechiv);
 
+                    fNochehutChodshitChelkit = 0;
+                    fMichsaChodshitChelkit = 0;
                     //67
                     CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, sTnaim, clGeneral.enRechivim.YomChofesh);
                     fNosafot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot100.GetHashCode());
