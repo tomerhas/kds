@@ -166,6 +166,11 @@
     <Compile Include="Premia\SystemCompare\CompareScope.cs" />
     <Compile Include="Premia\SystemCompare\ImportColumn.cs" />
     <Compile Include="Premia\SystemCompare\ImportStructure.cs" />
+    <Compile Include="Service References\KdsServiceProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="TaskManager\Utils.cs" />
     <Compile Include="Transfer\clErua.cs" />
     <Compile Include="Transfer\clErua416.cs" />
@@ -181,11 +186,6 @@
     <Compile Include="Transfer\clErua589.cs" />
     <Compile Include="Transfer\clEruaBakaraEt.cs" />
     <Compile Include="Transfer\clEruaDataEt.cs" />
-    <Compile Include="Web References\LocalProcesses\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDlls\Interop.Excel.dll" />
@@ -193,17 +193,28 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ReportMail.xsl" />
+    <None Include="Service References\KdsServiceProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\KdsServiceProxy\configuration.svcinfo" />
+    <None Include="Service References\KdsServiceProxy\configuration91.svcinfo" />
+    <None Include="Service References\KdsServiceProxy\BatchService.wsdl" />
+    <None Include="Service References\KdsServiceProxy\KdsLocalService.disco" />
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\LocalProcesses\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService.xsd">
+      <SubType>Designer</SubType>
     </None>
-    <None Include="Web References\LocalProcesses\wsLocalProcesses.disco" />
-    <None Include="Web References\LocalProcesses\wsLocalProcesses.wsdl" />
+    <None Include="Service References\KdsServiceProxy\KdsLocalService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -258,17 +269,7 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://localhost:50679/KdsWebSite/Modules/WebServices/wsLocalProcesses.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\LocalProcesses\</RelPath>
-      <UpdateFromURL>http://localhost:50679/KdsWebSite/Modules/WebServices/wsLocalProcesses.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>wsLocalProcesses</CachedSettingsPropName>
-    </WebReferenceUrl>
+    <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1178,106 +1178,106 @@ namespace KdsLibrary.BL
 
         /**************************************/
 
-         public void RunSinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim)
-         {
-             clUtils oUtils = new clUtils();
-             string sArguments = "";
-             int iStatus = 0;
-             string path, exfile;
-             FileInfo KdsCalcul = null;
-            try
-             {
-                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
-                 int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
-                 path = ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
-                 exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
-                 KdsCalcul = new FileInfo(path + exfile);
-                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
+         //public void RunSinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim)
+         //{
+         //    clUtils oUtils = new clUtils();
+         //    string sArguments = "";
+         //    int iStatus = 0;
+         //    string path, exfile;
+         //    FileInfo KdsCalcul = null;
+         //   try
+         //    {
+         //        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+         //        int iCntProcesses = int.Parse((string)ConfigurationManager.AppSettings["CntOfprocesses"]);
+         //        path = ConfigurationManager.AppSettings["KdsCalculPath"].ToString();
+         //        exfile = (string)ConfigurationManager.AppSettings["KdsCalculFileName"].ToString();
+         //        KdsCalcul = new FileInfo(path + exfile);
+         //        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalul will run from " + KdsCalcul.FullName);
 
-                 switch (TypeShguyim)
-                 {
-                     case clGeneral.enCalcType.ShinuyimVeShguyim:
-                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
-                         oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
-                         break;
-                     case clGeneral.enCalcType.ShinuyimVeSghuimHR:
-                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
-                         oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
-                         break;
-                     case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
-                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
-                         oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
-                         break;
-                 }
-                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
-                 //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul.Exists);
-                 //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul);
-                 if (KdsCalcul.Exists)
-                 {
-                     clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists");
-                     sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
-                     iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
-                 }
-                 else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+         //        switch (TypeShguyim)
+         //        {
+         //            case clGeneral.enCalcType.ShinuyimVeShguyim:
+         //                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeShguyim");
+         //                oUtils.PrepareNetunimToShguyimBatch(dTaarich, clGeneral.BatchRequestSource.ImportProcess.GetHashCode(), iCntProcesses, lRequestNum);
+         //                break;
+         //            case clGeneral.enCalcType.ShinuyimVeSghuimHR:
+         //                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimHR");
+         //                oUtils.PrepareNetunimToShguyimBatchHR(clGeneral.BatchRequestSource.ImportProcessForChangesInHR.GetHashCode(), iCntProcesses, lRequestNum);
+         //                break;
+         //            case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+         //                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "clGeneral.enCalcType.ShinuyimVeSghuimPremiot");
+         //                oUtils.PrepareNetunimToPremiotShguyimBatch(clGeneral.BatchRequestSource.ImportProcessForPremiot.GetHashCode(), iCntProcesses, lRequestNum);
+         //                break;
+         //        }
+         //        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
+         //        //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul.Exists);
+         //        //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists=" + KdsCalcul);
+         //        if (KdsCalcul.Exists)
+         //        {
+         //            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsCalcul.Exists");
+         //            sArguments = TypeShguyim.GetHashCode() + " " + lRequestNum.ToString() + " " + ExecutionTypeShguim.GetHashCode();
+         //            iStatus = RunKdsCalcul(lRequestNum, KdsCalcul, sArguments, iCntProcesses);
+         //        }
+         //        else iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
 
-             }
-             catch (Exception ex)
-             {
-                 clGeneral.LogError(ex);
-                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                 clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunSinuyimVeShguimBatch: " + ex.Message);
-                 throw ex;
-             }
-             finally
-             {
-                 CheckKdsCalculTerminated(KdsCalcul, lRequestNum, iStatus);
-             }
-             //LogThreadEnd("CalcBatchParallel", lRequestNum);
-         }
+         //    }
+         //    catch (Exception ex)
+         //    {
+         //        clGeneral.LogError(ex);
+         //        iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+         //        clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunSinuyimVeShguimBatch: " + ex.Message);
+         //        throw ex;
+         //    }
+         //    finally
+         //    {
+         //        CheckKdsCalculTerminated(KdsCalcul, lRequestNum, iStatus);
+         //    }
+         //    //LogThreadEnd("CalcBatchParallel", lRequestNum);
+         //}
 
-         public int RunKdsCalcul(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
-         {
-             try
-             {
-                 for (int i = 1; i <= CountOfProcesses; i++)
-                 {
-                     Process _process = new Process();
-                     _process.StartInfo.RedirectStandardOutput = false;
-                     _process.StartInfo.FileName = FileToRun.FullName;
-                     _process.StartInfo.UseShellExecute = false;
-                     _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
-                     _process.StartInfo.RedirectStandardError = true;
-                     _process.StartInfo.Arguments = sArguments + " " + i.ToString();
-                     _process.Start();
-                     _process.PriorityClass = ProcessPriorityClass.BelowNormal;
-                     clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, "KdsCalul was run for " + i.ToString() + " time(s)");
-                     _process.Dispose();
-                 }
-                 return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-             }
-             catch (Exception ex)
-             {
-                 clGeneral.LogError(ex);
-                 clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunKdsCalcul: " + ex.Message);
-                 return clGeneral.enStatusRequest.Failure.GetHashCode();
-             }
-         }
+         //public int RunKdsCalcul(long BakashaId, FileInfo FileToRun, string sArguments, int CountOfProcesses)
+         //{
+         //    try
+         //    {
+         //        for (int i = 1; i <= CountOfProcesses; i++)
+         //        {
+         //            Process _process = new Process();
+         //            _process.StartInfo.RedirectStandardOutput = false;
+         //            _process.StartInfo.FileName = FileToRun.FullName;
+         //            _process.StartInfo.UseShellExecute = false;
+         //            _process.StartInfo.WorkingDirectory = FileToRun.DirectoryName;
+         //            _process.StartInfo.RedirectStandardError = true;
+         //            _process.StartInfo.Arguments = sArguments + " " + i.ToString();
+         //            _process.Start();
+         //            _process.PriorityClass = ProcessPriorityClass.BelowNormal;
+         //            clLogBakashot.InsertErrorToLog(BakashaId, "I", 0, "KdsCalul was run for " + i.ToString() + " time(s)");
+         //            _process.Dispose();
+         //        }
+         //        return clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+         //    }
+         //    catch (Exception ex)
+         //    {
+         //        clGeneral.LogError(ex);
+         //        clLogBakashot.InsertErrorToLog(BakashaId, "E", 0, "RunKdsCalcul: " + ex.Message);
+         //        return clGeneral.enStatusRequest.Failure.GetHashCode();
+         //    }
+         //}
 
-         private void CheckKdsCalculTerminated(FileInfo KdsCalcul, long BakashaID, int Status)
-         {
-             Process[] List;
-             do
-             {
-                 List = Process.GetProcessesByName(KdsCalcul.Name.Split('.')[0]);
-                 if (List.Count() == 0)
-                 {
-                     clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
-                     UpdateLogBakasha(BakashaID, DateTime.Now, Status);
-                     break;
-                 }
-                 else Thread.Sleep(5000);
-             } while (List.Count() > 0);
-         }
+         //private void CheckKdsCalculTerminated(FileInfo KdsCalcul, long BakashaID, int Status)
+         //{
+         //    Process[] List;
+         //    do
+         //    {
+         //        List = Process.GetProcessesByName(KdsCalcul.Name.Split('.')[0]);
+         //        if (List.Count() == 0)
+         //        {
+         //            clLogBakashot.InsertErrorToLog(BakashaID, "I", 0, "END");
+         //            UpdateLogBakasha(BakashaID, DateTime.Now, Status);
+         //            break;
+         //        }
+         //        else Thread.Sleep(5000);
+         //    } while (List.Count() > 0);
+         //}
 
     } 
 }

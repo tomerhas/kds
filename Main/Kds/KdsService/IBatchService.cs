@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using KdsBatch;
+using KdsLibrary;
 
 namespace KdsService
 {
@@ -18,6 +19,8 @@ namespace KdsService
         [OperationContract]
         void CalcBatchParallel(long lRequestNum, DateTime dAdChodesh, string sMaamad,
             bool bRitzatTest, bool bRitzaGorefet);
+        [OperationContract]
+        void ShinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim);
 
         [OperationContract]
         void CalcBatchPremiyot(long lRequestNum);
@@ -32,8 +35,8 @@ namespace KdsService
         [OperationContract]
         void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim);
 
-        [OperationContract]
-        void TahalichHarazatShguimBatch(long lRequestNum, DateTime dTaarich, int TypeShguim,int ExecutionType);
+        //[OperationContract]
+        //void TahalichHarazatShguimBatch(long lRequestNum, DateTime dTaarich, int TypeShguim,int ExecutionType);
 
         [OperationContract]
         void CreateConstantsReports(long lRequestNum, string sMonth, int iUserId);
