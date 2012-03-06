@@ -10324,8 +10324,8 @@ namespace KdsBatch
                     htEmployeeDetails[i] = oSidur;
                     if (bUsedMazanTichnunInSidur)
                         bUsedMazanTichnun = true;
-                    if (string.IsNullOrEmpty(oSidur.sSidurVisaKod))
-                    {
+                   // if (string.IsNullOrEmpty(oSidur.sSidurVisaKod))
+                   // {
                         if (dShatYetziaFirst != oSidur.dFullShatHatchala && (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala)))
                         {
 
@@ -10421,7 +10421,7 @@ namespace KdsBatch
                                 }
                             }
                         }
-                     }
+                    // }
                     htEmployeeDetails[i] = oSidur;
 
                 }

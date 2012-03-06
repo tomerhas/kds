@@ -7,6 +7,7 @@ using System.Data.Common;
 using System.Data.OleDb;
 using KdsLibrary.DAL;
 using KdsLibrary;
+using System.Configuration;
 namespace KdsBatch.Premia
 {
     /// <summary>
@@ -99,11 +100,14 @@ namespace KdsBatch.Premia
             PremiaItem lastItem = null;
             double minutesCounter = 0;
             List<PremiaItem> stationItems = new List<PremiaItem>();
+            string col_mi = ConfigurationManager.AppSettings["col_tozar_mi"];
+            string col_date = ConfigurationManager.AppSettings["col_tozar_date"];
+            string col_code = ConfigurationManager.AppSettings["col_tozar_prem_code"];
             foreach (DataRow dr in dt.Rows)
             {
               //  if (dr[GetExcelColumnIndex("W")].ToString().Equals(NOT_VISIBLE_ROW_COMPARE_VALUE) ||
                 if (dt.Rows.IndexOf(dr)<FIRST_DATA_ROW_INDEX) continue;
-                var item = PremiaItem.GetItemFromExcelDataRow(dr);
+                var item = PremiaItem.GetItemFromExcelDataRow(dr,col_mi,col_date,col_code);
                 if (item != null)
                 {
                     item.RechivCode = GetDictionaryValueOfPremiaCode(item.PremiaCode,

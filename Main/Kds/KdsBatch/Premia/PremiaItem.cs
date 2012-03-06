@@ -55,16 +55,16 @@ namespace KdsBatch.Premia
             return item;
         }
 
-        public static PremiaItem GetItemFromExcelDataRow(System.Data.DataRow dr)
+        public static PremiaItem GetItemFromExcelDataRow(System.Data.DataRow dr,string col_mi,string col_date, string col_code)
         {
             try
             {
                 var item = new PremiaItem();
-                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex("A")].ToString()))
-                    item.EmployeeNumber = Convert.ToInt32(dr[PremiaFileImporter.GetExcelColumnIndex("A")]);
+                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex(col_mi)].ToString()))
+                    item.EmployeeNumber = Convert.ToInt32(dr[PremiaFileImporter.GetExcelColumnIndex(col_mi)]);
                 else return null;
 
-                string strDate = dr[PremiaFileImporter.GetExcelColumnIndex("BW")].ToString();
+                string strDate = dr[PremiaFileImporter.GetExcelColumnIndex(col_date)].ToString();
                 if (clGeneral.IsNumeric(strDate) && strDate.Length > 4)
                 {
                     item.WorkDate = new DateTime(int.Parse(strDate.Substring(0, 4)),
@@ -72,8 +72,8 @@ namespace KdsBatch.Premia
                 }
                 else return null;
                 // item.Station = dr[PremiaFileImporter.GetExcelColumnIndex("C")].ToString();
-                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex("B")].ToString()))
-                    item.PremiaCode = dr[PremiaFileImporter.GetExcelColumnIndex("B")].ToString();
+                if (clGeneral.IsNumeric(dr[PremiaFileImporter.GetExcelColumnIndex(col_code)].ToString()))
+                    item.PremiaCode = dr[PremiaFileImporter.GetExcelColumnIndex(col_code)].ToString();
                 else return null;
 
                 return item;
