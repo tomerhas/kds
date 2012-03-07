@@ -10629,7 +10629,8 @@ namespace KdsBatch
 
                                     if (!CheckHaveElementHachanatMechona_2(ref oSidur, iPeilutNesiaIndex) && !bAddElementPitzul)
                                     {
-                                        if (oLocalSidur != oSidur && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > _oParameters.iMinTimeBetweenSidurim)
+                                        if (oLocalSidur != oSidur && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes > _oParameters.iMinTimeBetweenSidurim
+                                            && ((oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes - _oParameters.iPrepareOtherMechineMaxTime) > _oParameters.iMinTimeBetweenSidurim)
                                         {
                                             AddElementHachanatMechine711_2(ref oSidur, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona,ref  iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, ref oObjSidurimOvdimUpd);
                                             htEmployeeDetails[iSidurIndex] = oSidur;

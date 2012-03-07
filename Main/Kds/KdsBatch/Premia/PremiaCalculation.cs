@@ -51,21 +51,27 @@ namespace KdsBatch.Premia
         }
         private void RunMacro()
         {
+            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro before new ExcelAdapter");
             var exAdpt = new ExcelAdapter(_settings.GetMacroFullPath(_periodDate));
-
+            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro after new ExcelAdapter");
+           
             try
             {
                 if(!_settings.IsMacroFileExists(_periodDate))
                     throw new Exception(String.Format("Path {0} does not exist",
                         _settings.GetMacroFullPath(_periodDate)));
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After IsMacroFileExists");
                 exAdpt.OpenExistingWorkBook();
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After OpenExistingWorkBook");
                 bool saved = false;
                 int attempts=0;
                 while (!saved && attempts < 3)
                 {
                     try
                     {
+                        clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "Before SaveExistingWorkBook");
                         exAdpt.SaveExistingWorkBook();
+                        clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After SaveExistingWorkBook");
                         saved = true;
                     }
                     catch (System.Runtime.InteropServices.COMException comEx)

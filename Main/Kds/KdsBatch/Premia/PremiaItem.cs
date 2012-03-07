@@ -38,21 +38,27 @@ namespace KdsBatch.Premia
         public static PremiaItem GetItemFromDataRow(System.Data.DataRow dr)
         {
             var item = new PremiaItem();
-            item.EmployeeNumber = Convert.ToInt32(dr["MISPAR_ISHI"]);
-            item.WorkDate = Convert.ToDateTime(dr["TAARICH"]);
-            item.Station = dr["mispar_tachana"].ToString();
-            item.Region = Convert.ToInt32(dr["EZOR"]);
-            item.PremiaCode = dr["KOD_PREMIA"].ToString();
-            item.Position = Convert.ToInt32(dr["MAAMAD"]);
-            item.Mutaam = dr["MUTAAM"].ToString();
-            item.Occupation = Convert.ToInt32(dr["ISUK"]);
-            item.AgeCode = Convert.ToInt32(dr["GIL"]);
-            item.Char60 = dr["meafeyn_60"].ToString();
-            item.Char74 = dr["meafeyn_74"].ToString();
-            item.Lastname = dr["SHEM_MISH"].ToString();
-            item.Firstname = dr["SHEM_PRAT"].ToString();
+            try{
+                item.EmployeeNumber = Convert.ToInt32(dr["MISPAR_ISHI"]);
+                item.WorkDate = Convert.ToDateTime(dr["TAARICH"]);
+                item.Station = dr["mispar_tachana"].ToString();
+                item.Region = Convert.ToInt32(dr["EZOR"]);
+                item.PremiaCode = dr["KOD_PREMIA"].ToString();
+                item.Position = Convert.ToInt32(dr["MAAMAD"]);
+                item.Mutaam = dr["MUTAAM"].ToString();
+                item.Occupation = Convert.ToInt32(dr["ISUK"]);
+                item.AgeCode = Convert.ToInt32(dr["GIL"]);
+                item.Char60 = dr["meafeyn_60"].ToString();
+                item.Char74 = dr["meafeyn_74"].ToString();
+                item.Lastname = dr["SHEM_MISH"].ToString();
+                item.Firstname = dr["SHEM_PRAT"].ToString();
 
-            return item;
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static PremiaItem GetItemFromExcelDataRow(System.Data.DataRow dr,string col_mi,string col_date, string col_code)

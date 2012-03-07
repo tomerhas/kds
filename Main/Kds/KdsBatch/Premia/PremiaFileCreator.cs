@@ -100,39 +100,46 @@ namespace KdsBatch.Premia
 
         private void LoadItemsFromDB()
         {
-            DataTable dt = GetData();
-            if (dt != null)
+            try
             {
-                PremiaItem lastItem = null;
-                int daysCounter = 0, minutesCounter = 0;
-                List<PremiaItem> stationItems = new List<PremiaItem>();
-                foreach (DataRow dr in dt.Rows)
+                DataTable dt = GetData();
+                if (dt != null)
                 {
-                    PremiaItem item = PremiaItem.GetItemFromDataRow(dr);
-                    
-                    if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
-                        !item.Station.Equals(lastItem.Station) || !item.PremiaCode.Equals(lastItem.PremiaCode)))
+                    PremiaItem lastItem = null;
+                    int daysCounter = 0, minutesCounter = 0;
+                    List<PremiaItem> stationItems = new List<PremiaItem>();
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        PremiaItem item = PremiaItem.GetItemFromDataRow(dr);
+
+                        if (lastItem != null && (item.EmployeeNumber != lastItem.EmployeeNumber ||
+                            !item.Station.Equals(lastItem.Station) || !item.PremiaCode.Equals(lastItem.PremiaCode)))
+                        {
+                            UpdateStationCounters(stationItems, daysCounter, minutesCounter);
+                            stationItems.Clear();
+                            daysCounter = 0;
+                            minutesCounter = 0;
+                            _items.AddItem(lastItem);
+                        }
+                        stationItems.Add(item);
+                        if (daysCounter == 0 || (item.EmployeeNumber == lastItem.EmployeeNumber && item.WorkDate != lastItem.WorkDate))
+                            daysCounter++;
+                        minutesCounter += Convert.ToInt32(dr["ERECH_RECHIV"]);
+
+                        lastItem = item;
+                    }
+                    if (lastItem != null) //מוסיפים את האחרון
                     {
                         UpdateStationCounters(stationItems, daysCounter, minutesCounter);
-                        stationItems.Clear();
-                        daysCounter = 0;
-                        minutesCounter = 0;
                         _items.AddItem(lastItem);
                     }
-                    stationItems.Add(item);
-                    if (daysCounter == 0 || (item.EmployeeNumber == lastItem.EmployeeNumber && item.WorkDate != lastItem.WorkDate))
-                        daysCounter++;
-                    minutesCounter += Convert.ToInt32(dr["ERECH_RECHIV"]);
-                   
-                    lastItem = item;
+                    if (stationItems.Count > 0)
+                        UpdateStationCounters(stationItems, daysCounter, minutesCounter);
                 }
-                if (lastItem != null) //מוסיפים את האחרון
-                {
-                    UpdateStationCounters(stationItems, daysCounter, minutesCounter);
-                    _items.AddItem(lastItem);
-                }
-                if (stationItems.Count > 0)
-                    UpdateStationCounters(stationItems, daysCounter, minutesCounter);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
