@@ -65,7 +65,8 @@ namespace KdsBatch
            catch (Exception ex)
            {
                WriteError("CreateErua419: " + ex.Message);
-               throw ex;
+               return null;
+            //   throw ex;
            }
       }
     }

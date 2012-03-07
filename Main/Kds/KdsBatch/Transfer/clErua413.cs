@@ -174,7 +174,7 @@ namespace KdsBatch
           catch (Exception ex)
           {
               WriteError("CreateData413: " + ex.Message);
-              throw ex;
+             // throw ex;
           }
       }
     }
