@@ -25,6 +25,14 @@ copy \\kdscalc01\KdsServiceProd\*.xml \\kdscalc01\KdsServiceProd\old\
 copy \\kdscalc01\KdsServiceTest\*.exe  \\kdscalc01\KdsServiceProd\
 copy \\kdscalc01\KdsServiceTest\*.dll  \\kdscalc01\KdsServiceProd\
 @echo KdsService was installed in kdscalc01 !
+
+@echo backup Local KdsService of kdsappl02 ....
+copy \\kdsappl02\KdsService\*.exe  \\kdsappl02\KdsService\old\
+copy \\kdsappl02\KdsService\*.dll  \\kdsappl02\KdsService\old\
+@echo install Local KdsService to kdsappl02 ....
+copy \\kdscalc01\KdsServiceProd\*.exe  \\kdsappl02\KdsService\
+copy \\kdscalc01\KdsServiceProd\*.dll  \\kdsappl02\KdsService\
+@echo Local KdsService was installed in kdsappl02 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsTaskManager install in progress ....
 @echo copy backup KdsTaskManager to old folder ....
