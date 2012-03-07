@@ -103,8 +103,8 @@ namespace KdsBatch
                             SetSugChishuvUDT(iMisparIshi, dChodesh,oPirteyOved, ref objMisparIshiSugChishuv);
                             objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
                            
-                            if (i%50 ==0)
-                               clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
+                            //if (i%50 ==0)
+                            //   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
                        //}
                        //catch (Exception ex)
                        //{
