@@ -5979,31 +5979,33 @@ namespace KdsBatch
                             else iMaxDakot = 30;
                             drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)='740')");
 
-                          
-                            if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                            if (drPeiluyot.Length > 0)
                             {
-                                //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+                                if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                                {
+                                    //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
-                                iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
-                                bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
-                                if (bYeshSidur)
+                                    iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
+                                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                                    if (bYeshSidur)
+                                    {
+                                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+
+                                        if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'740')").Length > 0)
+                                            fErech -= oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+
+                                        oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
+                                    }
+                                }
+                                else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
                                 {
                                     fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
-                                    if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'740')").Length >0)
+                                    if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'740')").Length > 0)
                                         fErech -= oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                                    
+
                                     oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
                                 }
-                            }
-                            else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
-                            {
-                                fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
-
-                                if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'740')").Length > 0)
-                                    fErech -= oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                                
-                                oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
                             }
                         }
 
@@ -6078,32 +6080,34 @@ namespace KdsBatch
                         
                        
                         drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)='730')");
-                        if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                        if (drPeiluyot.Length > 0)
                         {
-                            //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+                            if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                            {
+                                //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
-                            iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
-                            bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
-                            if (bYeshSidur)
+                                iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
+                                bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                                if (bYeshSidur)
+                                {
+                                    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+
+                                    if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'730')").Length > 0)
+                                        fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+
+                                    oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
+                                }
+                            }
+                            else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
                             {
                                 fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
                                 if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'730')").Length > 0)
                                     fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                                
+
                                 oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
                             }
                         }
-                        else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
-                        {
-                            fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
-
-                            if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'730')").Length > 0)
-                                fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                            
-                            oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
-                        }
-
                        if (!oCalcBL.CheckYomShishi(objOved.SugYom))
                         {
                             fTemp = Math.Min(fZmanAruchatTzharimSidur, 30 - fZmanAruchatTzharim - objOved.fTotalAruchatZaharimForDay);
@@ -6183,32 +6187,34 @@ namespace KdsBatch
                             if (objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode())
                                 iMaxDakot = 18;
                             else iMaxDakot = 30;
-                            
-                          
-                            if (iMisparSidur.ToString().Substring(0, 2) != "99")
-                            {
-                                //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
 
-                                iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
-                                bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
-                                if (bYeshSidur)
+                            if (drPeiluyot.Length > 0)
+                            {
+                                if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                                {
+                                    //SetSugSidur(ref _drSidurim[I], objOved.Taarich, iMisparSidur);
+
+                                    iSugSidur = int.Parse(_drSidurim[I]["sug_sidur"].ToString());
+                                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                                    if (bYeshSidur)
+                                    {
+                                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+
+                                        if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'750')").Length > 0)
+                                            fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+
+                                        oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
+                                    }
+                                }
+                                else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
                                 {
                                     fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
 
                                     if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'750')").Length > 0)
                                         fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-                                    
+
                                     oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
                                 }
-                            }
-                            else if (iMisparSidur == 99402 && sIsuk.IndexOf("," + objOved.objPirteyOved.iIsuk.ToString() + ",") > -1)
-                            {
-                                fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
-
-                                if (getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(SUBSTRING(makat_nesia,1,3)<>'750')").Length > 0)
-                                    fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
-
-                                oPeilut.CalcZmaneyAruchot(drPeiluyot, dShatHatchalaLetaslum, dShatGmarLetashlum, out  fZmanAruchatTzharimSidur, iMaxDakot);
                             }
                         }
 
