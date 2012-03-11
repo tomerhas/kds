@@ -662,9 +662,11 @@ namespace KdsBatch
                     addRowToTable(clGeneral.enRechivim.ZmanNesia.GetHashCode(), fZmanNesia - fTemp);
                 }
 
-
-                if (fSumDakotRechiv < fMichsaYomit && (fMichsaYomit - fSumDakotRechiv) <= 2)
-                    fSumDakotRechiv = fMichsaYomit;
+                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                {
+                    if (fSumDakotRechiv < fMichsaYomit && (fMichsaYomit - fSumDakotRechiv) <= 2)
+                        fSumDakotRechiv = fMichsaYomit;
+                }
 
                 addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), fSumDakotRechiv, fDakotNochechut);
 

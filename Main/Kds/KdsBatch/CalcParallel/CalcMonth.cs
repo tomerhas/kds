@@ -3990,8 +3990,12 @@ namespace KdsBatch
                 fNosafotTafkid = fTempX - (float.Parse(((fDakotTafkidChol + fOutMichsaShishi) / 60).ToString()));
                 
                 fShaotNosafotTafkidChol =  oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode());
-                if (fNosafotTafkid > fShaotNosafotTafkidChol)
-                    fSumDakotRechiv = fNosafotTafkid - fShaotNosafotTafkidChol;
+                if (fNosafotTafkid > fShaotNosafotTafkidChol){
+                    //if (objOved.objMeafyeneyOved.sMeafyen74.Trim() == "1")
+                    //    fSumDakotRechiv = fNosafotTafkid;
+                    //else
+                        fSumDakotRechiv = fNosafotTafkid - fShaotNosafotTafkidChol;
+                }
                 else fSumDakotRechiv = 0;
 
                 addRowToTable(clGeneral.enRechivim.KizuzNosafotTafkidChol.GetHashCode(), fSumDakotRechiv);

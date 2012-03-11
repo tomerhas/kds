@@ -527,12 +527,11 @@ namespace KdsBatch
             clCalcDal oCalcDal = new clCalcDal();
             int numFailed = 0;
             int numSucceed = 0;
-            int seq = 0;
             int result=0;
             try
             {
 
-                seq = obatch.InsertProcessLog(98, 0, KdsLibrary.BL.RecordStatus.Wait, "PremiaCalc", 0);
+                clLogBakashot.InsertErrorToLog(_iBakashaId, "I", 0, "Start PremiaCalc");
                 result = oCalcDal.PrepareDataLeChishuvPremiyot(_numProcess);
                 clGeneral.enBatchExecutionStatus status = clGeneral.enBatchExecutionStatus.Succeeded;
                
@@ -592,8 +591,8 @@ namespace KdsBatch
                 else status = clGeneral.enBatchExecutionStatus.Failed;
 
                 KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
-                obatch.UpdateProcessLog(seq, KdsLibrary.BL.RecordStatus.Finish, "PremiaCalc NumRowsFailed=" + numFailed + " NumRowsSucceed=" + numSucceed, 0);
-            }
+                clLogBakashot.InsertErrorToLog(_iBakashaId, "I", 0, "End PremiaCalc");
+             }
             catch (Exception ex)
             {
                 KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId,  clGeneral.enBatchExecutionStatus.Failed);

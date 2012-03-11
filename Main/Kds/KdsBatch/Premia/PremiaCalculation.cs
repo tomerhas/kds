@@ -28,19 +28,27 @@ namespace KdsBatch.Premia
         {
             try
             {
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacroWithScript");
+          
                 string filename = _settings.GetMacroFullPath(_periodDate);
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before IsMacroFileExists file=" + filename);
+          
                 if (!_settings.IsMacroFileExists(_periodDate))
                     throw new Exception(String.Format("Path {0} does not exist",
                         filename));
                 Process scriptProc = new Process();
-                
+
                 scriptProc.StartInfo.FileName = "cscript";
                 scriptProc.StartInfo.Arguments =
                     String.Format("//B //Nologo {0}runmacro.vbs {1}",
                     AppDomain.CurrentDomain.BaseDirectory, filename);
-              
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, scriptProc.StartInfo.Arguments);
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Start()");
+          
                 scriptProc.Start();
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before  scriptProc.WaitForExit()");
                 scriptProc.WaitForExit();
+                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Close()");
                 scriptProc.Close();
             }
             catch (Exception ex)
