@@ -799,8 +799,8 @@ namespace KdsBatch
                 {
                     Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
 
-                    fDakotNehigaChol = fSumDakotRechiv + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNehigaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
-                    fDakotNihulChol = fSumDakotRechiv + oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNihulTnuaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Taarich);
+                    fDakotNehigaChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNehigaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNehigaChol.GetHashCode(), objOved.Taarich);
+                    fDakotNihulChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNihulTnuaChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNihulTnuaChol.GetHashCode(), objOved.Taarich);
                     if (fDakotNehigaChol == 0 && fDakotNihulChol == 0)
                         fSumDakotRechiv = fSumDakotRechiv + oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanHashlama.GetHashCode(), objOved.Taarich);
 
@@ -1121,7 +1121,7 @@ namespace KdsBatch
                             Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
 
                             fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  
-                            fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100);  
+                           // fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ShaotShabat100);  
                            // fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotZikuyChofesh);
                             //fTempX = fTempX - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotShabat); 
 
@@ -1137,7 +1137,7 @@ namespace KdsBatch
                                 if (fTempX > fMichsaYomit)
                                 {
                                     fDakotTafkidChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotTafkidChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
-                                    fDakotTafkidChol = fDakotTafkidChol - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich); 
+                                    //fDakotTafkidChol = fDakotTafkidChol - oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich); 
                                     if (fDakotTafkidChol > 0 && (iCountNihulTnua == 0 && iCountNahagutChol == 0))
                                     {
                                         fSumDakotRechiv21 = fTempX - fMichsaYomit;
@@ -2613,7 +2613,9 @@ namespace KdsBatch
                                 fErechRechiv = fErechRechiv * objOved.fMekademNipuach;
                             }
 
-                           
+                            if (objOved.Taarich < objOved.dTchilatAvoda && fMichsaYomit == 0)
+                                fErechRechiv = 1;
+
                             if ((objOved.SugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() ||
                                  objOved.SugYom == clGeneral.enSugYom.ErevRoshHashna.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevYomKipur.GetHashCode() ||
                                  objOved.SugYom == clGeneral.enSugYom.ErevSukot.GetHashCode() || objOved.SugYom == clGeneral.enSugYom.ErevSimchatTora.GetHashCode() ||
@@ -2623,7 +2625,7 @@ namespace KdsBatch
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
-
+                            			
                             if (objOved.objMeafyeneyOved.iMeafyen83 == 1 && objOved.objMeafyeneyOved.iMeafyen33 == 1)
                             {
                                 sRechivim = clGeneral.enRechivim.YomHadracha.GetHashCode().ToString() + "," + clGeneral.enRechivim.YomMachalatHorim.GetHashCode().ToString() +
@@ -3899,12 +3901,12 @@ namespace KdsBatch
                             addRowToTable(clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), (fDakotTafkidShabat + fDakotRechiv));
 
                         }
-                        else
-                        {
-                            fDakotTafkidChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotTafkidChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
+                        //else
+                        //{
+                        //    fDakotTafkidChol = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotTafkidChol); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
 
-                            addRowToTable(clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), (fDakotTafkidChol + fDakotRechiv));
-                        }
+                        //    addRowToTable(clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), (fDakotTafkidChol + fDakotRechiv));
+                        //}
 
                     }
                 }

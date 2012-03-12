@@ -24,6 +24,7 @@ namespace KdsBatch
         public int iDarga;
         public int iAchsana;
         public int iSnifAv;
+        //public DateTime dTchilatAvoda;
         public bool bIsInShlila = false;
 
          private DataTable dtOvedCardDetails;
@@ -99,6 +100,7 @@ namespace KdsBatch
                 bIsInShlila = System.Convert.IsDBNull(drPratim["SHLILAT_RISHAYON"]) ? false : true;
                 iMikumYechida = System.Convert.IsDBNull(drPratim["MIKUM_YECHIDA"]) ? 0 : int.Parse(drPratim["MIKUM_YECHIDA"].ToString());
 
+               
                 _TaarichMe = DateTime.Parse(drPratim["ME_TARICH"].ToString());
                 _TaarichAd = DateTime.Parse(drPratim["AD_TARICH"].ToString());
 

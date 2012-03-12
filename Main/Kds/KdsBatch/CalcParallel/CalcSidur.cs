@@ -149,10 +149,10 @@ namespace KdsBatch
 
         public float CalcRechiv1BySidur(DataRow drSidur, float fMichsaYomit, CalcPeilut oPeilut)
         {
-            float fErechRechiv, fErechPeiluyot;
+            float fErechRechiv, fErechPeiluyot,fErech;
             int iMisparSidur;//, iSugYom;
             DateTime dShatHatchalaLetashlum, dShatGmarLetashlum, dTempDtFrom, dTempDtTo, dShatHatchalaSidur,shaa;
-
+            string sQury="";
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
             try
@@ -388,33 +388,29 @@ namespace KdsBatch
                     //עבור סידורי ויזה "צבאית"
                     else if (int.Parse(drSidur["sidur_namlak_visa"].ToString()) == 1)
                     {
-                        if (int.Parse(drSidur["yom_VISA"].ToString()) == 4)
-                        {
-                            fErechRechiv = fErechRechiv - (int.Parse(drSidur["Hafhatat_Nochechut_Visa"].ToString()) * 60);
-                        }
-                        //•	: סידורים מיוחדים בעלי שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1. 
-                        else if (int.Parse(drSidur["yom_VISA"].ToString()) == 1)
+
+                        if (int.Parse(drSidur["yom_VISA"].ToString()) == 1 || int.Parse(drSidur["yom_VISA"].ToString()) == 2)
                         {
                             dShatGmarLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00").AddDays(1);
-                            fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                           
-                            fErechRechiv = objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon;
-                            fErechRechiv = fErechRechiv + fErechPeiluyot;
-                        }
-                        if (int.Parse(drSidur["yom_VISA"].ToString()) == 2)
-                        {
-                          
-                            fErechRechiv = objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon;
-                            fErechRechiv = fErechRechiv - (int.Parse(drSidur["Hafhatat_Nochechut_Visa"].ToString()) * 60);
                         }
                         else if (int.Parse(drSidur["yom_VISA"].ToString()) == 3)
                         {
-                            dShatGmarLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00").AddDays(1);
-                            fErechRechiv = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                           
-                            fErechRechiv = Math.Min(fErechRechiv, objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon);
-                            if (fErechRechiv == objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon)
-                            { fErechRechiv = fErechRechiv + fErechPeiluyot; }
+                            shaa= DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00");
+                            if (dShatHatchalaLetashlum > shaa)
+                                dShatHatchalaLetashlum = DateTime.Parse(objOved.Taarich.ToShortDateString() + " 04:00:00");
+                        }
+
+                        sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and (SUBSTRING(makat_nesia,1,3)='790')";
+                        fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+                        fErechRechiv = Math.Min(objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon,
+                            float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString()) - fErech);
+
+                        if (fErechRechiv > objOved.objParameters.iMaxNochehutVisaTzahalLoAcharon)
+                        {
+                            sQury = "MISPAR_SIDUR=" + iMisparSidur +" and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                            sQury += " and (SUBSTRING(makat_nesia,1,3) in (719,720,791,785))";
+                            fErech = oCalcBL.GetSumErechRechiv(objOved.DtPeiluyotYomi.Compute("sum(zmanElement)", sQury));
+                            fErechRechiv += fErech;
                         }
                     }
                 }

@@ -35,6 +35,7 @@ namespace KdsBatch
         private DataTable _DtDay;
         private DataTable _DtSidur;
         private DataTable _DtPeilut;
+        public DateTime dTchilatAvoda;
 
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
@@ -185,6 +186,7 @@ namespace KdsBatch
                 {
                     itemPirteyOved = new clPirteyOved(rows[i], dTarMe);
                     PirteyOved.Add(itemPirteyOved);
+                    dTchilatAvoda = dTchilatAvoda = DateTime.Parse(rows[i]["TCHILAT_AVODA"].ToString());
                     itemPirteyOved = null;
                 }
                 itemPirteyOved = null;
