@@ -67,9 +67,9 @@ namespace KdsBatch
               }
               else { sErua417.Append(GetBlank(4)); }
 
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode()),4,0));
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode()),4,0));
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode()),4,0));
+                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"),4,0));
+                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"),4,0));
+                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"),4,0));
                 fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode());
                 fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode());
                 sErua417.Append(FormatNumber(fErech, 4,0));
