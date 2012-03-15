@@ -27,7 +27,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     private const string SAVED_PREMIAS_ERRORS = "PremiaErrors";
     private bool _refreshOnLoad;
     private const int Coll_Date = 6;
-
+    private const int Coll_Dakot = 5;
     #endregion
 
     #region Events
@@ -257,6 +257,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                 {
                     txtDakotPremia.Text = "";
                 }
+                ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[Coll_Dakot].FindControl("exvDakot")).BehaviorID = e.Row.ClientID + "_vldExtndrDakot";
+                txtDakotPremia.Attributes.Add("onblur", "onchange_txtDakot(" + e.Row.ClientID + ")");
             }
            
             if (e.Row.Cells[Coll_Date].Text != "&nbsp;" && e.Row.Cells[Coll_Date].Text != "")
@@ -793,6 +795,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                 gridPager.PageIndexChanged += delegate(object pagerSender,
                     GridViewPageEventArgs pagerArgs)
                 {
+                    RememberPremiaValues();
                     ChangeGridPage(pagerArgs.NewPageIndex, grdPremias,
                            new DataView((DataTable)Session[SAVED_PREMIAS]), "SortDirection",
                            "SortExp");

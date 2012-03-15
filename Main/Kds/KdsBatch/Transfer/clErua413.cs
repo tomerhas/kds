@@ -150,8 +150,8 @@ namespace KdsBatch
               //    fErech += GetErechRechiv(int.Parse(sKods[i]),col);
               //}
               fErech = GetErechRechiv(iKodRechiv,col);
-              if (fErech > 0)
-              {
+              //if (fErech > 0)
+              //{
                   StringBuilder sErua413 = new StringBuilder();
 
                   sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
@@ -169,7 +169,7 @@ namespace KdsBatch
                   {
                       _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
                   }
-              }
+              //}
           }
           catch (Exception ex)
           {

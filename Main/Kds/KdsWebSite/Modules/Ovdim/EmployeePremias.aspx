@@ -55,6 +55,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="ddStatuses" />
                 <asp:AsyncPostBackTrigger ControlID="btnExecute" />
+                <%--<asp:AsyncPostBackTrigger ControlID="grdPremias" />--%>
             </Triggers>
         </asp:UpdatePanel>        
     </fieldset>
@@ -244,8 +245,10 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                         DataField="Snif" ItemStyle-Width="150" SortExpression="Snif" />
                                     <asp:TemplateField HeaderText="דקות פרמיה"  SortExpression="Dakot_Premya"                                        ItemStyle-Width="80">
                                         <ItemTemplate>
-                                            <asp:TextBox ID="txtDakotPremia" 
+                                            <asp:TextBox ID="txtDakotPremia" MaxLength="4" 
                                             runat="server" Width="80"/>
+                                          <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotPremia" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
+                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExtndrDakot"  TargetControlID="vldDakot" Width="180px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                         </ItemTemplate>    
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="תאריך עדכון" 
@@ -275,11 +278,11 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
    </div>  
     <input type="hidden" id="ListOvdim" name="ListOvdim"  runat="server" />
     </ContentTemplate>
-                <%-- <Triggers>
+             <%--    <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnExecute" />    
                     <asp:AsyncPostBackTrigger ControlID="btnSearch" />
-                </Triggers> 
-                --%>
+                </Triggers> --%>
+               
  </asp:UpdatePanel> 
    
   
@@ -456,6 +459,27 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
 //        document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = "";
 //        //document.getElementById("ctl00_KdsContent_divGrdPremyot").style.display = "none";
 //        $("#ctl00_KdsContent_divGrdPremyot").css("display", "none");
-//    }
+    //    }
+
+
+    function onchange_txtDakot(row) {
+        //debugger;
+        var vld = document.getElementById(row.id + "_vldDakot");
+        var dakotNochechut = document.getElementById(row.id + "_txtDakotPremia").value;
+
+        if (!trim(dakotNochechut) == "")
+            if (!IsNumeric(dakotNochechut)) {
+                vld.errormessage = "יש להזין ערך מספרי ושלם בלבד";
+                ShowValidatorCalloutExtender(row.id + "_vldExtndrDakot");
+                document.getElementById(row.id + "_txtDakotPremia").focus();
+                document.getElementById(row.id + "_txtDakotPremia").value = "";
+               
+            }
+        }
+
+        function ShowValidatorCalloutExtender(sBehaviorId) {
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+        }
    </script>
 </asp:Content>

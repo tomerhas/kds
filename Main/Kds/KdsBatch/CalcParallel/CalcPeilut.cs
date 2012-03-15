@@ -583,6 +583,38 @@ namespace KdsBatch
              }
          }
 
+         public void CalcRechiv235(int iMisparSidur, DateTime dShatHatchalaSidur)
+         {
+             DataRow[] drPeiluyot;
+             float fErech;
+             int iMakat, iMisparKnisa;
+             DateTime dShatYetzia = DateTime.MinValue;
+             iMisparKnisa = 0;
+             try
+             {
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur," (SUBSTRING(makat_nesia,1,3)='737')");
+
+                 for (int J = 0; J < drPeiluyot.Length; J++)
+                 {
+                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
+                     iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
+                     
+                     fErech = int.Parse(iMakat.ToString().Substring(3, 3));
+                     addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, dShatYetzia, iMisparSidur, iMisparKnisa, fErech);
+
+                 }
+             }
+             catch (Exception ex)
+             {
+                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, dShatYetzia, iMisparKnisa, "CalcPeilut: " + ex.Message, null);
+                 throw (ex);
+             }
+             finally
+             {
+                 drPeiluyot = null;
+             }
+         }
          public void CalcRechiv267(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
             // DataTable dtPeiluyot;

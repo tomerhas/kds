@@ -893,6 +893,11 @@ namespace KdsBatch
                 //רציפות לזמן לילה    - רכיב 272:  
                 CalcRechiv272();
 
+                //רציפות לזמן לילה חוק   - רכיב 273:  
+                CalcRechiv273();
+
+                //רציפות לזמן לילה סידורי בוקר   - רכיב 274:  
+                CalcRechiv274();
                 //סה"כ קיזוזים  (רכיב 83):
                 CalcRechiv83();
 
@@ -3177,6 +3182,21 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutLaylaChok.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv274()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }

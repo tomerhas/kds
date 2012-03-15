@@ -271,7 +271,8 @@ namespace KdsBatch
                     {
                         //-	ימים א – ה וערב חג [זיהוי ערב חג]: הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
                         if (fErechRechiv >= 480)
-                            fErechRechiv = fMichsaYomit;
+                            if(fErechRechiv<fMichsaYomit)
+                                fErechRechiv = fMichsaYomit;
                     }
                     else if (oCalcBL.CheckYomShishi(objOved.SugYom))
                     {
@@ -5655,29 +5656,42 @@ namespace KdsBatch
             int iMisparSidur;
             DateTime dShatHatchalaSidur, dShatGmarLetashlum, dShatHatchalaLetashlum;
             float fErech;
-            string sSidurimMeyuchadim="";
+            string sSidurimMeyuchadim = "", sQury;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
             try
             {
-                sSidurimMeyuchadim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode());
-                if (sSidurimMeyuchadim.Length > 0)
+                if (objOved.objMeafyeneyOved.iMeafyen103 > 0)
                 {
-                    _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")");
-                    // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
-                    // _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur>=0");
-                    for (int I = 0; I < _drSidurim.Length; I++)
+                    sSidurimMeyuchadim = GetSidurimMeyuchRechiv(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode());
+                    if (sSidurimMeyuchadim.Length > 0)
                     {
+                        _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")");
+                        for (int I = 0; I < _drSidurim.Length; I++)
+                        {
+                            iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
+                            dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                            dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
+                            dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
+
+                            fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                            addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                        }
+                    }
+
+                    _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and MISPAR_SIDUR NOT IN(" + sSidurimMeyuchadim + ")");
+                    for (int I = 0; I < _drSidurim.Length; I++)
+                    
                         iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
                         dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
-                        dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                        dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
-
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());
-                        addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
-
-
+                       
+                        oPeilut.CalcRechiv235(iMisparSidur, dShatHatchalaSidur);
+                        fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_PEILUT"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        
+                        if (fErech>0)
+                            addRowToTable(clGeneral.enRechivim.NochehutLePremyatNehageyTenderim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                     }
+
                 }
             }
             catch (Exception ex)
