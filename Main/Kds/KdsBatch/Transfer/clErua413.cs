@@ -141,6 +141,7 @@ namespace KdsBatch
           float fErech=0;
           int iLastDigit;
           bKayamEfreshBErua = false;
+          string sErech="";
          // string[] sKods;
           try
           {
@@ -155,9 +156,9 @@ namespace KdsBatch
                   StringBuilder sErua413 = new StringBuilder();
 
                   sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
-                  sErua413.Append(GetBlank(17));
-                  sErua413.Append(FormatNumber(fErech, iLen, iNumDigit));
-                  sErua413.Append(GetBlank(12));
+                  sErech=GetBlank(17);
+                  sErech+=FormatNumber(fErech, iLen, iNumDigit);
+                  sErech+=GetBlank(12);
 
                   if (bKayamEfreshBErua)
                   {
@@ -165,8 +166,9 @@ namespace KdsBatch
                       _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
                      // _sFooter += GetSimanEfresh(iLastDigit);
                   }
-                  if (!IsEmptyErua(sErua413.ToString()))
+                  if (!IsEmptyErua(sErech.ToString()))
                   {
+                      sErua413.Append(sErech);
                       _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
                   }
               //}
