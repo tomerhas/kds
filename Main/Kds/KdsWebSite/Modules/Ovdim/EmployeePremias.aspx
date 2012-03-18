@@ -163,7 +163,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upPremiaMinutes" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtPremiaMinutes" runat="server" onchange="OnChange_PremiaMinutes()"
+                            <asp:TextBox ID="txtPremiaMinutes" runat="server"  MaxLength="4"
                                 AutoComplete="Off" style="width:50px;">
                             </asp:TextBox>
                          </ContentTemplate>
@@ -181,7 +181,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                             <asp:Button ID="btnUpdate" runat="server"  
                                 Text="עדכן" CssClass="ImgButtonSearch" 
                                 
-                                OnClientClick="if(document.getElementById('ctl00_KdsContent_txtPremiaMinutes').value == '') { alert('חובה להזין ערך בשדה דקות פרמיה'); document.getElementById('ctl00_KdsContent_txtPremiaMinutes').focus(); return false;}" onclick="btnUpdate_Click" 
+                                OnClientClick="return Onclick_UpdatePremiaMinutes();" onclick="btnUpdate_Click" 
                                />
                         </ContentTemplate>
                          <Triggers>
@@ -247,8 +247,8 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                         <ItemTemplate>
                                             <asp:TextBox ID="txtDakotPremia" MaxLength="4" 
                                             runat="server" Width="80"/>
-                                          <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotPremia" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
-                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExtndrDakot"  TargetControlID="vldDakot" Width="180px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
+                                         <%-- <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotPremia" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
+                                            <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExtndrDakot"  TargetControlID="vldDakot" Width="180px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  --%>
                                         </ItemTemplate>    
                                     </asp:TemplateField>
                                     <asp:BoundField HeaderText="תאריך עדכון" 
@@ -428,14 +428,22 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
     function GetDakotPremiyaSucc(result){
         document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value = result;
     }
-    function OnChange_PremiaMinutes() {
+    function Onclick_UpdatePremiaMinutes() {
         var dakot = document.getElementById("ctl00_KdsContent_txtPremiaMinutes").value;
-        if (!IsDecimal(dakot)) {
-            alert('ערך דקות פרמיה לא חוקי');
-            document.getElementById("ctl00_KdsContent_btnUpdate").disabled = true;
+        var txt_id = document.getElementById("ctl00_KdsContent_txtId").value;
+        if (trim(txt_id) != "") {
+            if (!IsNumeric(dakot) || trim(dakot) == "") {
+                alert("יש להזין ערך מספרי ושלם בלבד");
+                document.getElementById("ctl00_KdsContent_txtPremiaMinutes").focus();
+                return false;
+            }
         }
-        else
-            document.getElementById("ctl00_KdsContent_btnUpdate").disabled = false;
+        else {
+            alert("יש לבחור מספר אישי לעידכון");
+            document.getElementById("ctl00_KdsContent_txtPremiaMinutes").focus();
+            return false;
+        }
+   
     }
      
     function continue_click() {
@@ -469,17 +477,18 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
 
         if (!trim(dakotNochechut) == "")
             if (!IsNumeric(dakotNochechut)) {
-                vld.errormessage = "יש להזין ערך מספרי ושלם בלבד";
-                ShowValidatorCalloutExtender(row.id + "_vldExtndrDakot");
+              //  vld.errormessage = "יש להזין ערך מספרי ושלם בלבד";
+                //  ShowValidatorCalloutExtender(row.id + "_vldExtndrDakot");
+                alert("יש להזין ערך מספרי ושלם בלבד");
                 document.getElementById(row.id + "_txtDakotPremia").focus();
                 document.getElementById(row.id + "_txtDakotPremia").value = "";
                
             }
         }
 
-        function ShowValidatorCalloutExtender(sBehaviorId) {
-            $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);
-        }
+//        function ShowValidatorCalloutExtender(sBehaviorId) {
+//            $find(sBehaviorId)._ensureCallout();
+//            $find(sBehaviorId).show(true);
+//        }
    </script>
 </asp:Content>

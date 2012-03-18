@@ -58,12 +58,12 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         if (grdPremias.SelectedIndex != -1)
         {
             txtPremiaMinutes.Enabled = true;
-            btnUpdate.Attributes.Add("disabled", "false");
+            //btnUpdate.Attributes.Add("disabled", "false");
         }
         else
         {
             txtPremiaMinutes.Enabled = false;
-            btnUpdate.Attributes.Add("disabled","true");
+            //btnUpdate.Attributes.Add("disabled","true");
         }
     }
 
@@ -257,7 +257,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                 {
                     txtDakotPremia.Text = "";
                 }
-                ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[Coll_Dakot].FindControl("exvDakot")).BehaviorID = e.Row.ClientID + "_vldExtndrDakot";
+               // ((AjaxControlToolkit.ValidatorCalloutExtender)e.Row.Cells[Coll_Dakot].FindControl("exvDakot")).BehaviorID = e.Row.ClientID + "_vldExtndrDakot";
                 txtDakotPremia.Attributes.Add("onblur", "onchange_txtDakot(" + e.Row.ClientID + ")");
             }
            
@@ -368,7 +368,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         txtName.Text = "";
         txtPremiaMinutes.Text = "";
         btnSearch.Enabled = false;
-        btnUpdate.Attributes.Add("disabled", "true");
+        //btnUpdate.Attributes.Add("disabled", "true");
        
     }
     protected void vldEmpNotExists_ServerValidate(object source, ServerValidateEventArgs args)
@@ -585,7 +585,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             }
             else
             {
-                btnUpdate.Attributes.Add("disabled", "true");
+                //btnUpdate.Attributes.Add("disabled", "true");
        
                 txtName.Text = "";
                 txtId.Text = "";
@@ -606,7 +606,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         }
 
         txtPremiaMinutes.Enabled = true;
-        btnUpdate.Attributes.Add("disabled", "false");
+        //btnUpdate.Attributes.Add("disabled", "false");
        
     }
 

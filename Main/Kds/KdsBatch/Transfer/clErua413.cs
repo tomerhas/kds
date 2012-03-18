@@ -160,6 +160,7 @@ namespace KdsBatch
                   sErech+=FormatNumber(fErech, iLen, iNumDigit);
                   sErech+=GetBlank(12);
 
+                  SetFooter();
                   if (bKayamEfreshBErua)
                   {
                       iLastDigit =  int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
