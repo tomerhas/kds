@@ -1412,7 +1412,7 @@
                                             <TextRuns>
                                               <TextRun>
                                                 <Value>=iif(Fields!STATUS.Value=0 and Fields!STATUS.Value &lt;&gt; nothing,"כרטיס שגוי",
-iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) and Fields!NUM.Value=0,"חסר דיווח",
+iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"חסר דיווח",
 iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" , 
  iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח",""))))</Value>
                                                 <Style />
@@ -2514,10 +2514,6 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </Field>
         <Field Name="DAKOT_NOCHECHUT">
           <DataField>DAKOT_NOCHECHUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NUM">
-          <DataField>NUM</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="TEUR_PREMIA">
