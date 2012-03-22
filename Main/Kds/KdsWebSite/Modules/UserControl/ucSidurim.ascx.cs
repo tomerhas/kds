@@ -6316,8 +6316,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
           oCancelButton = AddImageButton();
           oCancelButton.OnClientClick = "SetKnisaActualMin(" + e.Row.ClientID + "); if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0" + ")) {return false; } else {return true;} ";          
-          if (bPeilutActive){//vered 23/02
-              if ((iMisparKnisa > 0) && (iKnisaType == 1)) //כניסה לפי צורך
+          if (bPeilutActive){
+              if ((iMisparKnisa > 0) && (iKnisaType == 1) && (((TextBox)(e.Row.Cells[_COL_ACTUAL_MINUTES].Controls[0])).Text=="0")) //כניסה לפי צורך
                   oCancelButton.CssClass = "ImgKnisaS";
               else
                   oCancelButton.CssClass = "ImgCheckedPeilut";           

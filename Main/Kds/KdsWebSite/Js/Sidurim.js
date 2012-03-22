@@ -609,7 +609,7 @@ function chkMkt(oRow) {
                                       }
                                       else {
                                           oColCancel.className = "ImgKnisaS";
-                                          oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = '';
+                                          oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = '0';
                                       }
                                     }
                             else
