@@ -24,6 +24,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     #region Fields
 
     private const string SAVED_PREMIAS = "Premias";
+    private const string PREMIYOT_FIRST = "Premias_First";
     private const string SAVED_PREMIAS_ERRORS = "PremiaErrors";
     private bool _refreshOnLoad;
     private const int Coll_Date = 6;
@@ -90,10 +91,12 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     {
         DataRow[] drSelect;
         string sSQL = "";
-        string dakot_old;
+        string dakot_old, dakot_new;
         Session[SAVED_PREMIAS_ERRORS] = null;
+        RememberPremiaValues();
         DataTable dt = (DataTable)Session[SAVED_PREMIAS];
-            grdPremias.Rows.Cast<GridViewRow>()
+        DataTable dtold = (DataTable)Session[PREMIYOT_FIRST];
+        dtold.Rows.Cast<DataRow>()
                            .ToList()
                            .ForEach
                            (
@@ -103,25 +106,22 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                                 int mispar_ishi = 0;
                                 float dakot = 0;
 
-                                shem_oved = row.Cells[1].Text;
-                                mispar_ishi = Int32.Parse(row.Cells[0].Text);
-                                TextBox txtDakotPremia = 
-                                    row.Cells[5].FindControl("txtDakotPremia") 
-                                        as TextBox;
-                                if (txtDakotPremia != null)
+                                mispar_ishi = Int32.Parse(row["mispar_ishi"].ToString());
+                        
+                                sSQL = string.Concat("MISPAR_ISHI='" + mispar_ishi + "'");
+                                drSelect = dt.Select(sSQL);
+                                dakot_new = drSelect[0]["Dakot_Premya"].ToString() =="0" ?"":drSelect[0]["Dakot_Premya"].ToString();
+
+                                sSQL = string.Concat("MISPAR_ISHI='" + mispar_ishi + "'");
+                                drSelect = dtold.Select(sSQL);
+                                dakot_old = drSelect[0]["Dakot_Premya"].ToString() == "0" ? "" : drSelect[0]["Dakot_Premya"].ToString();
+
+                                if (dakot_old.Trim() != dakot_new.Trim())
                                 {
-                                    if (!float.TryParse(txtDakotPremia.Text, out dakot))
+                                    if (!float.TryParse(dakot_new, out dakot))
                                     {
                                         dakot = -1;
                                     }
-                                }
-
-                                sSQL = string.Concat("MISPAR_ISHI='" + mispar_ishi + "'");
-                                drSelect = dt.Select(sSQL);
-                                dakot_old = drSelect[0]["Dakot_Premya"].ToString() =="0" ?"":drSelect[0]["Dakot_Premya"].ToString();
-                                if (dakot_old  != txtDakotPremia.Text)
-                                {
-
                                     int empID = 0;
                                     if (!Int32.TryParse(LoginUser.UserInfo.EmployeeNumber, out empID))
                                     {
@@ -292,6 +292,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
     void btnExecute_Click(object sender, EventArgs e)
     {
+        Session[PREMIYOT_FIRST] = null;
         ViewState["SortDirection"] = SortDirection.Ascending;
         ViewState["SortExp"] = "Mispar_Ishi";
         RefreshData();
@@ -471,10 +472,35 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
     private void RefreshData()
     {
+        DataTable dtOvdim = BindTable();
+        Session[SAVED_PREMIAS] = dtOvdim;
+        if (Session[PREMIYOT_FIRST] == null)
+        {
+            DataTable dtOvdim_a = BindTable();
+            Session[PREMIYOT_FIRST] = dtOvdim_a;
+        }
+
+        DataView dv = new DataView((DataTable)Session[SAVED_PREMIAS]);
+        grdPremias.PageIndex = 0;
+        dv.Sort = string.Concat(ViewState["SortExp"], " ",  (SortDirection)ViewState["SortDirection"] == SortDirection.Ascending ? "ASC":"DESC");
+        grdPremias.DataSource = dv;// dtOvdim;
+        grdPremias.DataBind();
+        if (dtOvdim.Rows.Count > 0)
+        {
+            btnSearch.Enabled = true;
+       //     btnUpdate.Enabled = true;
+        }
+        divGrdPremyot.Style["display"] = "inline";
+      //  fsGrid.Attributes.Add("display","");
+    //    grdPremias.Style["display"] = "inline";
+    }
+
+    private DataTable BindTable()
+    {
         DateTime dateTmp = new DateTime();
         string selectedPremia = ddStatuses.SelectedValue;
+        DateTime selectedMonth = DateTime.Parse(ddMonths.SelectedValue);    
         clUtils oUtils = new clUtils();
-        DateTime selectedMonth = DateTime.Parse(ddMonths.SelectedValue);
         DataTable dtSource =
             oUtils.GetOvdimForPremiaType(selectedPremia, selectedMonth);
 
@@ -494,7 +520,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         ListOvdim.Value = ";";
         foreach (DataRow row in dtSource.Rows)
         {
-            dtOvedDetails = 
+            dtOvedDetails =
                 clOvdim.GetInstance().GetOvedDetails
                 (
                     Int32.Parse(row["mispar_ishi"].ToString()), selectedMonth
@@ -503,8 +529,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             dtOvedPremyaDetails =
                 oUtils.GetPremiaYadanitForOved
                 (
-                    Int32.Parse(row["mispar_ishi"].ToString()), 
-                    selectedMonth, 
+                    Int32.Parse(row["mispar_ishi"].ToString()),
+                    selectedMonth,
                     Int32.Parse(selectedPremia)
                 );
 
@@ -516,37 +542,22 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                                             .ToString();
             drOved["Ezor"] = dtOvedDetails.Rows[0]["TEUR_EZOR"].ToString();
             drOved["Snif"] = dtOvedDetails.Rows[0]["TEUR_SNIF_AV"].ToString();
-            if (dtOvedPremyaDetails != null && 
+            if (dtOvedPremyaDetails != null &&
                 dtOvedPremyaDetails.Rows.Count > 0)
             {
-                drOved["Dakot_premya"] = 
+                drOved["Dakot_premya"] =
                     dtOvedPremyaDetails.Rows[0]["DAKOT_PREMYA"].ToString();
-                dateTmp =   DateTime.Parse( dtOvedPremyaDetails.Rows[0]["Taarich_idkun_acharon"]
+                dateTmp = DateTime.Parse(dtOvedPremyaDetails.Rows[0]["Taarich_idkun_acharon"]
                                        .ToString());
                 drOved["Taarich_Idkun"] = dateTmp.ToString(); // ToLongTimeString();// +" " + dateTmp.ToShortDateString();
-                 
+
             }
 
             dtOvdim.Rows.Add(drOved);
             ListOvdim.Value += drOved["Mispar_ishi"] + ";";
         }
-
-        Session[SAVED_PREMIAS] = dtOvdim;
-        DataView dv = new DataView((DataTable)Session[SAVED_PREMIAS]);
-        grdPremias.PageIndex = 0;
-        dv.Sort = string.Concat(ViewState["SortExp"], " ",  (SortDirection)ViewState["SortDirection"] == SortDirection.Ascending ? "ASC":"DESC");
-        grdPremias.DataSource = dv;// dtOvdim;
-        grdPremias.DataBind();
-        if (dtOvdim.Rows.Count > 0)
-        {
-            btnSearch.Enabled = true;
-       //     btnUpdate.Enabled = true;
-        }
-        divGrdPremyot.Style["display"] = "inline";
-      //  fsGrid.Attributes.Add("display","");
-    //    grdPremias.Style["display"] = "inline";
+        return dtOvdim;
     }
-           
     private void SearchOvedInGrid()
     {
         int iPageIndex = 0;
@@ -779,6 +790,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         }
         if (grdPremias.PageCount > 1) ChangeGridPage(0);
 
+        Session[PREMIYOT_FIRST] = null;
         RefreshData();
 
     }
