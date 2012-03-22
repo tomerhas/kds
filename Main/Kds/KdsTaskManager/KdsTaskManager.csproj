@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KdsLibrary">
-      <HintPath>..\KdsLibrary\bin\Release\KdsLibrary.dll</HintPath>
+      <HintPath>..\KdsLibrary\bin\Debug\KdsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
