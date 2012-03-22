@@ -429,8 +429,29 @@ function chkMkt(oRow) {
             dEndHour.setDate(dEndHour.getDate() + 1);
                        
         SidurTime = GetSidurTime(dStartHour,dEndHour);  
-        args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));    
+        args.IsValid = ((Number(oDDL.value) > SidurTime) ||  (Number(oDDL.value<=0)));
     }
+    function SetKnisaActualMin(oRow){
+        arrKnisa = $get(oRow.id).cells[_COL_KNISA].childNodes[0].nodeValue.split(',');
+        if ((Number(arrKnisa[0]) > 0) && ($get(oRow.id).cells[_COL_CANCEL].childNodes[0].className == 'ImgKnisaS')) {//אם כניסה לפי צורך
+            if (KnisaLefiZorech($get(oRow.id).cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue)){
+                var lMakat = $get(oRow.id).cells[_COL_MAKAT].childNodes[0].value;
+                var iSidurIndex = Number(String(oRow.id).substr(String('lstSidurim_').length, 3));
+                var sSidurDate = $get("lstSidurim_lblDate".concat(iSidurIndex)).innerHTML;
+                wsGeneral.GetKnisaActualMin(lMakat, sSidurDate,Number(arrKnisa[0]), callBackKnisa,null, oRow);
+            }
+        }
+    }
+    function callBackKnisa(result, oRow) {
+        if (result != "0") {
+            $get(oRow.id).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = result;
+        }
+        else {
+            $get(oRow.id).cells[_COL_CANCEL].childNodes[0].className = "ImgKnisaS";
+            alert('לא נמצא משך לכניסה ' + $get(oRow.id).cells[_COL_LINE_DESCRIPTION].innerHTML);
+        }
+    }
+
     function Test(val, args) { }
     function ChkOto(oRow) {
         var KeyID = event.keyCode;
@@ -586,9 +607,11 @@ function chkMkt(oRow) {
                                           if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")
                                           { oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
                                       }
-                                      else
+                                      else {
                                           oColCancel.className = "ImgKnisaS";
+                                          oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = '';
                                       }
+                                    }
                             else
                                 oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
                         }

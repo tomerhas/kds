@@ -1150,6 +1150,19 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+    [WebMethod]
+    public string GetKnisaActualMin(long lMakat, string sSidurDate, int iMisaprKnisa)
+    {
+        clKavim _Kavim = new clKavim();
+        DataSet dsMakat;
+        int iResult;
+
+        dsMakat = _Kavim.GetKavimDetailsFromTnuaDS(lMakat, DateTime.Parse(sSidurDate), out iResult, 1);
+        if (dsMakat.Tables[1].Rows.Count > 0)        
+            return dsMakat.Tables[1].Rows[iMisaprKnisa-1]["mazan"].ToString();        
+        else
+          return "0";
+    }
     [WebMethod(EnableSession = true)]
     public string CheckMakat(int iMisparIshi, string  sCardDate, int iSidurIndex, int iPeilutIndex,
                              long lNewMakat, long lOldMakat, string sTravelDate, 

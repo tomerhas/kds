@@ -258,65 +258,65 @@ Module KdsSchedulerProc
             ''**oKDsData.KdsWriteProcessLog(99, 0, 3, "MoveRecordsToHistory faild: " + ex.Message, 9)
         End Try
     End Sub
-    Sub Test4Tmp()
-        'SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '3 in test, 2 in prd
-        'If SdrnStatTimes = "" Then
-        '    SdrnStatTimes = "2"
-        'End If
-        'If SdrnStatTimes = 3 Then
-        'If Now.Month = 6 And Now.Day = 3 And Now.Hour < 12 Then
-        '    oKDs = New KdsDataImport.ClKds
-        '    oDal = New KdsLibrary.DAL.clDal
-        '    Try
-        '        sub_tahalich = 28
-        '        oKDs.KdsWriteProcessLog(3, 28, 1, "start tmp_meafyeney_elementim")
-        '        oDal.ClearCommand()
-        '        oDal.ExecuteSP("PKG_ELEMENTS.calling_Pivot_Meafyeney_e")
-        '        oKDs.KdsWriteProcessLog(3, 28, 2, "end ok tmp_meafyeney_elementim")
-        '    Catch ex As Exception
-        '        oKDs.KdsWriteProcessLog(3, 28, 3, "calling_Pivot_Meafyeney_e aborted " & ex.Message)
-        '    End Try
-        '    Try
-        '        sub_tahalich = 29
-        '        oKDs.KdsWriteProcessLog(3, 29, 1, "start tmp_meafyeney_sug_sidur")
-        '        oDal.ClearCommand()
-        '        oDal.ExecuteSP("PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S")
-        '        oKDs.KdsWriteProcessLog(3, 29, 2, "end ok tmp_meafyeney_sug_sidur")
-        '    Catch ex As Exception
-        '        oKDs.KdsWriteProcessLog(3, 29, 3, "calling_Pivot_Meafyeney_S aborted " & ex.Message)
-        '    End Try
-        '    Try
-        '        sub_tahalich = 30
-        '        oKDs.KdsWriteProcessLog(3, 30, 1, "start tmp_sidurim_meyuchadim")
-        '        oDal.ClearCommand()
-        '        oDal.ExecuteSP("PKG_SIDURIM.calling_Pivot_Sidurim_M")
-        '        oKDs.KdsWriteProcessLog(3, 30, 2, "end ok tmp_sidurim_meyuchadim")
-        '    Catch ex As Exception
-        '        oKDs.KdsWriteProcessLog(3, 30, 3, "calling_Pivot_Sidurim_M aborted " & ex.Message)
-        '    End Try
-        '    'oKDs.RunRefresh()
-        '    'Call Test4Tmp()
-        'End If
-        'End If
-        Dim oKDs As KdsDataImport.ClKds
-        Dim p_date_str As String
-        Dim lRequestNum As Integer
-        Dim dTaarich As Date
-        Dim dDatestr As String
-        Try
-            oKDs = New KdsDataImport.ClKds
-            p_date_str = "20100503"
-            'oKDs.KdsWriteProcessLog(8, 1, 1, "before OpenBatchRequest")
-            lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12)
-            dDatestr = Mid(p_date_str, 7, 2) & "/" & Mid(p_date_str, 5, 2) & "/" & Mid(p_date_str, 1, 4)
-            dTaarich = New DateTime(Mid(p_date_str, 1, 4), Mid(p_date_str, 5, 2), Mid(p_date_str, 7, 2))
-            'oKDs.KdsWriteProcessLog(8, 1, 1, "after OpenBatchRequest before shguyim")
-            KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
-            'oKDs.KdsWriteProcessLog(8, 1, 2, "after shguyim before ishurim")
-            KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
-            'oKDs.KdsWriteProcessLog(6, 1, 2, "after ishurim")
-        Catch ex As Exception
-        End Try
-    End Sub
+    'Sub Test4Tmp()
+    '    'SdrnStatTimes = ConfigurationSettings.AppSettings("SdrnStatTimes") '3 in test, 2 in prd
+    '    'If SdrnStatTimes = "" Then
+    '    '    SdrnStatTimes = "2"
+    '    'End If
+    '    'If SdrnStatTimes = 3 Then
+    '    'If Now.Month = 6 And Now.Day = 3 And Now.Hour < 12 Then
+    '    '    oKDs = New KdsDataImport.ClKds
+    '    '    oDal = New KdsLibrary.DAL.clDal
+    '    '    Try
+    '    '        sub_tahalich = 28
+    '    '        oKDs.KdsWriteProcessLog(3, 28, 1, "start tmp_meafyeney_elementim")
+    '    '        oDal.ClearCommand()
+    '    '        oDal.ExecuteSP("PKG_ELEMENTS.calling_Pivot_Meafyeney_e")
+    '    '        oKDs.KdsWriteProcessLog(3, 28, 2, "end ok tmp_meafyeney_elementim")
+    '    '    Catch ex As Exception
+    '    '        oKDs.KdsWriteProcessLog(3, 28, 3, "calling_Pivot_Meafyeney_e aborted " & ex.Message)
+    '    '    End Try
+    '    '    Try
+    '    '        sub_tahalich = 29
+    '    '        oKDs.KdsWriteProcessLog(3, 29, 1, "start tmp_meafyeney_sug_sidur")
+    '    '        oDal.ClearCommand()
+    '    '        oDal.ExecuteSP("PKG_SUG_SIDUR.calling_Pivot_Meafyeney_S")
+    '    '        oKDs.KdsWriteProcessLog(3, 29, 2, "end ok tmp_meafyeney_sug_sidur")
+    '    '    Catch ex As Exception
+    '    '        oKDs.KdsWriteProcessLog(3, 29, 3, "calling_Pivot_Meafyeney_S aborted " & ex.Message)
+    '    '    End Try
+    '    '    Try
+    '    '        sub_tahalich = 30
+    '    '        oKDs.KdsWriteProcessLog(3, 30, 1, "start tmp_sidurim_meyuchadim")
+    '    '        oDal.ClearCommand()
+    '    '        oDal.ExecuteSP("PKG_SIDURIM.calling_Pivot_Sidurim_M")
+    '    '        oKDs.KdsWriteProcessLog(3, 30, 2, "end ok tmp_sidurim_meyuchadim")
+    '    '    Catch ex As Exception
+    '    '        oKDs.KdsWriteProcessLog(3, 30, 3, "calling_Pivot_Sidurim_M aborted " & ex.Message)
+    '    '    End Try
+    '    '    'oKDs.RunRefresh()
+    '    '    'Call Test4Tmp()
+    '    'End If
+    '    'End If
+    '    Dim oKDs As KdsDataImport.ClKds
+    '    Dim p_date_str As String
+    '    Dim lRequestNum As Integer
+    '    Dim dTaarich As Date
+    '    Dim dDatestr As String
+    '    Try
+    '        oKDs = New KdsDataImport.ClKds
+    '        p_date_str = "20100503"
+    '        'oKDs.KdsWriteProcessLog(8, 1, 1, "before OpenBatchRequest")
+    '        lRequestNum = KdsLibrary.clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "KdsScheduler", -12)
+    '        dDatestr = Mid(p_date_str, 7, 2) & "/" & Mid(p_date_str, 5, 2) & "/" & Mid(p_date_str, 1, 4)
+    '        dTaarich = New DateTime(Mid(p_date_str, 1, 4), Mid(p_date_str, 5, 2), Mid(p_date_str, 7, 2))
+    '        'oKDs.KdsWriteProcessLog(8, 1, 1, "after OpenBatchRequest before shguyim")
+    '        KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, dTaarich, lRequestNum)
+    '        'oKDs.KdsWriteProcessLog(8, 1, 2, "after shguyim before ishurim")
+    '        KdsWorkFlow.Approvals.ApprovalFactory.ApprovalsEndOfDayProcess(dTaarich, False)
+    '        'oKDs.KdsWriteProcessLog(6, 1, 2, "after ishurim")
+    '    Catch ex As Exception
+    '    End Try
+    'End Sub
 
 End Module
