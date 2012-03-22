@@ -459,8 +459,8 @@ function chkMkt(oRow) {
             CopyOtoNum(oRow);            
         }    
     }
-    function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt)
-    {    SetBtnChanges();
+    function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt, PeilutAv)
+    {   SetBtnChanges();
          var oColCancel, oColPeilutCancel;
          var iSidur=0;         
          var _NextRow;
@@ -471,12 +471,15 @@ function chkMkt(oRow) {
              oColCancel = $get(Row.id).cells[_COL_CANCEL].childNodes[0];
              oColPeilutCancel = $get(Row.id).cells[_COL_CANCEL_PEILUT].childNodes[0];
              if ((oColCancel.className == "ImgCheckedPeilut") || (oColCancel.className == "ImgCheckedDisablePeilut")) {
-                 SetPeilutStatus(Row.id, true, iSidur,-1);
+                 if (FirstMkt != 0) //אם כניסה בעקבות שינוי רשומת אב, נעביר את רשומת האב
+                     SetPeilutStatus(Row.id, true, iSidur, -1, PeilutAv);
+                 else
+                     SetPeilutStatus(Row.id, true, iSidur, -1);
                  //oColCancel.className = "ImgCancel";
                  oColPeilutCancel.value = "1";
              }
              else {
-                 SetPeilutStatus(Row.id, false, iSidur,-1);
+                 SetPeilutStatus(Row.id, false, iSidur, -1, PeilutAv);
                  //oColCancel.className = "ImgChecked";
                  oColPeilutCancel.value = "0";
              }             
@@ -486,8 +489,10 @@ function chkMkt(oRow) {
         if (Number(FirstMkt) == 1) {
             lMkt = ($get(Row.id).cells[_COL_MAKAT].childNodes[0].value);
             //אם קו שירות, נבטל גם ויסותים וכניסות של אותו קו
-            if (((Number(lMkt >= 100000)) && (Number(lMkt < 50000000))) && (String($get(Row.id).cells[_COL_KNISA].childNodes[0].nodeValue).split(',')[0] == 0))
-                OrgMktType = 1;                        
+            if (((Number(lMkt >= 100000)) && (Number(lMkt < 50000000))) && (String($get(Row.id).cells[_COL_KNISA].childNodes[0].nodeValue).split(',')[0] == 0)) {
+                OrgMktType = 1;
+                PeilutAv = $get(Row.id);
+            }
         }
         //אם במקור ביטלנו קו שירות נבטל גם כניסות 
         if (((Number(OrgMktType) == 1)) && (SubMkt!=2)){
@@ -499,12 +504,12 @@ function chkMkt(oRow) {
                         lNxtMkt = Number(_NextRow.cells[_COL_MAKAT].childNodes[0].value);
                     } //,כניסות 
                     if (Number(arrKnisa[0]) > 0) //|| ((lNxtMkt >= 70000000) && (lNxtMkt <= 70099999)) || (((lNxtMkt >= 74300000) && (lNxtMkt <= 74399999))))
-                        ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 1);
+                        ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 1, PeilutAv);
                     else {
                         lNxtMkt = Number(_NextRow.cells[_COL_MAKAT].childNodes[0].value);
                         //אם הגענו לקו שירות נעצור
                         if ((((Number(lNxtMkt >= 100000)) && (Number(lNxtMkt < 50000000))) && (String(_NextRow.cells[_COL_KNISA].childNodes[0].nodeValue).split(',')[0] == 0)))
-                            ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 2);//קן שירות- תנאי עצירה
+                            ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 2 ); //קן שירות- תנאי עצירה
                           else
                             ChangeStatusPeilut(_NextRow, FirstMkt, OrgMktType, 0);
                     }
@@ -529,8 +534,8 @@ function chkMkt(oRow) {
         $get("lstSidurim_lblSidurCanceled".concat(iIndex)).value="0";
      }
      return false;
-    }    
-    function SetPeilutStatus(RowId,bFlag, iSidur, iSidurIndex)
+    }
+    function SetPeilutStatus(RowId, bFlag, iSidur, iSidurIndex, PeilutAv)
     {   SetBtnChanges();//SetLvlChg(3);
         var oRow=$get(RowId);
         var oColPeilutCancel=oRow.cells[_COL_CANCEL_PEILUT].firstChild;
@@ -572,22 +577,66 @@ function chkMkt(oRow) {
                 }
                 else {
                     if (oColCancel.getAttribute("OrgEnabled") == "1") {
-                        oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                        if (oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue != null) {
+                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
+                                if (oColCancel.className == "ImgKnisaS")
+                                  { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
+                                  else{
+                                      if (PeilutAv != null) {
+                                          if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")
+                                          { oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
+                                      }
+                                      else
+                                          oColCancel.className = "ImgKnisaS";
+                                      }
+                            else
+                                oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                        }
+                        else
+                          oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
                     }
                     else {
                         oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
                     }
                 }
             }
-            else {
+            else {//flag=false
                 if (oColCancel.getAttribute("OrgEnabled") == "1") {
-                   oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";
+                    if (PeilutAv != null) {//אם זו כניסה שיש לה נסיעת אב, נבדוק אם ביטלו את נסיעת האב, אם כן תבוטל גם הכניסה
+                        if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")                        
+                          {oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
+                        else {
+                            if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
+                            {
+                            if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == ''))
+                                  oColCancel.className = "ImgKnisaS";
+                            else
+                                {oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";}                                                                
+                            }
+                            else{
+                                   oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";
+                                }
+                         }//****
+                    }
+                    else {
+                        if ((KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].innerHTML)) && (oColCancel.className != "ImgKnisaS")) {
+                            if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == ''))
+                                oColCancel.className = "ImgKnisaS";
+                            else
+                            { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
+                        }
+                        else
+                        { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
+                        }
                 }
                 else {
                     oColCancel.className = "ImgCheckedDisablePeilut"; oColPeilutCancel.value = "0";
                 }
             }                       
-        }
+        }       
+    }
+    function KnisaLefiZorech(sText) {
+        return  (sText.indexOf('לפי-צורך') > 0)       
     }
     function SetLabelColor(sCtl,iIndex, sColor){        
         $get(sCtl.concat(iIndex)).style.color=sColor;  
@@ -1867,7 +1916,7 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
      var ddlChariga = $get("lstSidurim_ddlException".concat(id));  
      var iSelVal = Number(ddlChariga.value);
      var iCharigaType = Number(ddlChariga.getAttribute("ChrigaType"));
-     if ((iSelVal > 0) && (iSelVal != iCharigaType) && (iCharigaType != 3) && (iCharigaType != 0) && (iCharigaType != 4)) {
+     if ((iSelVal > 0) && (iSelVal != iCharigaType) && (iCharigaType != 3) && (iCharigaType != 0) && (iCharigaType != 4)){
          ddlChariga.value = -1;
          alert('אין חריגה משעת התחלה או משעת גמר ');
      }
