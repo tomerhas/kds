@@ -12,6 +12,9 @@ copy \\KdsCalc01\KdsCalculTest\*.config \\KdsCalc01\KdsCalculTest\old\
 @echo off 
 copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.exe  \\KdsCalc01\KdsCalculTest\
 copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.dll  \\KdsCalc01\KdsCalculTest\
+Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe  KdsCalculTest.exe 
+Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe.config  KdsCalculTest.exe.config 
+pause 
 @echo KdsCalcul was installed in KdsCalc01 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsService install in progress ....
@@ -26,6 +29,19 @@ copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.exe  \\KdsCalc01\KdsServiceTes
 copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.dll  \\KdsCalc01\KdsServiceTest\
 @echo KdsService was installed in KdsCalc01 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@echo KdsService install in progress inds kdsTest....
+@echo copy backup KdsService to old folder ....
+@echo off 
+copy \\kdstest\KdsService\*.exe \\kdstest\KdsService\old\
+copy \kdstest\KdsService\*.dll \\kdstest\KdsService\old\
+copy \\kdstest\KdsService\*.config \\kdstest\KdsService\old\
+copy \\kdstest\KdsService\*.xml \\kdstest\KdsService\old\
+copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.exe   \\kdstest\KdsService
+copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.dll  \\kdstest\KdsService
+
+@echo KdsService was installed in KdsTest02 !
+@echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsTaskManager install in progress ....
 @echo copy backup KdsTaskManager to old folder ....
 @echo off 
@@ -37,6 +53,7 @@ copy \\kdstst02\KdsTaskManager\*.xml \\kdstst02\KdsTaskManager\old\
 @echo off 
 copy C:\dev\kds\Main\Kds\KdsTaskManager\bin\Release\*.exe  \\kdstst02\KdsTaskManager\
 copy C:\dev\kds\Main\Kds\KdsTaskManager\bin\Release\*.dll  \\kdstst02\KdsTaskManager\
+
 @echo KdsTaskManager was installed in kdstst02 !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo 			END OF INSTALL !
