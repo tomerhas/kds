@@ -148,6 +148,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                            );
             if (grdPremias.PageCount > 1) ChangeGridPage(0);
 
+            Session[PREMIYOT_FIRST] = null;
             RefreshData();
      
     }
