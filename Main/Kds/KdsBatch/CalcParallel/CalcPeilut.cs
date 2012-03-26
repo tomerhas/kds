@@ -91,6 +91,29 @@ namespace KdsBatch
 
          }
 
+         public bool CheckHafasakaLast(int iMisparSidur, DateTime dShatHatchalaSidur, ref DateTime shatHatchalaHafsakaLast)
+         {
+             try
+             {
+                 DataRow[] drPeiluyot;
+                 int iMakat;
+                 drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "");
+                 if (drPeiluyot.Length > 0)
+                 {
+                     iMakat = int.Parse(drPeiluyot[drPeiluyot.Length - 1]["MAKAT_NESIA"].ToString());
+                     if (iMakat.ToString().Substring(0, 3) == "790")
+                     {
+                         shatHatchalaHafsakaLast = DateTime.Parse(drPeiluyot[drPeiluyot.Length - 1]["shat_yetzia"].ToString());
+                         return true;
+                     }
+                 }
+                 return false;
+             }
+             catch (Exception ex)
+             {
+                 throw (ex);
+             }
+         }
          private DataRow[] getPeiluyot(int iMisparSidur, DateTime dShatHatchalaSidur,string sCondition)
          {
              DataRow[] drPeiluyot;

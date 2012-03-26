@@ -2352,6 +2352,8 @@ namespace KdsBatch
             float fErech, fHalbashaTchilatYom, fHalbashaSofYom;
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
+            bool isHafsakaLast = false;
+            DateTime shatHatchalaHafsakaLast = new DateTime();
             try
             {
 
@@ -2365,12 +2367,17 @@ namespace KdsBatch
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-
+                            isHafsakaLast = oPeilut.CheckHafasakaLast(iMisparSidur, dShatHatchalaSidur, ref shatHatchalaHafsakaLast);
+                          
                             fHalbashaTchilatYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                             fHalbashaSofYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaSofYom.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
                             dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()).AddMinutes(-fHalbashaTchilatYom);
-                            dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
+
+                            if (isHafsakaLast)
+                                dShatGmarLetashlum = shatHatchalaHafsakaLast.AddMinutes(fHalbashaSofYom);
+                            else
+                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
 
                             fErech = 0;
                             if (dShatHatchalaLetashlum >= objOved.objParameters.dTchilatTosefetLaila && dShatGmarLetashlum <= objOved.objParameters.dSiyumTosefetLaila)
@@ -2455,6 +2462,8 @@ namespace KdsBatch
             float fHalbashaTchilatYom, fHalbashaSofYom;
             dZmatTchilatTosLila = DateTime.MaxValue;
             dZmanSiyuomTosLila = DateTime.MaxValue;
+            bool isHafsakaLast = false;
+            DateTime shatHatchalaHafsakaLast = new DateTime();
             try
             {
 
@@ -2469,7 +2478,7 @@ namespace KdsBatch
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
-
+                            isHafsakaLast = oPeilut.CheckHafasakaLast(iMisparSidur, dShatHatchalaSidur, ref shatHatchalaHafsakaLast);
                             fZmanLilaSidureyBoker = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_PEILUT"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.ZmanLilaSidureyBoker.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                             //	אין להתייחס בחישוב לסידורים עבורם קיים רכיב 271
                             if (fZmanLilaSidureyBoker == 0)
@@ -2478,7 +2487,10 @@ namespace KdsBatch
                                 fHalbashaSofYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaSofYom.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()).AddMinutes(-fHalbashaTchilatYom);
-                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
+                                if (isHafsakaLast)
+                                    dShatGmarLetashlum = shatHatchalaHafsakaLast.AddMinutes(fHalbashaSofYom);
+                                else
+                                    dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
 
                                 fErech = 0;
                                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
@@ -2507,7 +2519,10 @@ namespace KdsBatch
                                 else if (objOved.SugYom < clGeneral.enSugYom.Shishi.GetHashCode())
                                 {
                                     dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString());
-                                    dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
+                                    if (isHafsakaLast)
+                                        dShatGmarLetashlum = shatHatchalaHafsakaLast;
+                                    else
+                                        dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
 
                                     if (objOved.objPirteyOved.iMikumYechida == 141)
                                     {
@@ -6597,6 +6612,8 @@ namespace KdsBatch
             iMisparSidur = 0;
             dShatHatchalaSidur = DateTime.MinValue;
             int iSugYomLemichsa;
+            bool isHafsakaLast = false;
+            DateTime shatHatchalaHafsakaLast = new DateTime();
             try
             {
 
@@ -6610,12 +6627,16 @@ namespace KdsBatch
                         {
                             iMisparSidur = int.Parse(drSidurim[I]["mispar_sidur"].ToString());
                             dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
+                            isHafsakaLast = oPeilut.CheckHafasakaLast(iMisparSidur, dShatHatchalaSidur, ref shatHatchalaHafsakaLast);
 
                             fHalbashaTchilatYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaTchilatYom.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                             fHalbashaSofYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.HalbashaSofYom.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
                             dShatHatchalaLetashlum = DateTime.Parse(drSidurim[I]["shat_hatchala_letashlum"].ToString()).AddMinutes(-fHalbashaTchilatYom);
-                            dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
+                            if (isHafsakaLast)
+                                dShatGmarLetashlum = shatHatchalaHafsakaLast.AddMinutes(fHalbashaSofYom);
+                            else
+                                dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString()).AddMinutes(fHalbashaSofYom);
                             fErech = 0;
 
                             //אם סידור הינו סידור ויזה צבאית - סידור מיוחד בעל שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 45 ) עם ערך = 1 זהו יום אחרון של הוויזה - TB_Sidurim_Ovedim.Yom_Visa= 3 אזי יש לבצע את בדיקת זמן הסידור מול שעות לילה חוק לפי שעת התחלה של סידור TB_Sidurim_Ovedim. Shat_hatchala  ולא שעת התחלה לתשלום של סידור.
