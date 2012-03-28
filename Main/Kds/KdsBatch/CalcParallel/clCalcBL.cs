@@ -65,6 +65,37 @@ namespace KdsBatch
                 throw new Exception("GetSumErechRechiv :" + ex.Message);
             }
         }
+
+        public float GetSumErechRechivChelki(DataTable Table, int kodRechiv,int KodRechivTnai, DateTime dTaarich)
+        {
+            DataRow[] sidurim, dr;
+            int iMisparSidur;
+            string sQury = "";
+            DateTime dshatHatchala;
+            float fErechChelki = 0;
+            try
+            {
+                sidurim = Table.Select("ERECH_RECHIV>0  and KOD_RECHIV=" + KodRechivTnai.ToString() + " and taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime')");
+                for (int i = 0; i < sidurim.Length; i++)
+                {
+                    iMisparSidur = int.Parse(sidurim[i]["mispar_sidur"].ToString());
+                    dshatHatchala = DateTime.Parse(sidurim[i]["shat_hatchala"].ToString());
+
+                    sQury = " MISPAR_SIDUR=" + iMisparSidur + "  AND taarich=Convert('" + dTaarich.ToShortDateString() + "', 'System.DateTime') and ";
+                    sQury += "SHAT_HATCHALA=Convert('" + dshatHatchala.ToString() + "', 'System.DateTime')";
+
+                    dr = Table.Select(sQury + " and KOD_RECHIV=" + kodRechiv.ToString());
+                    if (dr.Length > 0)
+                        fErechChelki += float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+               }
+                return fErechChelki;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetSumErechRechiv :" + ex.Message);
+            }
+        }
+
         public float GetSumErechEzer(DataTable TableName, int kodRechiv, DateTime dTaarich)
         {
             try
@@ -118,11 +149,12 @@ namespace KdsBatch
                 throw new Exception("GetSumsOfRechiv :" + ex.Message);
             }
         }
+
+
         public float GetSumErechRechiv(Dictionary<int, float> ListOfSum, clGeneral.enRechivim SugRechiv)
         {
             return (ListOfSum.ContainsKey(SugRechiv.GetHashCode())) ? ListOfSum[SugRechiv.GetHashCode()] : 0;
         }
-
 
         public bool CheckYomShishi(int iSugYom)
         {

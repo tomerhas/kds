@@ -53,6 +53,31 @@ namespace KdsBatch
             }
         }
 
+        public float getZmanHamtanaEilat(int iMisparSidur, DateTime dShatHatchalaSidur)
+        {
+            float fZmanHamtana = 0;
+            DataRow[] drPeiluyot;
+            int iMakat;
+            string sQury;
+            try
+            {
+                sQury = "MISPAR_SIDUR=" + iMisparSidur + " and SHAT_HATCHALA_SIDUR=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime')";
+                sQury += " and (SUBSTRING(makat_nesia,1,3)='735')";
+
+                drPeiluyot = objOved.DtPeiluyotOved.Select(sQury, "shat_yetzia asc");
+                for (int J = 0; J < drPeiluyot.Length; J++)
+                {
+                    iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+
+                    fZmanHamtana += int.Parse(iMakat.ToString().Substring(3, 3));
+                }
+                return fZmanHamtana;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
          public void CalcRechiv1(int iMisparSidur, DateTime dShatHatchalaSidur)
          {
              DataRow[] drPeiluyot;

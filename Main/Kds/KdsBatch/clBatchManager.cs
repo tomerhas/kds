@@ -222,7 +222,8 @@ namespace KdsBatch
             errHightValueDakotBefoal=179,
             IsShatHatchalaLetashlumNull = 180,
             IsShatGmarLetashlumNull = 181,
-            ErrMisparElementimMealHamutar = 185
+            ErrMisparElementimMealHamutar = 185,
+            errMutamLoBeNahagutBizeaNahagut = 186
         }
 
         private enum errNesiaMeshtana
@@ -1201,6 +1202,7 @@ namespace KdsBatch
 
                     if (CheckErrorActive(164)) IsSidurSummerValid164(ref  oSidur, ref dtErrors);
                     if (CheckErrorActive(161)) IsSidurNAhagutValid161(drSugSidur, ref oSidur, ref dtErrors);
+
                     //IsSidurGriraValid177(drSugSidur, ref oSidur, ref dtErrors);
                    
                     if (!(bFirstSidur))//לא נבצע את הבדיקה לסידור הראשון
@@ -1241,8 +1243,8 @@ namespace KdsBatch
                      if (CheckErrorActive(143)) IsSidurMissingNumStore143(oSidur, ref dtErrors);
                      if (CheckErrorActive(152)) IsChafifaBesidurNihulTnua152(drSugSidur, oSidur, ref dtErrors);
                      if (CheckErrorActive(153)) IsHighPremya153(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
-                     if (CheckErrorActive(154)) IsNegativePremya154(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);                    
-
+                     if (CheckErrorActive(154)) IsNegativePremya154(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
+                     if (CheckErrorActive(186)) MutamLoBeNahagut186(oSidur,dCardDate, bSidurNahagut, ref dtErrors);
                     clSidur prevSidur = null;
                     if (i > 0) prevSidur = htEmployeeDetails[i - 1] as clSidur;
                     if (prevSidur != null)
@@ -2849,6 +2851,29 @@ namespace KdsBatch
             return isValid;
         }
 
+        private void MutamLoBeNahagut186(clSidur oSidur, DateTime dCardDate, bool bSidurNahagut, ref DataTable dtErrors)
+        {
+            DataRow drNew;
+            int iMutamut;
+            try
+            {
+                if (oOvedYomAvodaDetails.sMutamut.Trim() != "")
+                {
+                    iMutamut = int.Parse(oOvedYomAvodaDetails.sMutamut);
+                    if (bSidurNahagut &&  (iMutamut ==4 || iMutamut == 5 || iMutamut ==9))
+                    {
+                        drNew = dtErrors.NewRow();
+                        InsertErrorRow(oSidur, ref drNew, "", enErrors.errMutamLoBeNahagutBizeaNahagut.GetHashCode());
+                        dtErrors.Rows.Add(drNew);   
+                    }
+                }
+            }           
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errMutamLoBeNahagutBizeaNahagut.GetHashCode(), dCardDate, "MutamLoBeNahagut186: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
         private bool IsSimunNesiaValid27(DateTime dCardDate, ref DataTable dtErrors)
         {            
             string sLookUp, sBitulZmanNesia;
@@ -7660,7 +7685,7 @@ namespace KdsBatch
             try
             {
                 bool hasSidurEilat = false;
-                bool validForHamtana = false;
+               // bool validForHamtana = false;
                 clSidur oFirstSidurEilat = null;
                 clSidur oSecondSidurEilat = null; 
                 clPeilut oFirstPeilutEilat = null;
@@ -7690,17 +7715,17 @@ namespace KdsBatch
                                                 //if (oFirstPeilutEilat.dFullShatYetzia.Date == tmpPeilut.dFullShatYetzia.Date
                                                 //   || (oFirstPeilutEilat.dFullShatYetzia.Hour >= 20 && oFirstPeilutEilat.dFullShatYetzia.Date.AddDays(1) == tmpPeilut.dFullShatYetzia.Date))
                                                 //{
-                                                if (tmpPeilut.iSnifAchrai != oOvedYomAvodaDetails.iSnifTnua)
-                                                    {
-                                                        validForHamtana = true;
-                                                    }
+                                                //if (tmpPeilut.iSnifAchrai != oOvedYomAvodaDetails.iSnifTnua)
+                                                //    {
+                                                //        validForHamtana = true;
+                                                //    }
                                                 //}
                                             }
                                         }
                                     }
                                  );
 
-                if (validForHamtana)
+                if (oFirstSidurEilat != null && oSecondPeilutEilat != null)
                 {
                     int firstSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oFirstSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oFirstSidurEilat.dFullShatHatchala));
                     int secondSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oSecondSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oSecondSidurEilat.dFullShatHatchala));
@@ -7712,7 +7737,7 @@ namespace KdsBatch
                     {
                         HosafatHamtana(firstSidurIndex, secondSidurIndex);
                     }
-                   
+
                 }
             }
             catch (Exception ex)
@@ -7780,7 +7805,7 @@ namespace KdsBatch
                     for (j = 0; j <= oSidur.htPeilut.Values.Count - 1; j++)
                     {
                         oPeilut = (clPeilut)oSidur.htPeilut[j];
-                        if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "724")
+                        if (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
                         {
                             oElement=oPeilut;
                             break;
@@ -7820,7 +7845,7 @@ namespace KdsBatch
                                 oObjPeilutOvdimIns.TAARICH = _dCardDate;
                                 oObjPeilutOvdimIns.SHAT_YETZIA = oSidur.dFullShatGmar;
                                 oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidur.dFullShatHatchala;
-                                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("724" + sZmanElement + "00");
+                                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("735" + sZmanElement + "00");
                                 oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
                                 oObjPeilutOvdimIns.MISPAR_KNISA = 0;
                                 oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
