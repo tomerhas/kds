@@ -296,7 +296,7 @@ namespace KdsBatch
                     // הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126) ).
                     if (fMichsaYomit > 0)
                         fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
-                    else fErechRechiv = fErechRechiv;
+                   // else fErechRechiv = fErechRechiv;
                 }
                 else if (iMisparSidur == 99220)
                 {
