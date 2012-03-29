@@ -7729,14 +7729,14 @@ namespace KdsBatch
                 {
                     int firstSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oFirstSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oFirstSidurEilat.dFullShatHatchala));
                     int secondSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oSecondSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oSecondSidurEilat.dFullShatHatchala));
-                    if (firstSidurIndex + 1 < secondSidurIndex) // there are sidurim between those two
+                    if (firstSidurIndex + 1 == secondSidurIndex) 
                     {
                         HosafatHamtana(firstSidurIndex, secondSidurIndex);
                     }
-                    else 
-                    {
-                        HosafatHamtana(firstSidurIndex, secondSidurIndex);
-                    }
+                    //else 
+                    //{
+                    //    HosafatHamtana(firstSidurIndex, secondSidurIndex);
+                    //}
 
                 }
             }
@@ -7864,6 +7864,7 @@ namespace KdsBatch
                                 oObjPeilutOvdimUpd = GetUpdPeilutObject(I, oElement, out SourceObject, oObjSidurimOvdimUpd);
                                 oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
                                 oObjPeilutOvdimUpd.MAKAT_NESIA = oElement.lMakatNesia;
+                                oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
                                 oElement = new clPeilut(_iMisparIshi, _dCardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
                                 oSidur.htPeilut[j] = oElement;
                             //}
@@ -7872,7 +7873,7 @@ namespace KdsBatch
 
                         //if (!bHaveIdkun)
                         //{
-                            oSidur.dFullShatGmar = oSidur.dFullShatGmar.AddMinutes(dZmanElement);
+                            oSidur.dFullShatGmar = oSidur.dFullShatGmar.AddMinutes(dPaar); //dZmanElement);
                             oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
 
                            
