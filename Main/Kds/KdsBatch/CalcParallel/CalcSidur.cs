@@ -3166,7 +3166,7 @@ namespace KdsBatch
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
 
-                    bSidurNehigaFirst = isSidurNehiga(ref drSidurim[I]);
+                    bSidurNehigaFirst = (isSidurNehiga(ref drSidurim[I]) || isSidurNihulTnua(drSidurim[I]));
                     bSidurNihulOrTafkidFirst = isSidurNihulTnuaOrTafkidMezakeRezifut(ref drSidurim[I]);
 
                     if (bSidurNehigaFirst || bSidurNihulOrTafkidFirst)
@@ -3283,10 +3283,10 @@ namespace KdsBatch
         {
             int iMisparSidur = 0;
             bool bSidurNihulOrTafkid = false;
-            bool bYeshSidur = false;
-            int iSugSidur;
-            string sQury = "";
-            DataRow[] drPeiluyot;
+            //bool bYeshSidur = false;
+            //int iSugSidur;
+            //string sQury = "";
+            //DataRow[] drPeiluyot;
             // DataTable dtPeiluyot;
             DateTime dShatHatchalaSidur = DateTime.MinValue;
             int zakay = 0;
@@ -3296,29 +3296,33 @@ namespace KdsBatch
                 dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
                 if (drSidurim["zakay_lechishuv_retzifut"].ToString() != "")
                     zakay = int.Parse(drSidurim["zakay_lechishuv_retzifut"].ToString());
-                if (iMisparSidur.ToString().Substring(0, 2) == "99" && (drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString() || zakay == 1))
-                    bSidurNihulOrTafkid = true;
-                else if (iMisparSidur.ToString().Substring(0, 2) != "99")
-                {
-                    //SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
-                    iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
 
-                    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
-                    if (bYeshSidur)
-                        bSidurNihulOrTafkid = true;
-                    else
-                    {
-                        //dtPeiluyot = oPeilut.GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
-                        //drPeiluyot = dtPeiluyot.Select("sector_zvira_zman_haelement=4");
+                bSidurNihulOrTafkid = isSidurNihulTnua(drSidurim);
+
+                if (!bSidurNihulOrTafkid)
+                    if (iMisparSidur.ToString().Substring(0, 2) == "99" && zakay == 1)
+                      bSidurNihulOrTafkid = true;
+                //else if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                //{
+                //    //SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
+                //    iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
+
+                //    bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                //    if (bYeshSidur)
+                //        bSidurNihulOrTafkid = true;
+                //    else
+                //    {
+                //        //dtPeiluyot = oPeilut.GetPeiluyLesidur(iMisparSidur, dShatHatchalaSidur);
+                //        //drPeiluyot = dtPeiluyot.Select("sector_zvira_zman_haelement=4");
  
-                        drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(sector_zvira_zman_haelement=4)");
+                //        drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(sector_zvira_zman_haelement=4)");
            
-                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
-                        if (bYeshSidur || (iMisparSidur == 99301 && drPeiluyot.Length > 0)) // && clCalcGeneral.objOved.objMeafyeneyOved.iMeafyen33))
-                            bSidurNihulOrTafkid = true;
+                //        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                //        if (bYeshSidur || (iMisparSidur == 99301 && drPeiluyot.Length > 0)) // && clCalcGeneral.objOved.objMeafyeneyOved.iMeafyen33))
+                //            bSidurNihulOrTafkid = true;
 
-                    }
-                }
+                //    }
+                //}
                 return bSidurNihulOrTafkid;
             }
             catch (Exception ex)
@@ -3326,12 +3330,58 @@ namespace KdsBatch
                 clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: "+ ex.Message, null);
                 throw (ex);
             }
+            //finally
+            //{
+            //    drPeiluyot = null;
+            //}
+        }
+
+        private bool isSidurNihulTnua(DataRow drSidurim)
+        {
+            int iMisparSidur = 0;
+            bool bSidurNihulTnua = false;
+            bool bYeshSidur = false;
+            int iSugSidur;
+            DataRow[] drPeiluyot;
+            DateTime dShatHatchalaSidur = DateTime.MinValue;
+            try
+            {
+                iMisparSidur = int.Parse(drSidurim["mispar_sidur"].ToString());
+                dShatHatchalaSidur = DateTime.Parse(drSidurim["shat_hatchala_sidur"].ToString());
+              
+                if (iMisparSidur.ToString().Substring(0, 2) == "99" && drSidurim["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
+                    bSidurNihulTnua = true;
+                else 
+                {
+                    iSugSidur = int.Parse(drSidurim["sug_sidur"].ToString());
+                    //SetSugSidur(ref drSidurim, objOved.Taarich, iMisparSidur);
+                    if (iMisparSidur.ToString().Substring(0, 2) != "99")
+                    {
+                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                        if (bYeshSidur)
+                            bSidurNihulTnua = true;
+                    }
+                    else
+                    {
+                        drPeiluyot = getPeiluyot(iMisparSidur, dShatHatchalaSidur, "(sector_zvira_zman_haelement=4)");
+
+                        bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nihul.GetHashCode(), objOved.Taarich, iSugSidur);
+                        if (bYeshSidur || (iMisparSidur == 99301 && drPeiluyot.Length > 0)) // && clCalcGeneral.objOved.objMeafyeneyOved.iMeafyen33))
+                            bSidurNihulTnua = true;
+                    }
+                }
+                return bSidurNihulTnua;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, 0, objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
+            }
             finally
             {
                 drPeiluyot = null;
             }
         }
-
         public float CalcRechiv97(ref float fSumDakotLaylaEgged, ref float fSumDakotLaylaChok)
         {
             DataRow[] drSidurim, drPeiluyot;
