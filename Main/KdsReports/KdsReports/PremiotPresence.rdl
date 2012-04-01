@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>21.03172cm</Width>
+              <Width>20.02367cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.54287cm</Height>
+              <Height>5.82849cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -755,8 +755,8 @@
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>2.02775cm</Top>
-                          <Left>0.18783cm</Left>
+                          <Top>1.49937cm</Top>
+                          <Left>0.08805cm</Left>
                           <Height>1.62334cm</Height>
                           <Width>19.66741cm</Width>
                           <Visibility>
@@ -772,55 +772,55 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.95963cm</Width>
+                                <Width>1.76712cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.19003cm</Width>
+                                <Width>1.1589cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.72801cm</Width>
+                                <Width>0.69688cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.77033cm</Width>
+                                <Width>0.70974cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.71045cm</Width>
+                                <Width>0.67932cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.76138cm</Width>
+                                <Width>0.73025cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.81911cm</Width>
+                                <Width>0.78798cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.70959cm</Width>
+                                <Width>0.67846cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.84213cm</Width>
+                                <Width>0.71122cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.76252cm</Width>
+                                <Width>0.73139cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.50387cm</Width>
+                                <Width>3.47274cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.17648cm</Width>
+                                <Width>1.14535cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.29535cm</Width>
+                                <Width>1.26422cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.23cm</Width>
+                                <Width>1.19887cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.23493cm</Width>
+                                <Width>1.2038cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.80016cm</Width>
+                                <Width>0.6632cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.40709cm</Width>
+                                <Width>2.12511cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
@@ -1179,7 +1179,7 @@
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="Textbox259">
+                                      <Textbox Name="Textbox7">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
@@ -1197,7 +1197,7 @@
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>Textbox259</rd:DefaultName>
+                                        <rd:DefaultName>Textbox7</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
@@ -1781,14 +1781,14 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                   </TablixCell>
                                   <TablixCell>
                                     <CellContents>
-                                      <Textbox Name="TEUR_SIDUR_MEYCHAD1">
+                                      <Textbox Name="Textbox8">
                                         <CanGrow>true</CanGrow>
                                         <KeepTogether>true</KeepTogether>
                                         <Paragraphs>
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=Fields!TEUR_SIDUR_MEYCHAD.Value + "(" + Fields!MISPAR_SIDUR.Value  +")"</Value>
+                                                <Value>=Fields!TEUR_SIDUR_MEYCHAD.Value</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1797,7 +1797,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
-                                        <rd:DefaultName>TEUR_SIDUR_MEYCHAD1</rd:DefaultName>
+                                        <rd:DefaultName>Textbox8</rd:DefaultName>
                                         <Style>
                                           <Border>
                                             <Color>LightGrey</Color>
@@ -2147,10 +2147,10 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                             </TablixMembers>
                           </TablixRowHierarchy>
                           <DataSetName>DsPremiotPresence</DataSetName>
-                          <Top>3.84328cm</Top>
+                          <Top>3.15536cm</Top>
                           <Left>0.13066cm</Left>
                           <Height>2.62021cm</Height>
-                          <Width>20.90106cm</Width>
+                          <Width>19.72455cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
@@ -2284,9 +2284,9 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </TablixRowHierarchy>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsPremiotPresence</DataSetName>
-        <Left>0.40971cm</Left>
-        <Height>6.54287cm</Height>
-        <Width>21.03172cm</Width>
+        <Top>0.07056cm</Top>
+        <Height>5.82849cm</Height>
+        <Width>20.02367cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2386,8 +2386,8 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </TablixRowHierarchy>
         <KeepTogether>true</KeepTogether>
         <DataSetName>DsPirteyPremiya</DataSetName>
-        <Top>6.61343cm</Top>
-        <Left>0.40971cm</Left>
+        <Top>5.98724cm</Top>
+        <Left>0.50359cm</Left>
         <Height>2.53528cm</Height>
         <Width>15.35954cm</Width>
         <ZIndex>1</ZIndex>
@@ -2401,13 +2401,13 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.60185in</Height>
+    <Height>3.35532in</Height>
     <Style />
   </Body>
-  <Width>8.44151in</Width>
+  <Width>7.88334in</Width>
   <Page>
     <PageHeader>
-      <Height>0.47625cm</Height>
+      <Height>0.44097cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2429,7 +2429,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.02618cm</Top>
-          <Left>0.40971cm</Left>
+          <Left>0.50359cm</Left>
           <Height>0.30896cm</Height>
           <Width>2.5cm</Width>
           <Style>
