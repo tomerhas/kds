@@ -494,15 +494,27 @@ function chkMkt(oRow) {
              if ((oColCancel.className == "ImgCheckedPeilut") || (oColCancel.className == "ImgCheckedDisablePeilut")) {
                  if (FirstMkt != 0) //אם כניסה בעקבות שינוי רשומת אב, נעביר את רשומת האב
                      SetPeilutStatus(Row.id, true, iSidur, -1, PeilutAv);
-                 else
-                     SetPeilutStatus(Row.id, true, iSidur, -1);
+                 else {
+                     if (KnisaLefiZorech($get(Row.id).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue))
+                         SetPeilutStatus(Row.id, false, iSidur, -1);
+                     else
+                         SetPeilutStatus(Row.id, true, iSidur, -1);
+                 }
                  //oColCancel.className = "ImgCancel";
-                 oColPeilutCancel.value = "1";
+                 //oColPeilutCancel.value = "1";
              }
              else {
-                 SetPeilutStatus(Row.id, false, iSidur, -1, PeilutAv);
+                // SetPeilutStatus(Row.id, false, iSidur, -1, PeilutAv);
+                 if (PeilutAv != null){
+                     if (PeilutAv.cells[_COL_CANCEL].firstChild.className == "ImgCancel")//אם רשומת האב מבוטלת לא נאפשר עדכון הפעילויות בנים
+                         SetPeilutStatus(Row.id, true, iSidur, -1, PeilutAv);
+                     else
+                         SetPeilutStatus(Row.id, false, iSidur, -1, PeilutAv);
+                 } else {
+                     SetPeilutStatus(Row.id, false, iSidur, -1, PeilutAv);
+                 }
                  //oColCancel.className = "ImgChecked";
-                 oColPeilutCancel.value = "0";
+                // oColPeilutCancel.value = "0";
              }             
          }
 
@@ -600,23 +612,28 @@ function chkMkt(oRow) {
                     if (oColCancel.getAttribute("OrgEnabled") == "1") {
                         if (oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue != null) {
                             if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
-                                if (oColCancel.className == "ImgKnisaS")
-                                  { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
-                                  else{
-                                      if (PeilutAv != null) {
-                                          if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")
-                                          { oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
-                                      }
-                                      else {
-                                          oColCancel.className = "ImgKnisaS";
-                                          oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = '0';
-                                      }
+                            {
+                                if (PeilutAv != null) {
+                                    if (PeilutAv.cells[_COL_CANCEL].childNodes[0].className == "ImgCancel")
+                                    { oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1"; }
+                                }
+                                else {
+                                    if (oColCancel.className == "ImgKnisaS")
+                                    { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
+                                    else {
+                                        oColCancel.className = "ImgKnisaS";
+                                        oColPeilutCancel.value = "0";
+                                        oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = '0';
                                     }
-                            else
+                                }
+                             }
+                            else {
                                 oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                            }
                         }
-                        else
-                          oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                        else {
+                            oColCancel.className = "ImgCancel"; oColPeilutCancel.value = "1";
+                        }
                     }
                     else {
                         oColCancel.className = "ImgCancelDisable"; oColPeilutCancel.value = "1";
@@ -631,10 +648,12 @@ function chkMkt(oRow) {
                         else {
                             if (KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].firstChild.nodeValue))
                             {
-                            if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == ''))
-                                  oColCancel.className = "ImgKnisaS";
-                            else
-                                {oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";}                                                                
+                                if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == '')) {
+                                    oColCancel.className = "ImgKnisaS";
+                                    oColPeilutCancel.value = "0";
+                                }
+                                else
+                                { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }                                                                
                             }
                             else{
                                    oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0";
@@ -643,10 +662,17 @@ function chkMkt(oRow) {
                     }
                     else {
                         if ((KnisaLefiZorech(oRow.cells[_COL_LINE_DESCRIPTION].innerHTML)) && (oColCancel.className != "ImgKnisaS")) {
-                            if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == ''))
+                            {
                                 oColCancel.className = "ImgKnisaS";
-                            else
-                            { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
+                                oColPeilutCancel.value = "0";
+                                oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value = "0";
+                            }
+//                            if ((oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == 0) || (oRow.cells[_COL_ACTUAL_MINUTES].firstChild.value == '')) {
+//                                oColCancel.className = "ImgKnisaS";
+//                                oColPeilutCancel.value = "0";
+//                            }
+//                            else
+//                            { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
                         }
                         else
                         { oColCancel.className = "ImgCheckedPeilut"; oColPeilutCancel.value = "0"; }
@@ -659,7 +685,10 @@ function chkMkt(oRow) {
         }       
     }
     function KnisaLefiZorech(sText) {
-        return  (sText.indexOf('לפי-צורך') > 0)       
+        if (sText == null)
+            return 0;
+        else
+            return ((sText.indexOf('לפי צורך') > 0) || (sText.indexOf('לפי-צורך') > 0));       
     }
     function SetLabelColor(sCtl,iIndex, sColor){        
         $get(sCtl.concat(iIndex)).style.color=sColor;  
@@ -1832,10 +1861,18 @@ function chkMkt(oRow) {
                
                if (_imgCancelPeilut.firstChild.disabled){
                  if(_imgCancelPeilut.firstChild.className!=undefined){
-                     if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut"))>-1)
-                         _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";
-                     else
-                       _imgCancelPeilut.firstChild.className =  "ImgCancelDisable";              
+                     if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut")) > -1) {
+                         if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML)))
+                             _imgCancelPeilut.firstChild.disabled = false;
+                            else
+                             _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";
+                     }
+                     else {
+                         if (_imgCancelPeilut.firstChild.className == "ImgKnisaS")
+                             _imgCancelPeilut.firstChild.disabled = false;
+                         else
+                             _imgCancelPeilut.firstChild.className = "ImgCancelDisable";
+                     }
                     }
                 }
               }

@@ -5907,7 +5907,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     SetActualMinutes(e, bSidurActive, bPeilutActive, oMakatType, bElementHachanatMechona);
 
                     //פעיל            
-                    SetCancelColumn(e, bSidurActive, bPeilutActive, bElementHachanatMechona );
+                    SetCancelColumn(e, bSidurActive, ref bPeilutActive, bElementHachanatMechona );
 
                     SetDayToAdd(e, iSidurIndex);
 
@@ -6078,9 +6078,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iKnisaType = int.Parse(arrKnisaVal[1]);
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
             bool bEnabled = (!bIdkunRashemet);
-            
 
-            oTxt.Enabled = ((!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
+
+            oTxt.Enabled = ((_ProfileRashemet) && (!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
             oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
@@ -6302,7 +6302,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    protected void SetCancelColumn(GridViewRowEventArgs e, bool bSidurActive, bool bPeilutActive, bool bElementHachanatMechona)
+    protected void SetCancelColumn(GridViewRowEventArgs e, bool bSidurActive, ref bool bPeilutActive, bool bElementHachanatMechona)
     {
       Button oCancelButton;
       string[] arrKnisaVal;
@@ -6316,22 +6316,33 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
           oCancelButton = AddImageButton();
           oCancelButton.OnClientClick = "SetKnisaActualMin(" + e.Row.ClientID + "); if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0" + ")) {return false; } else {return true;} ";          
-          if (bPeilutActive){
-              if ((iMisparKnisa > 0) && (iKnisaType == 1) && (((TextBox)(e.Row.Cells[_COL_ACTUAL_MINUTES].Controls[0])).Text=="0")) //כניסה לפי צורך
+        //  if (bPeilutActive){
+          if ((iMisparKnisa > 0) && (iKnisaType == 1))  //כניסה לפי צורך
+          {
+              if (((TextBox)(e.Row.Cells[_COL_ACTUAL_MINUTES].Controls[0])).Text == "0")
                   oCancelButton.CssClass = "ImgKnisaS";
               else
-                  oCancelButton.CssClass = "ImgCheckedPeilut";           
+                  oCancelButton.CssClass = "ImgCheckedPeilut";
+
+              if (bSidurActive)
+                  bPeilutActive = true;
           }
           else
-            oCancelButton.CssClass = "ImgCancel";
-          
+          {
+              if (bPeilutActive)
+                  oCancelButton.CssClass = "ImgCheckedPeilut";
+              else
+                 oCancelButton.CssClass = "ImgCancel";
+          }
+         
+
           e.Row.Cells[_COL_CANCEL].Controls.Add(oCancelButton);
           oCancelButton = ((Button)(e.Row.Cells[_COL_CANCEL].Controls[0]));
 
           oCancelButton.ID = e.Row.ClientID + "CancelPeilut";
           bool bDisabled = (((((TextBox)(e.Row.Cells[_COL_DUMMY].Controls[0])).Text != "1")) || (!bSidurActive) || (!_ProfileRashemet) || (bElementHachanatMechona));
-
-          if (bDisabled)
+          bDisabled = ((bDisabled) && (!((iMisparKnisa > 0) && (iKnisaType == 1))));
+          if (bDisabled) 
           {
               oCancelButton.Attributes.Add("disabled", "true");
               oCancelButton.Attributes.Add("OrgEnabled", "0");
