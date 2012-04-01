@@ -186,7 +186,7 @@ namespace KdsBatch
                 {
                     itemPirteyOved = new clPirteyOved(rows[i], dTarMe);
                     PirteyOved.Add(itemPirteyOved);
-                    dTchilatAvoda = dTchilatAvoda = DateTime.Parse(rows[i]["TCHILAT_AVODA"].ToString());
+                    dTchilatAvoda = DateTime.Parse(rows[i]["TCHILAT_AVODA"].ToString());
                     itemPirteyOved = null;
                 }
                 itemPirteyOved = null;
