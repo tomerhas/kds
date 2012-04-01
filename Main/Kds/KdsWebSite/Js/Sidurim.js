@@ -1868,11 +1868,13 @@ function chkMkt(oRow) {
                              _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";
                      }
                      else {
-                         if (_imgCancelPeilut.firstChild.className == "ImgKnisaS")
-                             _imgCancelPeilut.firstChild.disabled = false;
-                         else
-                             _imgCancelPeilut.firstChild.className = "ImgCancelDisable";
-                     }
+                         if ($get("hidMeasherMistayeg").value != '-1'){
+                             if (_imgCancelPeilut.firstChild.className == "ImgKnisaS") 
+                                 _imgCancelPeilut.firstChild.disabled = false;
+                             else
+                                 _imgCancelPeilut.firstChild.className = "ImgCancelDisable";
+                         }
+                       }
                     }
                 }
               }
