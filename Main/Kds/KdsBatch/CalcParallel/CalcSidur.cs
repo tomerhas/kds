@@ -3145,8 +3145,8 @@ namespace KdsBatch
             float fErechShabat;
             dShatHatchalaSidur = DateTime.MinValue;
             iMisparSidur = 0;
-            bool bSidurNehigaFirst = false;
-            bool bSidurNehigaSecond = false;
+            bool bSidurNehigaOrNihulFirst = false;
+            bool bSidurNehigaOrNihulSecond = false;
             bool bSidurNihulOrTafkidFirst = false;
             bool bSidurNihulOrTafkidSecond = false;
 
@@ -3162,23 +3162,23 @@ namespace KdsBatch
                 fErechShabat = 0;
                 for (int I = 0; I < drSidurim.Length; I++)
                 {
-                    bSidurNehigaFirst = false;
+                    bSidurNehigaOrNihulFirst = false;
                     dShatHatchalaSidur = DateTime.Parse(drSidurim[I]["shat_hatchala_sidur"].ToString());
 
 
-                    bSidurNehigaFirst = (isSidurNehiga(ref drSidurim[I]) || isSidurNihulTnua(drSidurim[I]));
+                    bSidurNehigaOrNihulFirst = (isSidurNehiga(ref drSidurim[I]) || isSidurNihulTnua(drSidurim[I]));
                     bSidurNihulOrTafkidFirst = isSidurNihulTnuaOrTafkidMezakeRezifut(ref drSidurim[I]);
 
-                    if (bSidurNehigaFirst || bSidurNihulOrTafkidFirst)
+                    if (bSidurNehigaOrNihulFirst || bSidurNihulOrTafkidFirst)
                     {
                         J = I + 1;
                         if (J < drSidurim.Length)
                         {
 
-                            bSidurNehigaSecond = isSidurNehiga(ref drSidurim[J]);
+                            bSidurNehigaOrNihulSecond = (isSidurNehiga(ref drSidurim[J]) || isSidurNihulTnua(drSidurim[J]));
                             bSidurNihulOrTafkidSecond = isSidurNihulTnuaOrTafkidMezakeRezifut(ref drSidurim[J]);
 
-                            if ((bSidurNehigaFirst && (bSidurNehigaSecond || bSidurNihulOrTafkidSecond)) || (bSidurNehigaSecond && (bSidurNehigaFirst || bSidurNihulOrTafkidFirst)))
+                            if ((bSidurNehigaOrNihulFirst && (bSidurNehigaOrNihulSecond || bSidurNihulOrTafkidSecond)) || (bSidurNehigaOrNihulSecond && (bSidurNehigaOrNihulFirst || bSidurNihulOrTafkidFirst)))
                             {
                                 dShatHatchalaLetashlum = DateTime.Parse(drSidurim[J]["shat_hatchala_letashlum"].ToString());
                                 dShatGmarLetashlum = DateTime.Parse(drSidurim[I]["shat_gmar_letashlum"].ToString());
