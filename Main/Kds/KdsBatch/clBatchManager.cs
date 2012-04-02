@@ -6268,10 +6268,9 @@ namespace KdsBatch
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
+                        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
-
                             if (oSidur.iLoLetashlum == 1 && !(oSidur.iKodSibaLoLetashlum == 1 || oSidur.iKodSibaLoLetashlum == 11 || oSidur.iKodSibaLoLetashlum == 20))
                             {
                                 oSidur.iLoLetashlum = 0;
@@ -6279,16 +6278,17 @@ namespace KdsBatch
                                 oObjSidurimOvdimUpd.LO_LETASHLUM = 0;
                                 oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 0;                              
                             }
-                            oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
                             if (!CheckIdkunRashemet("PITZUL_HAFSAKA", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                             {
                                 oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 0;
                                 oSidur.sPitzulHafsaka = "0";
                             }
-                            oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                            htEmployeeDetails[i] = oSidur;
-                        }
+                       }     
+                       oObjSidurimOvdimUpd.MEZAKE_NESIOT = 0;
+                       oObjSidurimOvdimUpd.MEZAKE_HALBASHA = 0;
+                       oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                       
+                       htEmployeeDetails[i] = oSidur;
                     }
 
                  
@@ -13291,13 +13291,13 @@ namespace KdsBatch
                                 bSidurZakaiLHalbash = IsSidurHalbasha(oSidur);
                                 bSidurMisugShaonim = IsSidurShonim(drSugSidur, oSidur);
 
-                                if (!bSidurMisugShaonim && oSidur.sHalbashKod == "1")
+                                if (oSidur.iLoLetashlum == 0 && !bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
                                     if (iSidurZakaiLehalbashaKnisa == -1)
                                         iSidurZakaiLehalbashaKnisa = i;
                                     iSidurZakaiLehalbashaKnisa = i;
                                 }
-                                else if (bSidurMisugShaonim && oSidur.sHalbashKod == "1")
+                                else if (oSidur.iLoLetashlum == 0 && bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
                                     bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) 
