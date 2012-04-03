@@ -2660,6 +2660,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            
             DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
+            //יצירת ToolTip
             string sToolTip = CreateToolTip(oSidur, fSidurTime);
            
 
