@@ -2593,6 +2593,38 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //hCell.Style.Add("border-right", "solid 1px gray");
                 
     }
+    protected string CreateToolTip(clSidur oSidur, float fSidurTime)
+    {
+        string sToolTip = oSidur.sSidurDescription;
+        string sSugSidurDesc = "";
+        //נקבע את משך הסידור
+        if (!fSidurTime.Equals(0))
+        {
+            if (!oSidur.sSidurDescription.Equals(""))
+                sToolTip = String.Concat(oSidur.sSidurDescription, "\n");
+
+            sToolTip = String.Concat(sToolTip, "  משך הסידור: ", String.Format("{0:0.##}", fSidurTime), " דקות");
+        }
+        //אם זה סידור מפה נוסיף גם את סוג הסידור
+        if (!(oSidur.bSidurMyuhad))
+        {
+            sSugSidurDesc = GetSugSidurDescription(oSidur.iSugSidurRagil);
+            if (sSugSidurDesc!=string.Empty)
+                sToolTip = String.Concat(sToolTip, "\n", "  סוג סידור: " + sSugSidurDesc);
+        }
+        return sToolTip;
+    }
+    protected string GetSugSidurDescription(int iSugSidur)
+    {
+        string sSugSidurDescription = "";
+        DataRow[] dr;
+        
+        dr = SugeySidur.Select("sug_sidur=" + iSugSidur.ToString());
+        if (dr.Length > 0)
+            sSugSidurDescription = dr[0]["TEUR_SIDUR_AVODA"].ToString();
+
+        return sSugSidurDescription;
+    }
     protected void CreateSidurCell(clSidur oSidur, ref HtmlTableCell hCell,
                                    ref HtmlTableCell hCollapseCell,
                                    ref HtmlTableCell hErrCell, int iIndex)
@@ -2628,14 +2660,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            
             DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
-            string sToolTip = oSidur.sSidurDescription;
-            if (!fSidurTime.Equals(0))
-            {
-                if (!oSidur.sSidurDescription.Equals(""))
-                    sToolTip = String.Concat(oSidur.sSidurDescription, "\n");
-
-                sToolTip = String.Concat(sToolTip, "  משך הסידור: ", String.Format("{0:0.##}", fSidurTime), " דקות");
-            }
+            string sToolTip = CreateToolTip(oSidur, fSidurTime);
+           
 
             //נבדוק אם לסידור יש אפשרות להוסיף שדות, אם כן נציג אותו כלינק
             if (IsSadotNosafimLSidur(ref oSidur, MeafyeneySidur, SadotNosafim))
@@ -6308,12 +6334,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
       string[] arrKnisaVal;
       int iMisparKnisa;
       int iKnisaType;
+      bool bIdkunRashemet;
+      DateTime dShatYetiza;
       try
       {
           arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
           iMisparKnisa = int.Parse(arrKnisaVal[0]);//int.Parse(e.Row.Cells[_COL_KNISA].Text);
           iKnisaType = int.Parse(arrKnisaVal[1]);
-
+          
+         
           oCancelButton = AddImageButton();
           oCancelButton.OnClientClick = "SetKnisaActualMin(" + e.Row.ClientID + "); if (!ChangeStatusPeilut(" + e.Row.ClientID + ",0,0,0" + ")) {return false; } else {return true;} ";          
         //  if (bPeilutActive){
@@ -6341,7 +6370,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
           oCancelButton.ID = e.Row.ClientID + "CancelPeilut";
           bool bDisabled = (((((TextBox)(e.Row.Cells[_COL_DUMMY].Controls[0])).Text != "1")) || (!bSidurActive) || (!_ProfileRashemet) || (bElementHachanatMechona));
-          bDisabled = ((bDisabled) && (!((iMisparKnisa > 0) && (iKnisaType == 1))));
+          //אם התנאים הם לחסימה וגם הפעילות היא לא כניסה שלא לצורך או שיש עידכון רשמת לא נאפשר אץ עידכון הכפתור
+          //עדכון רשמת מתייחס לעידכון שנעשה בדקות בפועל
+       
+          dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
+          //אם יש עדכון רשמת על שדה דקות בפועל, יש להציג את כפתור "פעיל" כ- disable
+          bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
+
+          bDisabled = (((bDisabled) && (!((iMisparKnisa > 0) && (iKnisaType == 1)))) || (bIdkunRashemet));
           if (bDisabled) 
           {
               oCancelButton.Attributes.Add("disabled", "true");
