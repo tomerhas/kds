@@ -1198,7 +1198,7 @@ namespace KdsBatch
                                     //כלומר ביצע עבודת תנועה + תפקיד
                                     if (fDakotNihulChol > 0 && fDakotTafkidChol > 0 && iCountNahagutChol == 0)
                                     {
-                                        if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol >= fTempX)
+                                        if (fDakotTafkidChol >= fMichsaYomit && fDakotTafkidChol > fTempX)
                                         {
                                             fSumDakotRechiv21 = fTempX - fMichsaYomit;
                                         }
@@ -3831,32 +3831,9 @@ namespace KdsBatch
                         }
                     }
 
-
                     fDakotRechiv = fHalbashaTchilatYom + fHalbashaSofYom;
-
                     addRowToTable(clGeneral.enRechivim.ZmanHalbasha.GetHashCode(), fDakotRechiv);
 
-
-                    iSugYom = oCalcBL.GetSugYomLemichsa(objOved, objOved.Taarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
-                    if (iSugYom == clGeneral.enSugYom.Shishi.GetHashCode() && fMichsaYomit == 0)
-                    {
-                        fDakotTafkidShishi = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), objOved.Taarich);
-                        addRowToTable(clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode(), (fDakotTafkidShishi + fDakotRechiv));
-
-                    }
-                    else if (objOved.Taarich.DayOfWeek.GetHashCode() + 1 == clGeneral.enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom, objOved.Taarich))
-                    {
-                        fDakotTafkidShabat = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Taarich);
-
-                        addRowToTable(clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), (fDakotTafkidShabat + fDakotRechiv));
-
-                    }
-                    else
-                    {
-                        fDakotTafkidChol = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
-
-                        addRowToTable(clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), (fDakotTafkidChol + fDakotRechiv));
-                    }
                     //אם דקות תפקיד חול (רכיב 4) > 0 יש להוסיף את רכיב 93 לרכיב 4.
                     fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotTafkidChol.GetHashCode(), objOved.Taarich);
                     if (fErech>0)
@@ -5650,7 +5627,7 @@ namespace KdsBatch
                     if (fDakotNehigaShishi == 0)
                     { fSumDakotRechiv = fSumDakotRechiv + fZmanHashlama + fZmanRetzifut; }
 
-                   fSumDakotRechiv += fSumDakotRechiv + fHashlamaNihul;
+                   fSumDakotRechiv += fHashlamaNihul;
                     addRowToTable(clGeneral.enRechivim.SachDakotNihulShishi.GetHashCode(), fSumDakotRechiv);
                 }
             }

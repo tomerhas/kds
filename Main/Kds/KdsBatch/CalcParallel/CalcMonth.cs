@@ -4066,7 +4066,12 @@ namespace KdsBatch
               fShaotNihulTnua = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode());
 
               if (fNosafotNihulTnua > fShaotNihulTnua)
-                  fSumDakotRechiv = fNosafotNihulTnua - fShaotNihulTnua;
+              {
+                   if (objOved.objMeafyeneyOved.sMeafyen74.Trim() == "1")
+                       fSumDakotRechiv = fNosafotNihulTnua;
+                    else
+                       fSumDakotRechiv = fNosafotNihulTnua - fShaotNihulTnua;
+              }
               else fSumDakotRechiv = 0;
 
               addRowToTable(clGeneral.enRechivim.KizuzNosafotTnuaChol.GetHashCode(), fSumDakotRechiv);
