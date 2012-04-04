@@ -44,8 +44,8 @@ namespace KdsBatch
                   fErech = GetErechRechiv(clGeneral.enRechivim.ShaotHeadrut.GetHashCode());
                   fErech += GetErechRechiv(clGeneral.enRechivim.ShaotChofesh.GetHashCode());
                   sErua415.Append(FormatNumber(fErech, 4, 1));
-                  
-                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Nosafot100.GetHashCode()) , 4, 1));
+
+                  sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode()), 4, 1));
               //}
               //else { sErua415.Append(GetBlank(16)); }
 
@@ -53,7 +53,8 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode());
               if (sMeafyen83.Trim() == "1")
                   fErech = 0;
-              sErua415.Append(FormatNumber((fErech / 60), 4, 1));
+              sErua415.Append(FormatNumber
+                  ((fErech / 60), 4, 1));
 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode());
              if (sMeafyen83.Trim() == "1")

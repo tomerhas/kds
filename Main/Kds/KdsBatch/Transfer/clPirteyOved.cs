@@ -16,6 +16,7 @@ namespace KdsBatch
         public int iGil { get; set; }
         public long iBakashaId { get; set; }
         public long iBakashaIdRizatChishuv { get; set; }
+        public DateTime dChodeshChishuv { get; set; }
         public string sChodeshIbud { get; set; }
 
         public clEruaDataEt oDataEt { get; set; }
@@ -40,6 +41,7 @@ namespace KdsBatch
             iDirug = Dirug;
             iDarga = Darga;
             iBakashaId= BakashaId;
+            dChodeshChishuv = DateTime.Parse(drPirteyOved["taarich"].ToString());
             _drPirteyOved = drPirteyOved;
             _dtRechivim = dtDetailsChishuv;
             iBakashaIdRizatChishuv = lRequestNumToTransfer;
@@ -95,6 +97,7 @@ namespace KdsBatch
             {
                 oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, iBakashaIdRizatChishuv, ParameterDir.pdInput);
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dChodeshChishuv, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
                 oDal.ExecuteSP(clDefinitions.cProGetChishuvYomiToOved, ref  dt);
