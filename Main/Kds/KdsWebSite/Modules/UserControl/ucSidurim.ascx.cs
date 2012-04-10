@@ -6109,6 +6109,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             oTxt.Enabled = ((_ProfileRashemet) && (!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
             oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
+            oTxt.Attributes.Add("IdkunRashemet", bIdkunRashemet.ToString());
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
             oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
             oTxt.CssClass = "WorkCardPeilutTextBox";
