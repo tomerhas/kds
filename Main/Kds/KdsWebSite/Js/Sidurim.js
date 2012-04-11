@@ -1862,25 +1862,32 @@ function chkMkt(oRow) {
                if (_imgCancelPeilut.firstChild.disabled){
                  if(_imgCancelPeilut.firstChild.className!=undefined){
                      if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut")) > -1) {
-                         if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML)))
+                         if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML))
+                          && (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True'))
                              _imgCancelPeilut.firstChild.disabled = false;
                             else
                              _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";
                      }
-                     else {
-                         if ($get("hidMeasherMistayeg").value != '-1') {
-                             if (_imgCancelPeilut.firstChild.className == "ImgKnisaS")
-                                 _imgCancelPeilut.firstChild.disabled = false;
+                        else {
+                            var dId = $get("txtId").value;
+                            var GoremMEasger = $get("hidGoremMeasher").value;
+                            if (($get("hidMeasherMistayeg").value != '-1') || ($get("hidDriver").value == '1') || (dId == GoremMEasger)) {//אם הכרטיס הוא עם התייחסות או שאנחנו מעמדת נהג או עובד רגיל
+                             if (_imgCancelPeilut.firstChild.className == "ImgKnisaS") {
+                                 if (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True')
+                                     _imgCancelPeilut.firstChild.disabled = false;
+                                   else
+                                       _imgCancelPeilut.firstChild.className = "ImgKnisaSDisable";
+                             }
                              else
                                  _imgCancelPeilut.firstChild.className = "ImgCancelDisable";
                          }
                          else {//ללא התייחסות
-                             if (_imgCancelPeilut.firstChild.className == "ImgKnisaS")
+                             if ((_imgCancelPeilut.firstChild.className == "ImgKnisaS") && (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True'))
                                  _imgCancelPeilut.firstChild.className = "ImgKnisaSDisable";
                          }
                        }
                     }
-                }
+                 }
               }
            }                    
          }     

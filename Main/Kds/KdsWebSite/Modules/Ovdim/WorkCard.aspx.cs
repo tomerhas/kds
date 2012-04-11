@@ -476,10 +476,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         hidRashemet.Value = bRashemet ? "1" : "0";
         //כפתור מסך שגיאות
         //  שאינו מסוג רשמת/רשמת על/מנהל מערכת. הכפתור יוצג גם בכניסה מעמדת נהג וגם בכניסה מ- PC. 
+        //כפתור השגוי הבא יוצג רק לרשמת/מנהל מערכת
         if (bRashemet)
+        {
             btnDrvErrors.Style.Add("Display", "none");
+            btnNextErrCard.Style.Add("Display", "block");
+        }
         else
+        {
             btnDrvErrors.Style.Add("Display", "block");
+            btnNextErrCard.Style.Add("Display", "none");
+        }
     }
     protected void SetDriverSource()
     {             
