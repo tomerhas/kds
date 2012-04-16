@@ -3687,7 +3687,8 @@ namespace KdsBatch
             try
             {
                 clKavim.enMakatType oMakatType = (clKavim.enMakatType)oPeilut.iMakatType;
-                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mElement && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700"  && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
+                if (((oMakatType == clKavim.enMakatType.mKavShirut) || (oMakatType == clKavim.enMakatType.mEmpty) || (oMakatType == clKavim.enMakatType.mNamak) || (oMakatType == clKavim.enMakatType.mVisa)
+                    || (oMakatType == clKavim.enMakatType.mElement && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")) || ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "700"  && (oPeilut.bBusNumberMustExists) && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "701") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "712") && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "711")))
                 {
                     //בודקים אם הפעילות דורשת מספר רכב ואם הוא קיים וחוקי (מול מש"ר). פעילות דורשת מספר רכב אם מרוטינת זיהוי מקט חזר פרמטר שונה מאלמנט. אם חזר מהרוטינה אלנמט יש לבדוק אם דורש מספר רכב. תהיה טבלה של מספר פעילות המתחילים ב- 7 ולכל רשומה יהיה מאפיין אם הוא דורש מספר רכב. בטבלת מאפייני אלמנטים (11 - חובה מספר רכב)
                     //בדיקת מספר רכב מול מש"ר
@@ -7391,12 +7392,12 @@ namespace KdsBatch
                                     {
                                          DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
 
-                                         if (IsSidurNahagut(drSugSidur, oSidur) || IsSidurNihulTnua(drSugSidur, oSidur))
+                                         if (IsSidurNahagut(drSugSidur, oSidur) || IsSidurNihulTnua(drSugSidur, oSidur) || IsSugAvodaKupai(ref oSidur, _dCardDate))
                                             bSidurNahagut=true;
                                         else bSidurNahagut = false;
                                         drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oNextSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
 
-                                        if (IsSidurNahagut(drSugSidur, oNextSidur) || IsSidurNihulTnua(drSugSidur, oNextSidur))
+                                        if (IsSidurNahagut(drSugSidur, oNextSidur) || IsSidurNihulTnua(drSugSidur, oNextSidur) || IsSugAvodaKupai(ref oSidur, _dCardDate))
                                             bNextSidurNahagut=true;
                                         else bNextSidurNahagut = false;
 
@@ -7414,7 +7415,7 @@ namespace KdsBatch
                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                                             oSidur.sPitzulHafsaka = "1";
                                         }
-                                        else if (_oMeafyeneyOved.Meafyen41Exists && (bSidurTafkid && bNextSidurTafkid))
+                                        else if (_oMeafyeneyOved.Meafyen41Exists && (bSidurTafkid && oSidur.iZakayLepizul > 0 && bNextSidurTafkid && oNextSidur.iZakayLepizul > 0))
                                         {
                                             oObjSidurimOvdimUpd.PITZUL_HAFSAKA = 1;
                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -10599,7 +10600,7 @@ namespace KdsBatch
 
                     dRefferenceDate = clGeneral.GetDateTimeFromStringHour("08:00", oPeilut.dFullShatYetzia);
                     dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
-                    if (oPeilut.dFullShatYetzia >= dRefferenceDate && dShatKisuyTor >= dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
+                    if (oPeilut.dFullShatYetzia > dRefferenceDate && dShatKisuyTor > dRefferenceDate && (!clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)))
                     {
                         oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", oParam.iPrepareOtherMechineMaxTime.ToString().PadLeft(3, (char)48), "00"));
                         //    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-3);
@@ -10735,7 +10736,7 @@ namespace KdsBatch
                                         {
                                             lMakat = ((clPeilut)oLocalSidur.htPeilut[oLocalSidur.htPeilut.Count - 1]).lMakatNesia;
                                             if (oLocalSidur != oSidur && iSidurIndex == i + 1 && (oSidur.dFullShatHatchala - oLocalSidur.dFullShatGmar).TotalMinutes <= _oParameters.iMinTimeBetweenSidurim
-                                                 && lMakat.ToString().PadLeft(8).Substring(0, 3) == "724" && int.Parse(lMakat.ToString().PadLeft(8).Substring(3, 3)) > 60)
+                                                 && (lMakat.ToString().PadLeft(8).Substring(0, 3) == "724" || lMakat.ToString().PadLeft(8).Substring(0, 3) == "735") && int.Parse(lMakat.ToString().PadLeft(8).Substring(3, 3)) > 60)
                                             {
                                                 AddElementHachanatMechine711_2(ref oSidur, iSidurIndex, ref dShatYetzia, ref iPeilutNesiaIndex, ref iMeshechHachanotMechona, ref iNumHachanotMechonaForSidur, ref iMeshechHachanotMechonaNosafot, ref  iIndexElement, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur, ref oObjSidurimOvdimUpd);
                                                 htEmployeeDetails[iSidurIndex] = oSidur;
@@ -10846,6 +10847,7 @@ namespace KdsBatch
             DateTime dRefferenceDate;
             bool bCheck = false;
             string sSugMechona;
+
             try
             {
                 oFirstPeilutMashmautit = null;
@@ -10885,8 +10887,10 @@ namespace KdsBatch
                         sSugMechona =oPeilutMachine.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
 
                         if (sSugMechona == "711" || (sSugMechona == "701" &&
-                            ((oFirstPeilutMashmautit.dFullShatYetzia < dRefferenceDate || (oFirstPeilutMashmautit.dFullShatYetzia >= dRefferenceDate && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate))) && (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaAdShmone)) ||
-                            ((oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && !clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)) && (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaNichleletafter8))))
+                                                    ((oFirstPeilutMashmautit.dFullShatYetzia <= dRefferenceDate || (oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)) || (oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor) <= dRefferenceDate)) && 
+                                                     (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaAdShmone)) 
+                                                 || ((oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor) > dRefferenceDate && !clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)) &&
+                                                     (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaNichleletafter8))))
                         {
                             j = iIndexPeilutMashmautit - 1; ;// -1;
                             oNextPeilut = (clPeilut)oSidur.htPeilut[j];
@@ -10895,7 +10899,10 @@ namespace KdsBatch
                             while (oNextPeilut.lMakatNesia != oPeilutMachine.lMakatNesia) 
                             {
                                 //if (!string.IsNullOrEmpty(oNextPeilut.sElementNesiaReka))
-                                dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oNextPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
+                                iMeshechPeilut = (GetMeshechPeilutHachnatMechona(iIndexSidur, oNextPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur));
+                                if (sSugMechona == "711" && iMeshechPeilut == 0)
+                                    iMeshechPeilut = 1;
+                                dShatHatchala = dShatHatchala.AddMinutes(-iMeshechPeilut);
                                 //else if (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "709")
                                 //dShatHatchala = dShatHatchala.AddMinutes(-int.Parse(oNextPeilut.lMakatNesia.ToString().Substring(3, 3)));
                                 j -= 1;
@@ -10952,7 +10959,10 @@ namespace KdsBatch
                         oPeilut = (clPeilut)oSidur.htPeilut[i];
                         if ((oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && oPeilut.iElementLeShatGmar == 0) || oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
                         {// יש לעדכן את שעת היציאה של הכנת המכונה לשעת יציאה של הפעילות שאינה משמעותית הראשונה פחות משך הכנת המכונה.
-                            dShatHatchala = oPeilut.dFullShatYetzia.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref  bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
+                            iMeshechPeilut = (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref  bUsedMazanTichnun, ref bUsedMazanTichnunInSidur));
+                            if (iMeshechPeilut ==0)
+                                iMeshechPeilut = 1;
+                            dShatHatchala = oPeilut.dFullShatYetzia.AddMinutes(-iMeshechPeilut);
                             break;
                         }
                     }
