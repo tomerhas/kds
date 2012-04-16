@@ -411,7 +411,7 @@ namespace KdsBatch
 
         public bool IsLongEilatTrip(DateTime dTaarich, out clPeilut oPeilutEilat, float fPaar)
         {
-            clPeilut peilutEilat = this.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(peilut => peilut.bPeilutEilat); //&& peilut.fKm > fPaar
+            clPeilut peilutEilat = this.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(peilut => peilut.bPeilutEilat && peilut.fKm > fPaar);
             oPeilutEilat = peilutEilat;
             if (!string.IsNullOrEmpty(fPaar.ToString())
                 && peilutEilat != null)
