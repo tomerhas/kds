@@ -211,7 +211,7 @@ public partial class Modules_Requests_HarazatTaalichKlita : KdsPage
         try
         {
             clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-            obClManager.HafalatBatchShinuyimHR();
+            obClManager.HRChangesMatzavPirteyBrerotmechdal();
         }
         catch (Exception ex)
         {

@@ -20,8 +20,8 @@ namespace KdsBatch.HrWorkersChanges
             obatch = new clBatch();
             oDal = new clDal();
         }
-    
-        public void HafalatBatchShinuyimHR()
+
+        public void HRChangesMatzavPirteyBrerotmechdal() //HafalatBatchShinuyimHR()
         {
            // obatch.KdsWriteProcessLog(3, 31, 1, "start matzav - merav");
             HafalatMatzavOvdim();
@@ -33,7 +33,7 @@ namespace KdsBatch.HrWorkersChanges
             HafalatBrerotMechdal();
           //  obatch.KdsWriteProcessLog(3, 34, 1, "end brerot - merav");
         }
-        public void HafalatShinuyimHRatMeafyenim()
+        public void HRChangesMeafyenim() //HafalatShinuyimHRatMeafyenim()
         {
             HafalatMeafyenim();
         }
@@ -47,21 +47,29 @@ namespace KdsBatch.HrWorkersChanges
                 //**obatch.KdsWriteProcessLog(3, 31, 1, "start bdika shinuyim hr matzav ovdim");
                 iseq = obatch.InsertProcessLog(3, 31, RecordStatus.Wait, "start bdika shinuyim hr matzav ovdim",0);
                 flag = true;
-                obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.State, ref flag);
-                obClManager.InsertPeriod();
-                obClManager.SaveShinuyimHR(ref flag);
-                obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr matzav ovdim",0);
-               //** obatch.KdsWriteProcessLog(3, 31, 1, "end bdika shinuyim hr matzav ovdim");
-                if (flag)
+                if (!obatch.CheckViewEmpty("NEW_MATZAV_OVDIM"))
                 {
-                    //sub_tahalich = 31
-                    iseq = obatch.InsertProcessLog(3, 31, RecordStatus.Wait, "start upd matzav",0);
-                   //** obatch.KdsWriteProcessLog(3, 31, 1, "start upd matzav");
-                    obatch.MoveNewMatzavOvdimToOld();
-                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd matzav", 0);
-                   //** obatch.KdsWriteProcessLog(3, 31, 2, "end ok upd matzav");
+                    obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.State, ref flag);
+                    obClManager.InsertPeriod();
+                    obClManager.SaveShinuyimHR(ref flag);
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr matzav ovdim", 0);
+                    //** obatch.KdsWriteProcessLog(3, 31, 1, "end bdika shinuyim hr matzav ovdim");
+                    if (flag)
+                    {
+                        //sub_tahalich = 31
+                        iseq = obatch.InsertProcessLog(3, 31, RecordStatus.Wait, "start upd matzav", 0);
+                        //** obatch.KdsWriteProcessLog(3, 31, 1, "start upd matzav");
+                        obatch.MoveNewMatzavOvdimToOld();
+                        obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd matzav", 0);
+                        //** obatch.KdsWriteProcessLog(3, 31, 2, "end ok upd matzav");
+                    }
+                    obClManager = null;
                 }
-                obClManager = null;
+                else
+                {
+                    obClManager = null;
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Faild, "Matzav Ovdim Err: View Empty", 0);
+                }
             }
             catch (Exception ex)
             {
@@ -81,21 +89,29 @@ namespace KdsBatch.HrWorkersChanges
                 iseq = obatch.InsertProcessLog(3, 32, RecordStatus.Wait, "start bdika shinuyim hr pirtey oved", 0); 
                //** obatch.KdsWriteProcessLog(3, 32, 1, "start bdika shinuyim hr pirtey oved");
                 flag = true;
-                obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Details, ref flag);
-                obClManager.InsertPeriod();
-                obClManager.SaveShinuyimHR(ref flag);
-                obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr pirtey oved", 0);             
-              //**  obatch.KdsWriteProcessLog(3, 32, 1, "end bdika shinuyim hr pirtey oved");
-                if (flag)
+                if (!obatch.CheckViewEmpty("NEW_PIRTEY_OVDIM"))
                 {
-                    //sub_tahalich = 326
-                    iseq = obatch.InsertProcessLog(3, 32, RecordStatus.Wait, "start upd pirtey_ovdim", 0);
-                   //** obatch.KdsWriteProcessLog(3, 32, 1, "start upd pirtey_ovdim");
-                    obatch.MoveNewPirteyOvedToOld();
-                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd pirtey_ovdim", 0);
-                   //** obatch.KdsWriteProcessLog(3, 32, 2, "end ok upd pirtey_ovdim");
+                    obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Details, ref flag);
+                    obClManager.InsertPeriod();
+                    obClManager.SaveShinuyimHR(ref flag);
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr pirtey oved", 0);
+                    //**  obatch.KdsWriteProcessLog(3, 32, 1, "end bdika shinuyim hr pirtey oved");
+                    if (flag)
+                    {
+                        //sub_tahalich = 326
+                        iseq = obatch.InsertProcessLog(3, 32, RecordStatus.Wait, "start upd pirtey_ovdim", 0);
+                        //** obatch.KdsWriteProcessLog(3, 32, 1, "start upd pirtey_ovdim");
+                        obatch.MoveNewPirteyOvedToOld();
+                        obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd pirtey_ovdim", 0);
+                        //** obatch.KdsWriteProcessLog(3, 32, 2, "end ok upd pirtey_ovdim");
+                    }
+                    obClManager = null;
                 }
-                obClManager = null;
+                else
+                {
+                    obClManager = null;
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Faild, "Pirtey Oved Err: View Empty", 0);
+                }
             }
             catch (Exception ex)
             {
@@ -116,23 +132,31 @@ namespace KdsBatch.HrWorkersChanges
                 iseq = obatch.InsertProcessLog(3, 33, RecordStatus.Wait, "start bdika shinuyim hr meafyenim", 0);    
               //**  obatch.KdsWriteProcessLog(3, 33, 1, "start bdika shinuyim hr meafyenim");
                 flag = true;
-                obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Properties,ref flag);
-              //  obatch.KdsWriteProcessLog(3, 33, 1, "before InsertPeriod meafyenim");
-                obClManager.InsertPeriod();
-               // obatch.KdsWriteProcessLog(3, 33, 1, "before SaveShinuyimHR meafyenim");
-                obClManager.SaveShinuyimHR(ref flag);
-                obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr meafyenim", 0);
-              //**  obatch.KdsWriteProcessLog(3, 33, 1, "end bdika shinuyim hr meafyenim");
-                if (flag)
+                if (!obatch.CheckViewEmpty("NEW_MEAFYENIM_OVDIM"))
                 {
-                    //sub_tahalich = 33
-                    iseq = obatch.InsertProcessLog(3, 33, RecordStatus.Wait, "start upd meafyenim_ovdim", 0); 
-                 //**   obatch.KdsWriteProcessLog(3, 33, 1, "start upd meafyenim_ovdim");
-                    obatch.MoveNewMeafyenimOvdimToOld();
-                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd meafyenim_ovdim", 0); 
-                 //**   obatch.KdsWriteProcessLog(3, 33, 2, "end ok upd meafyenim_ovdim");
+                    obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Properties, ref flag);
+                    //  obatch.KdsWriteProcessLog(3, 33, 1, "before InsertPeriod meafyenim");
+                    obClManager.InsertPeriod();
+                    // obatch.KdsWriteProcessLog(3, 33, 1, "before SaveShinuyimHR meafyenim");
+                    obClManager.SaveShinuyimHR(ref flag);
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr meafyenim", 0);
+                    //**  obatch.KdsWriteProcessLog(3, 33, 1, "end bdika shinuyim hr meafyenim");
+                    if (flag)
+                    {
+                        //sub_tahalich = 33
+                        iseq = obatch.InsertProcessLog(3, 33, RecordStatus.Wait, "start upd meafyenim_ovdim", 0);
+                        //**   obatch.KdsWriteProcessLog(3, 33, 1, "start upd meafyenim_ovdim");
+                        obatch.MoveNewMeafyenimOvdimToOld();
+                        obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd meafyenim_ovdim", 0);
+                        //**   obatch.KdsWriteProcessLog(3, 33, 2, "end ok upd meafyenim_ovdim");
+                    }
+                    obClManager = null;
                 }
-                obClManager = null;
+                else
+                {
+                    obClManager = null;
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Faild, "Meafyenim Err: View Empty", 0);
+                }
               //**  obatch.KdsWriteProcessLog(3, 33, 1, "sof meafyenim_ovdim");
             }
             catch (Exception ex)
@@ -153,20 +177,28 @@ namespace KdsBatch.HrWorkersChanges
                 iseq = obatch.InsertProcessLog(3, 34, RecordStatus.Wait, "start bdika shinuyim hr brerot mechdal", 0);    
                //** obatch.KdsWriteProcessLog(3, 34, 1, "start bdika shinuyim hr brerot mechdal");
                 flag = true;
-                obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Defaults, ref flag);
-                obClManager.TipulTableDefaults(ref flag);
-                obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr brerot mechdal", 0); 
-              //**  obatch.KdsWriteProcessLog(3, 34, 1, "end bdika shinuyim hr brerot mechdal");
-                if (flag)
+                if (!obatch.CheckViewEmpty("NEW_BREROT_MECHDAL_MEAFYENIM"))
                 {
-                    //sub_tahalich = 34
-                    iseq = obatch.InsertProcessLog(3, 34, RecordStatus.Wait, "start upd Brerot_Mechdal_Meafyenim", 0);    
-                   //** obatch.KdsWriteProcessLog(3, 34, 1, "start upd Brerot_Mechdal_Meafyenim");
-                    obatch.MoveNewBrerotMechdalToOld();
-                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd Brerot_Mechdal_Meafyenim", 0); 
-                  //**  obatch.KdsWriteProcessLog(3, 34, 2, "end ok upd Brerot_Mechdal_Meafyenim");
+                    obClManager = new KdsBatch.HrWorkersChanges.clManager(KdsBatch.HrWorkersChanges.TableType.Defaults, ref flag);
+                    obClManager.TipulTableDefaults(ref flag);
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end bdika shinuyim hr brerot mechdal", 0);
+                    //**  obatch.KdsWriteProcessLog(3, 34, 1, "end bdika shinuyim hr brerot mechdal");
+                    if (flag)
+                    {
+                        //sub_tahalich = 34
+                        iseq = obatch.InsertProcessLog(3, 34, RecordStatus.Wait, "start upd Brerot_Mechdal_Meafyenim", 0);
+                        //** obatch.KdsWriteProcessLog(3, 34, 1, "start upd Brerot_Mechdal_Meafyenim");
+                        obatch.MoveNewBrerotMechdalToOld();
+                        obatch.UpdateProcessLog(iseq, RecordStatus.Finish, "end ok upd Brerot_Mechdal_Meafyenim", 0);
+                        //**  obatch.KdsWriteProcessLog(3, 34, 2, "end ok upd Brerot_Mechdal_Meafyenim");
+                    }
+                    obClManager = null;
                 }
-                obClManager = null;
+                else
+                {
+                    obClManager = null;
+                    obatch.UpdateProcessLog(iseq, RecordStatus.Faild, "Brerot Mechdal Err: View Empty", 0);
+                }
             }
             catch (Exception ex)
             {

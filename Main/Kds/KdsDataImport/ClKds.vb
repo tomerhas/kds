@@ -2910,7 +2910,7 @@ Public Class ClKds
                 ''**KdsWriteProcessLog(3, 30, 3, "calling_Pivot_Sidurim_M aborted " & ex.Message, 7)
             End Try
             obClManager = New KdsBatch.HrWorkersChanges.clMain
-            obClManager.HafalatBatchShinuyimHR()
+            obClManager.HRChangesMatzavPirteyBrerotmechdal()
 
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Finish, "RunRefresh", 0)
         Catch ex As Exception
@@ -2957,7 +2957,7 @@ Public Class ClKds
             'oDal.ExecuteSQL("insert into meafyenim_ovdim select * from new_meafyenim_ovdim")
             'KdsWriteProcessLog(3, 33, 2, "end ok upd meafyenim_ovdim")
             obClManager = New KdsBatch.HrWorkersChanges.clMain
-            obClManager.HafalatShinuyimHRatMeafyenim()
+            obClManager.HRChangesMeafyenim()
         Catch ex As Exception
             oBatch.UpdateProcessLog(iRunRefresh, KdsLibrary.BL.RecordStatus.Faild, "refrsh_meafyenim aborted " & ex.Message, 7)
             ''**  KdsWriteProcessLog(3, sub_tahalich, 3, "refrsh_meafyenim aborted " & ex.Message, "7")

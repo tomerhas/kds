@@ -46,6 +46,7 @@ namespace KdsLibrary
         public const string cFunGetNumChangesHrToShguim = "pkg_batch.fun_get_num_changes_to_shguim";
         public const string cFunInsertLogTahalichRecord = "PKG_BATCH.pro_ins_log_tahalich_rec";
         public const string cProUpdateLogTahalichRecord = "PKG_BATCH.pro_upd_log_tahalich_rec";
+        public const string cProCheckViewEmpty = "PKG_BATCH.pro_check_view_empty";
 
         public const string cProMoveNewMatzavOvdimToOld = "pkg_batch.MoveNewMatzavOvdimToOld";
         public const string cProMoveNewPirteyOvedToOld = "pkg_batch.MoveNewPirteyOvedToOld";

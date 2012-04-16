@@ -22,7 +22,7 @@
       <siteMapNode url="~/Modules/Batches/CreateConstantReports.aspx" title=" הפקת דו''חות קבועים"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Premia/PremiaCalculation.aspx" title="פרמיות ניהול תנועה"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/RunCalcParallel.aspx" title="הרצת חישוב מקבילי"  description="" roles="*"/>
-    
+      <siteMapNode url="~/Modules/Requests/HarazatTaalichKlita.aspx" title="הפעלת תהליך הקליטה"  description="" roles="*"/>
     </siteMapNode>
     <siteMapNode   title="טבלאות"  description="" roles="*">
       <siteMapNode url="~/SystemManager/DataEntryView.aspx?table=TB_BUGIM" title="דיווח באגים"  description="" roles="*"/>
@@ -45,8 +45,7 @@
       <siteMapNode url="" title="בקשות במערכת"  description="" roles="*"/>
       <siteMapNode url="" title="פרמטרים לבקשות"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Requests/LogBakashot.aspx" title="לוג בקשות"  description="" roles="*"/>
-      <siteMapNode url="~/Modules/Requests/LogTahalich.aspx" title="לוג תהליך"  description="" roles="*"/>
-      <siteMapNode url="~/Modules/Requests/HarazatTaalichKlita.aspx" title="הפעלת תהליך הקליטה"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Requests/LogTahalich.aspx" title="לוג תהליך"  description="" roles="*"/> 
     </siteMapNode>
     <siteMapNode title="דו''חות"  description="" roles="*">
       <siteMapNode url="~/Modules/Reports/ReportsList.aspx" title=" הפקת דו''חות"  description="" roles="*"/>

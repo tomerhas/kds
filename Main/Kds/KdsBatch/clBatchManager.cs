@@ -223,7 +223,9 @@ namespace KdsBatch
             IsShatHatchalaLetashlumNull = 180,
             IsShatGmarLetashlumNull = 181,
             ErrMisparElementimMealHamutar = 185,
-            errMutamLoBeNahagutBizeaNahagut = 186
+            errMutamLoBeNahagutBizeaNahagut = 186,
+            errKupaiWithNihulTnua = 187,
+            errChofeshAlCheshbonShaotNosafot = 188
         }
 
         private enum errNesiaMeshtana
@@ -1245,6 +1247,9 @@ namespace KdsBatch
                      if (CheckErrorActive(153)) IsHighPremya153(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
                      if (CheckErrorActive(154)) IsNegativePremya154(oSidur, ref dtErrors, bSidurNahagut, ref bCheckBoolSidur);
                      if (CheckErrorActive(186)) MutamLoBeNahagut186(oSidur,dCardDate, bSidurNahagut, ref dtErrors);
+                     if (CheckErrorActive(187)) KupaiWithNihulTnua187(oSidur, dCardDate,drSugSidur, ref dtErrors);
+                     if (CheckErrorActive(188)) ChofeshAlCheshbonShaotNosafot188(oSidur, dCardDate, ref dtErrors);
+
                     clSidur prevSidur = null;
                     if (i > 0) prevSidur = htEmployeeDetails[i - 1] as clSidur;
                     if (prevSidur != null)
@@ -2874,6 +2879,64 @@ namespace KdsBatch
                 _bSuccsess = false;
             }
         }
+
+        private void KupaiWithNihulTnua187(clSidur oSidur, DateTime dCardDate, DataRow[] drSugSidur, ref DataTable dtErrors)
+        {
+            DataRow drNew;
+            string  sug_sidur;
+            clPeilut oFirstPeilut;
+            try
+            {
+                if (drSugSidur.Length > 0)
+                {
+                    sug_sidur = drSugSidur[0]["sug_sidur"].ToString();
+                    if (sug_sidur == "70" || sug_sidur == "71" || sug_sidur == "72")
+                    {
+                        oFirstPeilut = oSidur.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "730" ||
+                                                peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "740" ||
+                                                peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "750"));
+
+                        if (oFirstPeilut != null)
+                        {
+                            drNew = dtErrors.NewRow();
+                            InsertErrorRow(oSidur, ref drNew, "", enErrors.errKupaiWithNihulTnua.GetHashCode());
+                            dtErrors.Rows.Add(drNew);
+                        }
+                    }
+                }
+            }           
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errKupaiWithNihulTnua.GetHashCode(), dCardDate, "KupaiWithNihulTnua187: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
+
+        private void ChofeshAlCheshbonShaotNosafot188(clSidur oSidur, DateTime dCardDate, ref DataTable dtErrors)
+        {
+            int iCountSidurim;
+            try
+            {
+                if (oSidur.iMisparSidur == 99822)
+                {
+
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => (Sidur.iMisparSidur != oSidur.iMisparSidur && Sidur.dFullShatHatchala != oSidur.dFullShatHatchala && Sidur.iLoLetashlum == 0));
+                     if (iCountSidurim > 0 || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                     {
+                            drNew = dtErrors.NewRow();
+                            InsertErrorRow(oSidur, ref drNew, "", enErrors.errChofeshAlCheshbonShaotNosafot.GetHashCode());
+                            dtErrors.Rows.Add(drNew);
+                      }
+                }
+     
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, null, "E", enErrors.errChofeshAlCheshbonShaotNosafot.GetHashCode(), dCardDate, "ChofeshAlCheshbonShaotNosafot188: " + ex.Message);
+                _bSuccsess = false;
+            }
+        }
+       
         private bool IsSimunNesiaValid27(DateTime dCardDate, ref DataTable dtErrors)
         {            
             string sLookUp, sBitulZmanNesia;
@@ -6327,23 +6390,10 @@ namespace KdsBatch
                     //שינוי זה צריך לעבוד לפני שינוי 4
                     AddElementMechine05_2();
 
-                    // שינוי 04
-                    for (i = 0; i < htEmployeeDetails.Count; i++)
-                    {
-                        oSidur = (clSidur)htEmployeeDetails[i];
-                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                        {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
-
-                            FixedShaotForSidurWithOneNesiaReeka04(i, ref oSidur, ref oObjSidurimOvdimUpd);
-                            htEmployeeDetails[i] = oSidur;
-                        }
-                    }
+                   
 
                     //שינוי 17
                     //SidurNetzer17(ref oSidur);
-
-                   
 
                     //שינוי 10
                     for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -6354,6 +6404,19 @@ namespace KdsBatch
                             oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
                             FixedShatGmar10(ref oSidur, i, ref  bUsedMazanTichnun, ref oObjSidurimOvdimUpd);
+                            htEmployeeDetails[i] = oSidur;
+                        }
+                    }
+
+                    // שינוי 04
+                    for (i = 0; i < htEmployeeDetails.Count; i++)
+                    {
+                        oSidur = (clSidur)htEmployeeDetails[i];
+                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                        {
+                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+
+                            FixedShaotForSidurWithOneNesiaReeka04(i, ref oSidur, ref oObjSidurimOvdimUpd);
                             htEmployeeDetails[i] = oSidur;
                         }
                     }
@@ -7826,63 +7889,65 @@ namespace KdsBatch
                     dPaar = (oSidurNext.dFullShatHatchala - oSidur.dFullShatGmar).TotalMinutes;
                     if (dPaar > 1 && iSumElement < _oParameters.iMaxZmanHamtanaEilat)
                     {
-                        //במידה ובסידור הראשון מביניהם לא קיים אלמנט - מוסיפים אלמנט המתנה 724xxxxx.
-                        dZmanElement = Math.Min(iSumElementLesidur + dPaar, _oParameters.iMaxZmanHamtanaEilat - iSumElement);
-
-                        sZmanElement = dZmanElement.ToString().PadLeft(3, (char)48);
-
-                        //bHaveIdkun = false;
-
-                        if (iSumElementLesidur == 0)
+                        if (!CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                         {
-                            //if (!CheckBitulRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, 0, oSidur.dFullShatGmar))
-                            //{
-                            if (!IsDuplicateShatYeziaHamtana(oSidur))
+                            //במידה ובסידור הראשון מביניהם לא קיים אלמנט - מוסיפים אלמנט המתנה 724xxxxx.
+                            dZmanElement = Math.Min(iSumElementLesidur + dPaar, _oParameters.iMaxZmanHamtanaEilat);
+
+                            sZmanElement = dZmanElement.ToString().PadLeft(3, (char)48);
+
+                            //bHaveIdkun = false;
+
+                            if (iSumElementLesidur == 0)
                             {
-                                OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
-                                InsertToObjPeilutOvdimForInsert(ref oSidur, ref oObjPeilutOvdimIns);
-                                oObjPeilutOvdimIns.MISPAR_SIDUR = oSidur.iMisparSidur;
-                                oObjPeilutOvdimIns.TAARICH = _dCardDate;
-                                oObjPeilutOvdimIns.SHAT_YETZIA = oSidur.dFullShatGmar;
-                                oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidur.dFullShatHatchala;
-                                oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("735" + sZmanElement + "00");
-                                oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
-                                oObjPeilutOvdimIns.MISPAR_KNISA = 0;
-                                oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
+                                //if (!CheckBitulRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, 0, oSidur.dFullShatGmar))
+                                //{
+                                if (!IsDuplicateShatYeziaHamtana(oSidur))
+                                {
+                                    OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
+                                    InsertToObjPeilutOvdimForInsert(ref oSidur, ref oObjPeilutOvdimIns);
+                                    oObjPeilutOvdimIns.MISPAR_SIDUR = oSidur.iMisparSidur;
+                                    oObjPeilutOvdimIns.TAARICH = _dCardDate;
+                                    oObjPeilutOvdimIns.SHAT_YETZIA = oSidur.dFullShatGmar;
+                                    oObjPeilutOvdimIns.SHAT_HATCHALA_SIDUR = oSidur.dFullShatHatchala;
+                                    oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse("735" + sZmanElement + "00");
+                                    oObjPeilutOvdimIns.BITUL_O_HOSAFA = 4;
+                                    oObjPeilutOvdimIns.MISPAR_KNISA = 0;
+                                    oCollPeilutOvdimIns.Add(oObjPeilutOvdimIns);
 
-                                clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
-                                oPeilutNew.iBitulOHosafa = 4;
-                                oSidur.htPeilut.Add(25 + oSidur.htPeilut.Count + 1, oPeilutNew);
+                                    clPeilut oPeilutNew = new clPeilut(_iMisparIshi, _dCardDate, oObjPeilutOvdimIns, dtTmpMeafyeneyElements);
+                                    oPeilutNew.iBitulOHosafa = 4;
+                                    oSidur.htPeilut.Add(25 + oSidur.htPeilut.Count + 1, oPeilutNew);
+                                }
+                                //}
+                                //else { bHaveIdkun = true; }
                             }
-                            //}
-                            //else { bHaveIdkun = true; }
-                        }
-                        else
-                        {
-                            //if (!CheckIdkunRashemet("MAKAT_NESIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oElement.iMisparKnisa, oElement.dFullShatYetzia))
-                            //{
-                                oObjPeilutOvdimUpd = GetUpdPeilutObject(I, oElement, out SourceObject, oObjSidurimOvdimUpd);
-                                oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
-                                oObjPeilutOvdimUpd.MAKAT_NESIA = oElement.lMakatNesia;
-                                oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
-                                oElement = new clPeilut(_iMisparIshi, _dCardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
-                                oSidur.htPeilut[j] = oElement;
-                            //}
-                            //else { bHaveIdkun = true; }
-                        }
+                            else
+                            {
+                                //if (!CheckIdkunRashemet("MAKAT_NESIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oElement.iMisparKnisa, oElement.dFullShatYetzia))
+                                //{
+                                    oObjPeilutOvdimUpd = GetUpdPeilutObject(I, oElement, out SourceObject, oObjSidurimOvdimUpd);
+                                    oElement.lMakatNesia = long.Parse(oElement.lMakatNesia.ToString().Replace(oElement.lMakatNesia.ToString().Substring(3, 3), sZmanElement));
+                                    oObjPeilutOvdimUpd.MAKAT_NESIA = oElement.lMakatNesia;
+                                    oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
+                                    oElement = new clPeilut(_iMisparIshi, _dCardDate, oElement, oObjPeilutOvdimUpd.MAKAT_NESIA, dtTmpMeafyeneyElements);
+                                    oSidur.htPeilut[j] = oElement;
+                                //}
+                                //else { bHaveIdkun = true; }
+                            }
 
-                        //if (!bHaveIdkun)
-                        //{
-                            oSidur.dFullShatGmar = oSidur.dFullShatGmar.AddMinutes(dPaar); //dZmanElement);
-                            oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
+                            //if (!bHaveIdkun)
+                            //{
+                                oSidur.dFullShatGmar = oSidur.dFullShatGmar.AddMinutes(dPaar); //dZmanElement);
+                                oSidur.sShatGmar = oSidur.dFullShatGmar.ToString("HH:mm");
 
                            
-                            oObjSidurimOvdimUpd.SHAT_GMAR = oSidur.dFullShatGmar;
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                            htEmployeeDetails[I] = oSidur;
-                        //}
+                                oObjSidurimOvdimUpd.SHAT_GMAR = oSidur.dFullShatGmar;
+                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                htEmployeeDetails[I] = oSidur;
+                            //}
+                        }
                     }
-
                 }
 
             }

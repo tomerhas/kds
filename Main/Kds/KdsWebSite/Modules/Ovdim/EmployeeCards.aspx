@@ -156,7 +156,7 @@
                                     <asp:BoundField DataField="status" HeaderText="דרוש עדכון" SortExpression="status"  ItemStyle-Font-Size="Larger"  ItemStyle-CssClass="ItemRow"  HeaderStyle-Width="150px" HeaderStyle-CssClass="GridHeader"   />
                                     <asp:BoundField DataField="kartis_without_peilut" HeaderText="ללא דיווח"  ItemStyle-Font-Size="Larger" SortExpression="kartis_without_peilut" ItemStyle-CssClass="ItemRow" HeaderStyle-Width="145px"  HeaderStyle-CssClass="GridHeader"  />
                                     <asp:BoundField DataField="measher_o_mistayeg_key" HeaderText="מסתייג/מאשר/ללא התייחסות"  ItemStyle-Font-Size="Larger"  SortExpression="measher_o_mistayeg_key"  HeaderStyle-Width="250px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
-                                    <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לאישור"  ItemStyle-Font-Size="Larger" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow"   HeaderStyle-Width="150px" HeaderStyle-CssClass="GridHeader"  />
+                                   <%-- <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לאישור"  ItemStyle-Font-Size="Larger" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow"   HeaderStyle-Width="150px" HeaderStyle-CssClass="GridHeader"  />--%>
                                <%--     <asp:BoundField DataField="status_tipul_key" HeaderText="ממתין לחישוב שכר" SortExpression="status_tipul_key" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />                            
                                --%> </Columns>
                                 <AlternatingRowStyle CssClass="GridAltRow" Height="25px" />

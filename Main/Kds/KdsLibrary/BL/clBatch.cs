@@ -341,7 +341,29 @@ namespace KdsLibrary.BL
             }
         }
 
-       
+
+        public bool CheckViewEmpty (string nameTbl)
+        {
+            clDal oDal = new clDal();
+            int iNum = 0;
+            try
+            {
+               
+                oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                oDal.AddParameter("p_TableName", ParameterType.ntOracleVarchar, nameTbl, ParameterDir.pdInput, 50);             
+                oDal.ExecuteSP(clGeneral.cProCheckViewEmpty);
+
+                iNum = Int32.Parse(oDal.GetValParam("p_return_value"));
+                if (iNum > 0) 
+                    return false;
+                else return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+      
         public void MoveNewMatzavOvdimToOld()
         {
             clDal oDal = new clDal();
@@ -443,7 +465,6 @@ namespace KdsLibrary.BL
             int iNum = 0;
             try
             {
-                //מחזיר את סטטוס קוד האישור ברמה הגבוהה ביותר
                 oDal.AddParameter("p_return_value", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
                 oDal.ExecuteSP(clGeneral.cFunGetNumChangesHrToShguim);
 

@@ -172,10 +172,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                                             item.Selected = true;
                                         }
                                      }
-                                    else if (item.Value == "99822" && (_MeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
-                                        {
-                                            item.Enabled = false;
-                                        } 
+                                    //else if (item.Value == "99822" && (_MeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode() || ((DataTable)ViewState["dtSidurim"]).Rows.Count>0))
+                                    //    {
+                                    //        item.Enabled = false;
+                                    //    } 
                                   
                                     //if (dtHeadruyot.Select("kod_sidur_meyuchad=" + item.Value).Any(row => row["sidur_yachid_beyom"].ToString() != ""))
                                     //{

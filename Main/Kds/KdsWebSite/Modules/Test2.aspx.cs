@@ -48,13 +48,13 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void OnClick_ShinuyHR(object sender, EventArgs e)
     {
         KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-        obClManager.HafalatBatchShinuyimHR();
+        obClManager.HRChangesMatzavPirteyBrerotmechdal();
     }
 
     protected void OnClick_ShinuyMeafyenim(object sender, EventArgs e)
     {
         KdsBatch.HrWorkersChanges.clMain obClManager = new KdsBatch.HrWorkersChanges.clMain();
-        obClManager.HafalatShinuyimHRatMeafyenim();
+        obClManager.HRChangesMeafyenim();
     }
 
    /* protected void OnClick_PrintWC(object sender, EventArgs e)
