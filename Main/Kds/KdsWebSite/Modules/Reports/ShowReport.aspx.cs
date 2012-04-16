@@ -40,7 +40,6 @@ public partial class Modules_Reports_ShowReport : System.Web.UI.Page
             RptViewer.ShowRefreshButton = false;
             RptViewer.ShowFindControls = false;
             RptViewer.ZoomPercent = _Report.ZoomPercent;
-            RptViewer.KeepSessionAlive = true;
             string userAgent = Request.ServerVariables.Get("HTTP_USER_AGENT");
          if (userAgent.Contains("MSIE 7.0"))
                 RptViewer.Attributes.Add("style", "margin-bottom: 30px;");
