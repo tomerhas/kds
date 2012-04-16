@@ -5436,7 +5436,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DataRow[] drResults;
         try
         {
-            drResults = ErrorsList.Select("mispar_ishi=" + oSidur.iMisparIshi + " and taarich=Convert('" + oSidur.dSidurDate.ToShortDateString() + "', 'System.DateTime')" + " and mispar_sidur=" + oSidur.iMisparSidur + " and shat_hatchala = '" + oSidur.dFullShatHatchala + "' and sadot_nosafim=1");
+            drResults = ErrorsList.Select("mispar_ishi=" + oSidur.iMisparIshi + " and taarich=Convert('" + oSidur.dSidurDate.ToShortDateString() + "', 'System.DateTime')" + " and mispar_sidur=" + oSidur.iMisparSidur + " and shat_hatchala = '" + oSidur.dOldFullShatHatchala + "' and sadot_nosafim=1");
             bErrExists = (drResults.Length > 0);
             return bErrExists;
         }
