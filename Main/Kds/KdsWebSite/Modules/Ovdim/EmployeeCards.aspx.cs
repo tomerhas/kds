@@ -124,7 +124,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 }
                
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
-                if (iSecurity == KdsSecurityLevel.ViewAll)
+                if (iSecurity == KdsSecurityLevel.ViewAll || iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
                 {
                     AutoCompleteExtenderByName.ContextKey = "";
                     AutoCompleteExtenderID.ContextKey = "";
