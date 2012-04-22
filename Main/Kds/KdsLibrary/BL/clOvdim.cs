@@ -1684,6 +1684,26 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+
+
+       public DataTable getRikuzimLeOved(int iMisparIshi, DateTime taarich)
+       {
+           clDal _Dal = new clDal();
+           DataTable dt = new DataTable();
+           try
+           {
+               _Dal.AddParameter("p_mispar_ishi ", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+               _Dal.AddParameter("p_tarich", ParameterType.ntOracleDate, taarich, ParameterDir.pdInput);
+               _Dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+               _Dal.ExecuteSP(clGeneral.cProGetRikuzeyAvodaLeoved, ref dt);
+
+               return dt;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
     }
 }
 

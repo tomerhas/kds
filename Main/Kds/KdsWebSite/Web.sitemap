@@ -9,8 +9,13 @@
     </siteMapNode>
     <siteMapNode url="~/Modules/Ovdim/EmployeTotalMonthly.aspx" title="סיכום חודשי"  description="" roles="*"/>
     <siteMapNode url="~/Modules/Errors/EmployeErrors.aspx" title="כ. עבודה לטיפול"  description="כ. עובד לטיפול" roles="*"/>
-    <siteMapNode url="~/Modules/Ovdim/TickurChishuvLeOved.aspx" title="חישוב לעובד"  description="" roles="*"/>
-    <siteMapNode  title="אישורים"  description="" roles="*">
+
+    <siteMapNode  title="חישוב לעובד"  description="" roles="*">
+      <siteMapNode url="~/Modules/Ovdim/TickurChishuvLeOved.aspx" title="חישוב לעובד"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Rikuzim/RikuzeyAvodaLeOved.aspx" title="ריכוזי עבודה"  description="" roles="*"/>
+    </siteMapNode>
+    
+     <siteMapNode  title="אישורים"  description="" roles="*">
       <siteMapNode url="~/Modules/Approvals/Approvals.aspx" title=" ניהול  &#10;  אישורים " description="" roles="*"/>
       <siteMapNode url="~/Modules/Ovdim/MonthlyQuotaAgafit.aspx" title="מחוץ למכסה אגפית"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Ovdim/MonthlyQuotaVaadatPnim.aspx" title="מחוץ למכסה החלטת ועדת פנים"  description="" roles="*"/>

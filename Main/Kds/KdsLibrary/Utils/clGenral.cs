@@ -198,6 +198,7 @@ namespace KdsLibrary
 
         public const string cProGetPirteyOvedLetkufot = "pkg_ovdim.pro_get_pirtey_oved_letkufot";
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";
+        public const string cProGetRikuzeyAvodaLeoved = "pkg_ovdim.pro_get_rikuzey_avoda_leoved";
 #endregion
 
 #region PKG_PARAMETERS constants
