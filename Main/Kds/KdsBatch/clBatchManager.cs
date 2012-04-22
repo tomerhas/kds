@@ -10863,12 +10863,17 @@ namespace KdsBatch
                     }
                 }
 
+                sSugMechona = oPeilutMachine.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
+
                 //קיימת פעילות משמעותית ראשונה ):
                 if (oFirstPeilutMashmautit != null)
                 {
                     if (iPeilutNesiaIndex == iIndexPeilutMashmautit)
                     {
-                        dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) + oFirstPeilutMashmautit.iKisuyTor));
+                        iMeshechPeilut = GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutMachine, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur);
+                        if (sSugMechona == "711" && iMeshechPeilut == 0)
+                            iMeshechPeilut = 1;
+                        dShatHatchala = oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-(iMeshechPeilut + oFirstPeilutMashmautit.iKisuyTor));
                     }
                     else
                     {
@@ -10884,8 +10889,7 @@ namespace KdsBatch
                         
                         oPeilutRekaFirst = (clPeilut)oSidur.htPeilut[j + 1];
 
-                        sSugMechona =oPeilutMachine.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
-
+                      
                         if (sSugMechona == "711" || (sSugMechona == "701" &&
                                                     ((oFirstPeilutMashmautit.dFullShatYetzia <= dRefferenceDate || (oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && clDefinitions.CheckShaaton(_dtSugeyYamimMeyuchadim, _iSugYom, _dCardDate)) || (oFirstPeilutMashmautit.dFullShatYetzia > dRefferenceDate && oFirstPeilutMashmautit.dFullShatYetzia.AddMinutes(-oFirstPeilutMashmautit.iKisuyTor) <= dRefferenceDate)) && 
                                                      (GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilutRekaFirst, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur) > oParam.iMaxZmanRekaAdShmone)) 
