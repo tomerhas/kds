@@ -93,9 +93,9 @@ namespace KdsBatch.TaskManager
                 if (!oBatch.CheckViewEmpty("NEW_MATZAV_OVDIM") && !oBatch.CheckViewEmpty("NEW_PIRTEY_OVDIM") &&
                     !oBatch.CheckViewEmpty("NEW_MEAFYENIM_OVDIM") && !oBatch.CheckViewEmpty("NEW_BREROT_MECHDAL_MEAFYENIM"))
                 {
-                    num = oBatch.GetNumChangesHrToShguim();
-                    if ((num < 50000))
-                    {
+                    //num = oBatch.GetNumChangesHrToShguim();
+                    //if ((num < 50000))
+                    //{
                         long lRequestNum = 0;
                         iSeqNum = oBatch.InsertProcessLog(8, 4, KdsLibrary.BL.RecordStatus.Wait, "before OpenBatchRequest hr", 0);
                         //'**KdsWriteProcessLog(8, 3, 1, "before OpenBatchRequest")
@@ -110,13 +110,13 @@ namespace KdsBatch.TaskManager
                         oBatch.UpdateProcessLog(iSeqNum, KdsLibrary.BL.RecordStatus.Finish, "after shguyim from hr", 0);
                         oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.Finish, "end RunThreadHrChainges", 0);
                         //'**KdsWriteProcessLog(8, 3, 2, "after shguyim from hr")
-                    }
-                    else
-                    {
-                        oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.PartialFinish, "ThreadHrChainges did not run.a lot of mispar_ishi: " + num.ToString(), 0);
-                        //'**  KdsWriteProcessLog(8, 3, 4, "ThreadHrChainges did not run.a lot of mispar_ishi: " & num.ToString())
-                        throw new Exception("ThreadHrChainges didn't run because a lot of records (" + num.ToString() + " workers)");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    oBatch.UpdateProcessLog(iSeqThreadHr, KdsLibrary.BL.RecordStatus.PartialFinish, "ThreadHrChainges did not run.a lot of mispar_ishi: " + num.ToString(), 0);
+                    //    //'**  KdsWriteProcessLog(8, 3, 4, "ThreadHrChainges did not run.a lot of mispar_ishi: " & num.ToString())
+                    //    throw new Exception("ThreadHrChainges didn't run because a lot of records (" + num.ToString() + " workers)");
+                    //}
                 }
                 else
                 {
