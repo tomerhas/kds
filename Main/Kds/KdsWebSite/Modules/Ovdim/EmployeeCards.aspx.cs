@@ -124,7 +124,7 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 }
                
                 KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
-                if (iSecurity == KdsSecurityLevel.ViewAll || iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
+                if (iSecurity == KdsSecurityLevel.ViewAll) //|| iSecurity == KdsSecurityLevel.ViewOnlyEmployeeData)
                 {
                     AutoCompleteExtenderByName.ContextKey = "";
                     AutoCompleteExtenderID.ContextKey = "";
@@ -136,8 +136,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 }
                 else
                 {
-                    AutoCompleteExtenderByName.ContextKey = LoginUser.UserInfo.EmployeeNumber;
-                    AutoCompleteExtenderID.ContextKey = LoginUser.UserInfo.EmployeeNumber;
+                    AutoCompleteExtenderByName.ContextKey = ""; // LoginUser.UserInfo.EmployeeNumber;
+                    AutoCompleteExtenderID.ContextKey = "";// LoginUser.UserInfo.EmployeeNumber;
                     txtId.Enabled = false;
                     rdoId.Enabled = false;
                     rdoName.Enabled = false;
