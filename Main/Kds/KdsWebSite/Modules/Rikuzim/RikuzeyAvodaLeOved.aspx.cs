@@ -44,14 +44,11 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
 
             if (!Page.IsPostBack)
             {
-                PageHeader = "תחקור חישוב לעובד";
+                PageHeader = "מסך ריכוזי עבודה שהועברו לשכר";
                 DateHeader = DateTime.Today.ToShortDateString();
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 btnShow.Enabled = false;
-                // btnCalc.Style.Add("Display", "None");
-                //   btnHidden.Style.Add("Display", "None");
-
-                // LoadMessages((DataList)Master.FindControl("lstMessages"));
+                LoadMessages((DataList)Master.FindControl("lstMessages"));
 
                 // divNetunim.Visible = false;
 

@@ -26,9 +26,13 @@ namespace KdsBatch
         protected DataRow _drPirteyOved;
         private List<string> _sLine;
         public bool bKayamEfreshBErua=false;
+        
+        protected bool _sadeLeloErech;
 
         public clErua(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iKodErua)
         {
+             _sadeLeloErech = ConfigurationSettings.AppSettings["SadeLeloErech"] =="true" ? true :false;
+
              _lBakashaId = lBakashaId;
              _drPirteyOved = drPirteyOved;
              _dtDetailsChishuv = dtDetailsChishuv;
@@ -103,7 +107,10 @@ namespace KdsBatch
             StringBuilder sFooter = new StringBuilder();
              try
              {
-                 sFooter.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+                 if (_sadeLeloErech && ((_iKodErua >= 415 && _iKodErua <= 419) || _iKodErua == 460 || _iKodErua == 462))
+                     sFooter.Append(GetBlank(2));
+                 else 
+                     sFooter.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
                  sFooter.Append(GetBlank(5));
 
                  _sFooter = sFooter.ToString();

@@ -225,7 +225,8 @@ namespace KdsBatch
             ErrMisparElementimMealHamutar = 185,
             errMutamLoBeNahagutBizeaNahagut = 186,
             errKupaiWithNihulTnua = 187,
-            errChofeshAlCheshbonShaotNosafot = 188
+            errChofeshAlCheshbonShaotNosafot = 188,
+            errKisuyTorLifneyHatchalatSidur =189
         }
 
         private enum errNesiaMeshtana
@@ -1305,6 +1306,7 @@ namespace KdsBatch
                         if (CheckErrorActive(86)) IsTimeForPrepareMechineValid86(ref iTotalTimePrepareMechineForSidur, ref iTotalTimePrepareMechineForDay, ref iTotalTimePrepareMechineForOtherMechines, ref oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(151)) IsDuplicateTravel151(ref  oSidur, ref oPeilut, ref dtErrors);
                         if (CheckErrorActive(179)) HightValueDakotBefoal179(oSidur, oPeilut, ref dtErrors);
+                        if (CheckErrorActive(189)) KisuyTorLifneyHatchalatSidur189(oSidur, oPeilut, ref dtErrors);
 
                         sMakat= oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
                         if (oPeilut.lMakatNesia.ToString().Length == 8 && (sMakat == "730" || sMakat == "740" || sMakat == "750"))
@@ -2920,7 +2922,7 @@ namespace KdsBatch
                 if (oSidur.iMisparSidur == 99822)
                 {
 
-                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => (Sidur.iMisparSidur != oSidur.iMisparSidur && Sidur.dFullShatHatchala != oSidur.dFullShatHatchala && Sidur.iLoLetashlum == 0));
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => ((Sidur.iMisparSidur != oSidur.iMisparSidur || Sidur.dFullShatHatchala != oSidur.dFullShatHatchala) && Sidur.iLoLetashlum == 0));
                      if (iCountSidurim > 0 || oMeafyeneyOved.iMeafyen56 != clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
                      {
                             drNew = dtErrors.NewRow();
@@ -5697,7 +5699,29 @@ namespace KdsBatch
 
         }
 
-        
+
+        private void KisuyTorLifneyHatchalatSidur189(clSidur oSidur, clPeilut oPeilut, ref DataTable dtErrors)
+        {
+            DateTime dShatKisuyTor;
+            try
+            {
+                dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
+                if (dShatKisuyTor < oSidur.dFullShatHatchala)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "כיסוי תור לפני תחילת סידור", enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode());
+                    InsertPeilutErrorRow(oPeilut, ref drNew);
+                    dtErrors.Rows.Add(drNew);
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.dFullShatYetzia, oPeilut.iMisparKnisa, "KisuyTorLifneyHatchalatSidur189: " + ex.Message, null);
+                _bSuccsess = false;
+            }
+
+        }
+
         private bool HasHafifaBecauseOfHashlama108(ref DataTable dtErrors)
         {
             bool hasHafifa = false;

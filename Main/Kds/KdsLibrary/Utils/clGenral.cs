@@ -1049,7 +1049,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             StorePremiaCalculationOutput = 10,
             DataComparisonImport = 11,
             CalculationForPremiaPopulation = 12,
-            YeziratRikuzim =13
+            YeziratRikuzim =13,
+            SendRikuzimMail=14
         }
         public enum enBechishuvSachar
         {
@@ -1118,6 +1119,14 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             HeavyReport=1,
             Rikuz=2
         }
+
+        public enum enMouthlyMailsType
+        {
+            Rikuzim = 0,
+            NochechutEmzaChodesh = 1,
+            NochechutSofChodesh = 2
+        }
+
         public static void BuildError(Page pPage, string sErr, bool DisplayFunctionName)
         {
             string OriginFunction;

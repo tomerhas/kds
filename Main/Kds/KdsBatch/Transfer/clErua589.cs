@@ -224,8 +224,16 @@ namespace KdsBatch
           StringBuilder sEnd = new StringBuilder();
           DateTime startDate =DateTime.Parse("01/"+_dMonth.Month.ToString()+"/" + _dMonth.Year.ToString());
 
-          sEnd.Append(startDate.ToString("ddMMyyyy"));
-          sEnd.Append(startDate.AddMonths(1).AddDays(-1).ToString("ddMMyyyy"));
+          if (_sadeLeloErech)
+          {
+              sEnd.Append(GetBlank(8));
+              sEnd.Append(GetBlank(8));
+          }
+          else
+          {
+              sEnd.Append(startDate.ToString("ddMMyyyy"));
+              sEnd.Append(startDate.AddMonths(1).AddDays(-1).ToString("ddMMyyyy"));
+          }
           sEnd.Append(GetBlank(5));
 
           _sFooter = sEnd.ToString();

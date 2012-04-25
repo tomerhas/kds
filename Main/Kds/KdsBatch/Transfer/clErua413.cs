@@ -40,8 +40,16 @@ namespace KdsBatch
       {
           StringBuilder sEnd = new StringBuilder();
 
-          sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
-          sEnd.Append(_dMonth.Year.ToString());
+          if (_sadeLeloErech)
+          {
+              sEnd.Append(GetBlank(2));
+              sEnd.Append(GetBlank(4));
+          }
+          else
+          {
+              sEnd.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+              sEnd.Append(_dMonth.Year.ToString());
+          }
           sEnd.Append(GetBlank(37));
           _sFooter = sEnd.ToString();      
       }

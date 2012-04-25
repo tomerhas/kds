@@ -45,7 +45,7 @@ namespace KdsBatch.Reports
                 _DestinationReports = new List<clDestinationReport>();
                 GetDataFromDb();
                 CreateReports();
-                FillDestinations();
+                //FillDestinations();
             }
             catch (Exception ex)
             {
@@ -79,10 +79,8 @@ namespace KdsBatch.Reports
 
         protected override void GetDataFromDb()
         {
-//            clGeneral.LogMessage("Get Data From Db", System.Diagnostics.EventLogEntryType.Information);
-            _dtDetailsReport = _BlReport.getDetailsOvdimLeRikuzim(_lBakashaIdForRikuzim);
-           // _dtReportDefinitions = _BlReport.getDefinitionReports(_lBakashaIdForRikuzim);
-            _dtDestinations = _BlReport.getEmailOvdimLeRikuzim(_lBakashaIdForRikuzim);
+           _dtDetailsReport = _BlReport.getDetailsOvdimLeRikuzim(_lBakashaIdForRikuzim);
+           //--_dtDestinations = _BlReport.getEmailOvdimLeRikuzim(_lBakashaIdForRikuzim);
         }
 
         protected override void FillReports()

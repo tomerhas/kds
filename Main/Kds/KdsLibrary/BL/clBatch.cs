@@ -137,6 +137,30 @@ namespace KdsLibrary.BL
             return iRequestId;
         }
 
+        public long YeziratBakashatRikuzim(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId, long iRequestIdForRikuzim)
+        {
+            long iRequestId;
+
+            clTxDal objDal = new clTxDal();
+            try
+            {
+                objDal.TxBegin();
+                iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
+
+                objDal.ClearCommand();
+                InsertBakashaParam(ref objDal, iRequestId, 1, iRequestIdForRikuzim.ToString());
+
+                objDal.TxCommit();
+            }
+            catch (Exception ex)
+            {
+                objDal.TxRollBack();
+                throw ex;
+            }
+
+            return iRequestId;
+        }
+        
         public DataTable GetPirteyRitzotChishuv(DateTime dTaarichMe, DateTime dTaarichAd, Boolean bGetAll)
         {
             clDal oDal = new clDal();

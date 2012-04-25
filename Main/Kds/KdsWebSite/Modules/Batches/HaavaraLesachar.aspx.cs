@@ -8,13 +8,32 @@ using KdsLibrary;
 using KdsLibrary.UI;
 using KdsLibrary.BL;
 using System.Data;
-
+using KdsLibrary;
+using KdsBatch;
 public partial class Modules_Batches_HaavaraLesachar :KdsPage
 {
-    private const int COL_REQUEST_ID  = 1;
-    private const int COL_AVAR_LASACHAR = 6;
-    private const int COL_BUTTON = 7;
-    private const int COL_BUTTON_RIKUZ = 8;
+
+    private enum enGrdRitzot
+    {
+        ZMAN_HATCHALA = 0,
+        bakasha_id,
+        TEUR,
+        auchlusia,
+        tkufa,
+        ritza_gorfet,
+        HUAVRA_LESACHAR,
+        ISHUR_HILAN,
+        btns_kvazim,
+        status_haavara_lesachar,
+        status,
+        btn_Rikuzim,
+        status_yezirat_rikuzim,
+        btn_send,
+        rizot_zehot
+    }
+
+
+ 
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -115,11 +134,16 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
-     
+     string status;
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
-         e.Row.Cells[(int)COL_AVAR_LASACHAR].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
+
          iColSort = GetCurrentColSort();
          lbl.Text = " ";
          e.Row.Cells[iColSort].Controls.Add(lbl);
@@ -141,20 +165,64 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          int i = 0;
          object sortHeader = null;
 
-         for (i = 0; i < e.Row.Cells.Count-3; i++)
+         for (i = 0; i < e.Row.Cells.Count-1; i++)
          {
-             sortHeader = e.Row.Cells[i].Controls[0];
-             ((LinkButton)(sortHeader)).Style.Add("color", "white");
-             ((LinkButton)(sortHeader)).Style.Add("text-decoration", "none");
+             if (e.Row.Cells[i].Controls.Count >0)
+             {
+                 sortHeader = e.Row.Cells[i].Controls[0];
+                 ((LinkButton)(sortHeader)).Style.Add("color", "white");
+                 ((LinkButton)(sortHeader)).Style.Add("text-decoration", "none");
+             }
          }
      }
      else if (e.Row.RowType == DataControlRowType.DataRow)
      {
-         e.Row.Cells[(int)COL_AVAR_LASACHAR].Style.Add("display", "none");
-         if (e.Row.Cells[(int)COL_AVAR_LASACHAR].Text == "1")
-             ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).Enabled = true;
-         ((Button)e.Row.Cells[COL_BUTTON].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
-         ((Button)e.Row.Cells[COL_BUTTON_RIKUZ].Controls[1]).CommandArgument = e.Row.Cells[COL_REQUEST_ID].Text;
+         e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
+
+         switch (e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim())
+         {
+             case "1": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text ="ממתין";
+                 break;
+             case "2": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text = "הסתיים";
+                 break;
+             case "3": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text = "נכשל";
+                 break;
+         }
+
+         if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() != "1")
+         {
+             ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
+             ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
+             if (e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim() == "1")
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
+             else
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
+         }
+         else
+         {
+             ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "none";
+             ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "inline";
+             if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1")
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = false;
+             else
+                 ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = true;
+         }
+         
+         if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
+             ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).Enabled = true;
+         
+     //    if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2")
+      //       ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
+
+         ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
+         ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+         ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+         ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+          
      }
  }
 
@@ -216,22 +284,29 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
  protected void TransferRitza(object sender, EventArgs e)
  {
-     long iRequestId, iRequestToTransfer;
-     string sMessage;
-     int iUserId;
+     string RizotZehot;
+     string[] commandArgsAccept;
      
     clBatch objBatch = new clBatch();
      try
      {
-         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
-         iRequestToTransfer = long.Parse(((Button)sender).CommandArgument);
-         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
-         ViewState["iRequestId"] = iRequestId;
-         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
+         //iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+         commandArgsAccept = ((Button)sender).CommandArgument.ToString().Split(new char[] { ',' });
+         inputHiddenBakasha.Value = commandArgsAccept[0];  // long.Parse(((Button)sender).CommandArgument);
+         RizotZehot = commandArgsAccept[1].ToString();
+         if (RizotZehot.Trim() != "&nbsp;" && RizotZehot.Trim() != "")
+         {
+             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessage('" + RizotZehot + "');", true);
+         }
+         else Transfer_Click(sender, e);
+
+         //iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
+         //ViewState["iRequestId"] = iRequestId;
+         //ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
          
-         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
-         lblMessage.Text = sMessage;
-         btnShowMessage_Click(this, new EventArgs());
+         //sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         //lblMessage.Text = sMessage;
+         //btnShowMessage_Click(this, new EventArgs());
      
      }
      catch (Exception ex)
@@ -240,7 +315,47 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      }
  }
 
- protected void YeziratRicuzim(object sender, EventArgs e)
+
+ protected void Transfer_Click(object sender, EventArgs e)
+ {
+     long iRequestId, iRequestToTransfer;
+     string sMessage;
+     int iUserId;
+     clBatch objBatch = new clBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+        // commandArgsAccept = ((Button)sender).CommandArgument.ToString().Split(new char[] { ',' });
+         iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);  // long.Parse(((Button)sender).CommandArgument);
+         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
+         ViewState["iRequestId"] = iRequestId;
+         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
+
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+ protected void CancelRitza(object sender, EventArgs e)
+ {
+     long iRequestToTransfer;
+     try
+     {
+           iRequestToTransfer = long.Parse(((Button)sender).CommandArgument);
+           clDefinitions.UpdateLogBakasha(iRequestToTransfer, 2, DateTime.Now);
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+ protected void YeziratRikuzim(object sender, EventArgs e)
  {
      long iRequestId, iRequestIdForRikuzim;
      string sMessage;
@@ -251,7 +366,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
          iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
-         iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.YeziratRikuzim, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
+         iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.YeziratRikuzim, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
          ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
 
@@ -265,4 +380,32 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          clGeneral.BuildError(Page, ex.Message);
      }
  }
+
+ protected void ShlichatRikuzimMail(object sender, EventArgs e)
+ {
+     long iRequestId, iRequestIdForRikuzim;
+     string sMessage;
+     int iUserId;
+
+     clBatch objBatch = new clBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+         iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
+         iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.SendRikuzimMail, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
+         ViewState["iRequestId"] = iRequestId;
+         //--ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
+
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+
 }

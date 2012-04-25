@@ -470,7 +470,8 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     //    }
                 }
                 dt = _Ovdim.GetLastUpdate(int.Parse(txtId.Text), DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString()));
-                if (dt.Rows.Count == 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")
+                //אם קיימות שגיאות וגם מישהו אחר עדכן את הכרטיס אז אין להציג עדכן
+                if (dt.Rows.Count > 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")
                 {
                     e.Row.Cells[Coll_status].Text = "";
                 }

@@ -668,8 +668,11 @@ namespace KdsBatch
             // DataTable dtPeiluyot;
             
              DataRow[] drPeiluyot;
-             int iMakat, iMisparKnisa, iDakotBefoal;
+             int iMisparKnisa, iDakotBefoal;
+             clKavim.enMakatType oMakatType;
+             clKavim _Kavim = new clKavim();
              float fErech;
+             string sMakat;
              DateTime dShatHatchla, dShatYetzia;
              iMisparKnisa = 0;
              dShatHatchla = DateTime.MinValue;
@@ -681,14 +684,18 @@ namespace KdsBatch
                 
                  for (int J = 0; J < drPeiluyot.Length; J++)
                  {
-                     iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
+                    // iMakat = int.Parse(drPeiluyot[J]["MAKAT_NESIA"].ToString());
                      dShatHatchla = DateTime.Parse(drPeiluyot[J]["shat_hatchala_sidur"].ToString());
                      dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
                      iMisparKnisa = int.Parse(drPeiluyot[J]["mispar_knisa"].ToString());
                      iDakotBefoal = int.Parse(drPeiluyot[J]["Dakot_bafoal"].ToString());
+                     
+                     sMakat = drPeiluyot[J]["MAKAT_NESIA"].ToString();
+                     oMakatType = (clKavim.enMakatType)(_Kavim.GetMakatType(int.Parse(sMakat)));
 
                      fErech = 0;
-                     if ((drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "1:1" && drPeiluyot[J]["MAKAT_NESIA"].ToString().Substring(0, 1) == "7"))
+                     if ((drPeiluyot[J]["kod_lechishuv_premia"].ToString().Trim() == "1:1" && sMakat.Substring(0, 1) == "7")
+                         || (oMakatType  == clKavim.enMakatType.mNamak && sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41"))
                      {
                          fErech = CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                      }
