@@ -209,10 +209,19 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+    public string ShlichatRikuzimMail(long lRequestNum, long iRequestIdForRikuzim)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.ShlichatRikuzimMail(lRequestNum, iRequestIdForRikuzim);
+        client.Close();
+        return "OK";
+    }
+
+    [WebMethod(EnableSession = true)]
     public string RunShinuimVeShguim(long lRequestNum, DateTime dTaarich,int TypeShguim ,int ExecutionType)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
-        client.TahalichHarazatShguimBatch(lRequestNum, dTaarich, TypeShguim, ExecutionType);
+        //client.TahalichHarazatShguimBatch(lRequestNum, dTaarich, TypeShguim, ExecutionType);
         client.Close();
         return "OK";
     }

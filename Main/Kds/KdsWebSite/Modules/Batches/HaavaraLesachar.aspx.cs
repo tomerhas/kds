@@ -214,9 +214,9 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          
          if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
              ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).Enabled = true;
-         
-     //    if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2")
-      //       ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
+
+         if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2")
+             ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
 
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Text ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
@@ -394,7 +394,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
          iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.SendRikuzimMail, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
-         //--ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
+         
+         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "ShlichatRikuzimMail(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
 
          sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
          lblMessage.Text = sMessage;

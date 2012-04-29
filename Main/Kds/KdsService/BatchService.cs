@@ -9,6 +9,7 @@ using System.Threading;
 using KdsLibrary;
 using KdsBatch.Reports;
 using KdsBatch.Premia;
+using KdsBatch.MonthlyMails;
 using KdsDataImport;
 using KdsLibrary.DAL;
 using KdsLibrary.BL;
@@ -308,6 +309,25 @@ namespace KdsService
             }
             LogThreadEnd("TransferToHilan", lRequestNum);
         }
+
+
+        private void RunShlichatRikuzimMailThread(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            long iRequestIdForRikuzim = (long)args[1];
+
+            clManagerRikuzimMail objReport = new clManagerRikuzimMail(lRequestNum, iRequestIdForRikuzim);
+            try
+            {
+                objReport.SendMails(lRequestNum);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+            LogThreadEnd("TransferToHilan", lRequestNum);
+        }
         private void RunCreateConstantsReports(object param)
         {
             object[] args = param as object[];
@@ -518,6 +538,13 @@ namespace KdsService
             runThread.Start(new object[] { lRequestNum, iRequestIdForRikuzim });
         }
 
+        public void ShlichatRikuzimMail(long lRequestNum, long iRequestIdForRikuzim)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunShlichatRikuzimMailThread));
+            LogThreadStart("ShlichatRikuzimMail", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, iRequestIdForRikuzim });
+        }
         //public void TahalichHarazatShguimBatch(long lRequestNum, DateTime dTaarich, int TypeShguim, int ExecutionType)
         //{
         //    Thread runThread = new Thread(

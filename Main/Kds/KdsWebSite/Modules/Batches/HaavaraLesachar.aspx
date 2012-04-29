@@ -128,6 +128,10 @@ function YeziratRikuzim(iRequestId, iRequestIdForRikuzim) {
     wsBatch.YeziratRikuzim(iRequestId, iRequestIdForRikuzim); //, TransetToSacharSucceeded);
 }
 
+function ShlichatRikuzimMail(iRequestId, iRequestIdForRikuzim) {
+    wsBatch.ShlichatRikuzimMail(iRequestId, iRequestIdForRikuzim); //, TransetToSacharSucceeded);
+}
+
 function ShowMessage(rizot) {
  var answer = confirm("קיימות ריצות קודמות " + rizot + "עם פרמטרים זהים ונוצרו עבורן קבצי העברה לשכר\n.  שים לב!!! יש לבטל העברה לשכר בריצות שלא חושבו בגינן משכורת,אי ביטול ריצות אלו יגרור יצירה לא תקינה של קבצי שכר מהריצה הנוכחית. \nהאם להמשיך ליצור קבצי שכר מהריצה הנוכחית?");
         if (answer) {

@@ -19,8 +19,7 @@ namespace KdsBatch.MonthlyMails
     public class clManagerRikuzimMail : clFactoryMail 
     {
         private long _lBakashaIdForRikuzim;
-        protected KdsLibrary.BL.clReport _BlReport;
-
+        
         public clManagerRikuzimMail(long iRequestId, long iRequestIdForRikuzim)
         {
              
@@ -51,7 +50,6 @@ namespace KdsBatch.MonthlyMails
                                         DateTime.Parse(dr["TAARICH"].ToString()), 
                                         dr["EMAIL"].ToString() ,
                                         (byte[])(dr["RIKUZ_PDF"]) ));
-                                 //int.Parse(dr["sug_chishuv"].ToString())));
                 }
             }
             catch (Exception ex)

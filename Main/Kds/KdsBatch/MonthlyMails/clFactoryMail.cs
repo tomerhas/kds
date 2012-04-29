@@ -22,30 +22,40 @@ namespace KdsBatch.MonthlyMails
         protected clGeneral.enStatusRequest _StatusProces;
         protected clGeneral.enMouthlyMailsType _enTypeMail;
         protected DataTable _dtDetailsMails;
+        protected KdsLibrary.BL.clReport _BlReport;
 
         public clFactoryMail()
         {
-
+            _BlReport = KdsLibrary.BL.clReport.GetInstance();
         }
 
         public void SendMails(long iRequestId)
         {
              string path;
              FileStream fs;
-             
-            path = ConfigurationSettings.AppSettings["PathFileReports"];
-                if (!Directory.Exists(path))
-                    Directory.CreateDirectory(path);
+             try{
+                path = ConfigurationSettings.AppSettings["PathFileReports"];
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
 
-            foreach (Mail eMail in _Mails)
+                foreach (Mail eMail in _Mails)
+                {
+                    fs = new FileStream(path + eMail.file_name, FileMode.Create, FileAccess.Write);
+                    fs.Write(eMail.file, 0, eMail.file.Length);
+                    fs.Flush();
+                    fs.Close();
+
+                    SendMail(path + eMail.file_name, eMail.Email, eMail.mail_subject);
+                    File.Delete(path + eMail.file_name);
+                }
+
+                clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _StatusProces.GetHashCode());
+            }
+            catch (Exception ex)
             {
-                fs = new FileStream(path + eMail.file_name, FileMode.Create, FileAccess.Write);
-                fs.Write(eMail.file, 0, eMail.file.Length);
-                fs.Flush();
-                fs.Close(); 
-
-                SendMail(path,eMail.Email,eMail.mail_subject);
-                File.Delete(path + eMail.file_name);
+                clGeneral.LogMessage(ex.Message, System.Diagnostics.EventLogEntryType.Error, true);
+                clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, clGeneral.enStatusRequest.Failure.GetHashCode());
+                clLogBakashot.InsertErrorToLog(iRequestId, 0, "E", 0, null, "Send Mails Fail");
             }
         }
 

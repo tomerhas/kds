@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8731/KdsLocalService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/KdsLibrary" />
   <xs:element name="ExecuteInputDataAndErrors">
     <xs:complexType>
       <xs:sequence>
@@ -27,6 +28,21 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="CalcBatchParallelResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShinuyimVeShguimBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="TypeShguyim" type="q1:clGeneral.enCalcType" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/KdsLibrary" minOccurs="0" name="ExecutionTypeShguim" type="q2:clGeneral.BatchExecutionType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ShinuyimVeShguimBatchResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -85,17 +101,15 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="TahalichHarazatShguimBatch">
+  <xs:element name="ShlichatRikuzimMail">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
-        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="TypeShguim" type="xs:int" />
-        <xs:element minOccurs="0" name="ExecutionType" type="xs:int" />
+        <xs:element minOccurs="0" name="iRequestIdForRikuzim" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="TahalichHarazatShguimBatchResponse">
+  <xs:element name="ShlichatRikuzimMailResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
