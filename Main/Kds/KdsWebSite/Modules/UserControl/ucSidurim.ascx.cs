@@ -2717,9 +2717,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         //lDummy.CssClass = "WorkCardSidurDummy";
                         
                         //hErrCell.Controls.Add(lDummy);      
-                        hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
+                       // hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");vered 29/4/2012
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
-                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        //CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell); //vered 29/4/2012
                         break;
                 }
             }
