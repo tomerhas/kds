@@ -2703,8 +2703,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             //hErrCell.Controls.Add(lDummy);         
                             hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                             //אישורים נראה בכל מקרה גם כשהכרטיס שגוי                           
-                            if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
-                                lnkSidur.Style.Add("color", "white");
+                            //if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell))
+                            //    lnkSidur.Style.Add("color", "white"); vered 29/4/2012
                         }
 
                         //נבדוק שגם אין שגיאות ברמת שדות נוספים
@@ -2753,13 +2753,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         else
                         {
                             hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
-                            CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                           // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell); vered 29/4/2012
                         }
                         break;
                     case clGeneral.enCardStatus.Valid:
                         hErrCell = CreateTableCell("23px", "WorkCardSidurErr", "");
                         //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");                        
-                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell);
+                        // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref hCell); vered 29/4/2012
                         break;
                 }
             }                        
@@ -2912,33 +2912,35 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //שגיאות לשדה
                 if (!SetOneError(chkBox, hCell, "Out_michsa", ref oSidur, iIndex.ToString(), ""))
                 {
-                    if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription, ref bEnableApproval))
-                    {
-                        Image imgApp;
-                        imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", "imgAOutMichsa" + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
-                        chkBox.Attributes.Add("class", "ApprovalField");
-                        hCell.Controls.Add(imgApp);
-                        LiteralControl lDummy = new LiteralControl();
-                        lDummy.Text = " ";
-                        hCell.Controls.Add(lDummy);
-                    }
+                    //vered 29/4/2012
+                    //if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription, ref bEnableApproval))
+                    //{
+                    //    Image imgApp;
+                    //    imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", "imgAOutMichsa" + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
+                    //    chkBox.Attributes.Add("class", "ApprovalField");
+                    //    hCell.Controls.Add(imgApp);
+                    //    LiteralControl lDummy = new LiteralControl();
+                    //    lDummy.Text = " ";
+                    //    hCell.Controls.Add(lDummy);
+                    //}
                 }
                 break;
             case clGeneral.enCardStatus.Valid:
                 //string sAllApprovalDescription = "";
                 //DataRow[] dr = dtApprovals.Select("mafne_lesade='Out_michsa'");
-                if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription,ref bEnableApproval))
-                {
-                    Image imgApp;
-                    imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", "imgAOutMichsa" + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
-                    chkBox.Attributes.Add("class", "ApprovalField");
-                    hCell.Controls.Add(imgApp);
-                    LiteralControl lDummy = new LiteralControl();
-                    lDummy.Text = " ";
-                    hCell.Controls.Add(lDummy);
-                    if (!chkBox.Disabled)                    
-                        chkBox.Disabled = (!bEnableApproval);                    
-                }
+                //vered 29/4/2012
+                //if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription,ref bEnableApproval))
+                //{
+                //    Image imgApp;
+                //    imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", "imgAOutMichsa" + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
+                //    chkBox.Attributes.Add("class", "ApprovalField");
+                //    hCell.Controls.Add(imgApp);
+                //    LiteralControl lDummy = new LiteralControl();
+                //    lDummy.Text = " ";
+                //    hCell.Controls.Add(lDummy);
+                //    if (!chkBox.Disabled)                    
+                //        chkBox.Disabled = (!bEnableApproval);                    
+                //}
                 break;
 
         }
@@ -3820,11 +3822,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
-                else
-                    SetIsurim(ddl, iIndex, "hashlama", "imgAHashlama", ref oSidur, ref hCell);
+                //else vered 29/04/2012
+                //    SetIsurim(ddl, iIndex, "hashlama", "imgAHashlama", ref oSidur, ref hCell);
                 break;
             case clGeneral.enCardStatus.Valid:
-                SetIsurim(ddl, iIndex, "hashlama", "imgAHashlama", ref oSidur, ref hCell);
+                //SetIsurim(ddl, iIndex, "hashlama", "imgAHashlama", ref oSidur, ref hCell); vered 29/4/2012
                 //string sAllApprovalDescription = "";
                 //DataRow[] dr = dtApprovals.Select("mafne_lesade='hashlama'");
                 //if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription))
@@ -4001,14 +4003,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
-                else
-                    //נבדוק אם יש אישורים על שדה חריגה
-                    SetIsurim(ddl, iIndex, "Chariga", "imgAChariga", ref oSidur, ref hCell);
+                //else vered 29/4/2012
+                //    //נבדוק אם יש אישורים על שדה חריגה
+                //    SetIsurim(ddl, iIndex, "Chariga", "imgAChariga", ref oSidur, ref hCell);
                 break;
             case clGeneral.enCardStatus.Valid:
                 {
                     //נבדוק אם יש אישורים על שדה חריגה
-                    SetIsurim(ddl, iIndex, "Chariga", "imgAChariga", ref oSidur, ref hCell);
+                    //SetIsurim(ddl, iIndex, "Chariga", "imgAChariga", ref oSidur, ref hCell); vered 29/4/2012
                     break;
                 }
         }        
@@ -4074,12 +4076,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (!SetOneError(oTextBox, hCell, "Shat_Gmar_Letashlum", ref oSidur, iIndex.ToString(), ""))
                 {
                     //אם לא נמצאה שגיאה נבדוק אישורים
-                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                   // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox); vered 29/4/2012
                 }
                 break;
             case clGeneral.enCardStatus.Valid:
                 {
-                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                    //  CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);vered 29/4/2012
                     break;
                 }
         }
@@ -4129,12 +4131,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 if (!SetOneError(oTextBox, hCell, "Shat_Hatchala_Letashlum", ref oSidur, iIndex.ToString(), ""))
                 {
                     //אם לא נמצאה שגיאה נבדוק אישורים
-                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                    //CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox); vered 29/4/2012
                 }
                 break;
             case clGeneral.enCardStatus.Valid:
                 {
-                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                    // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);vered 29/4/2012
                     break;
                 }
         }
@@ -4189,14 +4191,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
-                else
-                    //נבדוק אם יש אישורים על שדה כניסה
-                    SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_OUT", "imgASibaOut", ref oSidur, ref hCell);
+                //else vered 29/4/2012
+                //    //נבדוק אם יש אישורים על שדה כניסה
+                //    SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_OUT", "imgASibaOut", ref oSidur, ref hCell);
                 break;
             case clGeneral.enCardStatus.Valid:
                 {
                     //נבדוק אם יש אישורים על שדה כניסה
-                    SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_OUT", "imgASibaOut", ref oSidur, ref hCell);
+                    //SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_OUT", "imgASibaOut", ref oSidur, ref hCell); vered 29/4/2012
                     break;
                 }
         }
@@ -4257,14 +4259,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                         imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                         hCell.Controls.Add(imgErr);
                     }
-                    else
+                    //else
                         //נבדוק אם יש אישורים על שדה כניסה
-                        SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_IN", "imgASibaIn", ref oSidur, ref hCell);                    
+                        // SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_IN", "imgASibaIn", ref oSidur, ref hCell);  vered 29/4/2012                   
                     break;
                 case clGeneral.enCardStatus.Valid:
                     {
                         //נבדוק אם יש אישורים על שדה כניסה
-                        SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_IN", "imgASibaIn", ref oSidur, ref hCell);
+                        //SetIsurim(ddl, iIndex, "KOD_SIBA_LEDIVUCH_YADANI_IN", "imgASibaIn", ref oSidur, ref hCell); vered 29/4/2012
                         break;
                     }
             }    
@@ -5118,14 +5120,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             {
                 case clGeneral.enCardStatus.Valid:
                     //במידה והכרטיס תקין נבדוק אישורים                    
-                    CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                    //CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox); vered 29/4/2012
                     break;
                 case clGeneral.enCardStatus.Error:
                     if (!SetOneError(oTextBox, hCell, "Shat_Hatchala", ref oSidur, iIndex.ToString(), ""))
                     {
                         //אם לא נמצאה שגיאה, נבדוק אם יש אישור
                         //אישורים                       
-                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                        // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);vered 29/4/2012
                     }
                     break;
             }
@@ -5528,12 +5530,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     if (!SetOneError(oTextBox, hCell, "Shat_Gmar", ref oSidur, iIndex.ToString(), ""))
                     {
                         //אם לא נמצאה שגיאה נבדוק אישורים
-                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                       // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox); vered 29/4/2012
                     }
                     break;
                 case clGeneral.enCardStatus.Valid:
                     {
-                        CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox);
+                       // CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref oTextBox); vered 29/4/2012
                         break;
                     }
             }
@@ -6684,14 +6686,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     else
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt);
+                        //CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt); vered 29/4/2012
                     }
                     break;
                 case clGeneral.enCardStatus.Valid:
                     //במידה והכרטיס תקין נבדוק אישורים                  
                     {
                         dSidurShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString(), " ", ShatHatchala));
-                        CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt);
+                        //CheckIfApprovalExists(FillApprovalKeys(dr), MisparSidur, _FullOldShatHatchala, dOldShatYetiza, 0, ref oTxt); vered 29/4/2012
                     }
                     break;
             }

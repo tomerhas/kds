@@ -711,7 +711,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 case clGeneral.enCardStatus.Valid:
                     //אישורים
-                    SetApprovalInPage();
+                 //   SetApprovalInPage(); /vered 29/4/2012
                     break;
                 case clGeneral.enCardStatus.Error:
                     //שגיאות
@@ -1264,9 +1264,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 imgDayHaslamaErr.Src = "../../Images/!.png";
                 imgDayHaslamaErr.Attributes.Add("ondblclick", "GetErrorMessage(ddlHashlamaReason,1,'');");
             }
-            else           
+           // else           
                 //אם אין שגיאה, נבדוק אם יש אישור
-                SetApprovalInPage();
+               // SetApprovalInPage(); //vered 29/4/2012
             
             //ש לפתוח את מסך רכיבים מחושבים כאשר הכרטיס תקין בלבד
             // btnCalcItem.Disabled = true;
@@ -1311,17 +1311,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        
         //Check if oved musach
         //Get Employee Ishurim
-        
-        if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))
-        {
-            ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(dDateCard, iMisparIshi, 0, clWorkCard.IsOvedMusach(iMisparIshi, dDateCard));
-            arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dDateCard);
-            Session["EmployeeApproval"] = arrEmployeeApproval;
-        }
-        else
-        {
-            arrEmployeeApproval = (ApprovalRequest[])Session["EmployeeApproval"];
-        }
+        //vered 29/4/2012
+        //if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))
+        //{
+        //    ApprovalFactory.RaiseEmployeeWorkDayApprovalCodes(dDateCard, iMisparIshi, 0, clWorkCard.IsOvedMusach(iMisparIshi, dDateCard));
+        //    arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dDateCard);
+        //    Session["EmployeeApproval"] = arrEmployeeApproval;
+        //}
+        //else
+        //{
+        //    arrEmployeeApproval = (ApprovalRequest[])Session["EmployeeApproval"];
+        //}
+        //vered 29/4/2012
        // oBatchManager.InitGeneralData();
         
     }
@@ -1755,7 +1756,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         lstSidurim.MeafyeneyElementim = GetMeafyeneyElementim();
         lstSidurim.CardDate = dDateCard;
         lstSidurim.MisparIshi = iMisparIshi;
-        lstSidurim.EmployeeApproval = arrEmployeeApproval;
+        //lstSidurim.EmployeeApproval = arrEmployeeApproval; //vered 29/4/2012
         lstSidurim.dtSidurim = oBatchManager.dtDetails;
         lstSidurim.UpEmpDetails = upEmployeeDetails;
         lstSidurim.KnisatShabat = oBatchManager.oParam.dKnisatShabat;
