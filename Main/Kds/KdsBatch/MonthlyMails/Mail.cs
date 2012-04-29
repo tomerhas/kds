@@ -58,7 +58,7 @@ namespace KdsBatch.MonthlyMails
             _BakashaId = p_bakasha_id;
             _month = p_month;
             _Email = p_email;
-            _sMailSub = " ריכוזים ל" + _month.ToShortDateString();
+            _sMailSub = "  ריכוזים ל  " + _month.ToString("MM/yyyy");
             _sFileName = "Rikuz_" + _month.Year + _month.Month.ToString().PadLeft(2, '0') + _MisparIshi.ToString().PadLeft(5, '0') +".pdf";
             _pFile = p_file;
         }
