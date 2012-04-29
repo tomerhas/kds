@@ -298,7 +298,8 @@ namespace KdsBatch
                     dShatYetzia = DateTime.Parse(drPeiluyot[J]["shat_yetzia"].ToString());
                     iMakatType = _Kavim.GetMakatType(int.Parse(sMakat));
                     oMakatType = (clKavim.enMakatType)iMakatType;
-                    if (oMakatType == clKavim.enMakatType.mNamak || (oMakatType == clKavim.enMakatType.mKavShirut && iMisparKnisa == 0))
+
+                    if ((oMakatType == clKavim.enMakatType.mNamak && !(sMakat.Substring(0, 1) == "8" && sMakat.Substring(6, 2) == "41")) || (oMakatType == clKavim.enMakatType.mKavShirut && iMisparKnisa == 0))
                     {
                         fErech += 1;
                     }
@@ -571,7 +572,9 @@ namespace KdsBatch
                                      bNoCalc = true;
                              }
                          }
-
+                         if (drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(0, 1) == "8" && drPeiluyot[J]["MAKAT_NESIA"].ToString().PadLeft(8, '0').Substring(6, 2) == "41")
+                             bNoCalc = true;
+                         
                          if (!bNoCalc)
                             addRowToTable(clGeneral.enRechivim.DakotHagdara.GetHashCode(), dShatHatchla, dShatYetzia, iMisparSidur, iMisparKnisa, fErech);
                      }

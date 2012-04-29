@@ -30,7 +30,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                             סוג פרמיה:
                         </td>
                         <td>
-                            <asp:DropDownList runat="server" 
+                            <asp:DropDownList runat="server"
                                 AutoPostBack="true" ID="ddStatuses" 
                                 DataValueField="Kod_Premia" 
                                 DataTextField="Teur_Premia"

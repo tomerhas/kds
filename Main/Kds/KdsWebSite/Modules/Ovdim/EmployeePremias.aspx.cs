@@ -347,6 +347,8 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
       //  btnSearch.Enabled = ddStatuses.SelectedIndex > 0;
         btnExecute.Enabled = ddStatuses.SelectedIndex > 0;
         NikuySadot();
+        AutoCompleteExtenderID.ContextKey = ddStatuses.SelectedValue;
+        AutoCompleteExtenderByName.ContextKey = ddStatuses.SelectedValue;
         //if (ddStatuses.SelectedIndex > 0)
         //{
         //    txtPremiaMinutes.Enabled = true;
@@ -491,6 +493,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             btnSearch.Enabled = true;
        //     btnUpdate.Enabled = true;
         }
+       // if (ddStatuses.SelectedValue != "103")
         divGrdPremyot.Style["display"] = "inline";
       //  fsGrid.Attributes.Add("display","");
     //    grdPremias.Style["display"] = "inline";
@@ -625,22 +628,37 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
     
     [WebMethod]
     [ScriptMethod]
-    public static string[] GetOvdimById(string prefixText, int count)
+    public static string[] GetOvdimById(string prefixText, int count, string contextKey)
     {
         List<string> result = new List<string>();
-        DataTable dt;
+        DataTable dt= new DataTable();
+        clOvdim oOvdim = new clOvdim();
 
-        if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
+        if (contextKey != "103")
         {
-            long iMisparIshi = long.Parse(prefixText);
-            dt = HttpContext.Current.Session[SAVED_PREMIAS] as DataTable;
-            DataRow[] rows = dt.Select("Mispar_Ishi like '" + prefixText + "%'");
-            
-            rows.ToList()
+            if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
+            {
+                long iMisparIshi = long.Parse(prefixText);
+
+                dt = HttpContext.Current.Session[SAVED_PREMIAS] as DataTable;
+                DataRow[] rows = dt.Select("Mispar_Ishi like '" + prefixText + "%'");
+                rows.ToList()
                 .ForEach
                 (
                     row => result.Add(row["Mispar_Ishi"].ToString())
                 );
+            }
+        }
+        else
+        {
+            prefixText = prefixText + '%';
+            dt = oOvdim.GetOvdimMisparIshi(prefixText, "");
+            DataRow[] rows = dt.Select(null, "FullName asc");
+            rows.ToList()
+            .ForEach
+            (
+                row => result.Add(row["Mispar_Ishi"].ToString())
+            );
         }
 
         return result.Count > count ? result.Take(count).ToArray() : result.ToArray();
@@ -648,28 +666,42 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
 
     [WebMethod]
     [ScriptMethod]
-    public static string[] GetOvdimByName(string prefixText, int count)
+    public static string[] GetOvdimByName(string prefixText, int count,string contextKey)
     {
         List<string> result = new List<string>();
-
+        clOvdim oOvdim = new clOvdim();
         DataTable dt;
 
-        if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
+        if (contextKey != "103")
         {
-            dt = HttpContext.Current.Session[SAVED_PREMIAS] as DataTable;
-            DataRow[] rows = null;
-            try
+            if (HttpContext.Current.Session[SAVED_PREMIAS] != null)
             {
-                rows = dt.Select("Shem like '" + prefixText + "%'");
-            }
-            catch { }
+                dt = HttpContext.Current.Session[SAVED_PREMIAS] as DataTable;
+                DataRow[] rows = null;
+                try
+                {
+                    rows = dt.Select("Shem like '" + prefixText + "%'");
+                }
+                catch { }
 
+                rows.ToList()
+                    .ForEach
+                    (
+                        row => result.Add(row["Shem"].ToString() + " (" +
+                            row["Mispar_Ishi"].ToString() + ")")
+                    );
+            }
+        }
+        else
+        {
+            prefixText = prefixText +'%';
+            dt = oOvdim.GetOvdimByName(prefixText , "");
+            DataRow[] rows = dt.Select(null, "Oved_Name asc");
             rows.ToList()
-                .ForEach
-                (
-                    row => result.Add(row["Shem"].ToString() + " (" + 
-                        row["Mispar_Ishi"].ToString() + ")")
-                );
+            .ForEach
+            (
+                row => result.Add(row["Oved_Name"].ToString())
+            );
         }
 
         return result.Count > count ? result.Take(count).ToArray() : result.ToArray();
