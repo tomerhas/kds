@@ -529,7 +529,14 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
                 (
                     Int32.Parse(row["mispar_ishi"].ToString()), selectedMonth
                 );
-
+            if (dtOvedDetails.Rows.Count == 0)
+            {
+                dtOvedDetails =
+               clOvdim.GetInstance().GetOvedDetails
+               (
+                   Int32.Parse(row["mispar_ishi"].ToString()), selectedMonth.AddMonths(1).AddDays(-1)
+               );
+            }
             dtOvedPremyaDetails =
                 oUtils.GetPremiaYadanitForOved
                 (
@@ -541,11 +548,14 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
             drOved = dtOvdim.NewRow();
 
             drOved["Mispar_ishi"] = Int32.Parse(row["mispar_ishi"].ToString());
-            drOved["Shem"] = dtOvedDetails.Rows[0]["FULL_NAME"].ToString();
-            drOved["Maamad"] = dtOvedDetails.Rows[0]["TEUR_MAAMAD_HR"]
-                                            .ToString();
-            drOved["Ezor"] = dtOvedDetails.Rows[0]["TEUR_EZOR"].ToString();
-            drOved["Snif"] = dtOvedDetails.Rows[0]["TEUR_SNIF_AV"].ToString();
+            if (dtOvedDetails.Rows.Count > 0)
+            {
+                drOved["Shem"] = dtOvedDetails.Rows[0]["FULL_NAME"].ToString();
+                drOved["Maamad"] = dtOvedDetails.Rows[0]["TEUR_MAAMAD_HR"]
+                                                .ToString();
+                drOved["Ezor"] = dtOvedDetails.Rows[0]["TEUR_EZOR"].ToString();
+                drOved["Snif"] = dtOvedDetails.Rows[0]["TEUR_SNIF_AV"].ToString();
+            }
             if (dtOvedPremyaDetails != null &&
                 dtOvedPremyaDetails.Rows.Count > 0)
             {
