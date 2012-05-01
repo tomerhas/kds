@@ -469,12 +469,12 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                     //        ((HyperLink)e.Row.Cells[0].Controls[0]).Enabled = false; 
                     //    }
                 }
-                dt = _Ovdim.GetLastUpdate(int.Parse(txtId.Text), DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString()));
-                //אם קיימות שגיאות וגם מישהו אחר עדכן את הכרטיס אז אין להציג עדכן
-                if (dt.Rows.Count > 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")
-                {
-                    e.Row.Cells[Coll_status].Text = "";
-                }
+                ////dt = _Ovdim.GetLastUpdate(int.Parse(txtId.Text), DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString()));
+                //////אם קיימות שגיאות וגם מישהו אחר עדכן את הכרטיס אז אין להציג עדכן
+                ////if (dt.Rows.Count > 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")
+                ////{
+                ////    e.Row.Cells[Coll_status].Text = "";
+                ////}
             }
         }
         catch (Exception ex)

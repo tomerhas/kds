@@ -114,7 +114,7 @@ namespace KdsBatch.Reports
         {
             byte[] fileReport;
             string path, name = string.Empty, ErrorMessage = string.Empty;
-            int iStatus = 0;
+            int iStatus = 0,i=0;
             FileInfo info;
             _RptModule = ReportModule.GetInstance();
             try
@@ -170,6 +170,9 @@ namespace KdsBatch.Reports
                                   oObjRikuzPdf.SUG_CHISHUV = drReport.sug_chishuv;
                                   oObjRikuzPdf.RIKUZ_PDF = fileReport;
                                   oCollRikuzPdf.Add(oObjRikuzPdf);
+                                  i++;
+                                  if (i % 100 != 0)
+                                      clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "I", 0, null, "Yezirat Rikuzim: Num=" + i);
                                   break;
                         }
                     }

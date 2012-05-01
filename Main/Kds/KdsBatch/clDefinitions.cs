@@ -48,6 +48,7 @@ namespace KdsBatch
         public const string cProGetPremyotView = "pkg_utils.pro_get_premyot_view";
         public const string cProGetOvdimLechishuv = "pkg_batch.pro_get_ovdim_lechishuv";
         public const string cProUpdBakasha = "pkg_batch.pro_upd_bakasha";
+        public const string cProUpdBakashaIshurHilan = "pkg_batch.pro_upd_bakasha_ishur_hilan";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
         public const string cProGetOvdimToTransfer = "pkg_batch.pro_get_ovdim_to_transfer";
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
@@ -138,6 +139,25 @@ namespace KdsBatch
                 oDal.AddParameter("p_tar_haavara_lesachar", ParameterType.ntOracleDate, dTarHaavaraLesachar, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProUpdBakasha);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateBakashaParams(long lRequestNum, int ishurHilan)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+                oDal.AddParameter("p_ishur_hilan", ParameterType.ntOracleInteger, ishurHilan, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProUpdBakashaIshurHilan);
 
             }
             catch (Exception ex)

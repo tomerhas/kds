@@ -78,7 +78,7 @@
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="90px" />
                            <ItemTemplate>
-                                       <asp:button ID="btnYeziratRikuzim"  runat="server"  Width="95px" text="יצירת ריכוזים" Enabled="false" CssClass ="ImgButtonSearch"  OnClick="YeziratRikuzim" />
+                                       <asp:button ID="btnYeziratRikuzim"  runat="server"  Width="95px" text="יצירת ריכוזים"  CssClass ="ImgButtonSearch"  OnClick="YeziratRikuzim" />
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="status_yezirat_rikuzim" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
@@ -90,13 +90,22 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="rizot_zehot" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
+                        
+                        <asp:TemplateField  HeaderText="אישור חיל''ן">
+                            <HeaderStyle CssClass="GridHeader" />
+                            <ItemStyle CssClass="ItemRow" Width="90px" />
+                           <ItemTemplate>
+                                       <asp:button ID="btnYes"  runat="server"  Width="25px" text="כו" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                                       <asp:button ID="btnNo"  runat="server"  Width="25px" text="לא" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
                      </Columns> 
                     <RowStyle CssClass="GridAltRow"   />
                  </asp:GridView>
              </div>
         </div>
        <input type="hidden" id="inputHiddenBakasha" name="inputHiddenBakasha" runat="server" />
-              
+       <input type="hidden" id="inputSourceBtnHilan" name="inputSourceBtnHilan" runat="server" />       
     </ContentTemplate>
 </asp:UpdatePanel> 
 <asp:UpdatePanel ID="upMessage" runat="server">
@@ -116,6 +125,7 @@
 </asp:UpdatePanel>
  
  <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> 
+ <asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/> 
  <script language="javascript" type="text/javascript">
 
 
@@ -137,7 +147,26 @@ function ShowMessage(rizot) {
         if (answer) {
             document.getElementById("ctl00_KdsContent_btnHiddenTransfer").click();
         }
-}
+    }
+
+
+
+    function ShowMessageHilan(msg,source) {
+        var answer = confirm(msg);
+
+        if (source == "NO") {
+            if (answer) {
+                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
+            }
+        }
+        else {
+            if (answer) {
+                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
+            }
+        }
+       
+    }
+
 /*
 function OnChange_Taarich(id) {
     var minDate;
