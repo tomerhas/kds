@@ -1529,6 +1529,30 @@ namespace KdsLibrary.BL
             }
         }
 
+        public bool IsCardWasUpdated(int iMisparIshi, DateTime dTaarich)
+        {
+            clDal _Dal = new clDal();
+            int count;
+
+            try
+            {
+                _Dal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+                _Dal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                _Dal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+
+                _Dal.ExecuteSP(clGeneral.cFunIsCardLastUpdate);
+
+                count = int.Parse(_Dal.GetValParam("p_count").ToString());
+                if (count > 0)
+                    return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
        public bool CheckSidurExist(int misSidur,int misparIshi,DateTime shatSidur){
             clDal _Dal = new clDal();
             int count;

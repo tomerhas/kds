@@ -2064,25 +2064,26 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         bWorkCardWasUpdateRun = true;
         clOvdim _Ovdim = new clOvdim();
-        int iMisparIshiTrail;
-        int iMeadkenAcharon;
+        //int iMisparIshiTrail;
+        //int iMeadkenAcharon;
         //נבדוק אם הכרטיס עודכן ע"י גורם אנושי לא ע"י מערכת - קוד מעדכן אחרון גדול מאפס
         bool bWasUpdate = false;
-        DataTable dt = _Ovdim.GetLastUpdate(iMisparIshi, dDateCard);
-        foreach (DataRow dr in dt.Rows)
-        {
-            iMeadkenAcharon=0;
-            if (!String.IsNullOrEmpty(dr["MEADKEN_ACHARON"].ToString()))             
-                iMeadkenAcharon =  int.Parse(dr["MEADKEN_ACHARON"].ToString());
+        bWasUpdate=_Ovdim.IsCardWasUpdated(iMisparIshi, dDateCard);
+        //DataTable dt = _Ovdim.GetLastUpdate(iMisparIshi, dDateCard);
+        //foreach (DataRow dr in dt.Rows)
+        //{
+        //    iMeadkenAcharon=0;
+        //    if (!String.IsNullOrEmpty(dr["MEADKEN_ACHARON"].ToString()))             
+        //        iMeadkenAcharon =  int.Parse(dr["MEADKEN_ACHARON"].ToString());
                 
-            iMisparIshiTrail=0;
-            if  (!String.IsNullOrEmpty(dr["MISPAR_ISHI_TRAIL"].ToString()))                
-                    iMisparIshiTrail = int.Parse(dr["MISPAR_ISHI_TRAIL"].ToString());                
+        //    iMisparIshiTrail=0;
+        //    if  (!String.IsNullOrEmpty(dr["MISPAR_ISHI_TRAIL"].ToString()))                
+        //            iMisparIshiTrail = int.Parse(dr["MISPAR_ISHI_TRAIL"].ToString());                
 
-            if (((iMeadkenAcharon >= 0) && (iMeadkenAcharon != iMisparIshi)) || ((iMisparIshiTrail >= 0) && (iMisparIshiTrail != iMisparIshi)))             
-                bWasUpdate = true;
+        //    if (((iMeadkenAcharon >= 0) && (iMeadkenAcharon != iMisparIshi)) || ((iMisparIshiTrail >= 0) && (iMisparIshiTrail != iMisparIshi)))             
+        //        bWasUpdate = true;
                         
-        }
+        //}
         return bWasUpdate;
     }
     private void SetImageForButtonMeasherOMistayeg()

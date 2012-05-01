@@ -189,7 +189,8 @@ namespace KdsLibrary
         public const string cProSaveMeasherOmistayeg = "pkg_ovdim.pro_save_measher_O_mistayeg";
         public const string cProGetPakadId = "pkg_ovdim.pro_get_pakad_id";
         public const string cFunCheckPeilutExist = "pkg_ovdim.fun_check_peilut_exist";
-        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";
+        public const string cFunCheckSidurExist = "pkg_ovdim.fun_check_sidur_exist";       
+        public const string cFunIsCardLastUpdate =  "pkg_ovdim.func_is_card_last_updated";
         public const string cProUpdSadotNosafim = "pkg_ovdim.pro_upd_sadot_nosafim";
         public const string cProDelKnisotPeilut = "pkg_ovdim.pro_del_knisot_peilut";
         public const string cProDelHachanotMechona = "pkg_ovdim.pro_del_hachanot_mechona";
