@@ -123,7 +123,7 @@ namespace KdsBatch
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
-                   //DeleteChishuvAfterTransfer(lRequestNumToTransfer);
+                   DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
                    InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);
