@@ -13378,7 +13378,7 @@ namespace KdsBatch
                     //אם אין לעובד מאפיין הלבשה, נעדכן 0-
                     if (!oMeafyeneyOved.Meafyen44Exists)
                     {
-                        if (!CheckIdkunRashemet("HALBASHA") && oObjYameyAvodaUpd.HALBASHA != 0)
+                        if (!CheckIdkunRashemet("HALBASHA"))
                         {
                             oObjYameyAvodaUpd.HALBASHA = 0;
                             oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
