@@ -1176,6 +1176,25 @@ namespace KdsLibrary.BL
              }
          }
 
+         public DataTable GetOvdimLeBakashatChishuv(long p_bakasha_id)
+         {
+             DataTable dt = new DataTable();
+
+             try
+             {
+                 clDal dal = new clDal();
+                 dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, p_bakasha_id, ParameterDir.pdInput);
+                 dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                 dal.ExecuteSP(clGeneral.cProGetOvdimLeBakashatChishuv, ref dt);
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+
+             return dt;
+         }
+
         /**************************************/
 
          //public void RunSinuyimVeShguimBatch(long lRequestNum, DateTime dTaarich, clGeneral.enCalcType TypeShguyim, clGeneral.BatchExecutionType ExecutionTypeShguim)
@@ -1280,4 +1299,5 @@ namespace KdsLibrary.BL
          //}
 
     } 
+
 }
