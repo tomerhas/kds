@@ -6746,19 +6746,21 @@ namespace KdsBatch
                 //עבור שינויים 5,1,2,4,12
                 SetSidurObjects();
 
+                //11 השדות - הלבשה  
+                UpdateHalbasha(dCardDate);
+
                 oCollYameyAvodaUpd.Add(oObjYameyAvodaUpd);
-               
+
                 //נעדכן את ה- DataBase
                 clDefinitions.ShinuyKelet(oCollYameyAvodaUpd, oCollSidurimOvdimUpd, oCollSidurimOvdimIns, oCollSidurimOvdimDel, oCollPeilutOvdimUpd, oCollPeilutOvdimIns, oCollPeilutOvdimDel);
 
                 //DATABASE-כיוון שחישוב רכיבי השכר אמורים להתבסס על נתונים עדכניים, נבצע את שינויים שמתבססים על רכיבי שכר לאחר שעידכנו את ה- 
-                
-                
-                //11 השדות - הלבשה  
-                UpdateHalbasha(dCardDate);
-             
-                clDefinitions.UpdateYameyAvodaOvdim(oCollYameyAvodaUpd);
-                clDefinitions.UpdateSidurimOvdim(oCollSidurimOvdimUpd);
+
+
+                //////11 השדות - הלבשה  
+                ////UpdateHalbasha(dCardDate);             
+                ////clDefinitions.UpdateYameyAvodaOvdim(oCollYameyAvodaUpd);
+                ////clDefinitions.UpdateSidurimOvdim(oCollSidurimOvdimUpd);
 
                 if (_oCollIdkunRashemet.Count > 0)
                     clDefinitions.SaveIdkunRashemet(_oCollIdkunRashemet);
@@ -13376,7 +13378,7 @@ namespace KdsBatch
                     //אם אין לעובד מאפיין הלבשה, נעדכן 0-
                     if (!oMeafyeneyOved.Meafyen44Exists)
                     {
-                        if (!CheckIdkunRashemet("HALBASHA"))
+                        if (!CheckIdkunRashemet("HALBASHA") && oObjYameyAvodaUpd.HALBASHA != 0)
                         {
                             oObjYameyAvodaUpd.HALBASHA = 0;
                             oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
