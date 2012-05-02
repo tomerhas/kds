@@ -5705,13 +5705,16 @@ namespace KdsBatch
             DateTime dShatKisuyTor;
             try
             {
-                dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
-                if (dShatKisuyTor < oSidur.dFullShatHatchala)
+                if (oPeilut.iKisuyTor > 0)
                 {
-                    drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "כיסוי תור לפני תחילת סידור", enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode());
-                    InsertPeilutErrorRow(oPeilut, ref drNew);
-                    dtErrors.Rows.Add(drNew);
+                    dShatKisuyTor = oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor);
+                    if (dShatKisuyTor < oSidur.dFullShatHatchala)
+                    {
+                        drNew = dtErrors.NewRow();
+                        InsertErrorRow(oSidur, ref drNew, "כיסוי תור לפני תחילת סידור", enErrors.errKisuyTorLifneyHatchalatSidur.GetHashCode());
+                        InsertPeilutErrorRow(oPeilut, ref drNew);
+                        dtErrors.Rows.Add(drNew);
+                    }
                 }
             }
             catch (Exception ex)
