@@ -1,5 +1,330 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="DsRikuz">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:DataSourceID>e3207af7-39ca-4f13-8b63-9386e49c4b90</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsRikuzChodshi">
+      <Fields>
+        <Field Name="MIYUN_BESIKUM_CHODSHI">
+          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DAY_TAARICH">
+          <DataField>DAY_TAARICH</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KIZUZ_MEAL_MICHSA">
+          <DataField>KIZUZ_MEAL_MICHSA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_RIKUZ_CHODSHI</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_BAKASHA_ID">
+            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TZUGA">
+            <Value>1</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsPirteyOved">
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_MISH">
+          <DataField>SHEM_MISH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_PRAT">
+          <DataField>SHEM_PRAT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MAAMAD">
+          <DataField>MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MONTH_YEAR">
+          <DataField>MONTH_YEAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_AV">
+          <DataField>SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TACHANAT_SACHAR">
+          <DataField>TACHANAT_SACHAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ISUK">
+          <DataField>ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GIL">
+          <DataField>GIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TCHILAT_AVODA">
+          <DataField>TCHILAT_AVODA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsHeadruyot">
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_HEADRUT">
+          <DataField>YEMEY_HEADRUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_MILUIM">
+          <DataField>YEMEY_MILUIM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_TEUNA">
+          <DataField>YEMEY_TEUNA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CHOFESH_CHOVA">
+          <DataField>CHOFESH_CHOVA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CHOFESH_ZCHUT">
+          <DataField>CHOFESH_ZCHUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_MACHALA">
+          <DataField>YEMEY_MACHALA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YOM_MACHALA_BODED">
+          <DataField>YOM_MACHALA_BODED</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YEMEY_EVEL">
+          <DataField>YEMEY_EVEL</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_BEN_ZUG">
+          <DataField>MACHALAT_BEN_ZUG</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_YELED">
+          <DataField>MACHALAT_YELED</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MACHALAT_HORE">
+          <DataField>MACHALAT_HORE</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TIPAT_CHALAV">
+          <DataField>TIPAT_CHALAV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HERAYON">
+          <DataField>HERAYON</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HEADRUT_SCHIRIM">
+          <DataField>HEADRUT_SCHIRIM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_HEADRUT</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_BAKASHA_ID">
+            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsRechivimChodshiym">
+      <Fields>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MIYUN_BESIKUM_CHODSHI">
+          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_RECHIVIM_CODSHIYIM</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_BAKASHA_ID">
+            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TZUGA">
+            <Value>1</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="DsRechivim">
+      <Fields>
+        <Field Name="DAY">
+          <DataField>DAY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R1">
+          <DataField>R1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R76">
+          <DataField>R76</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R77">
+          <DataField>R77</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R78">
+          <DataField>R78</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R55">
+          <DataField>R55</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R131">
+          <DataField>R131</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R91">
+          <DataField>R91</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R92">
+          <DataField>R92</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R49">
+          <DataField>R49</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_RECHIVIM_LERIKUZ</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_BAKASHA_ID">
+            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TZUGA">
+            <Value>=Parameters!P_TZUGA.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+  </DataSets>
   <Body>
     <ReportItems>
       <Textbox Name="Textbox11">
@@ -291,36 +616,36 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.64439cm</Width>
+              <Width>1.0411in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.65969cm</Width>
+              <Width>0.65342in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.88117cm</Width>
+              <Width>0.74062in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.49999cm</Width>
+              <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.49999cm</Width>
+              <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.80203cm</Width>
+              <Width>0.70946in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.09131cm</Width>
+              <Width>0.82335in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.64594cm</Width>
+              <Width>1.04171in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.99631cm</Width>
+              <Width>0.78595in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.48948cm</Height>
+              <Height>0.19271in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -640,7 +965,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.56886cm</Height>
+              <Height>0.22396in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -952,7 +1277,7 @@
         <Top>2.14633cm</Top>
         <Left>0.9525cm</Left>
         <Height>1.05834cm</Height>
-        <Width>19.72084cm</Width>
+        <Width>19.72082cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -978,69 +1303,69 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.33946cm</Width>
+              <Width>0.52735in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.87735cm</Width>
+              <Width>0.34541in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.28772cm</Width>
+              <Width>0.50698in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.86995cm</Width>
+              <Width>0.3425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.87737cm</Width>
+              <Width>0.34542in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.02997cm</Width>
+              <Width>0.4055in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41238cm</Width>
+              <Width>0.55606in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.17369cm</Width>
+              <Width>0.46208in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.23712cm</Width>
+              <Width>0.48706in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.20524cm</Width>
+              <Width>0.4745in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.13774cm</Width>
+              <Width>0.44793in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.608cm</Width>
+              <Width>0.63307in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41238cm</Width>
+              <Width>0.55606in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.02997cm</Width>
+              <Width>0.4055in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41238cm</Width>
+              <Width>0.55606in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.28188cm</Width>
+              <Width>0.50468in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.46386cm</Width>
+              <Width>0.57632in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.37468cm</Width>
+              <Width>0.54121in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07654cm</Width>
+              <Width>0.42383in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.68275cm</Width>
+              <Width>0.2688in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>1.07625cm</Height>
+              <Height>0.42372in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1677,7 +2002,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.23622in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2339,276 +2664,6 @@
       </Border>
     </Style>
   </Body>
-  <Width>9.41715in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0.1cm</TopMargin>
-    <BottomMargin>0.05cm</BottomMargin>
-    <ColumnSpacing>0.1cm</ColumnSpacing>
-    <Style />
-  </Page>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="DsRikuz">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>e3207af7-39ca-4f13-8b63-9386e49c4b90</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsRikuzChodshi">
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_BAKASHA_ID">
-            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TZUGA">
-            <Value>1</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_RIKUZ_CHODSHI</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="MIYUN_BESIKUM_CHODSHI">
-          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HEARA">
-          <DataField>HEARA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="DAY_TAARICH">
-          <DataField>DAY_TAARICH</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KIZUZ_MEAL_MICHSA">
-          <DataField>KIZUZ_MEAL_MICHSA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsPirteyOved">
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_MISH">
-          <DataField>SHEM_MISH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_PRAT">
-          <DataField>SHEM_PRAT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MAAMAD">
-          <DataField>MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MONTH_YEAR">
-          <DataField>MONTH_YEAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SNIF_AV">
-          <DataField>SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TACHANAT_SACHAR">
-          <DataField>TACHANAT_SACHAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ISUK">
-          <DataField>ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="GIL">
-          <DataField>GIL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TCHILAT_AVODA">
-          <DataField>TCHILAT_AVODA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsHeadruyot">
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_BAKASHA_ID">
-            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_HEADRUT</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_HEADRUT">
-          <DataField>YEMEY_HEADRUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_MILUIM">
-          <DataField>YEMEY_MILUIM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_TEUNA">
-          <DataField>YEMEY_TEUNA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CHOFESH_CHOVA">
-          <DataField>CHOFESH_CHOVA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CHOFESH_ZCHUT">
-          <DataField>CHOFESH_ZCHUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_MACHALA">
-          <DataField>YEMEY_MACHALA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YOM_MACHALA_BODED">
-          <DataField>YOM_MACHALA_BODED</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="YEMEY_EVEL">
-          <DataField>YEMEY_EVEL</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_BEN_ZUG">
-          <DataField>MACHALAT_BEN_ZUG</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_YELED">
-          <DataField>MACHALAT_YELED</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MACHALAT_HORE">
-          <DataField>MACHALAT_HORE</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TIPAT_CHALAV">
-          <DataField>TIPAT_CHALAV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HERAYON">
-          <DataField>HERAYON</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HEADRUT_SCHIRIM">
-          <DataField>HEADRUT_SCHIRIM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsRechivimChodshiym">
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_BAKASHA_ID">
-            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_TZUGA">
-            <Value>1</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_RECHIVIM_CODSHIYIM</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MIYUN_BESIKUM_CHODSHI">
-          <DataField>MIYUN_BESIKUM_CHODSHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="DsRechivim">
-      <Query>
-        <DataSourceName>DsRikuz</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_RECHIVIM_LERIKUZ</CommandText>
-      </Query>
-    </DataSet>
-  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
@@ -2682,6 +2737,10 @@
       </DefaultValue>
       <Prompt>P_DT</Prompt>
     </ReportParameter>
+    <ReportParameter Name="P_TZUGA">
+      <DataType>String</DataType>
+      <Prompt>P TZUGA</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <Code>function getDay(dTaarich as date) as string
   dim sDay as string
@@ -2690,6 +2749,17 @@
 sDay= dTaarich.Day.ToString()  &amp; " - " &amp; sDay  
 return sDay
 end function</Code>
+  <Width>9.41715in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.1cm</TopMargin>
+    <BottomMargin>0.05cm</BottomMargin>
+    <ColumnSpacing>0.1cm</ColumnSpacing>
+    <Style />
+  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -2700,6 +2770,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>befec3b9-e086-426d-9ffb-3e7276853b20</rd:ReportID>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>
