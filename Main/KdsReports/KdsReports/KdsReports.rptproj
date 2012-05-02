@@ -114,6 +114,10 @@
       <FullPath>PrintWorkCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Report1.rdl</Name>
+      <FullPath>Report1.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
       <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
@@ -148,8 +152,8 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report1.rdl</Name>
-      <FullPath>Report1.rdl</FullPath>
+      <Name>RikuzAvodaChodshi2.rdl</Name>
+      <FullPath>RikuzAvodaChodshi2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
