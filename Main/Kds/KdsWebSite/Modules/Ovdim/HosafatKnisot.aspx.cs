@@ -138,7 +138,8 @@ public partial class Modules_Ovdim_HosafatKnisot : KdsPage
             {
                 clOvdim oOvdim = new clOvdim();
                 oOvdim.DeleteInsertKnisotLePeilut(int.Parse(ViewState["MisparIshi"].ToString()), int.Parse(ViewState["MisparSidur"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()),
-                                            DateTime.Parse(ViewState["SidurDate"] + " " + ViewState["SidurHour"]), DateTime.Parse(ViewState["ShatYetzia"].ToString()), long.Parse(ViewState["Makat"].ToString()), oCollPeilutOvdimIns);
+                                            DateTime.Parse(ViewState["SidurDate"] + " " + ViewState["SidurHour"]), DateTime.Parse(ViewState["ShatYetzia"].ToString()), long.Parse(ViewState["Makat"].ToString()), 
+                                             int.Parse(LoginUser.UserInfo.EmployeeNumber),oCollPeilutOvdimIns);
                 HttpRuntime.Cache.Remove(ViewState["MisparIshi"].ToString() + ViewState["DateCard"].ToString());
                 ScriptManager.RegisterStartupScript(btnUpdateKnisot, btnUpdateKnisot.GetType(), "close", "window.returnValue=1;window.close();", true);
             }

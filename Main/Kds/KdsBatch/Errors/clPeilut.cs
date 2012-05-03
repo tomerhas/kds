@@ -108,9 +108,17 @@ namespace KdsBatch
         public clPeilut(DateTime dCardDate)
         {            
             clUtils oUtils = new clUtils();
+            string sCacheKey = "ElementsTable";
+
             try
             {
-                dtElementim = oUtils.GetCtbElementim();
+                dtElementim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+                if (dtElementim == null)
+                {
+                    dtElementim = oUtils.GetCtbElementim();
+                    HttpRuntime.Cache.Insert(sCacheKey, dtElementim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                }
+                //dtElementim = oUtils.GetCtbElementim();
             }
             catch (Exception ex)
             {
@@ -123,9 +131,17 @@ namespace KdsBatch
         {
             DataTable dtPeiluyot;
             clUtils oUtils = new clUtils();
+            string sCacheKey = "ElementsTable";
+                
             try
             {
-                dtElementim = oUtils.GetCtbElementim();
+                dtElementim = (DataTable)HttpRuntime.Cache.Get(sCacheKey);
+                if (dtElementim == null)
+                {
+                    dtElementim = oUtils.GetCtbElementim();
+                    HttpRuntime.Cache.Insert(sCacheKey, dtElementim, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                }
+           //     dtElementim = oUtils.GetCtbElementim();
             lMakatNesia = lMakatNesiaNew;
             dCardDate = dDateCard;
             iPeilutMisparSidur = oPeilutOld.iPeilutMisparSidur;

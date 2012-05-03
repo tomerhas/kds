@@ -1535,7 +1535,7 @@ namespace KdsBatch
         private void CalcRechiv11()
         {
 
-            float fSumDakotRechiv, fDakotNosafotNahagut, fDakotNosafot100;
+            float fSumDakotRechiv, fDakotNosafotNahagut, fDakot100;
             float fDakotNosafotNihulTnuaChol, fDakotNosafotTafkidChol;
             try
             {
@@ -1544,10 +1544,10 @@ namespace KdsBatch
                 {
                     if (objOved.objMeafyeneyOved.iMeafyen56 == 52 || objOved.objMeafyeneyOved.iMeafyen56 == 62)
                     {
-                        fDakotNosafot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot100.GetHashCode());
+                        fDakot100 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Shaot100Letashlum.GetHashCode());
                         fDakotNosafotNahagut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotNahagut.GetHashCode()) / 60;
 
-                        if (fDakotNosafot100 > objOved.objParameters.iTamrizNosafotLoLetashlum && fDakotNosafotNahagut > 30)
+                        if (fDakot100 > objOved.objParameters.iTamrizNosafotLoLetashlum && fDakotNosafotNahagut > 30)
                         {
                             fDakotNosafotNihulTnuaChol = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotNihul.GetHashCode());
                             fDakotNosafotTafkidChol = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNosafotTafkid.GetHashCode());
@@ -1555,7 +1555,7 @@ namespace KdsBatch
                             if (fDakotNosafotNihulTnuaChol > 0 || fDakotNosafotTafkidChol > 0)
                                 fSumDakotRechiv = Math.Min(objOved.objParameters.iMaxNosafotNahagut, fDakotNosafotNahagut - objOved.objParameters.iTamrizNosafotLoLetashlum);
                             else
-                                fSumDakotRechiv = Math.Min(objOved.objParameters.iMaxNosafotNahagut, fDakotNosafot100 - objOved.objParameters.iTamrizNosafotLoLetashlum);
+                                fSumDakotRechiv = Math.Min(objOved.objParameters.iMaxNosafotNahagut, fDakot100 - objOved.objParameters.iTamrizNosafotLoLetashlum);
 
                             addRowToTable(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode(), fSumDakotRechiv);
                         }

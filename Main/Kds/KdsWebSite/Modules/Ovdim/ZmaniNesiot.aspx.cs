@@ -290,17 +290,21 @@ public partial class Modules_Ovdim_ZmaniNesiot : KdsLibrary.UI.KdsPage
     }
 
     private void UpdateDB()
-    { 
+    {
+        int meadken_acharon=0;
         if (Page.IsValid)
         {
             txtChanged.Value = "0";  // undo txtchaned .
 
             izmaNesiaHaloch = int.Parse(txtZNLavoda.Text.ToString());
             iZmanNesiaHazor = int.Parse(txtZNMavoda.Text.ToString());
+
+            if (LoginUser.UserInfo.EmployeeNumber != null && LoginUser.UserInfo.EmployeeNumber !="")
+                meadken_acharon = int.Parse(LoginUser.UserInfo.EmployeeNumber);
             try
             {
                 clOvdim oOvdim = new clOvdim();
-                oOvdim.UpdZmanNesiaa(iMisparIshi, dTarich, izmaNesiaHaloch, iZmanNesiaHazor);
+                oOvdim.UpdZmanNesiaa(iMisparIshi, dTarich, izmaNesiaHaloch, iZmanNesiaHazor, meadken_acharon);
                 InsertToTBIdkuneyRashemet();
             }
             catch (Exception ex)

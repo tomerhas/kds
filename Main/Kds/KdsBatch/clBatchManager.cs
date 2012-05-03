@@ -7603,7 +7603,7 @@ namespace KdsBatch
 
                                 if (bHaveSidur && oSidurPutzal.htPeilut.Values.Count > 0 && oSidur.htPeilut.Values.Count > 0)
                                 {
-                                    oLastPeilut = oSidurPutzal.htPeilut.Values.Cast<clPeilut>().ToList().LastOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
+                                    oLastPeilut = (clPeilut)oSidurPutzal.htPeilut[oSidurPutzal.htPeilut.Count -1];// oSidurPutzal.htPeilut.Values.Cast<clPeilut>().ToList().LastOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
                                     oFirstPeilut = oSidur.htPeilut.Values.Cast<clPeilut>().ToList().FirstOrDefault(peilut => (peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString() && peilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != "756"));
                                     if (oFirstPeilut != null && oLastPeilut != null)
                                     {
@@ -7661,14 +7661,14 @@ namespace KdsBatch
                                                 sMakat = oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
 
                                                 //לבדוק האם מס' הרכב TB_PEILUT_OVDIM.OTO_NO בפעילות האחרונה בסידור1 שונה מ- מס' הרכב בפעילות הראשונה שהועתקה מסידור2 אם כן, יש להשאיר את הכנת המכונה מק"ט 701,711,712. אחרת, אם מס' הרכב זהים יש לבטל את הכנת המכונה שהועברה מסידור2 TB_PEILUT_OVDIM. BITUL_O_HOSAFA=3.
-                                                if (j == 0)
-                                                {
-                                                    if (oLastPeilut.lOtoNo == oPeilut.lOtoNo)
-                                                    { bCancelHachanatMechona = true; }
-                                                }
+                                                //if (j == 0)
+                                                //{
+                                                //    if (oLastPeilut.lOtoNo == oPeilut.lOtoNo)
+                                                //    { bCancelHachanatMechona = true; }
+                                                //}
 
-                                                if (!bCancelHachanatMechona || (bCancelHachanatMechona && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()))
-                                                {
+                                                //if (!bCancelHachanatMechona || (bCancelHachanatMechona && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && sMakat != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()))
+                                                //{
                                                     OBJ_PEILUT_OVDIM oObjPeilutOvdimIns = new OBJ_PEILUT_OVDIM();
                                                     InsertToObjPeilutOvdimForUpdate(ref oPeilut, oObjSidurimOvdimDel, ref oObjPeilutOvdimIns);
                                                     oObjPeilutOvdimIns.MISPAR_SIDUR = oSidurPutzal.iMisparSidur;
@@ -7681,7 +7681,7 @@ namespace KdsBatch
                                                     oPeilutNew.iBitulOHosafa = 4;
                                                     oPeilutNew.iPeilutMisparSidur = oSidurPutzal.iMisparSidur;
                                                     oSidurPutzal.htPeilut.Add(28 * oSidurPutzal.htPeilut.Count + 1, oPeilut);
-                                                }
+                                                //}
 
                                                 oObjPeilutOvdimDel = new OBJ_PEILUT_OVDIM();
                                                 InsertToObjPeilutOvdimForDelete(ref oPeilut, ref oSidur, ref oObjPeilutOvdimDel);

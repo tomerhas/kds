@@ -1274,7 +1274,7 @@ namespace KdsLibrary.BL
 
         }
 
-        public void UpdZmanNesiaa(int iMisparIshi, DateTime dTarich, int izmaNesiaHaloch, int iZmanNesiaHazor)
+        public void UpdZmanNesiaa(int iMisparIshi, DateTime dTarich, int izmaNesiaHaloch, int iZmanNesiaHazor, int meadken_acharon)
         {
             //  Update   "ZMAN NESIAA Haloch ,  ZMAN NESIAA Hazor" on  TB_YAMEY_AVODA_OVDIM
 
@@ -1285,7 +1285,7 @@ namespace KdsLibrary.BL
                 oDal.AddParameter("p_tarich", ParameterType.ntOracleDate, dTarich, ParameterDir.pdInput);
                 oDal.AddParameter("p_zman_nesia_haloch", ParameterType.ntOracleInteger, izmaNesiaHaloch, ParameterDir.pdInput);
                 oDal.AddParameter("p_zman_nesia_hazor", ParameterType.ntOracleInteger, iZmanNesiaHazor, ParameterDir.pdInput);
-
+                oDal.AddParameter("p_meadken_acharon", ParameterType.ntOracleInteger, meadken_acharon, ParameterDir.pdInput);
                 oDal.ExecuteSP(clGeneral.cproProUpdZmanNesiaa);
 
             }
@@ -1577,7 +1577,7 @@ namespace KdsLibrary.BL
             }
         }
 
-       public  void DeleteInsertKnisotLePeilut(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, DateTime dShatYezia, long lMakat, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns)
+       public  void DeleteInsertKnisotLePeilut(int iMisparIshi, int iMisparSidur, DateTime dTaarich, DateTime dShatHatchala, DateTime dShatYezia, long lMakat,int iMeadken_Acharon, COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdimIns)
        {
            clTxDal oTxDal = new clTxDal();
 
@@ -1591,7 +1591,7 @@ namespace KdsLibrary.BL
                oTxDal.AddParameter("p_shat_hatchala", ParameterType.ntOracleDate, dShatHatchala, ParameterDir.pdInput);
                oTxDal.AddParameter("p_shat_yezia", ParameterType.ntOracleDate, dShatYezia, ParameterDir.pdInput);
                oTxDal.AddParameter("p_makat_nesia", ParameterType.ntOracleLong, lMakat, ParameterDir.pdInput);
-
+               oTxDal.AddParameter("p_meadken_acharon", ParameterType.ntOracleInteger, iMeadken_Acharon, ParameterDir.pdInput);
                oTxDal.ExecuteSP(clGeneral.cProDelKnisotPeilut);
 
                oTxDal.ClearCommand();
