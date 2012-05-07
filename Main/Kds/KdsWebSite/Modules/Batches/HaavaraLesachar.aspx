@@ -95,7 +95,7 @@
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="90px" />
                            <ItemTemplate>
-                                       <asp:button ID="btnYes"  runat="server"  Width="25px" text="כו" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
+                                       <asp:button ID="btnYes"  runat="server"  Width="25px" text="כן" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
                                        <asp:button ID="btnNo"  runat="server"  Width="25px" text="לא" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
                             </ItemTemplate>
                         </asp:TemplateField>
