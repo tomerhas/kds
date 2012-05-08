@@ -663,7 +663,7 @@ public partial class Modules_Ovdim_EmployeePremias : KdsPage
         {
             prefixText = prefixText + '%';
             dt = oOvdim.GetOvdimMisparIshi(prefixText, "");
-            DataRow[] rows = dt.Select(null, "FullName asc");
+            DataRow[] rows = dt.Select(null, "Mispar_Ishi asc");
             rows.ToList()
             .ForEach
             (
