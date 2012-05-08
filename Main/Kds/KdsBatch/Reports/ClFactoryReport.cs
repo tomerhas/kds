@@ -179,7 +179,10 @@ namespace KdsBatch.Reports
                 }
 
                 if (_enTypeRepot == clGeneral.enReportType.Rikuz)
-                    _BlReport.SaveRikuzmPdf(oCollRikuzPdf);
+                {
+                    if (oCollRikuzPdf.Value.Length >0)
+                        _BlReport.SaveRikuzmPdf(oCollRikuzPdf, oObjRikuzPdf.BAKASHA_ID);
+                }
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
             }
             catch (Exception ex)

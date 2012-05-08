@@ -290,6 +290,23 @@ namespace KdsLibrary.BL
             }
         }
 
+        public DataTable GetOvdimLefiRikuzim(string sPrefix)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {   //מחזיר מספרים אישיים
+                oDal.AddParameter("p_prefix", ParameterType.ntOracleVarchar, sPrefix, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetOvdimLefiRikuzim, ref dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public DataTable GetOvdimToUserByName(string sPrefix, int iUserId)
         {
             clDal oDal = new clDal();

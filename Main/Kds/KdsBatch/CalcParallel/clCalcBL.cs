@@ -488,5 +488,31 @@ namespace KdsBatch
             }
         }
 
+        public float ChishuvTosefetGil(Oved objOved, float fMichsaYomit, float fNuchehutLepremia,DateTime dShatHatchala)
+        {
+            bool bShishi, bErevChag;
+            float fTosefetGil = 0;
+            try
+            {
+                bShishi = CheckYomShishi(objOved.SugYom);
+                bErevChag = CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom);
+
+                if (fMichsaYomit > 0 && ((!bShishi && !bErevChag) || ((bShishi || bErevChag) && dShatHatchala < objOved.objParameters.dKnisatShabat)))
+                {
+                    if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                        fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKashish;
+                    else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                        fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKshishon;
+                }
+
+                return fTosefetGil;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), objOved.Taarich, "CalcDay:ChishuvTosefetGil " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
     }
 }

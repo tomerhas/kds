@@ -124,7 +124,7 @@ namespace KdsLibrary.BL
                 iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
 
                 objDal.ClearCommand();
-                InsertBakashaParam(ref objDal, iRequestId, 4, iRequestToSachar.ToString());
+                InsertBakashaParam(ref objDal, iRequestId, 1 , iRequestToSachar.ToString());
 
                 objDal.TxCommit();
             }
@@ -465,6 +465,19 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void DeleteBakashotRikuzim(long iRequestIdForRikuzim)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, iRequestIdForRikuzim, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProDeleteBakashotYeziratRikuzim);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public DataTable GetTavlaotToRefresh()
         {
             clDal oDal = new clDal();

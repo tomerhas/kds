@@ -20,7 +20,7 @@
                 <td align="right" dir="ltr" style="width:160px"> 
                  <KdsCalendar:KdsCalendar runat="server" ID="clnFromDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                            
                   <%--<wccEgged:wccCalendar runat="server" ID="clnFromDate"   BasePath="../../EggedFramework" AutoPostBack="false" Width="80px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                      
-               <asp:RequiredFieldValidator ID="vldReqFromDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!חובה להזין מתאריך " ControlToValidate="clnFromDate"></asp:RequiredFieldValidator>
+             <%--  <asp:RequiredFieldValidator ID="vldReqFromDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!חובה להזין מתאריך " ControlToValidate="clnFromDate"></asp:RequiredFieldValidator>--%>
           <%--     <asp:CompareValidator ID="vldTypeFromDate" runat="server" Display="Dynamic" ControlToValidate="clnFromDate" ErrorMessage="!מתאריך לא תקין" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>--%>
                 </td>  
                  <td style="width:10px"></td>
@@ -28,8 +28,8 @@
                 <td align="right" dir="ltr" style="width:150px">        
                  <KdsCalendar:KdsCalendar runat="server" ID="clnToDate"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>                       
                     <%--<wccEgged:wccCalendar runat="server" ID="clnToDate"   BasePath="../../EggedFramework" AutoPostBack="false" Width="80px" dir="rtl"></wccEgged:wccCalendar>--%>                                                                                                                      
-                <asp:RequiredFieldValidator ID="vldReqToDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!חובה להזין עד תאריך" ControlToValidate="clnToDate"></asp:RequiredFieldValidator>
-                   <asp:CompareValidator ID="vldComToDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!עד תאריך חייב להיות גדול ממתאריך" ControlToValidate="clnToDate" ControlToCompare="clnFromDate" Operator="GreaterThanEqual" Type="Date"></asp:CompareValidator>
+              <%--  <asp:RequiredFieldValidator ID="vldReqToDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!חובה להזין עד תאריך" ControlToValidate="clnToDate"></asp:RequiredFieldValidator>
+                   <asp:CompareValidator ID="vldComToDate" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="!עד תאריך חייב להיות גדול ממתאריך" ControlToValidate="clnToDate" ControlToCompare="clnFromDate" Operator="GreaterThanEqual" Type="Date"></asp:CompareValidator>--%>
                     <%--<asp:CompareValidator ID="vldTypeToDate" runat="server" Display="Dynamic" ControlToValidate="clnToDate" ErrorMessage="!עד תאריך לא תקין" Type="Date" Operator="DataTypeCheck"></asp:CompareValidator>--%>
                  </td> 
                  <td style="width:10px"></td>
@@ -60,7 +60,8 @@
                         <asp:BoundField DataField="bakasha_id" HeaderText="מספר ריצת חישוב" SortExpression="bakasha_id" ItemStyle-Width="90px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
                         <asp:BoundField DataField="TEUR" HeaderText="תאור" SortExpression="TEUR" ItemStyle-CssClass="ItemRow" ItemStyle-Width="360px" HeaderStyle-CssClass="GridHeader" />
                         <asp:BoundField DataField="auchlusia" HeaderText="אוכלוסיה לריצה" SortExpression="auchlusia" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="120px" />
-                        <asp:BoundField DataField="tkufa" HeaderText="תקופת הריצה - עד חודש (כולל)" SortExpression="tkufa" ItemStyle-Width="195px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                        <asp:BoundField DataField="tkufa" HeaderText="תקופת הריצה - עד חודש (כולל)" SortExpression="tkufa_date" ItemStyle-Width="195px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  />
+                        <asp:BoundField DataField="tkufa_date" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"  DataFormatString="{0:dd/MM/yyyy}" HtmlEncodeFormatString="true"/>
                         <asp:BoundField DataField="ritza_gorfet" HeaderText="ריצה גורפת" SortExpression="ritza_gorfet" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  ItemStyle-Width="65px"/>
                         <asp:BoundField DataField="HUAVRA_LESACHAR" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         <asp:BoundField DataField="ISHUR_HILAN" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
@@ -105,7 +106,9 @@
              </div>
         </div>
        <input type="hidden" id="inputHiddenBakasha" name="inputHiddenBakasha" runat="server" />
-       <input type="hidden" id="inputSourceBtnHilan" name="inputSourceBtnHilan" runat="server" />       
+       <input type="hidden" id="inputSourceBtnHilan" name="inputSourceBtnHilan" runat="server" />
+        <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> 
+        <asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/>       
     </ContentTemplate>
 </asp:UpdatePanel> 
 <asp:UpdatePanel ID="upMessage" runat="server">
@@ -124,8 +127,7 @@
     </ContentTemplate>
 </asp:UpdatePanel>
  
- <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> 
- <asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/> 
+ 
  <script language="javascript" type="text/javascript">
 
 

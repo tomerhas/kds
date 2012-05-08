@@ -66,7 +66,7 @@ namespace KdsBatch.Reports
                     _Reports.Add(new clReport(_lBakashaIdForRikuzim,
                                  clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
                                  DateTime.Parse(dr["TAARICH"].ToString()),
-                                 int.Parse(dr["sug_chishuv"].ToString()) ));
+                                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()): -1) ));
                 }
                 FillReports();
             }
@@ -100,7 +100,9 @@ namespace KdsBatch.Reports
                         drReport.Add("P_TAARICH", drReport.Month.AddMonths(1).AddDays(-1).ToShortDateString());
                         drReport.Add("P_BAKASHA_ID", drReport.BakashaId.ToString());
                         drReport.Add("P_Tar_chishuv", DateTime.Parse(drParams[0]["ZMAN_HATCHALA"].ToString()).ToShortDateString());
-                        drReport.Add("P_sug_chishuv", clGeneral.arrCalcType[int.Parse(drParams[0]["sug_chishuv"].ToString())]);
+                        if (drParams[0]["sug_chishuv"].ToString() != "")
+                            drReport.Add("P_sug_chishuv", clGeneral.arrCalcType[int.Parse(drParams[0]["sug_chishuv"].ToString())]);
+                        else drReport.Add("P_sug_chishuv", "");
                         drReport.Add("P_Oved_5_Yamim", getTeurWorkDay(drParams[0]["WorkDay"].ToString()));
                         drReport.Add("P_SIKUM_CHODSHI", "1");
                     }

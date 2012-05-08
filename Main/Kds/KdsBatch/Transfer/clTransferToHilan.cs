@@ -45,6 +45,7 @@ namespace KdsBatch
            DataTable dtOvdim, dtRechivim;
            DataSet dsNetunim;
            int iStatus = 0;
+           string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
            string sChodeshIbud,sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakara;
            PirteyOved oPirteyOved;
@@ -123,7 +124,8 @@ namespace KdsBatch
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
-                   DeleteChishuvAfterTransfer(lRequestNumToTransfer);
+                   if (bDelete == "true")
+                        DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
                    InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);

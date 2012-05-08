@@ -413,12 +413,13 @@ namespace KdsLibrary.BL
             }
         }
 
-        public void SaveRikuzmPdf(COLL_RIKUZ_PDF oCollRikuzPdf)
+        public void SaveRikuzmPdf(COLL_RIKUZ_PDF oCollRikuzPdf, long BakashaId)
         {
             try
             {
                 clDal dal = new clDal();
 
+                dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
                 dal.AddParameter("p_coll_rikuz_pdf", ParameterType.ntOracleArray, oCollRikuzPdf, ParameterDir.pdInput, "COLL_RIKUZ_PDF");
                 dal.ExecuteSP(clGeneral.cProSaveRikuzPdf);
             }

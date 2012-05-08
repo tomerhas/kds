@@ -48,7 +48,7 @@ namespace KdsBatch
         public const string cProGetPremyotView = "pkg_utils.pro_get_premyot_view";
         public const string cProGetOvdimLechishuv = "pkg_batch.pro_get_ovdim_lechishuv";
         public const string cProUpdBakasha = "pkg_batch.pro_upd_bakasha";
-        public const string cProUpdBakashaIshurHilan = "pkg_batch.pro_upd_bakasha_ishur_hilan";
+        public const string cProUpdBakashaAllfields = "pkg_batch.pro_upd_bakasha_all_fields";
         public const string cProShinuyKelet = "pkg_errors.pro_shinuy_kelet";
         public const string cProGetOvdimToTransfer = "pkg_batch.pro_get_ovdim_to_transfer";
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
@@ -147,24 +147,6 @@ namespace KdsBatch
             }
         }
 
-        public static void UpdateBakashaParams(long lRequestNum, int ishurHilan)
-        {
-            clDal oDal = new clDal();
-
-            try
-            {
-
-                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
-                oDal.AddParameter("p_ishur_hilan", ParameterType.ntOracleInteger, ishurHilan, ParameterDir.pdInput);
-
-                oDal.ExecuteSP(cProUpdBakashaIshurHilan);
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         public static void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus)
         {
@@ -179,6 +161,44 @@ namespace KdsBatch
                 oDal.AddParameter("p_tar_haavara_lesachar", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
 
                 oDal.ExecuteSP(cProUpdBakasha);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateLogBakasha(long lRequestNum, DateTime dZmanSiyum, int iStatus, int iHuavraLesachar, DateTime dTarHaavaraLesachar, int ishurHilan)
+        {
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+
+                if (dZmanSiyum != DateTime.MinValue)
+                    oDal.AddParameter("p_zman_siyum", ParameterType.ntOracleDate, dZmanSiyum, ParameterDir.pdInput);
+                else oDal.AddParameter("p_zman_siyum", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
+                
+                if (iStatus > 0)
+                    oDal.AddParameter("p_status", ParameterType.ntOracleInteger, iStatus, ParameterDir.pdInput);
+                else oDal.AddParameter("p_status", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+
+                if (iHuavraLesachar>-1)
+                    oDal.AddParameter("p_huavra_lesachar", ParameterType.ntOracleInteger, iHuavraLesachar, ParameterDir.pdInput);
+                else oDal.AddParameter("p_huavra_lesachar", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+
+                if (dTarHaavaraLesachar != DateTime.MinValue)
+                    oDal.AddParameter("p_tar_haavara_lesachar", ParameterType.ntOracleDate, dTarHaavaraLesachar, ParameterDir.pdInput);
+                else oDal.AddParameter("p_tar_haavara_lesachar", ParameterType.ntOracleDate, null, ParameterDir.pdInput);
+
+                if (ishurHilan>-1)
+                    oDal.AddParameter("p_ishur_hilan", ParameterType.ntOracleInteger, ishurHilan, ParameterDir.pdInput);
+                else
+                    oDal.AddParameter("p_ishur_hilan", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(cProUpdBakashaAllfields);
 
             }
             catch (Exception ex)

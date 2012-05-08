@@ -63,6 +63,7 @@ namespace KdsLibrary
 
         public const string cProSaveRikuzPdf = "pkg_batch.Pro_Save_Rikuz_Pdf";
         public const string cProGetRikuzPdf = "pkg_batch.Pro_Get_Rikuz_Pdf";
+        public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
         
 #endregion 
 
@@ -200,6 +201,7 @@ namespace KdsLibrary
         public const string cProGetPirteyOvedLetkufot = "pkg_ovdim.pro_get_pirtey_oved_letkufot";
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";
         public const string cProGetRikuzeyAvodaLeoved = "pkg_ovdim.pro_get_rikuzey_avoda_leoved";
+        public const string cProGetOvdimLefiRikuzim = "pkg_ovdim.get_ovdim_by_Rikuzim";
 #endregion
 
 #region PKG_PARAMETERS constants

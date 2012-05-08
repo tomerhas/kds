@@ -59,8 +59,8 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
                 grdRikuzim.AllowPaging = false;
                 divNetunim.Style["height"] = "250px";
 
-                AutoCompleteExtenderByName.ContextKey = "";
-                AutoCompleteExtenderID.ContextKey = "";
+                //AutoCompleteExtenderByName.ContextKey = "";
+               // AutoCompleteExtenderID.ContextKey = "";
                 txtEmpId.Focus();
 
                 LoadDdlMonth();
@@ -180,7 +180,8 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
 
             if (e.Row.Cells[enGrdRikuz.SUG_CHISHUV.GetHashCode()].Text == "0")
                 e.Row.Cells[enGrdRikuz.SUG_CHISHUV.GetHashCode()].Text = "רגילה";
-            else e.Row.Cells[enGrdRikuz.SUG_CHISHUV.GetHashCode()].Text = "הפרש";
+            else if(e.Row.Cells[enGrdRikuz.SUG_CHISHUV.GetHashCode()].Text == "1")
+                  e.Row.Cells[enGrdRikuz.SUG_CHISHUV.GetHashCode()].Text = "הפרש";
 
             ((HyperLink)e.Row.Cells[enGrdRikuz.PDF.GetHashCode()].Controls[1]).ImageUrl = "../../Images/icon-pdf.jpg";
             

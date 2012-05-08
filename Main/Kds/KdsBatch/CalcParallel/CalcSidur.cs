@@ -1464,6 +1464,110 @@ namespace KdsBatch
             }
         }
 
+
+        public void CalcRechiv30_2()
+        {
+            //דקות פרמיה יומית  (רכיב 30) 
+
+            int iMisparSidur, iSugSidur;
+            bool bYeshSidur;
+            DateTime dShatHatchalaLetashlum, dShatHatchalaSidur; 
+            DataRow[] _drSidurMeyuchad, _drSidurRagil;
+            float fErechRechiv, fDakotNochehutSidur,fTosefetGil,fMichsaYomit, fNuchehutLepremia;
+            float fDakotHagdara,fSumDakotSikun, fDakotHistaglut, fSachNesiot, fDakotLepremia , fDakotKisuyTor;
+
+            iMisparSidur = 0;
+            dShatHatchalaSidur = DateTime.MinValue;
+            try
+            {
+                //   iSugYom = SugYom;
+               //sMispareySidur = "";
+               fMichsaYomit =oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+               
+                //בדיקת סידורים רגילים
+                // נלקחים הסידורים הרגילים שסקטור העבודה שלהם =נהגות
+                _drSidurRagil = GetSidurimRegilim();
+                if (_drSidurRagil.Length > 0)
+                {
+                    for (int I = 0; I < _drSidurRagil.Length; I++)
+                    {
+                        fErechRechiv = 0;
+                        fTosefetGil = 0;
+                        if (_drSidurRagil[I]["sidur_namlak_visa"].ToString() == "")
+                        {
+                            iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
+                            iSugSidur = int.Parse(_drSidurRagil[I]["sug_sidur"].ToString());
+                            bYeshSidur = CheckSugSidur(clGeneral.enMeafyen.SectorAvoda.GetHashCode(), clGeneral.enSectorAvoda.Nahagut.GetHashCode(), objOved.Taarich, iSugSidur);
+                            if (bYeshSidur)
+                            {
+                                iMisparSidur = int.Parse(_drSidurRagil[I]["mispar_sidur"].ToString());
+                                dShatHatchalaSidur = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_sidur"].ToString());
+                                dShatHatchalaLetashlum = DateTime.Parse(_drSidurRagil[I]["shat_hatchala_letashlum"].ToString());
+                                
+                                fDakotNochehutSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                fTosefetGil = oCalcBL.ChishuvTosefetGil(objOved, fMichsaYomit, fDakotNochehutSidur, dShatHatchalaLetashlum);     
+                                fNuchehutLepremia = fDakotNochehutSidur - oPeilut.getZmanHamtanaEilat(iMisparSidur, dShatHatchalaSidur);
+
+                                fDakotHagdara = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHagdara.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')")) / float.Parse("0.75");
+                                fSumDakotSikun = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotSikun.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')")) / float.Parse("0.75");
+                                fDakotHistaglut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHistaglut.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                fDakotKisuyTor = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotKisuiTor.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                fDakotLepremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                fSachNesiot = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.SachNesiot.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+
+                                fErechRechiv = float.Parse(Math.Round(fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia  + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia 
+                                                                               , MidpointRounding.AwayFromZero).ToString());
+
+                                addAnyRowToTable(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
+                            }
+                        }
+                    }
+
+                }
+
+                //בדיקת סידורים מיוחדים
+                // נלקחים רק סידורים מיוחדים מסקטור עבודה =  נהגות
+                _drSidurMeyuchad = GetSidurimMeyuchadim("sector_avoda", clGeneral.enSectorAvoda.Nahagut.GetHashCode());
+
+                for (int I = 0; I <= _drSidurMeyuchad.Length - 1; I++)
+                {
+                    fErechRechiv = 0;
+                    fTosefetGil = 0;
+                    iMisparSidur = int.Parse(_drSidurMeyuchad[I]["mispar_sidur"].ToString());
+                    if (iMisparSidur != 99220 && (string.IsNullOrEmpty(_drSidurMeyuchad[I]["sidur_namlak_visa"].ToString())))
+                    {
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
+                        dShatHatchalaLetashlum = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_letashlum"].ToString());
+                       
+                        fDakotNochehutSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        fTosefetGil = oCalcBL.ChishuvTosefetGil(objOved, fMichsaYomit, fDakotNochehutSidur, dShatHatchalaLetashlum);
+                        fNuchehutLepremia = fDakotNochehutSidur - oPeilut.getZmanHamtanaEilat(iMisparSidur, dShatHatchalaSidur);
+
+                        fDakotHagdara = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHagdara.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')")) / float.Parse("0.75");
+                        fSumDakotSikun = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotSikun.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')")) / float.Parse("0.75");
+                        fDakotHistaglut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotHistaglut.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        fDakotKisuyTor = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotKisuiTor.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        fDakotLepremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.SachDakotLepremia.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        fSachNesiot = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.SachNesiot.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+
+                        fErechRechiv = float.Parse(Math.Round(fDakotHagdara + fSumDakotSikun + fDakotHistaglut + fDakotKisuyTor + fDakotLepremia + (fSachNesiot * objOved.objParameters.fElementZar) + fTosefetGil - fNuchehutLepremia
+                                               , MidpointRounding.AwayFromZero).ToString());
+
+                        addAnyRowToTable(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
+                    }  
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, "E", null, clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Mispar_ishi, objOved.Taarich, iMisparSidur, dShatHatchalaSidur, null, null, "CalcSidur: " + ex.StackTrace + "\n message: " + ex.Message, null);
+                throw (ex);
+            }
+            finally
+            {
+                _drSidurMeyuchad = null;
+                _drSidurRagil = null;
+            }
+        }
         public void CalcRechiv35()
         {
             //דקות בנהיגה בימי שבתון ( רכיב 35):
@@ -7480,6 +7584,32 @@ namespace KdsBatch
                     _dtChishuvSidur.Rows.Add(drChishuv);
                     drChishuv = null;
                 }
+            }
+            else
+            {
+                UpdateRowInTable(iKodRechiv, fErechRechiv, dShatHatchala, iMisparSidur);
+            }
+
+        }
+
+        private void addAnyRowToTable(int iKodRechiv, DateTime dShatHatchala, int iMisparSidur, float fErechRechiv)
+        {
+            DataRow drChishuv;
+            //            DataRow[] drChishuvRows;
+            //            drChishuvRows= objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select(null, "KOD_RECHIV");
+            //            drChishuvRows = objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Select("KOD_RECHIV=" + iKodRechiv + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchala.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')");
+            if (CountOfRecords(iKodRechiv, dShatHatchala, iMisparSidur) == 0)  //instead of (drChishuvRows.Length == 0)
+            {
+                    drChishuv = _dtChishuvSidur.NewRow();
+                    drChishuv["BAKASHA_ID"] = objOved.iBakashaId;
+                    drChishuv["MISPAR_ISHI"] = objOved.Mispar_ishi;
+                    drChishuv["TAARICH"] = objOved.Taarich;
+                    drChishuv["MISPAR_SIDUR"] = iMisparSidur;
+                    drChishuv["SHAT_HATCHALA"] = dShatHatchala;
+                    drChishuv["KOD_RECHIV"] = iKodRechiv;
+                    drChishuv["ERECH_RECHIV"] = fErechRechiv;
+                    _dtChishuvSidur.Rows.Add(drChishuv);
+                    drChishuv = null;              
             }
             else
             {

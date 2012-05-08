@@ -8,10 +8,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="KdsContent" Runat="Server">
   
    <script type="text/javascript" language="javascript">
-       var oTxtId = "<%=txtEmpId.ClientID%>";
-       var oTxtName = "<%=txtName.ClientID%>";
-       var flag = false;
-       var userId = iUserId;
 </script>
 <div class="Progress" id="divHourglass"  style="display:none;text-align:center;position:absolute;left:52%;top:48%; z-index:2000;width:150px" >
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
@@ -26,30 +22,14 @@
                         <asp:RadioButton runat="server" Checked="true" ID="rdoId"  EnableViewState="true" GroupName="grpSearch" Text="מספר אישי:"  > </asp:RadioButton>
                     </td>
                     <td dir="rtl">
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  onchange="GetOvedNameById();"
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  onchange="txtEmpId_txtChange();"
                                 Width="55px"  EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
-                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
-                                TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
+                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
+                                TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimLefiRikuzim" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  FirstRowSelected="true"
                                 CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  
-                               OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >  
+                                CompletionListItemCssClass="autocomplete_completionListItemElement" >   
                             </cc1:AutoCompleteExtender>                        
-                    </td>
-                    <td style="width:10px"></td>
-                    <td class="InternalLabel" style="width:60px">                       
-                         <asp:RadioButton runat="server" ID="rdoName" EnableViewState="true" GroupName="grpSearch" Text="שם:" > </asp:RadioButton>
-                    </td>   
-                    <td style="width:120px">
-                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName();"  AutoComplete="Off" style="width:120px" onfocus="this.select();" EnableViewState="true"  ></asp:TextBox>
-                          
-                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
-                                        TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                           CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement"
-                                       OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >   
-                            </cc1:AutoCompleteExtender> 
                     </td>
                     <td style="width:10px"></td>
                     <td  class="InternalLabel">חודש:</td>
@@ -117,7 +97,7 @@
   
      <iframe runat="server" id="iFramePrint" style="display:none" height="5px" width="5px"></iframe>
 <script language="javascript" type="text/javascript">
-    function continue_click() {
+    function txtEmpId_txtChange() {
             document.getElementById("ctl00_KdsContent_btnShow").disabled = false;
         }
         function onclick_ShowReport(mispar_ishi, bakasha_id, taarich) {

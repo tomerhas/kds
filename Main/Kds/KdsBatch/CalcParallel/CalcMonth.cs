@@ -1501,19 +1501,19 @@ namespace KdsBatch
                     if (fTempX > fMichsatNosafotTafkid)
                     {
                         // Z [ש"נ מחוץ למכסה] =  (סכום ערך הרכיב עבור כל הסידורים בחודש המסומנים מחוץ למכסה TB_Sidurim_Ovedim.Out_michsa = 1) חלקי 60 (לחלק ב-60 לקבלת נתון בשעות)
-                        fNosafotMichutzLamichsa = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "OUT_MICHSA=0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode().ToString()));
+                       // fNosafotMichutzLamichsa = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "OUT_MICHSA>0 AND  KOD_RECHIV=" + clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode().ToString()));
 
-                        fTempZ = fNosafotMichutzLamichsa / 60;
+                       // fTempZ = fNosafotMichutzLamichsa / 60;
 
                         //Y [קיזוז ש"נ]  = הגבוה מבין (0,  X פחות מכסת נוספות בתפקיד (רכיב 143) פחות Z)
-                        fTempY = Math.Max(0, (fTempX - fMichsatNosafotTafkid - fTempZ));
+                        fTempY = Math.Max(0, (fTempX - fMichsatNosafotTafkid )) ; //- fTempZ));
 
                         //	W = X פחות Y [ש"נ אחרי קיזוז]  + זמן נסיעות (רכיב 95) + זמן הלבשה (רכיב 93) +  זמן רציפות (רכיב 97).
-                        fZmanHalbasha = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanHalbasha);// oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanHalbasha.GetHashCode());
+                     //   fZmanHalbasha = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanHalbasha);// oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanHalbasha.GetHashCode());
                         fZmanNesiot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia);//oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanNesia.GetHashCode());
-                        fZmanRetzifut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanRetzifutTafkid);//oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode());
+                        //fZmanRetzifut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanRetzifutTafkid);//oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode());
 
-                        fTempW = fTempX - fTempY + fZmanHalbasha + fZmanNesiot + fZmanRetzifut;
+                        fTempW = fTempX - fTempY + fZmanNesiot; // +fZmanHalbasha + fZmanRetzifut;
 
                         if (fTempW > objOved.objParameters.iTamrizNosafotLoLetashlum)
                         {

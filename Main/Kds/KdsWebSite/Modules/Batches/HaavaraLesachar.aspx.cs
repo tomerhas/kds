@@ -20,6 +20,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         TEUR,
         auchlusia,
         tkufa,
+        tkufa_date,
         ritza_gorfet,
         HUAVRA_LESACHAR,
         ISHUR_HILAN,
@@ -66,13 +67,21 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          if (Page.IsValid)
          {
-             if (DateTime.Parse(clnFromDate.Text) < DateTime.Parse(DateTime.Now.AddMonths(-1).ToShortDateString()) ||
-                 DateTime.Parse(clnFromDate.Text) > DateTime.Now ||
-                 DateTime.Parse(clnToDate.Text) < DateTime.Parse(DateTime.Now.AddMonths(-1).ToShortDateString()) ||
-                 DateTime.Parse(clnToDate.Text) > DateTime.Now)
+             if (clnFromDate.Text == "" || clnToDate.Text == "")
              {
-                 ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "err", "alert('לא ניתן להגדיר טווח תאריכים מעבר לחודש אחורה מתאריך נוכחי');", true);
+                 ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "err", "alert('יש להזין טווח תאריכים');", true);
              }
+             else if (DateTime.Parse(clnToDate.Text) < DateTime.Parse(clnFromDate.Text))
+             {
+                 ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "err", "alert('!עד תאריך חייב להיות גדול ממתאריך');", true);
+             }
+             //if (DateTime.Parse(clnFromDate.Text) < DateTime.Parse(DateTime.Now.AddMonths(-1).ToShortDateString()) ||
+             //    DateTime.Parse(clnFromDate.Text) > DateTime.Now ||
+             //    DateTime.Parse(clnToDate.Text) < DateTime.Parse(DateTime.Now.AddMonths(-1).ToShortDateString()) ||
+             //    DateTime.Parse(clnToDate.Text) > DateTime.Now)
+             //{
+             //    ScriptManager.RegisterStartupScript(btnShow, this.GetType(), "err", "alert('לא ניתן להגדיר טווח תאריכים מעבר לחודש אחורה מתאריך נוכחי');", true);
+             //}
              else
              {
                  divNetunim.Visible = true;
@@ -135,7 +144,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  protected void grdRitzot_RowDataBound(object sender, GridViewRowEventArgs e)
  {
      int iColSort;
-     string status;
+     string huavara_lesachar, status_haavara_lesachar;
      if (e.Row.RowType == DataControlRowType.Header)
      {
          System.Web.UI.WebControls.Label lbl = new System.Web.UI.WebControls.Label();
@@ -144,6 +153,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Style.Add("display", "none");
 
          iColSort = GetCurrentColSort();
          lbl.Text = " ";
@@ -183,8 +193,12 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Style.Add("display", "none");
 
-         switch (e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim())
+         huavara_lesachar =e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() ;
+         status_haavara_lesachar = e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim();
+         switch (status_haavara_lesachar)
          {
              case "1": e.Row.Cells[enGrdRitzot.status.GetHashCode()].Text ="ממתין";
                  break;
@@ -194,11 +208,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                  break;
          }
 
-         if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() != "1")
+         if (huavara_lesachar == "0" || huavara_lesachar =="&nbsp;")
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "inline";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "none";
-             if (e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim() == "1")
+             if (status_haavara_lesachar == "1")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = false;
              else
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Enabled = true;
@@ -207,7 +221,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[1]).Style["display"] = "none";
              ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Style["display"] = "inline";
-             if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1")
+             if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1" || huavara_lesachar == "2")
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = false;
              else
                  ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).Enabled = true;
@@ -216,7 +230,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          //if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
          //((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).Enabled = true;
 
-         if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2" && e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text == "1")
+         if (e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Text == "2" && huavara_lesachar == "1")
              ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).Enabled = true;
 
          if (e.Row.Cells[enGrdRitzot.ISHUR_HILAN.GetHashCode()].Text == "1")
@@ -229,7 +243,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = true;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
          }
-         if (e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text != "1")
+         if (huavara_lesachar != "1")
          {
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).Enabled = false;
              ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).Enabled = false;  
@@ -319,7 +333,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          else if (((Button)sender).ClientID.IndexOf("btnYes") > -1)
          {
              inputSourceBtnHilan.Value = "Yes";
-             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחיל, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
+             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
          }
          else
          {
@@ -357,9 +371,12 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          source = inputSourceBtnHilan.Value;
          iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);
          if (source =="Yes")
-            clDefinitions.UpdateBakashaParams(iRequestToTransfer,1);
+             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 1);
+            //clDefinitions.UpdateBakashaParams(iRequestToTransfer,1);         
          else
-             clDefinitions.UpdateBakashaParams(iRequestToTransfer, 0);
+             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 0);
+             //clDefinitions.UpdateBakashaParams(iRequestToTransfer, 0);
+         
 
          GetRitzot();
      }
@@ -400,8 +417,9 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      try
      {
            iRequestToTransfer = long.Parse(((Button)sender).CommandArgument);
-           clDefinitions.UpdateLogBakasha(iRequestToTransfer, 2, DateTime.Now);
-     }
+           clDefinitions.UpdateLogBakasha(iRequestToTransfer,DateTime.MinValue,0,2, DateTime.MinValue, -1);
+           GetRitzot();
+      }
      catch (Exception ex)
      {
          clGeneral.BuildError(Page, ex.Message);
@@ -418,6 +436,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
          iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
+         objBatch.DeleteBakashotRikuzim(iRequestIdForRikuzim);
+
          iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.YeziratRikuzim, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
          ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);

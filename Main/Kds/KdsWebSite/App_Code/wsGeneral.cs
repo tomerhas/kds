@@ -1869,6 +1869,24 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
+
+    [WebMethod]
+    public string[] GetOvdimLefiRikuzim(string prefixText, int count)
+    {
+        clOvdim oOvdim = clOvdim.GetInstance();
+        DataTable dt = new DataTable();
+        try
+        {
+            //string[] Params = contextKey.Split(';');
+            dt = oOvdim.GetOvdimLefiRikuzim(prefixText);
+            return clGeneral.ConvertDatatableColumnToStringArray(dt, "mispar_ishi");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
     [WebMethod]
     public string GetDakotPremiya(int misIshi, string taarich, int sugPremia)
     {
