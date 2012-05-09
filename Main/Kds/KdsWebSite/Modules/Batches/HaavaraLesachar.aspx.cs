@@ -42,6 +42,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
         try
         {
+            
             if (!Page.IsPostBack)
             {
                 ServicePath = "~/Modules/WebServices/wsBatch.asmx";
@@ -54,6 +55,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
                 SetFixedHeaderGrid(pnlgrdRitzot.ClientID, mp.HeadPage);
                 //inputHiddenMinDate.Value = DateTime.Now.AddMonths(-1).ToShortDateString();
             }
+            
         }
         catch (Exception ex)
         {
@@ -351,7 +353,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              paMessage.Style["Height"] = "100px";
              ModalPopupEx.X = 250;
             
-             lblMessage.Text = "קיימות ריצות קודמות ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?";
+             lblMessage.Text = "ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?";
              btnShowMessage_Click(this, new EventArgs());
            //  ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
          }
@@ -410,6 +412,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      string sMessage;
      int iUserId;
      clBatch objBatch = new clBatch();
+     wsBatch obach = new wsBatch();
      try
      {
          iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
@@ -417,7 +420,9 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);  // long.Parse(((Button)sender).CommandArgument);
          iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
          ViewState["iRequestId"] = iRequestId;
-         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
+
+         obach.TransferToHilan(iRequestId, iRequestToTransfer);
+      //   ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
 
          btnConfirm.Style.Add("Display", "inline");
          btnYesTransfer.Style.Add("Display", "none");
@@ -456,7 +461,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      long iRequestId, iRequestIdForRikuzim;
      string sMessage;
      int iUserId;
-
+     wsBatch obach = new wsBatch();
      clBatch objBatch = new clBatch();
      try
      {
@@ -466,8 +471,17 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
 
          iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.YeziratRikuzim, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
-         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
+         obach.YeziratRikuzim(iRequestId, iRequestIdForRikuzim);
+         //ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "YeziratRikuzim(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
 
+
+         btnConfirm.Style.Add("Display", "inline");
+         btnYesTransfer.Style.Add("Display", "none");
+         btnNoTransfer.Style.Add("Display", "none");
+         btnYesHilan.Style.Add("Display", "None");
+         paMessage.Style["Width"] = "220px";
+         paMessage.Style["Height"] = "115px";
+         ModalPopupEx.X = 400;
          sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
          lblMessage.Text = sMessage;
          btnShowMessage_Click(this, new EventArgs());
@@ -484,7 +498,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      long iRequestId, iRequestIdForRikuzim;
      string sMessage;
      int iUserId;
-
+     wsBatch obach = new wsBatch();
      clBatch objBatch = new clBatch();
      try
      {
@@ -492,8 +506,9 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          iRequestIdForRikuzim = long.Parse(((Button)sender).CommandArgument);
          iRequestId = objBatch.YeziratBakashatRikuzim(clGeneral.enGeneralBatchType.SendRikuzimMail, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestIdForRikuzim);
          ViewState["iRequestId"] = iRequestId;
-         
-         ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "ShlichatRikuzimMail(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
+
+         obach.ShlichatRikuzimMail(iRequestId, iRequestIdForRikuzim);
+        // ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "ShlichatRikuzimMail(" + iRequestId + "," + iRequestIdForRikuzim + ");", true);
 
          sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
          lblMessage.Text = sMessage;

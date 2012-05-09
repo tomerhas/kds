@@ -92,7 +92,7 @@
                         </asp:TemplateField>
                         <asp:BoundField DataField="rizot_zehot" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                         
-                        <asp:TemplateField  HeaderText="אישור חיל''ן">
+                        <asp:TemplateField  HeaderText="אישור חילן">
                             <HeaderStyle CssClass="GridHeader" />
                             <ItemStyle CssClass="ItemRow" Width="90px" />
                            <ItemTemplate>
@@ -111,7 +111,7 @@
         <%--<asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/>       --%>
     </ContentTemplate>
 </asp:UpdatePanel> 
-<asp:UpdatePanel ID="upMessage" runat="server" >
+<asp:UpdatePanel ID="upMessage" runat="server" RenderMode="Inline" UpdateMode="Always">
   <ContentTemplate>
      <asp:Button  ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click"  style="display:none;"/> 
         <cc1:ModalPopupExtender ID="ModalPopupEx" OkControlID="btnShowMessage" CancelControlID="btnConfirm" 
@@ -122,10 +122,12 @@
         <br /><br />
         <asp:Label ID="lblMessage" runat ="server" Width="90%"></asp:Label>
        <br />  <br />
+
         <input type="button" id="btnConfirm" value="אישור" class="ImgButtonMake" name="btnConfirm" onserverclick="btnConfirm_Click" runat="server" />
         <input type="button" id="btnYesTransfer" value="כן" class="ImgButtonMake" name="btnYesTransfer" onserverclick="Transfer_Click" runat="server" />
         <input type="button" id="btnYesHilan" value="כן" class="ImgButtonMake" name="btnYesHilan" onserverclick="IshurHilan_Click" runat="server" />
         <input type="button" id="btnNoTransfer" value="לא" class="ImgButtonMake" name="btnNoTransfer" runat="server" onclick="CloseMessage();" />
+
 <%--       <asp:Button ID="btnConfirm" runat="server" Text="אישור"  CssClass="ImgButtonMake" onclick="btnConfirm_Click"/>
         <asp:Button ID="btnYesTransfer" runat="server" Text="כן"   CssClass="ImgButtonMake" onclick="Transfer_Click"/>
         <asp:Button ID="btnNoTransfer" runat="server" Text="לא"   CssClass="ImgButtonMake"  />--%>
