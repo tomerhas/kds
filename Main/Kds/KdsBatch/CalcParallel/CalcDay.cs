@@ -203,11 +203,11 @@ namespace KdsBatch
                 //דקות פרמיה בשבת  (רכיב 26 ) 
                 CalcRechiv26();
 
-                //דקות פרמיה יומית  (רכיב 30)
+                ////דקות פרמיה יומית  (רכיב 30)
                 CalcRechiv30();
 
                 //דקות פרמיה יומית  (רכיב 30)
-               // CalcRechiv30_2();
+                //CalcRechiv30_2();
 
                 //דקות פרמיה בשישי  (רכיב 202 ) 
                 CalcRechiv202();
@@ -1685,7 +1685,7 @@ namespace KdsBatch
             }
         }
 
-        private void CalcRechiv30()
+        private void CalcRechiv30_2()
         {
             float fSumDakotRechiv, fMichsaYomit, fNuchehutLepremia, fTosefetRetzifut, fSumDakotSikun;
             float fTosefetGil, fDakotHagdara, fDakotHistaglut, fSachNesiot, fDakotLepremia, fDakotKisuyTor;
@@ -1777,7 +1777,7 @@ namespace KdsBatch
         }
 
 
-        private void CalcRechiv30_2()
+        private void CalcRechiv30()
         {
             float fMichsaYomit, fErechRechiv, fErechSidur, fErechSidurOkev, fErechSidurPrev, SumEzer;
             DataRow[] drYom;
@@ -1798,7 +1798,7 @@ namespace KdsBatch
                         {
                             if (objOved.objPirteyOved.iDirug != 85 || objOved.objPirteyOved.iDarga != 30)
                             {
-                                oSidur.CalcRechiv30_2();
+                                oSidur.CalcRechiv30();
                                 fErechRechiv = 0;
                                 SumEzer = 0;
                                 drYom = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null", "shat_hatchala_sidur ASC");

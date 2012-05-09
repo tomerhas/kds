@@ -107,23 +107,29 @@
         </div>
        <input type="hidden" id="inputHiddenBakasha" name="inputHiddenBakasha" runat="server" />
        <input type="hidden" id="inputSourceBtnHilan" name="inputSourceBtnHilan" runat="server" />
-        <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> 
-        <asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/>       
+      <%--  <asp:Button  ID="btnHiddenTransfer" runat="server" onclick="Transfer_Click"  style="display:none;"/> --%>
+        <%--<asp:Button  ID="btnHiddenIshurHilan" runat="server" onclick="IshurHilan_Click"  style="display:none;"/>       --%>
     </ContentTemplate>
 </asp:UpdatePanel> 
-<asp:UpdatePanel ID="upMessage" runat="server">
+<asp:UpdatePanel ID="upMessage" runat="server" >
   <ContentTemplate>
      <asp:Button  ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click"  style="display:none;"/> 
         <cc1:ModalPopupExtender ID="ModalPopupEx" OkControlID="btnShowMessage" CancelControlID="btnConfirm" 
-                DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="btnShowMessage"  runat="server" >
+                DropShadow="false" X="250" Y="200" PopupControlID="paMessage" TargetControlID="btnShowMessage"  runat="server" >
         </cc1:ModalPopupExtender>
-       <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
+       <asp:Panel runat="server" width="450px" height="150px" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
         <asp:Label ID="lblHeaderMessage" runat ="server" Width="97%" BackColor="#696969"></asp:Label>
         <br /><br />
         <asp:Label ID="lblMessage" runat ="server" Width="90%"></asp:Label>
        <br />  <br />
-        <asp:Button ID="btnConfirm" runat="server" Text="אישור" CssClass="ImgButtonMake" onclick="btnConfirm_Click"/>
-     </asp:Panel>
+        <input type="button" id="btnConfirm" value="אישור" class="ImgButtonMake" name="btnConfirm" onserverclick="btnConfirm_Click" runat="server" />
+        <input type="button" id="btnYesTransfer" value="כן" class="ImgButtonMake" name="btnYesTransfer" onserverclick="Transfer_Click" runat="server" />
+        <input type="button" id="btnYesHilan" value="כן" class="ImgButtonMake" name="btnYesHilan" onserverclick="IshurHilan_Click" runat="server" />
+        <input type="button" id="btnNoTransfer" value="לא" class="ImgButtonMake" name="btnNoTransfer" runat="server" onclick="CloseMessage();" />
+<%--       <asp:Button ID="btnConfirm" runat="server" Text="אישור"  CssClass="ImgButtonMake" onclick="btnConfirm_Click"/>
+        <asp:Button ID="btnYesTransfer" runat="server" Text="כן"   CssClass="ImgButtonMake" onclick="Transfer_Click"/>
+        <asp:Button ID="btnNoTransfer" runat="server" Text="לא"   CssClass="ImgButtonMake"  />--%>
+      </asp:Panel>
     </ContentTemplate>
 </asp:UpdatePanel>
  
@@ -144,30 +150,32 @@ function ShlichatRikuzimMail(iRequestId, iRequestIdForRikuzim) {
     wsBatch.ShlichatRikuzimMail(iRequestId, iRequestIdForRikuzim); //, TransetToSacharSucceeded);
 }
 
-function ShowMessage(rizot) {
- var answer = confirm("קיימות ריצות קודמות " + rizot + "עם פרמטרים זהים ונוצרו עבורן קבצי העברה לשכר\n.  שים לב!!! יש לבטל העברה לשכר בריצות שלא חושבו בגינן משכורת,אי ביטול ריצות אלו יגרור יצירה לא תקינה של קבצי שכר מהריצה הנוכחית. \nהאם להמשיך ליצור קבצי שכר מהריצה הנוכחית?");
-        if (answer) {
-            document.getElementById("ctl00_KdsContent_btnHiddenTransfer").click();
-        }
-    }
+//function ShowMessage(rizot) {
+// var answer = confirm("קיימות ריצות קודמות " + rizot + "עם פרמטרים זהים ונוצרו עבורן קבצי העברה לשכר\n.  שים לב!!! יש לבטל העברה לשכר בריצות שלא חושבו בגינן משכורת,אי ביטול ריצות אלו יגרור יצירה לא תקינה של קבצי שכר מהריצה הנוכחית. \nהאם להמשיך ליצור קבצי שכר מהריצה הנוכחית?");
+//        if (answer) {
+//            document.getElementById("ctl00_KdsContent_btnHiddenTransfer").click();
+//        }
+//    }
 
+function CloseMessage() {
+    $find("ctl00_KdsContent_ModalPopupEx").hide();
+}
 
+//    function ShowMessageHilan(msg,source) {
+//        var answer = confirm(msg);
 
-    function ShowMessageHilan(msg,source) {
-        var answer = confirm(msg);
-
-        if (source == "NO") {
-            if (answer) {
-                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
-            }
-        }
-        else {
-            if (answer) {
-                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
-            }
-        }
-       
-    }
+//        if (source == "NO") {
+//            if (answer) {
+//                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
+//            }
+//        }
+//        else {
+//            if (answer) {
+//                document.getElementById("ctl00_KdsContent_btnHiddenIshurHilan").click();
+//            }
+//        }
+//       
+//    }
 
 /*
 function OnChange_Taarich(id) {

@@ -327,31 +327,54 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          if (((Button)sender).ClientID.IndexOf("btnNo") > -1)
          {
              inputSourceBtnHilan.Value = "No";
-             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב מסומנת כאושרה בחילן, האם ברצונך לבטל את האישור?');", true);
+             btnConfirm.Style.Add("Display", "None");
+             btnYesHilan.Style.Add("Display", "inline");
+             btnYesTransfer.Style.Add("Display", "none");
+             btnNoTransfer.Style.Add("Display", "inline");
+             paMessage.Style["Width"] = "450px";
+             paMessage.Style["Height"] = "100px";
+             ModalPopupEx.X = 250;
+
+             lblMessage.Text = "ריצת החישוב מסומנת כאושרה בחילן, האם ברצונך לבטל את האישור?";
+             btnShowMessage_Click(this, new EventArgs());
+            // ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב מסומנת כאושרה בחילן, האם ברצונך לבטל את האישור?');", true);
             
          }
          else if (((Button)sender).ClientID.IndexOf("btnYes") > -1)
          {
              inputSourceBtnHilan.Value = "Yes";
-             ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
+             btnConfirm.Style.Add("Display", "None");
+             btnYesHilan.Style.Add("Display", "inline");
+             btnYesTransfer.Style.Add("Display", "none");
+             btnNoTransfer.Style.Add("Display", "inline");
+             paMessage.Style["Width"] = "450px";
+             paMessage.Style["Height"] = "100px";
+             ModalPopupEx.X = 250;
+            
+             lblMessage.Text = "קיימות ריצות קודמות ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?";
+             btnShowMessage_Click(this, new EventArgs());
+           //  ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
          }
          else
          {
              RizotZehot = commandArgsAccept[1].ToString();
              if (RizotZehot.Trim() != "&nbsp;" && RizotZehot.Trim() != "")
              {
-                 ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessage('" + RizotZehot + "');", true);
+                 btnConfirm.Style.Add("Display", "None");
+                 btnYesHilan.Style.Add("Display", "None");
+                 btnYesTransfer.Style.Add("Display", "inline");
+                 btnNoTransfer.Style.Add("Display", "inline");
+                 paMessage.Style["Width"] = "450px";
+                 paMessage.Style["Height"] = "150px";
+                 ModalPopupEx.X = 250;
+                 //sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+                 lblMessage.Text = "קיימות ריצות קודמות " + RizotZehot + "עם פרמטרים זהים ונוצרו עבורן קבצי העברה לשכר \n.  שים לב!!! יש לבטל העברה לשכר בריצות שלא חושבו בגינן משכורת,אי ביטול ריצות אלו יגרור יצירה לא תקינה של קבצי שכר מהריצה הנוכחית. \nהאם להמשיך ליצור קבצי שכר מהריצה הנוכחית?";
+                 btnShowMessage_Click(this, new EventArgs());
+
+                // ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessage('" + RizotZehot + "');", true);
              }
              else Transfer_Click(sender, e);
          }
-         //iRequestId = objBatch.RunTransferToSachar(clGeneral.enGeneralBatchType.TransferToPayment, "", clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer);
-         //ViewState["iRequestId"] = iRequestId;
-         //ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
-         
-         //sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
-         //lblMessage.Text = sMessage;
-         //btnShowMessage_Click(this, new EventArgs());
-     
      }
      catch (Exception ex)
      {
@@ -371,13 +394,9 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          source = inputSourceBtnHilan.Value;
          iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);
          if (source =="Yes")
-             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 1);
-            //clDefinitions.UpdateBakashaParams(iRequestToTransfer,1);         
+             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 1);       
          else
              clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 0);
-             //clDefinitions.UpdateBakashaParams(iRequestToTransfer, 0);
-         
-
          GetRitzot();
      }
      catch (Exception ex)
@@ -400,6 +419,13 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          ViewState["iRequestId"] = iRequestId;
          ScriptManager.RegisterStartupScript(btnConfirm, this.GetType(), "Run", "TransetToSachar(" + iRequestId + "," + iRequestToTransfer + ");", true);
 
+         btnConfirm.Style.Add("Display", "inline");
+         btnYesTransfer.Style.Add("Display", "none");
+         btnNoTransfer.Style.Add("Display", "none");
+         btnYesHilan.Style.Add("Display", "None");
+         paMessage.Style["Width"] ="220px";
+         paMessage.Style["Height"] = "115px";
+         ModalPopupEx.X = 400;
          sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
          lblMessage.Text = sMessage;
          btnShowMessage_Click(this, new EventArgs());
