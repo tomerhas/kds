@@ -1720,7 +1720,7 @@ namespace KdsBatch
                                     dShatHatchalaYom = DateTime.Parse(drYom[0]["shat_hatchala_sidur"].ToString());
                                     dShatHatchalaShabaton = objOved.objParameters.dKnisatShabat;
 
-                                    oSidur.CalcRechiv30(out sMispareySidur);
+                                    oSidur.CalcRechiv30_2(out sMispareySidur);
                                     fNuchehutLepremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), objOved.Taarich);
                                     if (fNuchehutLepremia > 0)
                                     {
