@@ -13,7 +13,7 @@
         <asp:Image ID="Image2" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
 </div>  
     <fieldset class="FilterFieldSet" style="width:950px"> 
-       <legend> פרטי עובד </legend>   
+       <legend> ריכוזי עבודה עבור </legend>   
         <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
           <ContentTemplate>    
               <table style="margin-top:4px">
@@ -68,7 +68,8 @@
                                      <asp:BoundField DataField="BAKASHA_ID" SortExpression="BAKASHA_ID" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                      <asp:BoundField DataField="TAARICH"  SortExpression="TAARICH"  HeaderText="חודש"  ItemStyle-Width="150px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:MM/yyyy}" HtmlEncodeFormatString="true"/>
                                      <asp:BoundField DataField="SUG_CHISHUV"   SortExpression="SUG_CHISHUV"       HeaderText="סוג ריצה"       ItemStyle-Width="100px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
-                                     <asp:BoundField DataField="TAARICH_HAAVARA_LESACHAR"  SortExpression="TAARICH_HAAVARA_LESACHAR"   HeaderText="תאריך העברה לשכר" ItemStyle-Width="150px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:dd/MM/yyyy HH:mm}" HtmlEncodeFormatString="true"/>                                  
+                                     <asp:BoundField DataField="HUAVRA_LESACHAR"   SortExpression="HUAVRA_LESACHAR"       HeaderText="הועברה לשכר"       ItemStyle-Width="100px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"/>
+                                     <asp:BoundField DataField="TAARICH_HAAVARA_LESACHAR"  SortExpression="TAARICH_HAAVARA_LESACHAR"   HeaderText="תאריך העברה לשכר" ItemStyle-Width="150px" ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  DataFormatString="{0:HH:mm dd/MM/yyyy}" HtmlEncodeFormatString="true"/>                                  
                                      <asp:TemplateField HeaderText="PDF"  ItemStyle-Width="100px"  ItemStyle-HorizontalAlign="Center"  ItemStyle-CssClass="ItemRow" HeaderStyle-CssClass="GridHeader"  >
                                          <ItemTemplate>
                                                <asp:HyperLink  ID="imgButton" runat="server"   NavigateUrl="#" ></asp:HyperLink>

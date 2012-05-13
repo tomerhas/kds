@@ -24,6 +24,7 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
         BAKASHA_ID =0,
         TAARICH,
         SUG_CHISHUV,
+        HUAVRA_LESACHAR,
         TAARICH_HAAVARA_LESACHAR,
         PDF
     }
@@ -44,7 +45,7 @@ public partial class Modules_Ovdim_RikuzeyAvodaLeOved   : KdsPage
 
             if (!Page.IsPostBack)
             {
-                PageHeader = "מסך ריכוזי עבודה שהועברו לשכר";
+                PageHeader = "מסך ריכוזי עבודה";
                 DateHeader = DateTime.Today.ToShortDateString();
                 ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
                 btnShow.Enabled = false;

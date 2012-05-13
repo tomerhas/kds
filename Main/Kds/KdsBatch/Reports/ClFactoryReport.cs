@@ -171,7 +171,7 @@ namespace KdsBatch.Reports
                                   oObjRikuzPdf.RIKUZ_PDF = fileReport;
                                   oCollRikuzPdf.Add(oObjRikuzPdf);
                                   i++;
-                                  if (i % 100 != 0)
+                                  if (i % 100 == 0)
                                       clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "I", 0, null, "Yezirat Rikuzim: Num=" + i);
                                   break;
                         }

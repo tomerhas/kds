@@ -488,16 +488,32 @@ namespace KdsBatch
             }
         }
 
-        public float ChishuvTosefetGil(Oved objOved, float fMichsaYomit, float fNuchehutLepremia,DateTime dShatHatchala)
+        public float ChishuvTosefetGil(Oved objOved, float fMichsaYomit, float fNuchehutLepremia,DateTime dShatGmar)
         {
-            bool bShishi, bErevChag;
+            bool bShishi, bErevChag,bChisuv;
             float fTosefetGil = 0;
             try
             {
+                bChisuv = false;
                 bShishi = CheckYomShishi(objOved.SugYom);
                 bErevChag = CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom);
 
-                if (fMichsaYomit > 0 && ((!bShishi && !bErevChag) || ((bShishi || bErevChag) && dShatHatchala < objOved.objParameters.dKnisatShabat)))
+                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                {
+                    if (fMichsaYomit > 0 && (!bErevChag) || (bErevChag && dShatGmar < objOved.objParameters.dKnisatShabat))
+                    {
+                        bChisuv = true;
+                    }
+                }
+                else
+                {
+                    if (fMichsaYomit > 0 && ((!bShishi && !bErevChag) || ((bShishi || bErevChag) && dShatGmar < objOved.objParameters.dKnisatShabat)))
+                    {
+                        bChisuv = true;
+                    }
+                }
+
+                if (bChisuv)
                 {
                     if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
                         fTosefetGil = (fNuchehutLepremia * 30) / objOved.objParameters.iChalukaTosefetGilKashish;
