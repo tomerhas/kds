@@ -1513,7 +1513,7 @@ namespace KdsBatch
                         fZmanNesiot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia);//oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanNesia.GetHashCode());
                         //fZmanRetzifut = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanRetzifutTafkid);//oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.ZmanRetzifutTafkid.GetHashCode());
 
-                        fTempW = fTempX - fTempY + fZmanNesiot; // +fZmanHalbasha + fZmanRetzifut;
+                        fTempW = fTempX - fTempY; // +fZmanNesiot; // +fZmanHalbasha + fZmanRetzifut;
 
                         if (fTempW > objOved.objParameters.iTamrizNosafotLoLetashlum)
                         {
@@ -3944,7 +3944,7 @@ namespace KdsBatch
 
                 }
 
-                fSumDakotRechiv = float.Parse(Math.Ceiling(fSumDakotRechiv).ToString());
+                fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv, MidpointRounding.AwayFromZero).ToString()); // float.Parse(Math.Ceiling(fSumDakotRechiv).ToString());
                 addRowToTable(clGeneral.enRechivim.MichsatShaotNosafotTafkidChol.GetHashCode(), fSumDakotRechiv);
 
             }
