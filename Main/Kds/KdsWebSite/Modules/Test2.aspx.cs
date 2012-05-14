@@ -142,7 +142,8 @@ public partial class Modules_Test2 : System.Web.UI.Page
     protected void btnSrokTachograf_Click(object sender, EventArgs e)
     {
 
-        
+         KdsLibrary.BL.clReport obj = new KdsLibrary.BL.clReport();
+         obj.getRikuzPdfTest(76671, DateTime.Parse("01/08/2010"), 0);
         //BaseBarcode barcode = BarcodeFactory.GetBarcode(Symbology.EAN13);
 
         //barcode.Number = "123456789012";
@@ -163,6 +164,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
     {
         KdsBatch.TaskManager.Utils oUtils = new KdsBatch.TaskManager.Utils();
         oUtils.RunShguimOfPremiyotMusachim();// RunShguimLechishuv();
+        oUtils.RunCalcPremiyotMusachim();// RunShguimLechishuv();
         //MainCalc objMainCalc = new MainCalc(0, DateTime.Parse("01/03/2010"), DateTime.Parse("31/08/2010"), "0,1", false, clGeneral.TypeCalc.Batch);
         //foreach (Oved oOved in objMainCalc.Ovdim)
         //{

@@ -36,6 +36,7 @@ namespace KdsBatch
         private DataTable _DtSidur;
         private DataTable _DtPeilut;
         public DateTime dTchilatAvoda;
+        public DateTime dSiyumAvoda;
 
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
@@ -180,15 +181,20 @@ namespace KdsBatch
                 PirteyOved = new List<clPirteyOved>();
                 oGeneralData.dtPirteyOvdimAll.Select(null, "mispar_ishi");
 
-                rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi); // + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                rows = oGeneralData.dtPirteyOvdimAll.Select("mispar_ishi= " + Mispar_ishi,"ME_TARICH asc"); // + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                    
                 for(int i=0;i<rows.Length ;i++)
                 {
                     itemPirteyOved = new clPirteyOved(rows[i], dTarMe);
                     PirteyOved.Add(itemPirteyOved);
-                    dTchilatAvoda = DateTime.Parse(rows[i]["TCHILAT_AVODA"].ToString());
                     itemPirteyOved = null;
                 }
+                if (rows.Length > 0)
+                {
+                    dTchilatAvoda = DateTime.Parse(rows[rows.Length - 1]["TCHILAT_AVODA"].ToString());
+                    dSiyumAvoda = DateTime.Parse(rows[rows.Length - 1]["AD_TARICH"].ToString());
+                }
+
                 itemPirteyOved = null;
             }
             catch (Exception ex)
