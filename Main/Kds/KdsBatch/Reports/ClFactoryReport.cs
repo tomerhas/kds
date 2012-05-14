@@ -13,6 +13,7 @@ using System.Configuration;
 using KdsLibrary.Security;
 using System.Windows.Forms;
 using KdsLibrary.UDT;
+using KdsLibrary.Utils.Reports;
 namespace KdsBatch.Reports
 {
 
@@ -116,7 +117,7 @@ namespace KdsBatch.Reports
             string path, name = string.Empty, ErrorMessage = string.Empty;
             int iStatus = 0,i=0;
             FileInfo info;
-            _RptModule = ReportModule.GetInstance();
+            _RptModule = new ReportModule();// ReportModule.GetInstance();
             try
             {
                 path = ConfigurationSettings.AppSettings["PathFileReports"];

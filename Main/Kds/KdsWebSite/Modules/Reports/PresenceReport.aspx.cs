@@ -79,7 +79,7 @@ public partial class Modules_Reports_PresenceReport : KdsPage
     private void CreatReport()
     {
         byte[] s;
-        ReportModule Report = ReportModule.GetInstance();
+        ReportModule Report = new ReportModule();// ReportModule.GetInstance();
         DateTime dFromDate, dToDate;
         try
         {

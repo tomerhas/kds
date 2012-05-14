@@ -18,7 +18,7 @@ namespace KdsLibrary.Utils.Reports
         Warning[] warnings = null;
         string[] streamIDs = null;
 
-        private ReportModule()
+        public ReportModule()
         {
             devInfo = @"<DeviceInfo><Toolbar>False</Toolbar></DeviceInfo>";
         }

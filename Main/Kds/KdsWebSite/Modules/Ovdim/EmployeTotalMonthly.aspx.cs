@@ -170,7 +170,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = ReportModule.GetInstance();
+        ReportModule Report = new ReportModule();// ReportModule.GetInstance();
         string sIp="";
         string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
         
@@ -225,7 +225,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = ReportModule.GetInstance();
+        ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
 
         if (Page.IsValid)
         {

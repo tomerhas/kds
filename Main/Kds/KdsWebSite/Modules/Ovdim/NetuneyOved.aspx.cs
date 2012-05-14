@@ -303,7 +303,7 @@ public partial class Modules_Ovdim_NetuneyOved : KdsPage
     {
         byte[] s;
         string sScript;
-        ReportModule Report = ReportModule.GetInstance();
+        ReportModule Report = new ReportModule();//  ReportModule.GetInstance();
         try
         {
             if (Page.IsValid)

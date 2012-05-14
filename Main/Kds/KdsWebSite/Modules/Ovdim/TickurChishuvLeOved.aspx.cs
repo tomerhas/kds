@@ -147,7 +147,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
      {
          byte[] s;
          string sScript;
-         ReportModule Report = ReportModule.GetInstance();
+         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
 
          if (Page.IsValid)
          {
@@ -205,7 +205,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
     {
          byte[] s ;
          string sScript;
-         ReportModule Report = ReportModule.GetInstance();
+         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
 
          if (Page.IsValid)
          {
