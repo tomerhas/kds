@@ -374,7 +374,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             ddlLina.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "LINA"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
             ddlTachograph.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "TACHOGRAF"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
             ddlTravleTime.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "BITUL_ZMAN_NESIOT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
-            ddlHalbasha.Enabled = false;//(!clWorkCard.IsIdkunExists(clWorkCard.ErrorLevel.LevelYomAvoda, 5, 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));            
+            ddlHalbasha.Enabled = IsHalbasha();//(!clWorkCard.IsIdkunExists(clWorkCard.ErrorLevel.LevelYomAvoda, 5, 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));            
             ddlHashlamaReason.Enabled = (!clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "SIBAT_HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
             HashlamaForDayValue.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HASHLAMA_LEYOM"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
             Hamara.Disabled = (clWorkCard.IsIdkunExists(iMisparIshiIdkunRashemet, bRashemet, clWorkCard.ErrorLevel.LevelYomAvoda, clUtils.GetPakadId(dtPakadim, "HAMARAT_SHABAT"), 0, DateTime.MinValue, DateTime.MinValue, 0, ref dtIdkuneyRashemet));
@@ -474,19 +474,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     {
         Session["ProfileRashemet"] = bRashemet;
         hidRashemet.Value = bRashemet ? "1" : "0";
-        //כפתור מסך שגיאות
-        //  שאינו מסוג רשמת/רשמת על/מנהל מערכת. הכפתור יוצג גם בכניסה מעמדת נהג וגם בכניסה מ- PC. 
-        //כפתור השגוי הבא יוצג רק לרשמת/מנהל מערכת
-        if (bRashemet)
-        {
-            btnDrvErrors.Style.Add("Display", "none");
-            btnNextErrCard.Style.Add("Display", "block");
-        }
-        else
-        {
-            btnDrvErrors.Style.Add("Display", "block");
-            btnNextErrCard.Style.Add("Display", "none");
-        }
+        
+        //כפתור מסך עדכונים לעובד
+        btnDrvErrors.Style.Add("Display", "block");  
+        //כפתור השגוי הבא יוצג רק לרשמת/מנהל מערכת        
+        if (bRashemet)        
+            //btnDrvErrors.Style.Add("Display", "none");
+            btnNextErrCard.Style.Add("Display", "block");        
+        else        
+           // btnDrvErrors.Style.Add("Display", "block");
+            btnNextErrCard.Style.Add("Display", "none");        
     }
     protected void SetDriverSource()
     {             
@@ -2218,10 +2215,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SetImageForButtonHamaratShabat();
         //סיבות להשלמה
        // ddlHashlamaReason.SelectedValue = oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString() == "0" ? "-1" : oBatchManager.oOvedYomAvodaDetails.iSibatHashlamaLeyom.ToString();
-        ddlHalbasha.Enabled = false;
+        ddlHalbasha.Enabled = IsHalbasha();
        }
     }
-
+    private bool IsHalbasha()
+    {
+        return oBatchManager.oMeafyeneyOved.Meafyen44Exists;
+    }
     private void ShowEmployeeDetails(int iMisparIshi, DateTime dCardDate)
     {
         //נתוני עובד
@@ -2427,8 +2427,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         MPEPrintMsg.Hide();
     }
-    protected void PrintCard(object sender, EventArgs e)
+    public void PrintCard(object sender, EventArgs e)
     {
+        
         string urlBarcode,key;
         try
         {
@@ -2446,7 +2447,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
 
-                ReportModule Report = ReportModule.GetInstance();
+
+                ReportModule Report = new ReportModule();
                 Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
                 Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
                 Report.AddParameter("P_EMDA", "0");
