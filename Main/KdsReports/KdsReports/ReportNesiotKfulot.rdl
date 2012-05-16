@@ -1,17 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="DsKds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:DataSourceID>aad634d0-1823-4239-9d8f-450a50811e72</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsNesiotKfulot">
+      <Fields>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MAKAT_NESIA">
+          <DataField>MAKAT_NESIA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_YETZIA">
+          <DataField>SHAT_YETZIA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHILUT">
+          <DataField>SHILUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_YEZIA_S">
+          <DataField>SHAT_YEZIA_S</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_YOM">
+          <DataField>TEUR_YOM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_EZOR_MIYUN">
+          <DataField>KOD_EZOR_MIYUN</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV_MIYUN">
+          <DataField>TEUR_SNIF_AV_MIYUN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR_MIYUN">
+          <DataField>TEUR_EZOR_MIYUN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_NESIA">
+          <DataField>TEUR_NESIA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_SNIF_AV_MIYUN">
+          <DataField>KOD_SNIF_AV_MIYUN</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_NESIOT_KFULOT</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="DsSnif">
+      <Fields>
+        <Field Name="KOD_SNIF_TNUAA">
+          <DataField>KOD_SNIF_TNUAA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF">
+          <DataField>TEUR_SNIF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsKds</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_UTILS.PRO_GET_SNIF_TNUA_BY_KOD</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_KOD_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+  </DataSets>
   <Body>
     <ReportItems>
       <Tablix Name="Tablix5">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.65831cm</Width>
+              <Width>8.13319in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.41372cm</Height>
+              <Height>2.52509in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -21,39 +136,39 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>1.967cm</Width>
+                                <Width>0.77441in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.8031cm</Width>
+                                <Width>0.70988in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.05306cm</Width>
+                                <Width>0.80829in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.45064cm</Width>
+                                <Width>1.35852in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.09441cm</Width>
+                                <Width>0.43087in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.03035cm</Width>
+                                <Width>0.40565in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>2.55293cm</Width>
+                                <Width>1.00509in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.29972cm</Width>
+                                <Width>0.5117in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>3.9306cm</Width>
+                                <Width>1.54748in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.4765cm</Width>
+                                <Width>0.5813in</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>2.60529cm</Height>
+                                <Height>1.0257in</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -86,7 +201,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.66119cm</Height>
+                                <Height>0.26031in</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -169,7 +284,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.44952cm</Height>
+                                <Height>0.17698in</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -218,7 +333,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>1.21975cm</Height>
+                                <Height>0.48022in</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -601,7 +716,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>1.0168cm</Height>
+                                <Height>0.40031in</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -629,7 +744,7 @@
                                             <Style>None</Style>
                                           </LeftBorder>
                                           <RightBorder>
-                                            <Style>Solid</Style>
+                                            <Style>None</Style>
                                           </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -662,6 +777,12 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Style>None</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>Solid</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -692,6 +813,9 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                          </LeftBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -723,6 +847,13 @@
                                           <Border>
                                             <Style>None</Style>
                                           </Border>
+                                          <LeftBorder>
+                                            <Color>Black</Color>
+                                            <Style>Solid</Style>
+                                          </LeftBorder>
+                                          <RightBorder>
+                                            <Style>Solid</Style>
+                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -993,7 +1124,6 @@
                           <KeepTogether>true</KeepTogether>
                           <DataSetName>DsNesiotKfulot</DataSetName>
                           <Top>0.27597cm</Top>
-                          <Left>0cm</Left>
                           <Height>5.95255cm</Height>
                           <Width>20.65831cm</Width>
                           <Style>
@@ -1065,12 +1195,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>10.67086cm</Width>
+              <Width>4.20113in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.66646cm</Height>
+              <Height>0.26239in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1187,7 +1317,6 @@
             <Value>=" נסיעות כפולות מ- " &amp; Day(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Month(Parameters!P_STARTDATE.Value) &amp; "/" &amp; Year(Parameters!P_STARTDATE.Value) &amp; " עד " &amp; Day(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Month(Parameters!P_ENDDATE.Value) &amp; "/" &amp; Year(Parameters!P_ENDDATE.Value)</Value>
           </Parameter>
         </Parameters>
-        <Left>0cm</Left>
         <Height>2.87509cm</Height>
         <Width>20.65831cm</Width>
         <ZIndex>3</ZIndex>
@@ -1221,7 +1350,6 @@
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
         <Top>2.82257cm</Top>
-        <Left>0cm</Left>
         <Height>0.67937cm</Height>
         <Width>20.65831cm</Width>
         <ZIndex>4</ZIndex>
@@ -1279,134 +1407,6 @@
     <Height>8.91904cm</Height>
     <Style />
   </Body>
-  <Width>20.69359cm</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
-    <ColumnSpacing>1.27cm</ColumnSpacing>
-    <Style />
-  </Page>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>aad634d0-1823-4239-9d8f-450a50811e72</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsNesiotKfulot">
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_NESIOT_KFULOT</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MAKAT_NESIA">
-          <DataField>MAKAT_NESIA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_YETZIA">
-          <DataField>SHAT_YETZIA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHILUT">
-          <DataField>SHILUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_YEZIA_S">
-          <DataField>SHAT_YEZIA_S</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_YOM">
-          <DataField>TEUR_YOM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_EZOR_MIYUN">
-          <DataField>KOD_EZOR_MIYUN</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV_MIYUN">
-          <DataField>TEUR_SNIF_AV_MIYUN</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR_MIYUN">
-          <DataField>TEUR_EZOR_MIYUN</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_NESIA">
-          <DataField>TEUR_NESIA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_SNIF_AV_MIYUN">
-          <DataField>KOD_SNIF_AV_MIYUN</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="DsSnif">
-      <Query>
-        <DataSourceName>DsKds</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_KOD_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_UTILS.PRO_GET_SNIF_TNUA_BY_KOD</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="KOD_SNIF_TNUAA">
-          <DataField>KOD_SNIF_TNUAA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF">
-          <DataField>TEUR_SNIF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
@@ -1435,6 +1435,17 @@
       <Prompt>P SNIF</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <Width>20.69359cm</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
+    <Style />
+  </Page>
   <rd:ReportID>089a037f-6e6d-4eed-96e4-fbe50e015bdd</rd:ReportID>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>
