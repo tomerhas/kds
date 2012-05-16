@@ -25,14 +25,14 @@ namespace KdsBatch
           {
               sErua460.Append(GetBlank(8));
 
-              if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
-              {
+              //if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
+              //{
                   sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode()), 4, 0));
-              }
-              else
-              {
-                  sErua460.Append(GetBlank(4));
-              }
+              //}
+              //else
+              //{
+              //    sErua460.Append(GetBlank(4));
+              //}
 
               if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {

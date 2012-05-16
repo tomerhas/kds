@@ -669,7 +669,7 @@ namespace KdsBatch
                     addRowToTable(clGeneral.enRechivim.ZmanNesia.GetHashCode(), fZmanNesia - fTemp);
                 }
 
-                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode())
+                if (objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || objOved.objMeafyeneyOved.iMeafyen56 == clGeneral.enMeafyenOved56.enOved6DaysInWeek1.GetHashCode())
                 {
                     if (fSumDakotRechiv < fMichsaYomit && (fMichsaYomit - fSumDakotRechiv) <= 2)
                         fSumDakotRechiv = fMichsaYomit;
@@ -6164,7 +6164,7 @@ namespace KdsBatch
                                             {
                                                 drSidurPrev = drYom[i - 1];
                                                 dShatGmarPrev = DateTime.Parse(drSidurPrev["shat_gmar_letashlum"].ToString());
-                                                fErechSidurPrev = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + drSidurPrev["mispar_sidur"].ToString() + " AND SHAT_HATCHALA=Convert('" + drSidurPrev["shat_hatchala_sidur"].ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaYomit.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                                                fErechSidurPrev = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + drSidurPrev["mispar_sidur"].ToString() + " AND SHAT_HATCHALA=Convert('" + drSidurPrev["shat_hatchala_sidur"].ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                                             }
                                             else fErechSidurPrev = 0;
                                             

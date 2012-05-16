@@ -263,7 +263,7 @@ namespace KdsBatch
         protected void WriteError(string sError)
         {
         clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", _iKodErua, _dMonth, sError);
-               
+        clLogBakashot.InsertErrorToLog();
         }
 
         protected void PrepareLines()

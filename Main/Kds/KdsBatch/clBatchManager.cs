@@ -1114,7 +1114,7 @@ namespace KdsBatch
             //int iPrevLoLetashlum=0;
             float fSidurTime = 0;
             int iTotalHashlamotForSidur = 0;//סה"כ השלמות בכל הסידורים 
-            int iHashlama,iNumElements;
+            int iHashlama;
             bool bSidurNahagut=false;
             bool bHaveSidurNahagut = false;
             int iTotalTimePrepareMechineForSidur = 0;
@@ -1152,7 +1152,6 @@ namespace KdsBatch
                 for (int i = 0; i < htEmployeeDetails.Count; i++)
                 {
                     oSidur = (clSidur)htEmployeeDetails[i];
-                    iNumElements=0;
                     ////set dataset sidurim with sidur details
                     //SetSidurDetails(dCardDate, ref oSidur, out iResult);
 
@@ -1308,11 +1307,8 @@ namespace KdsBatch
                         if (CheckErrorActive(179)) HightValueDakotBefoal179(oSidur, oPeilut, ref dtErrors);
                         if (CheckErrorActive(189)) KisuyTorLifneyHatchalatSidur189(oSidur, oPeilut, ref dtErrors);
 
-                        sMakat= oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
-                        if (oPeilut.lMakatNesia.ToString().Length == 8 && (sMakat == "730" || sMakat == "740" || sMakat == "750"))
-                            iNumElements += 1;
                     }
-                    if (CheckErrorActive(185)) ErrMisparElementimMealHamutar185(iNumElements,dCardDate, ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(185)) ErrMisparElementimMealHamutar185(dCardDate, ref oSidur, ref dtErrors);
 
                     if (!bFirstSidur)
                     {
@@ -1514,11 +1510,14 @@ namespace KdsBatch
             return isValid;
         }
 
-        private bool ErrMisparElementimMealHamutar185(int iNumElements,DateTime dCardDate,ref clSidur oSidur, ref DataTable dtErrors)
+        private bool ErrMisparElementimMealHamutar185(DateTime dCardDate,ref clSidur oSidur, ref DataTable dtErrors)
         {
             //בדיקה ברמת סידור         
             DataRow drNew;
             bool isValid = true;
+            clPeilut oPeilut; // = new clPeilut();
+            string sMakat;
+            int iNumElements730=0, iNumElements740=0, iNumElements750=0;
             try
             {
                 DataRow[] drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
@@ -1526,7 +1525,18 @@ namespace KdsBatch
                 {
                     if (drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nihul.GetHashCode().ToString())
                     {
-                        if (iNumElements > 1)
+                        for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                        {
+                            oPeilut = (clPeilut)oSidur.htPeilut[j];
+                            sMakat = oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3);
+                            if (sMakat == "730") 
+                                iNumElements730 += 1;
+                             if (sMakat == "740") 
+                                iNumElements740 += 1;
+                             if (sMakat == "750") 
+                                iNumElements750 += 1;
+                        }
+                        if ((iNumElements730 > 0 && iNumElements740 > 0) || (iNumElements740 > 0 && iNumElements750 > 0) || (iNumElements730 > 0 && iNumElements750 > 0))
                         {
                             drNew = dtErrors.NewRow();
                             InsertErrorRow(oSidur, ref drNew, "סידור ניהול תנועה מהמפה המכיל יותר מסוג אחד של אלמנט מסוג ניהול תנועה", enErrors.ErrMisparElementimMealHamutar.GetHashCode());

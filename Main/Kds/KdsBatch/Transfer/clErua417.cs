@@ -50,7 +50,7 @@ namespace KdsBatch
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  sErua417.Append(FormatNumber((GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode()) / 60), 4, 0));
+                  sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()), 4, 0));
               }
               else if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
               {
@@ -61,23 +61,18 @@ namespace KdsBatch
                 else { sErua417.Append(GetBlank(4)); }
               }
 
-              if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
-              {
-                  sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode()), 4, 0));
-              }
-              else { sErua417.Append(GetBlank(4)); }
-
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"),4,0));
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"),4,0));
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"),4,0));
-                fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode());
-                fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode());
-                sErua417.Append(FormatNumber(fErech, 4,0));
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode()), 4, 0));
-                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaShabat.GetHashCode()),4,0));
-                fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode());
-                fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode());
-                sErua417.Append(FormatNumber(fErech, 5, 0));
+            sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode()), 4, 0));
+            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"),4,0));
+            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"),4,0));
+            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"),4,0));
+            fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode());
+            fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode());
+            sErua417.Append(FormatNumber(fErech, 4,0));
+            sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShabat.GetHashCode()), 4, 0));
+            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.DakotPremiaShabat.GetHashCode()),4,0));
+            fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode());
+            fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode());
+            sErua417.Append(FormatNumber(fErech, 5, 0));
 
               if (!IsEmptyErua(sErua417.ToString()))
               {

@@ -67,13 +67,13 @@ namespace KdsBatch
                fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
                sErua416.Append(FormatNumber(fErech, 4, 2));
            }
-           else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
-           {
-              fErech = GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode());
-              if (fErech > 0)
-                  sErua416.Append(FormatNumber(fErech, 4, 2));
-              else sErua416.Append(GetBlank(4));
-           }
+          //else if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+          //{
+          //    fErech = GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode());
+          //    if (fErech > 0)
+          //        sErua416.Append(FormatNumber(fErech, 4, 2));
+          //    else sErua416.Append(GetBlank(4));
+          //}
            else
            {
               sErua416.Append(GetBlank(4));

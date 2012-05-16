@@ -143,7 +143,7 @@ public partial class Modules_Test2 : System.Web.UI.Page
     {
 
          KdsLibrary.BL.clReport obj = new KdsLibrary.BL.clReport();
-         obj.getRikuzPdfTest(76671, DateTime.Parse("01/08/2010"), 0);
+         obj.getRikuzPdfTest(76452, DateTime.Parse("01/08/2010"), 0);
         //BaseBarcode barcode = BarcodeFactory.GetBarcode(Symbology.EAN13);
 
         //barcode.Number = "123456789012";

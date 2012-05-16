@@ -995,8 +995,9 @@ namespace KdsBatch
 
                     dShatGmarSidur = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
 
-                    fErech = float.Parse(_drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString()); //float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString());
-                   // fErech = float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString());
+                   // fErech = float.Parse(_drSidurim[I]["ZMAN_LELO_HAFSAKA"].ToString()); //float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString());
+                    fErech = float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString());
+                    fErech -= oPeilut.getZmanHafsakaBesidur(iMisparSidur, dShatHatchalaSidur);
                     addRowToTable(clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
                 }
 
