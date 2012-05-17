@@ -2033,11 +2033,6 @@ iif(
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
-      <DefaultValue>
-        <Values>
-          <Value>75757</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>Mispar_Ishi</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_WORKERVIEWLEVEL">

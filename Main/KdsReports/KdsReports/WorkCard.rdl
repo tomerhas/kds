@@ -8,16 +8,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.28277cm</Width>
+                  <Width>3.32893cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.20936cm</Width>
+                  <Width>4.25552cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.72308cm</Width>
+                  <Width>3.76924cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.97337cm</Width>
+                  <Width>3.01953cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -345,9 +345,9 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>1.63156cm</Top>
-            <Left>5.41578cm</Left>
+            <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.18858cm</Width>
+            <Width>14.37323cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -358,19 +358,19 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.00936cm</Width>
+                  <Width>3.06055cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.8719cm</Width>
+                  <Width>1.7169cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.9414cm</Width>
+                  <Width>2.59081cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.11084cm</Width>
+                  <Width>2.14777cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.25504cm</Width>
+                  <Width>2.29197cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -766,9 +766,9 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.72802cm</Top>
-            <Left>5.41578cm</Left>
+            <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.18854cm</Width>
+            <Width>11.808cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -780,16 +780,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.87076cm</Width>
+                  <Width>2.14484cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.00505cm</Width>
+                  <Width>1.35356cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.88874cm</Width>
+                  <Width>2.21728cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.85714cm</Width>
+                  <Width>1.16068cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1109,9 +1109,9 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>4.79389cm</Top>
-            <Left>5.41578cm</Left>
+            <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>11.62169cm</Width>
+            <Width>6.87636cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1225,8 +1225,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>4.79389cm</Top>
-            <Left>17.28438cm</Left>
+            <Top>3.72802cm</Top>
+            <Left>17.28431cm</Left>
             <Height>0.92476cm</Height>
             <Width>2.31999cm</Width>
             <ZIndex>3</ZIndex>
@@ -1240,16 +1240,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.41338cm</Width>
+                  <Width>4.45954cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.84409cm</Width>
+                  <Width>2.89025cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.21302cm</Width>
+                  <Width>4.25918cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.71813cm</Width>
+                  <Width>2.76429cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1575,9 +1575,9 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>2.66215cm</Top>
-            <Left>5.41578cm</Left>
+            <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.18862cm</Width>
+            <Width>14.37327cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -3160,10 +3160,281 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
               </Border>
             </Style>
           </Image>
+          <Tablix Name="Tablix8">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>2.78775cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.42958cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>3.1031cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.46238cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>כמות פניות ציבור</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Double</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox14">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>אי דיוק</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Double</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox32">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>דיווח תחילת נסיעה</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Double</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.46238cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="FULL_NAME5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25,Fields!PUBLIC_COMPLAINTS.Value,"")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FULL_NAME</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="MISPAR_ISHI5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25, Fields!NOT_ON_TIME.Value &amp; "%","")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>MISPAR_ISHI</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox33">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25, Fields!F5.Value &amp; "%","")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <HangingIndent>0cm</HangingIndent>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details8" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsPirteyOved</DataSetName>
+            <Top>4.79389cm</Top>
+            <Left>12.28397cm</Left>
+            <Height>0.92476cm</Height>
+            <Width>7.32043cm</Width>
+            <ZIndex>20</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Tablix>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Height>6.83694cm</Height>
-        <Width>19.6764cm</Width>
+        <Width>19.87734cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3182,7 +3453,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
       </Border>
     </Style>
   </Body>
-  <Width>7.75839in</Width>
+  <Width>7.82573in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -3314,6 +3585,18 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
         </Field>
         <Field Name="SHIBUZ_MECHONA">
           <DataField>SHIBUZ_MECHONA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="F5">
+          <DataField>F5</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NOT_ON_TIME">
+          <DataField>NOT_ON_TIME</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PUBLIC_COMPLAINTS">
+          <DataField>PUBLIC_COMPLAINTS</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
