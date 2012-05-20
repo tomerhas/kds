@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.14236cm</Width>
+              <Width>20.17644cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>8.13234cm</Height>
+              <Height>8.27318cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1729,8 +1729,9 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                             </Rectangle>
                           </ReportItems>
                           <KeepTogether>true</KeepTogether>
-                          <Top>2.50442cm</Top>
-                          <Height>5.62792cm</Height>
+                          <Top>2.02751cm</Top>
+                          <Left>0.08227cm</Left>
+                          <Height>5.29251cm</Height>
                           <Width>20.09417cm</Width>
                           <Style>
                             <Border>
@@ -1745,8 +1746,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                               <Value>="דו""ח נוכחות מה- " &amp; Parameters!P_STARTDATE.Value &amp; "  עד ל- " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Top>0.38769cm</Top>
-                          <Left>2.20939cm</Left>
+                          <Left>2.02121cm</Left>
                           <Height>1.80071cm</Height>
                           <Width>15.62888cm</Width>
                           <ZIndex>1</ZIndex>
@@ -1756,6 +1756,44 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                             </Border>
                           </Style>
                         </Subreport>
+                        <Textbox Name="Textbox4">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
+                                  <Style>
+                                    <FontSize>14pt</FontSize>
+                                    <Color>Red</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Top>0.90967cm</Top>
+                          <Left>1.02064cm</Left>
+                          <Height>0.89104cm</Height>
+                          <Width>15.08548cm</Width>
+                          <ZIndex>2</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif(CountRows("DsPresence")&gt;0 ,true ,false)</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Visibility>
@@ -1767,6 +1805,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                         </Border>
                       </Style>
                     </Rectangle>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1787,7 +1826,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                   <GroupExpression>=Format(Fields!TAARICH.Value,"MM/yyyy")</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
-                  <BreakLocation>End</BreakLocation>
+                  <BreakLocation>Between</BreakLocation>
                 </PageBreak>
               </Group>
               <SortExpressions>
@@ -1803,8 +1842,8 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
-        <Height>8.13234cm</Height>
-        <Width>20.14236cm</Width>
+        <Height>8.27318cm</Height>
+        <Width>20.17644cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -1814,46 +1853,8 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
           </Border>
         </Style>
       </Tablix>
-      <Textbox Name="Textbox4">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>לא נמצאו רשומות לחתך שהתבקש</Value>
-                <Style>
-                  <FontSize>14pt</FontSize>
-                  <Color>Red</Color>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Right</TextAlign>
-            </Style>
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>1.50132cm</Top>
-        <Left>1.22078cm</Left>
-        <Height>0.89104cm</Height>
-        <Width>15.08548cm</Width>
-        <ZIndex>1</ZIndex>
-        <Visibility>
-          <Hidden>=iif(CountRows("DsPresence")&gt;0 ,true ,false)</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
     </ReportItems>
-    <Height>3.20171in</Height>
+    <Height>3.44466in</Height>
     <Style />
   </Body>
   <Width>8.02969in</Width>
