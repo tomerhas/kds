@@ -99,6 +99,19 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
         ModalPopupEx.Show();
     }
 
+
+    protected void btnRefresh_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            clBatch oBatch = new clBatch();
+            oBatch.RefreshTable("TB_PREM");
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+    }
     //protected void btnRunShguiim_Click(object sender, EventArgs e)
     //{
     //    int iUserId, iRunAll;

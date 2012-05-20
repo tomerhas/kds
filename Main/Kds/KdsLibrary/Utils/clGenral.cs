@@ -64,6 +64,7 @@ namespace KdsLibrary
         public const string cProSaveRikuzPdf = "pkg_batch.Pro_Save_Rikuz_Pdf";
         public const string cProGetRikuzPdf = "pkg_batch.Pro_Get_Rikuz_Pdf";
         public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
+        public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv"; 
         
 #endregion 
 
@@ -339,7 +340,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         public const string cProGetSadotNosafomLePeilut = "PKG_UTILS.get_sadot_nosafim_lePeilut";
         public const string cProMoveRecordsToHistory = "PKG_UTILS.MoveRecordsToHistory";
         public const string cProGetTavlaotToRefresh = "PKG_UTILS.pro_get_tavlaot_to_refresh";
-        public const string cProGetOvdimLeBakashatChishuv = "PKG_UTILS.pro_get_ovdim_by_bakasha"; 
+        public const string cProGetOvdimLeBakashatChishuv = "PKG_UTILS.pro_get_ovdim_by_bakasha";
+     
 #endregion
         #region PKG_APPROVALS constants
         public const string cFnIsOvedMusach = "PKG_APPROVALS.fn_is_oved_musach";       

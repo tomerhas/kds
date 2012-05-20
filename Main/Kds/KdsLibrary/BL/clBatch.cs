@@ -496,6 +496,21 @@ namespace KdsLibrary.BL
             }
         }
 
+        public void RefreshTable(string NameTbl)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {
+                oDal.AddParameter("shem_mvew", KdsLibrary.DAL.ParameterType.ntOracleVarchar, NameTbl, KdsLibrary.DAL.ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProRefreshTable, ref dt); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int GetNumChangesHrToShguim()
         {
             clDal oDal = new clDal();

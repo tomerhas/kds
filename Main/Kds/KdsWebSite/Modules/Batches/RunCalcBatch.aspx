@@ -23,7 +23,8 @@
         <td colspan="2"><asp:DropDownList ID="ddlToMonth"  runat="server" Width="100px">
             </asp:DropDownList><asp:RequiredFieldValidator ID="vldMonth" runat="server" Display="Dynamic" CssClass="ErrorMessage"  ErrorMessage="חובה לבחור חודש!" ControlToValidate="ddlToMonth"></asp:RequiredFieldValidator>
         </td>
-        <td colspan="2"></td>
+       
+        <td colspan="2"> <asp:Button  ID="btnRefresh" runat="server" Width="130px" CausesValidation="false"  Text="רענן פרמיות משק"  CssClass="ImgButtonSearch"  onclick="btnRefresh_Click"/> </td>
     </tr>
       <tr>
        <td colspan="3"><asp:RadioButton ID="chkTest" runat="server" Checked="true" GroupName="rdoTest" /> &nbsp; ריצת טסט</td>

@@ -62,7 +62,6 @@ namespace KdsBatch
               sErua415.Append(FormatNumber((fErech/60), 4, 1));
 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode());
-              fErech -= (GetErechRechiv(clGeneral.enRechivim.Kizuz200.GetHashCode()) * 60);
               sErua415.Append(FormatNumber((fErech / 60), 4, 1));
 
               if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())

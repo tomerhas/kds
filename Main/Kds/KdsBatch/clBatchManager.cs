@@ -11638,7 +11638,9 @@ namespace KdsBatch
                     oSidur = (clSidur)htEmployeeDetails[i];
                     //נקרא את נתוני הסידור הקודם
                     oSidurPrev = (clSidur)htEmployeeDetails[i - 1];
-                   
+
+                    if (oSidur.iLoLetashlum == 0 && oSidurPrev.iLoLetashlum == 0)
+                    {
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         oPrevObjSidurimOvdimUpd = GetSidurOvdimObject(oSidurPrev.iMisparSidur, oSidurPrev.dFullShatHatchala);
 
@@ -11660,7 +11662,7 @@ namespace KdsBatch
                                             oNewSidurim.SidurIndex = i;
                                             oNewSidurim.SidurNew = oSidur.iMisparSidur;
                                             oNewSidurim.ShatHatchalaNew = oSidur.dFullShatHatchala.AddMinutes(Math.Min(Math.Abs((datePrevShatGmar - dateCurrShatHatchala).TotalMinutes), (oPeilut.dFullShatYetzia.AddMinutes(-oPeilut.iKisuyTor) - oSidur.dFullShatHatchala).TotalMinutes));
-                                         
+
                                             UpdateObjectUpdSidurim(oNewSidurim);
                                             for (int j = 0; j < oSidur.htPeilut.Count; j++)
                                             {
@@ -11676,20 +11678,20 @@ namespace KdsBatch
                                                     else
                                                     {
                                                         oObjPeilutUpd.NEW_SHAT_HATCHALA_SIDUR = oNewSidurim.ShatHatchalaNew;
-                                                         oObjPeilutUpd.UPDATE_OBJECT = 1;
+                                                        oObjPeilutUpd.UPDATE_OBJECT = 1;
                                                     }
                                                 }
-                                               
+
                                             }
                                             //UpdatePeiluyotMevutalotYadani(i,oNewSidurim, oObjSidurimOvdimUpd);
                                             UpdateIdkunRashemet(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
                                             UpdateApprovalErrors(oSidur.iMisparSidur, oSidur.dFullShatHatchala, oNewSidurim.ShatHatchalaNew);
-                                            
+
                                             oSidur.dFullShatHatchala = oNewSidurim.ShatHatchalaNew;
                                             oSidur.sShatHatchala = oSidur.dFullShatHatchala.ToString("HH:mm");
                                             htEmployeeDetails[i] = oSidur;
                                             oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
-                                            
+
                                             dateCurrShatHatchala = oNewSidurim.ShatHatchalaNew;
 
                                         }
@@ -11713,11 +11715,9 @@ namespace KdsBatch
                                     }
                                 }
                             }
-
                         }
-
-                        
                     }
+                }
             }
             catch (Exception ex)
             {
