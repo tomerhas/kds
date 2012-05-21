@@ -806,7 +806,9 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And Previous(Fields!MAKAT_NESIA.Value) = Fields!MAKAT_NESIA.Value And Previous(Fields!SHAT_YETZIA.Value) = Fields!SHAT_YETZIA.Value, "", Fields!MAKAT_NESIA.Value)</Value>
+                                                <Value>=iif(Previous(Fields!TAARICH.Value) = Fields!TAARICH.Value And 
+     Previous(Fields!MAKAT_NESIA.Value) = Fields!MAKAT_NESIA.Value And 
+     Previous(Fields!SHAT_YETZIA.Value) = Fields!SHAT_YETZIA.Value, "", Fields!MAKAT_NESIA.Value)</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
