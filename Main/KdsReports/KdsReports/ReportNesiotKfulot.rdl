@@ -136,10 +136,10 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.77441in</Width>
+                                <Width>0.64941in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.70988in</Width>
+                                <Width>0.43728in</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>0.80829in</Width>
@@ -160,7 +160,7 @@
                                 <Width>0.5117in</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.54748in</Width>
+                                <Width>1.94508in</Width>
                               </TablixColumn>
                               <TablixColumn>
                                 <Width>0.5813in</Width>
@@ -738,14 +738,17 @@
                                         </Paragraphs>
                                         <Style>
                                           <Border>
-                                            <Style>None</Style>
+                                            <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Style>None</Style>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Style>None</Style>
+                                          </BottomBorder>
                                           <LeftBorder>
                                             <Style>None</Style>
                                           </LeftBorder>
-                                          <RightBorder>
-                                            <Style>None</Style>
-                                          </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
                                           <PaddingTop>2pt</PaddingTop>
@@ -775,13 +778,16 @@
                                         <rd:DefaultName>Textbox5</rd:DefaultName>
                                         <Style>
                                           <Border>
-                                            <Style>None</Style>
-                                          </Border>
-                                          <LeftBorder>
-                                            <Style>None</Style>
-                                          </LeftBorder>
-                                          <RightBorder>
                                             <Style>Solid</Style>
+                                          </Border>
+                                          <TopBorder>
+                                            <Style>None</Style>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Style>None</Style>
+                                          </BottomBorder>
+                                          <RightBorder>
+                                            <Style>None</Style>
                                           </RightBorder>
                                           <PaddingLeft>2pt</PaddingLeft>
                                           <PaddingRight>2pt</PaddingRight>
@@ -811,8 +817,14 @@
                                         </Paragraphs>
                                         <Style>
                                           <Border>
-                                            <Style>None</Style>
+                                            <Style>Solid</Style>
                                           </Border>
+                                          <TopBorder>
+                                            <Style>None</Style>
+                                          </TopBorder>
+                                          <BottomBorder>
+                                            <Style>None</Style>
+                                          </BottomBorder>
                                           <LeftBorder>
                                             <Color>Black</Color>
                                           </LeftBorder>
@@ -822,6 +834,7 @@
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -1124,8 +1137,8 @@
                           <KeepTogether>true</KeepTogether>
                           <DataSetName>DsNesiotKfulot</DataSetName>
                           <Top>0.27597cm</Top>
-                          <Height>5.95255cm</Height>
-                          <Width>20.65831cm</Width>
+                          <Height>5.95254cm</Height>
+                          <Width>20.6583cm</Width>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1183,8 +1196,8 @@
         </TablixRowHierarchy>
         <DataSetName>DsNesiotKfulot</DataSetName>
         <Top>1.38883cm</Top>
-        <Height>6.41372cm</Height>
-        <Width>20.65831cm</Width>
+        <Height>6.41373cm</Height>
+        <Width>20.6583cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1270,8 +1283,8 @@
         <DataSetName>DsSnif</DataSetName>
         <Top>3.53722cm</Top>
         <Left>0.03528cm</Left>
-        <Height>0.66646cm</Height>
-        <Width>10.67086cm</Width>
+        <Height>0.66647cm</Height>
+        <Width>10.67087cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
