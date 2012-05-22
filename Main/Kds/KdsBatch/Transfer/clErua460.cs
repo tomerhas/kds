@@ -24,25 +24,21 @@ namespace KdsBatch
           try
           {
               sErua460.Append(GetBlank(8));
-
-              //if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
-              //{
-                  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode()), 4, 0));
-              //}
-              //else
-              //{
-              //    sErua460.Append(GetBlank(4));
-              //}
+              sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode()), 4, 0));
+              sErua460.Append(GetBlank(4));
 
               if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
-                  sErua460.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode()), 4, 2));
+                  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode()), 4, 2));
               }
               else
               {
                   sErua460.Append(GetBlank(4));
               }
-              sErua460.Append(GetBlank(57));
+              sErua460.Append(GetBlank(12));//פוזיציות 6,7,8
+              sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode()), 4, 2));
+
+              sErua460.Append(GetBlank(37));
               if (!IsEmptyErua(sErua460.ToString()))
               {
                   ListErua.Add(sErua460.ToString());

@@ -150,7 +150,7 @@ namespace KdsBatch
             else { sFormat = sFormat.PadLeft(iLen , char.Parse("0")); }
 
             //dErech = clGeneral.TrimDoubleToXDigits(double.Parse(fErech.ToString()), iNumDigit);
-            if (fErech == 0 && _iKodErua !=162 )
+            if (float.Parse(fErech.ToString(sFormat)) == 0 && _iKodErua != 162)
                 sErech = fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
             else sErech = fErech.ToString(sFormat).Replace(".", "");
 
@@ -160,6 +160,7 @@ namespace KdsBatch
                 sErech = sErech.Substring(1, sErech.Length - 2);
                 sErech += GetSimanEfresh(iLastDigit);
             }
+          
             return sErech;
         }
 

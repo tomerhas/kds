@@ -1640,7 +1640,7 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
@@ -1661,14 +1661,14 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
                                             else
                                             {
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 SumEzer += fErechSidur;
                                                 i++;
@@ -1677,14 +1677,14 @@ namespace KdsBatch
                                         else
                                         {
                                             if (SumEzer > 0)
-                                                fErechRechiv += SumEzer;
+                                                fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                             SumEzer = 0;
                                             i++;
                                         }
                                     }
                                     if (SumEzer > 0)
-                                        fErechRechiv += SumEzer;
-                                    fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
+                                        fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
+                                   // fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
                                     addRowToTable(clGeneral.enRechivim.DakotPremiaShabat.GetHashCode(), fErechRechiv);
                                 }
                             }
@@ -1945,7 +1945,7 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer>0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
@@ -1966,14 +1966,14 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
                                             else
                                             {
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 SumEzer += fErechSidur;
                                                 i++;
@@ -1982,14 +1982,15 @@ namespace KdsBatch
                                         else
                                         {
                                             if (SumEzer > 0)
-                                                fErechRechiv += SumEzer;
+                                                fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                             SumEzer = 0;
                                             i++;
                                         }
                                     }
                                     if (SumEzer > 0)
-                                        fErechRechiv += SumEzer;
-                                    fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
+                                        fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
+
+                                   // fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
                                     addRowToTable(clGeneral.enRechivim.DakotPremiaYomit.GetHashCode(), fErechRechiv);
                                 }
                             }
@@ -3385,7 +3386,7 @@ namespace KdsBatch
                 //fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                 fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
 
-                fDakotNochechutSidurey100 = oSidur.GetSumSidurim100();
+                fDakotNochechutSidurey100 = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot125);
                 ////SumNochechutMeyuchdim = oSidur.GetSumSidurim100();
                 ////if (SumNochechutMeyuchdim > fMichsaYomit)
                 ////    fDakotNosafot = SumNochechutMeyuchdim - fMichsaYomit;
@@ -3461,7 +3462,7 @@ namespace KdsBatch
             DataRow[] dr;
             try
             {
-                SumNochechutMeyuchdim = oSidur.GetSumSidurim100();
+                SumNochechutMeyuchdim = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot150);
 
                 //ו.	עבור מפעילים שכירים במשמרת לילה יש לשלם את שעות 125% ב- 150% כדלקמן: אם העיסוק שליפת פרטי עובד (קוד נתון  HR = 6, מ.א., תאריך) עם ערך = 122,  123,  124,  127 וגם מעמד שכיר שליפת פרטי עובד (קוד נתון  HR = 13, מ.א., תאריך) הספרה הראשונה = 2 וגם [סוג משמרת] = לילה (ראה חישוב [סוג משמרת] למפעילים ברכיב 126) אזי: ערך הרכיב = ערך הרכיב + נוספות 125% (רכיב 76)
                 if (objOved.objPirteyOved.iIsuk == 122 || objOved.objPirteyOved.iIsuk == 123 || objOved.objPirteyOved.iIsuk == 124 || objOved.objPirteyOved.iIsuk == 127)
@@ -4824,7 +4825,7 @@ namespace KdsBatch
         private void CalcRechiv131()
         {
             //שבת/שעות 100% (רכיב 131):
-            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET, fSumDakotKurse ;
+            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET ;
             DataRow[] dr;
             try
             {
@@ -4837,24 +4838,18 @@ namespace KdsBatch
                    
                     oSidur.CalcRechiv131();
                     fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
-                    fSumDakotKurse = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND (MISPAR_SIDUR in (99207,99007,99011) )"));
-                    fSumDakotKurse -= fMichsaYomit;
-                    if (fSumDakotKurse < 0)
-                        fSumDakotKurse = 0;
-                    fTempY = oSidur.GetSumSidurim100() + oSidur.GetSumShaotShabat100();
+
+                    fTempY = oSidur.GetSumSidurim100(clGeneral.enRechivim.ShaotShabat100) + oSidur.GetSumShaotShabat100();
                     if (fMichsaYomit == 0)
                     {
                         fShaot100 = fTempY;
                     }
                     else
                     {
-                        if ((fDakotNocheut - fTempY) > fMichsaYomit)
-                            fShaot100 = fTempY - fSumDakotKurse;
-                        else if ((fDakotNocheut-fTempY)<fMichsaYomit)
-                        {
-                            if (fDakotNocheut > fMichsaYomit)
-                                fShaot100 = fDakotNocheut -fSumDakotKurse - fMichsaYomit;
-                        }
+                        if (fTempY < fMichsaYomit)
+                            fShaot100 = 0;
+                        else
+                            fShaot100 = fTempY - fMichsaYomit;        
                     }
                 }
                 else{//ד
@@ -6140,7 +6135,7 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer>0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
@@ -6161,14 +6156,14 @@ namespace KdsBatch
                                             {
                                                 SumEzer += fErechSidur;
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 i++;
                                             }
                                             else
                                             {
                                                 if (SumEzer > 0)
-                                                    fErechRechiv += SumEzer;
+                                                    fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                                 SumEzer = 0;
                                                 SumEzer += fErechSidur;
                                                 i++;
@@ -6177,14 +6172,14 @@ namespace KdsBatch
                                         else
                                         {
                                             if (SumEzer > 0)
-                                                fErechRechiv += SumEzer;
+                                                fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
                                             SumEzer = 0;
                                             i++;
                                         }
                                     }
                                     if (SumEzer > 0)
-                                        fErechRechiv += SumEzer;
-                                    fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
+                                        fErechRechiv += float.Parse(Math.Round(SumEzer, MidpointRounding.AwayFromZero).ToString()); 
+                                   // fErechRechiv = float.Parse(Math.Round(fErechRechiv, MidpointRounding.AwayFromZero).ToString());
                                     addRowToTable(clGeneral.enRechivim.DakotPremiaBeShishi.GetHashCode(), fErechRechiv);
                                 }
                             }
