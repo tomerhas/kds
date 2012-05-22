@@ -332,7 +332,7 @@
                             <td width="50px">הלבשה:</td>
                             <td width="8px"><img id="imgHalbErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHalbasha,1,'');" /></td>
                             <td width="130px">
-                                <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);" 
+                                <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);ChangeHalbashaSelect();" 
                                     ondblclick="GetErrorMessage(this,1,'');" width="130px">
                                 </asp:DropDownList>
                             </td>   
@@ -539,7 +539,7 @@
                                 <asp:Button ID="btnPrint" runat="server"  CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             
                             </td>                                                                       
                             <td>
-                                <asp:Button Text="עדכונים לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                    
+                                <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                    
                             </td>  
                             <td>
                                 <asp:Button Text="דוח אישורים" ID="btnApprovalReport" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px; display:none;" OnClick="btnApprovalReport_click" CausesValidation="false" />                    
@@ -709,7 +709,7 @@
         <input type="hidden" runat="server" id="hidDriver"/>
         <input type="hidden" runat="server" id="hidUpdateBtn"/>
         <input type="hidden" runat="server" id="hidSdrInd"/>
-      
+        <input type="hidden" runat="server" id="hidPrevHalbasha"/>
     </form>   
     <script language="vbscript" type="text/vbscript">
         sub ShiftTab()
@@ -955,8 +955,14 @@
               $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value);            
             else
                 $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value) + 100;            
-         }   
-        
+        }   
+        function ChangeHalbashaSelect()
+        {
+          if (document.getElementById("ddlHalbasha").value=="0")
+             document.getElementById("ddlHalbasha").value = document.getElementById("hidPrevHalbasha").value;
+           else
+             document.getElementById("hidPrevHalbasha").value=document.getElementById("ddlHalbasha").value;
+        }
     </script>
 </body>
 </html>

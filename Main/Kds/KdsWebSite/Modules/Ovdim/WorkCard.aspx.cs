@@ -2204,6 +2204,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //DDL
         ddlTachograph.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sTachograf;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sTachograf) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sTachograf;
         ddlHalbasha.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sHalbasha;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sHalbasha) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sHalbasha;
+        hidPrevHalbasha.Value = ddlHalbasha.SelectedValue;
         ddlLina.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sLina;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sLina) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sLina;
         ddlTravleTime.SelectedValue = oBatchManager.oOvedYomAvodaDetails.sBitulZmanNesiot;//String.IsNullOrEmpty(oBatchManager.oOvedYomAvodaDetails.sBitulZmanNesiot) ? "-1" : oBatchManager.oOvedYomAvodaDetails.sBitulZmanNesiot;
         // ddlTravleTime.Enabled = ((clGeneral.enEmployeeType)oBatchManager.oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEgged);

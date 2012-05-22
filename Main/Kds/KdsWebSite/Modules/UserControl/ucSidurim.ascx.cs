@@ -1620,17 +1620,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                 _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
                                 while ((_NextSidur != null) && (!bFound))
                                 {
-                                    if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
-                                    {
-                                        bFound = true;
-                                        _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
-                                        iPeilutIndex = 0;
-                                        bLastSidurToSearch = true; //במידה ומצאנו את הסידור הבא שלא מבוטל נחפש בו את המק"ט , במידה ולא נמצא בסידור הזה, לא נעבור לסידור הבא
-                                    }
+                                    if (_NextSidur.Rows.Count == 0)
+                                        break;
                                     else
                                     {
-                                        iSidurIndex = iSidurIndex + 1;
-                                        _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                        if (((((TextBox)_NextSidur.Rows[0].Cells[_COL_CANCEL_PEILUT].Controls[0])).Text != "1"))
+                                        {
+                                            bFound = true;
+                                            _NextPeilut = _NextSidur.Rows[0]; //נעמוד על הפעילות הראשונה בסידור שמצאנו
+                                            iPeilutIndex = 0;
+                                            bLastSidurToSearch = true; //במידה ומצאנו את הסידור הבא שלא מבוטל נחפש בו את המק"ט , במידה ולא נמצא בסידור הזה, לא נעבור לסידור הבא
+                                        }
+                                        else
+                                        {
+                                            iSidurIndex = iSidurIndex + 1;
+                                            _NextSidur = ((GridView)this.FindControl(iSidurIndex.ToString().PadLeft(3, char.Parse("0"))));
+                                        }
                                     }
                                 }
                             }
@@ -2260,6 +2265,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         long lMakatTnua=0;
         int iSidurKnisa = 0;
         int iDirection = 0;
+        int KnisaNum=0;
         clKavim.enMakatType _MakatType;
 
         //נפנה למפה ונבדוק אם קיימת פעילות כמו זו שממנה אנחנו רוצים  להוסיף ריקה(לפי מק"ט ושעת יציאה
@@ -2321,7 +2327,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                             {
                                 lMakatTnua = (long.Parse(dsSidurim.Tables[1].Rows[j]["makat8"].ToString()));
                                 _MakatType = (clKavim.enMakatType)_Kavim.GetMakatType(lMakatTnua);
-                                if ((_MakatType != clKavim.enMakatType.mVisut) && (!((_MakatType == clKavim.enMakatType.mKavShirut) && (int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString())) > 0)))
+                                if ((dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString()) != string.Empty)
+                                    KnisaNum = int.Parse(dsSidurim.Tables[1].Rows[iDirection]["siduriknisa"].ToString());
+                                
+                                if ((_MakatType != clKavim.enMakatType.mVisut) && (!((_MakatType == clKavim.enMakatType.mKavShirut) && (KnisaNum > 0))))
                                 {
                                     if (_MakatType == clKavim.enMakatType.mEmpty)
                                     {
