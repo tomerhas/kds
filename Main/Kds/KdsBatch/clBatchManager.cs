@@ -64,7 +64,7 @@ namespace KdsBatch
         //שינויי קלט
         private DataTable dtMutamut;
         private DataTable dtSibotLedivuachYadani;
-        private DataSet dtChishuvYom;
+      //  private DataSet dtChishuvYom;
         public DataTable dtMashar;
         //private OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
         private OBJ_SIDURIM_OVDIM oObjSidurimOvdimDel;
@@ -83,7 +83,7 @@ namespace KdsBatch
         private COLL_SHGIOT_MEUSHAROT _oCollApprovalErrors;
    
        // private ApprovalRequest[] arrEmployeeApproval; vered 22/05/2012
-        private bool bHasShaonIsurInMaxLevel;
+       // private bool bHasShaonIsurInMaxLevel;
         private clCalculation objCalc = new clCalculation();
         private const int SIDUR_NESIA = 99300;
         private const int SIDUR_MATALA = 99301;
