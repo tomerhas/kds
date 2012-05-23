@@ -13605,41 +13605,41 @@ namespace KdsBatch
                    (oMeafyeneyOved.Meafyen51Exists && oMeafyeneyOved.sMeafyen51.Substring(0, 1) == "3"));
         }
 
-        private float CalcOvedDakotInYafkid(DateTime dCardDate)
-        {
-            //DataRow[] dr;
-            float fDakotInTafkid = 0;
-            object oErechRechiv;
-            try{
-            //if (oOvedYomAvodaDetails.sShabaton == clGeneral.enDay.Shabat.GetHashCode().ToString())
-            //{
-            //    dr = dtChishuvYom.Tables["CHISHUV_YOM"].Select("kod_rechiv=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString());
-            //}
-            //else
-            //{
-            //    dr = dtChishuvYom.Tables["CHISHUV_YOM"].Select("kod_rechiv=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString());
-            //}
-            //if (dr.Length > 0)
-            //{
-            //    iDakotInTafkid = System.Convert.IsDBNull(dr[0]["erech_rechiv"].ToString()) ? 0 : int.Parse(dr[0]["erech_rechiv"].ToString());
-            //}
+        //private float CalcOvedDakotInYafkid(DateTime dCardDate)
+        //{
+        //    //DataRow[] dr;
+        //    float fDakotInTafkid = 0;
+        //    object oErechRechiv;
+        //    try{
+        //    //if (oOvedYomAvodaDetails.sShabaton == clGeneral.enDay.Shabat.GetHashCode().ToString())
+        //    //{
+        //    //    dr = dtChishuvYom.Tables["CHISHUV_YOM"].Select("kod_rechiv=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString());
+        //    //}
+        //    //else
+        //    //{
+        //    //    dr = dtChishuvYom.Tables["CHISHUV_YOM"].Select("kod_rechiv=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString());
+        //    //}
+        //    //if (dr.Length > 0)
+        //    //{
+        //    //    iDakotInTafkid = System.Convert.IsDBNull(dr[0]["erech_rechiv"].ToString()) ? 0 : int.Parse(dr[0]["erech_rechiv"].ToString());
+        //    //}
 
-            //ערך רכיבים 4+37+193
-            oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString());
-            fDakotInTafkid = oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
+        //    //ערך רכיבים 4+37+193
+        //    oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidChol.GetHashCode().ToString());
+        //    fDakotInTafkid = oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
 
-            oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString());
-            fDakotInTafkid += oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
+        //    oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotTafkidShabat.GetHashCode().ToString());
+        //    fDakotInTafkid += oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
 
-            oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode().ToString());
-            fDakotInTafkid += oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return fDakotInTafkid;
-        }
+        //    oErechRechiv = dtChishuvYom.Tables["CHISHUV_YOM"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.SachDakotTafkidShishi.GetHashCode().ToString());
+        //    fDakotInTafkid += oErechRechiv.Equals(System.DBNull.Value) ? 0 : float.Parse(oErechRechiv.ToString());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    return fDakotInTafkid;
+        //}
 
         //private void InsertSidurRetzifut14(DateTime dCardDate, int iCurrSidurIndex, DataRow[] drSugSidur,
         //                                   ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd)
@@ -14860,8 +14860,8 @@ namespace KdsBatch
                 _dtSugSidur.Dispose();
             if (_dtYamimMeyuchadim != null)
                 _dtYamimMeyuchadim.Dispose();
-            if (dtChishuvYom != null)
-                dtChishuvYom.Dispose();
+            //if (dtChishuvYom != null)
+            //    dtChishuvYom.Dispose();
             if (dtMashar != null)
                 dtMashar.Dispose();
             if (dtMutamut != null)
