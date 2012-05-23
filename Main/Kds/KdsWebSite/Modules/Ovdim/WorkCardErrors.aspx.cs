@@ -18,7 +18,10 @@ public partial class Modules_Ovdim_WorkCardErrors : KdsPage
 {
     private DataTable _dtErrorCodes;
     //private DataTable _dtErrorDictionary;
-    private const string ERROR_CODE_COLUMN = "Kod_Shgia";
+    private const string ERROR_CODE_COLUMN = "kod_shgia";
+    private const string ERROR_CHECK_NUM_COLUMN = "check_num";
+    private const string ERROR_MISPAR_ISHI_COLUMN = "mispar_ishi";
+    private const string ERROR_TAARICH_COLUMN = "taarich";
     private const string ERROR_DESC_COLUMN = "Teur_Shgia";
     private const string ERROR_FIELD_COLUMN = "TEUR";
     private string[] arrParams;
@@ -156,9 +159,10 @@ public partial class Modules_Ovdim_WorkCardErrors : KdsPage
         
         foreach (DataColumn col in row.Table.Columns)
         {
-            if (!col.ColumnName.ToLower().Equals(ERROR_CODE_COLUMN.ToLower()))
+            if (!col.ColumnName.ToLower().Equals(ERROR_CHECK_NUM_COLUMN.ToLower()) && !col.ColumnName.ToLower().Equals(ERROR_MISPAR_ISHI_COLUMN.ToLower())
+                && !col.ColumnName.ToLower().Equals(ERROR_TAARICH_COLUMN.ToLower()))
             {
-                if (row[col.ColumnName] != DBNull.Value || !row[col.ColumnName].ToString().Equals("0"))
+                if (!row[col.ColumnName].ToString().Equals("0") && !row[col.ColumnName].ToString().Equals(""))
                 {
                     forWorkday = false;
                     break;

@@ -3377,16 +3377,16 @@ namespace KdsBatch
 
         private float CalcDayRechiv76(float fMichsaYomit, DateTime dTaarich)
         {
-            float fDakotNochehut, fErech, fNochehutBeshishi, fShaotShabat100,fDakotNochechutSidurey100;
+            float fDakotNochehut, fErech, fNochehutBeshishi, fShaotShabat100;
             fErech = 0;
 
             try
             {
-                fDakotNochechutSidurey100 = 0;
+               // fDakotNochechutSidurey100 = 0;
                 //fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                 fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
 
-                fDakotNochechutSidurey100 = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot125);
+               // fDakotNochechutSidurey100 = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot125);
                 ////SumNochechutMeyuchdim = oSidur.GetSumSidurim100();
                 ////if (SumNochechutMeyuchdim > fMichsaYomit)
                 ////    fDakotNosafot = SumNochechutMeyuchdim - fMichsaYomit;
@@ -3396,16 +3396,16 @@ namespace KdsBatch
                 //  fNochehutLetashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                 if (fMichsaYomit > 0 && fDakotNochehut > 0)
                 {
-                    if ((fDakotNochehut - fDakotNochechutSidurey100) < fMichsaYomit)
+                    if (fDakotNochehut > fMichsaYomit)
                     {
-                        fErech = fDakotNochehut - fDakotNochechutSidurey100;
-                        fErech = Math.Min(120, fErech);
+                       //fErech = fDakotNochehut - fDakotNochechutSidurey100;
+                        fErech = Math.Min(120, fDakotNochehut - fMichsaYomit);
                     }
-                    else
-                    {
-                        fErech = fDakotNochehut - fDakotNochechutSidurey100 - fMichsaYomit;
-                        fErech = Math.Min(120, fErech);
-                    }
+                    //else
+                    //{
+                    //    fErech = fDakotNochehut - fDakotNochechutSidurey100 - fMichsaYomit;
+                    //    fErech = Math.Min(120, fErech);
+                    //}
                 }
 
                 if (fMichsaYomit == 0 && oCalcBL.GetSugYomLemichsa(objOved, dTaarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.Shishi.GetHashCode())
@@ -3416,7 +3416,7 @@ namespace KdsBatch
                         fErech = Math.Min(120, fDakotNochehut - fShaotShabat100);
                     }
                     else if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && fNochehutBeshishi > 0)
-                        fErech = Math.Min(240, fDakotNochehut - fDakotNochechutSidurey100);
+                        fErech = Math.Min(240, fDakotNochehut);
                 }
 
                 return fErech;
@@ -3456,13 +3456,13 @@ namespace KdsBatch
         private float CalcDayRechiv77(float fMichsaYomit, DateTime dTaarich)
         {
             float fDakotNochehut, fErech, fNosafot125;
-            float SumNochechutMeyuchdim;
+          //  float SumNochechutMeyuchdim;
             fErech = 0;
             Boolean bMafilimSchirim = false;
             DataRow[] dr;
             try
             {
-                SumNochechutMeyuchdim = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot150);
+             //   SumNochechutMeyuchdim = oSidur.GetSumSidurim100(clGeneral.enRechivim.Nosafot150);
 
                 //ו.	עבור מפעילים שכירים במשמרת לילה יש לשלם את שעות 125% ב- 150% כדלקמן: אם העיסוק שליפת פרטי עובד (קוד נתון  HR = 6, מ.א., תאריך) עם ערך = 122,  123,  124,  127 וגם מעמד שכיר שליפת פרטי עובד (קוד נתון  HR = 13, מ.א., תאריך) הספרה הראשונה = 2 וגם [סוג משמרת] = לילה (ראה חישוב [סוג משמרת] למפעילים ברכיב 126) אזי: ערך הרכיב = ערך הרכיב + נוספות 125% (רכיב 76)
                 if (objOved.objPirteyOved.iIsuk == 122 || objOved.objPirteyOved.iIsuk == 123 || objOved.objPirteyOved.iIsuk == 124 || objOved.objPirteyOved.iIsuk == 127)
@@ -3478,7 +3478,7 @@ namespace KdsBatch
 
 
                 fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
-                fDakotNochehut = fDakotNochehut - SumNochechutMeyuchdim;
+             //   fDakotNochehut = fDakotNochehut - SumNochechutMeyuchdim;
                 if (fMichsaYomit > 0 && fDakotNochehut > 0 && objOved.objMeafyeneyOved.sMeafyen32 != "1")
                 {
                     if (fDakotNochehut > (fMichsaYomit + 120))

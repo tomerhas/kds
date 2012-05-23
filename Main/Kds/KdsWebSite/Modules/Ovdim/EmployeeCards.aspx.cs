@@ -458,23 +458,15 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 }
 
                 if (e.Row.Cells[Coll_lelo_divuach].Text == "+" )
+                     e.Row.Cells[Coll_lelo_divuach].Text = "אין פעילות";
+               // if (bool.Parse(hidFromEmda.Value))
+                DateTime dTaarich = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString());
+                if (DateTime.Now.Date == dTaarich.Date)
                 {
-                    DateTime dTaarich = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString());
-                    e.Row.Cells[Coll_lelo_divuach].Text = "אין פעילות";
-                    //if (bool.Parse(hidFromEmda.Value))
-                    //    if (DateTime.Now >= dTaarich && DateTime.Now < dTaarich.AddDays(3))
-                    //    {
-                    //        ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("onclick", "");
-                    //        ((HyperLink)e.Row.Cells[0].Controls[0]).Font.Bold = true;
-                    //        ((HyperLink)e.Row.Cells[0].Controls[0]).Enabled = false; 
-                    //    }
+                    ((HyperLink)e.Row.Cells[0].Controls[0]).Attributes.Add("onclick", "");
+                    ((HyperLink)e.Row.Cells[0].Controls[0]).Font.Bold = true;
+                    ((HyperLink)e.Row.Cells[0].Controls[0]).Enabled = false;
                 }
-                ////dt = _Ovdim.GetLastUpdate(int.Parse(txtId.Text), DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "sDate").ToString()));
-                //////אם קיימות שגיאות וגם מישהו אחר עדכן את הכרטיס אז אין להציג עדכן
-                ////if (dt.Rows.Count > 0 && e.Row.Cells[Coll_status].Text == "עדכן")// && e.Row.Cells[Coll_status].Text != "&nbsp;")
-                ////{
-                ////    e.Row.Cells[Coll_status].Text = "";
-                ////}
             }
         }
         catch (Exception ex)
