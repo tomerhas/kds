@@ -82,7 +82,7 @@ namespace KdsBatch
         private COLL_IDKUN_RASHEMET _oCollIdkunRashemet;
         private COLL_SHGIOT_MEUSHAROT _oCollApprovalErrors;
    
-        private ApprovalRequest[] arrEmployeeApproval;
+       // private ApprovalRequest[] arrEmployeeApproval; vered 22/05/2012
         private bool bHasShaonIsurInMaxLevel;
         private clCalculation objCalc = new clCalculation();
         private const int SIDUR_NESIA = 99300;
@@ -643,7 +643,7 @@ namespace KdsBatch
             //DataTable dtYamimMeyuchadim;
             clUtils oUtils = new clUtils();
             string sArrKodShgia;
-            clSidur oSidur;
+            //clSidur oSidur;
             //int iSugYom;
             //int iCardDay;
             _bSuccsess = true;
@@ -6249,8 +6249,8 @@ namespace KdsBatch
                 //Get Temp Meafyeney Elements
                 dtTmpMeafyeneyElements = clDefinitions.GetTmpMeafyeneyElements(dCardDate, dCardDate);
 
-                //Get Employee Ishurim
-                arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dCardDate);
+                //Get Employee Ishurim vered 22/05/2012
+                //arrEmployeeApproval = ApprovalRequest.GetMatchingApprovalRequestsWithStatuses(iMisparIshi, dCardDate);
 
                 //בדיקות ברמת יום עבודה
                 //Get yom avoda details
