@@ -1397,7 +1397,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.HeaderTemplate = new GridViewTemplate(ListItemType.Header, "");
             grdPeiluyot.Columns.Add(tGridField);
 
-           
+            grdPeiluyot.EnableViewState = false;
+
             return grdPeiluyot;
         }
         catch (Exception ex)
@@ -5120,7 +5121,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
             oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
-          
+            
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
