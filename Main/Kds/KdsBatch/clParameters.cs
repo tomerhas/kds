@@ -216,8 +216,8 @@ namespace KdsBatch
         {
             clUtils oUtils = new clUtils();
             try
-            {
-                _Taarich = dCardDate;
+            {                
+                _Taarich = dCardDate;               
                 dtParameters = oUtils.GetKdsParametrs();
                 SetParameters(dCardDate, iSugYom);
                 dtParameters.Dispose();
@@ -1066,6 +1066,7 @@ namespace KdsBatch
                 if (rows.Count() > 0)
                     return rows.First().ToString();
                 else return "";
+
             }
             catch (Exception ex)
             {

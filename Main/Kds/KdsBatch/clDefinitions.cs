@@ -11,6 +11,7 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Web;
 
+
 namespace KdsBatch
 {
     public class clDefinitions
@@ -1240,5 +1241,27 @@ namespace KdsBatch
 
             return bSidurTimeBigger;
         }
-    }
+    //    public static clParameters GetParamInstance(DateTime dCardDate, int iSugYom)
+    //    {
+    //        string sCacheKey = dCardDate.ToShortDateString() + iSugYom;
+    //        clParameters _Params;
+    //        HttpApplication _App = (HttpApplication)HttpContext.Current.ApplicationInstance; 
+    //        try
+    //        {                 
+    //            _Params=(clParameters)_App.Application[sCacheKey];                
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            _Params = null;
+    //        }
+
+    //        if (_Params == null)
+    //        {
+    //            _Params = new clParameters(dCardDate, iSugYom);
+    //            _App.Application[sCacheKey] = _Params;
+    //        }
+
+    //        return _Params;
+    //    }
+  }
 }

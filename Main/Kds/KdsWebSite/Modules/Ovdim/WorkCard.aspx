@@ -361,19 +361,19 @@
                             <fieldset class="FilterFieldSet" >                             
                             <table width="100%" cellpadding="0" border="0">
                                 <tr>                                               
-                                    <td style="width:228px">
-                                        התייצבות ראשונה:
-                                        <asp:TextBox runat="server" ID="txtFirstPart" CssClass="WorkCardTextBox" Width="120px" > </asp:TextBox>                                                                                                       
+                                    <td style="width:220px">
+                                        התייצבות 1:
+                                        <asp:TextBox runat="server" ID="txtFirstPart" CssClass="WorkCardTextBox" Width="122px" > </asp:TextBox>                                                                                                       
                                     </td>
-                                    <td style="width: 277px">
+                                    <td style="width: 285px">
                                         סיבת אי התייצבות:
                                         <asp:DropDownList runat="server" ID="ddlFirstPart" CssClass="WorkCardSidurDropDown" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                     </td>
-                                    <td style="width:225px">
-                                        התייצבות שניה:
-                                        <asp:TextBox runat="server" ID="txtSecPart" CssClass="WorkCardTextBox" Width="120px" onchange="SetBtnChanges();SetLvlChg(1,0);"> </asp:TextBox>                                                    
+                                    <td style="width:210px">
+                                        התייצבות 2:
+                                        <asp:TextBox runat="server" ID="txtSecPart" CssClass="WorkCardTextBox" Width="122px" onchange="SetBtnChanges();SetLvlChg(1,0);"> </asp:TextBox>                                                    
                                     </td>
-                                    <td style="width: 276px">
+                                    <td  style="width: 285px">
                                         סיבת אי התייצבות:
                                         <asp:DropDownList runat="server" ID="ddlSecPart" CssClass="WorkCardSidurDropDown" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                     </td>

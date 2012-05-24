@@ -993,6 +993,7 @@ namespace KdsBatch
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {
             try{
+              // oParam = clDefinitions.GetParamInstance(dCardDate, iSugYom);    
             oParam = new clParameters(dCardDate, iSugYom);
             }
             catch (Exception ex)
@@ -6236,7 +6237,8 @@ namespace KdsBatch
 
                 //Set global variable with parameters
                 oParam = new clParameters(dCardDate, iSugYom);
-                               
+               //oParam = clDefinitions.GetParamInstance(dCardDate, iSugYom);           
+
                 //Get Meafyeney Sug Sidur
                 dtSugSidur = clDefinitions.GetSugeySidur();
 
