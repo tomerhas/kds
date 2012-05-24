@@ -1,19 +1,8 @@
 ﻿var bScreenChanged = false;
-//function alert(sMsg) {
-//    $get("lblAlert").innerHTML = sMsg;
-//    $get("divAlert").style.top = 250;
-//    $get("divAlert").style.left = 400;
-//    $get("divAlert").style.display = 'block';
-//}
-//function CloseAlertDiv() {
-//    $get("divAlert").style.display = 'none';
-//}
     function OpenDiv(DivId, btnId){
         var oDiv = document.getElementById(DivId.toString());
         if (oDiv.style.display=='none'){        
-            oDiv.style.display='block';  
-            
-            
+            oDiv.style.display='block';              
             switch (DivId){
                 case "divEmployeeDetails":
                     $get("divNetunimLeYom").style.display = 'none';
@@ -143,25 +132,19 @@
     }    
     function EnabledAllFrames(bEnable)
     {
-        $get("tbEmpDetails").disabled = (!bEnable);
-       // $get("tbLblWorkDay").disabled = (!bEnable);
+        $get("tbEmpDetails").disabled = (!bEnable);     
         $get("tbValWorkDay").disabled = (!bEnable);
         $get("tblPart").disabled = (!bEnable);
         $get("lstSidurim_tbSidurim").disabled = (!bEnable);
         $get("btnFindSidur").disabled = (!bEnable);
         $get("btnAddHeadrut").disabled = (!bEnable);
         $get("btnClock").disabled = (!bEnable);
-        $get("btnApprovalReport").disabled = (!bEnable);
-        //if ($get("ddlTachograph").disabled == false)
-            $get("ddlTachograph").disabled = (!bEnable);
-        //if ($get("ddlHalbasha").disabled == false)
-            $get("ddlHalbasha").disabled = true; //(!bEnable);
-        //if ($get("ddlLina").disabled == false)
-            $get("ddlLina").disabled = (!bEnable);
-        //if ($get("ddlHashlamaReason").disabled == false)
-            $get("ddlHashlamaReason").disabled = (!bEnable);
-        //if ($get("btnHashlamaForDay").disabled == false)
-            $get("btnHashlamaForDay").disabled = (!bEnable);
+        $get("btnApprovalReport").disabled = (!bEnable);      
+        $get("ddlTachograph").disabled = (!bEnable);       
+        $get("ddlHalbasha").disabled = true;   
+        $get("ddlLina").disabled = (!bEnable);       
+        $get("ddlHashlamaReason").disabled = (!bEnable);       
+        $get("btnHashlamaForDay").disabled = (!bEnable);
         $get("btnCalcItem").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
         $get("btnPrevCard").disabled = (!bEnable);
@@ -272,8 +255,6 @@
         if ((KeyID != 45) && (KeyID != 107)) {
             bScreenChanged = true;
             disableUpdateBtn(false);
-//            $get("btnUpdateCard").disabled = false;
-//            $get("btnUpdateCard").className = "btnWorkCardUpadte";
             $get("hidChanges").value = true;
             $get("hidUpdateBtn").value = "false";
             SetRefreshBtn(true);
@@ -409,10 +390,7 @@
        iSidurNum = document.getElementById(("lstSidurim_lblSidur").concat(arrKey[2])).innerHTML;
        sStartH = document.getElementById(("lstSidurim_txtSH").concat(arrKey[2])).getAttribute("OrgShatHatchala");       
        wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
-      }
-     }     
-    }
-   }    
+      }}}}  
     function onGetdErrSucc(result){    
         document.getElementById("tbErr").innerHTML = result;
         document.getElementById("btnErrors").click(); 
@@ -484,8 +462,7 @@
                 return false;
             $("#hidSave")[0].value = "1";
             __doPostBack('btnConfirm', '');
-        }
-        
+        }        
         var sQueryString;        
         sQueryString = "?dt=" + Date();
         sQueryString = sQueryString + "&MisparIshi=" + document.getElementById("txtId").value;
@@ -749,8 +726,6 @@ function chkTravelTime(){
      else{
          bScreenChanged = true;
          disableUpdateBtn(false);
-//         $get("btnUpdateCard").disabled = false;
-//         $get("btnUpdateCard").className = "btnWorkCardUpadte";
    }
    SetLvlChg(1,0);
 }
@@ -805,7 +780,4 @@ function setBorderBtns(){
     }
 function onTxtIdPress() {
     var key = document.getElementById("txtId").value;
-}
-
-}
-
+}}

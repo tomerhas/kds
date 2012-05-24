@@ -78,9 +78,7 @@
         <ContentTemplate>
          <table width="100%" class="WorkCardTable2" cellspacing="0">
             <tr>
-              <td width="89%">                        
-              <%-- <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-                        <ContentTemplate>--%>
+              <td width="89%">                                      
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="width: 8%">
@@ -137,46 +135,16 @@
                                             <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
                                     </td>                                            
                                 </tr>                                        
-                            </table>                                   
-                    <%--    </ContentTemplate>
-                        <Triggers>                                                                                                                                
-                            <asp:AsyncPostBackTrigger ControlID="btnConfirm" />                                                                    
-                            <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut" />
-                            <asp:AsyncPostBackTrigger ControlID="btnFindSidur" />                                    
-                            <asp:AsyncPostBackTrigger ControlID="btnAddMyuchad" />
-                            <asp:AsyncPostBackTrigger ControlID="btnApprovalReport" />
-                            <asp:AsyncPostBackTrigger ControlID="btnClock" />
-                            <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/> 
-                            <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
-                            <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
-                            <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
-                            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
-                            <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
-                            <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />                                                                                                                                                                                                                                                                                                                                                                                                                            
-                        </Triggers>
-                    </asp:UpdatePanel>               --%>         
+                            </table>                                                       
             </td>
-              <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">
-               <%-- <asp:UpdatePanel ID="upApproveButton" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-                    <ContentTemplate>--%>
-                        <table style="width: 100%" cellpadding="0" cellspacing="0">
-                            <tr valign="bottom">
-                                <td colspan="2" align="center">
-                                    <label runat="server" id="lblCardStatus" class="ImgButtonCardStatus"></label>                                            
-                                </td>
-                            </tr>                                                                     
-                        </table>
-                  <%--  </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails"/>
-                        <asp:AsyncPostBackTrigger ControlID="btnAddHeadrut"/>
-                        <asp:AsyncPostBackTrigger ControlID="btnFindSidur"/>
-                        <asp:AsyncPostBackTrigger ControlID="btnUpdateCard"/>
-                        <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" /> 
-                        <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
-                        <asp:AsyncPostBackTrigger ControlID="btnPrevCard" /> 
-                    </Triggers>
-                </asp:UpdatePanel>--%>
+              <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">              
+                <table style="width: 100%" cellpadding="0" cellspacing="0">
+                    <tr valign="bottom">
+                        <td colspan="2" align="center">
+                            <label runat="server" id="lblCardStatus" class="ImgButtonCardStatus"></label>                                            
+                        </td>
+                    </tr>                                                                     
+                </table>                 
             </td>
            </tr>            
          </table>   
@@ -345,10 +313,7 @@
                             </td>             
                             <td width="90px">סיבה להשלמה:</td>                                                        
                             <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="160px"></asp:DropDownList></td>
-                            <td>
-                                <%--<input type="button" value="רכיבים מחושבים" name="btnCalcItem" id="btnCalcItem" runat="server" 
-                                    onclick="ShowRecivimCalculation();" class="ImgButtonShow" style="width: 120px; height: 25px" />   --%>                                    
-                            </td>
+                            <td></td>
                         </tr>                         
                         </table>
                     </fieldset>
@@ -419,17 +384,7 @@
                         <tr>                                    
                             <td style="width:108px">
                             <asp:Button Text="דיווח היעדרות"  style="width: 107px;" align="right"  ID="btnAddHeadrut" runat="server" OnClick="btnAddHeadrut_Click"
-                                        CausesValidation="false" OnClientClick='return AddSidurHeadrut();' CssClass="btnWorkCardAddMap" />      
-                            <%--<table cellpadding="1" cellspacing="0" style="width: 110px; height:30px;"  dir="ltr" >
-                                <tr>
-                                <td class="btnWorkCardLeft"  style="width: 4px;"></td>
-                                <td  style="color:#115799; width: 100%;" class="btnWorkCardMid" >
-                                    <asp:Button Text="דיווח היעדרות"  style="border-style:none; background-color:transparent;"  ID="btnAddHeadrut" runat="server" OnClick="btnAddHeadrut_Click"
-                                        CausesValidation="false" OnClientClick='return AddSidurHeadrut();' CssClass="btnGeneral" />      
-                                </td>
-                                <td class="btnWorkCardRight" style="width: 4px;"></td>
-                                </tr>  
-                            </table>--%>
+                                        CausesValidation="false" OnClientClick='return AddSidurHeadrut();' CssClass="btnWorkCardAddMap" />                                 
                             </td>  
                             <td style="width: 115px;" align="right"><asp:Button Text="הוסף סידור מפה" ID="btnFindSidur" runat="server" Style="width: 114px;" CssClass="btnWorkCardAddMap" CausesValidation="false" OnClientClick='return AddSidur();' OnClick="btnFindSidur_Click"/></td>
                             <td style="width: 127px;" align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 124px;" CssClass="btnWorkCardAddSpecial" CausesValidation="false" OnClientClick="$get('hidExecInputChg').value ='0';$get('hidUpdateBtn').value='false'; return true;" OnClick="btnAddSpecialSidur_Click"/></td>
@@ -460,8 +415,7 @@
                                 <input type="hidden" runat="server" id="hidChanges" />
                                 <input type="hidden" value="" id="btnHidClose" runat="server" causesvalidation="false" />                                         
                                 <asp:Button Text="סגור כרטיס" ID="btnCloseCard" runat="server" Style="width: 89px;" 
-                                        CssClass="btnWorkCardCloseCard" CausesValidation="false" OnClientClick='return CheckChanges();' />
-                                <%--<asp:Button ID="btnPrint" runat="server" CssClass="btnWorkCardPrint" CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             --%>
+                                        CssClass="btnWorkCardCloseCard" CausesValidation="false" OnClientClick='return CheckChanges();' />                                                                           
                                 <asp:Button ID="btnShowMessage" runat="server" OnClick="btnShowMessage_Click" Style="display: none;" />
                                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paCloseMsg"
                                     TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose">
@@ -553,19 +507,7 @@
        <Triggers>                                                                                                                                               
            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                  
         </Triggers>             
-      </asp:UpdatePanel>  
-      <%--<asp:Button id="btnAlert" runat="server" style="display:none"  />
-      <ajaxToolkit:ConfirmButtonExtender ID="cbeAlert" runat="server"
-        TargetControlID="btnAlert"
-        ConfirmText="Are you sure you want to click this?"
-        OnClientCancel="CancelClick" />       --%>
-      <%--<asp:UpdatePanel ID="upCloseCard" runat="server" UpdateMode="Always">
-        <ContentTemplate>    
-            <table style="width:980px;height:30px" cellpadding="1">
-               
-            </table>    
-           </ContentTemplate>
-       </asp:UpdatePanel>      --%>
+      </asp:UpdatePanel>      
    </center>
         <asp:Button ID="btnErrors" runat="server" CssClass="ImgButtonUpdate" CausesValidation="false"  Style="display: none;" />           
         <cc1:ModalPopupExtender ID="MPEErrors" DropShadow="false" CancelControlID="btnErrClose" BehaviorID="bMpeErr"
@@ -640,15 +582,7 @@
         <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="500" Y="280" PopupControlID="paCopy"
            TargetControlID="btnCopy"  runat="server" behaviorid="pBehvCopy" BackgroundCssClass="modalBackground">
         </cc1:ModalPopupExtender>
-        <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="WorkCardPanelMessage" Width="450px">
-           <%-- <asp:Label ID="Label2" runat="server" Width="100%" BackColor="#696969" ForeColor="White">העתקת מספר רכב</asp:Label>
-            <input type="hidden" id="hidCarKey1" />        
-            <br />
-                <asp:Label ID="lbl" runat="server" Width="100%"></asp:Label>    
-            <br />
-            <br />
-            <input type="button" ID="btnYes" runat="server" value="כן" onclick="btnCopyOtoNum(1)" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px" />       
-            <input type="button" ID="btnNo"  runat="server" onclick="btnCopyOtoNum(0)"  value="לא" CausesValidation="false" class="ImgButtonEndUpdate" style="width:80px"/>       --%>
+        <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="WorkCardPanelMessage" Width="450px">          
             <table width="450px">
                 <tr class="WorkCardPanelMessageBorder">
                     <td colspan="2" width="450px" height="33px"  class="WorkCardPanelMessageHeader">
@@ -682,22 +616,7 @@
             <br/>
                   <label id="msgErrCar" runat="server" style="display:none">חסר מספר רכב, כרטיס עבודה לא יועבר לתשלום </label>       
             <br/>
-     </asp:Panel>  
-    
-     <%--<div runat="server" id="divAlert" style="display:none;position:absolute;z-index:500;" class="AlertDiv" dir="ltr"> 
-        <table width="100%" height="100%"  border="1">            
-            <tr>
-              <td width='100%' height="90%" valign="top">
-                <label id="lblAlert"></label>
-              </td>
-             </tr>
-             <tr>
-              <td width='100%' align="left"  height="10%">
-                <input type="button" value="אישור" onclick="CloseAlertDiv();"  class="ImgButtonShow" style="width:54px; height:30px" />        
-              </td>  
-            </tr>
-        </table>     
-     </div>    --%>
+     </asp:Panel>     
         <input type="hidden" runat="server" id="hidGoremMeasher" />
         <input type="hidden" runat="server" id="hidSource" />
         <input type="hidden" runat="server" id="hidLvl1Chg" />
@@ -720,7 +639,6 @@
     
     <script language="javascript" type="text/javascript">
          var iCount=0;
-//       frmWorkCard.submit =SaveScrollPositionSubmit();
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck; 
         function KeyCheck(){  
@@ -734,8 +652,6 @@
                          event.returnValue=false;
                          event.cancel = true;
                       }
-//                    event.returnValue=false;
-//                    event.cancel = true;
                  }                 
                  break;  
               case 107: //+
@@ -776,43 +692,28 @@
                var _GridPeilut; 
                if (Direction==40)
                {  //down             
-//                    _GridPeilut = document.getElementById("lstSidurim_" + padLeft(SidurNum, '0', 3));   
-//                    if (_GridPeilut==null){                      
-                        //נמצא את הסידור הבא                    
-                        SidurNum = Number(SidurNum) + 1;                                         
-                        while (($get("lstSidurim_txtSH".concat(SidurNum))!=null) && ($get("lstSidurim_txtSH".concat(SidurNum)).isDisabled==true)){                                                                  
-                            SidurNum = Number(SidurNum) + 1;                             
-                        }
+                    //נמצא את הסידור הבא                    
+                    SidurNum = Number(SidurNum) + 1;                                         
+                    while (($get("lstSidurim_txtSH".concat(SidurNum))!=null) && ($get("lstSidurim_txtSH".concat(SidurNum)).isDisabled==true)){                                                                  
+                        SidurNum = Number(SidurNum) + 1;                             
+                    }
 
-                        if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
-                            if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
-                                $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();   
-                  //  }
-//                    else{//נמצא את הפעילות הראשונה בסידור
-//                       PeilutName = "lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl01_lstSidurim_" + padLeft(SidurNum, '0', 3) +"_ctl01ShatYetiza" ;
-//                       SetFocusToNextPrevPeilutField(Direction,PeilutName,'ShatYetiza'); 
-//                    }
+                    if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
+                        if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
+                            $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();                     
                  }
                  else
                  {//up      
                     SidurNum = Number(SidurNum) - 1;       
                     while ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)   
                     {                                                  
-//                        _GridPeilut = document.getElementById("lstSidurim_" + padLeft(SidurNum, '0', 3));   
-//                        if (_GridPeilut==null){         
-                            if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
-                                if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
-                                {
-                                    $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();
-                                    break;
-                                }
-//                        }
-//                        else{
-//                           PeilutName = "lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl"+ padLeft(_GridPeilut.rows.length+1,'0',2) + "_lstSidurim_" + padLeft(SidurNum, '0', 3) + "_ctl"+ padLeft(_GridPeilut.rows.length+1,'0',2)+"ShatYetiza" ;
-//                           SetFocusToNextPrevPeilutField(Direction,PeilutName,'ShatYetiza'); 
-//                           break;
-//                        }                                                          
-                         SidurNum = Number(SidurNum) - 1;   
+                    if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
+                        if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
+                        {
+                            $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();
+                            break;
+                        }                                                    
+                    SidurNum = Number(SidurNum) - 1;   
                     }                                                                                                                                                                                      
                 }                                                
             }//end if pos           
@@ -847,8 +748,7 @@
                   SidurNum = Number(SidurNum) + 1;
                   PeilutNum = 2;
                   NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);       
-                }
-                 //NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);                  
+                }                               
                  NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                }
                               
@@ -892,11 +792,6 @@
                                  
                         NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                     }
-//{
-//                       NextSidurName = "lstSidurim_txtSH".concat(Number(SidurNum)+1);
-//                       SetFocusToNextPrevSidur(Direction,NextSidurName,'txtSH');
-//                       break;
-//                    }
                    }                 
                    if ($get(NextPeilutName)!=null)                  
                       if (!$get(NextPeilutName).isDisabled)
