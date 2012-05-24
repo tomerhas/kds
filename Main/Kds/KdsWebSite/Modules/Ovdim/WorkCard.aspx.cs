@@ -210,7 +210,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void Page_PreRender(object sender, EventArgs e)
     {
+        EventLog.WriteEntry("Kds", "Before PageRender: ", EventLogEntryType.Error);
         RenderPage();
+        EventLog.WriteEntry("Kds", "after PageRender: ", EventLogEntryType.Error);
         //if (bInpuDataResult)
         //{
         //    //מספר אישי
@@ -675,7 +677,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //}
     protected void Page_Load(object sender, EventArgs e)
     {
+        EventLog.WriteEntry("Kds",  "Before PageLoad: ", EventLogEntryType.Error);
         LoadPage();
+        EventLog.WriteEntry("Kds", "After PageLoad: ", EventLogEntryType.Error);
     }
     protected bool DisabledCard()
     {
