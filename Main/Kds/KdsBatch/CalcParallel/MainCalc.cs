@@ -551,7 +551,7 @@ namespace KdsBatch
                                 {
                                     CalcOved(CurrentOved);
                          
-                                    oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, _iBakashaId, CurrentOved.Month);
+                                 //   oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, _iBakashaId, CurrentOved.Month);
 
                                     numSucceed += 1;
                                     CurrentOved.Dispose();
@@ -572,6 +572,9 @@ namespace KdsBatch
                                 }
                                 
                             });
+
+                            oCalcDal.UpdatePremiaBakashaID(_iBakashaId);
+
                             #endregion
                         }
                       

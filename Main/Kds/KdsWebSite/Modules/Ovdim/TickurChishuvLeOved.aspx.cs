@@ -186,7 +186,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
 
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi", eFormat.PDF, true);
+                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "PDF";
@@ -242,7 +242,7 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi", eFormat.EXCEL, true);
+                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.EXCEL, true);
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "EXCEL";

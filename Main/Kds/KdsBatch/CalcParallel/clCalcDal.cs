@@ -586,6 +586,15 @@ namespace KdsBatch
             dal.AddParameter("p_chodesh", ParameterType.ntOracleDate, startMonth,
                 ParameterDir.pdInput);
             dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
+        }
+
+        public void UpdatePremiaBakashaID(long lBakashaId)
+        {
+
+            clDal dal = new clDal();
+            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
+                ParameterDir.pdInput);
+            dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
 
         }
     }
