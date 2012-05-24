@@ -186,7 +186,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
                 Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                 Report.AddParameter("P_SIKUM_CHODSHI", "1");
-                s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi", eFormat.PDF, true);
+                s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
 
                 if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
                 { 
@@ -208,7 +208,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 {
                     Session["BinaryResult"] = s;
                     Session["TypeReport"] = "PDF";
-                    Session["FileName"] = "RikuzAvodaChodshi";
+                    Session["FileName"] = "RikuzAvodaChodshi2";
 
                     sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:740px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
                  }
