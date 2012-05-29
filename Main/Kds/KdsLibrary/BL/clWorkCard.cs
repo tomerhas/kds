@@ -282,21 +282,24 @@ namespace KdsLibrary.BL
             }            
         }
 
-        public int GetCountYemeyAvodaOvdim(int iMisparIshi,DateTime dTarMe,DateTime dTarAd)
+        public DataTable GetYemeyAvodaOvdim(int iMisparIshi, DateTime dTarMe, DateTime dTarAd)
         {
-            int iCountYemeyAvoda = 0;
+           // int iCountYemeyAvoda = 0;
             clDal oDal = new clDal();
+            DataTable dt = new DataTable();
             try
             {
-                oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+              // oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
-                oDal.ExecuteSP(clGeneral.cFunGetCountYemeyAvodaLeoved);
+                oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
-                iCountYemeyAvoda = int.Parse(oDal.GetValParam("p_count").ToString());
+                oDal.ExecuteSP(clGeneral.cProGetYemeyAvodaLeoved,ref dt);
 
-                return iCountYemeyAvoda;
+               // iCountYemeyAvoda = int.Parse(oDal.GetValParam("p_count").ToString());
+
+                return dt;
             }
             catch (Exception ex)
             {
