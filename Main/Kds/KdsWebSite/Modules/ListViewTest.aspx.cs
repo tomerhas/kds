@@ -16,8 +16,8 @@ public partial class Modules_ListViewTest : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //lstSidurimTest.DataSource = GetSidurimAndPeilut(74480, new DateTime(2009, 5, 26));
-        //lstSidurim.DataSource = GetSidurimAndPeilut(74480, new DateTime(2009, 5, 26));
+        //SDTest.DataSource = GetSidurimAndPeilut(74480, new DateTime(2009, 5, 26));
+        //SD.DataSource = GetSidurimAndPeilut(74480, new DateTime(2009, 5, 26));
        
     }
     protected DataTable GetSidurimAndPeilut(int iMisparIshi, DateTime dCardDate)

@@ -160,7 +160,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
             <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
             <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
-            <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
+            <asp:AsyncPostBackTrigger ControlID="SD" />   
             <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
             <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />  
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
@@ -226,7 +226,7 @@
                 <asp:AsyncPostBackTrigger ControlID="btnUpdatePrint" />      
                 <asp:AsyncPostBackTrigger ControlID="btnPrintWithoutUpdate" />     
                 <asp:AsyncPostBackTrigger ControlID="btnCancel" /> 
-                <asp:AsyncPostBackTrigger ControlID="lstSidurim" />   
+                <asp:AsyncPostBackTrigger ControlID="SD" />   
                 <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" />                                                                                                                                                                                                                                                                                                                                                                         
             </Triggers>
       </asp:UpdatePanel>
@@ -368,7 +368,7 @@
                 <tr>                                     
                     <td width="100%">
                         <div id="divSidur" style="text-align: right; overflow:hidden;height:500px;" >                                        
-                            <uc:ucSidurim runat="server" ID="lstSidurim"/> 
+                            <uc:ucSidurim runat="server" ID="SD"/> 
                             <input type="hidden" runat="server" id="hidErrChg" /> 
                             <input type="hidden" runat="server" id="hidExecInputChg" />                                        
                         </div>    
@@ -505,7 +505,7 @@
         </table>
        </ContentTemplate>      
        <Triggers>                                                                                                                                               
-           <asp:AsyncPostBackTrigger ControlID="lstSidurim" />                                                  
+           <asp:AsyncPostBackTrigger ControlID="SD" />                                                  
         </Triggers>             
       </asp:UpdatePanel>      
    </center>
@@ -688,29 +688,29 @@
             var NextSidurName,PeilutName; 
             if (iPos>-1)
             {
-               var SidurNum = ElementName.substr(ElementName.indexOf('lstSidurim_')+16);
+               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+16);
                var _GridPeilut; 
                if (Direction==40)
                {  //down             
                     //נמצא את הסידור הבא                    
                     SidurNum = Number(SidurNum) + 1;                                         
-                    while (($get("lstSidurim_txtSH".concat(SidurNum))!=null) && ($get("lstSidurim_txtSH".concat(SidurNum)).isDisabled==true)){                                                                  
+                    while (($get("SD_txtSH".concat(SidurNum))!=null) && ($get("SD_txtSH".concat(SidurNum)).isDisabled==true)){                                                                  
                         SidurNum = Number(SidurNum) + 1;                             
                     }
 
-                    if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
-                        if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
-                            $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();                     
+                    if ($get("SD_"+FieldName.concat(SidurNum))!=null)
+                        if ($get("SD_"+FieldName.concat(SidurNum)).isDisabled==false)
+                            $get(("SD_"+FieldName).concat(SidurNum)).focus();                     
                  }
                  else
                  {//up      
                     SidurNum = Number(SidurNum) - 1;       
-                    while ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)   
+                    while ($get("SD_"+FieldName.concat(SidurNum))!=null)   
                     {                                                  
-                    if ($get("lstSidurim_"+FieldName.concat(SidurNum))!=null)
-                        if ($get("lstSidurim_"+FieldName.concat(SidurNum)).isDisabled==false)
+                    if ($get("SD_"+FieldName.concat(SidurNum))!=null)
+                        if ($get("SD_"+FieldName.concat(SidurNum)).isDisabled==false)
                         {
-                            $get(("lstSidurim_"+FieldName).concat(SidurNum)).focus();
+                            $get(("SD_"+FieldName).concat(SidurNum)).focus();
                             break;
                         }                                                    
                     SidurNum = Number(SidurNum) - 1;   
@@ -724,8 +724,8 @@
             var NextSidurName; 
             if (iPos>-1){
                var PeilutNum=ElementName.substr(ElementName.indexOf('ctl')+3,2);
-               var SidurNum = ElementName.substr(ElementName.indexOf('lstSidurim_')+11,3);
-               NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);     
+               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+11,3);
+               NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);     
                if (Direction==38) //up
                   PeilutNum=Number(PeilutNum)-1;
                else //down
@@ -737,7 +737,7 @@
                {
                 if (Direction==38){ //up
                    SidurNum = Number(SidurNum) - 1;
-                   NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3); 
+                   NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3); 
                    if ($get(NextSidurName)==null)
                      PeilutNum=0;
                    else      
@@ -747,7 +747,7 @@
                 {
                   SidurNum = Number(SidurNum) + 1;
                   PeilutNum = 2;
-                  NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);       
+                  NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);       
                 }                               
                  NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                }
@@ -763,7 +763,7 @@
                    NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                    if (PeilutNum==0){             
                         SidurNum=SidurNum-1;            
-                        _GridPeilut = document.getElementById("lstSidurim_" + padLeft(Number(SidurNum), '0', 3));   
+                        _GridPeilut = document.getElementById("SD_" + padLeft(Number(SidurNum), '0', 3));   
                         if (_GridPeilut!=null){      
                            PeilutNum = Number(_GridPeilut.rows.length+1);
                            NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;  
@@ -777,7 +777,7 @@
                     {
                         if (Direction==38){ //up
                             SidurNum = Number(SidurNum) - 1;
-                            NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);         
+                            NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);         
                             if ($get(NextSidurName)==null)
                                PeilutNum=0;
                               else
@@ -787,7 +787,7 @@
                         {
                             SidurNum = Number(SidurNum) + 1;
                             PeilutNum = 2;
-                            NextSidurName = "lstSidurim_" + padLeft(SidurNum.toString(),'0',3);         
+                            NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);         
                         }
                                  
                         NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
@@ -846,17 +846,17 @@
                 return;
             }
             
-            if (Number($get("lstSidurim_hidScrollPos").value)==0)
-              $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value);            
+            if (Number($get("SD_hidScrollPos").value)==0)
+              $get("SD_dvS").scrollTop = Number($get("SD_hidScrollPos").value);            
             else
-                $get("lstSidurim_dvS").scrollTop = Number($get("lstSidurim_hidScrollPos").value) + 100;            
+                $get("SD_dvS").scrollTop = Number($get("SD_hidScrollPos").value) + 100;            
         }   
         function ChangeHalbashaSelect()
         {
-          if (document.getElementById("ddlHalbasha").value=="0")
-             document.getElementById("ddlHalbasha").value = document.getElementById("hidPrevHalbasha").value;
+          if ($get("ddlHalbasha").value=="0")
+             $get("ddlHalbasha").value = $get("hidPrevHalbasha").value;
            else
-             document.getElementById("hidPrevHalbasha").value=document.getElementById("ddlHalbasha").value;
+             $get("hidPrevHalbasha").value=$get("ddlHalbasha").value;
         }
     </script>
 </body>

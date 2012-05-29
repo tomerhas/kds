@@ -168,7 +168,7 @@ function IsShatGmarInNextDay(shaa){
         return false;
 }
 function IsShatHatchalaInNextDay(shaa) {
-    var sParam244 = document.getElementById("lstSidurim_hidParam244").value;
+    var sParam244 = document.getElementById("SD_hidParam244").value;
     var Time = shaa.split(':');
     var hours = Time[0];
     var minuts = Time[1];

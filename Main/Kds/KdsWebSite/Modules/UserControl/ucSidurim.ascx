@@ -55,7 +55,7 @@ var _COL_KISUY_TOR=<%=_COL_KISUY_TOR %>;var _COL_SHAT_YETIZA= <%=_COL_SHAT_YETIZ
 
 function SaveScrollPosToHidden()
 { 
-   $get('lstSidurim_hidScrollPos').value=$get("lstSidurim_dvS").scrollTop;
+   $get('SD_hidScrollPos').value=$get("SD_dvS").scrollTop;
 }
 function window.onload()
 {    

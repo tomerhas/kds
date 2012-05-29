@@ -153,44 +153,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     public enum enPeilutStatus
     {
         enError = 1, enValid = 0, enApproved = 2
-    }
-    
-
-    //clBatchManager oBatchManager;
-    //public int iMisparIshi;
-    //public DateTime dDateCard;
-    //protected void Page_Init(object sender, EventArgs e)
-    //{
-    //    iMisparIshi = 78856;
-    //    dDateCard = new DateTime(2009,12,22);
-    //    oBatchManager = new clBatchManager(iMisparIshi, dDateCard);
-    //    SetGeneralData(oBatchManager);
-    //    if (oBatchManager.htEmployeeDetails != null)
-    //    {
-    //        _DataSource = oBatchManager.htEmployeeDetails;
-    //    }
-    //if (_DataSource != null)
-    //    {
-    //        BuildSidurim(_DataSource);
-    //        SetHideParameters();
-
-    //        //vldTst.ServerValidate += new System.Web.UI.WebControls.ServerValidateEventHandler(IsShatHatchalaValid);
-    //    }
-    //}
-    //protected void Page_Init(object sender, EventArgs e)
-    //{
-    //    this.Page.MaintainScrollPositionOnPostBack = true;
-    //}
-    //protected void Page_PreRender(object sender, EventArgs e)
-    //{
-    //    if (hidScrollPos.Value != string.Empty)
-    //    {
-    //        dvS.Style.Add("scrollTop", hidScrollPos.Value);
-    //        //Set first sidur focus 
-    //        string sScript = "SetScrollPosition();";//"document.getElementById('lstSidurim_dvS').scrollTop= Number(document.getElementById('lstSidurim_hidScrollPos').value) + 600";
-    //        ScriptManager.RegisterStartupScript(Page, this.GetType(), "SidurFocus", sScript, true);
-    //    }
-    //}
+    }    
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -260,78 +223,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         get { return tbSidurim; }
     }
-    //protected void Page_PreRender(object sender, EventArgs e)
-    //{
-    //    //string sConn = (string)ConfigurationSettings.AppSettings["KDS_CONNECTION"];
-    //    //string sCmd = "EXEC kdsadmin.pkg_errors.pro_get_oved_details";
-    //    //DataTable dt;
-
-    //    try
-    //    {
-    //        if (_HasSaveCard)
-    //        {
-    //            SaveCard();
-    //        }
-    //        else
-    //        {
-                
-    //        }
-           
-           
-    //      // CustomValidator vldShatHatchala = new CustomValidator();
-    //      // vldShatHatchala.ErrorMessage = "יש להקליד שעת התחלה תקינה: ";
-    //      // vldShatHatchala.ControlToValidate = "textTst";
-    //      //// vldShatHatchala.ClientValidationFunction = "Test";
-    //      // vldShatHatchala.ID = "aa";
-    //      // vldShatHatchala.Display = ValidatorDisplay.None;
-    //      // vldShatHatchala.EnableClientScript = true;
-    //      // AjaxControlToolkit.ValidatorCalloutExtender vldExShatHatchala = new AjaxControlToolkit.ValidatorCalloutExtender();
-    //      // vldExShatHatchala.TargetControlID = vldShatHatchala.ID;
-    //      // vldExShatHatchala.PopupPosition = AjaxControlToolkit.ValidatorCalloutPosition.Left;
-    //      // vldExShatHatchala.ID = "xx";
-    //      // //vldShatHatchala.ClientValidationFunction = "ISShatHatchalaValid";
-    //      // vldShatHatchala.ServerValidate += new System.Web.UI.WebControls.ServerValidateEventHandler(IsShatHatchalaValid);
-    //      // divTst.Controls.Add(vldShatHatchala);
-    //      // divTst.Controls.Add(vldExShatHatchala);
-
-    //       // dt = GetSidurimAndPeilut(74480, new DateTime(2009, 5, 26));
-    //        //ListViewSidurim.DataSource = _DataSource;
-    //        //ListViewSidurim.DataBind();
-    //        //SqlDataSourceSidurim.SelectCommand = sCmd;
-    //        //SqlDataSourceSidurim.ConnectionString = sConn;
-    //        //SqlDataSourceSidurim.SelectParameters.Add("p_mispar_ishi", TypeCode.Int32, "74480");
-    //        //SqlDataSourceSidurim.SelectParameters.Add("p_date",TypeCode.DateTime,new DateTime(2009,5,26).ToShortDateString());            
-    //        //SqlDataSourceSidurim.DataSourceMode = SqlDataSourceMode.DataSet;
-    //        //////SqlDataSource sdsSidurim = new SqlDataSource(sConn, sCmd);
-    //        ////sdsSidurim.SelectCommandType = SqlDataSourceCommandType.StoredProcedure;
-    //        //////sdsSidurim.ID = "SqlDataSourceSidurim";
-    //        //////sdsSidurim.DataSourceMode = SqlDataSourceMode.DataSet;
-    //        ////sdsSidurim.SelectParameters.Add("p_mispar_ishi",TypeCode.Int32,"74480");
-    //        ////sdsSidurim.SelectParameters.Add("p_date",TypeCode.DateTime,new DateTime(2009,5,26).ToShortDateString());
-
-    //        ////ListViewSidurim.DataSourceID = "SqlDataSourceSidurim";
-           
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        throw ex;
-    //    }
-    //}
-    //public string GetCallbackResult()
-    //{
-
-    //    return _callBackStatus;
-    //}
-
-    //public void RaiseCallbackEvent(string eventArgument)
-    //{
-
-    //    // do your validation coding here
-
-    //     _callBackStatus = "Valid";
-    //}
-
-
+    
     protected void SetHideParameters()
     {
         //Set General Parameters     
@@ -391,14 +283,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 drMeafyeney = dtMeafyenSidur.Select("sidur_key=" + iSidurKey);
                 foreach (DataRow dr in drMeafyeney)
                 {//אם קוד מאפיין קיים בטבלה, נחזיר TRUE
-                    sErech = String.IsNullOrEmpty(dr["erech"].ToString()) ? "" : dr["erech"].ToString();
-                    //if ((sErech == string.Empty) || (sErech.Equals("0")))
-                    //{
-                    //    drSadot = dtSadotNosafimLsidur.Select("kod_meafyen=" + dr["kod_meafyen"].ToString());
-                    //}
-                    //else
-                    //{
-                      //  drSadot = dtSadotNosafimLsidur.Select("kod_meafyen=" + dr["kod_meafyen"].ToString() + " and erech='" + sErech + "'");
+                    sErech = String.IsNullOrEmpty(dr["erech"].ToString()) ? "" : dr["erech"].ToString();                   
                     drSadot = dtSadotNosafimLsidur.Select("kod_meafyen=" + dr["kod_meafyen"].ToString());
                     if (drSadot.Length > 0)
                     {
@@ -471,32 +356,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
         else
             return ((oSidur.bSidurMyuhad) && (oSidur.bSidurVisaKodExists));   
-    }
-    //protected bool IsPeilutEilatExistsWithKm(ref clSidur oSidur)
-    //{
-    //    //אם לא מצאנו מספר סידור או קודי מאפיין, נבדוק ברמת פעילות
-    //    //אם קיימת נסיעת אילת שהק"מ של הנסיעה גדול מפרמטר 149
-    //    //שדה GetKavDetails.EilatTrip=1   וגם אורך הקו הוא גדול מהערך בפרמטר 149  (GetKavDetails.Km,GetNamakDetails.Km , GetRekaDetailsKm). 
-    //    bool bExists = false;
-    //    try
-    //    {
-    //        clPeilut _Peilut;
-    //        for (int i = 0; i < oSidur.htPeilut.Count; i++)
-    //        {
-    //            _Peilut = ((clPeilut)oSidur.htPeilut[i]);
-    //            if ((_Peilut.iEilatTrip == 1)) //&& (_Peilut.fKm > Param149))
-    //            {
-    //                bExists = true;
-    //                break;
-    //            }
-    //        }
-    //        return bExists;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        throw ex;
-    //    }
-    //}
+    }    
     protected double CalcTimeDiffMinuts(DateTime dDate,string sHourA, string sHourB)
     {
         DateTime dDateA = DateTime.Parse(dDate.ToShortDateString() + " " + sHourA);
@@ -601,21 +461,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 throw ex;
             }
         }
-    }
-    //protected Button AddSidurHeadrutButton(int iIndex)
-    //{
-    //    Button btnSidur;
-    //    btnSidur = AddInputButton("תיקון דיווח היעדרות", "ImgButtonUpdate");
-    //    btnSidur.ID = "btnSidur" + iIndex;        
-    //    btnSidur.Attributes.Add("onclick", string.Concat("FixSidurHeadrut", "(", iIndex, ")"));
-    //    btnSidur.Click += new EventHandler(btnSidur_Click);
-
-    //    return btnSidur;
-    //    ////Add AsyncPostBackTrigger
-    //    //AsyncPostBackTrigger AsncTrigger = AddAsyncTrigger("btnSidur");
-    //    //AsncTrigger.ControlID = btnSidur.ID;
-    //    ////UpEmpDetails.Triggers.Add(AsncTrigger);
-    //}
+    }    
     protected AjaxControlToolkit.CollapsiblePanelExtender CreateCollapsiblePanelExtender(int iIndex,
                                                                                          string sPnlHeader, string sPnlContent,
                                                                                          int iPeilutNumber,
@@ -637,8 +483,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     }        
     protected AsyncPostBackTrigger AddAsyncTrigger(string sControlId)
     {
-        AsyncPostBackTrigger upTrigger  = new AsyncPostBackTrigger();        
-        //upTrigger.ControlID = btnSidur;
+        AsyncPostBackTrigger upTrigger  = new AsyncPostBackTrigger();                
         upTrigger.EventName = "OnCommand";
         return upTrigger;
     }
@@ -646,8 +491,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         UpdatePanel upPeilyot = new UpdatePanel();
         upPeilyot.RenderMode = UpdatePanelRenderMode.Inline;
-        upPeilyot.UpdateMode = UpdatePanelUpdateMode.Conditional;   
-        //upPeilyot.Triggers 
+        upPeilyot.UpdateMode = UpdatePanelUpdateMode.Conditional;           
         return upPeilyot;
     }
     protected void FixGridHeader(string sNamePnlGrid)
@@ -662,23 +506,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         dynDiv.ID = "pDiv" + iIndex;
        // dynDiv.Style.Add(HtmlTextWriterStyle.Overflow, "scroll");
         return dynDiv;
-    }
-    //protected void SetSidurParameters(DataRow dr)
-    //{
-    //    //אם סידור מיוחד, נכניס את פרמטר שעת התחלה מותרת ושעת גמר מותרת שמוגדרים לסידור
-    //    //ונדרוס את הפרמטרים הכללים של שעת התחלה וגמר מותרת, כיוון שההגדרה לסידור חזקה יותר מההגדרה הכללית
-    //    if (bool.Parse(dr["sidur_myuhad"].ToString()))
-    //    {
-    //        if (!String.IsNullOrEmpty(dr["shat_hatchala_muteret"].ToString()))
-    //        {
-    //            Param1 = DateTime.Parse(dr["shat_hatchala_muteret"].ToString());
-    //        }
-    //        if (!String.IsNullOrEmpty(dr["shat_gmar_muteret"].ToString()))
-    //        {
-    //            Param2 = DateTime.Parse(dr["shat_gmar_muteret"].ToString());
-    //        }
-    //    }       
-    //}
+    }   
     protected Button AddImageButton()
     {
         Button oImage = new Button();
@@ -822,39 +650,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             return _COL_KNISA;
         }
-    }
-    //private bool IsSidurMyuhad(string sMisparSidur)
-    //{//נבדוק אם סידור הוא רגיל או מיוחד
-    //    if (sMisparSidur.Length > 1)
-    //        return (sMisparSidur.Substring(0, 2) == "99");
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
-    //private bool IsSidurDriver(DataRow dr)
-    //{//סידור נהגות - לפי ערך 5 במאפיין 3
-    //   // bool bSidurMyuhad = (bool)dr["Sidur_Myuhad"];
-    //    bool bSidurDriver = false;
-    //    //if (bSidurMyuhad)
-    //    //{
-    //    //    bSidurDriver = String.IsNullOrEmpty(dr["sector_avoda"].ToString()) ? false : (int.Parse(dr["sector_avoda"].ToString()) == clGeneral.enSectorAvoda.Nahagut.GetHashCode());
-    //    //}
-    //    //else
-    //    //{
-    //    //}
-
-    //    return bSidurDriver;
-    //}
-    //private  void IsShatHatchalaValid(object source, System.Web.UI.WebControls.ServerValidateEventArgs args)
-    //{   //תקינות שעת התחלה     
-    //    DateTime dShatHatchala;
-    //    DateTime dParam1= Param1;
-    //    DateTime dParam2 = Param2;
-
-    //    dShatHatchala = DateTime.Parse(string.Concat(CardDate.ToShortDateString()," " ,args.Value));
-    //    args.IsValid = ((dShatHatchala >= dParam1) && (dShatHatchala <= dParam2));
-    //}
+    }   
     protected void FillDataTableRows(ref DataTable dtPeilutyot, OrderedDictionary htPeilut)
     {
          // populate it with your data
@@ -1463,25 +1259,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 else{
                     imgAddPeilut.Style.Add("display", "block");
                     hCell = CreateTableCell("40px", "", "");
-                }
-                //אם סידור חדש, נעלים את הוספת פעילות עד אשר יקלידו מספר סידור
-                //if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
-                //{
-                //    if (((oSidur.iMisparSidur > 0) && (bHasNoPremmisionToAddPeilut)) || (oSidur.iMisparSidur == 0))
-                //    {
-                //        imgAddPeilut.Style.Add("display", "none");
-                //        hCell = CreateTableCell("53px", "", "");
-                //    }
-                //    else
-                //    {
-                //        imgAddPeilut.Style.Add("display", "block");
-                //        hCell = CreateTableCell("40px", "", "");
-                //    }
-                //}
-                //else
-                //{
-                //    hCell = CreateTableCell("40px", "", "");
-                //}
+                }               
                 hCell.Controls.Add(imgAddPeilut);
             //}
             //else
@@ -2086,9 +1864,6 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     lRepresentMakat8 = String.IsNullOrEmpty(_NesiaDetails.Rows[0]["representmakat8"].ToString()) ? 0 : long.Parse((_NesiaDetails.Rows[0]["representmakat8"].ToString()));
                     if ((lMakat == 0) && (lRepresentMakat8 > 0))
                         lMakat = lRepresentMakat8;
-
-                    //InsertNesiaRekaToDB(int.Parse(Session["LoginUserEmp"].ToString()), iMisparIshi, sCardDate, iMisparSidur, sSidurShatHatchala, lMakat, lCarNum, dPeilutShatYetiza, sPeilutShatYetiza);
-                    //HttpRuntime.Cache.Remove(iMisparIshi.ToString() + DateTime.Parse(sCardDate).ToShortDateString());
                 }
             }
            
@@ -2251,7 +2026,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         if (sPeilutDetails[0].Equals("1"))
             //sScript = sScript + "$get('" + GetPeilutClientKey(sPeilutDetails) + "').focus();";
             sScript = sScript + "SetNewPeilutFocus('" + GetPeilutClientKey(sPeilutDetails) + "');";
-        // sScript = sScript + "$get('lstSidurim_000_ctl05_lstSidurim_000_ctl05ShatYetiza').focus();";
+        // sScript = sScript + "$get('SD_000_ctl05_SD_000_ctl05ShatYetiza').focus();";
 
         ScriptManager.RegisterStartupScript(Page, this.GetType(), "SaveScrollPos", sScript, true);
     }
@@ -2501,7 +2276,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         int iPeilutIndex;
         iPeilutIndex = ((clSidur)DataSource[int.Parse(sPeilutDetails[1])]).htPeilut.Count+1;
-        return "lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_lstSidurim_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
+        return "SD_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "_SD_" + (sPeilutDetails[1]).PadLeft(3, char.Parse("0")) + "_ctl" + iPeilutIndex.ToString().PadLeft(2, char.Parse("0")) + "ShatYetiza";
     }
     protected Image AddImage(string sImageUrl,string sImageId, string sOnClickScript)
     {
@@ -2595,7 +2370,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         //Add Ajax CallOutCustomeValidator
         vldExtenderCallOut = AddCallOutValidator(vldSidurNumber.ID, "vldExSidurNum", iIndex.ToString(), AjaxControlToolkit.ValidatorCalloutPosition.Left);
-        vldExtenderCallOut.BehaviorID = "vldExSidurNumBehv" + iIndex;
+        vldExtenderCallOut.BehaviorID = "vSBhv" + iIndex;
         hCell.Controls.Add(vldExtenderCallOut);
 
         hCell.Style.Add("valign", "top");
@@ -2695,11 +2470,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
-                        if (SetOneError(lnkSidur, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
+                        if (SetOneError(lnkSidur, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + lnkSidur.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
 
                             //hCell.Controls.Add(lDummy);
                             hErrCell.Controls.Add(imgErr);
@@ -2750,11 +2525,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 switch (_StatusCard)
                 {
                     case clGeneral.enCardStatus.Error:
-                        if (SetOneError(lbl, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ID))
+                        if (SetOneError(lbl, hErrCell, "Mispar_sidur", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ID))
                         {
                             imgErr.ImageUrl = "../../Images/!.png";
                             imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                            imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + lbl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                             //hCell.Controls.Add(lDummy);
                             hErrCell.Controls.Add(imgErr);
                             hErrCell.Style.Add("background-color", "#d1e4f2");
@@ -3298,7 +3073,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            }
        }
         if (bSidurHasChanged){
-            string sScript = "SetLvlChg(2," + iCurrSidurIndex + ");SetSidurStatus(" + iSidurIndex + ", true); $get('lstSidurim_imgCancel" + iSidurIndex + "').disabled = true;  $get('lstSidurim_imgCancel" + iSidurIndex + "').className='ImgCancelDisable';";
+            string sScript = "SetLvlChg(2," + iCurrSidurIndex + ");SetSidurStatus(" + iSidurIndex + ", true); $get('SD_imgCancel" + iSidurIndex + "').disabled = true;  $get('SD_imgCancel" + iSidurIndex + "').className='ImgCancelDisable';";
             ScriptManager.RegisterStartupScript(Page, this.GetType(), "SwitchHour", sScript, true);
       }    
     }
@@ -3745,7 +3520,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     //    drPeilutyot["knisa"] = "0,0,0,0";
     //    drPeilutyot["DayToAdd"] = "0";
     //    drPeilutyot["license_number"] = 0;
-    //    drPeilutyot["PeilutStatus"] = 0;// lstSidurim.enPeilutStatus.enValid.GetHashCode();
+    //    drPeilutyot["PeilutStatus"] = 0;// SD.enPeilutStatus.enValid.GetHashCode();
     //    dt.Rows.Add(drPeilutyot);
     //}
     private DateTime GetSidurNewDate(int iSidurKey, string sSidurHour)
@@ -3825,11 +3600,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
-                if (SetOneError(ddl, hCell, "Hashlama", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
+                if (SetOneError(ddl, hCell, "Hashlama", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ClientID))
                 {
                     imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
                 //else vered 29/04/2012
@@ -3941,11 +3716,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
-                if (SetOneError(ddl, hCell, "Pitzul_hafsaka", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
+                if (SetOneError(ddl, hCell, "Pitzul_hafsaka", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ClientID))
                 {
                     imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
                 break;
@@ -4006,11 +3781,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
-                if (SetOneError(ddl, hCell, "Chariga", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
+                if (SetOneError(ddl, hCell, "Chariga", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ClientID))
                 {
                     imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
                 //else vered 29/4/2012
@@ -4076,7 +3851,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         vldExShatGmarLetashlum = AddCallOutValidator(vldShatGmarLetashlum.ID, "vldExSGL" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
         hCell.Controls.Add(vldShatGmarLetashlum);
         hCell.Controls.Add(vldExShatGmarLetashlum);
-
+        oTextBox.EnableViewState = false;
      //   hCell.Style.Add("border-left", "solid 1px gray");
         
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Gmar_Letashlum'");
@@ -4121,7 +3896,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
         oTextBox.CssClass = "WorkCardSidurTextBox";
         oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-       
+        oTextBox.EnableViewState = false;
         //AddAttribute(oTextBox, "OldV", oTextBox.Text);
         hCell.Controls.Add(oTextBox);
         oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
@@ -4194,11 +3969,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
-                if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_OUT", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
+                if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_OUT", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ClientID))
                 {
                     imgErr.ImageUrl = "../../Images/!.png";
                     imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                    imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                     hCell.Controls.Add(imgErr);
                 }
                 //else vered 29/4/2012
@@ -4262,11 +4037,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Error:
-                    if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_IN", ref oSidur, iIndex.ToString(), "lstSidurim_" + imgErr.ClientID))
+                    if (SetOneError(ddl, hCell, "KOD_SIBA_LEDIVUCH_YADANI_IN", ref oSidur, iIndex.ToString(), "SD_" + imgErr.ClientID))
                     {
                         imgErr.ImageUrl = "../../Images/!.png";
                         imgErr.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-                        imgErr.Attributes.Add("ondblClick", "GetErrorMessage(lstSidurim_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
+                        imgErr.Attributes.Add("ondblClick", "GetErrorMessage(SD_" + ddl.ClientID + "," + 2 + ",'" + iIndex.ToString() + "')");
                         hCell.Controls.Add(imgErr);
                     }
                     //else
@@ -5121,7 +4896,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
             oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
-            
+            oTextBox.EnableViewState = false;
+
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
@@ -5147,7 +4923,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Style.Add("backgroung", "white");
             }
             oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-            //oTextBox.Attributes.Add("onfocus", "SetFocus('lstSidurim_" + oMaskedEditExtender.ClientID + "_ClientState');");
+            //oTextBox.Attributes.Add("onfocus", "SetFocus('SD_" + oMaskedEditExtender.ClientID + "_ClientState');");
             hCell.Controls.Add(oMaskedEditExtender);
             
             SetSidurStartHourParameters(oSidur, ref sShatHatchalaMutert, ref sShatGmarMutert);
@@ -5530,7 +5306,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //oTextBox.Attributes["OrgDate"] = oSidur.dOldFullShatGmar.ToShortDateString();
             oTextBox.ToolTip = "תאריך גמר הסידור הוא: " + oSidur.dFullShatGmar.ToShortDateString();
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
-          
+            oTextBox.EnableViewState = false;
             
             DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_gmar'");
             
@@ -5897,8 +5673,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 case DataControlRowType.DataRow:
                     SetPeilutStatus(e);
 
-                    iSidurIndex = int.Parse(e.Row.ClientID.Substring("lstSidurim_".Length, 3));
-                    //bSidurActive = ((KdsBatch.clSidur)(this.DataSource[int.Parse(e.Row.ClientID.Substring("lstSidurim_".Length, 3))])).iBitulOHosafa == 0;
+                    iSidurIndex = int.Parse(e.Row.ClientID.Substring("SD_".Length, 3));
+                    //bSidurActive = ((KdsBatch.clSidur)(this.DataSource[int.Parse(e.Row.ClientID.Substring("SD_".Length, 3))])).iBitulOHosafa == 0;
                     iBitulOHosafa = ((KdsBatch.clSidur)(this.DataSource[iSidurIndex])).iBitulOHosafa;
                     bSidurActive = ((iBitulOHosafa != clGeneral.enBitulOHosafa.BitulAutomat.GetHashCode()) && (iBitulOHosafa != clGeneral.enBitulOHosafa.BitulByUser.GetHashCode()));
                     iBitulOHosafa = (int)DataBinder.Eval(e.Row.DataItem, "bitul_o_hosafa");
@@ -5974,9 +5750,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 case DataControlRowType.Footer:
                    // btn=AddInputButton("הוסף/חפש פעילות", "ImgButtonUpdate");
                    // e.Row.Cells[_COL_LINE_DESCRIPTION].Controls.Add(btn);
-                   //((Button)e.Row.Cells[_COL_LINE_DESCRIPTION].Controls[0]).Attributes.Add("onclick", "AddPeilut(" + e.Row.ClientID.Substring("lstSidurim_".Length, 3) + ")");
+                   //((Button)e.Row.Cells[_COL_LINE_DESCRIPTION].Controls[0]).Attributes.Add("onclick", "AddPeilut(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
                     //e.Row.Cells[_COL_LINE_TYPE].Controls.Add(AddInputButton("שדות נוספים לסידור", "ImgButtonUpdate"));
-                    //((Button)e.Row.Cells[_COL_LINE_TYPE].Controls[0]).Attributes.Add("onclick", "(" + e.Row.ClientID.Substring("lstSidurim_".Length, 3) + ")");
+                    //((Button)e.Row.Cells[_COL_LINE_TYPE].Controls[0]).Attributes.Add("onclick", "(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
                     break;
             }
             e.Row.Cells[_COL_LAST_UPDATE].Style["display"] = "none";
@@ -6027,7 +5803,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             _Button.CausesValidation = false;
             _Button.Style.Add("height", "25px");
             //_Button.Click += new  ClickEventHandler(_Button_Click); 
-            //        ((Button)e.Row.Cells[iCol].Controls[0]).Attributes.Add("onclick", sFunctionName + "(" + e.Row.ClientID.Substring("lstSidurim_".Length, 3) + ")");
+            //        ((Button)e.Row.Cells[iCol].Controls[0]).Attributes.Add("onclick", sFunctionName + "(" + e.Row.ClientID.Substring("SD_".Length, 3) + ")");
             return _Button;
         }
         catch (Exception ex)
@@ -6740,6 +6516,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.CssClass="WorkCardPeilutTextBox";
             oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
             oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
+            oTxt.EnableViewState = false;
          //   oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             //Add MaskTextBox
@@ -7668,33 +7445,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                         container.Controls.Add(tbItem);
                                         sTargetId = tbItem.ClientID;
                                         break;
-                                    case enControlToAdd.MaskedTimeEditExtender:
-                                        //if (!String.IsNullOrEmpty(sTargetId))
-                                        //{
-                                        //    MaskTextBox = AddTimeMaskedEditExtender(sTargetId);
-                                        //    container.Controls.Add(MaskTextBox);
-                                        //}
+                                    case enControlToAdd.MaskedTimeEditExtender:                                      
                                         break;
-                                    case enControlToAdd.MaskedNumberEditExtender:
-                                        //if (!String.IsNullOrEmpty(sTargetId))
-                                        //{
-                                        //    MaskTextBox = AddNumberMaskedEditExtender(sTargetId);
-                                        //    container.Controls.Add(MaskTextBox);
-                                        //}
+                                    case enControlToAdd.MaskedNumberEditExtender:                                      
                                         break;
                                     case enControlToAdd.ImageButton:
                                         Image = AddImageButton();
                                         container.Controls.Add(Image);
                                         break;
-                                    case enControlToAdd.CustomValidator:
-                                        //if (!String.IsNullOrEmpty(sTargetId))
-                                        //{
-                                        //    vldCustom = AddCustomValidator(sTargetId);
-                                        //    container.Controls.Add(vldCustom);
-                                        //}
-                                        break;
-                                    //case enControlToAdd.label:
-                                    //    AddLabel();
+                                    case enControlToAdd.CustomValidator:                                      
+                                        break;                                   
                                 }
                             }
                         }
@@ -7946,17 +7706,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
         }
        
-    }
-
-    //protected void textTst_TextChanged(object sender, EventArgs e)
-    //{
-
-    //}
-    //protected void vldTst_ServerValidate(object source, ServerValidateEventArgs args)
-    //{
-    //    args.IsValid = false;
-    //}
-   
+    } 
     protected void txtDummy_TextChanged(object sender, EventArgs e)
     {
 
@@ -7968,8 +7718,5 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         tbSidurim.Controls.Clear();
         tbSidurimHeader.Controls.Clear();
-    }
-
-
-    
+    }    
 }

@@ -29,7 +29,7 @@
          <asp:ScriptManager  runat="server"  id="ScriptManagerKds" EnablePartialRendering="true">        
          </asp:ScriptManager>
         <div>                
-            <uc:ucSidurim runat="server" ID="lstSidurim" />             
+            <uc:ucSidurim runat="server" ID="SD" />             
         </div>
   
   

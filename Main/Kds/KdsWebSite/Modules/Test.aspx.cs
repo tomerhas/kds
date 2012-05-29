@@ -80,7 +80,7 @@ public partial class Modules_Test :Page
        // //clUtils oUtils = new clUtils();
        // clBatchManager oBatchManager;
        // //dtTest = oUtils.GetSnifAv(1);
-       // //lstSidurim.dtSnifim = dtTest;
+       // //SD.dtSnifim = dtTest;
        // DataTable dtLicenseNumbers = new DataTable();
        // dDateCard = DateTime.Parse("03/08/2009");
        // //ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
@@ -90,23 +90,23 @@ public partial class Modules_Test :Page
        // {
        //     oBatchManager.InitGeneralData();
        // }
-       // lstSidurim.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;
-       // lstSidurim.Param93 = oBatchManager.oParam.dSidurLimitShatGmar;
-       // lstSidurim.Param80 = oBatchManager.oParam.dNahagutLimitShatGmar;
-       // lstSidurim.Param3 = oBatchManager.oParam.dSidurEndLimitHourParam3;
-       // lstSidurim.Param29 = oBatchManager.oParam.dStartHourForPeilut;
-       // lstSidurim.Param30 = oBatchManager.oParam.dEndHourForPeilut;
-       // lstSidurim.SugeySidur = oBatchManager.dtSugSidur;
-       // lstSidurim.MeafyenyOved = oBatchManager.oMeafyeneyOved;
-       // lstSidurim.KdsParameters = oBatchManager.oParam;
-       // lstSidurim.OvedYomAvoda = oBatchManager.oOvedYomAvodaDetails;
-       // lstSidurim.MeafyeneyElementim = GetMeafyeneyElementim();
+       // SD.Param1 = oBatchManager.oParam.dSidurStartLimitHourParam1;
+       // SD.Param93 = oBatchManager.oParam.dSidurLimitShatGmar;
+       // SD.Param80 = oBatchManager.oParam.dNahagutLimitShatGmar;
+       // SD.Param3 = oBatchManager.oParam.dSidurEndLimitHourParam3;
+       // SD.Param29 = oBatchManager.oParam.dStartHourForPeilut;
+       // SD.Param30 = oBatchManager.oParam.dEndHourForPeilut;
+       // SD.SugeySidur = oBatchManager.dtSugSidur;
+       // SD.MeafyenyOved = oBatchManager.oMeafyeneyOved;
+       // SD.KdsParameters = oBatchManager.oParam;
+       // SD.OvedYomAvoda = oBatchManager.oOvedYomAvodaDetails;
+       // SD.MeafyeneyElementim = GetMeafyeneyElementim();
        // ////SetSecurityLevel();
        // //SetLookUpSidurim();
-       // lstSidurim.DataSource = oBatchManager.htEmployeeDetails;
+       // SD.DataSource = oBatchManager.htEmployeeDetails;
        // dtLicenseNumbers = GetMasharData(oBatchManager.htEmployeeDetails);
        
-       // lstSidurim.Mashar = dtLicenseNumbers;
+       // SD.Mashar = dtLicenseNumbers;
        // //oBatchManager.MainInputData(iMisparIshi, dDateCard);
        // //if (!Page.IsPostBack)
        // //{
@@ -202,15 +202,15 @@ public partial class Modules_Test :Page
         //{
         //    //חריגה
         //    dv.RowFilter = string.Concat("table_name='", clGeneral.cCtbDivuchHarigaMeshaot, "'");
-        //    lstSidurim.DDLChariga = dv;
+        //    SD.DDLChariga = dv;
 
         //    //סיבות לדיווח ידני
         //    dvSibotLedivuch = new DataView(oUtils.GetCtbSibotLedivuchYadani());
-        //    lstSidurim.DDLSibotLedivuch = dvSibotLedivuch;
+        //    SD.DDLSibotLedivuch = dvSibotLedivuch;
 
         //    //פיצול הפסקה
         //    dv.RowFilter = string.Concat("table_name='", clGeneral.cCtbPitzulaHafsaka, "'");
-        //    lstSidurim.DDLPitzulHafsaka = dv;
+        //    SD.DDLPitzulHafsaka = dv;
 
         //}
         //catch (Exception ex)

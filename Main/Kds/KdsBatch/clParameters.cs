@@ -248,6 +248,7 @@ namespace KdsBatch
         }
         private void SetParameters(DateTime dCardDate, int iSugYom)
         {
+           
             StringBuilder sHour = new StringBuilder();
             string sTmp;
             try

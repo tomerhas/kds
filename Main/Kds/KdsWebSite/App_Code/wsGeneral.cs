@@ -324,7 +324,7 @@ public class wsGeneral : System.Web.Services.WebService
                         sXML.Append(string.Concat("<DAKOT_DEF_TITLE>", "הגדרה לגמר היא " + dtMakat.Rows[0]["mazantashlum"].ToString() + " דקות ", "</DAKOT_DEF_TITLE>"));
                         sXML.Append(string.Concat("<DAKOT_BAFOAL_ENABLED>", "1", "</DAKOT_BAFOAL_ENABLED>"));
                        
-                        //sXML.Append(string.Concat("<HYPER_LINK>", "a onclick='AddHosafatKnisot(0,lstSidurim_000_ctl03);' style='text-decoration:underline;cursor:pointer;'>" + dtMakat.Rows[0]["description"].ToString(), "</HYPER_LINK>"));
+                        //sXML.Append(string.Concat("<HYPER_LINK>", "a onclick='AddHosafatKnisot(0,SD_000_ctl03);' style='text-decoration:underline;cursor:pointer;'>" + dtMakat.Rows[0]["description"].ToString(), "</HYPER_LINK>"));
                        
                         if (!sShatYetiza.Equals(""))
                             if (!String.IsNullOrEmpty(dtMakat.Rows[0]["kisuitor"].ToString()))
