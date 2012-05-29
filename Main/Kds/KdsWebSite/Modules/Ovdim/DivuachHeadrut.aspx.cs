@@ -225,10 +225,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
     protected void btnUpdate_Click(object sender, EventArgs e)
     {
         clWorkCard oWorkCard = new clWorkCard();
-        int iCounYemeyAvoda, iSugHeadrut;
-        string sMessage;
-        DateTime dShatHatchala, dShatSiyum;   
-        
+        int iSugHeadrut;
+        string sMessage, sTaarichim = "" ;
+        DateTime dShatHatchala, dShatSiyum;
+        DataTable dtYamim = new DataTable();
         try
         {
             iSugHeadrut = ddlHeadrutType.SelectedIndex; 
@@ -238,10 +238,15 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                 ddlHeadrutType.SelectedIndex = iSugHeadrut;
                 if (clnEndDateHeadrut.Text.Length > 0)
                 {
-                    iCounYemeyAvoda = oWorkCard.GetCountYemeyAvodaOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()).AddDays(1), DateTime.Parse(clnEndDateHeadrut.Text));
-                    if (iCounYemeyAvoda > 0)
+                    dtYamim = oWorkCard.GetYemeyAvodaOvdim(int.Parse(ViewState["MisparIshi"].ToString()), DateTime.Parse(ViewState["DateCard"].ToString()).AddDays(1), DateTime.Parse(clnEndDateHeadrut.Text));
+                    if (dtYamim.Rows.Count > 0)
                     {
-                        sMessage = "לא ניתן לדווח היעדרות ממושכת, קיים כבר דיווח באחד או יותר מהתאריכים: " + DateTime.Parse(ViewState["DateCard"].ToString()).ToShortDateString() + "-" + clnEndDateHeadrut.Text;
+                        foreach (DataRow dr in dtYamim.Rows)
+                        {
+                            sTaarichim += DateTime.Parse(dr["taarich"].ToString()).ToShortDateString() + ',';
+                        }
+                        sTaarichim = sTaarichim.Substring(0, sTaarichim.Length - 1);
+                        sMessage = "לא ניתן לדווח היעדרות ממושכת, קיים כבר דיווח בתאריכים " + sTaarichim;
                         ScriptManager.RegisterStartupScript(btnUpdate, btnUpdate.GetType(), "err", "HideShaotRow(document.all('ddlHeadrutType').options[document.all('ddlHeadrutType').selectedIndex]);alert('" + sMessage + "');", true);
 
                     }
