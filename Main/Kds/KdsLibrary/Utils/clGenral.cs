@@ -27,7 +27,12 @@ namespace KdsLibrary
         public const string cCtbSibotHashlamaLeyom = "ctb_sibot_hashlama_leyom";
         public const string cCtbDivuchHarigaMeshaot = "ctb_divuch_hariga_meshaot";
         public const string cCtbPitzulaHafsaka = "ctb_pitzul_hafsaka";
-#region pkg_batch constants 
+
+        #region pkg_rikuz_avoda constants
+        public const string cProGetRikuzAvodaChodshiTemp = "PKG_RIKUZ_AVODA.pro_get_rikuz_chodshi_temp";
+        #endregion
+        
+        #region pkg_batch constants
         public const string cProInsBakasha = "pkg_batch.pro_ins_bakasha";
         public const string cProInsLogBakasha = "pkg_batch.pro_ins_log_bakasha";
         public const string cProUpdBakasha = "pkg_batch.pro_upd_bakasha";
@@ -150,7 +155,7 @@ namespace KdsLibrary
         public const string cProSaveEmployeeCard = "pkg_ovdim.pro_save_employee_card";
         public const string cProInsYemeyAvodaLeoved = "pkg_ovdim.pro_ins_yemey_avoda_leoved";
         public const string cFunIsCardExistsYemeyAvoda = "pkg_ovdim.fun_is_card_exists_yemey_avoda";
-        public const string cFunGetCountYemeyAvodaLeoved = "pkg_ovdim.fun_get_count_yemey_avoda";
+        public const string cProGetYemeyAvodaLeoved = "pkg_ovdim.pro_get_yemey_avoda";
         public const string cProGetErrorOvdim = "pkg_ovdim.pro_get_error_ovdim";
         public const string cProGetOvedFullName = "pkg_ovdim.pro_get_oved_full_name";
         public const string cProGetOvedimMisparIshi = "pkg_ovdim.pro_get_ovedim_mispar_ishi";
