@@ -187,7 +187,7 @@ namespace KdsBatch
               sDataEt.Append(FormatNumber(fMechir, 10, 2));
               sDataEt.Append(sSimanMechir);
 
-              if (!IsEmptyErua(sDataEt.ToString()) && !bKayamEfreshBErua)
+              if (!IsEmptyErua(sDataEt.ToString()))
               {
                   _ListErua.Add(sDataEt.ToString());
               }
