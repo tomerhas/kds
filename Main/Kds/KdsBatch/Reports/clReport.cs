@@ -87,7 +87,7 @@ namespace KdsBatch.Reports
         public clReport(long BakashaId, int MisparIshi,DateTime Month, int sug_chishuv)//for rikuzim
         {
             _ReportParams = new List<clReportParam>();
-            _sRdlName = "RikuzAvodaChodshi";
+            _sRdlName = "RikuzAvodaChodshi2";
             _Extension = eFormat.PDF ;
             _BakashaId = BakashaId;
             _MisparIshi = MisparIshi;
