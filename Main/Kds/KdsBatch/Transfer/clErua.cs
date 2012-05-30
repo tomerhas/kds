@@ -244,6 +244,14 @@ namespace KdsBatch
                 {
                     CheckHefresh(drRechiv[0]);
                 }
+                else if (!bKayamEfreshBErua && (_iKodErua == 162 || _iKodErua == 462 || _iKodErua == 589))
+                {
+                    drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=126 and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+
+                    if (drRechiv[0]["bakasha_id_2"] != null)
+                        if (drRechiv[0]["bakasha_id_2"].ToString() != "")
+                            bKayamEfreshBErua = true;
+                }
             }
             return fErech;
         }

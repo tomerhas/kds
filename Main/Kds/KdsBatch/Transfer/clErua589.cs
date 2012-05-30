@@ -183,7 +183,7 @@ namespace KdsBatch
               }
               sErua589.Append(GetBlank(31));
         //   sErua589.Append(GetBlank(74-iCountDays));
-           if (!IsEmptyErua(sErua589.ToString()))
+              if (!IsEmptyErua(sErua589.ToString()) && !bKayamEfreshBErua)
            {
                ListErua.Add(sErua589.ToString());
                return ListErua;

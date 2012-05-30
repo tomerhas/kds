@@ -42,7 +42,7 @@ namespace KdsBatch
              
               sErua462.Append(GetBlank(61));
 
-              if (!IsEmptyErua(sErua462.ToString()))
+              if (!IsEmptyErua(sErua462.ToString()) && !bKayamEfreshBErua)
               {
                   ListErua.Add(sErua462.ToString());
                   return ListErua;
