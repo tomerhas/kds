@@ -152,13 +152,14 @@ namespace KdsBatch
             }
         }
 
-        public void MainCalcOved(int iMisparIshi, long lBakashaId, DateTime dCalcMonth, int iTzuga, ref DataTable dtHeadrut, ref DataTable dtRechivimChodshiym, ref  DataTable dtRikuz1To10, ref DataTable dtRikuz11To20, ref  DataTable dtRikuz21To31, ref DataTable dtAllRikuz)
+        public void MainCalcOved(int iMisparIshi, long lBakashaId, DateTime dCalcMonth, int iTzuga, ref DataTable dtHeadrut, ref DataTable dtRechivimChodshiym, ref  DataTable dtRikuz1To10, ref DataTable dtRikuz11To20, ref  DataTable dtRikuz21To31, ref DataTable dtAllRikuz, ref DataSet dsRikuz2)
         {
             clUtils oUtils = new clUtils();
             Oved oOved;
             DateTime StartMonth = DateTime.Parse("01/" + dCalcMonth.Month + "/" + dCalcMonth.Year);
             COLL_CHISHUV_YOMI _collChishuvYomi = new COLL_CHISHUV_YOMI();
             COLL_CHISHUV_CHODESH _collChishuvChodesh = new COLL_CHISHUV_CHODESH();
+            DataSet dsAllRikuz = new DataSet();
             try
             {
               //  clLogBakashot.InsertErrorToLog(0, 75757, "E", 0, dCalcMonth, "START MainCalcOved:" + iMisparIshi);
@@ -169,6 +170,7 @@ namespace KdsBatch
                 DataSetTurnIntoUdtChodesh(oOved._dsChishuv.Tables["CHISHUV_CHODESH"], ref _collChishuvChodesh);
                 DataSetTurnIntoUdtYom(oOved._dsChishuv.Tables["CHISHUV_YOM"], ref _collChishuvYomi);      
                 SaveChishuvTemp(oOved.Mispar_ishi, dCalcMonth, iTzuga, _collChishuvChodesh,_collChishuvYomi,ref  dtHeadrut, ref  dtRechivimChodshiym, ref   dtRikuz1To10, ref  dtRikuz11To20, ref   dtRikuz21To31, ref dtAllRikuz);
+                SaveChishuvTemp2(oOved.Mispar_ishi, dCalcMonth, _collChishuvChodesh, _collChishuvYomi, ref dsRikuz2);
 
                 oOved.Dispose();
                 if (SingleGeneralData.GetInstance() != null)
@@ -472,6 +474,46 @@ namespace KdsBatch
 
         }
 
+        private void SaveChishuvTemp2(int iMisparIshi, DateTime dCalcMonth,  COLL_CHISHUV_CHODESH _collChishuvChodesh, COLL_CHISHUV_YOMI _collChishuvYomi,  ref DataSet dsAllRikuz)
+        {
+            clTxDal oDal = new clTxDal();
+          // DataSet ds = new DataSet();
+            string names = "";
+         //   float fErechRechiv45 = 0;
+            try
+            {   //   שמירת נתוני החישוב
+                oDal.TxBegin();
+                oDal.AddParameter("p_coll_chishuv_chodesh", ParameterType.ntOracleArray, _collChishuvChodesh, ParameterDir.pdInput, "COLL_CHISHUV_CHODESH");
+                oDal.AddParameter("p_coll_chishuv_yomi", ParameterType.ntOracleArray, _collChishuvYomi, ParameterDir.pdInput, "COLL_CHISHUV_YOMI");
+                if (!(_collChishuvChodesh.IsNull) && !(_collChishuvYomi.IsNull))
+                    oDal.ExecuteSP(clDefinitions.cProInsChishuvTemp);
+
+                oDal.ClearCommand();
+
+                oDal.AddParameter("p_Cur_Rechivim_Yomi", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names = "Rechivim_Yomi";
+                oDal.AddParameter("p_Cur_Rechivim_Chodshi", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Rechivim_Chodshi";
+                oDal.AddParameter("p_Cur_Rechivey_Headrut", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Rechivey_Headrut";
+                oDal.AddParameter("p_Cur_Num_Rechivim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Num_Rechivim";
+
+                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dCalcMonth, ParameterDir.pdInput);
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, 0, ParameterDir.pdInput);
+
+                oDal.ExecuteSP(clGeneral.cProGetRikuzAvodaChodshiTemp, ref dsAllRikuz, names);
+           
+                oDal.TxCommit();
+            }
+            catch (Exception ex)
+            {
+                oDal.TxRollBack();
+                throw ex;
+            }
+
+        }
         private void InsertOvedToTable(int iMis_Ishi, DateTime dTaarich)
         {
             clDal oDal = new clDal();
@@ -550,8 +592,8 @@ namespace KdsBatch
                                 try
                                 {
                                     CalcOved(CurrentOved);
-                         
-                                 //   oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, _iBakashaId, CurrentOved.Month);
+
+                                    //   oCalcDal.UpdatePremiaBakashaID(CurrentOved.Mispar_ishi, _iBakashaId, CurrentOved.Month);
 
                                     numSucceed += 1;
                                     CurrentOved.Dispose();
@@ -570,12 +612,25 @@ namespace KdsBatch
                                     CurrentOved.Dispose();
                                     CurrentOved = null;
                                 }
-                                
+
                             });
 
                             oCalcDal.UpdatePremiaBakashaID(_iBakashaId);
 
                             #endregion
+                        }
+                        else if(Ovdim == null)
+                        {
+                            status = clGeneral.enBatchExecutionStatus.Failed;
+                            KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
+                            clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc Faild Ovdim is null");
+                        }
+                        else if (Ovdim.Count == 0)
+                        {
+                            status = clGeneral.enBatchExecutionStatus.Succeeded;
+                            KdsLibrary.clGeneral.CloseBatchRequest(_iBakashaId, status);
+                            clLogBakashot.InsertErrorToLog(_iBakashaId, "E", 0, "PremiaCalc: No Ovdim Lechishuv");
+                      
                         }
                       
                     }

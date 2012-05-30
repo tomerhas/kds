@@ -161,15 +161,18 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_sug_chishuv", ViewState["SugChishuv"].ToString());
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
-                     Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
-                    
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine", eFormat.PDF, true);
+                      Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
+
+                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.PDF, true);
+
+                  //   s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine", eFormat.PDF, true);
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "PDF";
                      Session["FileName"] = "RikuzAvodaChodshi";
 
-                     sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                     //sScript = "window.showModalDialog('../../modalshowprint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
+                     sScript = "window.showModalDialog('../../ModalShowPrint.aspx','','dialogwidth:800px;dialogheight:750px;dialogtop:10px;dialogleft:100px;status:no;resizable:yes;');";
                      MasterPage mp = (MasterPage)Page.Master;
 
                      ScriptManager.RegisterStartupScript(mp.ImagePrintClick, this.GetType(), "PrintPdf", sScript, true);
@@ -220,8 +223,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
                      Report.AddParameter("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
                      Report.AddParameter("P_SIKUM_CHODSHI", "0");
                      Report.AddParameter("P_DT_RIKUZ", ((DataSet)Session["dsRikuz"]));
-                    
-                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine", eFormat.EXCEL, true);
+
+                     s = Report.CreateReport("/KdsReports/RikuzAvodaChodshiOnLine2", eFormat.EXCEL, true);
 
                      Session["BinaryResult"] = s;
                      Session["TypeReport"] = "EXCEL";
@@ -576,8 +579,8 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
          DataTable dtRikuz11To20 = new DataTable();
          DataTable dtRikuz21To31 = new DataTable();
          DataTable dtAllRikuz = new DataTable();
+       //  DataSet dsRikuz = new DataSet();
          DataSet dsRikuz = new DataSet();
- 
          try
          {
              dTaarich = DateTime.Parse(ViewState["Taarich"].ToString());
@@ -589,18 +592,18 @@ public partial class Modules_Ovdim_TickurChishuvLeOved : KdsPage
 
 
              MainCalc objMainCalc = new MainCalc();
-             objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz);
-             
-
+             objMainCalc.MainCalcOved(int.Parse(txtEmpId.Text), 0, dTaarich, 2, ref   dtHeadrut, ref dtRechivimChodshiym, ref dtRikuz1To10, ref  dtRikuz11To20, ref dtRikuz21To31, ref dtAllRikuz, ref dsRikuz);
+             Session.Add("dsRikuz", dsRikuz);
+            // dsRikuz2.WriteXmlSchema("C:\\Temp\\RikuzChodshi.xml");
              grdHeadrut.DataSource = dtHeadrut;
              grdHeadrut.DataBind();
-             dtHeadrut.TableName = "Headruyot";
+           /*  dtHeadrut.TableName = "Headruyot";
              dsRikuz.Tables.Add(dtHeadrut);
              dtAllRikuz.TableName = "Rikuz";
              dsRikuz.Tables.Add(dtAllRikuz);
              dtRechivimChodshiym.TableName = "Chodshi";
              dsRikuz.Tables.Add(dtRechivimChodshiym);
-             Session.Add("dsRikuz", dsRikuz);
+             Session.Add("dsRikuz", dsRikuz);*/
             
              grdMachala.DataSource = dtHeadrut;
              grdMachala.DataBind();
