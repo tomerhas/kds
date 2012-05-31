@@ -114,10 +114,6 @@
       <FullPath>PrintWorkCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Report1.rdl</Name>
-      <FullPath>Report1.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>ReportNesiotKfulot.rdl</Name>
       <FullPath>ReportNesiotKfulot.rdl</FullPath>
     </ProjectItem>
@@ -126,8 +122,16 @@
       <FullPath>RikuzAvodaChodshi.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>RikuzAvodaChodshi2.rdl</Name>
+      <FullPath>RikuzAvodaChodshi2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>RikuzAvodaChodshiOnLine.rdl</Name>
       <FullPath>RikuzAvodaChodshiOnLine.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>RikuzAvodaChodshiOnLine2.rdl</Name>
+      <FullPath>RikuzAvodaChodshiOnLine2.rdl</FullPath>
     </ProjectItem>
     <ResourceProjectItem>
       <Name>Tiuta.bmp</Name>
@@ -150,10 +154,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>RikuzAvodaChodshi2.rdl</Name>
-      <FullPath>RikuzAvodaChodshi2.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
