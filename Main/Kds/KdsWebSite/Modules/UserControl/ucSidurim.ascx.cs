@@ -4278,12 +4278,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hTable.Rows[0].Cells.Add(hCell);
              }       
                 //עמודות נסתרות
-                //שעת התחלה מותרת לסידור, ערך מאפיין 7     
-                CreateShatHatchalaMutereHiddentCell(oSidur, ref hCell, iIndex);               
-                hTable.Rows[0].Cells.Add(hCell);
+                //vered 29/5
+                ////שעת התחלה מותרת לסידור, ערך מאפיין 7     
+                //CreateShatHatchalaMutereHiddentCell(oSidur, ref hCell, iIndex);               
+                //hTable.Rows[0].Cells.Add(hCell);
 
-                CreateShatGmarMutereHiddentCell(oSidur, ref hCell, iIndex);
-                hTable.Rows[0].Cells.Add(hCell);
+                //CreateShatGmarMutereHiddentCell(oSidur, ref hCell, iIndex);
+                //hTable.Rows[0].Cells.Add(hCell);
 
                 //תאריך
                 CreateSidurDateHiddenCell(oSidur, ref hCell, iIndex);
@@ -6227,21 +6228,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.CssClass = "WorkCardPeilutTextBox";
             //AddAttribute(oTxt, "OldV", oTxt.Text);
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
-            sID = "vldFilterMakatNumber";
+            sID = "vFMN";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
             e.Row.Cells[_COL_MAKAT].Controls.Add(oFilterTextBox);
             //Add CustomeValidator
             sMessage = "מספר מק'ט שגוי";
-            sID = "vldMakatNum";
+            sID = "vMN";
             sClientScriptFunction = "";
             vlMakatNumber = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
             e.Row.Cells[_COL_MAKAT].Controls.Add(vlMakatNumber);
 
             //Add Ajax CallOutCustomeValidator
             sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_MAKAT].Controls[2])).ID;
-            sID = "vldExMakatNum";
+            sID = "vExMN";
             vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
-            vldExtenderCallOut.BehaviorID = "vldMakatNumBeh" + e.Row.ClientID;
+            vldExtenderCallOut.BehaviorID = "vMNBeh" + e.Row.ClientID;
             e.Row.Cells[_COL_MAKAT].Controls.Add(vldExtenderCallOut);
             //dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
            
@@ -6327,7 +6328,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
             //Add Ajax CallOutCustomeValidator
             sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_CAR_NUMBER].Controls[2])).ID;
-            sID = "vldExCarNumber";
+            sID = "vExCN";
             vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
             vldExtenderCallOut.BehaviorID = "vldCarNumBehv" + e.Row.ClientID;
             e.Row.Cells[_COL_CAR_NUMBER].Controls.Add(vldExtenderCallOut);

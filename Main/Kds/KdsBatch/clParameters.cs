@@ -1038,6 +1038,9 @@ namespace KdsBatch
            {
                dTemp = clGeneral.GetDateTimeFromStringHour(sHour, dCardDate);
            }
+
+
+
             return dTemp;
          }
        

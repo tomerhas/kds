@@ -211,7 +211,7 @@ function chkMkt(oRow) {
                 } 
             }
             else {
-                var sBehaviorId = 'vldMakatNumBeh'.concat(oRId);
+                var sBehaviorId = 'vMNBeh'.concat(oRId);
                 $find(sBehaviorId)._ensureCallout();
                 $find(sBehaviorId).show(true);
             }

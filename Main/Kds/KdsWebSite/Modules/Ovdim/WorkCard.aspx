@@ -688,7 +688,7 @@
             var NextSidurName,PeilutName; 
             if (iPos>-1)
             {
-               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+16);
+               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+8);
                var _GridPeilut; 
                if (Direction==40)
                {  //down             
@@ -717,21 +717,20 @@
                     }                                                                                                                                                                                      
                 }                                                
             }//end if pos           
-         }//end function
-
+         }//end function        
          function SetFocusToNextPrevPeilutField(Direction,ElementName,FieldName){            
             var iPos=ElementName.indexOf(FieldName);
             var NextSidurName; 
             if (iPos>-1){
                var PeilutNum=ElementName.substr(ElementName.indexOf('ctl')+3,2);
-               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+11,3);
+               var SidurNum = ElementName.substr(ElementName.indexOf('SD_')+3,3);
                NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);     
                if (Direction==38) //up
                   PeilutNum=Number(PeilutNum)-1;
                else //down
                   PeilutNum=Number(PeilutNum)+1;
 
-               var NextPeilutName = ElementName.substr(0,18) + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,19) + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+               var NextPeilutName = ElementName.substr(0,10) + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(12,11) + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                
                if ($get(NextPeilutName)==null)
                {
@@ -748,8 +747,9 @@
                   SidurNum = Number(SidurNum) + 1;
                   PeilutNum = 2;
                   NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);       
-                }                               
-                 NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                }                                                
+                 NextPeilutName  = NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + "_"   + NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                 
                }
                               
                 while (($get(NextPeilutName)!=null) && ($get(NextPeilutName).isDisabled==true) && ($get(NextSidurName)!=null))
@@ -760,13 +760,13 @@
                     else //down
                         PeilutNum=Number(PeilutNum)+1;
                    
-                   NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                   NextPeilutName  = ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(11,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                    if (PeilutNum==0){             
                         SidurNum=SidurNum-1;            
                         _GridPeilut = document.getElementById("SD_" + padLeft(Number(SidurNum), '0', 3));   
                         if (_GridPeilut!=null){      
                            PeilutNum = Number(_GridPeilut.rows.length+1);
-                           NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;  
+                           NextPeilutName  =  GetPeilutName(ElementName,SidurNum);// ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;  
                            SetFocusToNextPrevPeilutField(Direction,NextPeilutName,FieldName);
                            break;
                         }
@@ -789,8 +789,7 @@
                             PeilutNum = 2;
                             NextSidurName = "SD_" + padLeft(SidurNum.toString(),'0',3);         
                         }
-                                 
-                        NextPeilutName  =  ElementName.substr(0,11) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(20,12) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
+                         NextPeilutName  =  NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + "_"   + NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;                              
                     }
                    }                 
                    if ($get(NextPeilutName)!=null)                  
