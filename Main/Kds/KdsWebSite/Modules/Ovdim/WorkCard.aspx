@@ -750,8 +750,7 @@
                 }                                                
                  NextPeilutName  = NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + "_"   + NextSidurName + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                  
-               }
-                              
+               }                              
                 while (($get(NextPeilutName)!=null) && ($get(NextPeilutName).isDisabled==true) && ($get(NextSidurName)!=null))
                    {
                     //  נעבור לפעילות הבאה
@@ -815,17 +814,17 @@
          function SetBarCode()
          {
            var sKey = document.getElementById("txtId").value.split("|");                     
-           document.getElementById("txtId").value =sKey[1];
-           document.getElementById("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
-           document.getElementById("btnRefreshOvedDetails").click();          
+           $get("txtId").value =sKey[1];
+           $get("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
+           $get("btnRefreshOvedDetails").click();          
          }
          function btnMeasherOrMistayeg_onclick(value)
          {               
             SetMeasher(value); 
             if (document.getElementById('hidFromEmda').value =='true') 
             {
-                document.getElementById("btnPrint").disabled=false;
-                document.getElementById("btnPrint").className="btnWorkCardPrint";
+                $get("btnPrint").disabled=false;
+                $get("btnPrint").className="btnWorkCardPrint";
                 document.all('btnPrint').click(); 
             }            
          }   
