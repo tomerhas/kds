@@ -1216,7 +1216,7 @@
         <Top>1.48497cm</Top>
         <Left>0.30758cm</Left>
         <Height>0.7961cm</Height>
-        <Width>20.46466cm</Width>
+        <Width>20.46464cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -3039,7 +3039,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9781,6 +9780,10 @@
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="P_BAKASHA_ID">
             <Value>=Parameters!P_BAKASHA_ID.Value</Value>
           </QueryParameter>
@@ -9979,6 +9982,10 @@
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="P_BAKASHA_ID">
             <Value>=Parameters!P_BAKASHA_ID.Value</Value>
           </QueryParameter>
@@ -10116,6 +10123,10 @@
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
           </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="P_BAKASHA_ID">
             <Value>=Parameters!P_BAKASHA_ID.Value</Value>
           </QueryParameter>
@@ -10188,6 +10199,10 @@
         <QueryParameters>
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_BAKASHA_ID">
             <Value>=Parameters!P_BAKASHA_ID.Value</Value>
