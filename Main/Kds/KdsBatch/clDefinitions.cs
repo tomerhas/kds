@@ -1263,5 +1263,19 @@ namespace KdsBatch
 
     //        return _Params;
     //    }
+        public static void SetParamTableInApplicationObj()
+        {
+            clUtils _Utils = new clUtils();
+            DataTable dtParameters;
+            
+
+            dtParameters = _Utils.GetKdsParametrs();
+            foreach (DataRow drParam in dtParameters.Rows)
+            {
+                //SetParameters(dr[], iSugYom);
+            }
+            
+            dtParameters.Dispose();
+        }         
   }
 }
