@@ -112,7 +112,7 @@ END PKG_APPROVALS;
 /
 
 
-CREATE OR REPLACE PACKAGE PKG_BATCH AS
+CREATE OR REPLACE PACKAGE          PKG_BATCH AS
 TYPE    CurType      IS    REF  CURSOR;
 /******************************************************************************
    NAME:       PKG_BATCH
@@ -151,6 +151,8 @@ PROCEDURE pro_ins_bakasha(p_sug_bakasha  IN tb_bakashot.sug_bakasha%type,
               p_zman_siyum   in  tb_bakashot.zman_siyum%type,
               p_tar_haavara_lesachar   in  tb_bakashot.taarich_haavara_lesachar%type) ;
 
+ PROCEDURE pro_upd_bakasha_ishur_hilan(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                   p_ishur_hilan   IN TB_BAKASHOT.ISHUR_HILAN%TYPE );
  PROCEDURE pro_ins_bakasha_param(p_bakasha_id  IN tb_bakashot_params.bakasha_id%type,
                    p_param_id  IN  tb_bakashot_params.param_id%type,
                  p_erech   IN  tb_bakashot_params.erech%type);
@@ -179,7 +181,7 @@ function fun_get_rizot_zehot_lesachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) 
     ----------------
 PROCEDURE pro_del_chishuv_after_transfer(p_request_id in  tb_bakashot.bakasha_id%type);
 ----------------
-PROCEDURE pro_upd_status_yamey_avoda(p_request_id in  tb_bakashot.bakasha_id%type);
+PROCEDURE pro_upd_status_yamey_avoda(p_request_id in  tb_bakashot.bakasha_id%type); 
 PROCEDURE pro_ins_yamey_avoda_ovdim ;
      PROCEDURE pro_ins_yamey_avoda_ovdim(pDt varchar);
         PROCEDURE pro_get_premiot_ovdim(pYM varchar,p_Cur OUT CurType);
@@ -310,9 +312,76 @@ PROCEDURE Pro_Get_Rikuz_Pdf(p_mispar_ishi IN NUMBER,p_taarich IN DATE,p_Bakashat
 PROCEDURE Pro_ins_baam;
 PROCEDURE Pro_ins_wr1;
 FUNCTION pro_check_view_empty(p_TableName VARCHAR2) RETURN NUMBER;
-PROCEDURE  chk_creation_date_meafyenim(shem_mvew VARCHAR)  ;
-
+PROCEDURE  chk_creation_date_meafyenim(shem_mvew VARCHAR) ;
 END PKG_BATCH;
+/
+
+
+CREATE OR REPLACE PACKAGE          Pkg_Calc AS
+/******************************************************************************
+   NAME:       PKG_CALC
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        05/07/2009             1. Created this package.
+******************************************************************************/
+
+
+ TYPE    CurType      IS    REF  CURSOR;
+
+	PROCEDURE pro_get_yemey_avoda_to_oved(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE,
+															p_taarich_me IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
+															p_taarich_ad IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
+															p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+														p_cur OUT CurType) ;
+
+  PROCEDURE pro_ins_chishuv_sidur_ovdim(p_coll_chishuv_sidur IN  COLL_CHISHUV_SIDUR);
+
+  PROCEDURE pro_ins_chishuv_yomi_ovdim(p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI);
+	 PROCEDURE pro_ins_chishuv_yomi_tmp(p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI);
+
+	  PROCEDURE pro_ins_chishuv_codesh_ovdim(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH);
+	 PROCEDURE pro_ins_chishuv_codesh_tmp(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH) ;
+
+	PROCEDURE pro_ins_chishuv( p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+												p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI,
+												p_coll_chishuv_sidur IN  COLL_CHISHUV_SIDUR);
+
+
+PROCEDURE pro_ins_chishuv(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+                                                p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI ) ;
+  PROCEDURE pro_ins_chishuv(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH );
+		PROCEDURE pro_ins_chishuv_tmp(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+												p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI);
+
+	PROCEDURE pro_get_peiluyot_lesidur(p_mispar_ishi IN  TB_PEILUT_OVDIM.MISPAR_ISHI%TYPE,
+																			p_taarich IN  TB_PEILUT_OVDIM.TAARICH%TYPE,
+																				p_shat_hatchala_sidur IN  TB_PEILUT_OVDIM.SHAT_HATCHALA_SIDUR%TYPE,
+																			p_mispar_sidur IN  TB_PEILUT_OVDIM.MISPAR_SIDUR%TYPE,
+																			p_cur OUT CurType);
+	PROCEDURE pro_upd_sidurim_lo_letashlum(p_mispar_ishi IN  TB_SIDURIM_OVDIM.MISPAR_ISHI%TYPE,
+																			p_taarich IN  TB_SIDURIM_OVDIM.TAARICH%TYPE,
+																			p_mispar_sidur IN  TB_SIDURIM_OVDIM.MISPAR_SIDUR%TYPE,
+																			p_shat_hatchala IN  TB_SIDURIM_OVDIM.SHAT_HATCHALA%TYPE);
+
+	PROCEDURE pro_get_michsa_yomit(p_me_taarich IN  TB_MICHSA_YOMIT.me_taarich%TYPE,
+																			p_ad_taarich IN  TB_MICHSA_YOMIT.ad_taarich%TYPE,
+																			p_cur OUT CurType);
+
+	PROCEDURE pro_get_oved_putar( p_mispar_ishi IN  MATZAV_OVDIM.mispar_ishi%TYPE,
+		  					  				   	   						p_tar_chodesh_me IN MATZAV_OVDIM.Taarich_hatchala%TYPE,
+																		p_tar_chodesh_ad IN  MATZAV_OVDIM.Taarich_hatchala%TYPE,
+																		p_putar OUT NUMBER);
+
+PROCEDURE pro_get_peiluyot_leoved(p_tar_me IN DATE,p_tar_ad IN DATE,
+		  							p_mispar_ishi IN NUMBER ,p_Cur OUT CurType);
+ PROCEDURE pro_get_pirtey_oved_ForMonth(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+										p_tar_me IN DATE,p_tar_ad IN DATE,
+ 		   							 p_cur OUT CurType);								
+		/*PROCEDURE pro_ins;		*/
+END Pkg_Calc;
 /
 
 
@@ -985,7 +1054,14 @@ PROCEDURE pro_del_idkuney_rashemet_sidur(p_coll_sidurim_ovdim in coll_sidurim_ov
 PROCEDURE pro_del_idkuney_rashemet_peilt(p_coll_peiluyot_ovdim in coll_obj_peilut_ovdim);
 FUNCTION func_get_next_err_card(p_mispar_ishi in tb_yamey_avoda_ovdim.mispar_ishi%type, p_date in tb_yamey_avoda_ovdim.taarich%type ) return varchar2;
 PROCEDURE pro_get_rikuzey_avoda_leoved(p_mispar_ishi IN MATZAV_OVDIM.mispar_ishi%TYPE,p_taarich IN DATE,
-                                                        p_cur OUT CurType);                         																 																	 
+                                                        p_cur OUT CurType);      
+FUNCTION func_is_card_last_updated(p_mispar_ishi in tb_peilut_ovdim.mispar_ishi%type, p_taarich in tb_peilut_ovdim.taarich%type) return number;
+
+PROCEDURE pro_get_rechivim_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                                                                                 p_taarich IN DATE,
+                                                                                             p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                                                                            p_tzuga IN CTB_RECHIVIM.Letzuga_Besikum_Chodshi%TYPE,
+                                                                                         p_cur OUT CurType);                                                                           																 																	 
 END PKG_OVDIM;
 /
 
@@ -1329,7 +1405,7 @@ END PKG_REQUEST;
 /
 
 
-CREATE OR REPLACE PACKAGE PKG_sdrn AS
+CREATE OR REPLACE PACKAGE Pkg_Sdrn AS
 TYPE    CurType      IS    REF  CURSOR;
 /******************************************************************************
    NAME:       PKG_sdrn
@@ -1341,34 +1417,35 @@ TYPE    CurType      IS    REF  CURSOR;
    1.0        09/03/2010             1. Created this package.
 ******************************************************************************/
 
-     PROCEDURE pro_ins_yamim_4_sidurim(pDt varchar) ;
-     PROCEDURE pro_ins_sidurim_4_sidurim(pDt varchar) ;
-     PROCEDURE pro_ins_peilut_4_sidurim(pDt varchar) ;
-         PROCEDURE pro_get_sdrm_control(pDt varchar,p_Cur OUT CurType) ;
-      PROCEDURE pro_upd_sdrm_control(pDt varchar);
-    PROCEDURE pro_GetStatusSdrn(pDt varchar, p_cur out CurType);
-	 PROCEDURE pro_GetStatus2Sdrn(pAr varchar, p_cur out CurType) ;
-	  PROCEDURE pro_GetDtReRunSdrn(pDt varchar, p_cur out CurType) ;
-	  PROCEDURE pro_upd_sdrnRerun_control(pDt varchar) ;
- 	  PROCEDURE pro_TrailNDel_peilut_4retrSdrn(pDt varchar);
- 	  PROCEDURE pro_TrailNDel_sidurim_4reSdrn(pDt varchar);
-	   	PROCEDURE pro_ins_sidurim_retroSdrn(pDt varchar) ;
-		PROCEDURE pro_ins_peilut_retroSdrn(pDt varchar) ;
+     PROCEDURE pro_ins_yamim_4_sidurim(pDt VARCHAR) ;
+     PROCEDURE pro_ins_sidurim_4_sidurim(pDt VARCHAR) ;
+     PROCEDURE pro_ins_peilut_4_sidurim(pDt VARCHAR) ;
+         PROCEDURE pro_get_sdrm_control(pDt VARCHAR,p_Cur OUT CurType) ;
+      PROCEDURE pro_upd_sdrm_control(pDt VARCHAR);
+    PROCEDURE pro_GetStatusSdrn(pDt VARCHAR, p_cur OUT CurType);
+	 PROCEDURE pro_GetStatus2Sdrn(pAr VARCHAR, p_cur OUT CurType) ;
+	  PROCEDURE pro_GetDtReRunSdrn(pDt VARCHAR, p_cur OUT CurType) ;
+	  PROCEDURE pro_upd_sdrnRerun_control(pDt VARCHAR) ;
+ 	  PROCEDURE pro_TrailNDel_peilut_4retrSdrn(pDt VARCHAR);
+ 	  PROCEDURE pro_TrailNDel_sidurim_4reSdrn(pDt VARCHAR);
+	   	PROCEDURE pro_ins_sidurim_retroSdrn(pDt VARCHAR) ;
+		PROCEDURE pro_ins_peilut_retroSdrn(pDt VARCHAR) ;
 		PROCEDURE pro_ins_YamimOfSdrn;
 		PROCEDURE pro_ins_SidurimOfSdrn ;
 		PROCEDURE pro_ins_PeilutOfSdrn ;
 		PROCEDURE pro_upd_CtrlOfSdrn ;
 		PROCEDURE pro_chk_Dt4_rerun ;
-		PROCEDURE pro_upd_sdrntstRerun_control(pDt varchar) ;
+		PROCEDURE pro_upd_sdrntstRerun_control(pDt VARCHAR) ;
 		--PROCEDURE pro_stam;
 		PROCEDURE pro_stam2;
-		procedure pro_stam3;
-     PROCEDURE pro_stam4(pDt varchar) ;
-	      PROCEDURE pro_retro1(pDt varchar) ;
-		  PROCEDURE pro_ins_sidurim_from_sdrm(pDt varchar) ; 
+		PROCEDURE pro_stam3;
+     PROCEDURE pro_stam4(pDt VARCHAR) ;
+	      PROCEDURE pro_retro1(pDt VARCHAR) ;
+		PROCEDURE pro_ins_sidurim_from_sdrm(pDt VARCHAR) ; 
+		PROCEDURE pro_ins_peilut_from_sdrm(pDt VARCHAR);
 
 
-END PKG_sdrn;
+END Pkg_Sdrn;
 /
 
 
@@ -1543,15 +1620,16 @@ PROCEDURE pro_get_kavim_details(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TY
 PROCEDURE pro_get_buses_details(p_tar_me IN DATE,p_tar_ad IN DATE,
 		  							p_mispar_ishi IN NUMBER ,p_Cur OUT CurType);
                                     
- FUNCTION pro_get_kavim_details_sidur(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
+ PROCEDURE pro_get_kavim_details_sidur(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
                                                             p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
                                                             p_taarich IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE) return number;                                   
+                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
+                                                                p_km OUT number);                        
 END Pkg_Tnua;
 /
 
 
-CREATE OR REPLACE PACKAGE Pkg_Utils AS
+CREATE OR REPLACE PACKAGE          Pkg_Utils AS
 /******************************************************************************
    NAME:       PKG_UTILS
    PURPOSE:
@@ -1674,7 +1752,9 @@ PROCEDURE Pro_Get_Previous_Months_List(p_FromDate IN DATE, NumOfPreviousMonth NU
 	PROCEDURE pro_insert_barkod_Tachograf(p_mispar_ishi IN  INTEGER,p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE,p_Barkod IN  NUMBER	);		
     PROCEDURE fun_get_barkod_Tachograf(p_mispar_ishi IN  INTEGER,p_taarich IN TB_TACHOGRAF_LE_KARTIS.TAARICH%TYPE, p_cur OUT CurType  ) ;
 	PROCEDURE pro_get_tavlaot_to_refresh(p_cur OUT CurType);	
-	PROCEDURE pro_get_snif_tnua_by_kod(p_kod_snif IN NUMBER,p_cur OUT CurType);													
+	PROCEDURE pro_get_snif_tnua_by_kod(p_kod_snif IN NUMBER,p_cur OUT CurType);		
+    PROCEDURE pro_insert_meadken_acharon(p_mispar_ishi IN NUMBER,p_taarich DATE);	
+        PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType);										
 END Pkg_Utils;
 /
 CREATE OR REPLACE PACKAGE BODY          Pkg_Approvals AS
@@ -2924,6 +3004,19 @@ Ver        Date        Author           Description
         RAISE;
   END pro_upd_bakasha;
 
+
+  PROCEDURE pro_upd_bakasha_ishur_hilan(p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                   p_ishur_hilan   IN TB_BAKASHOT.ISHUR_HILAN%TYPE ) IS
+  BEGIN
+        UPDATE  TB_BAKASHOT
+        SET ISHUR_HILAN=p_ishur_hilan   
+        WHERE BAKASHA_ID=p_bakasha_id;
+
+      EXCEPTION
+   WHEN OTHERS THEN
+        RAISE;
+  END pro_upd_bakasha_ishur_hilan;
+
 /*
 Ver        Date        Author           Description
    ---------  ----------  ---------------  ------------------------------------
@@ -2961,14 +3054,14 @@ BEGIN
                (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2) tkufa,
           (SELECT  DECODE(bp.erech,1,'כן','לא') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=3) ritza_gorfet,
           B.HUAVRA_LESACHAR,B.ISHUR_HILAN,
-          pkg_batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
-          pkg_batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
-          pkg_batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot      
+          Pkg_Batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
+          Pkg_Batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
+          Pkg_Batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot      
        FROM TB_BAKASHOT B,(SELECT Erech,Bakasha_ID
                    FROM TB_BAKASHOT_PARAMS
                    WHERE  Param_ID = 5) P
        WHERE B.Sug_Bakasha=1
-      --  AND TRUNC(B.Zman_Hatchala) BETWEEN TRUNC(p_taarich_me) AND TRUNC(p_taarich_ad)
+        AND TRUNC(B.Zman_Hatchala) BETWEEN TRUNC(p_taarich_me) AND TRUNC(p_taarich_ad)
         AND b.bakasha_id=p.bakasha_id
         AND p.erech='0'
         AND b.status=2
@@ -2980,9 +3073,9 @@ BEGIN
              (SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=2) tkufa,
              (SELECT  DECODE(bp.erech,1,'כן','לא') FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=b.bakasha_id AND bp.param_id=3) ritza_gorfet,
              B.HUAVRA_LESACHAR,B.ISHUR_HILAN,
-             pkg_batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
-             pkg_batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
-             pkg_batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot
+             Pkg_Batch.fun_get_status_sachar( B.Bakasha_ID) status_haavara_lesachar,
+             Pkg_Batch.fun_get_status_bakasha(13,1,B.Bakasha_ID) status_yezirat_rikuzim,
+             Pkg_Batch.fun_get_rizot_zehot_lesachar( B.Bakasha_ID) rizot_zehot
         FROM TB_BAKASHOT B,(SELECT Erech,Bakasha_ID
                    FROM TB_BAKASHOT_PARAMS
                    WHERE  Param_ID = 5) P
@@ -3003,74 +3096,74 @@ EXCEPTION
 END  pro_get_pirtey_ritzot;
 
 
-FUNCTION fun_get_status_sachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) return number
+FUNCTION fun_get_status_sachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN NUMBER
 IS 
     p_cur  CurType;
-    p_status number;
+    p_status NUMBER;
     
 BEGIN
    p_status:=0;   
    BEGIN
    
-       Select T.STATUS into  p_status
-       from   tb_bakashot t 
-       where   T.BAKASHA_ID in(
-                               select    max(T.BAKASHA_ID) bakasha_id
-                               from  tb_bakashot t , tb_bakashot_params p
-                               where T.BAKASHA_ID = P.BAKASHA_ID
-                                  and  T.SUG_BAKASHA =3
-                                  and P.PARAM_ID = 4
-                                  and P.ERECH = p_bakasha_id);     
+       SELECT T.STATUS INTO  p_status
+       FROM   TB_BAKASHOT t 
+       WHERE   T.BAKASHA_ID IN(
+                               SELECT    MAX(T.BAKASHA_ID) bakasha_id
+                               FROM  TB_BAKASHOT t , TB_BAKASHOT_PARAMS p
+                               WHERE T.BAKASHA_ID = P.BAKASHA_ID
+                                  AND  T.SUG_BAKASHA =3
+                                  AND P.PARAM_ID = 4
+                                  AND P.ERECH = p_bakasha_id);     
    EXCEPTION
        WHEN NO_DATA_FOUND  THEN
          p_status:=0;
    END;
   
-  return p_status;
+  RETURN p_status;
 END fun_get_status_sachar;
 
-FUNCTION fun_get_status_bakasha(p_sug_bakasha number,p_Param_id number,p_erech varchar) return number
+FUNCTION fun_get_status_bakasha(p_sug_bakasha NUMBER,p_Param_id NUMBER,p_erech VARCHAR) RETURN NUMBER
 IS 
     p_cur  CurType;
-    p_status number;
+    p_status NUMBER;
     
 BEGIN
    p_status:=0;   
    BEGIN
    
-        select  t.status into p_status
-        from  tb_bakashot t , tb_bakashot_params p
-        where T.BAKASHA_ID = P.BAKASHA_ID
-              and  T.SUG_BAKASHA =p_sug_bakasha
-              and P.PARAM_ID =p_Param_id
-              and P.ERECH = p_erech;     
+        SELECT  t.status INTO p_status
+        FROM  TB_BAKASHOT t , TB_BAKASHOT_PARAMS p
+        WHERE T.BAKASHA_ID = P.BAKASHA_ID
+              AND  T.SUG_BAKASHA =p_sug_bakasha
+              AND P.PARAM_ID =p_Param_id
+              AND P.ERECH = p_erech;     
    EXCEPTION
        WHEN NO_DATA_FOUND  THEN
          p_status:=0;
    END;
   
-  return p_status;
+  RETURN p_status;
 END fun_get_status_bakasha;
 
 
-function fun_get_rizot_zehot_lesachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) return varchar
+FUNCTION fun_get_rizot_zehot_lesachar(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) RETURN VARCHAR
 IS
 CURSOR p_cur(p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
-        select h2.BAKASHA_ID, h2.PARAM_ID_1,h2.PARAM_ID_2
-        from (select  H.BAKASHA_ID,
+        SELECT h2.BAKASHA_ID, h2.PARAM_ID_1,h2.PARAM_ID_2
+        FROM (SELECT  H.BAKASHA_ID,
                             MAX(CASE WHEN  (H.Param_ID=1)   THEN H.ERECH  END)    PARAM_ID_1 ,
                             MAX(CASE WHEN  (H.Param_ID=2)   THEN H.ERECH  END)    PARAM_ID_2
-                 from(  SELECT B.BAKASHA_ID,B.ERECH,B.PARAM_ID
-                           FROM TB_BAKASHOT_PARAMS b,tb_bakashot t
+                 FROM(  SELECT B.BAKASHA_ID,B.ERECH,B.PARAM_ID
+                           FROM TB_BAKASHOT_PARAMS b,TB_BAKASHOT t
                            WHERE   T.HUAVRA_LESACHAR=1
-                                  and T.SUG_BAKASHA = 1
-                                  and B.BAKASHA_ID=T.BAKASHA_ID
-                                  and b.bakasha_id <>p_bakasha_id
-                                  and B.PARAM_ID in(1,2) ) H
-                 group BY  H.BAKASHA_ID )  h2
-         where   h2.Param_ID_1=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=1)
-              and h2.Param_ID_2=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=2);     
-lst_bakasha_id varchar(1000);        
+                                  AND T.SUG_BAKASHA = 1
+                                  AND B.BAKASHA_ID=T.BAKASHA_ID
+                                  AND b.bakasha_id <>p_bakasha_id
+                                  AND B.PARAM_ID IN(1,2) ) H
+                 GROUP BY  H.BAKASHA_ID )  h2
+         WHERE   h2.Param_ID_1=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=1)
+              AND h2.Param_ID_2=( SELECT  bp.erech FROM TB_BAKASHOT_PARAMS bp WHERE bp.bakasha_id=p_bakasha_id AND bp.param_id=2);     
+lst_bakasha_id VARCHAR(1000);        
 v_rec  p_cur%ROWTYPE;
 BEGIN
         lst_bakasha_id:='';
@@ -3079,7 +3172,7 @@ BEGIN
                       lst_bakasha_id:= lst_bakasha_id || ';' || v_rec.bakasha_id;
               END LOOP;         
               
-      return lst_bakasha_id;            
+      RETURN lst_bakasha_id;            
 END fun_get_rizot_zehot_lesachar;
 
 PROCEDURE pro_get_ovdim_lechishuv(p_chodesh IN DATE,
@@ -3109,7 +3202,7 @@ BEGIN
               where Bakasha_ID  is null)*/)
            GROUP BY mispar_ishi,chodesh) y,
          (SELECT po.maamad,po.mispar_ishi
-               FROM pivot_pirtey_ovdim PO
+               FROM PIVOT_PIRTEY_OVDIM PO
                  WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
               OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
               OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
@@ -3120,7 +3213,7 @@ BEGIN
         (SELECT p.mispar_ishi
          FROM TB_PREMYOT_YADANIYOT p,
                 (SELECT po.maamad,po.mispar_ishi
-               FROM pivot_pirtey_ovdim PO
+               FROM PIVOT_PIRTEY_OVDIM PO
                  WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
               OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
               OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) po
@@ -3146,7 +3239,7 @@ BEGIN
       AND TO_CHAR(taarich,'mm/yyyy')=TO_CHAR(p_chodesh,'mm/yyyy')
       GROUP BY mispar_ishi,TO_CHAR(taarich,'mm/yyyy') ) y,
         (SELECT po.maamad,po.mispar_ishi
-              FROM pivot_pirtey_ovdim PO
+              FROM PIVOT_PIRTEY_OVDIM PO
                 WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
              OR   v_ad_taarich  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
              OR   po.ME_TARICH>=v_me_taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  v_ad_taarich )) p
@@ -3170,8 +3263,8 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
 			     SELECT c.taarich,c.mispar_ishi ,DECODE(SUBSTR(p.maamad,0,1),1,'0013', DECODE(SUBSTR(p.maamad,2,2),'23','2626',  '0026')) mifal,
                  SUBSTR(p.maamad,2,2) maamad,p.gil,SUBSTR(p.maamad,0,1) maamad_rashi, c.chodesh_ibud,
 						o.SIFRAT_BIKORET_MI sifrat_bikoret,o.SHEM_MISH,o.SHEM_PRAT,p.dirug,p.darga,o.TEUDAT_ZEHUT,p.Isuk,
-                      pkg_ovdim.fun_get_meafyen_oved(c.mispar_ishi,53,c.taarich) meafyen53,
-                      pkg_ovdim.fun_get_meafyen_oved(c.mispar_ishi,83,c.taarich) meafyen83,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,53,c.taarich) meafyen53,
+                      Pkg_Ovdim.fun_get_meafyen_oved(c.mispar_ishi,83,c.taarich) meafyen83,
 			                DECODE((SELECT  1 FROM MATZAV_OVDIM m
 									            WHERE m.mispar_ishi=c.mispar_ishi
 									           AND c.TAARICH BETWEEN m.taarich_hatchala AND m.taarich_siyum
@@ -3184,11 +3277,11 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
 					            WHERE Bakasha_ID=p_request_id) c,
 			           			OVDIM o,
 						        (SELECT po.me_tarich,po.ad_tarich ,po.mispar_ishi,po.maamad,po.dirug,po. darga,po.Isuk,po.gil
-						       FROM pivot_pirtey_ovdim PO)p
+						       FROM PIVOT_PIRTEY_OVDIM PO)p
 			   WHERE  c.mispar_ishi=p.mispar_ishi
 			   AND o.mispar_ishi=c.mispar_ishi
 			    AND p.ME_TARICH=(SELECT MAX(po.me_tarich)
-													          FROM   pivot_pirtey_ovdim po
+													          FROM   PIVOT_PIRTEY_OVDIM po
 													          WHERE (c.taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
 													          OR   (ADD_MONTHS(c.taarich,1)-1)  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
 													          OR   po.ME_TARICH>=c.taarich AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=    (ADD_MONTHS(c.taarich,1)-1))
@@ -3199,48 +3292,48 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
    OPEN p_cur FOR
    SELECT c.mispar_ishi, c.taarich,c.kod_rechiv,c.b1 bakasha_id_1,c.b2 bakasha_id_2,c.erech_rechiv_a,c.erech_rechiv_b,c.erech_rechiv
     FROM
-            ( SELECT  NVL(a.taarich,b.taarich) taarich,NVL(a.mispar_ishi,b.mispar_ishi)mispar_ishi,a.BAKASHA_ID b1,nvl(a.erech_rechiv,0) erech_rechiv_a,
-                nvl(b.BAKASHA_ID,bakasha_id_last) b2, nvl(b.erech_rechiv,0) erech_rechiv_b,NVL(a.kod_rechiv,b.kod_rechiv) kod_rechiv,(NVL(a.erech_rechiv,0)-NVL(b.erech_rechiv,0))  erech_rechiv
+            ( SELECT  NVL(a.taarich,b.taarich) taarich,NVL(a.mispar_ishi,b.mispar_ishi)mispar_ishi,a.BAKASHA_ID b1,NVL(a.erech_rechiv,0) erech_rechiv_a,
+                NVL(b.BAKASHA_ID,bakasha_id_last) b2, NVL(b.erech_rechiv,0) erech_rechiv_b,NVL(a.kod_rechiv,b.kod_rechiv) kod_rechiv,(NVL(a.erech_rechiv,0)-NVL(b.erech_rechiv,0))  erech_rechiv
                FROM
                        (
-                        select  c1.mispar_ishi,c1.taarich,c1.BAKASHA_ID,c1.kod_rechiv,c1.erech_rechiv,c2.bakasha_id bakasha_id_last
-                        from    (SELECT c.mispar_ishi,c.taarich,c.BAKASHA_ID,c.kod_rechiv,c.erech_rechiv
+                        SELECT  c1.mispar_ishi,c1.taarich,c1.BAKASHA_ID,c1.kod_rechiv,c1.erech_rechiv,c2.bakasha_id bakasha_id_last
+                        FROM    (SELECT c.mispar_ishi,c.taarich,c.BAKASHA_ID,c.kod_rechiv,c.erech_rechiv
                                      FROM TB_CHISHUV_CHODESH_OVDIM c
                                      WHERE c.Bakasha_ID=p_request_id
                                      ORDER BY c.mispar_ishi,c.kod_rechiv) c1,                        
-                                   ( select distinct   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
-                                                from( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
-                                                                      MAX(B.TAARICH_HAAVARA_LESACHAR) over (partition by co.mispar_ishi,co.Taarich )  th2
+                                   ( SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                                                FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                                                      MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
                                                          FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
                                                          WHERE co.Bakasha_ID<>p_request_id
-                                                               and co.Bakasha_ID<p_request_id
+                                                               AND co.Bakasha_ID<p_request_id
                                                                AND B.BAKASHA_ID = CO.BAKASHA_ID
                                                                AND b.Huavra_Lesachar=1
                                                         -- and co.mispar_ishi=202
                                                           ) a
-                                                  where a.th1=a.th2
+                                                  WHERE a.th1=a.th2
                                                 ) c2
-                          where   c1.mispar_ishi= c2.mispar_ishi(+)
-                                and c1.taarich = c2.taarich(+)                    
+                          WHERE   c1.mispar_ishi= c2.mispar_ishi(+)
+                                AND c1.taarich = c2.taarich(+)                    
                          )a
-                    full join
+                    FULL JOIN
                         (SELECT c1.mispar_ishi,c1.bakasha_id,c1.Taarich,c1.kod_rechiv,c1.erech_rechiv
                           FROM TB_CHISHUV_CHODESH_OVDIM c1 ,
                                     TB_BAKASHOT b,
                                     (SELECT  DISTINCT taarich,mispar_ishi
                                       FROM TB_CHISHUV_CHODESH_OVDIM c
                                       WHERE Bakasha_ID=p_request_id)c2  ,
-                                     ( select distinct   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
-                                        from( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
-                                                              MAX(B.TAARICH_HAAVARA_LESACHAR) over (partition by co.mispar_ishi,co.Taarich )  th2
+                                     ( SELECT DISTINCT   a.mispar_ishi, a.Taarich, a.bakasha_id,a.th2 TAARICH_HAAVARA_LESACHAR
+                                        FROM( SELECT  co.mispar_ishi, co.Taarich, co.bakasha_id,b.TAARICH_HAAVARA_LESACHAR th1,
+                                                              MAX(B.TAARICH_HAAVARA_LESACHAR) OVER (PARTITION BY co.mispar_ishi,co.Taarich )  th2
                                                  FROM TB_CHISHUV_CHODESH_OVDIM co,TB_BAKASHOT b
                                                  WHERE co.Bakasha_ID<>p_request_id
-                                                    and co.Bakasha_ID<p_request_id
+                                                    AND co.Bakasha_ID<p_request_id
                                                        AND B.BAKASHA_ID = CO.BAKASHA_ID
                                                        AND b.Huavra_Lesachar=1
                                                 -- and co.mispar_ishi=202
                                                   ) a
-                                          where a.th1=a.th2
+                                          WHERE a.th1=a.th2
                                         ) x
                           WHERE c1.Bakasha_ID<>p_request_id
                                AND c1.taarich=c2.taarich
@@ -3272,7 +3365,7 @@ PROCEDURE pro_get_chishuv_yomi(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE,
    SELECT   taarich,kod_rechiv,erech_rechiv
    FROM TB_CHISHUV_YOMI_OVDIM c
    WHERE mispar_ishi =p_mispar_ishi
-   and taarich between p_taarich and last_day(p_taarich)
+   AND taarich BETWEEN p_taarich AND LAST_DAY(p_taarich)
   AND bakasha_id=p_request_id;
 
 EXCEPTION
@@ -3344,13 +3437,13 @@ PROCEDURE pro_upd_status_yamey_avoda(p_request_id IN  TB_BAKASHOT.bakasha_id%TYP
                                     (SELECT 1 FROM kdsadmin.TB_CHISHUV_YOMI_OVDIM C
                                     WHERE c.taarich =o.taarich
                                       AND c.mispar_ishi = o.mispar_ishi
-                                     and bakasha_id= p_request_id)       
+                                     AND bakasha_id= p_request_id)       
              
                          OR          
                            NOT EXISTS (SELECT 1 FROM kdsadmin.TB_SIDURIM_OVDIM S
                                                 WHERE s.taarich = o.taarich
-                                                     and s.mispar_ishi = o.mispar_ishi
-                                                     and s.mispar_sidur<>99200)       
+                                                     AND s.mispar_ishi = o.mispar_ishi
+                                                     AND s.mispar_sidur<>99200)       
                         );
              
              
@@ -3360,7 +3453,7 @@ BEGIN
    LOOP
    UPDATE TB_YAMEY_AVODA_OVDIM
    SET status=2,
-          TAARICH_IDKUN_ACHARON = sysdate
+          TAARICH_IDKUN_ACHARON = SYSDATE
    WHERE mispar_ishi=v_cur_rec.mispar_ishi
    AND taarich=v_cur_rec.taarich;
   END LOOP;
@@ -3371,42 +3464,44 @@ EXCEPTION
             RAISE;
 END pro_upd_status_yamey_avoda;
 --------------
+
+
    PROCEDURE pro_ins_yamey_avoda_ovdim IS
     idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam6 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=7 
-and kod_peilut_tahalich=1;
+CURSOR  stam6 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=7 
+AND kod_peilut_tahalich=1;
 --and seq between 30 and 44;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_ins_yamey_avoda_ovdim(to_char(sysdate,'yyyymmdd'));
+   pro_ins_yamey_avoda_ovdim(TO_CHAR(SYSDATE,'yyyymmdd'));
    
  FOR  stam6_rec IN  stam6  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam6_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=7
-and kod_peilut_tahalich=1;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=7
+AND kod_peilut_tahalich=1;
 --and seq between 30 and 44;
 
   	IF (idNumber >0) THEN
-    raise_application_error(-20006, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20006, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -3417,9 +3512,9 @@ and kod_peilut_tahalich=1;
 END pro_ins_yamey_avoda_ovdim;  
  
  PROCEDURE pro_ins_yamey_avoda_ovdim(pDt VARCHAR) IS
- cursor Yamim is
-  select   distinct mispar_ishi,TO_DATE(pDt,'yyyymmdd') dt--,0,SYSDATE,-11
-from NEW_MATZAV_OVDIM  o
+ CURSOR Yamim IS
+  SELECT   DISTINCT mispar_ishi,TO_DATE(pDt,'yyyymmdd') dt--,0,SYSDATE,-11
+FROM NEW_MATZAV_OVDIM  o
 WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
    AND TO_DATE(pDt,'yyyymmdd') BETWEEN taarich_hatchala AND NVL(taarich_siyum,SYSDATE+1)
    AND NOT EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM yao
@@ -3428,10 +3523,10 @@ WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
 
    BEGIN
 FOR  Yamim_rec IN  Yamim LOOP
-begin
+BEGIN
    INSERT INTO TB_YAMEY_AVODA_OVDIM
    (mispar_ishi,taarich,lina,taarich_idkun_acharon,meadken_acharon)
-values (Yamim_rec.mispar_ishi,Yamim_rec.dt,  0,sysdate,-11 );
+VALUES (Yamim_rec.mispar_ishi,Yamim_rec.dt,  0,SYSDATE,-11 );
 --   SELECT mispar_ishi,TO_DATE(pDt,'yyyymmdd'),0,SYSDATE,-11
 --  FROM  NEW_MATZAV_OVDIM  o
 --   WHERE   kod_matzav IN ('01','03','04','05','06','07','08')
@@ -3442,11 +3537,11 @@ values (Yamim_rec.mispar_ishi,Yamim_rec.dt,  0,sysdate,-11 );
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,1) '||to_char(Yamim_rec.driver_id)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (7,1,1,sysdate,'',10,'',substr(to_char(Yamim_rec.mispar_ishi) ||' '||pDt||' '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (7,1,1,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Yamim_rec.mispar_ishi) ||' '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
 END LOOP;
-commit;
+COMMIT;
        
 END pro_ins_yamey_avoda_ovdim;
 
@@ -3462,8 +3557,8 @@ END pro_ins_yamey_avoda_ovdim;
 -- WHERE wr_premia_year_month=pYM;
 -- 5/2/2012: materialized view tb_prem is the above union only on current open -1 tkufot
 SELECT   Mispar_ishi,  Tkufa,  Snif_premia,  Sug_premia,  Dakot_premia
-from  TB_PREM
-where Tkufa=pYM;
+FROM  TB_PREM
+WHERE Tkufa=pYM;
 END pro_get_premiot_ovdim;
 
 
@@ -3471,7 +3566,7 @@ END pro_get_premiot_ovdim;
 
    BEGIN
    
-   begin
+   BEGIN
           UPDATE TB_YAMEY_AVODA_OVDIM  yao
       SET --measher_o_mistayeg=2,
           tachograf=2
@@ -3483,12 +3578,12 @@ END pro_get_premiot_ovdim;
      AND yao.taarich= TO_DATE(pDt,'yyyymmdd');
        EXCEPTION
    WHEN OTHERS THEN
-   insert into tb_log_tahalich
-	values (15,1,56,sysdate,'',10,'',substr('update_yamim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-	end;
-commit; 
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,56,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+	END;
+COMMIT; 
 
-begin
+BEGIN
          UPDATE TB_YAMEY_AVODA_OVDIM  yao
       SET --measher_o_mistayeg=2,
           tachograf=2
@@ -3500,13 +3595,13 @@ begin
      AND yao.taarich= TO_DATE(pDt,'yyyymmdd')+1;
 	        EXCEPTION
    WHEN OTHERS THEN
-   insert into tb_log_tahalich
-	values (15,1,57,sysdate,'',10,'',substr('update_yamim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-	end;
-commit; 
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,57,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+	END;
+COMMIT; 
 
 
- begin
+ BEGIN
 -- 2010/06/29 measher_o_mistayeg
    UPDATE  TB_YAMEY_AVODA_OVDIM yao
  SET   measher_o_mistayeg =1
@@ -3520,10 +3615,10 @@ AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM so
         AND so.mispar_sidur<>99200);
        EXCEPTION
    WHEN OTHERS THEN
-   insert into tb_log_tahalich
-	values (15,1,58,sysdate,'',10,'',substr('update_yamim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-	end;
-commit; 
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,58,SYSDATE,'',10,'',SUBSTR('update_yamim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+	END;
+COMMIT; 
 
   --t2010/06/29 update measher_o_mistayeg=null,   for workers with any -12
  --     update  tb_yamey_avoda_ovdim yao
@@ -3976,7 +4071,7 @@ EXCEPTION
           /* bet */
             UNION SELECT DISTINCT   ya.mispar_ishi,ya.taarich
             FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
-            WHERE ya.taarich=trunc(p_date)
+            WHERE ya.taarich=TRUNC(p_date)
                AND  o.mispar_ishi=ya.mispar_ishi
                AND NOT EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
                                         AND so.taarich=ya.taarich AND so.meadken_acharon=-12)
@@ -4038,7 +4133,7 @@ EXCEPTION
         /* gimel */
         SELECT h.Mispar_Ishi, h.Taarich 
         FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y,
-          CTB_ISUK i,   pivot_pirtey_ovdim v_pirty_oved,OVDIM ov
+          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
         WHERE h.Mispar_Ishi=y.Mispar_Ishi
           AND h.Taarich=Y.Taarich
           AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
@@ -4628,7 +4723,7 @@ END MoveNewMeafyenimOvdimToOld;
 PROCEDURE MoveNewBrerotMechdalToOld  IS
 BEGIN
 	-- EXECUTE IMMEDIATE  'truncate table Brerot_Mechdal_Meafyenim' ;
-	 delete from     Brerot_Mechdal_Meafyenim ;
+	 DELETE FROM     BREROT_MECHDAL_MEAFYENIM ;
 	 EXECUTE IMMEDIATE 'insert into Brerot_Mechdal_Meafyenim select * from new_Brerot_Mechdal_Meafyenim';
 EXCEPTION
    WHEN OTHERS THEN
@@ -4674,9 +4769,9 @@ WHERE TRUNC(taarich)  = TO_DATE(pDt,'yyyymmdd')
 END  pro_sof_meafyenim;
 
 PROCEDURE pro_get_premia_input(p_taarich DATE, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE,p_Cur OUT CurType) IS
-        p_tar date;
+        p_tar DATE;
 BEGIN
-        p_tar:= to_date('01/' || to_char(p_taarich,'mm/yyyy'));
+        p_tar:= TO_DATE('01/' || TO_CHAR(p_taarich,'mm/yyyy'));
     OPEN p_Cur FOR
        SELECT cs.MISPAR_ISHI, CS.MISPAR_SIDUR,cs.TAARICH, cs.KOD_RECHIV ,cs.ERECH_RECHIV,
            SP.KOD_PREMIA,PO.EZOR, PO.MAAMAD, PO.MUTAAM, PO.GIL, PO.ISUK,O.SHEM_MISH,O.SHEM_PRAT,
@@ -4685,10 +4780,10 @@ BEGIN
            Pkg_Ovdim.func_get_mispar_tachana(cs.MISPAR_ISHI,CS.MISPAR_SIDUR,cs.TAARICH,cs.SHAT_HATCHALA) mispar_tachana
         FROM TB_CHISHUV_SIDUR_OVDIM cs,
                  CTB_SUGEY_PREMIOT sp ,
-                 pivot_pirtey_ovdim po,
+                 PIVOT_PIRTEY_OVDIM po,
                  OVDIM o 
         WHERE   cs.BAKASHA_ID=p_bakasha_id
-        AND cs.taarich between p_tar and last_day(p_tar) -- to_char(cs.taarich,'mm/yyyy')=to_char(p_taarich,'mm/yyyy')
+        AND cs.taarich BETWEEN p_tar AND LAST_DAY(p_tar) -- to_char(cs.taarich,'mm/yyyy')=to_char(p_taarich,'mm/yyyy')
         AND  cs.KOD_RECHIV IN (256,257,258,259,260)      
   --    AND  cs.MISPAR_ISHI= 78387
         AND cs.KOD_RECHIV=SP.KOD_RACHIV_NOCHECHUT(+)
@@ -4798,26 +4893,26 @@ PROCEDURE pro_get_ovdim_lehishuv_premiot(p_Cur OUT CurType) IS
 --AND mispar_sidur BETWEEN 99220 AND 99222);
 SELECT DISTINCT mispar_ishi,chodesh FROM (SELECT *
  FROM  wr1.wr_OVDIM_LECHISHUV_PREMIA@KDS2wr1
- union all
+ UNION ALL
  SELECT *
  FROM  baam.baam_OVDIM_LECHISHUV_PREMIA@KDS2baam
- union all
+ UNION ALL
  SELECT DISTINCT mispar_ishi,TO_DATE(TO_CHAR(taarich,'yyyymm')*100+01,'yyyymmdd')
  FROM TB_SIDURIM_OVDIM
 WHERE mispar_sidur BETWEEN 99220 AND 99222
-AND taarich between (select  to_date(min(baa_run_year_month)*100+1,'yyyymmdd')  
+AND taarich BETWEEN (SELECT  TO_DATE(MIN(baa_run_year_month)*100+1,'yyyymmdd')  
    FROM  baam.tb_baa_run_param@KDS2baam
-  where baa_run_status='פ')
-and   (  select  to_date(max(baa_run_year_month)*100+1,'yyyymmdd') 
+  WHERE baa_run_status='פ')
+AND   (  SELECT  TO_DATE(MAX(baa_run_year_month)*100+1,'yyyymmdd') 
    FROM  baam.tb_baa_run_param@KDS2baam
-  where baa_run_status='פ'  )
+  WHERE baa_run_status='פ'  )
   -- test 4 premiot 201201
-    union all
-  select 48441,to_date('01/01/2012','dd/mm/yyyy') 
-  from dual
-  union all
-  select 71717,to_date('01/01/2012','dd/mm/yyyy') 
-  from dual  
+    UNION ALL
+  SELECT 48441,TO_DATE('01/01/2012','dd/mm/yyyy') 
+  FROM dual
+  UNION ALL
+  SELECT 71717,TO_DATE('01/01/2012','dd/mm/yyyy') 
+  FROM dual  
     -- end test 4 premiot 201201
   );
       EXCEPTION
@@ -4832,7 +4927,7 @@ BEGIN
 
   SELECT COUNT(*) INTO num
         FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y,
-          CTB_ISUK i,   pivot_pirtey_ovdim v_pirty_oved,OVDIM ov
+          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
         WHERE h.Mispar_Ishi=y.Mispar_Ishi
           AND h.Taarich=Y.Taarich
           AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
@@ -4900,40 +4995,40 @@ p_mispar_siduri TB_LOG_TAHALICH.seq%TYPE;
   
   PROCEDURE pro_upd_yamimOfSdrn    IS
   idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam5 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and (kod_tahalich=4 or kod_tahalich=15)
-and kod_peilut_tahalich=1;
+CURSOR  stam5 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND (kod_tahalich=4 OR kod_tahalich=15)
+AND kod_peilut_tahalich=1;
 --and seq between 30 and 44;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_upd_yamey_avoda_ovdim(to_char(sysdate-1,'yyyymmdd'));
+   pro_upd_yamey_avoda_ovdim(TO_CHAR(SYSDATE-1,'yyyymmdd'));
 
 FOR  stam5_rec IN  stam5  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam5_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and (kod_tahalich=4 or kod_tahalich=15)
-and kod_peilut_tahalich=1;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND (kod_tahalich=4 OR kod_tahalich=15)
+AND kod_peilut_tahalich=1;
 --and seq between 30 and 44;
 
   	IF (idNumber >0) THEN
-    raise_application_error(-20005, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20005, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -4944,156 +5039,156 @@ and kod_peilut_tahalich=1;
 END pro_upd_yamimOfSdrn; 
 
 
- PROCEDURE pro_get_meafyenim_gap(p_num_process number,   p_cur OUT CurType) IS
+ PROCEDURE pro_get_meafyenim_gap(p_num_process NUMBER,   p_cur OUT CurType) IS
   
 BEGIN
      OPEN p_cur FOR	
 	 --stepa : add  to an existing kod "the rest" of the month
-	 select distinct   p1.mispar_ishi oved,p1.kod_meafyen kodm,--p1.me_taarich ,p1.ad_taarich,
-	p1.ad_taarich+1 miss_me, nvl(least(p3.me_taarich-1,last_day(s.taarich)),last_day(s.taarich)) miss_ad  ,b.erech
-from   meafyenim_ovdim  p1,meafyenim_ovdim  p3,brerot_mechdal_meafyenim b,TB_MISPAR_ISHI_CHISHUV s
-	where   p1.me_taarich between s.taarich and  last_day(s.taarich)
-			and p1.ad_taarich+1 between s.taarich and  last_day(s.taarich)
-			and p3.mispar_ishi(+)=p1.mispar_ishi
-		    and p3.kod_meafyen(+)=p1.kod_meafyen
-	        and p3.me_taarich(+) >   p1.ad_taarich+1
-			and b.kod_meafyen = p1.kod_meafyen
-			and    S.NUM_PACK =p_num_process
-						 and s.mispar_ishi  = p1.mispar_ishi
+	 SELECT DISTINCT   p1.mispar_ishi oved,p1.kod_meafyen kodm,--p1.me_taarich ,p1.ad_taarich,
+	p1.ad_taarich+1 miss_me, NVL(LEAST(p3.me_taarich-1,LAST_DAY(s.taarich)),LAST_DAY(s.taarich)) miss_ad  ,b.erech
+FROM   MEAFYENIM_OVDIM  p1,MEAFYENIM_OVDIM  p3,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE   p1.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p1.ad_taarich+1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p3.mispar_ishi(+)=p1.mispar_ishi
+		    AND p3.kod_meafyen(+)=p1.kod_meafyen
+	        AND p3.me_taarich(+) >   p1.ad_taarich+1
+			AND b.kod_meafyen = p1.kod_meafyen
+			AND    S.NUM_PACK =p_num_process
+						 AND s.mispar_ishi  = p1.mispar_ishi
 	--  	    and ((p1.ad_taarich+1 between b.me_taarich and nvl(b.ad_taarich,sysdate+200)) or
 	--					( nvl(least(p3.me_taarich-1,last_day(s.taarich)),last_day(s.taarich))  between b.me_taarich and nvl(b.ad_taarich,sysdate+200)))
-		and not exists ( select *  from   meafyenim_ovdim  p2
-						   	 		   	  where   p2.mispar_ishi=p1.mispar_ishi
-										  		  and p2.kod_meafyen=p1.kod_meafyen
-												  and p2.me_taarich = p1.ad_taarich+1)
-	   and not exists (   select p8.mispar_ishi,p8.kod_meafyen,count(*)
-					   	   		  		 from   meafyenim_ovdim  p8
-										   where  ((me_taarich<= s.taarich and ad_taarich<=last_day(s.taarich) and ad_taarich>= s.taarich ) or
-										     	  		(me_taarich>= s.taarich  and ad_taarich<=last_day(s.taarich)) or
-														(me_taarich>= s.taarich  and ad_taarich>=last_day(s.taarich) and me_taarich<= last_day(s.taarich) ) or
-														(me_taarich<= s.taarich  and ad_taarich>=last_day(s.taarich)))
-										and p8.mispar_ishi=p1.mispar_ishi
-										and p8.kod_meafyen=p1.kod_meafyen
-										group by p8.kod_meafyen,p8.mispar_ishi
-										having count(*)>1)
+		AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p2
+						   	 		   	  WHERE   p2.mispar_ishi=p1.mispar_ishi
+										  		  AND p2.kod_meafyen=p1.kod_meafyen
+												  AND p2.me_taarich = p1.ad_taarich+1)
+	   AND NOT EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p1.mispar_ishi
+										AND p8.kod_meafyen=p1.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
   --stepb : add  to an existing kod "the beginning" of the month
-		union all
-		select distinct   p4.mispar_ishi oved,p4.kod_meafyen kodm,--p4.me_taarich ,p4.ad_taarich,
-	 nvl(greatest(p6.ad_taarich+1,s.taarich),s.taarich)  miss_me,
+		UNION ALL
+		SELECT DISTINCT   p4.mispar_ishi oved,p4.kod_meafyen kodm,--p4.me_taarich ,p4.ad_taarich,
+	 NVL(GREATEST(p6.ad_taarich+1,s.taarich),s.taarich)  miss_me,
 	 p4.me_taarich-1  miss_ad,b.erech
-from   meafyenim_ovdim  p4,meafyenim_ovdim  p6,brerot_mechdal_meafyenim b,TB_MISPAR_ISHI_CHISHUV s
-	where  p4.me_taarich between s.taarich and  last_day(s.taarich)
-		and		 p4.me_taarich-1 between s.taarich and  last_day(s.taarich)
-		 and p6.mispar_ishi(+)=p4.mispar_ishi
-		     and p6.kod_meafyen(+)=p4.kod_meafyen
-	        and p6.ad_taarich(+) <=   p4.me_taarich-1
-				and b.kod_meafyen = p4.kod_meafyen
-				and    S.NUM_PACK =p_num_process
-							 and s.mispar_ishi  = p4.mispar_ishi
-			and not exists ( select *  from   meafyenim_ovdim  p5
-						   	 		   	  where   p5.mispar_ishi=p4.mispar_ishi
-										  		  and p5.kod_meafyen=p4.kod_meafyen
-												  and p5.ad_taarich = p4.me_taarich-1) 
-		 and  not exists (   select p8.mispar_ishi,p8.kod_meafyen,count(*)
-					   	   		  		 from   meafyenim_ovdim  p8
-										   where  ((me_taarich<= s.taarich and ad_taarich<=last_day(s.taarich) and ad_taarich>= s.taarich ) or
-										     	  		(me_taarich>= s.taarich  and ad_taarich<=last_day(s.taarich)) or
-														(me_taarich>= s.taarich  and ad_taarich>=last_day(s.taarich) and me_taarich<= last_day(s.taarich) ) or
-														(me_taarich<= s.taarich  and ad_taarich>=last_day(s.taarich)))
-										and p8.mispar_ishi=p4.mispar_ishi
-										and p8.kod_meafyen=p4.kod_meafyen
-										group by p8.kod_meafyen,p8.mispar_ishi
-										having count(*)>1)
+FROM   MEAFYENIM_OVDIM  p4,MEAFYENIM_OVDIM  p6,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE  p4.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		AND		 p4.me_taarich-1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		 AND p6.mispar_ishi(+)=p4.mispar_ishi
+		     AND p6.kod_meafyen(+)=p4.kod_meafyen
+	        AND p6.ad_taarich(+) <=   p4.me_taarich-1
+				AND b.kod_meafyen = p4.kod_meafyen
+				AND    S.NUM_PACK =p_num_process
+							 AND s.mispar_ishi  = p4.mispar_ishi
+			AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p5
+						   	 		   	  WHERE   p5.mispar_ishi=p4.mispar_ishi
+										  		  AND p5.kod_meafyen=p4.kod_meafyen
+												  AND p5.ad_taarich = p4.me_taarich-1) 
+		 AND  NOT EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p4.mispar_ishi
+										AND p8.kod_meafyen=p4.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
    --stepc :  	add to a whole month where the kod does not exist
-   union all
-   select distinct s.mispar_ishi oved ,kod_meafyen_bitzua kodm , s.taarich miss_me , last_day(s.taarich) miss_ad  ,b.erech
-  from ctb_meafyen_bitzua, brerot_mechdal_meafyenim b,TB_MISPAR_ISHI_CHISHUV s
+   UNION ALL
+   SELECT DISTINCT s.mispar_ishi oved ,kod_meafyen_bitzua kodm , s.taarich miss_me , LAST_DAY(s.taarich) miss_ad  ,b.erech
+  FROM CTB_MEAFYEN_BITZUA, BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
 WHERE     S.NUM_PACK =p_num_process
-and not exists (select * from   meafyenim_ovdim  p1
-  where p1.kod_meafyen=kod_meafyen_bitzua
-  and ((me_taarich<= s.taarich  and ad_taarich<=last_day(s.taarich) and ad_taarich>= s.taarich ) or
-  	  		(me_taarich>= s.taarich  and ad_taarich<=last_day(s.taarich)) or
-			(me_taarich>= s.taarich  and ad_taarich>=last_day(s.taarich) and me_taarich<= last_day(s.taarich) ) or
-			(me_taarich<= s.taarich  and ad_taarich>=last_day(s.taarich))))
-and b.kod_meafyen = kod_meafyen_bitzua
+AND NOT EXISTS (SELECT * FROM   MEAFYENIM_OVDIM  p1
+  WHERE p1.kod_meafyen=kod_meafyen_bitzua
+  AND ((me_taarich<= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+  	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+			(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+			(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich))))
+AND b.kod_meafyen = kod_meafyen_bitzua
    --todo  stepd :  	pro_get_meafyenim_manygaps use cursors where there is more than one gap 
-  order by oved,kodm  ;
+  ORDER BY oved,kodm  ;
       EXCEPTION
 		   WHEN OTHERS THEN
 		        RAISE;
   END pro_get_meafyenim_gap;
   
- PROCEDURE pro_get_meafyenim_manygaps(p_num_process number,   p_cur OUT CurType) IS
+ PROCEDURE pro_get_meafyenim_manygaps(p_num_process NUMBER,   p_cur OUT CurType) IS
    v_dt DATE;
   max_dt DATE;
    
- CURSOR many_gaps is
- select distinct    oved,  kodm,  miss_me,  miss_ad  
-from (select distinct   p1.mispar_ishi oved,p1.kod_meafyen kodm,
-	s.taarich  miss_me, last_day(s.taarich) miss_ad 
-from   meafyenim_ovdim  p1,meafyenim_ovdim  p3,brerot_mechdal_meafyenim b,TB_MISPAR_ISHI_CHISHUV s
-	where   p1.me_taarich between s.taarich and  last_day(s.taarich)
-			and p1.ad_taarich+1 between s.taarich and  last_day(s.taarich)
-			and p3.mispar_ishi(+)=p1.mispar_ishi
-		    and p3.kod_meafyen(+)=p1.kod_meafyen
-	        and p3.me_taarich(+) >   p1.ad_taarich+1
-			and b.kod_meafyen = p1.kod_meafyen
-			and    S.NUM_PACK =p_num_process
-				 and s.mispar_ishi  = p1.mispar_ishi
-		and not exists ( select *  from   meafyenim_ovdim  p2
-						   	 		   	  where   p2.mispar_ishi=p1.mispar_ishi
-										  		  and p2.kod_meafyen=p1.kod_meafyen
-												  and p2.me_taarich = p1.ad_taarich+1)
-and  exists (   select p8.mispar_ishi,p8.kod_meafyen,count(*)
-					   	   		  		 from   meafyenim_ovdim  p8
-										   where  ((me_taarich<= s.taarich and ad_taarich<=last_day(s.taarich) and ad_taarich>= s.taarich ) or
-										     	  		(me_taarich>= s.taarich  and ad_taarich<=last_day(s.taarich)) or
-														(me_taarich>= s.taarich  and ad_taarich>=last_day(s.taarich) and me_taarich<= last_day(s.taarich) ) or
-														(me_taarich<= s.taarich  and ad_taarich>=last_day(s.taarich)))
-										and p8.mispar_ishi=p1.mispar_ishi
-										and p8.kod_meafyen=p1.kod_meafyen
-										group by p8.kod_meafyen,p8.mispar_ishi
-										having count(*)>1)
+ CURSOR many_gaps IS
+ SELECT DISTINCT    oved,  kodm,  miss_me,  miss_ad  
+FROM (SELECT DISTINCT   p1.mispar_ishi oved,p1.kod_meafyen kodm,
+	s.taarich  miss_me, LAST_DAY(s.taarich) miss_ad 
+FROM   MEAFYENIM_OVDIM  p1,MEAFYENIM_OVDIM  p3,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE   p1.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p1.ad_taarich+1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+			AND p3.mispar_ishi(+)=p1.mispar_ishi
+		    AND p3.kod_meafyen(+)=p1.kod_meafyen
+	        AND p3.me_taarich(+) >   p1.ad_taarich+1
+			AND b.kod_meafyen = p1.kod_meafyen
+			AND    S.NUM_PACK =p_num_process
+				 AND s.mispar_ishi  = p1.mispar_ishi
+		AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p2
+						   	 		   	  WHERE   p2.mispar_ishi=p1.mispar_ishi
+										  		  AND p2.kod_meafyen=p1.kod_meafyen
+												  AND p2.me_taarich = p1.ad_taarich+1)
+AND  EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p1.mispar_ishi
+										AND p8.kod_meafyen=p1.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1)
  --stepb : add  to an existing kod "the beginning" of the month
-		union all
-		select distinct   p4.mispar_ishi oved,p4.kod_meafyen kodm,
-	s.taarich  miss_me, last_day(s.taarich) miss_ad 
-from   meafyenim_ovdim  p4,meafyenim_ovdim  p6,brerot_mechdal_meafyenim b,TB_MISPAR_ISHI_CHISHUV s
-	where  p4.me_taarich between s.taarich and  last_day(s.taarich)
-		and		 p4.me_taarich-1 between s.taarich and  last_day(s.taarich)
-		 and p6.mispar_ishi(+)=p4.mispar_ishi
-		     and p6.kod_meafyen(+)=p4.kod_meafyen
-	        and p6.ad_taarich(+) <=   p4.me_taarich-1
-				and b.kod_meafyen = p4.kod_meafyen
-				and    S.NUM_PACK =p_num_process
-							 and s.mispar_ishi  = p4.mispar_ishi
-			and not exists ( select *  from   meafyenim_ovdim  p5
-						   	 		   	  where   p5.mispar_ishi=p4.mispar_ishi
-										  		  and p5.kod_meafyen=p4.kod_meafyen
-												  and p5.ad_taarich = p4.me_taarich-1) 
-		 and  exists (   select p8.mispar_ishi,p8.kod_meafyen,count(*)
-					   	   		  		 from   meafyenim_ovdim  p8
-										   where  ((me_taarich<= s.taarich and ad_taarich<=last_day(s.taarich) and ad_taarich>= s.taarich ) or
-										     	  		(me_taarich>= s.taarich  and ad_taarich<=last_day(s.taarich)) or
-														(me_taarich>= s.taarich  and ad_taarich>=last_day(s.taarich) and me_taarich<= last_day(s.taarich) ) or
-														(me_taarich<= s.taarich  and ad_taarich>=last_day(s.taarich)))
-										and p8.mispar_ishi=p4.mispar_ishi
-										and p8.kod_meafyen=p4.kod_meafyen
-										group by p8.kod_meafyen,p8.mispar_ishi
-										having count(*)>1))
-  order by oved,kodm;
+		UNION ALL
+		SELECT DISTINCT   p4.mispar_ishi oved,p4.kod_meafyen kodm,
+	s.taarich  miss_me, LAST_DAY(s.taarich) miss_ad 
+FROM   MEAFYENIM_OVDIM  p4,MEAFYENIM_OVDIM  p6,BREROT_MECHDAL_MEAFYENIM b,TB_MISPAR_ISHI_CHISHUV s
+	WHERE  p4.me_taarich BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		AND		 p4.me_taarich-1 BETWEEN s.taarich AND  LAST_DAY(s.taarich)
+		 AND p6.mispar_ishi(+)=p4.mispar_ishi
+		     AND p6.kod_meafyen(+)=p4.kod_meafyen
+	        AND p6.ad_taarich(+) <=   p4.me_taarich-1
+				AND b.kod_meafyen = p4.kod_meafyen
+				AND    S.NUM_PACK =p_num_process
+							 AND s.mispar_ishi  = p4.mispar_ishi
+			AND NOT EXISTS ( SELECT *  FROM   MEAFYENIM_OVDIM  p5
+						   	 		   	  WHERE   p5.mispar_ishi=p4.mispar_ishi
+										  		  AND p5.kod_meafyen=p4.kod_meafyen
+												  AND p5.ad_taarich = p4.me_taarich-1) 
+		 AND  EXISTS (   SELECT p8.mispar_ishi,p8.kod_meafyen,COUNT(*)
+					   	   		  		 FROM   MEAFYENIM_OVDIM  p8
+										   WHERE  ((me_taarich<= s.taarich AND ad_taarich<=LAST_DAY(s.taarich) AND ad_taarich>= s.taarich ) OR
+										     	  		(me_taarich>= s.taarich  AND ad_taarich<=LAST_DAY(s.taarich)) OR
+														(me_taarich>= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich) AND me_taarich<= LAST_DAY(s.taarich) ) OR
+														(me_taarich<= s.taarich  AND ad_taarich>=LAST_DAY(s.taarich)))
+										AND p8.mispar_ishi=p4.mispar_ishi
+										AND p8.kod_meafyen=p4.kod_meafyen
+										GROUP BY p8.kod_meafyen,p8.mispar_ishi
+										HAVING COUNT(*)>1))
+  ORDER BY oved,kodm;
   
-  CURSOR meafyeney_oved(par_ishi number,p_meafyen number) IS
-  select p9.mispar_ishi,p9.kod_meafyen,p9.me_taarich,p9.ad_taarich
-from   meafyenim_ovdim p9  ,TB_MISPAR_ISHI_CHISHUV s
-	where    p9.mispar_ishi=par_ishi 
-		     and  p9.kod_meafyen=p_meafyen
-			 and    S.NUM_PACK =p_num_process
-				 and s.mispar_ishi  = p9.mispar_ishi
-			 and ((p9.me_taarich<= s.taarich  and p9.ad_taarich<=last_day(s.taarich) and p9.ad_taarich>= s.taarich ) or
-  	  		(p9.me_taarich>= s.taarich  and p9.ad_taarich<=last_day(s.taarich)) or
-			(p9.me_taarich>= s.taarich  and p9.ad_taarich>=last_day(s.taarich) and p9.me_taarich<= last_day(s.taarich) ) or
-			(p9.me_taarich<= s.taarich  and p9.ad_taarich>=last_day(s.taarich)));
+  CURSOR meafyeney_oved(par_ishi NUMBER,p_meafyen NUMBER) IS
+  SELECT p9.mispar_ishi,p9.kod_meafyen,p9.me_taarich,p9.ad_taarich
+FROM   MEAFYENIM_OVDIM p9  ,TB_MISPAR_ISHI_CHISHUV s
+	WHERE    p9.mispar_ishi=par_ishi 
+		     AND  p9.kod_meafyen=p_meafyen
+			 AND    S.NUM_PACK =p_num_process
+				 AND s.mispar_ishi  = p9.mispar_ishi
+			 AND ((p9.me_taarich<= s.taarich  AND p9.ad_taarich<=LAST_DAY(s.taarich) AND p9.ad_taarich>= s.taarich ) OR
+  	  		(p9.me_taarich>= s.taarich  AND p9.ad_taarich<=LAST_DAY(s.taarich)) OR
+			(p9.me_taarich>= s.taarich  AND p9.ad_taarich>=LAST_DAY(s.taarich) AND p9.me_taarich<= LAST_DAY(s.taarich) ) OR
+			(p9.me_taarich<= s.taarich  AND p9.ad_taarich>=LAST_DAY(s.taarich)));
 
   
 BEGIN
@@ -5103,24 +5198,24 @@ FOR  many_gaps_rec IN  many_gaps  LOOP
  max_dt:=many_gaps_rec.miss_ad;
 
 FOR  meafyeney_oved_rec IN  meafyeney_oved(many_gaps_rec.oved,many_gaps_rec.kodm) LOOP
-	 if (meafyeney_oved_rec.me_taarich > v_dt) then
+	 IF (meafyeney_oved_rec.me_taarich > v_dt) THEN
 	-- insert into tb_log_tahalich values (40,meafyeney_oved_rec.kod_meafyen,meafyeney_oved_rec.mispar_ishi,v_dt,0,0,least(max_dt,meafyeney_oved_rec.me_taarich-1),'');
-	insert into tmp_meafyenim_gap 
-		   values (meafyeney_oved_rec.mispar_ishi,meafyeney_oved_rec.kod_meafyen,v_dt,least(max_dt,meafyeney_oved_rec.me_taarich-1));
-	 end if;
+	INSERT INTO TMP_MEAFYENIM_GAP 
+		   VALUES (meafyeney_oved_rec.mispar_ishi,meafyeney_oved_rec.kod_meafyen,v_dt,LEAST(max_dt,meafyeney_oved_rec.me_taarich-1));
+	 END IF;
 	 v_dt:=meafyeney_oved_rec.ad_taarich+1;
-end loop;
-	if (v_dt <= max_dt) then
+END LOOP;
+	IF (v_dt <= max_dt) THEN
 	-- insert into tb_log_tahalich values (40,many_gaps_rec.kodm,many_gaps_rec.oved,v_dt,0,0,max_dt,'');
-	insert into tmp_meafyenim_gap 
-		values (many_gaps_rec.oved,many_gaps_rec.kodm,v_dt,max_dt);
- 	 end if;
+	INSERT INTO TMP_MEAFYENIM_GAP 
+		VALUES (many_gaps_rec.oved,many_gaps_rec.kodm,v_dt,max_dt);
+ 	 END IF;
 
-end loop;
+END LOOP;
 
  OPEN p_cur FOR	
- 	  select MISPAR_ISHI   ,  Kod_meafyen	,  Me_taarich  ,  ad_taarich   
-	  from tmp_meafyenim_gap;
+ 	  SELECT MISPAR_ISHI   ,  Kod_meafyen	,  Me_taarich  ,  ad_taarich   
+	  FROM TMP_MEAFYENIM_GAP;
 
 --beware to commit; not to lose the data!!
 
@@ -5129,34 +5224,33 @@ end loop;
 		        RAISE;
   END pro_get_meafyenim_manygaps;
   
-  procedure Pro_get_pirtey_ovdim_leRikuzim(p_bakasha_id number, p_cur OUT CurType) IS
+  PROCEDURE Pro_get_pirtey_ovdim_leRikuzim(p_bakasha_id NUMBER, p_cur OUT CurType) IS
   BEGIN
   
      OPEN p_cur FOR    
-        select distinct S.MISPAR_ISHI ,S.TAARICH ,nvl(P.ERECH_ISHI,P.ERECH_MECHDAL_PARTANY) WorkDay, B.ZMAN_HATCHALA,c.SUG_CHISHUV        
+        SELECT DISTINCT S.MISPAR_ISHI ,S.TAARICH ,NVL(P.ERECH_ISHI,P.ERECH_MECHDAL_PARTANY) WorkDay, B.ZMAN_HATCHALA,c.SUG_CHISHUV        
                          --   Pkg_Batch.pro_get_sug_chishuv(S.MISPAR_ISHI ,S.TAARICH,p_bakasha_id) sug_chishuv
-        from tb_chishuv_chodesh_ovdim s ,tb_bakashot b ,pivot_meafyenim_ovdim p,tb_mispar_ishi_sug_chishuv c
-        where S.BAKASHA_ID = p_bakasha_id
-            and S.BAKASHA_ID = B.BAKASHA_ID
-            and S.MISPAR_ISHI = P.MISPAR_ISHI
-            and s.TAARICH between P.ME_TAARICH and P.AD_TAARICH
-            and S.MISPAR_ISHI = c.MISPAR_ISHI
-            and s.BAKASHA_ID = c.BAKASHA_ID
-            and S.TAARICH = c.TAARICH
-            and P.KOD_MEAFYEN =56
-            and S.MISPAR_ISHI <73000;
+        FROM TB_CHISHUV_CHODESH_OVDIM s ,TB_BAKASHOT b ,PIVOT_MEAFYENIM_OVDIM p,TB_MISPAR_ISHI_SUG_CHISHUV c
+        WHERE S.BAKASHA_ID = p_bakasha_id
+            AND S.BAKASHA_ID = B.BAKASHA_ID
+            AND S.MISPAR_ISHI = P.MISPAR_ISHI
+            AND s.TAARICH BETWEEN P.ME_TAARICH AND P.AD_TAARICH
+            AND S.MISPAR_ISHI = c.MISPAR_ISHI
+            AND s.BAKASHA_ID = c.BAKASHA_ID
+            AND S.TAARICH = c.TAARICH
+            AND P.KOD_MEAFYEN =56;
         
   END Pro_get_pirtey_ovdim_leRikuzim;
   
-  procedure Pro_get_Email_Ovdim_LeRikuzim(p_bakasha_id number, p_cur OUT CurType) IS
+  PROCEDURE Pro_get_Email_Ovdim_LeRikuzim(p_bakasha_id NUMBER, p_cur OUT CurType) IS
   BEGIN
   
      OPEN p_cur FOR    
-      select p.MISPAR_ISHI ,p.TAARICH , o.EMAIL  ,P.RIKUZ_PDF
-        from OVDIM o,TB_RIKUZ_PDF p
-        where p.MISPAR_ISHI = O.MISPAR_ISHI
-            and p.BAKASHA_ID = p_bakasha_id
-            and o.EMAIL is not null;
+      SELECT p.MISPAR_ISHI ,p.TAARICH , o.EMAIL  ,P.RIKUZ_PDF
+        FROM OVDIM o,TB_RIKUZ_PDF p
+        WHERE p.MISPAR_ISHI = O.MISPAR_ISHI
+            AND p.BAKASHA_ID = p_bakasha_id
+            AND o.EMAIL IS NOT NULL;
      
      /*   select distinct S.MISPAR_ISHI ,S.TAARICH ,o.EMAIL  ,c.SUG_CHISHUV
         from tb_chishuv_chodesh_ovdim s  ,   OVDIM o,tb_mispar_ishi_sug_chishuv c
@@ -5174,9 +5268,9 @@ end loop;
                                                   p_bakasha_id OUT TB_BAKASHOT.bakasha_id%TYPE ) RETURN NUMBER IS
   v_count_bakashot NUMBER;
   p_sug_chishuv NUMBER;
-  p_tar date;
+  p_tar DATE;
 BEGIN
-        p_tar:= to_date('01/' || to_char(p_taarich,'mm/yyyy'));
+        p_tar:= TO_DATE('01/' || TO_CHAR(p_taarich,'mm/yyyy'));
 
         SELECT COUNT(b.BAKASHA_ID) INTO  v_count_bakashot
         FROM TB_BAKASHOT B
@@ -5184,7 +5278,7 @@ BEGIN
         AND EXISTS (SELECT bakasha_id FROM TB_CHISHUV_CHODESH_OVDIM  C
                                       WHERE    C.Bakasha_ID=B.Bakasha_ID
                                 AND C.Mispar_Ishi =p_mispar_ishi
-                                AND C.Taarich between p_tar and last_day(p_tar));--TO_CHAR(C.Taarich,'mm/yyyy') =TO_CHAR(p_taarich,'mm/yyyy'));
+                                AND C.Taarich BETWEEN p_tar AND LAST_DAY(p_tar));--TO_CHAR(C.Taarich,'mm/yyyy') =TO_CHAR(p_taarich,'mm/yyyy'));
 
    IF v_count_bakashot=1 THEN
             p_sug_chishuv:=0;
@@ -5194,11 +5288,11 @@ BEGIN
             p_sug_chishuv:=2;
    END IF;
    
-   return p_sug_chishuv;
+   RETURN p_sug_chishuv;
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
           p_sug_chishuv:=2;
-          return p_sug_chishuv;
+          RETURN p_sug_chishuv;
      WHEN OTHERS THEN
             RAISE;
  
@@ -5208,7 +5302,7 @@ END  pro_get_sug_chishuv;
 PROCEDURE pro_ins_misparishi_sug_chishuv(p_bakasha_id NUMBER,p_coll_chishuv_sug_sidur IN COLL_MISPAR_ISHI_SUG_CHISHUV) IS
 
 BEGIN
-     delete from TB_MISPAR_ISHI_SUG_CHISHUV where  bakasha_id=p_bakasha_id;
+     DELETE FROM TB_MISPAR_ISHI_SUG_CHISHUV WHERE  bakasha_id=p_bakasha_id;
       IF (p_coll_chishuv_sug_sidur IS NOT NULL) THEN
           FOR i IN 1..p_coll_chishuv_sug_sidur.COUNT LOOP
             INSERT INTO TB_MISPAR_ISHI_SUG_CHISHUV
@@ -5234,12 +5328,12 @@ END pro_ins_misparishi_sug_chishuv;
 /****************************************************************************************/
 /********************* shguim batch  ********************************/
 
-PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type in number,p_num_process IN NUMBER, p_bakasha_id tb_bakashot.bakasha_id%type) IS
+PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
   BEGIN
-     insert into TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,Type,bakasha_id)
+     INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
       /* alef */
-      select  rownum,MISPAR_ISHI, taarich,0,p_type ,p_bakasha_id
-      from(           SELECT DISTINCT  ya.mispar_ishi,ya.taarich
+      SELECT  ROWNUM,MISPAR_ISHI, taarich,0,p_type ,p_bakasha_id
+      FROM(           SELECT DISTINCT  ya.mispar_ishi,ya.taarich
                 FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
                 WHERE  o.mispar_ishi=ya.mispar_ishi
                      AND  EXISTS  (SELECT mispar_ishi
@@ -5252,7 +5346,7 @@ PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type in number,p_num_proc
                   /* bet */
      UNION  SELECT DISTINCT   ya.mispar_ishi,ya.taarich
                  FROM TB_YAMEY_AVODA_OVDIM ya,OVDIM o
-                 WHERE ya.taarich=trunc(p_date)
+                 WHERE ya.taarich=TRUNC(p_date)
                      AND  o.mispar_ishi=ya.mispar_ishi
                      AND NOT EXISTS(SELECT 1 FROM TB_SIDURIM_OVDIM so WHERE so.mispar_ishi=ya.mispar_ishi
                                                                                                                AND so.taarich=ya.taarich AND so.meadken_acharon=-12)
@@ -5279,17 +5373,17 @@ PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type in number,p_num_proc
        Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id); 
        
        INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
-         select   M.MISPAR_ISHI,M.TAARICH,sysdate,p_bakasha_id,0,'shguim of sdrn'
-         from TB_MISPAR_ISHI_SHGUIM_BATCH m
-         where m.bakasha_id = p_bakasha_id;
+         SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of sdrn'
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+         WHERE m.bakasha_id = p_bakasha_id;
  END Prepare_yamei_avoda_meshek;
  
-  PROCEDURE Prepare_yamei_avoda_shinui_hr( p_type in number,p_num_process IN NUMBER, p_bakasha_id tb_bakashot.bakasha_id%type) IS
+  PROCEDURE Prepare_yamei_avoda_shinui_hr( p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
   BEGIN 
-      insert into TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
-        SELECT rownum, h.Mispar_Ishi, h.Taarich ,0,p_type,p_bakasha_id
+      INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+        SELECT ROWNUM, h.Mispar_Ishi, h.Taarich ,0,p_type,p_bakasha_id
         FROM OVDIM_IM_SHINUY_HR h, TB_YAMEY_AVODA_OVDIM y,
-          CTB_ISUK i,   pivot_pirtey_ovdim v_pirty_oved,OVDIM ov
+          CTB_ISUK i,   PIVOT_PIRTEY_OVDIM v_pirty_oved,OVDIM ov
         WHERE h.Mispar_Ishi=y.Mispar_Ishi
           AND h.Taarich=Y.Taarich
           AND NVL(y. RITZAT_SHGIOT_ACHARONA,h.Taarich_Idkun_HR-1)<h.Taarich_Idkun_HR
@@ -5304,58 +5398,58 @@ PROCEDURE Prepare_yamei_avoda_meshek(p_date IN DATE, p_type in number,p_num_proc
           Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id);  
           
             INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
-         select   M.MISPAR_ISHI,M.TAARICH,sysdate,p_bakasha_id,0,'shguim of hr'
-         from TB_MISPAR_ISHI_SHGUIM_BATCH m
-         where m.bakasha_id = p_bakasha_id;
+         SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of hr'
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+         WHERE m.bakasha_id = p_bakasha_id;
   END Prepare_yamei_avoda_shinui_hr;
   
- PROCEDURE pro_divide_packets( p_num_process IN  NUMBER, p_bakasha_id tb_bakashot.bakasha_id%type ) IS
-   num number;
+ PROCEDURE pro_divide_packets( p_num_process IN  NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE ) IS
+   num NUMBER;
 BEGIN
 
- select count(*) into num from TB_MISPAR_ISHI_SHGUIM_BATCH WHERE bakasha_id =p_bakasha_id;
+ SELECT COUNT(*) INTO num FROM TB_MISPAR_ISHI_SHGUIM_BATCH WHERE bakasha_id =p_bakasha_id;
   
-  update TB_MISPAR_ISHI_SHGUIM_BATCH s
-  set s.num_pack = (select  trunc(row_num*p_num_process/num)+1 from dual)-- (select trunc(rownum*p_num_processe/num + 1) from TB_MISPAR_ISHI_CHISHUV);
-   where    s.bakasha_id =p_bakasha_id;
+  UPDATE TB_MISPAR_ISHI_SHGUIM_BATCH s
+  SET s.num_pack = (SELECT  TRUNC(row_num*p_num_process/num)+1 FROM dual)-- (select trunc(rownum*p_num_processe/num + 1) from TB_MISPAR_ISHI_CHISHUV);
+   WHERE    s.bakasha_id =p_bakasha_id;
       
-  update TB_MISPAR_ISHI_SHGUIM_BATCH s
-  set s.num_pack =p_num_process
-  where s.num_pack=(p_num_process+1)
-  and s.bakasha_id =p_bakasha_id;
+  UPDATE TB_MISPAR_ISHI_SHGUIM_BATCH s
+  SET s.num_pack =p_num_process
+  WHERE s.num_pack=(p_num_process+1)
+  AND s.bakasha_id =p_bakasha_id;
   
   EXCEPTION
    WHEN OTHERS THEN
             RAISE;
 END pro_divide_packets;
 
-PROCEDURE pro_get_netunim_for_process( p_num_process IN  NUMBER , p_bakasha_id tb_bakashot.bakasha_id%type, p_Cur OUT CurType) IS
+PROCEDURE pro_get_netunim_for_process( p_num_process IN  NUMBER , p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE, p_Cur OUT CurType) IS
   BEGIN
   
      OPEN p_Cur FOR    
-        select s.mispar_ishi,s.taarich,S.BAKASHA_ID,S.NUM_PACK
-         from TB_MISPAR_ISHI_SHGUIM_BATCH s
+        SELECT s.mispar_ishi,s.taarich,S.BAKASHA_ID,S.NUM_PACK
+         FROM TB_MISPAR_ISHI_SHGUIM_BATCH s
          WHERE   s.num_pack =p_num_process 
-               and s.bakasha_id = p_bakasha_id;
+               AND s.bakasha_id = p_bakasha_id;
   
   EXCEPTION
    WHEN OTHERS THEN
             RAISE;
 END pro_get_netunim_for_process;
 
-PROCEDURE pro_delete_tb_shguim_batch(    p_num_process IN  NUMBER ,  p_bakasha_id tb_bakashot.bakasha_id%type) is
-begin
+PROCEDURE pro_delete_tb_shguim_batch(    p_num_process IN  NUMBER ,  p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
+BEGIN
 
-        delete  TB_MISPAR_ISHI_SHGUIM_BATCH s
+        DELETE  TB_MISPAR_ISHI_SHGUIM_BATCH s
         WHERE   s.num_pack =p_num_process 
-               and s.bakasha_id = p_bakasha_id;
+               AND s.bakasha_id = p_bakasha_id;
               
          EXCEPTION
    WHEN OTHERS THEN
             RAISE; 
-end pro_delete_tb_shguim_batch;   
+END pro_delete_tb_shguim_batch;   
 
-PROCEDURE Prepare_premiot_shguim_batch(p_type in number,p_num_process IN NUMBER, p_bakasha_id tb_bakashot.bakasha_id%type) IS
+PROCEDURE Prepare_premiot_shguim_batch(p_type IN NUMBER,p_num_process IN NUMBER, p_bakasha_id TB_BAKASHOT.bakasha_id%TYPE) IS
 CURSOR p_cur IS
       SELECT Mispar_Ishi, chodesh
            FROM OVDIM_LECHISHUV_PREMYOT lp  
@@ -5372,15 +5466,15 @@ CURSOR p_cur IS
               LOOP
                       BEGIN
                            tar_me:=v_rec.chodesh;
-                           tar_ad:=add_months(tar_me,1)-1;
-                           if (tar_ad>sysdate) then
-                                tar_ad:= sysdate;
-                           end if;
+                           tar_ad:=ADD_MONTHS(tar_me,1)-1;
+                           IF (tar_ad>SYSDATE) THEN
+                                tar_ad:= SYSDATE;
+                           END IF;
                             
-                           WHILE trunc(tar_me)<=trunc(tar_ad)
+                           WHILE TRUNC(tar_me)<=TRUNC(tar_ad)
                             LOOP
-                                 insert into TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
-                                 values (row_num,v_rec.MISPAR_ISHI,tar_me,0,p_type,p_bakasha_id);
+                                 INSERT INTO TB_MISPAR_ISHI_SHGUIM_BATCH(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack,TYPE,bakasha_id)
+                                 VALUES (row_num,v_rec.MISPAR_ISHI,tar_me,0,p_type,p_bakasha_id);
                                  row_num:=row_num+1;
                                  tar_me:= tar_me+1;
                             END LOOP;
@@ -5395,9 +5489,9 @@ CURSOR p_cur IS
          Pkg_Batch.pro_divide_packets(p_num_process,p_bakasha_id);
 
       INSERT INTO TEST_MAATEFET(mispar_ishi, taarich, taarich_ritza, bakasha_id, sug_bakasha,comments)
-             select   M.MISPAR_ISHI,M.TAARICH,sysdate,p_bakasha_id,0,'shguim of premiot'
-             from TB_MISPAR_ISHI_SHGUIM_BATCH m
-             where m.bakasha_id = p_bakasha_id;
+             SELECT   M.MISPAR_ISHI,M.TAARICH,SYSDATE,p_bakasha_id,0,'shguim of premiot'
+             FROM TB_MISPAR_ISHI_SHGUIM_BATCH m
+             WHERE m.bakasha_id = p_bakasha_id;
      EXCEPTION
          WHEN OTHERS THEN
               RAISE;   
@@ -5409,7 +5503,7 @@ PROCEDURE Pro_Save_Rikuz_Pdf(p_coll_rikuz_pdf IN COLL_RIKUZ_PDF) IS
 BEGIN  
       IF (p_coll_rikuz_pdf IS NOT NULL) THEN
           FOR i IN 1..p_coll_rikuz_pdf.COUNT LOOP
-          if (p_coll_rikuz_pdf(i).rikuz_pdf is not null) then
+          IF (p_coll_rikuz_pdf(i).rikuz_pdf IS NOT NULL) THEN
             INSERT INTO TB_RIKUZ_PDF
                         (mispar_ishi,
                          bakasha_id,
@@ -5423,7 +5517,7 @@ BEGIN
                      p_coll_rikuz_pdf(i).sug_chishuv,
                     p_coll_rikuz_pdf(i).rikuz_pdf
                       );
-                      end if;
+                      END IF;
           END LOOP;
       END IF;
       
@@ -5436,11 +5530,11 @@ PROCEDURE Pro_Get_Rikuz_Pdf(p_mispar_ishi IN NUMBER,p_taarich IN DATE,p_Bakashat
 
 BEGIN  
  OPEN p_cur FOR    
-    select * -- into p_rikuz 
-    from TB_RIKUZ_PDF r
-    where r.mispar_ishi = p_mispar_ishi
-        and r.bakasha_id = p_BakashatId
-      and trunc(r.taarich) = trunc(p_taarich);
+    SELECT * -- into p_rikuz 
+    FROM TB_RIKUZ_PDF r
+    WHERE r.mispar_ishi = p_mispar_ishi
+        AND r.bakasha_id = p_BakashatId
+      AND TRUNC(r.taarich) = TRUNC(p_taarich);
 
       EXCEPTION
          WHEN OTHERS THEN
@@ -5448,35 +5542,42 @@ BEGIN
 END Pro_Get_Rikuz_Pdf;
 
 
-PROCEDURE Pro_ins_baam is
-SugErech number;
+
+PROCEDURE Pro_ins_baam IS
+SugErech NUMBER;
 
 BEGIN
 SugErech:=0;
 
-  SELECT distinct   b.BAKASHA_ID 
- into   SugErech
-  from   tb_bakashot  b,  OVDIM_LECHISHUV_PREMYOT  o,
-  tb_chishuv_sidur_ovdim   s
-where s.kod_rechiv =211
-and b.bakasha_id=s.bakasha_id
-and b.SUG_BAKASHA=12
-and to_char(  s.taarich,'yyyymm')= to_char(  o.CHODESH,'yyyymm')
-and s.MISPAR_ISHI=o.MISPAR_ISHI
-and b.BAKASHA_ID=o.BAKASHA_ID;
+-- SELECT SUM(bakasha_id) 
+--  INTO   SugErech
+--  FROM (
+  SELECT DISTINCT  b.BAKASHA_ID 
+    INTO   SugErech
+    FROM   TB_BAKASHOT  b,  OVDIM_LECHISHUV_PREMYOT  o,
+  TB_CHISHUV_SIDUR_OVDIM   s
+WHERE s.kod_rechiv =211
+AND b.bakasha_id=s.bakasha_id
+AND b.SUG_BAKASHA=12
+AND TO_CHAR(  s.taarich,'yyyymm')= TO_CHAR(  o.CHODESH,'yyyymm')
+AND s.MISPAR_ISHI=o.MISPAR_ISHI
+AND b.BAKASHA_ID=o.BAKASHA_ID
+--UNION ALL
+--SELECT 0 FROM dual)
+;
 
               IF (SugErech =0) THEN
-            raise_application_error(-2005, 'log_tahalich', TRUE);
-              else
-     baam.pkg_Calc.DelAttend@KDS2baam;
-     baam.pkg_Calc.DelPersonnel@KDS2baam;
-     baam.pkg_Calc.InsPersonnel@KDS2baam;
-     baam.pkg_Calc.InsAttend@KDS2baam;
-     baam.pkg_Calc.InsGrr@KDS2baam;
-            baam.pkg_Calc.InsNoch0@KDS2baam;
-            insert into tb_log_tahalich
-            values (13,5,1,sysdate,'','','','Pro_ins_baam');
-            end if;
+            RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+              ELSE
+     baam.Pkg_Calc.DelAttend@KDS2baam;
+     baam.Pkg_Calc.DelPersonnel@KDS2baam;
+     baam.Pkg_Calc.InsPersonnel@KDS2baam;
+     baam.Pkg_Calc.InsAttend@KDS2baam;
+     baam.Pkg_Calc.InsGrr@KDS2baam;
+            baam.Pkg_Calc.InsNoch0@KDS2baam;
+            INSERT INTO TB_LOG_TAHALICH
+            VALUES (13,5,1,SYSDATE,'','','','Pro_ins_baam');
+            END IF;
 
       EXCEPTION
          WHEN OTHERS THEN
@@ -5486,35 +5587,41 @@ END  Pro_ins_baam;
 
  
 
-PROCEDURE Pro_ins_wr1 is
-SugErech number;
+PROCEDURE Pro_ins_wr1 IS
+SugErech NUMBER;
 
 BEGIN
 SugErech:=0;
 
-  SELECT distinct   b.BAKASHA_ID 
- into   SugErech
-  from   tb_bakashot  b,  OVDIM_LECHISHUV_PREMYOT  o,
-  tb_chishuv_sidur_ovdim   s
-where s.kod_rechiv =212
-and b.bakasha_id=s.bakasha_id
-and b.SUG_BAKASHA=12
-and to_char(  s.taarich,'yyyymm')= to_char(  o.CHODESH,'yyyymm')
-and s.MISPAR_ISHI=o.MISPAR_ISHI
-and b.BAKASHA_ID=o.BAKASHA_ID;
+-- SELECT SUM(bakasha_id) 
+--  INTO   SugErech
+--  FROM (
+  SELECT DISTINCT  b.BAKASHA_ID 
+  INTO   SugErech
+  FROM   TB_BAKASHOT  b,  OVDIM_LECHISHUV_PREMYOT  o,
+  TB_CHISHUV_SIDUR_OVDIM   s
+WHERE s.kod_rechiv =212
+AND b.bakasha_id=s.bakasha_id
+AND b.SUG_BAKASHA=12
+AND TO_CHAR(  s.taarich,'yyyymm')= TO_CHAR(  o.CHODESH,'yyyymm')
+AND s.MISPAR_ISHI=o.MISPAR_ISHI
+AND b.BAKASHA_ID=o.BAKASHA_ID
+--UNION ALL
+--SELECT 0 FROM dual)
+;
 
               IF (SugErech =0) THEN
-            raise_application_error(-2005, 'log_tahalich', TRUE);
-              else
-            Wr1.pkg_Calc.DelAttend@KDS2wr1;
-            Wr1.pkg_Calc.DelPersonnel@KDS2wr1;
-            Wr1.pkg_Calc.InsPersonnel@KDS2wr1;
-            Wr1.pkg_Calc.InsAttend@KDS2wr1;
-            Wr1.pkg_Calc.InsNoch0@KDS2wr1;
+            RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+              ELSE
+            Wr1.Pkg_Calc.DelAttend@KDS2wr1;
+            Wr1.Pkg_Calc.DelPersonnel@KDS2wr1;
+            Wr1.Pkg_Calc.InsPersonnel@KDS2wr1;
+            Wr1.Pkg_Calc.InsAttend@KDS2wr1;
+            Wr1.Pkg_Calc.InsNoch0@KDS2wr1;
 
-            insert into tb_log_tahalich
-            values (13,6,1,sysdate,'','','','Pro_ins_wr1');
-                  end if;
+            INSERT INTO TB_LOG_TAHALICH
+            VALUES (13,6,1,SYSDATE,'','','','Pro_ins_wr1');
+                  END IF;
 
       EXCEPTION
          WHEN OTHERS THEN
@@ -5523,25 +5630,24 @@ and b.BAKASHA_ID=o.BAKASHA_ID;
 END  Pro_ins_wr1;
 
 
-
 FUNCTION pro_check_view_empty(p_TableName VARCHAR2) RETURN NUMBER AS
 num NUMBER ;
 BEGIN
 
 INSERT INTO TB_LOG_TEST(ID,PARAM,VALUE) VALUES ( KDSADMIN.TB_LOG_TEST_SEQ.NEXTVAL , 'p_TableName:',p_TableName);
 
-  if (p_TableName = 'NEW_MATZAV_OVDIM') then
+  IF (p_TableName = 'NEW_MATZAV_OVDIM') THEN
       SELECT COUNT(*) INTO num FROM NEW_MATZAV_OVDIM;
-   else if (p_TableName = 'NEW_PIRTEY_OVDIM') then
+   ELSE IF (p_TableName = 'NEW_PIRTEY_OVDIM') THEN
               SELECT COUNT(*) INTO num FROM NEW_PIRTEY_OVDIM;
-         else if (p_TableName = 'NEW_MEAFYENIM_OVDIM') then
+         ELSE IF (p_TableName = 'NEW_MEAFYENIM_OVDIM') THEN
                     SELECT COUNT(*) INTO num FROM NEW_MEAFYENIM_OVDIM;
-                else if (p_TableName = 'NEW_BREROT_MECHDAL_MEAFYENIM') then
+                ELSE IF (p_TableName = 'NEW_BREROT_MECHDAL_MEAFYENIM') THEN
                       SELECT COUNT(*) INTO num FROM NEW_BREROT_MECHDAL_MEAFYENIM;
-                end if;
-         end if;
-   end if;
-  end if;     
+                END IF;
+         END IF;
+   END IF;
+  END IF;     
               
   RETURN num  ;
 
@@ -5555,27 +5661,31 @@ END pro_check_view_empty;
 
 
 PROCEDURE  chk_creation_date_meafyenim(shem_mvew VARCHAR)  IS
-CreationDt Date;
+CreationDt DATE;
 
 BEGIN
-CreationDt:=sysdate+1;
+CreationDt:=SYSDATE+1;
 
-  SELECT max( creation_date)
- into   CreationDt
-from apps.EGD_MKS_MeAFYENim_ovdim@kds_gw
-where     mispar_ishi='77690';
+  SELECT MAX( creation_date)
+ INTO   CreationDt
+FROM apps.EGD_MKS_MeAFYENim_ovdim@kds_gw
+WHERE     mispar_ishi='77690';
 
-  if (trunc( CreationDt) = trunc(sysdate-1)) then
+  IF (TRUNC( CreationDt) = TRUNC(SYSDATE-1)) THEN
      dbms_mview.REFRESH(shem_mvew,'c');
-   else if (trunc( CreationDt) < trunc(sysdate)) then
-                     raise_application_error(-2005, 'log_tahalich', TRUE);
-         else if (trunc( CreationDt) < trunc(sysdate)) then
+   ELSE IF (TRUNC( CreationDt) < TRUNC(SYSDATE)) THEN
+   	INSERT INTO TB_LOG_TAHALICH
+	VALUES (16,1,1,SYSDATE,'',10,'','creationdate= '||TO_CHAR(CreationDt,'dd/mm/yyyy hh24:mi:ssss'));
+                     RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+         ELSE IF (TRUNC( CreationDt) = TRUNC(SYSDATE)) THEN
                   dbms_mview.REFRESH(shem_mvew,'c');
-                else 
-                              raise_application_error(-2005, 'log_tahalich', TRUE);
-                end if;
-         end if;
-   end if;
+                ELSE 
+   	INSERT INTO TB_LOG_TAHALICH
+	VALUES (16,1,1,SYSDATE,'',10,'','creationdate= '||TO_CHAR(CreationDt,'dd/mm/yyyy hh24:mi:ssss'));
+                              RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+                END IF;
+         END IF;
+   END IF;
      
     EXCEPTION
             WHEN OTHERS THEN
@@ -5583,6 +5693,381 @@ where     mispar_ishi='77690';
 END chk_creation_date_meafyenim;
 
 END Pkg_Batch;
+/
+
+
+CREATE OR REPLACE PACKAGE BODY          Pkg_Calc AS
+/******************************************************************************
+   NAME:       PKG_CALC
+   PURPOSE:
+
+   REVISIONS:
+   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        05/07/2009             1. Created this package body.
+******************************************************************************/
+
+
+
+/*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       05/07/2009     sari      1. פונקציה המחזירה את ימי העבודה לעובד*/
+	PROCEDURE pro_get_yemey_avoda_to_oved(p_mispar_ishi IN TB_YAMEY_AVODA_OVDIM.mispar_ishi%TYPE,
+														p_taarich_me IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
+															p_taarich_ad IN TB_YAMEY_AVODA_OVDIM.taarich%TYPE,
+															p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_tipul%TYPE,
+														p_cur OUT CurType) IS
+	BEGIN
+	 DBMS_APPLICATION_INFO.SET_MODULE('PKG_CAOLC.pro_get_yemey_avoda_to_oved','get yemey avoda to oved');
+  
+		 OPEN p_cur FOR
+			 	   SELECT y.taarich,y.shat_hatchala,y.shat_siyum ,s.mispar_sidur, NVL(s.lo_letashlum,0) lo_letashlum,
+				   		  s.shat_hatchala shat_hatchala_sidur,s.shat_hatchala_letashlum ,s.shat_gmar_letashlum,
+						   s.shat_gmar shat_gmar_sidur,
+						  TO_CHAR(s.taarich,'d') day_taarich,
+							  y.hamarat_shabat ,y.TACHOGRAF,
+							      v_sidurim.sidur_misug_headrut,
+								     v_sidurim.sector_avoda,
+									    v_sidurim.sug_avoda,
+										 v_sidurim.SUG_SIDUR  SUG_SIDUR_MEYUCHAD,
+										--s.Km_visa_lepremia,
+										 v_sidurim.sidur_namlak_visa,
+										DECODE(s.out_michsa,NULL,0, s.out_michsa) out_michsa,
+										y.lina,y.halbasha,
+										s.pitzul_hafsaka,NVL(s.Mezake_Halbasha,0)Mezake_Halbasha,
+										v_sidurim.michsat_shaot_chodshit,
+										v_sidurim.max_dakot_boded,
+										  v_sidurim.max_shaot_byom_shishi	,
+										    v_sidurim.max_shaot_beshabaton	,    NVL(v_sidurim.zakay_lepizul,0)zakay_lepizul,
+											  v_sidurim.dakot_n_letashlum_hol, NVL(s.sug_hashlama,0)sug_hashlama,
+											  v_sidurim.sug_shaot_byom_hol_if_migbala,
+											  	NVL(s.Hashlama,0) Hashlama,s.Bitul_O_Hosafa,
+												y.Hashlama_Leyom,NVL(s.yom_VISA,0) yom_VISA,
+												v_sidurim.ein_leshalem_tos_lila,
+												NVL(y.Zman_Nesia_Haloch,0) Zman_Nesia_Haloch,
+												NVL(y.Zman_Nesia_Hazor,0 ) Zman_Nesia_Hazor ,
+												NVL(v_sidurim.zakay_lehamara,0) zakay_lehamara  ,NVL(s.Hafhatat_Nochechut_Visa,0) Hafhatat_Nochechut_Visa,
+												NVL(s.Mezake_nesiot,0)Mezake_nesiot ,y.BITUL_ZMAN_NESIOT,
+										NVL(s.KOD_SIBA_LEDIVUCH_YADANI_IN,0)KOD_SIBA_LEDIVUCH_YADANI_IN,NVL(s.kod_siba_ledivuch_yadani_out,0) kod_siba_ledivuch_yadani_out,
+										NVL(s.Achuz_knas_lepremyat_visa,0)Achuz_knas_lepremyat_visa,NVL(s.ACHUZ_VIZA_BESIKUN,0) ACHUZ_VIZA_BESIKUN,
+										s.MIKUM_SHAON_KNISA,s.MIKUM_SHAON_YETZIA,v_sidurim.zakay_lechishuv_retzifut,nvl(S.SUG_SIDUR,0) SUG_SIDUR
+					FROM TB_YAMEY_AVODA_OVDIM y,
+						 ( SELECT * FROM TB_SIDURIM_OVDIM s
+						 WHERE   ( (s.lo_letashlum=0 OR s.lo_letashlum IS NULL)
+							   	OR  (s.lo_letashlum=1 AND s.sug_sidur=69  ))
+							 AND s.mispar_sidur<>99200
+						     AND s.mispar_ishi=p_mispar_ishi
+						    AND  s.taarich BETWEEN p_taarich_me AND p_taarich_ad) s,
+				   		     PIVOT_SIDURIM_MEYUCHADIM v_sidurim,OVDIM o
+					WHERE o.mispar_ishi=p_mispar_ishi
+					AND y.mispar_ishi=o.mispar_ishi
+					AND y.mispar_ishi=s.mispar_ishi(+)
+					AND y.taarich BETWEEN p_taarich_me AND p_taarich_ad
+					AND  v_sidurim.mispar_sidur(+)=s.mispar_sidur
+					AND  s.taarich BETWEEN v_sidurim.me_tarich(+) AND v_sidurim.ad_tarich(+)
+					AND y.taarich=s.taarich(+)
+					--and (y.status_tipul=p_status_tipul or p_status_tipul is null)
+			        AND (y.status=1 OR y.status=2) --or  p_status_tipul is null)
+					  AND NOT NVL(s.Bitul_O_Hosafa,0)  IN (1,3)
+					ORDER BY y.taarich ASC;
+
+  EXCEPTION
+       WHEN OTHERS THEN
+				RAISE;
+END  pro_get_yemey_avoda_to_oved;
+
+/*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        08/07/2009      sari       1. הוספת רשומה לטבלת חישוב סידור עובדים*/
+  PROCEDURE pro_ins_chishuv_sidur_ovdim(p_coll_chishuv_sidur IN  COLL_CHISHUV_SIDUR) IS
+ BEGIN
+ 	  IF p_coll_chishuv_sidur IS NOT NULL THEN
+  	   		FOR i   IN  1..p_coll_chishuv_sidur.COUNT     LOOP
+  	   					INSERT INTO TB_CHISHUV_SIDUR_OVDIM
+			                   (MISPAR_ISHI,BAKASHA_ID,MISPAR_SIDUR,SHAT_HATCHALA,TAARICH,KOD_RECHIV,ERECH_RECHIV)
+					VALUES (p_coll_chishuv_sidur(i).mispar_ishi,p_coll_chishuv_sidur(i).bakasha_id,p_coll_chishuv_sidur(i).mispar_sidur,
+						   				p_coll_chishuv_sidur(i).shat_hatchala,p_coll_chishuv_sidur(i).taarich,p_coll_chishuv_sidur(i).kod_rechiv,p_coll_chishuv_sidur(i).erech_rechiv);
+			  END LOOP;
+		END IF;
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_ins_chishuv_sidur_ovdim;
+
+  /*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        08/07/2009      sari       1. הוספת רשומה לטבלתחישוב יומי עובדים*/
+  PROCEDURE pro_ins_chishuv_yomi_ovdim(p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI) IS
+ BEGIN
+  	   IF p_coll_chishuv_yomi IS NOT NULL THEN
+  	   		FOR i   IN  1..p_coll_chishuv_yomi.COUNT     LOOP
+  	   			    INSERT INTO TB_CHISHUV_YOMI_OVDIM
+			                   (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV,TKUFA)
+					VALUES (p_coll_chishuv_yomi(i).mispar_ishi,p_coll_chishuv_yomi(i).bakasha_id,p_coll_chishuv_yomi(i).taarich,p_coll_chishuv_yomi(i).kod_rechiv,p_coll_chishuv_yomi(i).erech_rechiv,p_coll_chishuv_yomi(i).tkufa);
+			  END LOOP;
+			  END IF;
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_ins_chishuv_yomi_ovdim;
+
+    PROCEDURE pro_ins_chishuv_yomi_tmp(p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI) IS
+ BEGIN
+  	   IF p_coll_chishuv_yomi IS NOT NULL THEN
+  	   		FOR i   IN  1..p_coll_chishuv_yomi.COUNT     LOOP
+  	   			    INSERT INTO TB_TMP_CHISHUV_YOMI_OVDIM
+			                   (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV,TKUFA)
+					VALUES (p_coll_chishuv_yomi(i).mispar_ishi,p_coll_chishuv_yomi(i).bakasha_id,p_coll_chishuv_yomi(i).taarich,p_coll_chishuv_yomi(i).kod_rechiv,p_coll_chishuv_yomi(i).erech_rechiv,p_coll_chishuv_yomi(i).tkufa);
+			  END LOOP;
+             /*     FOR i   IN  1..p_coll_chishuv_yomi.COUNT     LOOP
+                         INSERT INTO TB_TMP_CHISHUV_YOMI_OVDIM_2
+                               (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV,TKUFA)
+                    VALUES (p_coll_chishuv_yomi(i).mispar_ishi,p_coll_chishuv_yomi(i).bakasha_id,p_coll_chishuv_yomi(i).taarich,p_coll_chishuv_yomi(i).kod_rechiv,p_coll_chishuv_yomi(i).erech_rechiv,p_coll_chishuv_yomi(i).tkufa);
+              END LOOP;*/
+			  END IF;
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_ins_chishuv_yomi_tmp;
+
+    /*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0        26/07/2009      sari       1. הוספת רשומה לטבלת חישוב יומי עובדים*/
+  PROCEDURE pro_ins_chishuv_codesh_ovdim(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH) IS
+ BEGIN
+  	   		FOR i   IN  1..p_coll_chishuv_chodesh.COUNT     LOOP
+				INSERT INTO TB_CHISHUV_CHODESH_OVDIM
+			                   (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV)
+			   VALUES (p_coll_chishuv_chodesh(i).mispar_ishi,p_coll_chishuv_chodesh(i).bakasha_id,p_coll_chishuv_chodesh(i).taarich,p_coll_chishuv_chodesh(i).kod_rechiv,p_coll_chishuv_chodesh(i).erech_rechiv);
+          END LOOP;
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_ins_chishuv_codesh_ovdim;
+
+   PROCEDURE pro_ins_chishuv_codesh_tmp(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH) IS
+ BEGIN
+  	   		FOR i   IN  1..p_coll_chishuv_chodesh.COUNT     LOOP
+				INSERT INTO TB_TMP_CHISHUV_CHODESH_OVDIM
+			                   (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV)
+			   VALUES (p_coll_chishuv_chodesh(i).mispar_ishi,p_coll_chishuv_chodesh(i).bakasha_id,p_coll_chishuv_chodesh(i).taarich,p_coll_chishuv_chodesh(i).kod_rechiv,p_coll_chishuv_chodesh(i).erech_rechiv);
+          END LOOP;
+          
+               /*    FOR i   IN  1..p_coll_chishuv_chodesh.COUNT     LOOP
+                INSERT INTO TB_TMP_CHISHUV_CHODESH_OVDIM_2
+                               (MISPAR_ISHI,BAKASHA_ID,TAARICH,KOD_RECHIV,ERECH_RECHIV)
+               VALUES (p_coll_chishuv_chodesh(i).mispar_ishi,p_coll_chishuv_chodesh(i).bakasha_id,p_coll_chishuv_chodesh(i).taarich,p_coll_chishuv_chodesh(i).kod_rechiv,p_coll_chishuv_chodesh(i).erech_rechiv);
+          END LOOP;*/
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END pro_ins_chishuv_codesh_tmp;
+
+ 	PROCEDURE pro_ins_chishuv(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+												p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI,
+												p_coll_chishuv_sidur IN  COLL_CHISHUV_SIDUR)  IS
+	BEGIN
+ 	        pro_ins_chishuv_codesh_ovdim(p_coll_chishuv_chodesh);
+			pro_ins_chishuv_yomi_ovdim(p_coll_chishuv_yomi);
+			pro_ins_chishuv_sidur_ovdim(p_coll_chishuv_sidur);
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END  pro_ins_chishuv;
+
+PROCEDURE pro_ins_chishuv(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+                                                p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI )  IS
+    BEGIN
+             pro_ins_chishuv_codesh_ovdim(p_coll_chishuv_chodesh);
+            pro_ins_chishuv_yomi_ovdim(p_coll_chishuv_yomi);
+         --   pro_ins_chishuv_sidur_ovdim(p_coll_chishuv_sidur);
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END  pro_ins_chishuv;
+  
+  PROCEDURE pro_ins_chishuv(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH )  IS
+    BEGIN
+             pro_ins_chishuv_codesh_ovdim(p_coll_chishuv_chodesh);
+         --   pro_ins_chishuv_yomi_ovdim(p_coll_chishuv_yomi);
+         --   pro_ins_chishuv_sidur_ovdim(p_coll_chishuv_sidur);
+      EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END  pro_ins_chishuv;
+   	PROCEDURE pro_ins_chishuv_tmp(p_coll_chishuv_chodesh IN  COLL_CHISHUV_CHODESH,
+												p_coll_chishuv_yomi IN  COLL_CHISHUV_YOMI)  IS
+ BEGIN
+  	   		pro_ins_chishuv_codesh_tmp(p_coll_chishuv_chodesh);
+			pro_ins_chishuv_yomi_tmp(p_coll_chishuv_yomi);
+      EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+  END  pro_ins_chishuv_tmp;
+
+ /*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       05/08/2009      sari       1. מחזיר פעילויות לסידור*/
+PROCEDURE pro_get_peiluyot_lesidur(p_mispar_ishi IN  TB_PEILUT_OVDIM.MISPAR_ISHI%TYPE,
+																			p_taarich IN  TB_PEILUT_OVDIM.TAARICH%TYPE,
+																			p_shat_hatchala_sidur IN  TB_PEILUT_OVDIM.SHAT_HATCHALA_SIDUR%TYPE,
+																			p_mispar_sidur IN  TB_PEILUT_OVDIM.MISPAR_SIDUR%TYPE,
+																			p_cur OUT CurType)
+IS
+BEGIN
+    OPEN p_cur FOR
+	    SELECT p.SHAT_HATCHALA_SIDUR,p.SHAT_YETZIA,LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') MAKAT_NESIA,p.MISPAR_KNISA,NVL(e.sector_zvira_zman_haelement,0)sector_zvira_zman_haelement,NVL(p.km_visa,0) km_visa,
+			   e.nesia,e.kod_lechishuv_premia,e.kupai,NVL(p.Kod_shinuy_premia,0) Kod_shinuy_premia ,p.Oto_no,NVL(p.Dakot_bafoal,0) Dakot_bafoal,
+			  TO_NUMBER( SUBSTR(LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') ,4,3)) zmanElement,p.kisuy_tor,e.nesia_reika
+		 FROM TB_PEILUT_OVDIM p,PIVOT_MEAFYENEY_ELEMENTIM e
+         WHERE p.MISPAR_ISHI=p_mispar_ishi
+	    AND  p.TAARICH= p_taarich 
+	    AND  p.MISPAR_SIDUR=p_mispar_sidur
+		AND p.SHAT_HATCHALA_SIDUR=p_shat_hatchala_sidur
+		 AND TO_NUMBER(SUBSTR(p.makat_nesia,2,2)) = e.kod_element(+)
+          AND p_taarich BETWEEN e.me_tarich(+) AND e.ad_tarich(+)
+		  AND NOT NVL(p.Bitul_O_Hosafa,0)  IN (1,3)
+		  ORDER BY shat_yetzia ASC   ;
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_get_peiluyot_lesidur;
+
+ /*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       05/08/2009      sari       1. סימון סידורים לא לתשלום=1*/
+PROCEDURE pro_upd_sidurim_lo_letashlum(p_mispar_ishi IN  TB_SIDURIM_OVDIM.MISPAR_ISHI%TYPE,
+																			p_taarich IN  TB_SIDURIM_OVDIM.TAARICH%TYPE,
+																			p_mispar_sidur IN  TB_SIDURIM_OVDIM.MISPAR_SIDUR%TYPE,
+																			p_shat_hatchala IN  TB_SIDURIM_OVDIM.SHAT_HATCHALA%TYPE) IS
+BEGIN
+    UPDATE TB_SIDURIM_OVDIM
+	  SET lo_letashlum=1
+	  WHERE mispar_ishi=p_mispar_ishi
+	  AND taarich=p_taarich
+	  AND mispar_sidur=p_mispar_sidur
+	  AND shat_hatchala=p_shat_hatchala ;
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_upd_sidurim_lo_letashlum;
+
+/*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       05/08/2009      sari       1. מחזיר מיכסות יומיות*/
+PROCEDURE pro_get_michsa_yomit(p_me_taarich IN  TB_MICHSA_YOMIT.me_taarich%TYPE,
+																			p_ad_taarich IN  TB_MICHSA_YOMIT.ad_taarich%TYPE,
+																			p_cur OUT CurType)
+IS
+BEGIN
+   DBMS_APPLICATION_INFO.SET_MODULE('Pkg_Calc.pro_get_michsa_yomit','get michsot yomiyot');
+  
+    OPEN p_cur FOR
+	    SELECT  kod_michsa,sug_yom ,me_taarich, NVL(AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy')) ad_taarich,michsa,Shavoa_Avoda
+        FROM TB_MICHSA_YOMIT
+		WHERE me_taarich<=p_ad_taarich
+		AND NVL(AD_TAARICH,TO_DATE('01/01/9999','dd/mm/yyyy'))>=p_me_taarich;
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_get_michsa_yomit;
+
+/*   Ver        Date        Author           Description
+   ---------  ----------  ---------------  ------------------------------------
+   1.0       06/12/2009      sari       1. בודק אם עובד פוטר*/
+PROCEDURE pro_get_oved_putar( p_mispar_ishi IN  MATZAV_OVDIM.mispar_ishi%TYPE,
+		  					  				   	   						p_tar_chodesh_me IN MATZAV_OVDIM.Taarich_hatchala%TYPE,
+																		p_tar_chodesh_ad IN  MATZAV_OVDIM.Taarich_hatchala%TYPE,
+																		p_putar OUT NUMBER)
+IS
+BEGIN
+  	   SELECT 1 INTO p_putar
+		FROM MATZAV_OVDIM m
+		WHERE m.Kod_Matzav ='P'
+		AND m.mispar_ishi=p_mispar_ishi
+		AND m.Taarich_hatchala >= p_tar_chodesh_me
+		AND m.Taarich_hatchala <= p_tar_chodesh_ad;
+
+  EXCEPTION
+  		WHEN NO_DATA_FOUND THEN
+		      p_putar:=0;
+		 WHEN OTHERS THEN
+		      RAISE;
+END  pro_get_oved_putar;
+
+PROCEDURE pro_get_peiluyot_leoved(p_tar_me IN DATE,p_tar_ad IN DATE,
+		  							p_mispar_ishi IN NUMBER ,p_Cur OUT CurType)
+IS
+BEGIN
+ DBMS_APPLICATION_INFO.SET_MODULE('pkg_calc.pro_get_peiluyot_leoved','get peiluyot leoved letkufa ');
+    OPEN p_cur FOR
+	    SELECT p.TAARICH,p.MISPAR_SIDUR,p.SHAT_HATCHALA_SIDUR,p.SHAT_YETZIA,
+		      LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') MAKAT_NESIA,p.MISPAR_KNISA,NVL(e.sector_zvira_zman_haelement,0)sector_zvira_zman_haelement,NVL(p.km_visa,0) km_visa,
+			   e.nesia,e.kod_lechishuv_premia,e.kupai,NVL(p.Kod_shinuy_premia,0) Kod_shinuy_premia ,p.Oto_no,NVL(p.Dakot_bafoal,0) Dakot_bafoal,
+			  TO_NUMBER( SUBSTR(LPAD(TO_CHAR(p.MAKAT_NESIA),8,'0') ,4,3)) zmanElement,p.kisuy_tor,e.nesia_reika
+		 FROM TB_PEILUT_OVDIM p,PIVOT_MEAFYENEY_ELEMENTIM e
+         WHERE p.MISPAR_ISHI=p_mispar_ishi
+		  AND  p.TAARICH BETWEEN p_tar_me AND p_tar_ad
+	  --  AND  p.TAARICH= p_taarich 
+	 --   AND  p.MISPAR_SIDUR=p_mispar_sidur
+		--AND p.SHAT_HATCHALA_SIDUR=p_shat_hatchala_sidur
+		 AND TO_NUMBER(SUBSTR(p.makat_nesia,2,2)) = e.kod_element(+)
+          AND p_tar_me BETWEEN e.me_tarich(+) AND e.ad_tarich(+)
+		  AND NOT NVL(p.Bitul_O_Hosafa,0)  IN (1,3);
+		--  ORDER BY shat_yetzia ASC   ;
+
+		  EXCEPTION
+		 WHEN OTHERS THEN
+		      RAISE;
+END pro_get_peiluyot_leoved;
+
+PROCEDURE pro_get_pirtey_oved_ForMonth(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+										p_tar_me IN DATE,p_tar_ad IN DATE,
+ 		   							 p_cur OUT CurType) IS
+BEGIN
+DBMS_APPLICATION_INFO.SET_MODULE('pkg_calc.pro_get_pirtey_oved_ForMonth','get pirtey oved for letkyfa ');
+ 
+	 OPEN p_cur FOR
+	 SELECT po.*, i.KOD_SECTOR_ISUK
+	    FROM PIVOT_PIRTEY_OVDIM PO,CTB_ISUK i,OVDIM o
+		WHERE 	po.mispar_ishi=p_mispar_ishi
+		AND po.mispar_ishi=o.mispar_ishi
+		AND   (   p_tar_me   BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR p_tar_ad BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
+					  OR   po.ME_TARICH>=p_tar_me   AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= p_tar_ad  )
+		
+		  AND i.Kod_Hevra = o.kod_hevra
+		 AND  i.Kod_Isuk =po.isuk;
+
+EXCEPTION
+       WHEN OTHERS THEN
+            RAISE;
+
+END  pro_get_pirtey_oved_ForMonth;
+	
+ 
+   /*PROCEDURE pro_ins as
+   xml xmltype;
+   begin
+   		xml:=xmltype.createxml('<ds><dr><mispar_ishi>75290</mispar_ishi><bakasha_id>99</bakasha_id><taarich>01/07/2009</taarich><kod_rechiv>100</kod_rechiv></dr><dr><mispar_ishi>75290</mispar_ishi><bakasha_id>99</bakasha_id><taarich>01/07/2009</taarich><kod_rechiv>101</kod_rechiv></dr></ds>');
+
+		for j in
+			(select xmltype.extract(value(a),'/dr/mispar_ishi/text()').getstringval() as v_str1,
+			xmltype.extract(value(a),'/dr/bakasha_id/text()').getstringval() as v_str2,
+			xmltype.extract(value(a),'/dr/taarich/text()').getstringval() as v_str3,
+			xmltype.extract(value(a),'/dr/kod_rechiv/text()').getstringval() as v_str4
+			from table
+			(xmlsequence(xml.extract('/ds/dr')))a)
+		loop
+		    pro_ins_chishuv_codesh_ovdim(j.v_str1,j.v_str2,to_date(j.v_str3,'dd/mm/yyyy'),j.v_str4,77);
+
+		end loop;
+
+   end  pro_ins;*/
+END Pkg_Calc;
 /
 
 
@@ -8155,7 +8640,7 @@ BEGIN
 
     IF (p_coll_sidurim_ovdim IS NOT NULL) THEN
         FOR i IN 1..p_coll_sidurim_ovdim.COUNT LOOP
-            IF (p_coll_sidurim_ovdim(i).update_object=1) THEN
+            IF (p_coll_sidurim_ovdim(i).update_object=1) THEN               
                 pro_ins_sidurim_ovdim_trail(p_coll_sidurim_ovdim(i),3);
                 pro_upd_sidur_oved(p_coll_sidurim_ovdim(i));
             END IF;
@@ -8400,6 +8885,12 @@ BEGIN
          mispar_sidur  = p_obj_sidurim_ovdim.mispar_sidur   AND
          taarich       = TRUNC(p_obj_sidurim_ovdim.taarich) AND
          shat_hatchala = p_obj_sidurim_ovdim.shat_hatchala;
+         
+         
+          IF ((p_obj_sidurim_ovdim.meadken_acharon<> p_obj_sidurim_ovdim.mispar_ishi) and (p_obj_sidurim_ovdim.meadken_acharon>0))  
+              THEN
+                    pkg_utils.pro_insert_meadken_acharon(p_obj_sidurim_ovdim.mispar_ishi,p_obj_sidurim_ovdim.taarich );
+          END IF; 
 EXCEPTION
 		 WHEN OTHERS THEN
 		      RAISE;
@@ -8445,6 +8936,10 @@ BEGIN
     WHERE mispar_ishi   = p_obj_yamey_avoda_ovdim.mispar_ishi AND
           taarich       = TRUNC(p_obj_yamey_avoda_ovdim.taarich);
 
+
+        IF ((p_obj_yamey_avoda_ovdim.meadken_acharon<> p_obj_yamey_avoda_ovdim.mispar_ishi) and (p_obj_yamey_avoda_ovdim.meadken_acharon>0)) THEN
+                    pkg_utils.pro_insert_meadken_acharon(p_obj_yamey_avoda_ovdim.mispar_ishi,p_obj_yamey_avoda_ovdim.taarich );
+        END IF; 
 EXCEPTION
 		 WHEN OTHERS THEN
 		      RAISE;
@@ -8509,6 +9004,10 @@ BEGIN
           shat_yetzia           = p_obj_peilut_ovdim.shat_yetzia         AND
           mispar_knisa          = p_obj_peilut_ovdim.mispar_knisa;
 
+
+          IF ((p_obj_peilut_ovdim.meadken_acharon<> p_obj_peilut_ovdim.mispar_ishi) and (p_obj_peilut_ovdim.meadken_acharon>0)) THEN
+                    pkg_utils.pro_insert_meadken_acharon(p_obj_peilut_ovdim.mispar_ishi,p_obj_peilut_ovdim.taarich );
+        END IF; 
 EXCEPTION
         --WHEN DUP_VAL_ON_INDEX THEN
         --    RETURN;
@@ -10172,8 +10671,8 @@ BEGIN
                                              WHEN '5' THEN 'ה'
                                              WHEN '6' THEN 'ו'
                                              WHEN '7' THEN 'ש' END)  || ' ' || c.teur_yom taarich,
-		 DECODE (y.SHGIOT_LETEZUGA_LAOVED,1,'עדכן')     status,
-      --  pkg_ovdim.fun_get_status_lekartis(y.SHGIOT_LETEZUGA_LAOVED,y.mispar_ishi,y.taarich) status,
+		-- DECODE (y.SHGIOT_LETEZUGA_LAOVED,1,'עדכן')     status,
+          pkg_ovdim.fun_get_status_lekartis(y.SHGIOT_LETEZUGA_LAOVED,y.mispar_ishi,y.taarich) status,
            me.teur_measher_o_mistayeg measher_o_mistayeg_key,
           pkg_ovdim.fun_get_kartis_lelo_peilut(y.mispar_ishi,y.taarich)  kartis_without_peilut ,
             --DECODE(NVL(so.mispar_sidur,0),0,'+','') kartis_without_peilut ,
@@ -10205,15 +10704,14 @@ FUNCTION fun_get_status_lekartis(p_SHGIOT_LETEZUGA_LAOVED number,p_mispar_ishi n
 IS 
     p_cur  CurType;
     simun varchar(5);
-    
+    icount number;
 BEGIN
    simun:='';     
     if (p_SHGIOT_LETEZUGA_LAOVED =1) THEN
-   --     simun:='עדכן';
-     --else
-        pkg_ovdim.pro_get_meadken_acharon(p_mispar_ishi,p_taarich,p_cur);
-        
-        if (p_cur%ROWCOUNT =0) then
+
+      icount:=   pkg_ovdim.func_is_card_last_updated(p_mispar_ishi,p_taarich);
+     
+     if (icount=0) then
             simun:='עדכן';
          end if;
    end if;
@@ -10254,8 +10752,8 @@ BEGIN
                                              WHEN '6' THEN 'ו'
                                              WHEN '7' THEN 'ש' END)  || ' ' || c.teur_yom taarich,
         --   k.teur_status_kartis status,
-       --   pkg_ovdim.fun_get_status_lekartis(y.SHGIOT_LETEZUGA_LAOVED,y.mispar_ishi,y.taarich) status,
-          DECODE (y.SHGIOT_LETEZUGA_LAOVED,1,'עדכן')    status,
+          pkg_ovdim.fun_get_status_lekartis(y.SHGIOT_LETEZUGA_LAOVED,y.mispar_ishi,y.taarich) status,
+       --   DECODE (y.SHGIOT_LETEZUGA_LAOVED,1,'עדכן')    status,
            me.teur_measher_o_mistayeg measher_o_mistayeg_key,
             pkg_ovdim.fun_get_kartis_lelo_peilut(y.mispar_ishi,y.taarich)  kartis_without_peilut ,
            -- DECODE(NVL(so.mispar_sidur,0),0,'+','') kartis_without_peilut,
@@ -10272,7 +10770,9 @@ BEGIN
           AND b.sug_yom= c.sug_yom(+)
        --   AND y.status = k.kod_status_kartis(+)
           AND NVL(y.measher_o_mistayeg,2) = me.kod_measher_o_mistayeg(+)
-		  AND (y.SHGIOT_LETEZUGA_LAOVED=1 OR r.KOD_STATUS_ISHUR=0 OR NVL(so.mispar_sidur,0)=0 
+		  AND ( (pkg_ovdim.fun_get_status_lekartis(y.SHGIOT_LETEZUGA_LAOVED,y.mispar_ishi,y.taarich) = 'עדכן')
+                 OR r.KOD_STATUS_ISHUR=0 
+                 OR NVL(so.mispar_sidur,0)=0 
                  OR ( pkg_ovdim.fun_get_kartis_lelo_peilut(y.mispar_ishi,y.taarich) ='+'  ))
 		   AND  y.mispar_ishi = r.mispar_ishi(+)
 		  AND y.taarich = r.taarich(+)
@@ -11644,6 +12144,9 @@ BEGIN
           shat_yetzia           = p_obj_peilut_ovdim.shat_yetzia         AND
           mispar_knisa          = p_obj_peilut_ovdim.mispar_knisa;
 
+          IF ((p_obj_peilut_ovdim.meadken_acharon<> p_obj_peilut_ovdim.mispar_ishi) and (p_obj_peilut_ovdim.meadken_acharon>0)) THEN
+                    pkg_utils.pro_insert_meadken_acharon(p_obj_peilut_ovdim.mispar_ishi,p_obj_peilut_ovdim.taarich );
+          END IF; 
 EXCEPTION
          WHEN OTHERS THEN
               RAISE;
@@ -11781,6 +12284,10 @@ BEGIN
          mispar_sidur  = p_obj_sidurim_ovdim.mispar_sidur   AND
          taarich       = TRUNC(p_obj_sidurim_ovdim.taarich) AND
          shat_hatchala = p_obj_sidurim_ovdim.shat_hatchala;
+         
+          IF ((p_obj_sidurim_ovdim.meadken_acharon<> p_obj_sidurim_ovdim.mispar_ishi) and (p_obj_sidurim_ovdim.meadken_acharon>0)) THEN
+                    pkg_utils.pro_insert_meadken_acharon(p_obj_sidurim_ovdim.mispar_ishi,p_obj_sidurim_ovdim.taarich );
+          END IF; 
 EXCEPTION
          WHEN OTHERS THEN
               RAISE;
@@ -12420,6 +12927,7 @@ BEGIN
 		AND  mispar_knisa >0
 		 AND makat_nesia=p_makat_nesia;
 			   
+        
 		EXCEPTION
          WHEN OTHERS THEN
               RAISE;	   
@@ -12716,6 +13224,69 @@ PROCEDURE pro_get_rikuzey_avoda_leoved(p_mispar_ishi IN MATZAV_OVDIM.mispar_ishi
        WHEN OTHERS THEN
                 RAISE;
 END   pro_get_rikuzey_avoda_leoved;
+FUNCTION func_is_card_last_updated(p_mispar_ishi in tb_peilut_ovdim.mispar_ishi%type, p_taarich in tb_peilut_ovdim.taarich%type) return number AS
+  v_count  number;
+BEGIN
+    select count(mispar_ishi) into v_count
+    from TB_MEADKEN_ACHARON a
+    where a.mispar_ishi = p_mispar_ishi
+              and a.taarich = p_taarich;
+              
+return v_count;              
+EXCEPTION
+       WHEN OTHERS THEN
+                return 0;              
+END  func_is_card_last_updated;
+
+
+
+PROCEDURE pro_get_rechivim_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                                                                                 p_taarich IN DATE,
+                                                                                             p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                                                                            p_tzuga IN CTB_RECHIVIM.Letzuga_Besikum_Chodshi%TYPE,
+                                                                                         p_cur OUT CurType) IS
+    tar_me date;       
+    list_rechivim nvarchar2(100);                                                                     
+ BEGIN  
+   tar_me:= to_date('01/' ||  to_char(p_taarich,'mm/yyyy'),'dd/mm/yyyy');
+   list_rechivim:= '126,1,76,77,78,55,131,91,92,49';    
+ open  p_cur for                                                                                     
+        select   TO_NUMBER(TO_CHAR(p.taarich ,'DD')) day_num, DayOfWeek(p.taarich) day_ot , 
+          p.mispar_ishi, p.taarich,
+          max(case to_number(kod_rechiv) when 126 then erech_rechiv end ) r126 ,
+          max(case  to_number(kod_rechiv)  when 1 then erech_rechiv end ) r1,
+          max(case  to_number(kod_rechiv)  when 76 then erech_rechiv end )r76,
+          max(case  to_number(kod_rechiv)  when 77 then erech_rechiv end )r77,
+          max(case  to_number(kod_rechiv)  when 78 then erech_rechiv end )r78,
+          max(case  to_number(kod_rechiv)  when 55 then erech_rechiv end )r55,
+          max(case  to_number(kod_rechiv)  when 131 then erech_rechiv end )r131,
+          max(case  to_number(kod_rechiv)  when 91 then erech_rechiv end )r91,
+          max(case  to_number(kod_rechiv)  when 92 then erech_rechiv end )r92,
+          max(case  to_number(kod_rechiv)  when 49 then erech_rechiv end )r49
+        from (
+        SELECT h.mispar_ishi,  h.Kod_Rechiv, h.TAARICH ,y.Erech_Rechiv erech_rechiv
+         FROM 
+        ( select c.mispar_ishi,c.taarich,c.kod_rechiv,c.erech_rechiv
+         from  TB_CHISHUV_YOMI_OVDIM C
+         where c.Mispar_Ishi=p_mispar_ishi 
+              and C.Bakasha_ID=p_bakasha_id
+              AND c.taarich between tar_me and last_day(tar_me) 
+              and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE)))   ) y ,
+        (select D.mispar_ishi,D.taarich,R.kod_rechiv
+        from
+         (   select p_mispar_ishi mispar_ishi ,TO_DATE(x,'dd/mm/yyyy') taarich 
+             from ( SELECT X from    TABLE(CAST(Convert_String_To_Table(String_Dates_Of_Period(to_char(p_taarich,'mm/yyyy')),',') AS mytabtype)))   ) D
+        full join     
+            (select p_mispar_ishi mispar_ishi ,x kod_rechiv
+             from ( SELECT X FROM TABLE(CAST(Convert_String_To_Table(list_rechivim,  ',') AS MYTABTYPE))) )R
+        on D.mispar_ishi = R.mispar_ishi   ) h
+        where  h.MISPAR_ISHI = y.MISPAR_ISHI(+)
+                and h.TAARICH= y.TAARICH(+)
+                and h.KOD_RECHIV= y.Kod_Rechiv(+)  ) p
+        GROUP BY p.mispar_ishi, p.taarich
+        order  BY p.mispar_ishi, p.taarich;
+
+end pro_get_rechivim_lerikuz;
 END Pkg_Ovdim;
 /
 
@@ -16533,7 +17104,7 @@ END Pkg_Request;
 /
 
 
-CREATE OR REPLACE PACKAGE BODY PKG_sdrn AS
+CREATE OR REPLACE PACKAGE BODY Pkg_Sdrn AS
 /******************************************************************************
    NAME:       PKG_BATCH
    PURPOSE:
@@ -16545,33 +17116,33 @@ CREATE OR REPLACE PACKAGE BODY PKG_sdrn AS
 ******************************************************************************/
 
 
-  PROCEDURE pro_ins_yamim_4_sidurim(pDt varchar) IS
+  PROCEDURE pro_ins_yamim_4_sidurim(pDt VARCHAR) IS
 --err_str  varchar2(1000);
  
-   cursor Yamim is
-  select   distinct driver_id,start_dt,-12 meadken--,0,sysdate,-12
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where start_dt= to_date(pDt,'yyyymmdd')
-and  not  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt);
+   CURSOR Yamim IS
+  SELECT   DISTINCT driver_id,start_dt,-12 meadken--,0,sysdate,-12
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND  NOT  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt);
 
 BEGIN
 --  err_str:='';
   
 FOR  Yamim_rec IN  Yamim LOOP
-begin
- insert into  tb_yamey_avoda_ovdim (mispar_ishi,taarich,lina,taarich_idkun_acharon,meadken_acharon)
-values (Yamim_rec.driver_id,Yamim_rec.start_dt,  0,sysdate,Yamim_rec.meadken );
+BEGIN
+ INSERT INTO  TB_YAMEY_AVODA_OVDIM (mispar_ishi,taarich,lina,taarich_idkun_acharon,meadken_acharon)
+VALUES (Yamim_rec.driver_id,Yamim_rec.start_dt,  0,SYSDATE,Yamim_rec.meadken );
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,1) '||to_char(Yamim_rec.driver_id)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (4,1,1,sysdate,'',10,'',substr(to_char(Yamim_rec.driver_id)||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,1,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Yamim_rec.driver_id)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
 END LOOP;
-commit;
+COMMIT;
 
 -- if  not err_str=''  then 
 --  raise_application_error(1, SUBSTR     (err_str,1,1000), TRUE);
@@ -16581,23 +17152,23 @@ commit;
 END pro_ins_yamim_4_sidurim;
 
 
-  PROCEDURE pro_ins_sidurim_4_sidurim(pDt varchar) IS
+  PROCEDURE pro_ins_sidurim_4_sidurim(pDt VARCHAR) IS
 -- err_str  varchar2(1000);
   
   CURSOR Sidurim1 IS
-  select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440 hatchala ,
-k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440 gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt=  to_date(pDt,'yyyymmdd')
-and not exists (select *  from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+  SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440 hatchala ,
+k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440 gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND NOT EXISTS (SELECT *  FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule);
 --sidurim9 is update not insert!!
 --and not (k1.start_schedule<2400
 --and k1.end_schedule<2400
@@ -16606,137 +17177,137 @@ and k1.end_schedule<>k2.end_schedule);
 
  
  CURSOR Trail_Sidurim1 IS
- select   distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi')  gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where start_dt =  to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and end_schedule>2359
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt)
-and  exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1);
+ SELECT   DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi')  gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND end_schedule>2359
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt)
+AND  EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1);
  
  CURSOR Sidurim6 IS
-  select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select min(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+  SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MIN(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule);
 
-cursor Sidurim7 is
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa , -12 meadken,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+CURSOR Sidurim7 IS
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa , -12 meadken,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule);
 
 CURSOR Sidurim8  IS
-  select  distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt = to_date(pDt,'yyyymmdd') 
-and k1.start_schedule<2400
-and k1.end_schedule>2359
-and    exists ( select * from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k1.start_dt = to_date(pDt,'yyyymmdd') 
-and k2.start_schedule<2400
-and k2.end_schedule>2359
-and k1.start_dt= k2.start_dt
-and   k2.driver_id =k1.driver_id
-and k2.schedule_num=k1.schedule_num
-and k2.start_schedule=k1.start_schedule
-and k2.end_schedule<>k1.end_schedule)
-order by driver_id;
+  SELECT  DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd') 
+AND k1.start_schedule<2400
+AND k1.end_schedule>2359
+AND    EXISTS ( SELECT * FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd') 
+AND k2.start_schedule<2400
+AND k2.end_schedule>2359
+AND k1.start_dt= k2.start_dt
+AND   k2.driver_id =k1.driver_id
+AND k2.schedule_num=k1.schedule_num
+AND k2.start_schedule=k1.start_schedule
+AND k2.end_schedule<>k1.end_schedule)
+ORDER BY driver_id;
 
   CURSOR Trail_Sidurim2 IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi')  gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi')  gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule);
 
 -- problem? if start_dt+1 is today and is in the future??
 -- problem: do not write it on cursor1
 CURSOR Sidurim9  IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt+1,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and decode(sug_visa,' ','',sug_visa) in (0,1)
-and  k1.start_schedule>k1.end_schedule;
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  k1.start_schedule>k1.end_schedule;
 
 
    BEGIN
@@ -16744,144 +17315,144 @@ and  k1.start_schedule>k1.end_schedule;
      
    FOR  Sidurim1_rec IN  Sidurim1 LOOP
 BEGIN
-  insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
-values (Sidurim1_rec.driver_id,Sidurim1_rec.start_dt,  Sidurim1_rec.schedule_num,  
+  INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
+VALUES (Sidurim1_rec.driver_id,Sidurim1_rec.start_dt,  Sidurim1_rec.schedule_num,  
 Sidurim1_rec.hatchala,Sidurim1_rec.gmar,  Sidurim1_rec.sug_visa,   Sidurim1_rec.meadken, Sidurim1_rec.sug_sidur );
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,20) '||to_char(Sidurim1_rec.driver_id) ||' '||to_char(Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,20,sysdate,'',10,'',substr(to_char(Sidurim1_rec.driver_id) ||' '||to_char(Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,20,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim1_rec.driver_id) ||' '||TO_CHAR(Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
 END LOOP;
-commit;
+COMMIT;
 
  --used to be in Sidurim3:&  Sidurim5:
  BEGIN
- update  tb_sidurim_ovdim 
- set   Shayah_LeYom_Kodem=1   
-where  taarich = to_date(pDt,'yyyymmdd')
-and exists (select *   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule>2359
+ UPDATE  TB_SIDURIM_OVDIM 
+ SET   Shayah_LeYom_Kodem=1   
+WHERE  taarich = TO_DATE(pDt,'yyyymmdd')
+AND EXISTS (SELECT *   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule>2359
 --and k1.end_schedule>2359
-and    taarich = k1.start_dt
-and mispar_ishi=k1.driver_id
-and  mispar_sidur  =k1.schedule_num
-and  shat_hatchala  =k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440
-and  shat_gmar=k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440);
+AND    taarich = k1.start_dt
+AND mispar_ishi=k1.driver_id
+AND  mispar_sidur  =k1.schedule_num
+AND  shat_hatchala  =k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440
+AND  shat_gmar=k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,22) '||to_char(Sidurim3_rec.driver_id) ||' '||to_char(Sidurim3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-    insert into tb_log_tahalich
-    values (4,1,22,sysdate,'',10,'',substr(pDt||' Shayah_LeYom_Kodem '||DBMS_UTILITY.format_error_stack,1,1000));     
-end;
-commit;
+    INSERT INTO TB_LOG_TAHALICH
+    VALUES (4,1,22,SYSDATE,'',10,'',SUBSTR(pDt||' Shayah_LeYom_Kodem '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));     
+END;
+COMMIT;
  
 
 FOR  Trail_Sidurim1_rec IN  Trail_Sidurim1 LOOP
 BEGIN
- insert into trail_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  ,sug_sidur   )
- values (Trail_Sidurim1_rec.driver_id,Trail_Sidurim1_rec.start_dt,  Trail_Sidurim1_rec.schedule_num,  
+ INSERT INTO TRAIL_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  ,sug_sidur   )
+ VALUES (Trail_Sidurim1_rec.driver_id,Trail_Sidurim1_rec.start_dt,  Trail_Sidurim1_rec.schedule_num,  
 Trail_Sidurim1_rec.hatchala,Trail_Sidurim1_rec.gmar,  Trail_Sidurim1_rec.sug_visa,   Trail_Sidurim1_rec.meadken, Trail_Sidurim1_rec.sug_sidur );
 
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,25) '||to_char(Trail_Sidurim1_rec.driver_id) ||' '||to_char(Trail_Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,25,sysdate,'',10,'',substr(to_char(Trail_Sidurim1_rec.driver_id) ||' '||to_char(Trail_Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,25,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Trail_Sidurim1_rec.driver_id) ||' '||TO_CHAR(Trail_Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
    
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 
 FOR  Sidurim6_rec IN  Sidurim6 LOOP
 BEGIN
-insert into tb_sidurim_ovdim ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
+INSERT INTO TB_SIDURIM_OVDIM ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
 shat_gmar,sector_visa,meadken_acharon  ,sug_sidur   )
-values (Sidurim6_rec.driver_id,Sidurim6_rec.start_dt,  Sidurim6_rec.schedule_num,  Sidurim6_rec.hatchala,
+VALUES (Sidurim6_rec.driver_id,Sidurim6_rec.start_dt,  Sidurim6_rec.schedule_num,  Sidurim6_rec.hatchala,
 Sidurim6_rec.gmar,  Sidurim6_rec.sug_visa,   Sidurim6_rec.meadken ,Sidurim6_rec.sug_sidur   );
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,26) '||to_char(Sidurim6_rec.driver_id) ||' '||to_char(Sidurim6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,26,sysdate,'',10,'',substr(to_char(Sidurim6_rec.driver_id) ||' '||to_char(Sidurim6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,26,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim6_rec.driver_id) ||' '||TO_CHAR(Sidurim6_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
    
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 
  FOR  Sidurim7_rec IN  Sidurim7 LOOP
 BEGIN
-insert into tb_sidurim_ovdim ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
+INSERT INTO TB_SIDURIM_OVDIM ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
 shat_gmar,sector_visa,meadken_acharon  ,sug_sidur   )
-values (Sidurim7_rec.driver_id,Sidurim7_rec.start_dt,  Sidurim7_rec.schedule_num,  Sidurim7_rec.hatchala,
+VALUES (Sidurim7_rec.driver_id,Sidurim7_rec.start_dt,  Sidurim7_rec.schedule_num,  Sidurim7_rec.hatchala,
 Sidurim7_rec.gmar,  Sidurim7_rec.sug_visa,   Sidurim7_rec.meadken ,Sidurim7_rec.sug_sidur    );
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,27) '|| to_char(Sidurim7_rec.driver_id) ||' '||to_char(Sidurim7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,27,sysdate,'',10,'',substr(to_char(Sidurim7_rec.driver_id) ||' '||to_char(Sidurim7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,27,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim7_rec.driver_id) ||' '||TO_CHAR(Sidurim7_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
   
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 
 FOR  Sidurim8_rec IN  Sidurim8 LOOP
 BEGIN
-insert into tb_sidurim_ovdim s1 ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
-values (Sidurim8_rec.driver_id,Sidurim8_rec.start_dt,  Sidurim8_rec.schedule_num,  
+INSERT INTO TB_SIDURIM_OVDIM s1 ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
+VALUES (Sidurim8_rec.driver_id,Sidurim8_rec.start_dt,  Sidurim8_rec.schedule_num,  
 Sidurim8_rec.hatchala,Sidurim8_rec.gmar,  Sidurim8_rec.sug_visa,   Sidurim8_rec.meadken  ,Sidurim8_rec.sug_sidur );
 
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,28) '|| to_char(Sidurim8_rec.driver_id) ||' '||to_char(Sidurim8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,28,sysdate,'',10,'',substr(to_char(Sidurim8_rec.driver_id) ||' '||to_char(Sidurim8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,28,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim8_rec.driver_id) ||' '||TO_CHAR(Sidurim8_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 
 FOR  Trail_Sidurim2_rec IN  Trail_Sidurim2 LOOP
 BEGIN
- insert into trail_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  ,sug_sidur  ) 
- values (Trail_Sidurim2_rec.driver_id,Trail_Sidurim2_rec.start_dt,  Trail_Sidurim2_rec.schedule_num,  
+ INSERT INTO TRAIL_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  ,sug_sidur  ) 
+ VALUES (Trail_Sidurim2_rec.driver_id,Trail_Sidurim2_rec.start_dt,  Trail_Sidurim2_rec.schedule_num,  
 Trail_Sidurim2_rec.hatchala,Trail_Sidurim2_rec.gmar,  Trail_Sidurim2_rec.sug_visa,   Trail_Sidurim2_rec.meadken  ,Trail_Sidurim2_rec.sug_sidur );
 
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,29) '|| to_char(Trail_Sidurim2_rec.driver_id) ||' '||to_char(Trail_Sidurim2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,29,sysdate,'',10,'',substr(to_char(Trail_Sidurim2_rec.driver_id) ||' '||to_char(Trail_Sidurim2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,29,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Trail_Sidurim2_rec.driver_id) ||' '||TO_CHAR(Trail_Sidurim2_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 BEGIN
- update TB_Sidurim_Ovdim 
-set   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
- where taarich= to_date(pDt,'yyyymmdd')
-and meadken_acharon=-12;
+ UPDATE TB_SIDURIM_OVDIM 
+SET   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND meadken_acharon=-12;
 
   EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,2) '||'update_sidurim '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,2,sysdate,'',10,'',substr('update_sidurim '||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,2,SYSDATE,'',10,'',SUBSTR('update_sidurim '||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
-commit;
+END;
+COMMIT;
 
 --if not  err_str=''  then 
 --  raise_application_error(2, SUBSTR     (err_str,1,1000), TRUE);
@@ -16889,101 +17460,101 @@ commit;
 
 FOR  Sidurim9_rec IN  Sidurim9 LOOP
 BEGIN
-update tb_sidurim_ovdim 
-set shat_gmar=Sidurim9_rec.gmar
-where mispar_ishi=Sidurim9_rec.driver_id
-and taarich=Sidurim9_rec.start_dt
-and mispar_sidur=Sidurim9_rec.schedule_num
-and shat_hatchala=Sidurim9_rec.hatchala
-and sector_visa in (0,1);
+UPDATE TB_SIDURIM_OVDIM 
+SET shat_gmar=Sidurim9_rec.gmar
+WHERE mispar_ishi=Sidurim9_rec.driver_id
+AND taarich=Sidurim9_rec.start_dt
+AND mispar_sidur=Sidurim9_rec.schedule_num
+AND shat_hatchala=Sidurim9_rec.hatchala
+AND sector_visa IN (0,1);
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,28) '|| to_char(Sidurim8_rec.driver_id) ||' '||to_char(Sidurim8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,2,sysdate,'',10,'',substr(to_char(Sidurim9_rec.driver_id) ||' '||to_char(Sidurim9_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,2,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim9_rec.driver_id) ||' '||TO_CHAR(Sidurim9_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 END pro_ins_sidurim_4_sidurim;
 
 
- PROCEDURE pro_ins_peilut_4_sidurim(pDt varchar) IS
+ PROCEDURE pro_ins_peilut_4_sidurim(pDt VARCHAR) IS
 -- err_str  varchar2(1000);
  
    CURSOR Peilut1 IS
-   select    driver_id,start_dt,schedule_num,branch,
+   SELECT    driver_id,start_dt,schedule_num,branch,
 -- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
 -- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
-start_dt + substr(lpad(start_schedule,4,0),1,2)/24 + substr(lpad(start_schedule,4,0),3,2)/1440 hatchala ,
-start_dt + substr(lpad(start_time,4,0),1,2)/24 + substr(lpad(start_time,4,0),3,2)/1440 gmar,ride_id,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time<2400
-and not (start_schedule<2400
-and end_schedule<2400
-and decode(sug_visa,' ','',sug_visa) in (0,1)
-and  start_schedule>end_schedule);
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time<2400
+AND NOT (start_schedule<2400
+AND end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  start_schedule>end_schedule);
 -- and schedule_num<100000;
 
    CURSOR Peilut2 IS
-  select    driver_id,start_dt,schedule_num,branch,
+  SELECT    driver_id,start_dt,schedule_num,branch,
 -- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
 -- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
-start_dt + substr(lpad(start_schedule,4,0),1,2)/24 + substr(lpad(start_schedule,4,0),3,2)/1440 hatchala ,
-start_dt + substr(lpad(start_time,4,0),1,2)/24 + substr(lpad(start_time,4,0),3,2)/1440 gmar,ride_id,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and not exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1);
+ AND NOT EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1);
 
    CURSOR Peilut3 IS
-   select    driver_id,start_dt,schedule_num,branch,
+   SELECT    driver_id,start_dt,schedule_num,branch,
 -- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
 -- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
-start_dt + substr(lpad(start_schedule,4,0),1,2)/24 + substr(lpad(start_schedule,4,0),3,2)/1440 hatchala ,
-start_dt + substr(lpad(start_time,4,0),1,2)/24 + substr(lpad(start_time,4,0),3,2)/1440 gmar,ride_id,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359;
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359;
 --and start_time>2359;
 -- and schedule_num<100000;
 
    CURSOR Peilut4 IS
-select    driver_id,start_dt,schedule_num,branch,
+SELECT    driver_id,start_dt,schedule_num,branch,
 -- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
 -- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
-start_dt + substr(lpad(start_schedule,4,0),1,2)/24 + substr(lpad(start_schedule,4,0),3,2)/1440 hatchala ,
-start_dt + substr(lpad(start_time,4,0),1,2)/24 + substr(lpad(start_time,4,0),3,2)/1440 gmar,ride_id,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1);
+ AND EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1);
 
 -- included in cursor3
 --   CURSOR Peilut5 IS
@@ -16998,111 +17569,111 @@ and s2.shat_gmar<start_dt+1);
 --and start_time<2400;
 
    CURSOR Peilut6 IS
- select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+ SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
-and k1.end_schedule=(select min(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
- and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and not exists (select * from  tb_peilut_ovdim s2
-where s2.mispar_ishi= k1.driver_id
-and  s2.taarich= k1.start_dt
-and  s2.taarich=  to_date(pDt,'yyyymmdd')
-and s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala_sidur =to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.SHAT_YETZIA=to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.MISPAR_KNISA=k1.ride_id);
+AND k1.end_schedule=(SELECT MIN(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+ AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND NOT EXISTS (SELECT * FROM  TB_PEILUT_OVDIM s2
+WHERE s2.mispar_ishi= k1.driver_id
+AND  s2.taarich= k1.start_dt
+AND  s2.taarich=  TO_DATE(pDt,'yyyymmdd')
+AND s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala_sidur =TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.SHAT_YETZIA=TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.MISPAR_KNISA=k1.ride_id);
 
    CURSOR Peilut7 IS
- select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+ SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
- and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+ AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule);
 
  CURSOR Peilut8  IS
-  select   distinct    start_dt, driver_id,schedule_num,
-                 to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-				 to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') moed,
+  SELECT   DISTINCT    start_dt, driver_id,schedule_num,
+                 TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+				 TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') moed,
 				 makat_line,ride_id,  line_description
- from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt=  to_date(pDt,'yyyymmdd')
-							and start_schedule<2400
-							and start_time<2400
-							and line_description is not null
-							and ride_id>0
-							and makat_line<50000000;
+ FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+							AND start_schedule<2400
+							AND start_time<2400
+							AND line_description IS NOT NULL
+							AND ride_id>0
+							AND makat_line<50000000;
 							
 --like sidurim9, for visa when end<start
 -- problem: do not write it on cursor1
 CURSOR Peilut9  IS
-  select   distinct      driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+  SELECT   DISTINCT      driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where  start_dt=  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and decode(sug_visa,' ','',sug_visa) in (0,1)
-and  k1.start_schedule>k1.end_schedule;
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  k1.start_schedule>k1.end_schedule;
   
    BEGIN
 --  err_str:='';
      
    FOR  Peilut1_rec IN  Peilut1 LOOP
 BEGIN
-insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut1_rec.driver_id,Peilut1_rec.start_dt,  Peilut1_rec.schedule_num,  Peilut1_rec.branch,
+  VALUES (Peilut1_rec.driver_id,Peilut1_rec.start_dt,  Peilut1_rec.schedule_num,  Peilut1_rec.branch,
 Peilut1_rec.hatchala,Peilut1_rec.gmar,   Peilut1_rec.ride_id, Peilut1_rec.makat_line,Peilut1_rec.bus_number,Peilut1_rec.bus_sequence,
 Peilut1_rec.waiting_time, Peilut1_rec.spm_time,Peilut1_rec.spm_bus_number,Peilut1_rec.spm_schedule_num,Peilut1_rec.spm_start_time,
 Peilut1_rec.spm_makat_line, Peilut1_rec.spm_line_sign,Peilut1_rec.spm_location, Peilut1_rec.meadken );
@@ -17110,20 +17681,20 @@ Peilut1_rec.spm_makat_line, Peilut1_rec.spm_line_sign,Peilut1_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
   -- err_str:=err_str||' (4,30) '||to_char(Peilut1_rec.driver_id) ||' '||to_char(Peilut1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,30,sysdate,'',10,'',substr(to_char(Peilut1_rec.driver_id) ||' '||to_char(Peilut1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-   end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,30,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut1_rec.driver_id) ||' '||TO_CHAR(Peilut1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
   
 FOR  Peilut2_rec IN  Peilut2 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut2_rec.driver_id,Peilut2_rec.start_dt,  Peilut2_rec.schedule_num,  Peilut2_rec.branch,
+  VALUES (Peilut2_rec.driver_id,Peilut2_rec.start_dt,  Peilut2_rec.schedule_num,  Peilut2_rec.branch,
 Peilut2_rec.hatchala,Peilut2_rec.gmar,   Peilut2_rec.ride_id, Peilut2_rec.makat_line,Peilut2_rec.bus_number,Peilut2_rec.bus_sequence,
 Peilut2_rec.waiting_time, Peilut2_rec.spm_time,Peilut2_rec.spm_bus_number,Peilut2_rec.spm_schedule_num,Peilut2_rec.spm_start_time,
 Peilut2_rec.spm_makat_line, Peilut2_rec.spm_line_sign,Peilut2_rec.spm_location, Peilut2_rec.meadken );
@@ -17131,21 +17702,21 @@ Peilut2_rec.spm_makat_line, Peilut2_rec.spm_line_sign,Peilut2_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,31) '||to_char(Peilut2_rec.driver_id) ||' '||to_char(Peilut2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,31,sysdate,'',10,'',substr(to_char(Peilut2_rec.driver_id) ||' '||to_char(Peilut2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
- end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,31,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut2_rec.driver_id) ||' '||TO_CHAR(Peilut2_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+ END;
 END LOOP;
-commit;
+COMMIT;
 
 
 -- 14/12/2010  no more tomorrow 4 Shayah_LeYom_Kodem
 FOR  Peilut3_rec IN  Peilut3 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
 Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
- values (Peilut3_rec.driver_id,Peilut3_rec.start_dt,  Peilut3_rec.schedule_num,  Peilut3_rec.branch,
+ VALUES (Peilut3_rec.driver_id,Peilut3_rec.start_dt,  Peilut3_rec.schedule_num,  Peilut3_rec.branch,
 Peilut3_rec.hatchala,Peilut3_rec.gmar,   Peilut3_rec.ride_id, Peilut3_rec.makat_line,Peilut3_rec.bus_number,Peilut3_rec.bus_sequence,
 Peilut3_rec.waiting_time, Peilut3_rec.spm_time,Peilut3_rec.spm_bus_number,Peilut3_rec.spm_schedule_num,Peilut3_rec.spm_start_time,
 Peilut3_rec.spm_makat_line, Peilut3_rec.spm_line_sign,Peilut3_rec.spm_location, Peilut3_rec.meadken );
@@ -17153,20 +17724,20 @@ Peilut3_rec.spm_makat_line, Peilut3_rec.spm_line_sign,Peilut3_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,32) '|| to_char(Peilut3_rec.driver_id) ||' '||to_char(Peilut3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,32,sysdate,'',10,'',substr(to_char(Peilut3_rec.driver_id) ||' '||to_char(Peilut3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-  end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,32,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut3_rec.driver_id) ||' '||TO_CHAR(Peilut3_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+  END;
 END LOOP;
-commit;
+COMMIT;
    
 
 FOR  Peilut4_rec IN  Peilut4 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer  ,meadken_acharon )
-  values (Peilut4_rec.driver_id,Peilut4_rec.start_dt,  Peilut4_rec.schedule_num,  Peilut4_rec.branch,
+  VALUES (Peilut4_rec.driver_id,Peilut4_rec.start_dt,  Peilut4_rec.schedule_num,  Peilut4_rec.branch,
 Peilut4_rec.hatchala,Peilut4_rec.gmar,   Peilut4_rec.ride_id, Peilut4_rec.makat_line,Peilut4_rec.bus_number,Peilut4_rec.bus_sequence,
 Peilut4_rec.waiting_time, Peilut4_rec.spm_time,Peilut4_rec.spm_bus_number,Peilut4_rec.spm_schedule_num,Peilut4_rec.spm_start_time,
 Peilut4_rec.spm_makat_line, Peilut4_rec.spm_line_sign,Peilut4_rec.spm_location, Peilut4_rec.meadken );
@@ -17174,21 +17745,21 @@ Peilut4_rec.spm_makat_line, Peilut4_rec.spm_line_sign,Peilut4_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,33) '|| to_char(Peilut4_rec.driver_id) ||' '||to_char(Peilut4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-   	insert into tb_log_tahalich
-	values (4,1,33,sysdate,'',10,'',substr(to_char(Peilut4_rec.driver_id) ||' '||to_char(Peilut4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-  end;
+   	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,33,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut4_rec.driver_id) ||' '||TO_CHAR(Peilut4_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+  END;
 END LOOP;
-commit;
+COMMIT;
   
 
 
 FOR  Peilut6_rec IN  Peilut6 LOOP
 BEGIN
- insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+ INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut6_rec.driver_id,Peilut6_rec.start_dt,  Peilut6_rec.schedule_num,  Peilut6_rec.branch,
+  VALUES (Peilut6_rec.driver_id,Peilut6_rec.start_dt,  Peilut6_rec.schedule_num,  Peilut6_rec.branch,
 Peilut6_rec.hatchala,Peilut6_rec.gmar,   Peilut6_rec.ride_id, Peilut6_rec.makat_line,Peilut6_rec.bus_number,Peilut6_rec.bus_sequence,
 Peilut6_rec.waiting_time, Peilut6_rec.spm_time,Peilut6_rec.spm_bus_number,Peilut6_rec.spm_schedule_num,Peilut6_rec.spm_start_time,
 Peilut6_rec.spm_makat_line, Peilut6_rec.spm_line_sign,Peilut6_rec.spm_location, Peilut6_rec.meadken );
@@ -17196,19 +17767,19 @@ Peilut6_rec.spm_makat_line, Peilut6_rec.spm_line_sign,Peilut6_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,35) '|| to_char(Peilut6_rec.driver_id) ||' '||to_char(Peilut6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,35,sysdate,'',10,'',substr(to_char(Peilut6_rec.driver_id) ||' '||to_char(Peilut6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-   end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,35,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut6_rec.driver_id) ||' '||TO_CHAR(Peilut6_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut7_rec IN  Peilut7 LOOP
 BEGIN
- insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur, snif_tnua, shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+ INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur, snif_tnua, shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
- values (Peilut7_rec.driver_id,Peilut7_rec.start_dt,  Peilut7_rec.schedule_num,  Peilut7_rec.branch,
+ VALUES (Peilut7_rec.driver_id,Peilut7_rec.start_dt,  Peilut7_rec.schedule_num,  Peilut7_rec.branch,
 Peilut7_rec.hatchala,Peilut7_rec.gmar,   Peilut7_rec.ride_id, Peilut7_rec.makat_line,Peilut7_rec.bus_number,Peilut7_rec.bus_sequence,
 Peilut7_rec.waiting_time, Peilut7_rec.spm_time,Peilut7_rec.spm_bus_number,Peilut7_rec.spm_schedule_num,Peilut7_rec.spm_start_time,
 Peilut7_rec.spm_makat_line, Peilut7_rec.spm_line_sign,Peilut7_rec.spm_location, Peilut7_rec.meadken );
@@ -17216,38 +17787,38 @@ Peilut7_rec.spm_makat_line, Peilut7_rec.spm_line_sign,Peilut7_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,36) '|| to_char(Peilut7_rec.driver_id) ||' '||to_char(Peilut7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,36,sysdate,'',10,'',substr(to_char(Peilut7_rec.driver_id) ||' '||to_char(Peilut7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-   end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,36,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut7_rec.driver_id) ||' '||TO_CHAR(Peilut7_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 BEGIN
- update tb_peilut_ovdim
- set imut_netzer=1
- where taarich= to_date(pDt,'yyyymmdd')
-  and Oto_No_Netzer>0 ;
+ UPDATE TB_PEILUT_OVDIM
+ SET imut_netzer=1
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+  AND Oto_No_Netzer>0 ;
  --and (Oto_No_Netzer>0 or Mispar_Sidur_Netzer>0  );
 EXCEPTION
    WHEN OTHERS THEN
 --      err_str:=err_str||' (4,37)  update imut_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,37,sysdate,'',10,'',substr('update imut peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,37,SYSDATE,'',10,'',SUBSTR('update imut peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
 
-begin
- update tb_peilut_ovdim
-set mispar_matala=mispar_sidur
- where taarich= to_date(pDt,'yyyymmdd')
- and mispar_sidur< 1000;
+BEGIN
+ UPDATE TB_PEILUT_OVDIM
+SET mispar_matala=mispar_sidur
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+ AND mispar_sidur< 1000;
  EXCEPTION
    WHEN OTHERS THEN
 --      err_str:=err_str||' (4,38)  update matala_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,38,sysdate,'',10,'',substr('update matala peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,38,SYSDATE,'',10,'',SUBSTR('update matala peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
  
 -- 14/12/2010  no more tomorrow 4 Shayah_LeYom_Kodem update tb_peilut_ovdim
  --todo: only if exists in sidurim shaya_leyom_kodem
@@ -17257,36 +17828,36 @@ commit;
  
 FOR  Peilut8_rec IN  Peilut8 LOOP
 BEGIN
-update tb_peilut_ovdim
-set teur_nesia=    Peilut8_rec.line_description
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich
-							and Peilut8_rec.driver_id=mispar_ishi
-							and Peilut8_rec.schedule_num=mispar_sidur
-							and Peilut8_rec.hatchala =shat_hatchala_sidur
-							and Peilut8_rec.moed =shat_yetzia
-							and Peilut8_rec.makat_line=makat_nesia
-							and Peilut8_rec.ride_id=mispar_knisa;
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=    Peilut8_rec.line_description
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich
+							AND Peilut8_rec.driver_id=mispar_ishi
+							AND Peilut8_rec.schedule_num=mispar_sidur
+							AND Peilut8_rec.hatchala =shat_hatchala_sidur
+							AND Peilut8_rec.moed =shat_yetzia
+							AND Peilut8_rec.makat_line=makat_nesia
+							AND Peilut8_rec.ride_id=mispar_knisa;
 
 EXCEPTION
    WHEN OTHERS THEN
 --    err_str:=err_str||' (4,39)  update_teur_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,39,sysdate,'',10,'',substr('update teur peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,39,SYSDATE,'',10,'',SUBSTR('update teur peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut9_rec IN  Peilut9 LOOP
 BEGIN
-insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut9_rec.driver_id,Peilut9_rec.start_dt,  Peilut9_rec.schedule_num,  Peilut9_rec.branch,
+  VALUES (Peilut9_rec.driver_id,Peilut9_rec.start_dt,  Peilut9_rec.schedule_num,  Peilut9_rec.branch,
 Peilut9_rec.hatchala,Peilut9_rec.gmar,   Peilut9_rec.ride_id, Peilut9_rec.makat_line,Peilut9_rec.bus_number,Peilut9_rec.bus_sequence,
 Peilut9_rec.waiting_time, Peilut9_rec.spm_time,Peilut9_rec.spm_bus_number,Peilut9_rec.spm_schedule_num,Peilut9_rec.spm_start_time,
 Peilut9_rec.spm_makat_line, Peilut9_rec.spm_line_sign,Peilut9_rec.spm_location, Peilut9_rec.meadken );
@@ -17294,156 +17865,156 @@ Peilut9_rec.spm_makat_line, Peilut9_rec.spm_line_sign,Peilut9_rec.spm_location, 
 EXCEPTION
    WHEN OTHERS THEN
   -- err_str:=err_str||' (4,30) '||to_char(Peilut1_rec.driver_id) ||' '||to_char(Peilut1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,45,sysdate,'',10,'',substr(to_char(Peilut9_rec.driver_id) ||' '||to_char(Peilut9_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-   end;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,45,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut9_rec.driver_id) ||' '||TO_CHAR(Peilut9_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
 END LOOP;
-commit;
+COMMIT;
  
-begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time>2359
-							and line_description is not null
-				   			and ride_id>0
-							and makat_line<50000000)
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich+1;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time>2359
+							AND line_description IS NOT NULL
+				   			AND ride_id>0
+							AND makat_line<50000000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --    err_str:=err_str||' (4,40)  update_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,40,sysdate,'',10,'',substr('update peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,40,SYSDATE,'',10,'',SUBSTR('update peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
  
-begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule>2359
-							and start_time>2359
-							and line_description is not null
-				   			and ride_id>0
-							and makat_line<50000000)
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich+1
-and trunc(shat_yetzia)=taarich+1;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule>2359
+							AND start_time>2359
+							AND line_description IS NOT NULL
+				   			AND ride_id>0
+							AND makat_line<50000000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich+1
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --    err_str:=err_str||' (4,41)  update_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,41,sysdate,'',10,'',substr('update peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,41,SYSDATE,'',10,'',SUBSTR('update peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
  
-begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time<2400
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time<2400
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich;
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,42)  update_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,42,sysdate,'',10,'',substr('update peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,42,SYSDATE,'',10,'',SUBSTR('update peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
  
-begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time>2359
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich+1;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time>2359
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,43)  update_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,43,sysdate,'',10,'',substr('update peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,43,SYSDATE,'',10,'',SUBSTR('update peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
  
-begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule>2359
-							and start_time>2359
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich+1
-and trunc(shat_yetzia)=taarich+1;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule>2359
+							AND start_time>2359
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich+1
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,22) '||'update_peilut  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-  	insert into tb_log_tahalich
-	values (4,1,44,sysdate,'',10,'',substr('update peilut  '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
-commit;
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,44,SYSDATE,'',10,'',SUBSTR('update peilut  '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+COMMIT;
 
  
 -- if not  err_str=''  then 
@@ -17453,7 +18024,7 @@ commit;
 END pro_ins_peilut_4_sidurim;
 
 
-   PROCEDURE pro_get_sdrm_control(pDt varchar,p_Cur OUT CurType) IS
+   PROCEDURE pro_get_sdrm_control(pDt VARCHAR,p_Cur OUT CurType) IS
   BEGIN
   OPEN p_Cur FOR
     SELECT  *
@@ -17465,28 +18036,28 @@ END pro_ins_peilut_4_sidurim;
       END pro_get_sdrm_control;
 
 
-   PROCEDURE pro_upd_sdrm_control(pDt varchar) IS
+   PROCEDURE pro_upd_sdrm_control(pDt VARCHAR) IS
      BEGIN
-      update  kds.kds_control_driver_activities@kds2sdrm
-     set status=9
-      where status=1
-      and  start_dt = to_date(pDt,'yyyymmdd') ;
+      UPDATE  kds.kds_control_driver_activities@kds2sdrm
+     SET status=9
+      WHERE status=1
+      AND  start_dt = TO_DATE(pDt,'yyyymmdd') ;
         EXCEPTION
    WHEN OTHERS THEN
-insert into tb_log_tahalich
-	values (4,6,1,sysdate,'',10,'',substr('upd_sdrm '||pDt||' '||DBMS_UTILITY.format_error_stack,1,1000));   
-commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,6,1,SYSDATE,'',10,'',SUBSTR('upd_sdrm '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
+COMMIT;
 
  END pro_upd_sdrm_control;
  
 
 
-  PROCEDURE pro_GetStatusSdrn(pDt varchar, p_cur out CurType)  IS
+  PROCEDURE pro_GetStatusSdrn(pDt VARCHAR, p_cur OUT CurType)  IS
      BEGIN
- open p_cur for
- select status
-    from   kds.kds_control_driver_activities@kds2sdrm
-    where start_dt=to_date(pDt,'yyyymmdd');
+ OPEN p_cur FOR
+ SELECT status
+    FROM   kds.kds_control_driver_activities@kds2sdrm
+    WHERE start_dt=TO_DATE(pDt,'yyyymmdd');
 	 EXCEPTION
    WHEN OTHERS THEN
         RAISE;
@@ -17494,308 +18065,308 @@ commit;
 
 
 
-PROCEDURE pro_GetStatus2Sdrn( pAr varchar, p_cur out CurType)  IS
+PROCEDURE pro_GetStatus2Sdrn( pAr VARCHAR, p_cur OUT CurType)  IS
      BEGIN
- open p_cur for
- select to_char(start_dt,'yyyymmdd') start_dt
-    from   kds.kds_control_driver_activities@kds2sdrm
-       where start_dt>=sysdate-(select erech_param from tb_parametrim where kod_param=100)
-	and status=2
-	order by start_dt;
+ OPEN p_cur FOR
+ SELECT TO_CHAR(start_dt,'yyyymmdd') start_dt
+    FROM   kds.kds_control_driver_activities@kds2sdrm
+       WHERE start_dt>=SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=100)
+	AND status=2
+	ORDER BY start_dt;
 	EXCEPTION
    WHEN OTHERS THEN
         RAISE;
  END pro_GetStatus2Sdrn;
  
- PROCEDURE pro_GetDtReRunSdrn(pDt varchar, p_cur out CurType)  IS
+ PROCEDURE pro_GetDtReRunSdrn(pDt VARCHAR, p_cur OUT CurType)  IS
      BEGIN
- open p_cur for
- select max(taarich),kod_peilut_tahalich
-  from tb_log_tahalich
-where kod_tahalich=4
-and kod_peilut_tahalich>=8
-and status=1
-and nvl(taarich_sgira,trunc(sysdate))=to_date(pDt,'yyyymmdd')
-group by kod_peilut_tahalich
-order by max(taarich) desc;
+ OPEN p_cur FOR
+ SELECT MAX(taarich),kod_peilut_tahalich
+  FROM TB_LOG_TAHALICH
+WHERE kod_tahalich=4
+AND kod_peilut_tahalich>=8
+AND status=1
+AND NVL(taarich_sgira,TRUNC(SYSDATE))=TO_DATE(pDt,'yyyymmdd')
+GROUP BY kod_peilut_tahalich
+ORDER BY MAX(taarich) DESC;
 	EXCEPTION
    WHEN OTHERS THEN
         RAISE;
  END pro_GetDtReRunSdrn;
  
- PROCEDURE pro_upd_sdrnRerun_control(pDt varchar) IS
+ PROCEDURE pro_upd_sdrnRerun_control(pDt VARCHAR) IS
      BEGIN
-      update  kds.kds_control_driver_activities@kds2sdrm
-     set status=9
-      where status=2
-      and  start_dt = to_date(pDt,'yyyymmdd') ;
+      UPDATE  kds.kds_control_driver_activities@kds2sdrm
+     SET status=9
+      WHERE status=2
+      AND  start_dt = TO_DATE(pDt,'yyyymmdd') ;
         EXCEPTION
    WHEN OTHERS THEN
         RAISE;
  END pro_upd_sdrnRerun_control;
  
  
- PROCEDURE pro_TrailNDel_peilut_4retrSdrn(pDt varchar) IS
+ PROCEDURE pro_TrailNDel_peilut_4retrSdrn(pDt VARCHAR) IS
  
    BEGIN
    
-   begin
-insert into trail_peilut_ovdim t
+   BEGIN
+INSERT INTO TRAIL_PEILUT_OVDIM t
 (t.MISPAR_ISHI   ,  t.TAARICH  ,  t.MISPAR_sidur  ,  t.Shat_hatchala_sidur	,
   t.Shat_yetzia		,  t.Mispar_knisa		,  t.Makat_nesia	,  t.Oto_no	,  t.Mispar_siduri_oto	 ,  t.Kisuy_tor		,  t.Bitul_O_Hosafa	,  t.Kod_shinuy_premia	  ,
   t.Snif_tnua	   ,  t.Mispar_visa		,  t.Imut_netzer		,  t.Shat_Bhirat_Nesia_Netzer  ,  t.Oto_No_Netzer		,  t.Mispar_Sidur_Netzer	 ,  t.Shat_yetzia_Netzer	,
   t.Makat_Netzer		,  t.Shilut_Netzer		,  t.Mispar_matala	 ,  t.Dakot_bafoal		,  t.Km_visa 	,  t.TAARICH_IDKUN_ACHARON  ,  t.MEADKEN_ACHARON 	,
   t.MISPAR_ISHI_trail   ,  t.TAARICH_IDKUN_trail      ,  t.Sug_peula  	,  
   t.Mikum_Bhirat_Nesia_Netzer ,  t.heara			,  t.Teur_Nesia )
-select distinct p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
+SELECT DISTINCT p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
   p.Shat_yetzia		,  p.Mispar_knisa		,  p.Makat_nesia	,  p.Oto_no	,  p.Mispar_siduri_oto	 ,  p.Kisuy_tor		,  p.Bitul_O_Hosafa	,  p.Kod_shinuy_premia	  ,
   p.Snif_tnua	   ,  p.Mispar_visa		,  p.Imut_netzer		,  p.Shat_Bhirat_Nesia_Netzer  ,  p.Oto_No_Netzer		,  p.Mispar_Sidur_Netzer	 ,  p.Shat_yetzia_Netzer	,
   p.Makat_Netzer		,  p.Shilut_Netzer		,  p.Mispar_matala	 ,  p.Dakot_bafoal		,  p.Km_visa 	,  p.TAARICH_IDKUN_ACHARON  ,  p.MEADKEN_ACHARON 	,
- 77690  ,  sysdate      ,  8 	,  
+ 77690  ,  SYSDATE      ,  8 	,  
   p.Mikum_Bhirat_Nesia_Netzer ,  p.heara			,  p.Teur_Nesia  
-from tb_peilut_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and s.shayah_leyom_kodem=1)    ;
+FROM TB_PEILUT_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND s.shayah_leyom_kodem=1)    ;
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,1,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,1,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin						   
- insert into trail_peilut_ovdim t
+BEGIN						   
+ INSERT INTO TRAIL_PEILUT_OVDIM t
 (t.MISPAR_ISHI   ,  t.TAARICH  ,  t.MISPAR_sidur  ,  t.Shat_hatchala_sidur	,
   t.Shat_yetzia		,  t.Mispar_knisa		,  t.Makat_nesia	,  t.Oto_no	,  t.Mispar_siduri_oto	 ,  t.Kisuy_tor		,  t.Bitul_O_Hosafa	,  t.Kod_shinuy_premia	  ,
   t.Snif_tnua	   ,  t.Mispar_visa		,  t.Imut_netzer		,  t.Shat_Bhirat_Nesia_Netzer  ,  t.Oto_No_Netzer		,  t.Mispar_Sidur_Netzer	 ,  t.Shat_yetzia_Netzer	,
   t.Makat_Netzer		,  t.Shilut_Netzer		,  t.Mispar_matala	 ,  t.Dakot_bafoal		,  t.Km_visa 	,  t.TAARICH_IDKUN_ACHARON  ,  t.MEADKEN_ACHARON 	,
   t.MISPAR_ISHI_trail   ,  t.TAARICH_IDKUN_trail      ,  t.Sug_peula  	,  
   t.Mikum_Bhirat_Nesia_Netzer ,  t.heara			,  t.Teur_Nesia )
-select distinct p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
+SELECT DISTINCT p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
   p.Shat_yetzia		,  p.Mispar_knisa		,  p.Makat_nesia	,  p.Oto_no	,  p.Mispar_siduri_oto	 ,  p.Kisuy_tor		,  p.Bitul_O_Hosafa	,  p.Kod_shinuy_premia	  ,
   p.Snif_tnua	   ,  p.Mispar_visa		,  p.Imut_netzer		,  p.Shat_Bhirat_Nesia_Netzer  ,  p.Oto_No_Netzer		,  p.Mispar_Sidur_Netzer	 ,  p.Shat_yetzia_Netzer	,
   p.Makat_Netzer		,  p.Shilut_Netzer		,  p.Mispar_matala	 ,  p.Dakot_bafoal		,  p.Km_visa 	,  p.TAARICH_IDKUN_ACHARON  ,  p.MEADKEN_ACHARON 	,
- 77690  ,  sysdate      ,  8 	,  
+ 77690  ,  SYSDATE      ,  8 	,  
   p.Mikum_Bhirat_Nesia_Netzer ,  p.heara			,  p.Teur_Nesia  
-from tb_peilut_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =  to_date(pDt,'yyyymmdd')    
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')    
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and s.shayah_leyom_kodem=1
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and (s.mispar_sidur < 99000 or s.mispar_sidur> 99999));
+FROM TB_PEILUT_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =  TO_DATE(pDt,'yyyymmdd')    
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')    
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND s.shayah_leyom_kodem=1
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND (s.mispar_sidur < 99000 OR s.mispar_sidur> 99999));
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,2,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,2,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 						   
-begin
- insert into trail_peilut_ovdim t
+BEGIN
+ INSERT INTO TRAIL_PEILUT_OVDIM t
 (t.MISPAR_ISHI   ,  t.TAARICH  ,  t.MISPAR_sidur  ,  t.Shat_hatchala_sidur	,
   t.Shat_yetzia		,  t.Mispar_knisa		,  t.Makat_nesia	,  t.Oto_no	,  t.Mispar_siduri_oto	 ,  t.Kisuy_tor		,  t.Bitul_O_Hosafa	,  t.Kod_shinuy_premia	  ,
   t.Snif_tnua	   ,  t.Mispar_visa		,  t.Imut_netzer		,  t.Shat_Bhirat_Nesia_Netzer  ,  t.Oto_No_Netzer		,  t.Mispar_Sidur_Netzer	 ,  t.Shat_yetzia_Netzer	,
   t.Makat_Netzer		,  t.Shilut_Netzer		,  t.Mispar_matala	 ,  t.Dakot_bafoal		,  t.Km_visa 	,  t.TAARICH_IDKUN_ACHARON  ,  t.MEADKEN_ACHARON 	,
   t.MISPAR_ISHI_trail   ,  t.TAARICH_IDKUN_trail      ,  t.Sug_peula  	,  
   t.Mikum_Bhirat_Nesia_Netzer ,  t.heara			,  t.Teur_Nesia )
-select distinct p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
+SELECT DISTINCT p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
   p.Shat_yetzia		,  p.Mispar_knisa		,  p.Makat_nesia	,  p.Oto_no	,  p.Mispar_siduri_oto	 ,  p.Kisuy_tor		,  p.Bitul_O_Hosafa	,  p.Kod_shinuy_premia	  ,
   p.Snif_tnua	   ,  p.Mispar_visa		,  p.Imut_netzer		,  p.Shat_Bhirat_Nesia_Netzer  ,  p.Oto_No_Netzer		,  p.Mispar_Sidur_Netzer	 ,  p.Shat_yetzia_Netzer	,
   p.Makat_Netzer		,  p.Shilut_Netzer		,  p.Mispar_matala	 ,  p.Dakot_bafoal		,  p.Km_visa 	,  p.TAARICH_IDKUN_ACHARON  ,  p.MEADKEN_ACHARON 	,
- 77690  ,  sysdate      ,  8 	,  
+ 77690  ,  SYSDATE      ,  8 	,  
   p.Mikum_Bhirat_Nesia_Netzer ,  p.heara			,  p.Teur_Nesia  
-from tb_peilut_ovdim p, tb_yamey_avoda_ovdim y,tb_sidurim_ovdim s
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =   to_date(pDt,'yyyymmdd')  +1
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null
-and s.taarich =   to_date(pDt,'yyyymmdd')  +1
-and s.taarich  = p.taarich
-and s.mispar_ishi=p.mispar_ishi
-and s.mispar_sidur=p.mispar_sidur
-and p.shat_hatchala_sidur=s.shat_hatchala
-and s.shayah_leyom_kodem=1;
+FROM TB_PEILUT_OVDIM p, TB_YAMEY_AVODA_OVDIM y,TB_SIDURIM_OVDIM s
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL
+AND s.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+AND s.taarich  = p.taarich
+AND s.mispar_ishi=p.mispar_ishi
+AND s.mispar_sidur=p.mispar_sidur
+AND p.shat_hatchala_sidur=s.shat_hatchala
+AND s.shayah_leyom_kodem=1;
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,3,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,3,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin
- insert into trail_peilut_ovdim t
+BEGIN
+ INSERT INTO TRAIL_PEILUT_OVDIM t
 (t.MISPAR_ISHI   ,  t.TAARICH  ,  t.MISPAR_sidur  ,  t.Shat_hatchala_sidur	,
   t.Shat_yetzia		,  t.Mispar_knisa		,  t.Makat_nesia	,  t.Oto_no	,  t.Mispar_siduri_oto	 ,  t.Kisuy_tor		,  t.Bitul_O_Hosafa	,  t.Kod_shinuy_premia	  ,
   t.Snif_tnua	   ,  t.Mispar_visa		,  t.Imut_netzer		,  t.Shat_Bhirat_Nesia_Netzer  ,  t.Oto_No_Netzer		,  t.Mispar_Sidur_Netzer	 ,  t.Shat_yetzia_Netzer	,
   t.Makat_Netzer		,  t.Shilut_Netzer		,  t.Mispar_matala	 ,  t.Dakot_bafoal		,  t.Km_visa 	,  t.TAARICH_IDKUN_ACHARON  ,  t.MEADKEN_ACHARON 	,
   t.MISPAR_ISHI_trail   ,  t.TAARICH_IDKUN_trail      ,  t.Sug_peula  	,  
   t.Mikum_Bhirat_Nesia_Netzer ,  t.heara			,  t.Teur_Nesia )
-select distinct p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
+SELECT DISTINCT p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
   p.Shat_yetzia		,  p.Mispar_knisa		,  p.Makat_nesia	,  p.Oto_no	,  p.Mispar_siduri_oto	 ,  p.Kisuy_tor		,  p.Bitul_O_Hosafa	,  p.Kod_shinuy_premia	  ,
   p.Snif_tnua	   ,  p.Mispar_visa		,  p.Imut_netzer		,  p.Shat_Bhirat_Nesia_Netzer  ,  p.Oto_No_Netzer		,  p.Mispar_Sidur_Netzer	 ,  p.Shat_yetzia_Netzer	,
   p.Makat_Netzer		,  p.Shilut_Netzer		,  p.Mispar_matala	 ,  p.Dakot_bafoal		,  p.Km_visa 	,  p.TAARICH_IDKUN_ACHARON  ,  p.MEADKEN_ACHARON 	,
- 77690  ,  sysdate      ,  8 	,  
+ 77690  ,  SYSDATE      ,  8 	,  
   p.Mikum_Bhirat_Nesia_Netzer ,  p.heara			,  p.Teur_Nesia  
-from tb_peilut_ovdim p, tb_yamey_avoda_ovdim y, tb_sidurim_ovdim s
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1 
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =  to_date(pDt,'yyyymmdd')  +1   
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1
-and  s.taarich =   to_date(pDt,'yyyymmdd')  +1   
-and s.taarich  = p.taarich
-and s.mispar_ishi=p.mispar_ishi
-and s.mispar_sidur=p.mispar_sidur
-and p.shat_hatchala_sidur=s.shat_hatchala
-and s.shayah_leyom_kodem=1
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')  +1    
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-							and p.shat_hatchala_sidur=s2.shat_hatchala
-						   and s2.shayah_leyom_kodem=1);
+FROM TB_PEILUT_OVDIM p, TB_YAMEY_AVODA_OVDIM y, TB_SIDURIM_OVDIM s
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1 
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =  TO_DATE(pDt,'yyyymmdd')  +1   
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1
+AND  s.taarich =   TO_DATE(pDt,'yyyymmdd')  +1   
+AND s.taarich  = p.taarich
+AND s.mispar_ishi=p.mispar_ishi
+AND s.mispar_sidur=p.mispar_sidur
+AND p.shat_hatchala_sidur=s.shat_hatchala
+AND s.shayah_leyom_kodem=1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')  +1    
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+							AND p.shat_hatchala_sidur=s2.shat_hatchala
+						   AND s2.shayah_leyom_kodem=1);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,4,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,4,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin						   
-delete from tb_peilut_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and exists (select * from  tb_yamey_avoda_ovdim y
- where  y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null)
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and s.shayah_leyom_kodem=1)  ;
+BEGIN						   
+DELETE FROM TB_PEILUT_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y
+ WHERE  y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND s.shayah_leyom_kodem=1)  ;
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,5,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,5,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin						   
-delete from tb_peilut_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and exists (select * from   tb_yamey_avoda_ovdim y
-where   y.taarich =  to_date(pDt,'yyyymmdd')    
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1)
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')    
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and s.shayah_leyom_kodem=1
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and (s.mispar_sidur < 99000 or s.mispar_sidur> 99999));
+BEGIN						   
+DELETE FROM TB_PEILUT_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND EXISTS (SELECT * FROM   TB_YAMEY_AVODA_OVDIM y
+WHERE   y.taarich =  TO_DATE(pDt,'yyyymmdd')    
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')    
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND s.shayah_leyom_kodem=1
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND (s.mispar_sidur < 99000 OR s.mispar_sidur> 99999));
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,6,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,6,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin						   
-delete from tb_peilut_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and exists (select * from  tb_yamey_avoda_ovdim y  
-where   y.taarich =   to_date(pDt,'yyyymmdd')  +1
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null)
-and exists (select * from tb_sidurim_ovdim s
-where  s.taarich =   to_date(pDt,'yyyymmdd')  +1
-and s.taarich  = p.taarich
-and s.mispar_ishi=p.mispar_ishi
-and s.mispar_sidur=p.mispar_sidur
-and p.shat_hatchala_sidur=s.shat_hatchala
-and s.shayah_leyom_kodem=1);
+BEGIN						   
+DELETE FROM TB_PEILUT_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y  
+WHERE   y.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL)
+AND EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+WHERE  s.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+AND s.taarich  = p.taarich
+AND s.mispar_ishi=p.mispar_ishi
+AND s.mispar_sidur=p.mispar_sidur
+AND p.shat_hatchala_sidur=s.shat_hatchala
+AND s.shayah_leyom_kodem=1);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,7,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,7,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin
-delete from tb_peilut_ovdim p
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1 
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and exists (select * from tb_yamey_avoda_ovdim y 
-where  y.taarich =  to_date(pDt,'yyyymmdd')  +1   
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1)
-and exists (select * from  tb_sidurim_ovdim s
-where   s.taarich =   to_date(pDt,'yyyymmdd')  +1   
-and s.taarich  = p.taarich
-and s.mispar_ishi=p.mispar_ishi
-and s.mispar_sidur=p.mispar_sidur
-and p.shat_hatchala_sidur=s.shat_hatchala
-and s.shayah_leyom_kodem=1)
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')  +1    
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-							and p.shat_hatchala_sidur=s2.shat_hatchala
-						   and s2.shayah_leyom_kodem=1);
+BEGIN
+DELETE FROM TB_PEILUT_OVDIM p
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1 
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND EXISTS (SELECT * FROM TB_YAMEY_AVODA_OVDIM y 
+WHERE  y.taarich =  TO_DATE(pDt,'yyyymmdd')  +1   
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1)
+AND EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s
+WHERE   s.taarich =   TO_DATE(pDt,'yyyymmdd')  +1   
+AND s.taarich  = p.taarich
+AND s.mispar_ishi=p.mispar_ishi
+AND s.mispar_sidur=p.mispar_sidur
+AND p.shat_hatchala_sidur=s.shat_hatchala
+AND s.shayah_leyom_kodem=1)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')  +1    
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+							AND p.shat_hatchala_sidur=s2.shat_hatchala
+						   AND s2.shayah_leyom_kodem=1);
 							   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,8,sysdate,'',10,'',substr('trail_peilut '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,8,SYSDATE,'',10,'',SUBSTR('trail_peilut '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
 		END  pro_TrailNDel_peilut_4retrSdrn;
 
 		
-	PROCEDURE pro_TrailNDel_sidurim_4reSdrn(pDt varchar) IS
+	PROCEDURE pro_TrailNDel_sidurim_4reSdrn(pDt VARCHAR) IS
 
    BEGIN
    
-   begin
-   	 insert into trail_sidurim_ovdim t
+   BEGIN
+   	 INSERT INTO TRAIL_SIDURIM_OVDIM t
  ( MISPAR_ISHI  ,  MISPAR_sidur    ,  TAARICH ,  Shat_hatchala		,  
  Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
@@ -17803,30 +18374,30 @@ commit;
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,  Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
   Sector_Visa 		,  MEADKEN_ACHARON 	 ,  TAARICH_IDKUN_ACHARON   ,  MISPAR_ISHI_trail     ,  TAARICH_IDKUN_trail   , Sug_peula , heara	,sug_sidur	 )
-select distinct p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
+SELECT DISTINCT p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
   Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
   Mispar_Musach_O_Machsan	,  Kod_siba_lo_letashlum		,  Kod_siba_ledivuch_yadani_in	,  Kod_siba_ledivuch_yadani_out	,  Menahel_Musach_Meadken	,
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,    Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
-  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  sysdate  ,8    ,  p.heara 	,p.sug_sidur
-from tb_sidurim_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null
-and nvl(p.shayah_leyom_kodem,0)=0 ;
+  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  SYSDATE  ,8    ,  p.heara 	,p.sug_sidur
+FROM TB_SIDURIM_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL
+AND NVL(p.shayah_leyom_kodem,0)=0 ;
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,10,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,10,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin
-  	 insert into trail_sidurim_ovdim t
+BEGIN
+  	 INSERT INTO TRAIL_SIDURIM_OVDIM t
  ( MISPAR_ISHI  ,  MISPAR_sidur    ,  TAARICH ,  Shat_hatchala		,  
  Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
@@ -17834,37 +18405,37 @@ begin
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,  Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
   Sector_Visa 		,  MEADKEN_ACHARON 	 ,  TAARICH_IDKUN_ACHARON   ,  MISPAR_ISHI_trail     ,  TAARICH_IDKUN_trail   , Sug_peula , heara		,sug_sidur	 )
-select distinct p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
+SELECT DISTINCT p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
   Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
   Mispar_Musach_O_Machsan	,  Kod_siba_lo_letashlum		,  Kod_siba_ledivuch_yadani_in	,  Kod_siba_ledivuch_yadani_out	,  Menahel_Musach_Meadken	,
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,    Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
-  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  sysdate  ,8    ,  p.heara,p.sug_sidur
-from tb_sidurim_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =  to_date(pDt,'yyyymmdd')    
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1
-and   nvl(p.shayah_leyom_kodem,0)=0
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')    
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-						   and nvl(s2.shayah_leyom_kodem,0)=0);
+  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  SYSDATE  ,8    ,  p.heara,p.sug_sidur
+FROM TB_SIDURIM_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =  TO_DATE(pDt,'yyyymmdd')    
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1
+AND   NVL(p.shayah_leyom_kodem,0)=0
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')    
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+						   AND NVL(s2.shayah_leyom_kodem,0)=0);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,11,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,11,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
- begin
-  	 insert into trail_sidurim_ovdim t
+ BEGIN
+  	 INSERT INTO TRAIL_SIDURIM_OVDIM t
  ( MISPAR_ISHI  ,  MISPAR_sidur    ,  TAARICH ,  Shat_hatchala		,  
  Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
@@ -17872,30 +18443,30 @@ commit;
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,  Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
   Sector_Visa 		,  MEADKEN_ACHARON 	 ,  TAARICH_IDKUN_ACHARON   ,  MISPAR_ISHI_trail     ,  TAARICH_IDKUN_trail   , Sug_peula , heara	,sug_sidur	 )
-select distinct p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
+SELECT DISTINCT p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
   Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
   Mispar_Musach_O_Machsan	,  Kod_siba_lo_letashlum		,  Kod_siba_ledivuch_yadani_in	,  Kod_siba_ledivuch_yadani_out	,  Menahel_Musach_Meadken	,
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,    Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
-  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  sysdate  ,8    ,  p.heara, p.sug_sidur
-from tb_sidurim_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =   to_date(pDt,'yyyymmdd') +1 
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null
-and p.shayah_leyom_kodem=1 ;
+  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  SYSDATE  ,8    ,  p.heara, p.sug_sidur
+FROM TB_SIDURIM_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =   TO_DATE(pDt,'yyyymmdd') +1 
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL
+AND p.shayah_leyom_kodem=1 ;
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,12,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,12,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
- begin
-  	 insert into trail_sidurim_ovdim t
+ BEGIN
+  	 INSERT INTO TRAIL_SIDURIM_OVDIM t
  ( MISPAR_ISHI  ,  MISPAR_sidur    ,  TAARICH ,  Shat_hatchala		,  
  Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
@@ -17903,960 +18474,960 @@ commit;
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,  Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
   Sector_Visa 		,  MEADKEN_ACHARON 	 ,  TAARICH_IDKUN_ACHARON   ,  MISPAR_ISHI_trail     ,  TAARICH_IDKUN_trail   , Sug_peula , heara		,sug_sidur	 )
-select distinct p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
+SELECT DISTINCT p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
   Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
   Mispar_Musach_O_Machsan	,  Kod_siba_lo_letashlum		,  Kod_siba_ledivuch_yadani_in	,  Kod_siba_ledivuch_yadani_out	,  Menahel_Musach_Meadken	,
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,    Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
-  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  sysdate  ,8    ,  p.heara	,p.sug_sidur
-from tb_sidurim_ovdim p, tb_yamey_avoda_ovdim y
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and  y.taarich =  to_date(pDt,'yyyymmdd')    +1
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1
-and    p.shayah_leyom_kodem=1
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')    +1
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-						   and s2.shayah_leyom_kodem=1);
+  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  SYSDATE  ,8    ,  p.heara	,p.sug_sidur
+FROM TB_SIDURIM_OVDIM p, TB_YAMEY_AVODA_OVDIM y
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND  y.taarich =  TO_DATE(pDt,'yyyymmdd')    +1
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1
+AND    p.shayah_leyom_kodem=1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')    +1
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+						   AND s2.shayah_leyom_kodem=1);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,13,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,13,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 						   
-begin
-delete from  tb_sidurim_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and nvl(p.shayah_leyom_kodem,0)=0
- and  exists (select * from  tb_yamey_avoda_ovdim y
- where y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null );
+BEGIN
+DELETE FROM  TB_SIDURIM_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND NVL(p.shayah_leyom_kodem,0)=0
+ AND  EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y
+ WHERE y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL );
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,14,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,14,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin
- delete  from tb_sidurim_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and   nvl(p.shayah_leyom_kodem,0)=0
- and  exists (select * from  tb_yamey_avoda_ovdim y
- where y.taarich =  to_date(pDt,'yyyymmdd')    
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1)
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')    
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-						   and nvl(s2.shayah_leyom_kodem,0)=0);
+BEGIN
+ DELETE  FROM TB_SIDURIM_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND   NVL(p.shayah_leyom_kodem,0)=0
+ AND  EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y
+ WHERE y.taarich =  TO_DATE(pDt,'yyyymmdd')    
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')    
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+						   AND NVL(s2.shayah_leyom_kodem,0)=0);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,15,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,15,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 						   
-begin
-delete  from tb_sidurim_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and p.shayah_leyom_kodem=1
- and  exists (select * from  tb_yamey_avoda_ovdim y
- where y.taarich =   to_date(pDt,'yyyymmdd') +1 
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg is null );
+BEGIN
+DELETE  FROM TB_SIDURIM_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND p.shayah_leyom_kodem=1
+ AND  EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y
+ WHERE y.taarich =   TO_DATE(pDt,'yyyymmdd') +1 
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg IS NULL );
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,16,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,16,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-begin
-delete from tb_sidurim_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  +1
- and (p.mispar_sidur < 99000 or p.mispar_sidur> 99999)
- and    p.shayah_leyom_kodem=1
- and  exists (select * from  tb_yamey_avoda_ovdim y
- where  y.taarich =  to_date(pDt,'yyyymmdd')    +1
-and y.taarich  = p.taarich
-and y.mispar_ishi=p.mispar_ishi
-and y.measher_o_mistayeg =1)
-and  not exists (select * from tb_sidurim_ovdim s2
- 	 				  	   where s2.taarich =   to_date(pDt,'yyyymmdd')    +1
-						   and s2.taarich  = p.taarich
-						   and s2.mispar_ishi=p.mispar_ishi
-						   and s2.mispar_sidur=p.mispar_sidur
-						    and (s2.mispar_sidur < 99000 or s2.mispar_sidur> 99999)
-						   and s2.shayah_leyom_kodem=1);
+BEGIN
+DELETE FROM TB_SIDURIM_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  +1
+ AND (p.mispar_sidur < 99000 OR p.mispar_sidur> 99999)
+ AND    p.shayah_leyom_kodem=1
+ AND  EXISTS (SELECT * FROM  TB_YAMEY_AVODA_OVDIM y
+ WHERE  y.taarich =  TO_DATE(pDt,'yyyymmdd')    +1
+AND y.taarich  = p.taarich
+AND y.mispar_ishi=p.mispar_ishi
+AND y.measher_o_mistayeg =1)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+ 	 				  	   WHERE s2.taarich =   TO_DATE(pDt,'yyyymmdd')    +1
+						   AND s2.taarich  = p.taarich
+						   AND s2.mispar_ishi=p.mispar_ishi
+						   AND s2.mispar_sidur=p.mispar_sidur
+						    AND (s2.mispar_sidur < 99000 OR s2.mispar_sidur> 99999)
+						   AND s2.shayah_leyom_kodem=1);
 						   EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,17,sysdate,'',10,'',substr('trail_sidurim '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,17,SYSDATE,'',10,'',SUBSTR('trail_sidurim '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 						   
 		END  pro_TrailNDel_sidurim_4reSdrn;   
 		
-	PROCEDURE pro_ins_sidurim_retroSdrn(pDt varchar) IS
+	PROCEDURE pro_ins_sidurim_retroSdrn(pDt VARCHAR) IS
 --	err_str  varchar2(1000);
 	
 	  CURSOR Sidurim_Retro1 IS
-	  select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt=  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and not exists (select *  from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+	  SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND NOT EXISTS (SELECT *  FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 
 	  CURSOR Sidurim_Retro2 IS
-  select   distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule>2359
+  SELECT   DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule>2359
  --and schedule_num<100000
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=k1.driver_id
-and  taarich=k1.start_dt)
-and not exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=k1.driver_id
-and  s2.taarich= k1.start_dt
-and s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<k1.start_dt+1)
-and  not  exists ( select * from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k1.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.schedule_num=k1.schedule_num
-and k2.start_schedule<2400
-and k2.end_schedule>2359
-and k1.start_dt= k2.start_dt
-and   k2.driver_id =k1.driver_id
-and k2.start_schedule=k1.start_schedule
-and k2.end_schedule<>k1.end_schedule)
-and not exists (select * from tb_sidurim_ovdim s3
-where   s3.taarich = to_date(pDt,'yyyymmdd')
-and s3.taarich =  k1.start_dt
-and  s3.mispar_ishi =k1.driver_id
-and  s3.mispar_sidur =k1.schedule_num
-and  s3.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=k1.driver_id
+AND  taarich=k1.start_dt)
+AND NOT EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=k1.driver_id
+AND  s2.taarich= k1.start_dt
+AND s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<k1.start_dt+1)
+AND  NOT  EXISTS ( SELECT * FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k1.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.schedule_num=k1.schedule_num
+AND k2.start_schedule<2400
+AND k2.end_schedule>2359
+AND k1.start_dt= k2.start_dt
+AND   k2.driver_id =k1.driver_id
+AND k2.start_schedule=k1.start_schedule
+AND k2.end_schedule<>k1.end_schedule)
+AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s3
+WHERE   s3.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s3.taarich =  k1.start_dt
+AND  s3.mispar_ishi =k1.driver_id
+AND  s3.mispar_sidur =k1.schedule_num
+AND  s3.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 	  
 	  	  CURSOR Sidurim_Retro3 IS
-select   distinct driver_id,start_dt+1start_dt,schedule_num,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa ,-12 meadken,1 Shayah	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and end_schedule>2359
+SELECT   DISTINCT driver_id,start_dt+1start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa ,-12 meadken,1 Shayah	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND end_schedule>2359
  --and schedule_num<100000
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt+1)
-and not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')+1
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt+1,'yyyymmdd')||' '||substr(lpad(k1.start_schedule-2400,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt+1)
+AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')+1
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 CURSOR Sidurim_Retro4 IS
-  select   distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and end_schedule>2359
+  SELECT   DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND end_schedule>2359
  --and schedule_num<100000
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt)
-and  exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1)
-and  not exists (select * from tb_sidurim_ovdim s3
-where   s3.taarich = to_date(pDt,'yyyymmdd')+1
-and s3.taarich =  start_dt
-and  s3.mispar_ishi =driver_id
-and  s3.mispar_sidur =schedule_num
-and  s3.shat_hatchala =  to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt)
+AND  EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s3
+WHERE   s3.taarich = TO_DATE(pDt,'yyyymmdd')+1
+AND s3.taarich =  start_dt
+AND  s3.mispar_ishi =driver_id
+AND  s3.mispar_sidur =schedule_num
+AND  s3.shat_hatchala =  TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 		 CURSOR Sidurim_Retro5 IS
-select   distinct driver_id,start_dt+1 start_dt,schedule_num,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(end_schedule,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,1 Shayah	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and end_schedule<2400
+SELECT   DISTINCT driver_id,start_dt+1 start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken,1 Shayah	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND end_schedule<2400
  --and schedule_num<100000
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt)
-and not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt)
+AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 	  CURSOR Trail_Sidurim_Retro1 IS
-select   distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-where start_dt =  to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and end_schedule>2359
- and  exists(select * from tb_yamey_avoda_ovdim
-where  mispar_ishi=driver_id
-and  taarich=start_dt)
-and  exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1);
+SELECT   DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND end_schedule>2359
+ AND  EXISTS(SELECT * FROM TB_YAMEY_AVODA_OVDIM
+WHERE  mispar_ishi=driver_id
+AND  taarich=start_dt)
+AND  EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1);
 
 	  CURSOR Trail_Sidurim_Retro2 IS
- select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+ SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 CURSOR Sidurim_Retro6 IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select min(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and  not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MIN(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 CURSOR Sidurim_Retro7 IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa , -12 meadken	,sug_sidur
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and  exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt =  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and  not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') +1/1440 hatchala,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa , -12 meadken	,sug_sidur
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND  EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'));
 
 CURSOR Sidurim_Retro8 IS
-select  distinct driver_id,start_dt,schedule_num,
-to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(end_schedule-2400,4,0),1,2)||':'||substr(lpad(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt = to_date(pDt,'yyyymmdd') 
-and k1.start_schedule<2400
-and k1.end_schedule>2359
-and    exists ( select * from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k1.start_dt = to_date(pDt,'yyyymmdd') 
-and k2.start_schedule<2400
-and k2.end_schedule>2359
-and k1.start_dt= k2.start_dt
-and   k2.driver_id =k1.driver_id
-and k2.schedule_num=k1.schedule_num
-and k2.start_schedule=k1.start_schedule
-and k2.end_schedule<>k1.end_schedule)
-and  not exists (select * from tb_sidurim_ovdim s2
-where   s2.taarich = to_date(pDt,'yyyymmdd')
-and s2.taarich =  k1.start_dt
-and  s2.mispar_ishi =k1.driver_id
-and  s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala =  to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'))
-order by driver_id;
+SELECT  DISTINCT driver_id,start_dt,schedule_num,
+TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(end_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa, -12 meadken	,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd') 
+AND k1.start_schedule<2400
+AND k1.end_schedule>2359
+AND    EXISTS ( SELECT * FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd') 
+AND k2.start_schedule<2400
+AND k2.end_schedule>2359
+AND k1.start_dt= k2.start_dt
+AND   k2.driver_id =k1.driver_id
+AND k2.schedule_num=k1.schedule_num
+AND k2.start_schedule=k1.start_schedule
+AND k2.end_schedule<>k1.end_schedule)
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s2
+WHERE   s2.taarich = TO_DATE(pDt,'yyyymmdd')
+AND s2.taarich =  k1.start_dt
+AND  s2.mispar_ishi =k1.driver_id
+AND  s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala =  TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi'))
+ORDER BY driver_id;
 			  
    BEGIN
 --     err_str:='';
 	 
   FOR  Sidurim_Retro1_rec IN  Sidurim_Retro1 LOOP
 BEGIN
- 		 insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
-values (Sidurim_Retro1_rec.driver_id,Sidurim_Retro1_rec.start_dt,  Sidurim_Retro1_rec.schedule_num,  
+ 		 INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
+VALUES (Sidurim_Retro1_rec.driver_id,Sidurim_Retro1_rec.start_dt,  Sidurim_Retro1_rec.schedule_num,  
 Sidurim_Retro1_rec.hatchala,Sidurim_Retro1_rec.gmar,  Sidurim_Retro1_rec.sug_visa,   Sidurim_Retro1_rec.meadken ,Sidurim_Retro1_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,60) '|| to_char(Sidurim_Retro1_rec.driver_id) ||' '||to_char(Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,20,sysdate,'',10,'',substr(to_char(Sidurim_Retro1_rec.driver_id) ||' '||to_char(Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));   
- end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,20,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro1_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));   
+ END;
 END LOOP;
-commit;
+COMMIT;
   
 		 
 FOR  Sidurim_Retro2_rec IN  Sidurim_Retro2 LOOP
 BEGIN
-insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
-values (Sidurim_Retro2_rec.driver_id,Sidurim_Retro2_rec.start_dt,  Sidurim_Retro2_rec.schedule_num,  
+INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
+VALUES (Sidurim_Retro2_rec.driver_id,Sidurim_Retro2_rec.start_dt,  Sidurim_Retro2_rec.schedule_num,  
 Sidurim_Retro2_rec.hatchala,Sidurim_Retro2_rec.gmar,  Sidurim_Retro2_rec.sug_visa,   Sidurim_Retro2_rec.meadken ,Sidurim_Retro2_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,61) '||to_char(Sidurim_Retro2_rec.driver_id) ||' '||to_char(Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,21,sysdate,'',10,'',substr(to_char(Sidurim_Retro2_rec.driver_id) ||' '||to_char(Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-  end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,21,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro2_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+  END;
 END LOOP;
-commit;
+COMMIT;
   
 FOR  Sidurim_Retro3_rec IN  Sidurim_Retro3 LOOP
 BEGIN
-insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,
+INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,
  meadken_acharon,Shayah_LeYom_Kodem 	,sug_sidur  )
-values (Sidurim_Retro3_rec.driver_id,Sidurim_Retro3_rec.start_dt,  Sidurim_Retro3_rec.schedule_num,  
+VALUES (Sidurim_Retro3_rec.driver_id,Sidurim_Retro3_rec.start_dt,  Sidurim_Retro3_rec.schedule_num,  
 Sidurim_Retro3_rec.hatchala,Sidurim_Retro3_rec.gmar,  Sidurim_Retro3_rec.sug_visa,   Sidurim_Retro3_rec.meadken ,Sidurim_Retro3_rec.Shayah,Sidurim_Retro3_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,62) '||to_char(Sidurim_Retro3_rec.driver_id) ||' '||to_char(Sidurim_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,22,sysdate,'',10,'',substr(to_char(Sidurim_Retro3_rec.driver_id) ||' '||to_char(Sidurim_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-  end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,22,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro3_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+  END;
 END LOOP;
-commit;
+COMMIT;
  
  
 FOR  Sidurim_Retro4_rec IN  Sidurim_Retro4 LOOP
 BEGIN
-insert into tb_sidurim_ovdim ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
+INSERT INTO TB_SIDURIM_OVDIM ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  ,
 shat_gmar,sector_visa,meadken_acharon  	,sug_sidur )
-values (Sidurim_Retro4_rec.driver_id,Sidurim_Retro4_rec.start_dt,  Sidurim_Retro4_rec.schedule_num,  Sidurim_Retro4_rec.hatchala,
+VALUES (Sidurim_Retro4_rec.driver_id,Sidurim_Retro4_rec.start_dt,  Sidurim_Retro4_rec.schedule_num,  Sidurim_Retro4_rec.hatchala,
 Sidurim_Retro4_rec.gmar,  Sidurim_Retro4_rec.sug_visa,   Sidurim_Retro4_rec.meadken  ,Sidurim_Retro4_rec.sug_sidur );
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,63) '|| to_char(Sidurim_Retro4_rec.driver_id) ||' '||to_char(Sidurim_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,23,sysdate,'',10,'',substr(to_char(Sidurim_Retro4_rec.driver_id) ||' '||to_char(Sidurim_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-  end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,23,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro4_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+  END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Sidurim_Retro5_rec IN  Sidurim_Retro5 LOOP
 BEGIN
- insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,
+ INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,
  meadken_acharon,Shayah_LeYom_Kodem 	,sug_sidur  )
- values (Sidurim_Retro5_rec.driver_id,Sidurim_Retro5_rec.start_dt,  Sidurim_Retro5_rec.schedule_num,  
+ VALUES (Sidurim_Retro5_rec.driver_id,Sidurim_Retro5_rec.start_dt,  Sidurim_Retro5_rec.schedule_num,  
 Sidurim_Retro5_rec.hatchala,Sidurim_Retro5_rec.gmar,  Sidurim_Retro5_rec.sug_visa,   Sidurim_Retro5_rec.meadken ,Sidurim_Retro5_rec.Shayah,Sidurim_Retro5_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,64) '||to_char(Sidurim_Retro5_rec.driver_id) ||' '||to_char(Sidurim_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,24,sysdate,'',10,'',substr(to_char(Sidurim_Retro5_rec.driver_id) ||' '||to_char(Sidurim_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
- end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,24,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro5_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+ END;
 END LOOP;
-commit;
+COMMIT;
  
  
 FOR  Trail_Sidurim_Retro1_rec IN  Trail_Sidurim_Retro1 LOOP
 BEGIN
-insert into trail_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  	,sug_sidur )
- values (Trail_Sidurim_Retro1_rec.driver_id,Trail_Sidurim_Retro1_rec.start_dt,  Trail_Sidurim_Retro1_rec.schedule_num,  
+INSERT INTO TRAIL_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon  	,sug_sidur )
+ VALUES (Trail_Sidurim_Retro1_rec.driver_id,Trail_Sidurim_Retro1_rec.start_dt,  Trail_Sidurim_Retro1_rec.schedule_num,  
 Trail_Sidurim_Retro1_rec.hatchala,Trail_Sidurim_Retro1_rec.gmar,  Trail_Sidurim_Retro1_rec.sug_visa,   Trail_Sidurim_Retro1_rec.meadken ,Trail_Sidurim_Retro1_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,65) '||to_char(Trail_Sidurim_Retro1_rec.driver_id) ||' '||to_char(Trail_Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
- 	insert into tb_log_tahalich
-	values (15,1,25,sysdate,'',10,'',substr(to_char(Trail_Sidurim_Retro1_rec.driver_id) ||' '||to_char(Trail_Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,25,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Trail_Sidurim_Retro1_rec.driver_id) ||' '||TO_CHAR(Trail_Sidurim_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP; 
-commit;
+COMMIT;
  
 FOR  Trail_Sidurim_Retro2_rec IN  Trail_Sidurim_Retro2 LOOP
 BEGIN
- insert into trail_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
- values (Trail_Sidurim_Retro2_rec.driver_id,Trail_Sidurim_Retro2_rec.start_dt,  Trail_Sidurim_Retro2_rec.schedule_num,  
+ INSERT INTO TRAIL_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon 	,sug_sidur  )
+ VALUES (Trail_Sidurim_Retro2_rec.driver_id,Trail_Sidurim_Retro2_rec.start_dt,  Trail_Sidurim_Retro2_rec.schedule_num,  
 Trail_Sidurim_Retro2_rec.hatchala,Trail_Sidurim_Retro2_rec.gmar,  Trail_Sidurim_Retro2_rec.sug_visa,   Trail_Sidurim_Retro2_rec.meadken ,Trail_Sidurim_Retro2_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,66) '|| to_char(Trail_Sidurim_Retro2_rec.driver_id) ||' '||to_char(Trail_Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (15,1,26,sysdate,'',10,'',substr(to_char(Trail_Sidurim_Retro2_rec.driver_id) ||' '||to_char(Trail_Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,26,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Trail_Sidurim_Retro2_rec.driver_id) ||' '||TO_CHAR(Trail_Sidurim_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP;
-commit;
+COMMIT;
   
 	
 FOR  Sidurim_Retro6_rec IN  Sidurim_Retro6 LOOP
 BEGIN
- insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon 	,sug_sidur  )
- values (Sidurim_Retro6_rec.driver_id,Sidurim_Retro6_rec.start_dt,  Sidurim_Retro6_rec.schedule_num,  
+ INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon 	,sug_sidur  )
+ VALUES (Sidurim_Retro6_rec.driver_id,Sidurim_Retro6_rec.start_dt,  Sidurim_Retro6_rec.schedule_num,  
 Sidurim_Retro6_rec.hatchala,Sidurim_Retro6_rec.gmar,  Sidurim_Retro6_rec.sug_visa,   Sidurim_Retro6_rec.meadken ,Sidurim_Retro6_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,67) '||to_char(Sidurim_Retro6_rec.driver_id) ||' '||to_char(Sidurim_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (15,1,27,sysdate,'',10,'',substr(to_char(Sidurim_Retro6_rec.driver_id) ||' '||to_char(Sidurim_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,27,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro6_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Sidurim_Retro7_rec IN  Sidurim_Retro7 LOOP
 BEGIN
- insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon  	,sug_sidur )
- values (Sidurim_Retro7_rec.driver_id,Sidurim_Retro7_rec.start_dt,  Sidurim_Retro7_rec.schedule_num,  
+ INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon  	,sug_sidur )
+ VALUES (Sidurim_Retro7_rec.driver_id,Sidurim_Retro7_rec.start_dt,  Sidurim_Retro7_rec.schedule_num,  
 Sidurim_Retro7_rec.hatchala,Sidurim_Retro7_rec.gmar,  Sidurim_Retro7_rec.sug_visa,   Sidurim_Retro7_rec.meadken,Sidurim_Retro7_rec.sug_sidur );
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,68) '||to_char(Sidurim_Retro7_rec.driver_id) ||' '||to_char(Sidurim_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (15,1,28,sysdate,'',10,'',substr(to_char(Sidurim_Retro7_rec.driver_id) ||' '||to_char(Sidurim_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-     end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,28,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro7_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+     END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Sidurim_Retro8_rec IN  Sidurim_Retro8 LOOP
 BEGIN
- insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon 	,sug_sidur  )
- values (Sidurim_Retro8_rec.driver_id,Sidurim_Retro8_rec.start_dt,  Sidurim_Retro8_rec.schedule_num,  
+ INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa, meadken_acharon 	,sug_sidur  )
+ VALUES (Sidurim_Retro8_rec.driver_id,Sidurim_Retro8_rec.start_dt,  Sidurim_Retro8_rec.schedule_num,  
 Sidurim_Retro8_rec.hatchala,Sidurim_Retro8_rec.gmar,  Sidurim_Retro8_rec.sug_visa,   Sidurim_Retro8_rec.meadken  ,Sidurim_Retro8_rec.sug_sidur);
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,69) '||to_char(Sidurim_Retro8_rec.driver_id) ||' '||to_char(Sidurim_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (15,1,29,sysdate,'',10,'',substr(to_char(Sidurim_Retro8_rec.driver_id) ||' '||to_char(Sidurim_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,29,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_Retro8_rec.driver_id) ||' '||TO_CHAR(Sidurim_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 		BEGIN
- update TB_Sidurim_Ovdim 
-set   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
- where taarich= to_date(pDt,'yyyymmdd')
-and meadken_acharon=-12
-and Lo_letashlum is null
- and Kod_Siba_Lo_Letashlum is null;
+ UPDATE TB_SIDURIM_OVDIM 
+SET   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND meadken_acharon=-12
+AND Lo_letashlum IS NULL
+ AND Kod_Siba_Lo_Letashlum IS NULL;
 
   EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,6) '||'update_sidurim_retro '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (15,1,30,sysdate,'',10,'',substr('update_sidurim_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
-commit;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,30,SYSDATE,'',10,'',SUBSTR('update_sidurim_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
+COMMIT;
 	
 		END  pro_ins_sidurim_retroSdrn;   
 	
 
 
-PROCEDURE pro_ins_peilut_retroSdrn(pDt varchar) IS
+PROCEDURE pro_ins_peilut_retroSdrn(pDt VARCHAR) IS
 --err_str  varchar2(1000);
 
 		 CURSOR Peilut_Retro1 IS
-select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time<2400
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
-select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time<2400
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time<2400
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time<2400
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
  		 CURSOR Peilut_Retro2 IS
-		 select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+		 SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and not exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
- select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+ AND NOT EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+ SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and not exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;		
+ AND NOT EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;		
 						   
 		 CURSOR Peilut_Retro3 IS
-		 select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+		 SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and start_time>2359
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
-select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND start_time>2359
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and start_time>2359
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND start_time>2359
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
 		 CURSOR Peilut_Retro4 IS
-		 select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+		 SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
-select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+ AND EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule<2400
-and start_time>2359
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule<2400
+AND start_time>2359
  --and schedule_num<100000;
- and exists (select * from  tb_sidurim_ovdim s2
-where s2.mispar_ishi=driver_id
-and  s2.taarich= start_dt
-and s2.mispar_sidur =schedule_num
-and  s2.shat_hatchala =to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.shat_gmar<start_dt+1)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+ AND EXISTS (SELECT * FROM  TB_SIDURIM_OVDIM s2
+WHERE s2.mispar_ishi=driver_id
+AND  s2.taarich= start_dt
+AND s2.mispar_sidur =schedule_num
+AND  s2.shat_hatchala =TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.shat_gmar<start_dt+1)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
 		 CURSOR Peilut_Retro5 IS
-		 select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+		 SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and start_time<2400
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
-select    driver_id,start_dt,schedule_num,branch,
- to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND start_time<2400
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+SELECT    driver_id,start_dt,schedule_num,branch,
+ TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') gmar,ride_id,
  makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,tb_yamey_avoda_ovdim y
-where  start_dt= to_date(pDt,'yyyymmdd')
-and start_schedule>2359
-and start_time<2400
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm,TB_YAMEY_AVODA_OVDIM y
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND start_schedule>2359
+AND start_time<2400
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
 		 CURSOR Peilut_Retro6 IS
-		 select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+		 SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
-and k1.end_schedule=(select min(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
- and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and not exists (select * from  tb_peilut_ovdim s2
-where s2.mispar_ishi= k1.driver_id
-and  s2.taarich= k1.start_dt
-and  s2.taarich=  to_date(pDt,'yyyymmdd')
-and s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala_sidur =to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.SHAT_YETZIA=to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.MISPAR_KNISA=k1.ride_id)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
-select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+AND k1.end_schedule=(SELECT MIN(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+ AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND NOT EXISTS (SELECT * FROM  TB_PEILUT_OVDIM s2
+WHERE s2.mispar_ishi= k1.driver_id
+AND  s2.taarich= k1.start_dt
+AND  s2.taarich=  TO_DATE(pDt,'yyyymmdd')
+AND s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala_sidur =TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.SHAT_YETZIA=TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.MISPAR_KNISA=k1.ride_id)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
-and k1.end_schedule=(select min(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
- and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and not exists (select * from  tb_peilut_ovdim s2
-where s2.mispar_ishi= k1.driver_id
-and  s2.taarich= k1.start_dt
-and  s2.taarich=  to_date(pDt,'yyyymmdd')
-and s2.mispar_sidur =k1.schedule_num
-and  s2.shat_hatchala_sidur =to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.SHAT_YETZIA=to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
-and s2.MISPAR_KNISA=k1.ride_id)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+AND k1.end_schedule=(SELECT MIN(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+ AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND NOT EXISTS (SELECT * FROM  TB_PEILUT_OVDIM s2
+WHERE s2.mispar_ishi= k1.driver_id
+AND  s2.taarich= k1.start_dt
+AND  s2.taarich=  TO_DATE(pDt,'yyyymmdd')
+AND s2.mispar_sidur =k1.schedule_num
+AND  s2.shat_hatchala_sidur =TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.SHAT_YETZIA=TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')
+AND s2.MISPAR_KNISA=k1.ride_id)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
 		 CURSOR Peilut_Retro7 IS
-		  select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+		  SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
- and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg is null
-union all
- select    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
- to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_time,4,0),1,2)||':'||substr(lpad(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
+ AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg IS NULL
+UNION ALL
+ SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,branch,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi')+1/1440  hatchala,
+ TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_time,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_time,4,0),3,2),'yyyymmdd hh24:mi')  gmar,k1.ride_id,
  k1.makat_line,bus_number,k1.bus_sequence,k1.waiting_time,
  k1.spm_time,k1.spm_bus_number,k1.spm_schedule_num,k1.spm_start_time,k1.spm_makat_line,
  k1.spm_line_sign,k1.spm_location,-12 meadken
-from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where  k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.start_time<2400
+FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE  k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.start_time<2400
  --and k1.schedule_num<100000
- and k1.end_schedule=(select max(k3.end_schedule) from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
-where k3.start_dt =  to_date(pDt,'yyyymmdd')
-and k3.start_schedule<2400
-and k3.end_schedule<2400
-and k1.driver_id=k3.driver_id
-and k1.start_dt=k3.start_dt
-and k1.schedule_num=k3.schedule_num
-and k1.start_schedule=k3.start_schedule)
-and exists (select *  from  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k2.start_schedule<2400
-and k2.end_schedule<2400
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule)
-and   y.taarich =   to_date(pDt,'yyyymmdd')  
-and y.taarich  = start_dt
-and y.mispar_ishi=driver_id
-and y.measher_o_mistayeg =1
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = start_dt
-						   and s.mispar_ishi=driver_id
-						   and s.mispar_sidur=schedule_num
-						   and s.shat_hatchala= to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
-						   and s.shayah_leyom_kodem=1) ;
+ AND k1.end_schedule=(SELECT MAX(k3.end_schedule) FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k3
+WHERE k3.start_dt =  TO_DATE(pDt,'yyyymmdd')
+AND k3.start_schedule<2400
+AND k3.end_schedule<2400
+AND k1.driver_id=k3.driver_id
+AND k1.start_dt=k3.start_dt
+AND k1.schedule_num=k3.schedule_num
+AND k1.start_schedule=k3.start_schedule)
+AND EXISTS (SELECT *  FROM  kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
+WHERE k2.start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k2.start_schedule<2400
+AND k2.end_schedule<2400
+AND k1.driver_id=k2.driver_id
+AND k1.start_dt=k2.start_dt
+AND k1.schedule_num=k2.schedule_num
+AND k1.start_schedule=k2.start_schedule
+AND k1.end_schedule<>k2.end_schedule)
+AND   y.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND y.taarich  = start_dt
+AND y.mispar_ishi=driver_id
+AND y.measher_o_mistayeg =1
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = start_dt
+						   AND s.mispar_ishi=driver_id
+						   AND s.mispar_sidur=schedule_num
+						   AND s.shat_hatchala= TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')
+						   AND s.shayah_leyom_kodem=1) ;
 						   
  		 CURSOR Peilut_Retro8 IS
-  select   distinct    start_dt, driver_id,schedule_num,
-                 to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-				 to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi') moed,
+  SELECT   DISTINCT    start_dt, driver_id,schedule_num,
+                 TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+				 TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi') moed,
 				 makat_line,ride_id,  line_description
- from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt=  to_date(pDt,'yyyymmdd')
-							and start_schedule<2400
-							and start_time<2400
-							and line_description is not null
-							and ride_id>0
-							and makat_line<50000000;
+ FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+							AND start_schedule<2400
+							AND start_time<2400
+							AND line_description IS NOT NULL
+							AND ride_id>0
+							AND makat_line<50000000;
 																	  		 				   
 						   
    BEGIN
@@ -18864,11 +19435,11 @@ and  not exists (select * from tb_sidurim_ovdim s
 	 
    FOR  Peilut_Retro1_rec IN  Peilut_Retro1 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut_Retro1_rec.driver_id,Peilut_Retro1_rec.start_dt,  Peilut_Retro1_rec.schedule_num,  Peilut_Retro1_rec.branch,
+  VALUES (Peilut_Retro1_rec.driver_id,Peilut_Retro1_rec.start_dt,  Peilut_Retro1_rec.schedule_num,  Peilut_Retro1_rec.branch,
 Peilut_Retro1_rec.hatchala,Peilut_Retro1_rec.gmar,   Peilut_Retro1_rec.ride_id, Peilut_Retro1_rec.makat_line,Peilut_Retro1_rec.bus_number,Peilut_Retro1_rec.bus_sequence,
 Peilut_Retro1_rec.waiting_time, Peilut_Retro1_rec.spm_time,Peilut_Retro1_rec.spm_bus_number,Peilut_Retro1_rec.spm_schedule_num,Peilut_Retro1_rec.spm_start_time,
 Peilut_Retro1_rec.spm_makat_line, Peilut_Retro1_rec.spm_line_sign,Peilut_Retro1_rec.spm_location, Peilut_Retro1_rec.meadken );
@@ -18876,20 +19447,20 @@ Peilut_Retro1_rec.spm_makat_line, Peilut_Retro1_rec.spm_line_sign,Peilut_Retro1_
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,70) '||to_char(Peilut_Retro1_rec.driver_id) ||' '||to_char(Peilut_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,40,sysdate,'',10,'',substr(to_char(Peilut_Retro1_rec.driver_id) ||' '||to_char(Peilut_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
- end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,40,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro1_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+ END;
 END LOOP;
-commit;
+COMMIT;
 
 
 FOR  Peilut_Retro2_rec IN  Peilut_Retro2 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut_Retro2_rec.driver_id,Peilut_Retro2_rec.start_dt,  Peilut_Retro2_rec.schedule_num,  Peilut_Retro2_rec.branch,
+  VALUES (Peilut_Retro2_rec.driver_id,Peilut_Retro2_rec.start_dt,  Peilut_Retro2_rec.schedule_num,  Peilut_Retro2_rec.branch,
 Peilut_Retro2_rec.hatchala,Peilut_Retro2_rec.gmar,   Peilut_Retro2_rec.ride_id, Peilut_Retro2_rec.makat_line,Peilut_Retro2_rec.bus_number,
 Peilut_Retro2_rec.bus_sequence,Peilut_Retro2_rec.waiting_time, Peilut_Retro2_rec.spm_time,Peilut_Retro2_rec.spm_bus_number,
 Peilut_Retro2_rec.spm_schedule_num,Peilut_Retro2_rec.spm_start_time,
@@ -18898,19 +19469,19 @@ Peilut_Retro2_rec.spm_makat_line, Peilut_Retro2_rec.spm_line_sign,Peilut_Retro2_
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,71) '|| to_char(Peilut_Retro2_rec.driver_id) ||' '||to_char(Peilut_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,41,sysdate,'',10,'',substr(to_char(Peilut_Retro2_rec.driver_id) ||' '||to_char(Peilut_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,41,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro2_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro2_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut_Retro3_rec IN  Peilut_Retro3 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
 Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
- values (Peilut_Retro3_rec.driver_id,Peilut_Retro3_rec.start_dt,  Peilut_Retro3_rec.schedule_num,  Peilut_Retro3_rec.branch,
+ VALUES (Peilut_Retro3_rec.driver_id,Peilut_Retro3_rec.start_dt,  Peilut_Retro3_rec.schedule_num,  Peilut_Retro3_rec.branch,
 Peilut_Retro3_rec.hatchala,Peilut_Retro3_rec.gmar,   Peilut_Retro3_rec.ride_id, Peilut_Retro3_rec.makat_line,Peilut_Retro3_rec.bus_number,Peilut_Retro3_rec.bus_sequence,
 Peilut_Retro3_rec.waiting_time, Peilut_Retro3_rec.spm_time,Peilut_Retro3_rec.spm_bus_number,Peilut_Retro3_rec.spm_schedule_num,Peilut_Retro3_rec.spm_start_time,
 Peilut_Retro3_rec.spm_makat_line, Peilut_Retro3_rec.spm_line_sign,Peilut_Retro3_rec.spm_location, Peilut_Retro3_rec.meadken );
@@ -18918,20 +19489,20 @@ Peilut_Retro3_rec.spm_makat_line, Peilut_Retro3_rec.spm_line_sign,Peilut_Retro3_
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,72) '||to_char(Peilut_Retro3_rec.driver_id) ||' '||to_char(Peilut_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,42,sysdate,'',10,'',substr(to_char(Peilut_Retro3_rec.driver_id) ||' '||to_char(Peilut_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
- end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,42,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro3_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro3_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+ END;
 END LOOP;
-commit;
+COMMIT;
    
 
 FOR  Peilut_Retro4_rec IN  Peilut_Retro4 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer  ,meadken_acharon )
-  values (Peilut_Retro4_rec.driver_id,Peilut_Retro4_rec.start_dt,  Peilut_Retro4_rec.schedule_num,  Peilut_Retro4_rec.branch,
+  VALUES (Peilut_Retro4_rec.driver_id,Peilut_Retro4_rec.start_dt,  Peilut_Retro4_rec.schedule_num,  Peilut_Retro4_rec.branch,
 Peilut_Retro4_rec.hatchala,Peilut_Retro4_rec.gmar,   Peilut_Retro4_rec.ride_id, Peilut_Retro4_rec.makat_line,Peilut_Retro4_rec.bus_number,Peilut_Retro4_rec.bus_sequence,
 Peilut_Retro4_rec.waiting_time, Peilut_Retro4_rec.spm_time,Peilut_Retro4_rec.spm_bus_number,Peilut_Retro4_rec.spm_schedule_num,Peilut_Retro4_rec.spm_start_time,
 Peilut_Retro4_rec.spm_makat_line, Peilut_Retro4_rec.spm_line_sign,Peilut_Retro4_rec.spm_location, Peilut_Retro4_rec.meadken );
@@ -18939,19 +19510,19 @@ Peilut_Retro4_rec.spm_makat_line, Peilut_Retro4_rec.spm_line_sign,Peilut_Retro4_
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,73) '|| to_char(Peilut_Retro4_rec.driver_id) ||' '||to_char(Peilut_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,43,sysdate,'',10,'',substr(to_char(Peilut_Retro4_rec.driver_id) ||' '||to_char(Peilut_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-  end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,43,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro4_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro4_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+  END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut_Retro5_rec IN  Peilut_Retro5 LOOP
 BEGIN
-  insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+  INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
 Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
- values (Peilut_Retro5_rec.driver_id,Peilut_Retro5_rec.start_dt,  Peilut_Retro5_rec.schedule_num,  Peilut_Retro5_rec.branch,
+ VALUES (Peilut_Retro5_rec.driver_id,Peilut_Retro5_rec.start_dt,  Peilut_Retro5_rec.schedule_num,  Peilut_Retro5_rec.branch,
 Peilut_Retro5_rec.hatchala,Peilut_Retro5_rec.gmar,   Peilut_Retro5_rec.ride_id, Peilut_Retro5_rec.makat_line,Peilut_Retro5_rec.bus_number,Peilut_Retro5_rec.bus_sequence,
 Peilut_Retro5_rec.waiting_time, Peilut_Retro5_rec.spm_time,Peilut_Retro5_rec.spm_bus_number,Peilut_Retro5_rec.spm_schedule_num,Peilut_Retro5_rec.spm_start_time,
 Peilut_Retro5_rec.spm_makat_line, Peilut_Retro5_rec.spm_line_sign,Peilut_Retro5_rec.spm_location, Peilut_Retro5_rec.meadken );
@@ -18959,19 +19530,19 @@ Peilut_Retro5_rec.spm_makat_line, Peilut_Retro5_rec.spm_line_sign,Peilut_Retro5_
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,74) '||to_char(Peilut_Retro5_rec.driver_id) ||' '||to_char(Peilut_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,44,sysdate,'',10,'',substr(to_char(Peilut_Retro5_rec.driver_id) ||' '||to_char(Peilut_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,44,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro5_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro5_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut_Retro6_rec IN  Peilut_Retro6 LOOP
 BEGIN
- insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+ INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
-  values (Peilut_Retro6_rec.driver_id,Peilut_Retro6_rec.start_dt,  Peilut_Retro6_rec.schedule_num,  Peilut_Retro6_rec.branch,
+  VALUES (Peilut_Retro6_rec.driver_id,Peilut_Retro6_rec.start_dt,  Peilut_Retro6_rec.schedule_num,  Peilut_Retro6_rec.branch,
 Peilut_Retro6_rec.hatchala,Peilut_Retro6_rec.gmar,   Peilut_Retro6_rec.ride_id, Peilut_Retro6_rec.makat_line,Peilut_Retro6_rec.bus_number,Peilut_Retro6_rec.bus_sequence,
 Peilut_Retro6_rec.waiting_time, Peilut_Retro6_rec.spm_time,Peilut_Retro6_rec.spm_bus_number,Peilut_Retro6_rec.spm_schedule_num,Peilut_Retro6_rec.spm_start_time,
 Peilut_Retro6_rec.spm_makat_line, Peilut_Retro6_rec.spm_line_sign,Peilut_Retro6_rec.spm_location, Peilut_Retro6_rec.meadken );
@@ -18979,19 +19550,19 @@ Peilut_Retro6_rec.spm_makat_line, Peilut_Retro6_rec.spm_line_sign,Peilut_Retro6_
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,75) '|| to_char(Peilut_Retro6_rec.driver_id) ||' '||to_char(Peilut_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,45,sysdate,'',10,'',substr(to_char(Peilut_Retro6_rec.driver_id) ||' '||to_char(Peilut_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-    end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,45,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro6_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro6_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+    END;
 END LOOP;
-commit;
+COMMIT;
 
 FOR  Peilut_Retro7_rec IN  Peilut_Retro7 LOOP
 BEGIN
- insert into tb_peilut_ovdim (mispar_ishi,taarich,mispar_sidur, snif_tnua, shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+ INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur, snif_tnua, shat_hatchala_sidur,shat_yetzia,mispar_knisa,
 makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
  Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
- values (Peilut_Retro7_rec.driver_id,Peilut_Retro7_rec.start_dt,  Peilut_Retro7_rec.schedule_num,  Peilut_Retro7_rec.branch,
+ VALUES (Peilut_Retro7_rec.driver_id,Peilut_Retro7_rec.start_dt,  Peilut_Retro7_rec.schedule_num,  Peilut_Retro7_rec.branch,
 Peilut_Retro7_rec.hatchala,Peilut_Retro7_rec.gmar,   Peilut_Retro7_rec.ride_id, Peilut_Retro7_rec.makat_line,Peilut_Retro7_rec.bus_number,Peilut_Retro7_rec.bus_sequence,
 Peilut_Retro7_rec.waiting_time, Peilut_Retro7_rec.spm_time,Peilut_Retro7_rec.spm_bus_number,Peilut_Retro7_rec.spm_schedule_num,Peilut_Retro7_rec.spm_start_time,
 Peilut_Retro7_rec.spm_makat_line, Peilut_Retro7_rec.spm_line_sign,Peilut_Retro7_rec.spm_location, Peilut_Retro7_rec.meadken );
@@ -18999,256 +19570,256 @@ Peilut_Retro7_rec.spm_makat_line, Peilut_Retro7_rec.spm_line_sign,Peilut_Retro7_
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,76) '||to_char(Peilut_Retro7_rec.driver_id) ||' '||to_char(Peilut_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,46,sysdate,'',10,'',substr(to_char(Peilut_Retro7_rec.driver_id) ||' '||to_char(Peilut_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-    end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,46,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro7_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro7_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+    END;
 END LOOP;
-commit;
+COMMIT;
 
 	
 BEGIN
- update tb_peilut_ovdim
- set imut_netzer=1
- where taarich= to_date(pDt,'yyyymmdd')
-  and Oto_No_Netzer>0 ;
+ UPDATE TB_PEILUT_OVDIM
+ SET imut_netzer=1
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+  AND Oto_No_Netzer>0 ;
  --and (Oto_No_Netzer>0 or Mispar_Sidur_Netzer>0  );
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,77) '|| 'update_imut_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,47,sysdate,'',10,'',substr('update_imut_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,47,SYSDATE,'',10,'',SUBSTR('update_imut_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
 
- begin
- update tb_peilut_ovdim
-set mispar_matala=mispar_sidur
- where taarich= to_date(pDt,'yyyymmdd')
- and mispar_sidur< 1000;
+ BEGIN
+ UPDATE TB_PEILUT_OVDIM
+SET mispar_matala=mispar_sidur
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+ AND mispar_sidur< 1000;
  EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,78) '|| 'update_matala_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,48,sysdate,'',10,'',substr('update_matala_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-   end;
-   commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,48,SYSDATE,'',10,'',SUBSTR('update_matala_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+   END;
+   COMMIT;
 
 FOR  Peilut_Retro8_rec IN  Peilut_Retro8 LOOP
-begin
-update tb_peilut_ovdim
-set teur_nesia=    Peilut_Retro8_rec.line_description
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich
-							and Peilut_Retro8_rec.driver_id=mispar_ishi
-							and Peilut_Retro8_rec.schedule_num=mispar_sidur
-							and Peilut_Retro8_rec.hatchala =shat_hatchala_sidur
-							and Peilut_Retro8_rec.moed =shat_yetzia
-							and Peilut_Retro8_rec.makat_line=makat_nesia
-							and Peilut_Retro8_rec.ride_id=mispar_knisa;
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=    Peilut_Retro8_rec.line_description
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich
+							AND Peilut_Retro8_rec.driver_id=mispar_ishi
+							AND Peilut_Retro8_rec.schedule_num=mispar_sidur
+							AND Peilut_Retro8_rec.hatchala =shat_hatchala_sidur
+							AND Peilut_Retro8_rec.moed =shat_yetzia
+							AND Peilut_Retro8_rec.makat_line=makat_nesia
+							AND Peilut_Retro8_rec.ride_id=mispar_knisa;
 
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,79) '|| to_char(Peilut_Retro8_rec.driver_id) ||' '||to_char(Peilut_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,49,sysdate,'',10,'',substr(to_char(Peilut_Retro8_rec.driver_id) ||' '||to_char(Peilut_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,100));
-    end;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,49,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut_Retro8_rec.driver_id) ||' '||TO_CHAR(Peilut_Retro8_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+    END;
 END LOOP;
-commit;
+COMMIT;
   
-  begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time>2359
-							and line_description is not null
-				   			and ride_id>0
-							and makat_line<50000000)
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich+1;
+  BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time>2359
+							AND line_description IS NOT NULL
+				   			AND ride_id>0
+							AND makat_line<50000000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,80) '||'update_teur_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,50,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,50,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
  
-  begin
-  update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule>2359
-							and start_time>2359
-							and line_description is not null
-				   			and ride_id>0
-							and makat_line<50000000)
-where taarich= to_date(pDt,'yyyymmdd')
-and makat_nesia<50000000
-and mispar_knisa>0
-and trunc(shat_hatchala_sidur)=taarich+1
-and trunc(shat_yetzia)=taarich+1;
+  BEGIN
+  UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule>2359
+							AND start_time>2359
+							AND line_description IS NOT NULL
+				   			AND ride_id>0
+							AND makat_line<50000000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND makat_nesia<50000000
+AND mispar_knisa>0
+AND TRUNC(shat_hatchala_sidur)=taarich+1
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --    err_str:=err_str||' (4,81) '||'update_teur_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,51,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,51,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
-   begin
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_time,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time<2400
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich;
+   BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_time,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time<2400
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich;
 EXCEPTION
    WHEN OTHERS THEN
  --   err_str:=err_str||' (4,82) '||'update_teur_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,52,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
-commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,52,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
+COMMIT;
 
  
-  begin
-  update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt,'yyyymmdd')||' '||substr(lpad(start_schedule,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule<2400
-							and start_time>2359
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich
-and trunc(shat_yetzia)=taarich+1;
+  BEGIN
+  UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule<2400
+							AND start_time>2359
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,83) '||'update_teur_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,53,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-  end;
-  commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,53,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+  END;
+  COMMIT;
 
-  begin 
-update tb_peilut_ovdim
-set teur_nesia=( select    line_description
-				 		   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
-						   	where  start_dt= taarich
-							and driver_id=mispar_ishi
-							and schedule_num=mispar_sidur
-							and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_schedule-2400,4,0),1,2)||':'||substr(lpad(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
-							 and to_date(to_char(start_dt+1,'yyyymmdd')||' '||substr(lpad(start_time-2400,4,0),1,2)||':'||substr(lpad(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
-							and makat_line=makat_nesia
-							and ride_id=mispar_knisa
-							and start_schedule>2359
-							and start_time>2359
-							and line_description is not null
-							and nvl(makat_line,0)=0
-							and schedule_num<1000)
-where taarich= to_date(pDt,'yyyymmdd')
-and nvl(makat_nesia,0)=0
-and mispar_sidur<1000
-and trunc(shat_hatchala_sidur)=taarich+1
-and trunc(shat_yetzia)=taarich+1;
+  BEGIN 
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=( SELECT    line_description
+				 		   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt= taarich
+							AND driver_id=mispar_ishi
+							AND schedule_num=mispar_sidur
+							AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_schedule-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_schedule,4,0),3,2),'yyyymmdd hh24:mi')=shat_hatchala_sidur
+							 AND TO_DATE(TO_CHAR(start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(start_time-2400,4,0),1,2)||':'||SUBSTR(LPAD(start_time,4,0),3,2),'yyyymmdd hh24:mi')=shat_yetzia
+							AND makat_line=makat_nesia
+							AND ride_id=mispar_knisa
+							AND start_schedule>2359
+							AND start_time>2359
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000)
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+AND TRUNC(shat_hatchala_sidur)=taarich+1
+AND TRUNC(shat_yetzia)=taarich+1;
 EXCEPTION
    WHEN OTHERS THEN
 --   err_str:=err_str||' (4,84) '|| 'update_teur_peilut_retro  '||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-insert into tb_log_tahalich
-	values (15,1,54,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
- end;
- commit;
+INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,54,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+ END;
+ COMMIT;
 
 	
-end pro_ins_peilut_retroSdrn;
+END pro_ins_peilut_retroSdrn;
 
 
 PROCEDURE pro_ins_YamimOfSdrn  IS
 idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam1 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and seq=1
-order by taarich;
+CURSOR  stam1 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND seq=1
+ORDER BY taarich;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_ins_yamim_4_sidurim(to_char(sysdate-1,'yyyymmdd'));
+   pro_ins_yamim_4_sidurim(TO_CHAR(SYSDATE-1,'yyyymmdd'));
 
 FOR  stam1_rec IN  stam1  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam1_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=4
-and seq=1
-and kod_peilut_tahalich=1;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=4
+AND seq=1
+AND kod_peilut_tahalich=1;
 
 	IF (idNumber >0) THEN
 --	insert into tb_log_tahalich
 --		values (4,2,2,sysdate,'',10,'',substr(to_char(77690)||' '||err_str,1,100));
-    raise_application_error(-20001, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20001, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19260,50 +19831,52 @@ END pro_ins_YamimOfSdrn;
 
 PROCEDURE pro_ins_SidurimOfSdrn   IS
 idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam2 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and seq between 21 and 29
-union all
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and seq =2;
+CURSOR  stam2 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND seq BETWEEN 21 AND 29
+UNION ALL
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND seq =2;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_ins_sidurim_4_sidurim(to_char(sysdate-1,'yyyymmdd'));
+   --pro_ins_sidurim_4_sidurim(TO_CHAR(SYSDATE-1,'yyyymmdd'));
+      -- new procedures:
+   pro_ins_sidurim_from_sdrm(TO_CHAR(SYSDATE-1,'yyyymmdd'));
 
 FOR  stam2_rec IN  stam2  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam2_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and (seq=2
-or seq between 21 and 29);
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND (seq=2
+OR seq BETWEEN 21 AND 29);
 
 	IF (idNumber >0) THEN
 --	insert into tb_log_tahalich
 --		values (4,2,2,sysdate,'',10,'',substr(to_char(77690)||' '||err_str,1,100));
-    raise_application_error(-20002, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20002, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19315,42 +19888,44 @@ END pro_ins_SidurimOfSdrn;
 
 PROCEDURE pro_ins_PeilutOfSdrn   IS
 idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam3 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and seq between 30 and 45;
+CURSOR  stam3 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND seq BETWEEN 30 AND 45;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_ins_peilut_4_sidurim(to_char(sysdate-1,'yyyymmdd'));
+   --pro_ins_peilut_4_sidurim(TO_CHAR(SYSDATE-1,'yyyymmdd'));
+      -- new procedures:
+   pro_ins_peilut_from_sdrm(TO_CHAR(SYSDATE-1,'yyyymmdd'));
 
 FOR  stam3_rec IN  stam3  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam3_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-and seq between 30 and 45;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+AND seq BETWEEN 30 AND 45;
 
 	IF (idNumber >0) THEN
 --	insert into tb_log_tahalich
 --		values (4,2,2,sysdate,'',10,'',substr(to_char(77690)||' '||err_str,1,100));
-    raise_application_error(-20003, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20003, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19362,37 +19937,37 @@ END pro_ins_PeilutOfSdrn;
 
 PROCEDURE pro_upd_CtrlOfSdrn   IS
 idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam7 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=6;
+CURSOR  stam7 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=6;
 
- begin
+ BEGIN
  idNumber:=0;
 err_str:='';
 
-   pro_upd_sdrm_control(to_char(sysdate-1,'yyyymmdd'));
+   pro_upd_sdrm_control(TO_CHAR(SYSDATE-1,'yyyymmdd'));
   FOR  stam7_rec IN  stam7  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam7_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=4
-and kod_peilut_tahalich=6;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=4
+AND kod_peilut_tahalich=6;
 
 	IF (idNumber >0) THEN
-    raise_application_error(-20007, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20007, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19405,47 +19980,47 @@ END pro_upd_CtrlOfSdrn;
    PROCEDURE pro_chk_Dt4_rerun IS
 --err_str  varchar2(1000);
  idNumber NUMBER;
-err_str varchar(1000);
+err_str VARCHAR(1000);
 		
-cursor  stam4 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=15
-and kod_peilut_tahalich=1
+CURSOR  stam4 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=15
+AND kod_peilut_tahalich=1
 --and seq=1
-union all
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-0.01
-and kod_tahalich=4
-and kod_peilut_tahalich=1;
+UNION ALL
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1;
 --and seq=1
 --order by taarich;
 
-   cursor Dt4_rerun is
-       select to_char(start_dt,'yyyymmdd') start_dt
-    from   kds.kds_control_driver_activities@kds2sdrm
-       where start_dt>=sysdate-(select erech_param from tb_parametrim where kod_param=100)
-	and status=4
-	 and exists (select y.mispar_ishi
+   CURSOR Dt4_rerun IS
+       SELECT TO_CHAR(start_dt,'yyyymmdd') start_dt
+    FROM   kds.kds_control_driver_activities@kds2sdrm
+       WHERE start_dt>=SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=100)
+	AND status=4
+	 AND EXISTS (SELECT y.mispar_ishi
   FROM TB_YAMEY_AVODA_OVDIM y
 WHERE  y.taarich= start_dt 
-and y.taarich>=sysdate-(select erech_param from tb_parametrim where kod_param=100)
+AND y.taarich>=SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=100)
  AND measher_o_mistayeg IS NULL
  UNION ALL
  SELECT y.mispar_ishi
   FROM TB_YAMEY_AVODA_OVDIM y
 WHERE  y.taarich= start_dt 
-and y.taarich>=sysdate-(select erech_param from tb_parametrim where kod_param=100)
+AND y.taarich>=SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=100)
  AND measher_o_mistayeg =1
 AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
   	 	 				  	   WHERE  s.taarich= start_dt 
 							   AND s.taarich=y.taarich
-							   and s.taarich>=sysdate-(select erech_param from tb_parametrim where kod_param=100)
+							   AND s.taarich>=SYSDATE-(SELECT erech_param FROM TB_PARAMETRIM WHERE kod_param=100)
 							   AND s.mispar_ishi=y.mispar_ishi
 						   AND (s.mispar_sidur<99000 OR s.mispar_sidur>99999)))  
-	order by start_dt;
+	ORDER BY start_dt;
 
 BEGIN
   --err_str:='';
@@ -19454,22 +20029,22 @@ err_str:='';
 
   
 FOR  Dt4_rerun_rec IN  Dt4_rerun LOOP
-begin
+BEGIN
 -- insert into  tb_log_tahalich
 --values (15,1,1,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-PKG_sdrn.pro_ins_yamim_4_sidurim(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_ins_yamim_4_sidurim(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,2,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-PKG_sdrn.pro_TrailNDel_peilut_4retrSdrn(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_TrailNDel_peilut_4retrSdrn(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,3,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-PKG_sdrn.pro_TrailNDel_sidurim_4reSdrn(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_TrailNDel_sidurim_4reSdrn(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,4,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-PKG_sdrn.pro_ins_sidurim_retroSdrn(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_ins_sidurim_retroSdrn(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,5,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-PKG_sdrn.pro_ins_peilut_retroSdrn(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_ins_peilut_retroSdrn(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,6,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
 Pkg_Batch.pro_upd_yamey_avoda_ovdim(Dt4_rerun_rec.start_dt);
@@ -19479,32 +20054,32 @@ Pkg_Batch.pro_upd_yamey_avoda_ovdim(Dt4_rerun_rec.start_dt);
 -- prd: 
 --PKG_sdrn.pro_upd_sdrnRerun_control(Dt4_rerun_rec.start_dt);
 -- tst:
-PKG_sdrn.pro_upd_sdrntstRerun_control(Dt4_rerun_rec.start_dt);
+Pkg_Sdrn.pro_upd_sdrntstRerun_control(Dt4_rerun_rec.start_dt);
 -- insert into  tb_log_tahalich
 --values (15,1,8,to_date(Dt4_rerun_rec.start_dt,'yyyymmdd'),0,0,sysdate,'');
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
 
 FOR  stam4_rec IN  stam4  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam4_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and (kod_tahalich=15 or   kod_tahalich=4)
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND (kod_tahalich=15 OR   kod_tahalich=4)
 --and seq=1
-and kod_peilut_tahalich=1;
+AND kod_peilut_tahalich=1;
 
 	IF (idNumber >0) THEN
-    raise_application_error(-20004, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20004, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19514,17 +20089,17 @@ and kod_peilut_tahalich=1;
   
 END pro_chk_Dt4_rerun;
 
-PROCEDURE pro_upd_sdrntstRerun_control(pDt varchar) IS
+PROCEDURE pro_upd_sdrntstRerun_control(pDt VARCHAR) IS
      BEGIN
-      update  kds.kds_control_driver_activities@kds2sdrm
-     set status=9
-      where status=4
-      and  start_dt = to_date(pDt,'yyyymmdd') ;
+      UPDATE  kds.kds_control_driver_activities@kds2sdrm
+     SET status=9
+      WHERE status=4
+      AND  start_dt = TO_DATE(pDt,'yyyymmdd') ;
         EXCEPTION
    WHEN OTHERS THEN
-   insert into tb_log_tahalich
-	values (15,1,55,sysdate,'',10,'',substr('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.format_error_stack,1,100));
-commit; 
+   INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,55,SYSDATE,'',10,'',SUBSTR('update_teur_peilut_retro '||pDt||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+COMMIT; 
 --        RAISE;
  END pro_upd_sdrntstRerun_control;
 
@@ -19574,21 +20149,21 @@ commit;
 
 PROCEDURE pro_stam2   IS
 idNumber NUMBER;
-  begin
+  BEGIN
   	 idNumber:=0;
 
 --	 pro_stam;
 
- select count(*)
+ SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-0.01  
-and kod_tahalich=4
-and kod_peilut_tahalich=1;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-0.01  
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1;
 
 	IF (idNumber >0) THEN
-	 raise_application_error(-2005, 'log_tahalich', TRUE);
- end if;
+	 RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19599,42 +20174,42 @@ and kod_peilut_tahalich=1;
 END pro_stam2;
 
 
-procedure pro_stam3   is
-err_str varchar(1000);
-idNumber number;
+PROCEDURE pro_stam3   IS
+err_str VARCHAR(1000);
+idNumber NUMBER;
 
-cursor  stam1 is
-select teur_tech
- from tb_log_tahalich
-where   taarich>sysdate-1
-and kod_tahalich=4
-and kod_peilut_tahalich=1
-order by taarich;
+CURSOR  stam1 IS
+SELECT teur_tech
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-1
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1
+ORDER BY taarich;
 
-begin
+BEGIN
 err_str:='';
 idNumber:=0;
 
 FOR  stam1_rec IN  stam1  LOOP
-begin
+BEGIN
 err_str:=err_str ||trim(stam1_rec.teur_tech);
-end;
-end loop;
-commit;
+END;
+END LOOP;
+COMMIT;
 
-select count(*)
+SELECT COUNT(*)
  INTO idNumber
- from tb_log_tahalich
-where   taarich>sysdate-1  
-and kod_tahalich=4
-and kod_peilut_tahalich=1;
+ FROM TB_LOG_TAHALICH
+WHERE   taarich>SYSDATE-1  
+AND kod_tahalich=4
+AND kod_peilut_tahalich=1;
 
 	IF (idNumber >0) THEN
 --	insert into tb_log_tahalich
 --		values (4,2,2,sysdate,'',10,'',substr(to_char(77690)||' '||err_str,1,100));
   --   ERR_MESSAGE:=substr(err_str,1,100);
-    raise_application_error(-20001, substr(err_str,1,100), TRUE);
- end if;
+    RAISE_APPLICATION_ERROR(-20001, SUBSTR(err_str,1,100), TRUE);
+ END IF;
  
   EXCEPTION
      WHEN NO_DATA_FOUND  THEN
@@ -19643,134 +20218,134 @@ and kod_peilut_tahalich=1;
         RAISE;
 END pro_stam3;
 		
-      PROCEDURE pro_stam4(pDt varchar)  IS
+      PROCEDURE pro_stam4(pDt VARCHAR)  IS
 -- problem? if start_dt+1 is today and is in the future??
 	  CURSOR Sidurim9  IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-to_date(to_char(k1.start_dt,'yyyymmdd')||' '||substr(lpad(k1.start_schedule,4,0),1,2)||':'||substr(lpad(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
-to_date(to_char(k1.start_dt+1,'yyyymmdd')||' '||substr(lpad(k1.end_schedule,4,0),1,2)||':'||substr(lpad(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule<2400
-and k1.end_schedule<2400
-and decode(sug_visa,' ','',sug_visa) in (0,1)
-and  k1.start_schedule>k1.end_schedule;
+SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+TO_DATE(TO_CHAR(k1.start_dt,'yyyymmdd')||' '||SUBSTR(LPAD(k1.start_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.start_schedule,4,0),3,2),'yyyymmdd hh24:mi') hatchala,
+TO_DATE(TO_CHAR(k1.start_dt+1,'yyyymmdd')||' '||SUBSTR(LPAD(k1.end_schedule,4,0),1,2)||':'||SUBSTR(LPAD(k1.end_schedule,4,0),3,2),'yyyymmdd hh24:mi') gmar
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  k1.start_schedule>k1.end_schedule;
 
-begin
+BEGIN
 
 FOR  Sidurim9_rec IN  Sidurim9 LOOP
 BEGIN
-update tb_sidurim_ovdim 
-set shat_gmar=Sidurim9_rec.gmar
-where mispar_ishi=Sidurim9_rec.driver_id
-and taarich=Sidurim9_rec.start_dt
-and mispar_sidur=Sidurim9_rec.schedule_num
-and shat_hatchala=Sidurim9_rec.hatchala
-and sector_visa in (0,1);
+UPDATE TB_SIDURIM_OVDIM 
+SET shat_gmar=Sidurim9_rec.gmar
+WHERE mispar_ishi=Sidurim9_rec.driver_id
+AND taarich=Sidurim9_rec.start_dt
+AND mispar_sidur=Sidurim9_rec.schedule_num
+AND shat_hatchala=Sidurim9_rec.hatchala
+AND sector_visa IN (0,1);
 
 EXCEPTION
    WHEN OTHERS THEN
  --  err_str:=err_str||' (4,28) '|| to_char(Sidurim8_rec.driver_id) ||' '||to_char(Sidurim8_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack||chr(10)||chr(13);
-	insert into tb_log_tahalich
-	values (4,1,2,sysdate,'',10,'',substr(to_char(Sidurim9_rec.driver_id) ||' '||to_char(Sidurim9_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,2,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim9_rec.driver_id) ||' '||TO_CHAR(Sidurim9_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
-commit;
+COMMIT;
 
 END pro_stam4;
 
 
-     PROCEDURE pro_retro1(pDt varchar)  IS
+     PROCEDURE pro_retro1(pDt VARCHAR)  IS
 	 --cursor1: measher_mistayeg null, if sidur<999 might be matala
 	  CURSOR Sidurim_r1  IS
-select    k1.driver_id,k1.start_dt,k1.schedule_num,
-k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440 hatchala ,
-k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440 gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur, branch,
-k1.start_dt +substr(lpad(start_time,4,0),1,2)/24+substr(lpad(start_time,4,0),3,2)/1440  start_nesia ,
+SELECT    k1.driver_id,k1.start_dt,k1.schedule_num,
+k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440 hatchala ,
+k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440 gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur, branch,
+k1.start_dt +SUBSTR(LPAD(start_time,4,0),1,2)/24+SUBSTR(LPAD(start_time,4,0),3,2)/1440  start_nesia ,
 ride_id, makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.schedule_num>999
-and y.taarich= to_date(pDt,'yyyymmdd')
-and y.taarich=k1.start_dt
- and y.mispar_ishi=k1.driver_id
- and y.measher_o_mistayeg is null
-and not exists (select *  from tb_sidurim_ovdim  s1
-where s1.taarich= to_date(pDt,'yyyymmdd')
- and (s1.mispar_sidur<99000 or s1.mispar_sidur>99999)
- and s1.taarich=k1.start_dt
- and s1.mispar_ishi=k1.driver_id
- and s1.mispar_sidur=k1.schedule_num
- and s1.shat_hatchala=k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440)
- union all
-select     k1.driver_id,k1.start_dt,k1.schedule_num,
-k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440 hatchala ,
-k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440 gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur, branch,
-k1.start_dt +substr(lpad(start_time,4,0),1,2)/24+substr(lpad(start_time,4,0),3,2)/1440  start_nesia ,
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.schedule_num>999
+AND y.taarich= TO_DATE(pDt,'yyyymmdd')
+AND y.taarich=k1.start_dt
+ AND y.mispar_ishi=k1.driver_id
+ AND y.measher_o_mistayeg IS NULL
+AND NOT EXISTS (SELECT *  FROM TB_SIDURIM_OVDIM  s1
+WHERE s1.taarich= TO_DATE(pDt,'yyyymmdd')
+ AND (s1.mispar_sidur<99000 OR s1.mispar_sidur>99999)
+ AND s1.taarich=k1.start_dt
+ AND s1.mispar_ishi=k1.driver_id
+ AND s1.mispar_sidur=k1.schedule_num
+ AND s1.shat_hatchala=k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440)
+ UNION ALL
+SELECT     k1.driver_id,k1.start_dt,k1.schedule_num,
+k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440 hatchala ,
+k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440 gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur, branch,
+k1.start_dt +SUBSTR(LPAD(start_time,4,0),1,2)/24+SUBSTR(LPAD(start_time,4,0),3,2)/1440  start_nesia ,
  ride_id, makat_line,bus_number,bus_sequence,waiting_time,
  spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,tb_yamey_avoda_ovdim y
-where k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.schedule_num<=999
-and y.taarich= to_date(pDt,'yyyymmdd')
-and y.taarich=k1.start_dt
- and y.mispar_ishi=k1.driver_id
- and y.measher_o_mistayeg is null
-and not exists (select *  from tb_sidurim_ovdim  s1
-where s1.taarich= to_date(pDt,'yyyymmdd')
- and (s1.mispar_sidur<99000 or s1.mispar_sidur>99999)
- and s1.taarich=k1.start_dt
- and s1.mispar_ishi=k1.driver_id
- and s1.mispar_sidur=k1.schedule_num
-  and s1.shat_hatchala=k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440)
- and not exists (select *  from trail_sidurim_ovdim s2  
-where s2.taarich= to_date(pDt,'yyyymmdd')
- and (s2.mispar_sidur<99000 or s2.mispar_sidur>99999)
- and s2.taarich=k1.start_dt
- and s2.mispar_ishi=k1.driver_id
- and s2.mispar_sidur=k1.schedule_num);
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1,TB_YAMEY_AVODA_OVDIM y
+WHERE k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.schedule_num<=999
+AND y.taarich= TO_DATE(pDt,'yyyymmdd')
+AND y.taarich=k1.start_dt
+ AND y.mispar_ishi=k1.driver_id
+ AND y.measher_o_mistayeg IS NULL
+AND NOT EXISTS (SELECT *  FROM TB_SIDURIM_OVDIM  s1
+WHERE s1.taarich= TO_DATE(pDt,'yyyymmdd')
+ AND (s1.mispar_sidur<99000 OR s1.mispar_sidur>99999)
+ AND s1.taarich=k1.start_dt
+ AND s1.mispar_ishi=k1.driver_id
+ AND s1.mispar_sidur=k1.schedule_num
+  AND s1.shat_hatchala=k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440)
+ AND NOT EXISTS (SELECT *  FROM TRAIL_SIDURIM_OVDIM s2  
+WHERE s2.taarich= TO_DATE(pDt,'yyyymmdd')
+ AND (s2.mispar_sidur<99000 OR s2.mispar_sidur>99999)
+ AND s2.taarich=k1.start_dt
+ AND s2.mispar_ishi=k1.driver_id
+ AND s2.mispar_sidur=k1.schedule_num);
  
- cursor sidurim2del  is
-  select  distinct  mispar_ishi  , taarich  , mispar_sidur 
-from  TB_tmp_peilut4rerun
-where taarich= to_date(pDt,'yyyymmdd');
+ CURSOR sidurim2del  IS
+  SELECT  DISTINCT  mispar_ishi  , taarich  , mispar_sidur 
+FROM  TB_TMP_PEILUT4RERUN
+WHERE taarich= TO_DATE(pDt,'yyyymmdd');
 
- cursor sidurim_r9  is
-  select  distinct  mispar_ishi  , taarich  , mispar_sidur ,shat_hatchala , shat_gmar
-from tb_sidurim_ovdim
-where taarich= to_date(pDt,'yyyymmdd')
-and decode(sector_visa,' ','',sector_visa) in (0,1)
-and  shat_hatchala > shat_gmar;
+ CURSOR sidurim_r9  IS
+  SELECT  DISTINCT  mispar_ishi  , taarich  , mispar_sidur ,shat_hatchala , shat_gmar
+FROM TB_SIDURIM_OVDIM
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')
+AND DECODE(sector_visa,' ','',sector_visa) IN (0,1)
+AND  shat_hatchala > shat_gmar;
 
-cursor Tmp4Srerun  is
-  select  DISTINCT mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  ,  shat_gmar,sector_visa,meadken_acharon   ,  sug_sidur
-from  TB_tmp_peilut4rerun
-where taarich= to_date(pDt,'yyyymmdd');
+CURSOR Tmp4Srerun  IS
+  SELECT  DISTINCT mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  ,  shat_gmar,sector_visa,meadken_acharon   ,  sug_sidur
+FROM  TB_TMP_PEILUT4RERUN
+WHERE taarich= TO_DATE(pDt,'yyyymmdd');
 
 
-cursor Tmp4Prerun  is
-  select  mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  , Shat_yetzia,   meadken_acharon   ,
+CURSOR Tmp4Prerun  IS
+  SELECT  mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  , Shat_yetzia,   meadken_acharon   ,
    snif_tnua,mispar_knisa,makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer , Mikum_Bhirat_Nesia_Netzer
-from  TB_tmp_peilut4rerun
-where taarich= to_date(pDt,'yyyymmdd');
+FROM  TB_TMP_PEILUT4RERUN
+WHERE taarich= TO_DATE(pDt,'yyyymmdd');
  
  	 -- todo: cursor2: measher_mistayeg =1 and no sidurim at all
- begin
+ BEGIN
 
 FOR  Sidurim_r1_rec IN  Sidurim_r1 LOOP
 BEGIN
 --todo: phase1: insert into trail & delete from peilut & sdrn, than insert into sdrn & peiluyot
  	 --  combined with  peiluyot in the same loop
 	 -- also lo_letashlum & upd shat_gmar visa.
-  insert into TB_tmp_peilut4rerun   ( mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  , Shat_yetzia, shat_gmar,sector_visa,meadken_acharon   ,
+  INSERT INTO TB_TMP_PEILUT4RERUN   ( mispar_ishi  , taarich  , mispar_sidur  , Shat_hatchala_sidur	  , Shat_yetzia, shat_gmar,sector_visa,meadken_acharon   ,
   sug_sidur, snif_tnua,mispar_knisa,makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
  Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer , Mikum_Bhirat_Nesia_Netzer   )
-values (Sidurim_r1_rec.driver_id,Sidurim_r1_rec.start_dt,  Sidurim_r1_rec.schedule_num,  
+VALUES (Sidurim_r1_rec.driver_id,Sidurim_r1_rec.start_dt,  Sidurim_r1_rec.schedule_num,  
 Sidurim_r1_rec.hatchala, Sidurim_r1_rec.start_nesia, Sidurim_r1_rec.gmar,  Sidurim_r1_rec.sug_visa,   Sidurim_r1_rec.meadken, Sidurim_r1_rec.sug_sidur,
 Sidurim_r1_rec.branch, Sidurim_r1_rec.ride_id, Sidurim_r1_rec.makat_line,Sidurim_r1_rec.bus_number,Sidurim_r1_rec.bus_sequence,
 Sidurim_r1_rec.waiting_time, Sidurim_r1_rec.spm_time,Sidurim_r1_rec.spm_bus_number,Sidurim_r1_rec.spm_schedule_num,Sidurim_r1_rec.spm_start_time,
@@ -19778,16 +20353,16 @@ Sidurim_r1_rec.waiting_time, Sidurim_r1_rec.spm_time,Sidurim_r1_rec.spm_bus_numb
 
 EXCEPTION
    WHEN OTHERS THEN
-	insert into tb_log_tahalich
-	values (15,1,1,sysdate,'',10,'',substr(to_char(Sidurim_r1_rec.driver_id) ||' '||to_char(Sidurim_r1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,1,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_r1_rec.driver_id) ||' '||TO_CHAR(Sidurim_r1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
 -- do not commit!
 
 FOR  sidurim2del_rec IN  sidurim2del LOOP
-begin
-    	 insert into trail_sidurim_ovdim t
+BEGIN
+    	 INSERT INTO TRAIL_SIDURIM_OVDIM t
  ( MISPAR_ISHI  ,  MISPAR_sidur    ,  TAARICH ,  Shat_hatchala		,  
  Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
@@ -19795,117 +20370,117 @@ begin
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,  Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
   Sector_Visa 		,  MEADKEN_ACHARON 	 ,  TAARICH_IDKUN_ACHARON   ,  MISPAR_ISHI_trail     ,  TAARICH_IDKUN_trail   , Sug_peula , heara	,sug_sidur	 )
-select distinct p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
+SELECT DISTINCT p.MISPAR_ISHI  ,  MISPAR_sidur    ,  p.TAARICH ,  p.Shat_hatchala		,  
   Shat_gmar		,  Shat_hatchala_letashlum ,  Shat_gmar_letashlum	,  Pitzul_hafsaka	,  Chariga	,  Tosefet_Grira	,  Hashlama,  sug_hashlama 		,
   Yom_Visa		,  Lo_letashlum	,  Out_michsa	,  Mikum_shaon_knisa	 ,  Mikum_shaon_yetzia	,  Achuz_Knas_LePremyat_Visa	,  Achuz_Viza_Besikun	,
   Mispar_Musach_O_Machsan	,  Kod_siba_lo_letashlum		,  Kod_siba_ledivuch_yadani_in	,  Kod_siba_ledivuch_yadani_out	,  Menahel_Musach_Meadken	,
   Shayah_LeYom_Kodem 	,  Mispar_shiurey_nehiga	,  Mezake_Halbasha 	,  Mezake_nesiot		,    Sug_Hazmanat_Visa ,  Bitul_O_Hosafa	,
   tafkid_visa 		,  mivtza_visa 		,  Nidreshet_hitiatzvut 		,  Shat_hitiatzvut	,  Ptor_Mehitiatzvut 	,  Hachtama_Beatar_Lo_Takin  ,  Hafhatat_Nochechut_Visa	,
-  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  sysdate  ,8    ,  p.heara 	,p.sug_sidur
-from tb_sidurim_ovdim p
-where p.taarich =   to_date(pDt,'yyyymmdd')  
-and  p.taarich = sidurim2del_rec.taarich
- and p.mispar_sidur = sidurim2del_rec.mispar_sidur
- and  p.mispar_ishi = sidurim2del_rec.mispar_ishi
-and nvl(p.shayah_leyom_kodem,0)=0 ;
+  Sector_Visa 		,  p.MEADKEN_ACHARON 	 ,  p.TAARICH_IDKUN_ACHARON  ,   77690  ,  SYSDATE  ,8    ,  p.heara 	,p.sug_sidur
+FROM TB_SIDURIM_OVDIM p
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND  p.taarich = sidurim2del_rec.taarich
+ AND p.mispar_sidur = sidurim2del_rec.mispar_sidur
+ AND  p.mispar_ishi = sidurim2del_rec.mispar_ishi
+AND NVL(p.shayah_leyom_kodem,0)=0 ;
 
-insert into trail_peilut_ovdim t
+INSERT INTO TRAIL_PEILUT_OVDIM t
 (t.MISPAR_ISHI   ,  t.TAARICH  ,  t.MISPAR_sidur  ,  t.Shat_hatchala_sidur	,
   t.Shat_yetzia		,  t.Mispar_knisa		,  t.Makat_nesia	,  t.Oto_no	,  t.Mispar_siduri_oto	 ,  t.Kisuy_tor		,  t.Bitul_O_Hosafa	,  t.Kod_shinuy_premia	  ,
   t.Snif_tnua	   ,  t.Mispar_visa		,  t.Imut_netzer		,  t.Shat_Bhirat_Nesia_Netzer  ,  t.Oto_No_Netzer		,  t.Mispar_Sidur_Netzer	 ,  t.Shat_yetzia_Netzer	,
   t.Makat_Netzer		,  t.Shilut_Netzer		,  t.Mispar_matala	 ,  t.Dakot_bafoal		,  t.Km_visa 	,  t.TAARICH_IDKUN_ACHARON  ,  t.MEADKEN_ACHARON 	,
   t.MISPAR_ISHI_trail   ,  t.TAARICH_IDKUN_trail      ,  t.Sug_peula  	,  
   t.Mikum_Bhirat_Nesia_Netzer ,  t.heara			,  t.Teur_Nesia )
-select distinct p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
+SELECT DISTINCT p.MISPAR_ISHI   ,  p.TAARICH  ,  p.MISPAR_sidur  ,  p.Shat_hatchala_sidur	,
   p.Shat_yetzia		,  p.Mispar_knisa		,  p.Makat_nesia	,  p.Oto_no	,  p.Mispar_siduri_oto	 ,  p.Kisuy_tor		,  p.Bitul_O_Hosafa	,  p.Kod_shinuy_premia	  ,
   p.Snif_tnua	   ,  p.Mispar_visa		,  p.Imut_netzer		,  p.Shat_Bhirat_Nesia_Netzer  ,  p.Oto_No_Netzer		,  p.Mispar_Sidur_Netzer	 ,  p.Shat_yetzia_Netzer	,
   p.Makat_Netzer		,  p.Shilut_Netzer		,  p.Mispar_matala	 ,  p.Dakot_bafoal		,  p.Km_visa 	,  p.TAARICH_IDKUN_ACHARON  ,  p.MEADKEN_ACHARON 	,
- 77690  ,  sysdate      ,  8 	,  
+ 77690  ,  SYSDATE      ,  8 	,  
   p.Mikum_Bhirat_Nesia_Netzer ,  p.heara			,  p.Teur_Nesia  
-from tb_peilut_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
-and  p.taarich = sidurim2del_rec.taarich
- and p.mispar_sidur = sidurim2del_rec.mispar_sidur
- and  p.mispar_ishi = sidurim2del_rec.mispar_ishi
-and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and s.shayah_leyom_kodem=1)  ;
+FROM TB_PEILUT_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND  p.taarich = sidurim2del_rec.taarich
+ AND p.mispar_sidur = sidurim2del_rec.mispar_sidur
+ AND  p.mispar_ishi = sidurim2del_rec.mispar_ishi
+AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND s.shayah_leyom_kodem=1)  ;
 						   
-delete from tb_peilut_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and  p.taarich = sidurim2del_rec.taarich
- and p.mispar_sidur = sidurim2del_rec.mispar_sidur
- and  p.mispar_ishi = sidurim2del_rec.mispar_ishi
- and  not exists (select * from tb_sidurim_ovdim s
- 	 				  	   where s.taarich =   to_date(pDt,'yyyymmdd')  
-						   and s.taarich  = p.taarich
-						   and s.mispar_ishi=p.mispar_ishi
-						   and s.mispar_sidur=p.mispar_sidur
-						   and p.shat_hatchala_sidur=s.shat_hatchala
-						   and s.shayah_leyom_kodem=1)  ;
+DELETE FROM TB_PEILUT_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND  p.taarich = sidurim2del_rec.taarich
+ AND p.mispar_sidur = sidurim2del_rec.mispar_sidur
+ AND  p.mispar_ishi = sidurim2del_rec.mispar_ishi
+ AND  NOT EXISTS (SELECT * FROM TB_SIDURIM_OVDIM s
+ 	 				  	   WHERE s.taarich =   TO_DATE(pDt,'yyyymmdd')  
+						   AND s.taarich  = p.taarich
+						   AND s.mispar_ishi=p.mispar_ishi
+						   AND s.mispar_sidur=p.mispar_sidur
+						   AND p.shat_hatchala_sidur=s.shat_hatchala
+						   AND s.shayah_leyom_kodem=1)  ;
 
-delete from  tb_sidurim_ovdim p 
-where p.taarich =   to_date(pDt,'yyyymmdd')  
- and  p.taarich = sidurim2del_rec.taarich
- and p.mispar_sidur = sidurim2del_rec.mispar_sidur
- and  p.mispar_ishi = sidurim2del_rec.mispar_ishi
-and nvl(p.shayah_leyom_kodem,0)=0 ;
+DELETE FROM  TB_SIDURIM_OVDIM p 
+WHERE p.taarich =   TO_DATE(pDt,'yyyymmdd')  
+ AND  p.taarich = sidurim2del_rec.taarich
+ AND p.mispar_sidur = sidurim2del_rec.mispar_sidur
+ AND  p.mispar_ishi = sidurim2del_rec.mispar_ishi
+AND NVL(p.shayah_leyom_kodem,0)=0 ;
 
 EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,2,sysdate,'',10,'',substr(to_char(sidurim2del_rec.mispar_ishi)||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,2,SYSDATE,'',10,'',SUBSTR(TO_CHAR(sidurim2del_rec.mispar_ishi)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
 END LOOP;
 
 
 FOR  Tmp4Srerun_rec IN  Tmp4Srerun LOOP
-begin
- insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,
+BEGIN
+ INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,
  sug_sidur ,  Lo_letashlum,Kod_Siba_Lo_Letashlum)
-values (Tmp4Srerun_rec.mispar_ishi,Tmp4Srerun_rec.taarich,  Tmp4Srerun_rec.mispar_sidur,  
+VALUES (Tmp4Srerun_rec.mispar_ishi,Tmp4Srerun_rec.taarich,  Tmp4Srerun_rec.mispar_sidur,  
 Tmp4Srerun_rec.Shat_hatchala_sidur,Tmp4Srerun_rec.shat_gmar, Tmp4Srerun_rec.sector_visa, Tmp4Srerun_rec.meadken_acharon,
 Tmp4Srerun_rec.sug_sidur ,1,16);
 
 
 EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,3,sysdate,'',10,'',substr(to_char(Tmp4Srerun_rec.mispar_ishi)||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,3,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Tmp4Srerun_rec.mispar_ishi)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
 END LOOP;
 
 
 FOR  sidurim_r9_rec IN  sidurim_r9 LOOP
 BEGIN
-update tb_sidurim_ovdim 
-set shat_gmar=Sidurim_r9_rec.shat_gmar
-where   taarich =   to_date(pDt,'yyyymmdd')  
-and mispar_ishi=Sidurim_r9_rec.mispar_ishi
-and taarich=Sidurim_r9_rec.taarich
-and mispar_sidur=Sidurim_r9_rec.mispar_sidur
-and shat_hatchala=Sidurim_r9_rec.shat_hatchala
-and sector_visa in (0,1);
+UPDATE TB_SIDURIM_OVDIM 
+SET shat_gmar=Sidurim_r9_rec.shat_gmar
+WHERE   taarich =   TO_DATE(pDt,'yyyymmdd')  
+AND mispar_ishi=Sidurim_r9_rec.mispar_ishi
+AND taarich=Sidurim_r9_rec.taarich
+AND mispar_sidur=Sidurim_r9_rec.mispar_sidur
+AND shat_hatchala=Sidurim_r9_rec.shat_hatchala
+AND sector_visa IN (0,1);
 
 EXCEPTION
    WHEN OTHERS THEN
-	insert into tb_log_tahalich
-	values (15,1,4,sysdate,'',10,'',substr(to_char(Sidurim_r9_rec.mispar_ishi) ||' '||to_char(Sidurim_r9_rec.mispar_sidur)||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,4,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim_r9_rec.mispar_ishi) ||' '||TO_CHAR(Sidurim_r9_rec.mispar_sidur)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
+END;
 END LOOP;
 
 
 FOR  Tmp4Prerun_rec IN  Tmp4Prerun LOOP
-begin
- insert into tb_PEILUT_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala_sidur  , shat_yetzia, meadken_acharon,
+BEGIN
+ INSERT INTO TB_PEILUT_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala_sidur  , shat_yetzia, meadken_acharon,
   snif_tnua,mispar_knisa,makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
 Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer , Mikum_Bhirat_Nesia_Netzer)
-values (Tmp4Prerun_rec.mispar_ishi,Tmp4Prerun_rec.taarich,  Tmp4Prerun_rec.mispar_sidur,  
+VALUES (Tmp4Prerun_rec.mispar_ishi,Tmp4Prerun_rec.taarich,  Tmp4Prerun_rec.mispar_sidur,  
 Tmp4Prerun_rec.Shat_hatchala_sidur,Tmp4Prerun_rec.Shat_yetzia,  Tmp4Prerun_rec.meadken_acharon,
   Tmp4Prerun_rec.snif_tnua,Tmp4Prerun_rec.mispar_knisa,Tmp4Prerun_rec.makat_nesia,Tmp4Prerun_rec.oto_no,Tmp4Prerun_rec.mispar_siduri_oto,
   Tmp4Prerun_rec.kisuy_tor,Tmp4Prerun_rec.Shat_Bhirat_Nesia_Netzer , Tmp4Prerun_rec.Oto_No_Netzer, Tmp4Prerun_rec.Mispar_Sidur_Netzer,  
@@ -19913,120 +20488,330 @@ Tmp4Prerun_rec.Shat_hatchala_sidur,Tmp4Prerun_rec.Shat_yetzia,  Tmp4Prerun_rec.m
 
 EXCEPTION
    WHEN OTHERS THEN
- 	insert into tb_log_tahalich
-	values (15,1,5,sysdate,'',10,'',substr(to_char(Tmp4Prerun_rec.mispar_ishi)||' '||DBMS_UTILITY.format_error_stack,1,100));
-end;
+ 	INSERT INTO TB_LOG_TAHALICH
+	VALUES (15,1,5,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Tmp4Prerun_rec.mispar_ishi)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,100));
+END;
 END LOOP;
 
 
 --todo: add phase2 before committing!
-commit;
+COMMIT;
 
- end pro_retro1;
+ END pro_retro1;
   
-PROCEDURE pro_ins_sidurim_from_sdrm(pDt varchar) IS
+  
+PROCEDURE pro_ins_sidurim_from_sdrm(pDt VARCHAR) IS
+idNumber NUMBER;
 
 -- this bulk is most of the sidurim
-  CURSOR Sidurim1 IS
-  select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440 hatchala ,
-k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440 gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt=  to_date(pDt,'yyyymmdd')
-and not exists (select *  from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k2
-where k2.start_dt=  to_date(pDt,'yyyymmdd')
-and k1.driver_id=k2.driver_id
-and k1.start_dt=k2.start_dt
-and k1.schedule_num=k2.schedule_num
-and k1.start_schedule=k2.start_schedule
-and k1.end_schedule<>k2.end_schedule);
+CURSOR Sidurim1 IS
+SELECT empl,taarich,sidur,hatchala,COUNT(*) FROM
+(SELECT   DISTINCT k1.driver_id empl,k1.start_dt taarich,k1.schedule_num sidur,
+k1.start_schedule  hatchala ,k1.end_schedule   gmar
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1 
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd'))
+GROUP BY empl,taarich,sidur,hatchala
+HAVING COUNT(*)=1;
+
+-- these r the duplicates, such as הכנת מכונה or רציפות נהיגה etc
+CURSOR Sidurim2 IS
+SELECT empl,taarich,sidur,hatchala,COUNT(*) FROM
+(SELECT   DISTINCT k1.driver_id empl,k1.start_dt taarich,k1.schedule_num sidur,
+k1.start_schedule  hatchala ,k1.end_schedule   gmar
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1 
+WHERE k1.start_dt = TO_DATE(pDt,'yyyymmdd')) 
+GROUP BY empl,taarich,sidur,hatchala
+HAVING COUNT(*)>1;
 
 
--- theses r the duplicates, such as הכנת מכונה or רציפות נהיגה etc
-  CURSOR Sidurim2 IS
-select   distinct k1.driver_id,k1.start_dt,k1.schedule_num,
-k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440 +1/1440 hatchala ,
-k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440 gmar,
-decode(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
-from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt =  to_date(pDt,'yyyymmdd')  
-and  exists (select * from tb_sidurim_ovdim 
-			   		   	 	  where mispar_ishi  =k1.driver_id
-							  and  taarich  =  to_date(pDt,'yyyymmdd')
-							  and taarich=k1.start_dt
-							  and  mispar_sidur  =k1.schedule_num
-							  and shat_hatchala  =k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440
-							  and  shat_gmar  =k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440);
+-- this is based on cursor1 :bulk is most of the sidurim
+  CURSOR Sidurim3(p_empl NUMBER,p_taarich DATE,p_sidur NUMBER,p_hatchala NUMBER) IS
+  SELECT   DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440 hatchala ,
+k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440 gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt=  TO_DATE(pDt,'yyyymmdd') 
+AND k1.driver_id=p_empl
+AND k1.start_dt=p_taarich
+AND k1.schedule_num=p_sidur
+AND k1.start_schedule=p_hatchala;
+
+-- this will be based on cursor2 :the duplicates
+  CURSOR Sidurim4(p_empl NUMBER,p_taarich DATE,p_sidur NUMBER,p_hatchala NUMBER) IS
+SELECT DISTINCT k1.driver_id,k1.start_dt,k1.schedule_num,
+k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440 hatchala ,
+k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440 gmar,
+DECODE(sug_visa,' ','',sug_visa) sug_visa,-12 meadken,sug_sidur
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt=  TO_DATE(pDt,'yyyymmdd')  
+AND k1.driver_id=p_empl
+AND k1.start_dt=p_taarich
+AND k1.schedule_num=p_sidur
+AND k1.start_schedule=p_hatchala;
+
 
  BEGIN
      
    FOR  Sidurim1_rec IN  Sidurim1 LOOP
-BEGIN
-  insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
-values (Sidurim1_rec.driver_id,Sidurim1_rec.start_dt,  Sidurim1_rec.schedule_num,  
-Sidurim1_rec.hatchala,Sidurim1_rec.gmar,  Sidurim1_rec.sug_visa,   Sidurim1_rec.meadken, Sidurim1_rec.sug_sidur );
+ 
+   		FOR  Sidurim3_rec IN  Sidurim3(Sidurim1_rec.empl,Sidurim1_rec.taarich,Sidurim1_rec.sidur,Sidurim1_rec.hatchala)  LOOP
+ 		BEGIN
+  INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
+--VALUES (Sidurim3_rec.driver_id,Sidurim3_rec.start_dt+100,  Sidurim3_rec.schedule_num,  
+VALUES (Sidurim3_rec.driver_id,Sidurim3_rec.start_dt,  Sidurim3_rec.schedule_num,  
+Sidurim3_rec.hatchala,Sidurim3_rec.gmar,  Sidurim3_rec.sug_visa,   Sidurim3_rec.meadken, Sidurim3_rec.sug_sidur );
 
 EXCEPTION
    WHEN OTHERS THEN
-	insert into tb_log_tahalich
-	values (4,1,20,sysdate,'',10,'',substr(to_char(Sidurim1_rec.driver_id) ||' '||to_char(Sidurim1_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
-end;
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,20,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim3_rec.driver_id) ||' new '||TO_CHAR(Sidurim3_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+	  END;
+ 		   END LOOP;
+	 
 END LOOP;
-commit;
+COMMIT;
 
+   FOR  Sidurim2_rec IN  Sidurim2 LOOP
+ idNumber:=0; 
+   		FOR  Sidurim4_rec IN  Sidurim4(Sidurim2_rec.empl,Sidurim2_rec.taarich,Sidurim2_rec.sidur,Sidurim2_rec.hatchala)  LOOP
+ 		BEGIN
+  INSERT INTO TB_SIDURIM_OVDIM s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
+--VALUES (Sidurim4_rec.driver_id,Sidurim4_rec.start_dt+100,  Sidurim4_rec.schedule_num,  
+VALUES (Sidurim4_rec.driver_id,Sidurim4_rec.start_dt,  Sidurim4_rec.schedule_num,  
+Sidurim4_rec.hatchala+idNumber/1440,Sidurim4_rec.gmar,  Sidurim4_rec.sug_visa,   Sidurim4_rec.meadken, Sidurim4_rec.sug_sidur );
+idNumber:=idNumber+1;
+EXCEPTION
+   WHEN OTHERS THEN
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,21,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Sidurim4_rec.driver_id) ||' new '||TO_CHAR(Sidurim4_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+	  END;
+ 		   END LOOP;
+	 
+END LOOP;
+COMMIT;
 
---FOR  Sidurim2_rec IN  Sidurim2 LOOP
---BEGIN
---  insert into tb_sidurim_ovdim s ( mispar_ishi  , taarich  , mispar_sidur  , shat_hatchala  , shat_gmar,sector_visa,meadken_acharon   ,sug_sidur  )
---values (Sidurim2_rec.driver_id,Sidurim2_rec.start_dt,  Sidurim2_rec.schedule_num,  
---Sidurim2_rec.hatchala,Sidurim2_rec.gmar,  Sidurim2_rec.sug_visa,   Sidurim2_rec.meadken, Sidurim2_rec.sug_sidur );
-
---EXCEPTION
---   WHEN OTHERS THEN
---	insert into tb_log_tahalich
---	values (4,1,21,sysdate,'',10,'',substr(to_char(Sidurim2_rec.driver_id) ||' '||to_char(Sidurim2_rec.schedule_num)||' '||DBMS_UTILITY.format_error_stack,1,1000));
---end;
---END LOOP;
---commit;
 
  BEGIN
- update  tb_sidurim_ovdim 
- set   Shayah_LeYom_Kodem=1   
-where  taarich = to_date(pDt,'yyyymmdd')
-and exists (select *   from kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
-where k1.start_dt= to_date(pDt,'yyyymmdd')
-and k1.start_schedule>2359
-and    taarich = k1.start_dt
-and mispar_ishi=k1.driver_id
-and  mispar_sidur  =k1.schedule_num
-and  shat_hatchala  =k1.start_dt + substr(lpad(k1.start_schedule,4,0),1,2)/24 + substr(lpad(k1.start_schedule,4,0),3,2)/1440
-and  shat_gmar=k1.start_dt + substr(lpad(k1.end_schedule,4,0),1,2)/24 + substr(lpad(k1.end_schedule,4,0),3,2)/1440);
+ UPDATE  TB_SIDURIM_OVDIM 
+ SET   Shayah_LeYom_Kodem=1   
+WHERE  taarich = TO_DATE(pDt,'yyyymmdd')--+100
+AND EXISTS (SELECT *   FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE k1.start_dt= TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule>2359
+AND    taarich = k1.start_dt--+100
+AND mispar_ishi=k1.driver_id
+AND  mispar_sidur  =k1.schedule_num
+AND  shat_hatchala  =k1.start_dt + SUBSTR(LPAD(k1.start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.start_schedule,4,0),3,2)/1440
+AND  shat_gmar=k1.start_dt + SUBSTR(LPAD(k1.end_schedule,4,0),1,2)/24 + SUBSTR(LPAD(k1.end_schedule,4,0),3,2)/1440);
 
 EXCEPTION
    WHEN OTHERS THEN
-    insert into tb_log_tahalich
-    values (4,1,22,sysdate,'',10,'',substr(pDt||' Shayah_LeYom_Kodem '||DBMS_UTILITY.format_error_stack,1,1000));     
-end;
-commit;
+    INSERT INTO TB_LOG_TAHALICH
+    VALUES (4,1,22,SYSDATE,'',10,'',SUBSTR(pDt||' Shayah_LeYom_Kodem new '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));     
+END;
+COMMIT;
 
 BEGIN
- update TB_Sidurim_Ovdim 
-set   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
- where taarich= to_date(pDt,'yyyymmdd')
-and meadken_acharon=-12;
+ UPDATE TB_SIDURIM_OVDIM 
+SET   Lo_letashlum=1 ,Kod_Siba_Lo_Letashlum=16
+ WHERE taarich= TO_DATE(pDt,'yyyymmdd')--+100
+AND meadken_acharon=-12;
 
   EXCEPTION
    WHEN OTHERS THEN
-	insert into tb_log_tahalich
-	values (4,1,2,sysdate,'',10,'',substr('update_sidurim '||' '||DBMS_UTILITY.format_error_stack,1,1000));   
+	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,2,SYSDATE,'',10,'',SUBSTR('update_sidurim new'||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));   
 
-end;
-commit;
+END;
+COMMIT;
 
 END pro_ins_sidurim_from_sdrm;
 
-END PKG_sdrn;
+PROCEDURE pro_ins_peilut_from_sdrm(pDt VARCHAR) IS
+
+-- this bulk is most of the peiluyot, except continuous visa
+   CURSOR Peilut1 IS
+   SELECT    driver_id,start_dt,schedule_num,branch,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
+ makat_line,bus_number,bus_sequence,waiting_time,
+ spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+WHERE  start_dt= TO_DATE(pDt,'yyyymmdd')
+AND NOT (start_schedule<2400
+AND end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  start_schedule>end_schedule);
+							
+--for visa when end<start ommited cursor1
+CURSOR Peilut9  IS
+  SELECT   DISTINCT      driver_id,start_dt,schedule_num,branch,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
+ makat_line,bus_number,bus_sequence,waiting_time,
+ spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND k1.start_schedule<2400
+AND k1.end_schedule<2400
+AND DECODE(sug_visa,' ','',sug_visa) IN (0,1)
+AND  k1.start_schedule>k1.end_schedule;
+
+--for not a visa and ommited in cursor1
+CURSOR Peilut3  IS
+  SELECT   DISTINCT      driver_id,start_dt,schedule_num,branch,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala ,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 gmar,ride_id,
+ makat_line,bus_number,bus_sequence,waiting_time,
+ spm_time,spm_bus_number,spm_schedule_num,spm_start_time,spm_makat_line,spm_line_sign,spm_location,-12 meadken
+FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm k1
+WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+AND NOT EXISTS (SELECT * FROM   TB_PEILUT_OVDIM
+WHERE taarich=TO_DATE(pDt,'yyyymmdd')--+100
+AND driver_id=mispar_ishi
+-- AND start_dt+100=taarich 
+ AND start_dt=taarich
+AND schedule_num=mispar_sidur
+AND branch=snif_tnua
+AND shat_hatchala_sidur=start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440  
+AND shat_yetzia=start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440  
+AND mispar_knisa=ride_id) ;
+
+
+CURSOR Peilut5  IS
+  SELECT   DISTINCT    start_dt, driver_id,schedule_num,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 moed,
+				 makat_line,ride_id,  line_description
+ FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+							AND line_description IS NOT NULL
+							AND NVL(makat_line,0)=0
+							AND schedule_num<1000;
+  
+CURSOR Peilut8  IS
+  SELECT   DISTINCT    start_dt, driver_id,schedule_num,
+start_dt + SUBSTR(LPAD(start_schedule,4,0),1,2)/24 + SUBSTR(LPAD(start_schedule,4,0),3,2)/1440 hatchala,
+start_dt + SUBSTR(LPAD(start_time,4,0),1,2)/24 + SUBSTR(LPAD(start_time,4,0),3,2)/1440 moed,
+				 makat_line,ride_id,  line_description
+ FROM kds.KDS_DRIVER_ACTIVITIES@kds2sdrm
+						   	WHERE  start_dt=  TO_DATE(pDt,'yyyymmdd')
+							AND line_description IS NOT NULL
+							AND ride_id>0
+							AND makat_line<50000000;
+
+     BEGIN
+     
+   FOR  Peilut1_rec IN  Peilut1 LOOP
+BEGIN
+INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
+ Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
+ Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
+--  VALUES (Peilut1_rec.driver_id,Peilut1_rec.start_dt+100,  Peilut1_rec.schedule_num,  Peilut1_rec.branch,
+  VALUES (Peilut1_rec.driver_id,Peilut1_rec.start_dt,  Peilut1_rec.schedule_num,  Peilut1_rec.branch,
+Peilut1_rec.hatchala,Peilut1_rec.gmar,   Peilut1_rec.ride_id, Peilut1_rec.makat_line,Peilut1_rec.bus_number,Peilut1_rec.bus_sequence,
+Peilut1_rec.waiting_time, Peilut1_rec.spm_time,Peilut1_rec.spm_bus_number,Peilut1_rec.spm_schedule_num,Peilut1_rec.spm_start_time,
+Peilut1_rec.spm_makat_line, Peilut1_rec.spm_line_sign,Peilut1_rec.spm_location, Peilut1_rec.meadken );
+
+EXCEPTION
+   WHEN OTHERS THEN
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,30,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut1_rec.driver_id) ||' new '||TO_CHAR(Peilut1_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
+END LOOP;
+COMMIT;
+
+FOR  Peilut9_rec IN  Peilut9 LOOP
+BEGIN
+INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
+ Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
+ Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
+--  VALUES (Peilut9_rec.driver_id,Peilut9_rec.start_dt+100,  Peilut9_rec.schedule_num,  Peilut9_rec.branch,
+  VALUES (Peilut9_rec.driver_id,Peilut9_rec.start_dt,  Peilut9_rec.schedule_num,  Peilut9_rec.branch,
+Peilut9_rec.hatchala,Peilut9_rec.gmar,   Peilut9_rec.ride_id, Peilut9_rec.makat_line,Peilut9_rec.bus_number,Peilut9_rec.bus_sequence,
+Peilut9_rec.waiting_time, Peilut9_rec.spm_time,Peilut9_rec.spm_bus_number,Peilut9_rec.spm_schedule_num,Peilut9_rec.spm_start_time,
+Peilut9_rec.spm_makat_line, Peilut9_rec.spm_line_sign,Peilut9_rec.spm_location, Peilut9_rec.meadken );
+
+EXCEPTION
+   WHEN OTHERS THEN
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,45,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut9_rec.driver_id) ||' new '||TO_CHAR(Peilut9_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
+END LOOP;
+COMMIT;
+
+FOR  Peilut3_rec IN  Peilut3 LOOP
+BEGIN
+INSERT INTO TB_PEILUT_OVDIM (mispar_ishi,taarich,mispar_sidur,  snif_tnua,shat_hatchala_sidur,shat_yetzia,mispar_knisa,
+makat_nesia,oto_no,mispar_siduri_oto,kisuy_tor,
+ Shat_Bhirat_Nesia_Netzer , Oto_No_Netzer, Mispar_Sidur_Netzer,  Shat_yetzia_Netzer,  Makat_Netzer, Shilut_Netzer ,
+ Mikum_Bhirat_Nesia_Netzer ,meadken_acharon  )
+--  VALUES (Peilut3_rec.driver_id,Peilut3_rec.start_dt+100,  Peilut3_rec.schedule_num,  Peilut3_rec.branch,
+  VALUES (Peilut3_rec.driver_id,Peilut3_rec.start_dt,  Peilut3_rec.schedule_num,  Peilut3_rec.branch,
+Peilut3_rec.hatchala,Peilut3_rec.gmar,   Peilut3_rec.ride_id, Peilut3_rec.makat_line,Peilut3_rec.bus_number,Peilut3_rec.bus_sequence,
+Peilut3_rec.waiting_time, Peilut3_rec.spm_time,Peilut3_rec.spm_bus_number,Peilut3_rec.spm_schedule_num,Peilut3_rec.spm_start_time,
+Peilut3_rec.spm_makat_line, Peilut3_rec.spm_line_sign,Peilut3_rec.spm_location, Peilut3_rec.meadken );
+
+
+EXCEPTION
+   WHEN OTHERS THEN
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,43,SYSDATE,'',10,'',SUBSTR(TO_CHAR(Peilut3_rec.driver_id) ||' new '||TO_CHAR(Peilut3_rec.schedule_num)||' '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+   END;
+END LOOP;
+COMMIT;
+
+ 
+ FOR  Peilut5_rec IN  Peilut5 LOOP
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=    Peilut5_rec.line_description
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')--+100
+AND NVL(makat_nesia,0)=0
+AND mispar_sidur<1000
+							AND Peilut5_rec.driver_id=mispar_ishi
+							AND Peilut5_rec.schedule_num=mispar_sidur
+							AND Peilut5_rec.hatchala =shat_hatchala_sidur
+							AND Peilut5_rec.moed =shat_yetzia
+							AND Peilut5_rec.makat_line=makat_nesia
+							AND Peilut5_rec.ride_id=mispar_knisa;
+
+EXCEPTION
+   WHEN OTHERS THEN
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,42,SYSDATE,'',10,'',SUBSTR('update teur peilut new '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+END LOOP;
+COMMIT;
+
+FOR  Peilut8_rec IN  Peilut8 LOOP
+BEGIN
+UPDATE TB_PEILUT_OVDIM
+SET teur_nesia=    Peilut8_rec.line_description
+WHERE taarich= TO_DATE(pDt,'yyyymmdd')--+100
+AND makat_nesia<50000000
+AND mispar_knisa>0
+							AND Peilut8_rec.driver_id=mispar_ishi
+							AND Peilut8_rec.schedule_num=mispar_sidur
+							AND Peilut8_rec.hatchala =shat_hatchala_sidur
+							AND Peilut8_rec.moed =shat_yetzia
+							AND Peilut8_rec.makat_line=makat_nesia
+							AND Peilut8_rec.ride_id=mispar_knisa;
+
+EXCEPTION
+   WHEN OTHERS THEN
+  	INSERT INTO TB_LOG_TAHALICH
+	VALUES (4,1,39,SYSDATE,'',10,'',SUBSTR('update teur peilut new '||DBMS_UTILITY.FORMAT_ERROR_STACK,1,1000));
+END;
+END LOOP;
+COMMIT;
+
+END pro_ins_peilut_from_sdrm;
+
+END Pkg_Sdrn;
 /
 
 
@@ -20303,8 +21088,13 @@ PROCEDURE pro_ins_upd_sidurim_ovdim(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ish
 							AND taarich =TRUNC(p_taarich)
 							AND mispar_sidur=p_mispar_sidur
 							AND shat_hatchala=p_shat_hatchala;
+                            
+                 IF ((p_user_upd<> p_mispar_ishi) and (p_user_upd>0)) THEN
+                      pkg_utils.pro_insert_meadken_acharon(p_mispar_ishi,p_taarich);
+                 END IF; 
 			END IF;
 
+        
 			EXCEPTION
         WHEN OTHERS THEN
 		RAISE;
@@ -21923,13 +22713,13 @@ EXCEPTION
 		RAISE;
 END pro_get_buses_details;
 
-FUNCTION pro_get_kavim_details_sidur(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
+PROCEDURE pro_get_kavim_details_sidur(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
                                                             p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
                                                             p_taarich IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE) return number is
+                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE,
+                                                                      p_km OUT number) IS
     v_count  NUMBER;
     rc NUMBER;
-    p_sum_km number;
 BEGIN
     SELECT COUNT(po.mispar_ishi) INTO v_count
     FROM TB_SIDURIM_OVDIM o,TB_PEILUT_OVDIM po
@@ -21938,11 +22728,12 @@ BEGIN
           AND o.mispar_sidur= po.mispar_sidur
           AND o.shat_hatchala = po.shat_hatchala_sidur
           AND o.mispar_ishi=p_mispar_ishi
-          and O.mispar_ishi=p_mispar_ishi
           and o.mispar_sidur=p_mispar_sidur
           AND  o.taarich=p_taarich
           and  o.shat_hatchala =p_shat_hatchala ;
-         
+          
+          p_km:=   NULL;     
+          
     IF (v_count>0) THEN
     BEGIN
        INSERT INTO TMP_CATALOG_DETAILS@kds_gw_at_tnpr
@@ -21954,7 +22745,9 @@ BEGIN
           AND o.mispar_sidur= po.mispar_sidur
           AND o.shat_hatchala = po.shat_hatchala_sidur
           AND o.mispar_ishi=p_mispar_ishi
-          AND  o.taarich=p_taarich ;
+          AND  o.taarich=p_taarich
+           and o.mispar_sidur=p_mispar_sidur
+          and  o.shat_hatchala =p_shat_hatchala ;
           
        EXCEPTION
               WHEN DUP_VAL_ON_INDEX THEN
@@ -21965,17 +22758,14 @@ BEGIN
       kds_catalog_pack.GetKavimDetails@kds_gw_at_tnpr(rc);
 
      -- OPEN p_cur FOR
-      SELECT sum(km) into p_sum_km
+      SELECT sum(km) into p_km
        FROM TMP_CATALOG_DETAILS@kds_gw_at_tnpr;
-       
-       return  p_sum_km;
-       
+             
           EXCEPTION
               WHEN OTHERS THEN
-                 RETURN   NULL;
+                 raise;     
      END;
     END IF;
-
 END  pro_get_kavim_details_sidur;
 END Pkg_Tnua;
 /
@@ -22043,6 +22833,9 @@ IS
           WHERE Taarich BETWEEN fromDate AND toDate;
  
 		  DELETE FROM TRAIL_YAMEY_AVODA_OVDIM
+          WHERE Taarich BETWEEN fromDate AND toDate;
+          
+          DELETE FROM TB_MEADKEN_ACHARON
           WHERE Taarich BETWEEN fromDate AND toDate;
           
           DELETE FROM TB_SHGIOT_MEUSHAROT
@@ -23037,6 +23830,47 @@ END fun_get_barkod_Tachograf;
 		 EXCEPTION
          WHEN OTHERS THEN
               RAISE;
-  END pro_get_snif_tnua_by_kod;											
+  END pro_get_snif_tnua_by_kod;		
+  
+ PROCEDURE pro_insert_meadken_acharon(p_mispar_ishi IN NUMBER,p_taarich DATE)
+    IS
+    icount number;
+     BEGIN
+        
+        BEGIN
+            select count(*) into icount
+            from tb_meadken_acharon t
+            where T.MISPAR_ISHI = p_mispar_ishi
+               and T.TAARICH = p_taarich;
+        
+        EXCEPTION
+         WHEN NO_DATA_FOUND THEN
+                icount:=0;
+        END;
+       
+          if (icount = 0) then
+                insert into tb_meadken_acharon(MISPAR_ISHI,TAARICH)
+                VALUES (p_mispar_ishi,p_taarich);
+          end if;
+           
+         EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_insert_meadken_acharon;    
+  
+                          
+    PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType)
+    IS
+     BEGIN
+                 OPEN p_cur FOR
+                   SELECT DISTINCT C.MISPAR_ISHI,C.TAARICH
+                       FROM tb_chishuv_chodesh_ovdim c
+                       WHERE C.BAKASHA_ID = p_bakasha_id;
+
+         EXCEPTION
+         WHEN OTHERS THEN
+              RAISE;
+  END pro_get_ovdim_by_bakasha;        
+  							
 END Pkg_Utils;
 /
