@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>8.27318cm</Height>
+              <Height>7.45297cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1805,7 +1805,6 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                         </Border>
                       </Style>
                     </Rectangle>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1842,7 +1841,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
         </TablixRowHierarchy>
         <DataSetName>DsPresence</DataSetName>
         <Left>0.20014cm</Left>
-        <Height>8.27318cm</Height>
+        <Height>7.45297cm</Height>
         <Width>20.17644cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsPresence")&gt;0 ,false ,true)</Hidden>
@@ -1854,11 +1853,53 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.44466in</Height>
+    <Height>3.05924in</Height>
     <Style />
   </Body>
   <Width>8.02969in</Width>
   <Page>
+    <PageFooter>
+      <Height>0.84667cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox38">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=" דף  " &amp; Globals!PageNumber &amp; "  מתוך  " &amp; Globals!TotalPages</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <LeftIndent>0cm</LeftIndent>
+              <HangingIndent>0cm</HangingIndent>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox12</rd:DefaultName>
+          <Top>0.28223cm</Top>
+          <Height>0.56444cm</Height>
+          <Width>5.6801cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0cm</LeftMargin>
