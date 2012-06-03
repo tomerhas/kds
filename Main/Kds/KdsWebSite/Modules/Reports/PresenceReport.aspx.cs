@@ -119,7 +119,7 @@ public partial class Modules_Reports_PresenceReport : KdsPage
             sIp = "";//arrParams[1];
             s = (byte[])Session["Report"];
             sFileName = "PresenceReport.pdf";
-            sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+            sPathFile = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\";
             if (!Directory.Exists(sPathFile))
                 Directory.CreateDirectory(sPathFile);
             fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
