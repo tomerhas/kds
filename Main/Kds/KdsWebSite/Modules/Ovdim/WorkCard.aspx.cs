@@ -2451,7 +2451,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 string sScript = "";
                 string sIp;
-                string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+                string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
 
                 clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFilePrint=" + sPathFilePrint);
@@ -2472,7 +2472,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 sIp = "";// arrParams[1];
                 sFileName = "WorkCard.pdf";
 
-                sPathFile = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
                 clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFile=" + sPathFile);
 
                 if (!Directory.Exists(sPathFile))

@@ -172,7 +172,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
         string sScript;
         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
         string sIp="";
-        string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+        string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
         
         if (Page.IsValid)
         {
@@ -194,7 +194,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                     FileStream fs;
                     sIp = "";// arrParams[1];
                     sFileName = "RikuzAvodaChodshi.pdf";
-                    sPathFile = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+                    sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
                     if (!Directory.Exists(sPathFile))
                         Directory.CreateDirectory(sPathFile);
                     fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);

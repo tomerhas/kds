@@ -110,7 +110,7 @@ public partial class Modules_Reports_PresenceReport : KdsPage
         string sScript;
         byte[] s;
         string sIp = "";
-        string sPathFilePrint = ConfigurationManager.AppSettings["PathFilePrintReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
+        string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
         
         if (LoginUser.IsLimitedUser && arrParams[2].ToString()=="1")
         {
@@ -119,7 +119,7 @@ public partial class Modules_Reports_PresenceReport : KdsPage
             sIp = "";//arrParams[1];
             s = (byte[])Session["Report"];
             sFileName = "PresenceReport.pdf";
-            sPathFile = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+            sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
             if (!Directory.Exists(sPathFile))
                 Directory.CreateDirectory(sPathFile);
             fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
