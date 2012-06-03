@@ -2439,14 +2439,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         try
         {
             bWorkCardWasUpdate = IsWorkCardWasUpdate();
-             key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
-         // urlBarcode = ClBarcode.GetUrlBarcode(key, 90, 90);
-            // if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
-          //  EventLog.WriteEntry("kds", Page.Title + ": before urlBarcode", EventLogEntryType.Error);
+            key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;
-          //  EventLog.WriteEntry("kds", Page.Title + ": after urlBarcode", EventLogEntryType.Error);
-            clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "hidFromEmda.Value=" + hidFromEmda.Value);
-               
+           
             if (hidFromEmda.Value == "true")
             {
                 string sScript = "";
@@ -2454,7 +2449,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
 
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFilePrint=" + sPathFilePrint);
                 ReportModule Report = new ReportModule();
                 Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
                 Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
@@ -2463,33 +2457,23 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 Report.AddParameter("P_URL_BARCODE", urlBarcode);
                 Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
 
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "before CreateReport");
                 s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after CreateReport");
-             //   EventLog.WriteEntry("kds", Page.Title + ": after CreateReport", EventLogEntryType.Error);
                 string sFileName, sPathFile;
                 FileStream fs;
                 sIp = "";// arrParams[1];
                 sFileName = "WorkCard.pdf";
 
                 sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFile=" + sPathFile);
-
+               
                 if (!Directory.Exists(sPathFile))
                 {
-                    clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "in Directory.Exists");
                     Directory.CreateDirectory(sPathFile);
-                    clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "Directory.CreateDirectory");
                 }
                 
                 fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after new FileStream");
                 fs.Write(s, 0, s.Length);
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after fs.Write");
                 fs.Flush();
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after fs.Flush()");
                 fs.Close();
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after  fs.Close()");
                
                 for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
                 {
@@ -2499,15 +2483,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         break;
                     }
                 }
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after  for  dtErrors");
                
           //      EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
                 sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFilePrint + sFileName="+ sPathFilePrint + sFileName );
                
-                ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);
-                clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "after ScriptManager.RegisterStartupScript");
-               
+                ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);          
             }
             else
             {
@@ -2524,7 +2504,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         catch (Exception ex)
         {
-           clGeneral.BuildError(this, ex.Message,true);
+            EventLog.WriteEntry("Kds", "PrintCard Faild: " + ex.Message, EventLogEntryType.Error);
+            throw ex;
         }
     }
     
