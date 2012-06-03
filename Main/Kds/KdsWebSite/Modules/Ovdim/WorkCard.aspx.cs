@@ -2472,13 +2472,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 sIp = "";// arrParams[1];
                 sFileName = "WorkCard.pdf";
 
-                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\";
+                sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "sPathFile=" + sPathFile);
 
                 if (!Directory.Exists(sPathFile))
                 {
                     clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "in Directory.Exists");
                     Directory.CreateDirectory(sPathFile);
+                    clLogBakashot.InsertErrorToLog(858, 75757, "I", 0, null, "Directory.CreateDirectory");
                 }
                 
                 fs = new FileStream(sPathFile + sFileName, FileMode.Create, FileAccess.Write);
