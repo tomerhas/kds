@@ -347,7 +347,7 @@
             <Top>1.63156cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.37323cm</Width>
+            <Width>14.37322cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -1577,7 +1577,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <Top>2.66215cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.37327cm</Width>
+            <Width>14.37326cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1684,7 +1684,8 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                                   <Value>=iif (Fields!MEASHER_O_MISTAYEG.Value="1" and Parameters!P_TIKUN.Value ="0","מאשר",
      iif (Fields!MEASHER_O_MISTAYEG.Value="0" and Parameters!P_TIKUN.Value ="0","מסתייג",
      iif (Fields!MEASHER_O_MISTAYEG.Value="1" and Parameters!P_TIKUN.Value ="1"," מאשר - תיקון",
-     iif (Fields!MEASHER_O_MISTAYEG.Value="0" and Parameters!P_TIKUN.Value ="1"," מסתייג - תיקון",""))))</Value>
+     iif (Fields!MEASHER_O_MISTAYEG.Value="0" and Parameters!P_TIKUN.Value ="1"," מסתייג - תיקון",
+        iif (CStr(Fields!MEASHER_O_MISTAYEG.Value)="" and Parameters!P_TAARICH.Value &lt; Now.AddDays(-Int(reportitems!Textbox2.Value)) ," ללא התייחסות","")))))</Value>
                                   <Style>
                                     <FontSize>16pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1709,6 +1710,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -3341,7 +3343,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25, Fields!NOT_ON_TIME.Value &amp; "%","")</Value>
+                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "" and CStr(Fields!NOT_ON_TIME.Value) &lt;&gt; "0", Fields!NOT_ON_TIME.Value &amp; "%","")</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -3374,7 +3376,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25, Fields!F5.Value &amp; "%","")</Value>
+                                  <Value>=iif(Day(Parameters!P_TAARICH.Value)&gt;=25 and CStr(Fields!F5.Value) &lt;&gt; "" and CStr(Fields!F5.Value) &lt;&gt; "0", Fields!F5.Value &amp; "%","")</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -3431,6 +3433,39 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!ERECH_PARAM.Value, "dsParam252")</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.81703cm</Top>
+            <Left>0.39544cm</Left>
+            <Height>0.6cm</Height>
+            <Width>0.83138cm</Width>
+            <ZIndex>21</ZIndex>
+            <Visibility>
+              <Hidden>true</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Height>6.83694cm</Height>
@@ -3721,6 +3756,31 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="KOD_PARAM">
+          <DataField>KOD_PARAM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_PARAM">
+          <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsParam252">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KODLIST">
+            <Value>252</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Day(Now) &amp; "/" &amp; Month(Now)  &amp; "/" &amp; Year(Now)</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
       </Query>
       <Fields>
         <Field Name="KOD_PARAM">

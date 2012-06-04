@@ -2085,7 +2085,8 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                                                 <Value>=iif (Fields!SECTOR_VISA.Value="0" and Parameters!P_TIKUN.Value="0","ויזה פנים",
      iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="0","ויזה צהל",
      iif (Fields!SECTOR_VISA.Value="0"  and Parameters!P_TIKUN.Value="1","צהל ויזה - תיקון",
-     iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="1","תיקון - ויזה צהל",""))))</Value>
+     iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="1","תיקון - ויזה צהל",
+      iif (CStr(Fields!MEASHER_O_MISTAYEG.Value)="" and Parameters!P_TAARICH.Value &lt; Now.AddDays(-Int(reportitems!Textbox2.Value)) ," ללא התייחסות","")))))</Value>
                                                 <Style>
                                                   <FontSize>16pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
@@ -2111,6 +2112,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
@@ -2220,6 +2222,39 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                           <Height>0.22425cm</Height>
                           <Width>4.65931cm</Width>
                           <ZIndex>13</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=First(Fields!ERECH_PARAM.Value, "dsParam252")</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Top>0.91109cm</Top>
+                          <Left>0.25426cm</Left>
+                          <Height>0.6cm</Height>
+                          <Width>0.83138cm</Width>
+                          <ZIndex>14</ZIndex>
+                          <Visibility>
+                            <Hidden>true</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -2428,6 +2463,31 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         <CommandType>StoredProcedure</CommandType>
         <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="KOD_PARAM">
+          <DataField>KOD_PARAM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_PARAM">
+          <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsParam252">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_KODLIST">
+            <Value>252</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Day(Now) &amp; "/" &amp; Month(Now)  &amp; "/" &amp; Year(Now)</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_PARAMETERS.PRO_GET_ERECH_BY_KOD</CommandText>
       </Query>
       <Fields>
         <Field Name="KOD_PARAM">
