@@ -2728,7 +2728,8 @@
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechivimChodshiym</DataSetName>
-        <Top>5.70591cm</Top>
+        <Top>5.67945cm</Top>
+        <Left>0.12237cm</Left>
         <Height>1.24282cm</Height>
         <Width>15.79495cm</Width>
         <ZIndex>8</ZIndex>
@@ -5842,7 +5843,6 @@
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9690,10 +9690,7 @@
       <rd:DataSourceID>88fddfaf-2a79-4de8-94a4-60f6c809acb8</rd:DataSourceID>
     </DataSource>
     <DataSource Name="DsLocalReport">
-      <ConnectionProperties>
-        <DataProvider>DATASET</DataProvider>
-        <ConnectString />
-      </ConnectionProperties>
+      <DataSourceReference>DsExtension</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>c56f22e7-6d87-464d-85a2-3effdb27a9ad</rd:DataSourceID>
     </DataSource>

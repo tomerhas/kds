@@ -9667,7 +9667,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.88664in</Height>
+    <Height>4.08456in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -9676,13 +9676,12 @@
   </Body>
   <Width>10.97146in</Width>
   <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0.1cm</TopMargin>
-    <BottomMargin>0.05cm</BottomMargin>
-    <ColumnSpacing>0.1cm</ColumnSpacing>
+    <PageHeight>13in</PageHeight>
+    <PageWidth>10in</PageWidth>
+    <LeftMargin>0.25in</LeftMargin>
+    <RightMargin>0.25in</RightMargin>
+    <BottomMargin>0.25in</BottomMargin>
+    <ColumnSpacing>0.03937in</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -10314,6 +10313,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>befec3b9-e086-426d-9ffb-3e7276853b20</rd:ReportID>
 </Report>
