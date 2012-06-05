@@ -185,73 +185,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void Page_PreRender(object sender, EventArgs e)
     {        
-       RenderPage();        
-        //if (bInpuDataResult)
-        //{
-        //    //מספר אישי
-        //    SetControlColor(txtId, "black", "white");            
-        //    // זמן נסיעות
-        //    SetControlColor(ddlTravleTime, "black", "white");            
-        //    // לינה 
-        //    SetControlColor(ddlLina, "black", "white");                     
-        //    //הלבשה
-        //    SetControlColor(ddlHalbasha, "black", "white");     
-        //    //סיבת השלמה ליום
-        //    SetControlColor(ddlHashlamaReason, "black", "white");     
-           
-        //    switch (_StatusCard)
-        //    {
-        //        case clGeneral.enCardStatus.Valid:
-        //            //אישורים
-        //            SetApprovalInPage();
-        //            break;
-        //        case clGeneral.enCardStatus.Error:
-        //            //שגיאות
-        //            SetErrorInPage();
-        //            break;
-        //    }
-
-
-        //    //התייצבות
-        //    bParticipationAllowed = SetParticipation();
-            
-        //   // if (bParticipationAllowed){   
-        //    if (!bWorkCardWasUpdateRun)
-        //        bWorkCardWasUpdate = IsWorkCardWasUpdate();
-        //   // }
-        //    //bParticipationAllowed = SetParticipation();
-        //    SetMeasherMistayeg();
-            
-        //    clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
-        //    //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
-        //    //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
-        //    KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
-        //    if ((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
-        //        && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString()))))           
-        //        EnabledFrames(false);            
-        //    else
-        //        if (!bDisabledFrame)                
-        //            EnabledFrames(true);
-                
-                        
-        //    btnHamara.Disabled = (!EnabledHamaraForDay());
-        //    ddlTachograph.Enabled = EnabledTachograph();
-        //    EnabledFields();
-        //    SecurityManager.AuthorizePage(this,true);
-        //    BindSibotLehashlamaLeyom();
-        //    if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))           
-        //        CreateChangeAttributs();
-            
-        //    SetDDLToolTip();
-        //    string sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ");";
-        //    ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
-
-        ////    InsertTriggersToUpdatePanel (upEmployeeDetails, TriggerToAdd);
-
-
-        //}
-        ////Before Load page, save field data for compare
-        ////_WorkCardBeforeChanges = InitWorkCardObject();
+       RenderPage();                
     }
 
     protected void SetDDLToolTip(){
@@ -263,25 +197,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clUtils.SetDDLToolTip(ddlFirstPart);
         clUtils.SetDDLToolTip(ddlSecPart);
     }
-    //protected WorkCardObj InitWorkCardObject()
-    //{
-    //    //Fill WorkCard With all Page fields
-    //    WorkCardObj _WorkCard = new WorkCardObj();
-    //    try
-    //    {
-    //        _WorkCard.EmpID = iMisparIshi;
-    //        _WorkCard.CardDate = dDateCard;
-    //        _WorkCard.Lina = String.IsNullOrEmpty(ddlLina.SelectedValue) ? 0 : int.Parse(ddlLina.SelectedValue);
-    //        _WorkCard.Halbasha = String.IsNullOrEmpty(ddlHalbasha.SelectedValue) ? 0 : int.Parse(ddlHalbasha.SelectedValue);
-
-
-    //        return _WorkCard;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        throw ex;
-    //    }
-    //}
+   
     protected bool IsRashemetProfile()
     {
         bool bRashemet = false;
