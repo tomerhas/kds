@@ -576,7 +576,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }   
     protected bool DisabledCard()
     {
-        int iDays;    
+      int iDays;    
       //  בפתיחת כרטיס עבודה עם TB_YAMEY_AVODA_OVDIM.STATUS=2  (הועבר לשכר) והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת - יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות במי ומאיפה פתחו את הכרטיס).   
       //4. בפתיחת כרטיס עבודה ללא סידורים ו- sysdate הוא בטווח תאריך כרטיס עבודה + 2 והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת- יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות מאיפה פתחו את הכרטיס). 
       //TimeSpan ts = DateTime.Now-oBatchManager.CardDate;

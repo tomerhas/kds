@@ -2291,6 +2291,7 @@ public class wsGeneral : System.Web.Services.WebService
         string sReturnCode = "0";
         DataTable dtMeafyenim= new DataTable();
         DataRow[] dr;
+        clParameters _parameters = (clParameters)Session["Parameters"];
                 
         if ((iSidurNumber.Equals(SIDUR_HITYAZVUT_A)) || (iSidurNumber.Equals(SIDUR_HITYAZVUT_B)))
             sReturnCode = "1|לא ניתן לדווח סידור התייצבות";
@@ -2311,8 +2312,10 @@ public class wsGeneral : System.Web.Services.WebService
                         if (dr.Length == 0)
                             sReturnCode = "1| מספר סידור שגוי";
 
-                        if ((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
+                        if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
+                            && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) < _parameters.iValidDays))
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
+                            //אבל רק במידה והכרטיס הוא בטוו 45 יום (פרמטר 252)
                             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1'");
                             if (dr.Length == 0)
                                 sReturnCode = "1| כרטיס ללא התייחסות, לא ניתן להוסיף סידור זה";

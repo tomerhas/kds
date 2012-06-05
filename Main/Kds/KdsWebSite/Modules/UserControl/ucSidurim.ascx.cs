@@ -2354,8 +2354,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oAutoComplete = AddAutoCompleteCtl("ACSidur" + iIndex, 25, true, oTextBox.ID, "getKodSidurimWhithOutList", "~/Modules/WebServices/wsGeneral.asmx");
        // oAutoComplete.OnClientItemSelected = "chkNewSidur";
         //ננטרל סידורי התייצבות והיעדרות      
-        if (MeasherOMistayeg==clGeneral.enMeasherOMistayeg.ValueNull)
-            oAutoComplete.ContextKey = MEAFYEN_CARD_NULL +";1;" + MeasherOMistayeg.GetHashCode(); 
+        if (MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull)
+        {
+            //אם הסידור הוא ללא התייחסות וגם בטווח של 45 יום אחורה ,לא נאפשר סידורים שאין להם מאפיין 99
+            if (clDefinitions.GetDiffDays(CardDate, DateTime.Now) < Param252)
+                oAutoComplete.ContextKey = MEAFYEN_CARD_NULL + ";1;" + MeasherOMistayeg.GetHashCode();
+            else
+                oAutoComplete.ContextKey =  ";;" + MeasherOMistayeg.GetHashCode();
+        }
         else
             oAutoComplete.ContextKey = MEAFYEN_SIDUR_HADRUT1 + "," + MEAFYEN_SIDUR_HADRUT2 + ";" + SIDUR_HITYAZVUT1 + "," + SIDUR_HITYAZVUT2 + ";" + MeasherOMistayeg.GetHashCode(); 
 
@@ -4332,7 +4338,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
 
         bNewWorkCard = clDefinitions.GetDiffDays(CardDate, DateTime.Now) < Param252;
-        //אם הכרטיס הוא ללא התייחסות והמספר שאישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס
+        //אם הכרטיס הוא ללא התייחסות והמספר האישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס
         //ואנחנו בטווח של 45 (פרמטר 252) יום מתאריך של היום 
         //לא נאפשר עדכון סידור אם לסידור לא קיים מאפיין 99
         if ((MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) && (!bRashaiLedavech) && (LoginUserId != MisparIshi) && (bNewWorkCard))
