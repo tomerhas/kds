@@ -2660,8 +2660,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
        // AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
         Image imgRemark = new Image();
-        imgRemark.ImageUrl = "../../Images/Qmark.png";
-        imgRemark.Attributes.Add("onclick", "ShowRemark(" + iIndex + ");MovePanel(" + iIndex + ");");
+        if (chkBox.Disabled)
+            imgRemark.ImageUrl = "../../Images/Qmark_Dis.png";
+        else
+        {
+            imgRemark.ImageUrl = "../../Images/Qmark.png";
+            imgRemark.Attributes.Add("onclick", "ShowRemark(" + iIndex + ");MovePanel(" + iIndex + ");");
+        }
+
         if (!chkBox.Checked)
         {
             hCell = CreateTableCell("70px", "", "");

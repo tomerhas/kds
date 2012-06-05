@@ -262,6 +262,24 @@ cursor:pointer;
 	cursor:pointer;	
 }
 
+.ImgLoLetashlum
+{
+	background-image: url(Images/Qmark.png);	
+	background-repeat:no-repeat;
+	background-position:center;		
+	background-color:transparent;
+	border:none;	
+	cursor:pointer;	
+}
+.ImgLoLetashlumDis
+{
+	background-image: url(Images/Qmark_dis.png);	
+	background-repeat:no-repeat;
+	background-position:center;		
+	background-color:transparent;
+	border:none;	
+	cursor:pointer;	
+}
 
 .ImgCancel
 {

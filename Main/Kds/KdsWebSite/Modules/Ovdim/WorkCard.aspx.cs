@@ -4681,7 +4681,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         Session["ReportParameters"] = ReportParameters;
 
-        //EventLog.WriteEntry("kds", this.PureUrlRoot);
+        EventLog.WriteEntry("kds", "PureUrlRoot: " + this.PureUrlRoot);
         string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                
         ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
