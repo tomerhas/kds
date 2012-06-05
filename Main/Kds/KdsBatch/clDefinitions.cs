@@ -1272,10 +1272,18 @@ namespace KdsBatch
             dtParameters = _Utils.GetKdsParametrs();
             foreach (DataRow drParam in dtParameters.Rows)
             {
-                //SetParameters(dr[], iSugYom);
+                //SetParameters(dr["me_taarich"], iSugYom);
             }
             
             dtParameters.Dispose();
-        }         
+        }
+        public static int GetDiffDays(DateTime dFromDate, DateTime dToDate)
+        {
+            //הפרש בימים בין תאריכים
+            TimeSpan ts = dToDate - dFromDate;
+            int iDays = ts.Days;
+            return iDays;
+        }
+
   }
 }

@@ -124,6 +124,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void SetMeasherMistayeg(bool bChishuvShachar, bool bCalculateAndNotRashemet)
     {
+        bool bParam252 = false;
+
         //במידה ותאריך הכרטיס הוא התאריך של היום לא נאפשר את כפתורי מאשר מסתייג
         if (dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())){        
             btnApprove.Disabled = true;
@@ -133,12 +135,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bCalculateAndNotRashemet)){                                   
                     //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                     //רק במידה ולא נעשה שינוי בכרטיס
-                    btnApprove.Disabled = bWorkCardWasUpdate;
-                    btnNotApprove.Disabled = bWorkCardWasUpdate;                                    
+                    //ורק במידה שאנחנו בטווח של פרמטר 252 (45) יום
+                    bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) >= oBatchManager.oParam.iValidDays;
+                    btnApprove.Disabled = ((bWorkCardWasUpdate) || (bParam252));
+                    btnNotApprove.Disabled = ((bWorkCardWasUpdate) || (bParam252));                                     
                 }
-                else{                                                                          
-                        //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
-                        //רק במידה ולא נעשה שינוי בכרטיס
+                else{                                                                                                  
                         btnApprove.Disabled = true;
                         btnNotApprove.Disabled = true;                    
                 }           
@@ -148,44 +150,21 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         switch (oMasherOMistayeg)
         {
-            case clGeneral.enMeasherOMistayeg.ValueNull:
-                //if (btnApprove.Disabled)
-                   // btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
-               // if (btnNotApprove.Disabled)
-                  //  btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
+            case clGeneral.enMeasherOMistayeg.ValueNull:               
                 if (!bRashemet)
                 {
                     btnPrint.Enabled = false;
                     btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
-                }
-                //if (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))
-                //{
-                //    EnabledFrames(false);
-                //    bDisabledFrame = true;
-                //}
-                //else
-                //    EnabledFrames(true);                
+                }               
                 break;
-            case clGeneral.enMeasherOMistayeg.Measher:
-                //if (btnApprove.Disabled)
-                   // btnApprove.Attributes.Add("class", "ImgButtonApprovalCheckedDisabled");
+            case clGeneral.enMeasherOMistayeg.Measher:               
                 if (!btnApprove.Disabled)
                 {
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
-                }
-                //if (btnNotApprove.Disabled)
-                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled");
-                //if (!btnNotApprove.Disabled)
-                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular");
+                }               
                 break;
-            case clGeneral.enMeasherOMistayeg.Mistayeg:
-                 //if (btnApprove.Disabled)
-                 //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
-                 //if (!btnApprove.Disabled)
-                 //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular");
-                 //if (btnNotApprove.Disabled)
-                    // btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalCheckedDisabled");
+            case clGeneral.enMeasherOMistayeg.Mistayeg:                
                 if (!btnNotApprove.Disabled)
                 {
                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
@@ -193,13 +172,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 break;
 
-            default:
-                //if (btnApprove.Disabled)
-                //    btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled");
+            default:                
                 if (!btnApprove.Disabled) 
                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
-                //if (btnNotApprove.Disabled)
-                //    btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
                 if (!btnNotApprove.Disabled)
                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
                 btnPrint.Enabled = true;
@@ -209,10 +184,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         hidMeasherMistayeg.Value = oMasherOMistayeg.GetHashCode().ToString();
     }
     protected void Page_PreRender(object sender, EventArgs e)
-    {
-        EventLog.WriteEntry("Kds", "Before PageRender: ", EventLogEntryType.Error);
-        RenderPage();
-        EventLog.WriteEntry("Kds", "after PageRender: ", EventLogEntryType.Error);
+    {        
+       RenderPage();        
         //if (bInpuDataResult)
         //{
         //    //מספר אישי
@@ -480,12 +453,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         //כפתור מסך עדכונים לעובד
         btnDrvErrors.Style.Add("Display", "block");  
         //כפתור השגוי הבא יוצג רק לרשמת/מנהל מערכת        
-        if (bRashemet)        
-            //btnDrvErrors.Style.Add("Display", "none");
-            btnNextErrCard.Style.Add("Display", "block");        
-        else        
-           // btnDrvErrors.Style.Add("Display", "block");
-            btnNextErrCard.Style.Add("Display", "none");        
+        if (bRashemet)
+        {         
+            btnNextErrCard.Style.Add("Display", "block");
+            btnNextCard.Style.Add("Display", "block");
+            btnPrevCard.Style.Add("Display", "block");
+        }
+        else
+        {           
+            btnNextErrCard.Style.Add("Display", "none");
+            btnNextCard.Style.Add("Display", "none");
+            btnPrevCard.Style.Add("Display", "none");
+        }  
     }
     protected void SetDriverSource()
     {             
@@ -676,20 +655,36 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     //    this.MaintainScrollPositionOnPostBack = true;
     //}
     protected void Page_Load(object sender, EventArgs e)
-    {
-        EventLog.WriteEntry("Kds",  "Before PageLoad: ", EventLogEntryType.Error);
-        LoadPage();
-        EventLog.WriteEntry("Kds", "After PageLoad: ", EventLogEntryType.Error);
-    }
+    {        
+        LoadPage();     
+    }   
     protected bool DisabledCard()
     {
+        int iDays;    
       //  בפתיחת כרטיס עבודה עם TB_YAMEY_AVODA_OVDIM.STATUS=2  (הועבר לשכר) והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת - יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות במי ומאיפה פתחו את הכרטיס).   
       //4. בפתיחת כרטיס עבודה ללא סידורים ו- sysdate הוא בטווח תאריך כרטיס עבודה + 2 והגורם שפתח את הכרטיס אינו רשמת/רשמת על/מנהל מערכת- יש להציג את הכרטיס כ- disable ולא לאפשר עדכון בכרטיס (ללא תלות מאיפה פתחו את הכרטיס). 
-      TimeSpan ts = DateTime.Now-oBatchManager.CardDate;
-      int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
-
+      //TimeSpan ts = DateTime.Now-oBatchManager.CardDate;
+      //int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
+      iDays =clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
       return ((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
             || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
+    }
+    protected bool WorkCardWasUpdateAndDriver(bool bWorkCardWasUpdate)
+    {
+    //עדכון כרטיס ע"י עובד -  אם המ.א ב-  User   LogIn שווה למ.א בכרטיס העבודה יש לחסום עדכון כרטיס עבודה במקרים הבאים:
+    //א. גורם אחר התחיל לטפל בכרטיס: מזהים שגורם אחר נגע בכרטיס אם קיימת רשומה למ.א ותאריך כרטיס עבודה בטבלה 
+    //  TB_MEADKEN_ACHARON (טבלה זו מכילה רשומות עבור מ.א+תאריך בהם בוצע עדכון לא ע"י המ.א אישי של כרטיס העבודה).
+    //ב.  תאריך כרטיס עבודה קטן מ - sysdate(פרמטר 252 ) פחות 45 יום.
+        //TimeSpan ts = DateTime.Now-oBatchManager.CardDate;
+        //int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
+        int iDays;
+        iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
+        bool bWorkCardWasUpdateAndDriverInsert=false;
+
+        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays <= oBatchManager.oParam.iValidDays)))
+            bWorkCardWasUpdateAndDriverInsert = true;
+
+        return bWorkCardWasUpdateAndDriverInsert;
     }
     protected void RenderPage()
     {
@@ -742,7 +737,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             KdsSecurityLevel iSecurity = PageModule.SecurityLevel;
             if ((((((iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndViewOnlySubordinates) || (iSecurity == KdsSecurityLevel.UpdateEmployeeDataAndSubordinates))
                 && (iMisparIshi != int.Parse(LoginUser.UserInfo.EmployeeNumber))) || ((dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())))))
-                || (bChishuvShachar) || (bCalculateAndNotRashemet))
+                || (bChishuvShachar) || (bCalculateAndNotRashemet)
+                || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)))
                 EnabledFrames(false, (bChishuvShachar || bCalculateAndNotRashemet));
             else
                 EnabledFrames(true, (bChishuvShachar || bCalculateAndNotRashemet));
@@ -758,17 +754,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             SetDDLToolTip();
             string sScript = SendScript(bChishuvShachar, bCalculateAndNotRashemet);
-            //string sScript;// = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            //if ((bChishuvShachar) || (bCalculateAndNotRashemet))
-            //{
-            //    sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",true);";
-            //    if (bChishuvShachar)
-            //        sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר י
-            //}
-            //else
-            //{
-            //    sScript = "SetSidurimCollapseImg();HasSidurHashlama();EnabledSidurimListBtn(" + tbSidur.Disabled.ToString().ToLower() + ",false);";
-            //}
+         
             if (bAddSidur)
                 sScript = sScript + "SetNewSidurFocus(" + (SD.DataSource.Count - 1).ToString() + ");";                         
             if (SD.AddPeilut != null)
@@ -777,12 +763,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 if (sPeilutDetails[0].Equals("1"))                    
                     sScript = sScript + "SetNewPeilutFocus('" + SD.GetPeilutClientKey(sPeilutDetails) + "');";
                 
-            }
-            ////אם הגענו לשגוי הבא, נעלה הודעה
-            //if (bNextCardErrorNotFound)
-            //    sScript = sScript + "ShowMsg('לא קיים כרטיס שגוי הבא');"; 
-            //if (oBatchManager.oOvedYomAvodaDetails.iBechishuvSachar.Equals(clGeneral.enBechishuvSachar.bsActive.GetHashCode()))
-            //    sScript = sScript + ChisuvShacharMsg();// " alert('זמנית לא ניתן להפיק כרטיס עבודה זה. אנא נסה במועד מאוחר יותר');"; 
+            }                    
 
             bAddSidur = false;
             SD.AddPeilut = "";
@@ -1727,7 +1708,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.Param102 = oBatchManager.oParam.iHashlamaShisi;
         SD.Param103 = oBatchManager.oParam.iHashlamaShabat;
         SD.Param242 = oBatchManager.oParam.dShatGmarNextDay;
-        SD.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua; 
+        SD.Param244 = oBatchManager.oParam.dShatHatchalaNahagutNihulTnua;
+        SD.Param252 = oBatchManager.oParam.iValidDays;
         SD.RefreshBtn = (hidRefresh.Value!=string.Empty) ? int.Parse(hidRefresh.Value) : 0;
         
      
@@ -2093,14 +2075,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         string strImageUrlApprove = "";
         string strImageUrlNotApprove = "";
         clGeneral.enMeasherOMistayeg oMasherOMistayeg;
-
-        //if (LoginUser.IsLimitedUser)
-        //{
-        //    strImageUrlApprove = "ImgButtonApprovalRegular";
-        //    strImageUrlNotApprove = "ImgButtonApprovalRegular";
-        //}
-        //else
-        //{
+      
         if (oBatchManager.oOvedYomAvodaDetails.OvedDetailsExists)
         {
             oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;

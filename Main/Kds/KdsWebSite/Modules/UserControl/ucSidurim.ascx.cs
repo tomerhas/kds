@@ -52,7 +52,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private float _Param43;
     private float _Param42;
     private int _NumOfHashlama;
-   
+    private int _Param252;
     private DateTime _CardDate;
     private DateTime _FullShatHatchala;
     private DateTime _FullOldShatHatchala;
@@ -1260,10 +1260,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     imgAddPeilut.Style.Add("display", "block");
                     hCell = CreateTableCell("40px", "", "");
                 }               
-                hCell.Controls.Add(imgAddPeilut);
-            //}
-            //else
-            //    hCell = CreateTableCell("53px", "", "");           
+                hCell.Controls.Add(imgAddPeilut);              
         }
         catch (Exception ex)
         {
@@ -4185,7 +4182,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                                       
             hTable.Rows.Add(hRow);
 
-            //אם לסידור אין מאפיין 99 והסידור הוא ללא התייחסות, לא נאפשר  את עידכון הסידור
+            //אם לסידור אין מאפיין 99 והסידור הוא ללא התייחסות ואנחנו בטווח של 45 יום (פרמטר 252), לא נאפשר  את עידכון הסידור
             bEnableSidur = IsEnableSidur(ref oSidur, drSugSidur);  
 
             //יהיה אמת אם לפחות אחד מהסידורים יהיה תנועה או נהגות 
@@ -4320,6 +4317,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         bool bEnable = true;
         bool bRashaiLedavech=false;
+        bool bNewWorkCard = false;
 
         if (oSidur.bSidurMyuhad) //סידור מיוחד
             bRashaiLedavech = oSidur.bRashaiLedaveachExists;
@@ -4332,9 +4330,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             else //אינו סידור מיוחד ואינו סידור מפה
                 bRashaiLedavech = false;
 
+
+        bNewWorkCard = clDefinitions.GetDiffDays(CardDate, DateTime.Now) < Param252;
         //אם הכרטיס הוא ללא התייחסות והמספר שאישי של הגורם שנכנס שונה מהמספר האישי של הכרטיס
+        //ואנחנו בטווח של 45 (פרמטר 252) יום מתאריך של היום 
         //לא נאפשר עדכון סידור אם לסידור לא קיים מאפיין 99
-        if ((MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) && (!bRashaiLedavech) && (LoginUserId != MisparIshi))
+        if ((MeasherOMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) && (!bRashaiLedavech) && (LoginUserId != MisparIshi) && (bNewWorkCard))
             bEnable = false;
 
         return bEnable;
@@ -7125,6 +7126,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             return _Param244;
         }
+    }
+    public int Param252
+    {
+        set { _Param252 = value; }
+        get { return _Param252; }
     }
     //public int Param108
     //{
