@@ -48,6 +48,7 @@
             $("#drVldTaarichAd").css("display", "none");
             $("#trAddition").css("height", "163px");
             ValidatorEnable(document.all("vldStartTime"), false);
+          //  debugger;
             ValidatorEnable(document.all("vldEndTime"), false);
             ValidatorEnable(document.all("vldReqStartTime"), false);
             ValidatorEnable(document.all("vldReqEndTime"), false);
@@ -55,14 +56,14 @@
         }
         else {
 
-            if ($(selectedItem).attr('headrut_hova_ledaveach_shaot') == "True") {
-                document.all("txtEndTime").value = "";
-                document.all("txtStartTime").value = "";
-            }
-            else {
+//            if ($(selectedItem).attr('headrut_hova_ledaveach_shaot') == "True") {
+//                document.all("txtEndTime").value = "";
+//                document.all("txtStartTime").value = "";
+//            }
+//            else {
                 document.all("txtEndTime").value = $(selectedItem).attr('max_gmar_muteret').substring(11, 16);
                 document.all("txtStartTime").value = $(selectedItem).attr('max_shat_hatchala').substring(11, 16);
-            }
+//            }
             document.all("btnUpdate").disabled = false;
             document.all("btnUpdate").className = "btnWorkCardLong";
             document.all("txtStartTime").disabled = false;
@@ -75,6 +76,7 @@
             document.all("vldEndTime").errormessage = "שעת גמר מותרת עד - " + $(selectedItem).attr('max_gmar_muteret').substring(11, 16);
 
             ValidatorEnable(document.all("vldStartTime"), true);
+          //  debugger;
             ValidatorEnable(document.all("vldEndTime"), true);
            ValidatorEnable(document.all("vldReqStartTime"), true);
             ValidatorEnable(document.all("vldReqEndTime"), true);
@@ -89,10 +91,11 @@
                 document.all("clnEndDateHeadrut").value = "";
                 ValidatorEnable(document.all("vldCalDate_clnEndDateHeadrut"), true);
                 ValidatorEnable(document.all("vldEndHeadrut"),true);
-                ValidatorEnable(document.all("vldStartTime"), false);
-                ValidatorEnable(document.all("vldEndTime"), false);
-                ValidatorEnable(document.all("vldReqStartTime"), false);
-                ValidatorEnable(document.all("vldReqEndTime"), false);
+                //ValidatorEnable(document.all("vldStartTime"), false);
+               // debugger;
+               // ValidatorEnable(document.all("vldEndTime"), false);
+               // ValidatorEnable(document.all("vldReqStartTime"), false);
+               // ValidatorEnable(document.all("vldReqEndTime"), false);
             }
             else {
                 $("#drHeaara").css("display", "none");
@@ -130,8 +133,9 @@
             args.IsValid = true;
         }
     }
-    
+
     function CheckDateEnd(val, args) {
+
         var dEndTime = $(selectedSidur).attr('max_gmar_muteret');
         var dSidurDate = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), Number(args.Value.substring(0, 2)), Number(args.Value.substring(3, 5)));
         if ((Number(args.Value.substring(0, 2))>1 && Number(args.Value.substring(0, 2))<8) || (Number(args.Value.substring(0, 2))==0 && Number(args.Value.substring(3, 5))==1))
@@ -145,7 +149,8 @@
         }
     }
 
-function CheckDateGreaterStart(val, args) {
+    function CheckDateGreaterStart(val, args) {
+      //  debugger;
     var dStartTime = document.all("txtStartTime").value;
         var dSidurDate = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), Number(args.Value.substring(0, 2)), Number(args.Value.substring(3, 5)));
         if ((Number(args.Value.substring(0, 2)) > 1 && Number(args.Value.substring(0, 2)) < 8) || (Number(args.Value.substring(0, 2)) == 0 && Number(args.Value.substring(3, 5)) == 1))
@@ -162,7 +167,8 @@ function CheckDateGreaterStart(val, args) {
     function EnableButton() {
         if (document.getElementById("clnEndDateHeadrut").value != "__/__/____")
     {
-//        if (Page_ClientValidate()) {
+        //        if (Page_ClientValidate()) {
+     //   debugger;
             ValidatorEnable(document.all("vldStartTime"), false);
             ValidatorEnable(document.all("vldEndTime"), false);
 

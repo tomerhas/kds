@@ -269,6 +269,15 @@ namespace KdsBatch
                 bKayamEfreshBErua = true;
         }
 
+        protected bool KayemetRitzatHefresh()
+        {
+            DataRow[] drRechiv;
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " and bakasha_id_2 is not null and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+            if (drRechiv.Length > 0)
+                return true;
+            else return false;
+        }
+
         protected void WriteError(string sError)
         {
         clLogBakashot.SetError(_lBakashaId, _iMisparIshi, "E", _iKodErua, _dMonth, sError);

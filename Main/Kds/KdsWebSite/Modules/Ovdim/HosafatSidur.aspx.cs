@@ -111,7 +111,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
           //  txtShatGmar.Attributes.Add("Date","");
 
             //שליפת פרמטרים חיצוניים ושמירתם
-            dtParametrim = oUtils.getErechParamByKod("1,3,4,29,30,80,93,98,244", TaarichCA.Value);
+            dtParametrim = oUtils.getErechParamByKod("1,3,4,29,30,80,93,98,244,252", TaarichCA.Value);
             if (dtParametrim.Rows.Count > 0)
             {
                 for (int i = 0; i < dtParametrim.Rows.Count; i++)

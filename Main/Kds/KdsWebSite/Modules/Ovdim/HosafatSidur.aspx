@@ -87,7 +87,12 @@
                  }
                  else {
                      if (sugSidur == 1) {
-                         if (document.getElementById("StatusCard").value == -1)
+                         var Param252 = document.getElementById("Params").attributes("Param252").value;
+                         var taarichSplit = taarich.split('/');
+                         var TaarichCa = new Date(taarichSplit[2], taarichSplit[1] - 1, taarichSplit[0], '00', '00', '00');
+                         var TaarichTemp = new Date();
+                             TaarichTemp = new Date(TaarichTemp.setDate(TaarichTemp.getDate() - Param252));
+                         if (document.getElementById("StatusCard").value == -1 && TaarichCa>=TaarichTemp)
                              wsGeneral.MeafyenSidurMapaExists(misSidur, taarich, 99, 1, MeafyenSidurExistsSucceded);
                          else wsGeneral.GetSidurDetailsFromTnua(misSidur, taarich, CheckTeurSucceded);
                      }

@@ -17,11 +17,11 @@
        
     </script>
     <script type="text/javascript" language="javascript ">
-        $(document).ready(function () {
-            $("button").click(function () {
-                $("div").load('txtId.txt');
-            });
-        });
+//        $(document).ready(function () {
+//            $("button").click(function () {
+//                $("div").load('txtId.txt');
+//            });
+//        });
 
      function ChangeStatusSidur(id)
     {           

@@ -31,130 +31,132 @@ namespace KdsBatch
 
           try
           {
-              
-              iCountDays = 0;
-              dTarMe = new DateTime(_dMonth.Year,_dMonth.Month,1);
-              dTarAd = dTarMe.AddMonths(1).AddDays(-1);
-              do
+              if (!KayemetRitzatHefresh())
               {
-                  iCountDays += 1;
-                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
-                  if (fErech > 0)
+                  iCountDays = 0;
+                  dTarMe = new DateTime(_dMonth.Year, _dMonth.Month, 1);
+                  dTarAd = dTarMe.AddMonths(1).AddDays(-1);
+                  do
                   {
-                      sErua589.Append("R");
-                  }
-                  else
-                  {
-                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                      iCountDays += 1;
+                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                       if (fErech > 0)
                       {
-                          sErua589.Append("G");
+                          sErua589.Append("R");
                       }
                       else
                       {
-                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                           if (fErech > 0)
                           {
-                              sErua589.Append("D");
+                              sErua589.Append("G");
                           }
                           else
                           {
-                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMiluim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                               if (fErech > 0)
                               {
-                                  sErua589.Append("V");
+                                  sErua589.Append("D");
                               }
                               else
                               {
-                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMiluim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                   if (fErech > 0)
                                   {
-                                      sErua589.Append("N");
+                                      sErua589.Append("V");
                                   }
                                   else
                                   {
-                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachla.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                       if (fErech > 0)
                                       {
-                                          sErua589.Append("M");
+                                          sErua589.Append("N");
                                       }
                                       else
                                       {
-                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaYeled.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaBoded.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                           if (fErech > 0)
                                           {
-                                              sErua589.Append("I");
+                                              sErua589.Append("M");
                                           }
                                           else
                                           {
-                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatHorim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalaYeled.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                               if (fErech > 0)
                                               {
-                                                  sErua589.Append("T");
+                                                  sErua589.Append("I");
                                               }
                                               else
                                               {
-                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatBenZug.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatHorim.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                   if (fErech > 0)
                                                   {
-                                                      sErua589.Append("A");
+                                                      sErua589.Append("T");
                                                   }
                                                   else
                                                   {
-                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomShmiratHerayon.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomMachalatBenZug.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                       if (fErech > 0)
                                                       {
-                                                          sErua589.Append("F");
+                                                          sErua589.Append("A");
                                                       }
                                                       else
                                                       {
-                                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTipatChalav.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomShmiratHerayon.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                           if (fErech > 0)
                                                           {
-                                                              sErua589.Append("H");
+                                                              sErua589.Append("F");
                                                           }
                                                           else
                                                           {
-                                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHadracha.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                              fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTipatChalav.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                               if (fErech > 0)
                                                               {
-                                                                  sErua589.Append("W");
+                                                                  sErua589.Append("H");
                                                               }
                                                               else
                                                               {
-                                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTeuna.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomHadracha.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                                   if (fErech > 0)
                                                                   {
-                                                                      sErua589.Append("Z");
+                                                                      sErua589.Append("W");
                                                                   }
                                                                   else
                                                                   {
-                                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomEvel.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                      fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomTeuna.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
                                                                       if (fErech > 0)
                                                                       {
-                                                                          sErua589.Append("א");
+                                                                          sErua589.Append("Z");
                                                                       }
                                                                       else
                                                                       {
-                                                                          //switch ((dTarMe.DayOfWeek.GetHashCode() + 1))
-                                                                          //{
-                                                                          //    case 7:
-                                                                          //        { iSugYom = 20; break; }
-                                                                          //    case 6:
-                                                                          //        { iSugYom = 10; break; }
-                                                                          //    default:
-                                                                          //        { iSugYom = 1; break; }
-                                                                          //}
-                                                                          //if (iSugYom == 10)
-                                                                          //{ sErua589.Append("ו"); }
-                                                                          //else if (iSugYom == 20)
-                                                                          //{ sErua589.Append("ש"); }
-                                                                          //else if (iSugYom > 20)
-                                                                          //{ sErua589.Append("ג"); }
-                                                                          //else 
-                                                                          if (_iMushhe > 0)
-                                                                          { sErua589.Append("C"); }
-                                                                          else { sErua589.Append("."); }
+                                                                          fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.YomEvel.GetHashCode().ToString() + " and taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')"));
+                                                                          if (fErech > 0)
+                                                                          {
+                                                                              sErua589.Append("א");
+                                                                          }
+                                                                          else
+                                                                          {
+                                                                              //switch ((dTarMe.DayOfWeek.GetHashCode() + 1))
+                                                                              //{
+                                                                              //    case 7:
+                                                                              //        { iSugYom = 20; break; }
+                                                                              //    case 6:
+                                                                              //        { iSugYom = 10; break; }
+                                                                              //    default:
+                                                                              //        { iSugYom = 1; break; }
+                                                                              //}
+                                                                              //if (iSugYom == 10)
+                                                                              //{ sErua589.Append("ו"); }
+                                                                              //else if (iSugYom == 20)
+                                                                              //{ sErua589.Append("ש"); }
+                                                                              //else if (iSugYom > 20)
+                                                                              //{ sErua589.Append("ג"); }
+                                                                              //else 
+                                                                              if (_iMushhe > 0)
+                                                                              { sErua589.Append("C"); }
+                                                                              else { sErua589.Append("."); }
+                                                                          }
                                                                       }
                                                                   }
                                                               }
@@ -162,40 +164,41 @@ namespace KdsBatch
                                                       }
                                                   }
                                               }
-                                          }
 
+                                          }
                                       }
                                   }
                               }
                           }
                       }
-                  }
 
-                  dTarMe = dTarMe.AddDays(1);
+                      dTarMe = dTarMe.AddDays(1);
+                  }
+                  while (dTarMe <= dTarAd);
+
+                  iDay = dTarAd.Day;
+                  while (iDay < 31)
+                  {
+                      iDay++;
+                      sErua589.Append(".");
+                  }
+                  sErua589.Append(GetBlank(31));
+                  //   sErua589.Append(GetBlank(74-iCountDays));
+                  if (!IsEmptyErua(sErua589.ToString()) && !bKayamEfreshBErua)
+                  {
+                      ListErua.Add(sErua589.ToString());
+                      return ListErua;
+                  }
+                  else return null;
               }
-              while (dTarMe <= dTarAd);
-              
-              iDay=dTarAd.Day;
-              while (iDay < 31)
-              {
-                  iDay++;
-                  sErua589.Append(".");  
-              }
-              sErua589.Append(GetBlank(31));
-        //   sErua589.Append(GetBlank(74-iCountDays));
-              if (!IsEmptyErua(sErua589.ToString()) && !bKayamEfreshBErua)
-           {
-               ListErua.Add(sErua589.ToString());
-               return ListErua;
-           }
-           else return null;
-           }
-           catch (Exception ex)
-           {
-               WriteError("CreateErua589: " + ex.Message);
-               return null;
-           //    throw ex;
-           }
+              else return null;
+          }
+          catch (Exception ex)
+          {
+              WriteError("CreateErua589: " + ex.Message);
+              return null;
+              //    throw ex;
+          }
 
       }
 

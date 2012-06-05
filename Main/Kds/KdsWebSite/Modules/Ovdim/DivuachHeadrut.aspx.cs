@@ -130,7 +130,7 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             tnaim="(sidur_misug_headrut is not null or kod_sidur_meyuchad=-1 or  nitan_ledaveach_ad_taarich is not null) ";
             if (ViewState["Status"] != null)
                 if (int.Parse(ViewState["Status"].ToString())==-1)
-                    tnaim += " and rashai_ledaveach=1";
+                    tnaim += " and (rashai_ledaveach=1 or kod_sidur_meyuchad=-1)";
             dr = dtHeadrutType.Select(tnaim, "teur_sidur_meychad asc");
             dtHeadrutTypeNew = new DataTable();
             dtHeadrutTypeNew = dtHeadrutType.Clone();
@@ -313,14 +313,14 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             {
                 dEndSidur = dEndSidur.AddDays(1);
             }
-            for (int I = 0; I < drRowSidurim.Length; I++)
+            for (int I = 0; I < drRowSidurim.Length-1; I++)
             {
                 if (string.IsNullOrEmpty(drRowSidurim[I]["SHAT_GMAR"].ToString()))
                 { drRowSidurim[I]["SHAT_GMAR"] = drRowSidurim[I]["SHAT_HATCHALA"]; }
 
-                if ((dStartSidur<DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString()) && dEndSidur>DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()))
-                   ||(dEndSidur>DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()) && dEndSidur<DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString()))
-                || (dStartSidur<DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()) && dEndSidur>DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString())))
+                if ((dStartSidur < DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()) && dEndSidur > DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString()))
+                   || (dEndSidur > DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()) && dEndSidur < DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString()))
+                || (dStartSidur > DateTime.Parse(drRowSidurim[I]["SHAT_HATCHALA"].ToString()) && dStartSidur < DateTime.Parse(drRowSidurim[I]["SHAT_GMAR"].ToString())))
                 {
                     bChofef=true;
                 }
