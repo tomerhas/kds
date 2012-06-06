@@ -372,14 +372,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         if (bRashemet)
         {         
             btnNextErrCard.Style.Add("Display", "block");
-            btnNextCard.Style.Add("Display", "block");
-            btnPrevCard.Style.Add("Display", "block");
+            //btnNextCard.Style.Add("Display", "block");
+            //btnPrevCard.Style.Add("Display", "block");
         }
         else
         {           
             btnNextErrCard.Style.Add("Display", "none");
-            btnNextCard.Style.Add("Display", "none");
-            btnPrevCard.Style.Add("Display", "none");
+            //btnNextCard.Style.Add("Display", "none");
+            //btnPrevCard.Style.Add("Display", "none");
         }  
     }
     protected void SetDriverSource()
@@ -426,6 +426,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         txtId.ToolTip = sToolTip;
     }
+    protected void SetNextPrevBtn()
+    {//מעמדת נהג לא נציג את כפתורי הבא/קודם
+        if (hidSource.Value =="0")
+        {
+            btnNextCard.Style.Add("Display", "block");
+            btnPrevCard.Style.Add("Display", "block");
+        }
+        else
+        {
+            btnNextCard.Style.Add("Display", "none");
+            btnPrevCard.Style.Add("Display", "none");
+        }
+    }
+
     protected void LoadPage()
     {
         DataTable dtLicenseNumbers = new DataTable();
@@ -500,6 +514,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                     //אם הגענו מעמדת נהג, נשמור 1 אחרת 0
                     SetDriverSource();
+                    SetNextPrevBtn();
                     //hidSource.Value = ((Request.QueryString["Page"] != null) || (Session["arrParams"] != null)) ? "1" : " 0";
                     Session["hidSource"] = hidSource.Value;
                     if (dtPakadim == null)
@@ -597,7 +612,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
         bool bWorkCardWasUpdateAndDriverInsert=false;
 
-        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays <= oBatchManager.oParam.iValidDays)))
+        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays > oBatchManager.oParam.iValidDays)))
             bWorkCardWasUpdateAndDriverInsert = true;
 
         return bWorkCardWasUpdateAndDriverInsert;
