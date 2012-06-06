@@ -150,8 +150,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         switch (oMasherOMistayeg)
         {
-            case clGeneral.enMeasherOMistayeg.ValueNull:               
-                if (!bRashemet)
+            case clGeneral.enMeasherOMistayeg.ValueNull:
+                if ((!bRashemet) && (clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) < oBatchManager.oParam.iValidDays))
                 {
                     btnPrint.Enabled = false;
                     btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
@@ -612,7 +612,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
         bool bWorkCardWasUpdateAndDriverInsert=false;
 
-        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays > oBatchManager.oParam.iValidDays)))
+        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays >= oBatchManager.oParam.iValidDays)))
             bWorkCardWasUpdateAndDriverInsert = true;
 
         return bWorkCardWasUpdateAndDriverInsert;
