@@ -164,7 +164,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
             <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />  
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
-            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                       
+            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                         
         </Triggers>
       </asp:UpdatePanel>
            
@@ -646,7 +646,7 @@
            switch(KeyID){            
               case 13: //Enter           
                  if ((document.activeElement.id!='btnRefreshOvedDetails') &&  (document.activeElement.id!='btnUpdateCard')){  
-                     if ((document.getElementById("txtId").value).length>5)
+                     if (($get("txtId").value).length>5)
                          SetBarCode();
                      else{              
                          event.returnValue=false;
@@ -661,8 +661,8 @@
                    ShiftTab();                                       
                    break;
               case 110: //. //123-f12
-                   if (document.getElementById("btnUpdateCard").disabled==false)
-                       document.getElementById("btnUpdateCard").focus();
+                   if ($get("btnUpdateCard").disabled==false)
+                       $get("btnUpdateCard").focus();
               
                    break;
              case 38://up 
@@ -762,7 +762,7 @@
                    NextPeilutName  = ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(11,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;
                    if (PeilutNum==0){             
                         SidurNum=SidurNum-1;            
-                        _GridPeilut = document.getElementById("SD_" + padLeft(Number(SidurNum), '0', 3));   
+                        _GridPeilut = $get("SD_" + padLeft(Number(SidurNum), '0', 3));   
                         if (_GridPeilut!=null){      
                            PeilutNum = Number(_GridPeilut.rows.length+1);
                            NextPeilutName  =  GetPeilutName(ElementName,SidurNum);// ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) + ElementName.substr(0,3) +  padLeft(SidurNum.toString(),'0',3) + "_ctl" + padLeft(PeilutNum.toString(),'0',2) +FieldName;  
@@ -813,7 +813,7 @@
          }
          function SetBarCode()
          {
-           var sKey = document.getElementById("txtId").value.split("|");                     
+           var sKey = $get("txtId").value.split("|");                     
            $get("txtId").value =sKey[1];
            $get("clnDate").value = String(sKey[2]).substr(6,2) + "/" +  String(sKey[2]).substr(4,2) + "/" + String(sKey[2]).substr(0,4);                
            $get("btnRefreshOvedDetails").click();          
@@ -821,7 +821,7 @@
          function btnMeasherOrMistayeg_onclick(value)
          {               
             SetMeasher(value); 
-            if (document.getElementById('hidFromEmda').value =='true') 
+            if ($get('hidFromEmda').value =='true') 
             {
                 $get("btnPrint").disabled=false;
                 $get("btnPrint").className="btnWorkCardPrint";

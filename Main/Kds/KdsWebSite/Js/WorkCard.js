@@ -1,6 +1,6 @@
 ﻿var bScreenChanged = false;
     function OpenDiv(DivId, btnId){
-        var oDiv = document.getElementById(DivId.toString());
+        var oDiv = $get(DivId.toString());
         if (oDiv.style.display=='none'){        
             oDiv.style.display='block';              
             switch (DivId){
@@ -70,20 +70,20 @@
         }       
     }
     function onClientItemSelected_getID(sender, eventArgs) {
-        document.getElementById("clnDate").select();
+        $get("clnDate").select();
     }
     function onClientHiddenHandler_getID(sender, eventArgs){           
-        GetOvedALLDetails(document.getElementById("txtId").value);
+        GetOvedALLDetails($get("txtId").value);
     }  
     function GetOvedNameSucceeded(result){    
        if ((result=='') || (result=='null')){
             alert('מספר אישי לא קיים');                        
-            document.getElementById("txtId").select();
-            document.getElementById("txtName").value='';
+            $get("txtId").select();
+            $get("txtName").value='';
             SetRefreshBtn(true);      
         }
         else{
-            document.getElementById("txtName").value=result;
+            $get("txtName").value=result;
             SetRefreshBtn(false);       
         }     
     }
@@ -97,34 +97,34 @@
           if (root.childNodes.length>0)
           {                            
            if (root.childNodes.item(0)!=null){           
-            document.getElementById("txtCompany").value=root.childNodes.item(0).text;
+            $get("txtCompany").value=root.childNodes.item(0).text;
            }
            if (root.childNodes.item(1)!=null){           
-            document.getElementById("txtArea").value=root.childNodes.item(1).text;
+            $get("txtArea").value=root.childNodes.item(1).text;
            }
            if (root.childNodes.item(2)!=null){           
-            document.getElementById("txtSnif").value=root.childNodes.item(2).text;
+            $get("txtSnif").value=root.childNodes.item(2).text;
            }
            if (root.childNodes.item(3)!= null){    
-            document.getElementById("txtMaamad").value=root.childNodes.item(3).text;
+            $get("txtMaamad").value=root.childNodes.item(3).text;
            }
            if (root.childNodes.item(4)!=null){           
-            document.getElementById("txtIsuk").value=root.childNodes.item(4).text;           
+            $get("txtIsuk").value=root.childNodes.item(4).text;           
            }
            if (root.childNodes.item(5)!=null){           
-            document.getElementById("txtName").value=root.childNodes.item(5).text;  
+            $get("txtName").value=root.childNodes.item(5).text;  
            }
            if (root.childNodes.item(6)!=null){           
-            document.getElementById("ddlTachograph").selectedValue = root.childNodes.item(6).text; 
+            $get("ddlTachograph").selectedValue = root.childNodes.item(6).text; 
            }
            if (root.childNodes.item(7)!=null){           
-            document.getElementById("ddlHalbasha").selectedValue = root.childNodes.item(7).text; 
+            $get("ddlHalbasha").selectedValue = root.childNodes.item(7).text; 
            }
            if (root.childNodes.item(8)!=null){           
-             document.getElementById("ddlLina").selectedValue = root.childNodes.item(8).text;  
+             $get("ddlLina").selectedValue = root.childNodes.item(8).text;  
            }
            if (root.childNodes.item(9)){           
-             document.getElementById("ddlTravleTime").selectedValue = root.childNodes.item(9).text;  
+             $get("ddlTravleTime").selectedValue = root.childNodes.item(9).text;  
            }
             SetRefreshBtn(false); 
           }               
@@ -170,8 +170,8 @@
     }
     function GetOvedALLDetails(iKodOved){
        var sCardDate;
-       if (document.getElementById("clnDate").value!=''){                      
-         sCardDate=document.getElementById("clnDate").value;
+       if ($get("clnDate").value != '') {
+           sCardDate = $get("clnDate").value;
        }
        else{       
          sCardDate = getSysDate().toString();
@@ -179,58 +179,58 @@
      if (iKodOved != '') {
            if (String(iKodOved).length<=5){
                wsGeneral.GetOvedAllDetails(iKodOved,sCardDate,GetOvedDetailsSucceeded);
-               document.getElementById("txtId").value=iKodOved;    
+               $get("txtId").value=iKodOved;    
                EnabledAllFrames(false);      
            }
        }
     }    
     function GetOvedMisparIshiByName(){
-      var sName = document.getElementById("txtName").value;
+      var sName = $get("txtName").value;
       if (sName.indexOf(")")==-1){                  
-        document.getElementById("txtName").click();                          
+        $get("txtName").click();                          
       }                      
     }          
     function onClientHiddenHandler_getName(sender, eventArgs){    
      var iMisparIshi, iPos;
-     var sOvedName=document.getElementById("txtName").value;     
+     var sOvedName=$get("txtName").value;     
      if (sOvedName!='')
      {
          iPos = sOvedName.indexOf('(');
          if (iPos!=-1)
          {
             iMisparIshi = sOvedName.substr(iPos+1, sOvedName.length-iPos-2);
-            document.getElementById("txtId").value=iMisparIshi;
+            $get("txtId").value=iMisparIshi;
             GetOvedALLDetails(iMisparIshi);                   
          }
       }EnabledAllFrames(false);               
     }         
     function RefreshOvedDetails(){    
-       if (document.getElementById("txtId").value!='')
+       if ($get("txtId").value!='')
        {
-        GetOvedALLDetails(document.getElementById("txtId").value);
+        GetOvedALLDetails($get("txtId").value);
        } SetBtnChanges();       
     }
     function ShowRecivimCalculation(){
-        var id = document.getElementById("txtId").value;
-        var date = document.getElementById("clnDate").value;
+        var id = $get("txtId").value;
+        var date = $get("clnDate").value;
         var sQuryString = "?id=" + id + "&date=" + date;
-        document.getElementById("divHourglass").style.display = 'block'; 
+        $get("divHourglass").style.display = 'block'; 
         var ReturnWin = window.showModalDialog('Rechivim.aspx' + sQuryString, window, "dialogHeight: 471px; dialogWidth: 715px;dialogtop:200px;status:no;resizable:yes;");
-        document.getElementById("divHourglass").style.display = 'none';
+        $get("divHourglass").style.display = 'none';
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;
     }
     function ShowLastUpdateUser(){
-        var id = document.getElementById("txtId").value;
-        var date = document.getElementById("clnDate").value;
+        var id = $get("txtId").value;
+        var date = $get("clnDate").value;
         var sQuryString="?id=" + id + "&date=" + date;
         var ReturnWin = window.showModalDialog('MadknAcharon.aspx' + sQuryString, window, "dialogHeight: 280px; dialogWidth: 490px;dialogtop:200px;status:no;resizable:no;scroll:no;");                         
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
     }
     function ShowEmployeeDetails(){    
-        var id = document.getElementById("txtId").value;
-        var date = String(document.getElementById("clnDate").value).substr(3);
+        var id = $get("txtId").value;
+        var date = String($get("clnDate").value).substr(3);
         var sQuryString="?id=" + id + "&month=" + date;        
         var ReturnWin=window.showModalDialog('NetuneyOvedModal.aspx' + sQuryString , window , "dialogwidth:970px;dialogheight:600px;dialogtop:130px;dialogleft:25px;status:no;resizable:yes;scroll:0;");                          
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
@@ -238,7 +238,7 @@
     }  
     function RefreshCardData(){    
          bScreenChanged=false;
-         document.getElementById("btnRefreshOvedDetails").click();
+         $get("btnRefreshOvedDetails").click();
     }
     function CheckButton(btnId,HidId){    
         if (HidId.value=="0"){        
@@ -275,9 +275,9 @@
         if ((KeyID != 45) && (KeyID != 107)) {
             var id = ("hidLvl".concat(String(iLvl))).concat("Chg");
             if (Number(iLvl == 1))
-                document.getElementById(id).value = "1";
+                $get(id).value = "1";
             else
-                document.getElementById(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ",");
+                $get(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ",");
         }                    
     }    
     function CheckChanges(){    
@@ -304,11 +304,11 @@
     }
     
     function CheckIfCardExists(){
-      var sDay = document.getElementById("clnDate").value.substr(0,2);
-      var sMonth =  document.getElementById("clnDate").value.substr(3,2);
-      var sFullYear = document.getElementById("clnDate").value.substr(6,4);         
-      id = document.getElementById("txtId").value;
-      date = document.getElementById("clnDate").value;
+      var sDay = $get("clnDate").value.substr(0,2);
+      var sMonth =  $get("clnDate").value.substr(3,2);
+      var sFullYear = $get("clnDate").value.substr(6,4);         
+      id = $get("txtId").value;
+      date = $get("clnDate").value;
       if (date!=''){    
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
@@ -322,14 +322,14 @@
             $find(sBehaviorId)._ensureCallout();
             $find(sBehaviorId).show(true);            
             SetRefreshBtn(true);
-            document.getElementById("txtDay").value ="";
+            $get("txtDay").value ="";
         }
         else
         {
            SetRefreshBtn(false);         
-           document.getElementById("txtDay").value = arrReturnValue[1];                    
+           $get("txtDay").value = arrReturnValue[1];                    
         }
-         document.getElementById("txtDay").title = arrReturnValue[1];
+         $get("txtDay").title = arrReturnValue[1];
      }
      function SetRefreshBtn(bDisabled) {
          $get("btnRefreshOvedDetails").disabled = bDisabled;
@@ -340,16 +340,16 @@
      }     
     function GetErrorMessage(id, level, pKey){   
         oId=id.id;       
-    var oObj = document.getElementById(oId);
+    var oObj = $get(oId);
     var rc = oObj.getAttribute("ErrCnt");
     var arrKnisa; 
     if (Number(rc)>0)
     {
-     var iMisparIshi = document.getElementById("txtId").value;
-     var dCardDate = document.getElementById("clnDate").value;
+     var iMisparIshi = $get("txtId").value;
+     var dCardDate = $get("clnDate").value;
      var sFName = oObj.getAttribute("FName");
      var iSidurNum=0; var sStartH=''; var sPShatY='';var iMKnisa = 0; 
-     document.getElementById("hErrKey").value=oId;     
+     $get("hErrKey").value=oId;     
      if (level==1){
          wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);     
      }
@@ -358,19 +358,19 @@
       if (level==2)
       {            
        var i = String(id.id).substr("SD_txtSH".length);
-       iSidurNum=document.getElementById(("SD_lblSidur").concat(pKey)).innerHTML;
-       sStartH = document.getElementById(("SD_txtSH").concat(pKey)).getAttribute("OrgShatHatchala");         
+       iSidurNum=$get(("SD_lblSidur").concat(pKey)).innerHTML;
+       sStartH = $get(("SD_txtSH").concat(pKey)).getAttribute("OrgShatHatchala");         
        wsGeneral.GetFieldErrors(level, iMisparIshi,dCardDate,iSidurNum,sStartH,sPShatY,iMKnisa,sFName, onGetdErrSucc);
       }
       else
       {
        var arrKey =  pKey.toString().split("|");
-       sPShatY = document.getElementById(arrKey[0]).value;
+       sPShatY = $get(arrKey[0]).value;
        if (sPShatY == '__:__') {
-           sPShatY = document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza');
+           sPShatY = $get(arrKey[0]).getAttribute('OrgShatYetiza');
        } else {
-           sPShatY=document.getElementById(arrKey[0]).getAttribute('OrgShatYetiza').substr(11,5);
-           var AddDay = Number(document.getElementById(arrKey[3].concat("_txtDayToAdd")).value);
+           sPShatY=$get(arrKey[0]).getAttribute('OrgShatYetiza').substr(11,5);
+           var AddDay = Number($get(arrKey[3].concat("_txtDayToAdd")).value);
            if (AddDay == 1) {
                //add one day to the date              
                var ShStart = new Date();
@@ -384,48 +384,48 @@
                sPShatY = dCardDate.concat(' ' + sPShatY);              
            }
        }
-       iMKnisa = document.getElementById(arrKey[1]).innerHTML;
+       iMKnisa = $get(arrKey[1]).innerHTML;
        arrKnisa = iMKnisa.toString().split(",");
        iMKnisa = arrKnisa[0];
-       iSidurNum = document.getElementById(("SD_lblSidur").concat(arrKey[2])).innerHTML;
-       sStartH = document.getElementById(("SD_txtSH").concat(arrKey[2])).getAttribute("OrgShatHatchala");       
+       iSidurNum = $get(("SD_lblSidur").concat(arrKey[2])).innerHTML;
+       sStartH = $get(("SD_txtSH").concat(arrKey[2])).getAttribute("OrgShatHatchala");       
        wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
       }}}}  
     function onGetdErrSucc(result){    
-        document.getElementById("tbErr").innerHTML = result;
-        document.getElementById("btnErrors").click(); 
+        $get("tbErr").innerHTML = result;
+        $get("btnErrors").click(); 
     }
     function ShowRemark(id)
     {
-      var iMisparIshi = document.getElementById("txtId").value;
-      var dCardDate = document.getElementById("clnDate").value;
-      var iSidurNum =document.getElementById(("SD_lblSidur").concat(id)).innerHTML;
-      var sStartH = document.getElementById(("SD_txtSH").concat(id)).getAttribute("OrgShatHatchala");      
+      var iMisparIshi = $get("txtId").value;
+      var dCardDate = $get("clnDate").value;
+      var iSidurNum =$get(("SD_lblSidur").concat(id)).innerHTML;
+      var sStartH = $get(("SD_txtSH").concat(id)).getAttribute("OrgShatHatchala");      
       wsGeneral.GetLoLetashlumRemark(iMisparIshi,dCardDate,iSidurNum,sStartH,onGetdRmkSucc);      
     }
     function onGetdRmkSucc(result)
     {      
-        document.getElementById("tblRmk").innerHTML = result;
-        document.getElementById("btnRemark").click();          
+        $get("tblRmk").innerHTML = result;
+        $get("btnRemark").click();          
     }
      function GetAppMsg(id){       
         if (id!=undefined){                                       
-                 var olbl = document.getElementById("lblApp");
+                 var olbl = $get("lblApp");
                  olbl.innerText = id.getAttribute("App");   
-                 document.getElementById("btnApp").click();                 
+                 $get("btnApp").click();                 
         }     
      }
      function CancelError(id){
         $find("bMpeErr").hide();          
-        iMisparIshi = document.getElementById("txtId").value;
-        dCardDate = document.getElementById("clnDate").value;     
+        iMisparIshi = $get("txtId").value;
+        dCardDate = $get("clnDate").value;     
         sErrorId = id.parentNode.parentNode.children[3].innerText;  
-        sMeasher =  document.getElementById("hidGoremMeasher").value;    
+        sMeasher =  $get("hidGoremMeasher").value;    
         wsGeneral.CancelError(iMisparIshi, dCardDate, sErrorId,sMeasher,callBackCancelError);      
      }
      function callBackCancelError(result){     
         if (result==1){SetBtnChanges();     
-            var oObj = document.getElementById(document.getElementById("hErrKey").value);         
+            var oObj = $get($get("hErrKey").value);         
             var rc = oObj.getAttribute("ErrCnt");
             if (Number(rc)>0)
             {
@@ -441,17 +441,17 @@
                     oObj.style.color = "black";
                 }
                 if ((oObj.getAttribute("imgId"))!=''){
-                document.getElementById(oObj.getAttribute("imgId")).style.display="none";}
+                $get(oObj.getAttribute("imgId")).style.display="none";}
               }
             }            
         }     
     }         
     function ApproveError(id){
         $find("bMpeErr").hide();    
-        iMisparIshi = document.getElementById("txtId").value;
-        dCardDate = document.getElementById("clnDate").value;
+        iMisparIshi = $get("txtId").value;
+        dCardDate = $get("clnDate").value;
         sErrorId = id.parentNode.parentNode.children[3].innerText; 
-        sMeasher =  document.getElementById("hidGoremMeasher").value;      
+        sMeasher =  $get("hidGoremMeasher").value;      
         wsGeneral.ApproveError(iMisparIshi, dCardDate, sErrorId,sMeasher);
         return false;
     }
@@ -465,8 +465,8 @@
         }        
         var sQueryString;        
         sQueryString = "?dt=" + Date();
-        sQueryString = sQueryString + "&MisparIshi=" + document.getElementById("txtId").value;
-        sQueryString = sQueryString + "&DateCard=" + document.getElementById("clnDate").value;                
+        sQueryString = sQueryString + "&MisparIshi=" + $get("txtId").value;
+        sQueryString = sQueryString + "&DateCard=" + $get("clnDate").value;                
         sQueryString = sQueryString + "&MisparSidur="; 
         sQueryString = sQueryString + "&TimeStart=";
         sQueryString = sQueryString + "&TimeEnd=";
@@ -495,14 +495,14 @@
         var sQueryString;        
         sQueryString = "?dt=" + Date();
         sQueryString = sQueryString + "&EmpID=" + document.getElementById("txtId").value;
-        sQueryString = sQueryString + "&CardDate=" + document.getElementById("clnDate").value;
-        sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
-        document.getElementById("divHourglass").style.display = 'block';
+        sQueryString = sQueryString + "&CardDate=" + $get("clnDate").value;
+        sQueryString = sQueryString + "&Status=" + $get("hidMeasherMistayeg").value;
+        $get("divHourglass").style.display = 'block';
         res = window.showModalDialog('HosafatSidur.aspx?' + sQueryString, '', 'dialogwidth:975px;dialogheight:690px;dialogtop:180px;dialogleft:50px;status:no;resizable:no;');
-        document.getElementById("divHourglass").style.display = 'none';
+        $get("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (!_bScreenChanged))) {
-            document.getElementById("hidExecInputChg").value = "1";
-            document.getElementById("hidRefresh").value = "1";
+            $get("hidExecInputChg").value = "1";
+            $get("hidRefresh").value = "1";
             __doPostBack('btnFindSidur', '');
             bScreenChanged = false;
         }
@@ -510,15 +510,15 @@
     }
    function ShowDrvErr(){
        var iLaoved;
-        if (document.getElementById("hidRashemet").value=="1")
+        if ($get("hidRashemet").value=="1")
             iLaoved="0";
            else
             iLaoved="1";
               
         var sQueryString;        
         sQueryString = "?dt=" + Date();
-        sQueryString = sQueryString + "&EmpID=" + document.getElementById("txtId").value;
-        sQueryString = sQueryString + "&CardDate=" + document.getElementById("clnDate").value;
+        sQueryString = sQueryString + "&EmpID=" + $get("txtId").value;
+        sQueryString = sQueryString + "&CardDate=" + $get("clnDate").value;
         sQueryString = sQueryString + "&laoved=" + iLaoved;
         res=window.showModalDialog('WorkCardErrors.aspx' + sQueryString, '', 'dialogwidth:1000px;dialogheight:600px;dialogtop:280px;dialogleft:180px;status:no;resizable:no;');
         if (res==undefined){
@@ -534,7 +534,7 @@
         window.showModalDialog('ZmaniNesiot.aspx' + sQueryString, '', 'dialogwidth:660px;dialogheight:170px;dialogtop:200px;status:no;resizable:no;');
     }
    function SetChgFlag(){
-    document.getElementById("hidChanges").value=bScreenChanged;
+    $get("hidChanges").value=bScreenChanged;
     return true;
    }
    function ChkCardVld(){   
@@ -542,7 +542,7 @@
      var bValid=true;var sMsg='';var sCallBack='';
      var HashForDay = $get("HashlamaForDayValue").value;
      var HashReason = $get("ddlHashlamaReason").value;
-     document.getElementById("hidExecInputChg").value = "0";
+     $get("hidExecInputChg").value = "0";
 
      if ((Number(HashForDay) == 1) && (Number(HashReason) == -1) && (!($get("ddlHashlamaReason").disabled))) {      
         sMsg ='סומנה השלמה ליום, יש לדווח סיבה'; 
@@ -596,9 +596,9 @@
                          sCardDate = $get("clnDate").value;
                          dStartHour = new Date(Number(sSidurDate.substr(6, 4)), Number(sSidurDate.substr(3, 2)) - 1, Number(sSidurDate.substr(0, 2)), Number(sSH.value.substr(0, 2)), Number(sSH.value.substr(3, 2)));
                          dEndHour = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), Number(sSG.value.substr(0, 2)), Number(sSG.value.substr(3, 2)));
-                         if (document.getElementById("SD_txtDayAdd".concat(i)).value == "1")
+                         if ($get("SD_txtDayAdd".concat(i)).value == "1")
                              dEndHour.setDate(dEndHour.getDate() + 1);
-                         oDDL = document.getElementById("SD_ddlHashlama".concat(i));
+                         oDDL = $get("SD_ddlHashlama".concat(i));
                          if (oDDL.disabled == false){
                              SidurTime = GetSidurTime(dStartHour, dEndHour);
                              if ((SidurTime >= Number(oDDL.value)) && Number(oDDL.value > 0)){
@@ -631,7 +631,7 @@
 
    function ChkIfPeiluyotValid(iSidurInx){
        var sActualShatYetiza;
-       _Peilut = document.getElementById("SD_" + padLeft(iSidurInx, '0', 3));
+       _Peilut = $get("SD_" + padLeft(iSidurInx, '0', 3));
        if (_Peilut != null){
            for (var j = 1; j < _Peilut.firstChild.childNodes.length; j++) {
                sActualShatYetiza = _Peilut.firstChild.childNodes[j].cells[_COL_SHAT_YETIZA].firstChild;
@@ -644,18 +644,18 @@
    }
    function GetErrorMessageSadotNosafim(id, level, pKey){    
        oId = id.id;
-       var oObj = document.getElementById(oId);
+       var oObj = $get(oId);
        var rc = oObj.getAttribute("ErrCnt");
          if (Number(rc) > 0) {
 
-           var iMisparIshi = document.getElementById("txtId").value;
-           var dCardDate = document.getElementById("clnDate").value;
+           var iMisparIshi = $get("txtId").value;
+           var dCardDate = $get("clnDate").value;
            var sFName = oObj.getAttribute("FName");
            var iSidurNum = 0; var sStartH = ''; var sPShatY = ''; var iMKnisa = 0;
-           document.getElementById("hErrKey").value = oId;     
+           $get("hErrKey").value = oId;     
             if (level == 2) {          
-                iSidurNum = document.getElementById("MisSidur").value;
-                sStartH =  document.getElementById("ShatHatchala").value;
+                iSidurNum = $get("MisSidur").value;
+                sStartH =  $get("ShatHatchala").value;
                 wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
             }
             else {
@@ -663,16 +663,16 @@
                 sPShatY = dCardDate + " " + arrKey[0];
                 iMKnisa = arrKey[1];
                    
-                iSidurNum = document.getElementById("MisSidur").value;
-                sStartH =  document.getElementById("ShatHatchala").value; 
+                iSidurNum = $get("MisSidur").value;
+                sStartH =  $get("ShatHatchala").value; 
                 wsGeneral.GetFieldErrors(level, iMisparIshi, dCardDate, iSidurNum, sStartH, sPShatY, iMKnisa, sFName, onGetdErrSucc);
             }
         }
     }   
 function SetMeasher(iStatus)
 {
-    var iMisparIshi=document.getElementById("txtId").value;
-    var dDate = document.getElementById("clnDate").value;
+    var iMisparIshi=$get("txtId").value;
+    var dDate = $get("clnDate").value;
     wsGeneral.SetMeasherOMistayeg(Number(iMisparIshi), dDate, Number(iStatus), onMeasherSuccuss,null,iStatus);
 }
 function onMeasherSuccuss(result,iStatus)
@@ -681,27 +681,27 @@ function onMeasherSuccuss(result,iStatus)
         alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");    
     else
     {
-        document.getElementById("btnPrint").disabled = false;
-        document.getElementById("btnPrint").className = "btnWorkCardPrint";
+        $get("btnPrint").disabled = false;
+        $get("btnPrint").className = "btnWorkCardPrint";
         
         if(iStatus==1)
         {            
-            document.getElementById("btnApprove").className = "ImgButtonApprovalChecked";
-            document.getElementById("btnNotApprove").className = "ImgButtonDisApprovalCheckedDisabled";                                        
+            $get("btnApprove").className = "ImgButtonApprovalChecked";
+            $get("btnNotApprove").className = "ImgButtonDisApprovalCheckedDisabled";                                        
         }                           
         else
         {
-            document.getElementById("btnApprove").className = "ImgButtonApprovalRegularDisabled";
-            document.getElementById("btnNotApprove").className = "ImgButtonDisApproveChecked"; 
+            $get("btnApprove").className = "ImgButtonApprovalRegularDisabled";
+            $get("btnNotApprove").className = "ImgButtonDisApproveChecked"; 
         }
     }
 }
 function CloseWindow()
 {
-  var EmpId = document.getElementById("txtId").value;
-  var WCardDate = document.getElementById("clnDate").value;            
+  var EmpId = $get("txtId").value;
+  var WCardDate = $get("clnDate").value;            
         
- switch (document.getElementById("hidSource").value)
+ switch ($get("hidSource").value)
  {
     case "1":
         window.location.href("EmployeeCards.aspx?EmpID=" + EmpId + "&WCardDate=" + WCardDate);
@@ -715,7 +715,7 @@ function CloseWindow()
  } 
 } 
 function chkTravelTime(){
-     var _TravelTime = document.getElementById("ddlTravleTime");        
+     var _TravelTime = $get("ddlTravleTime");        
      var iMeafyenVal = _TravelTime.getAttribute("MeafyenVal");
      if ((((_TravelTime.value == "1") && (iMeafyenVal != "1") && (iMeafyenVal != "3")))
         || (((_TravelTime.value == "2") && (iMeafyenVal != "2") && (iMeafyenVal != "3")))
@@ -731,27 +731,27 @@ function chkTravelTime(){
 }
 function isUserIdValid(){
     SetRefreshBtn(true);
-    var EmpId = document.getElementById("txtId").value;
-    var iAdmin=document.getElementById("hidGoremMeasher").value;
+    var EmpId = $get("txtId").value;
+    var iAdmin=$get("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeById(EmpId,0,iAdmin,onUsrValidSuccess);
 }
 function isUserNameValid(){
     SetRefreshBtn(true); 
-    var EmpName = document.getElementById("txtName").value; 
+    var EmpName = $get("txtName").value; 
     var iPos= EmpName.indexOf("(");   
     if (iPos!=-1){  
         EmpName = EmpName.substr(0,iPos-1);
     }
-    var iAdmin=document.getElementById("hidGoremMeasher").value;
+    var iAdmin=$get("hidGoremMeasher").value;
     wsGeneral.GetAdminEmployeeByName(EmpName,0,iAdmin, onUsrValidSuccess);
 }
 function SetNewDate(_Add){
-    var sCardDate = document.getElementById("clnDate").value;
+    var sCardDate = $get("clnDate").value;
     var dCardDate = new Date(Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), 0, 0);
 
     dCardDate.setDate(dCardDate.getDate() + Number(_Add));
-    document.getElementById("clnDate").value = GetDateDDMMYYYY(dCardDate);
-    document.getElementById("txtDay").value = GetHebrewDay(dCardDate.getDay());
+    $get("clnDate").value = GetDateDDMMYYYY(dCardDate);
+    $get("txtDay").value = GetHebrewDay(dCardDate.getDay());
 }
 
 function onUsrValidSuccess(result){
@@ -779,5 +779,5 @@ function setBorderBtns(){
         }
     }
 function onTxtIdPress() {
-    var key = document.getElementById("txtId").value;
+    var key = $get("txtId").value;
 }}
