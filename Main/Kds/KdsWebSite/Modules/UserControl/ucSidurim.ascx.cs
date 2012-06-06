@@ -2497,8 +2497,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                         //נבדוק שגם אין שגיאות ברמת שדות נוספים
                         if (IsErrorInAdditionFields(ErrorsList, ref oSidur))
-                            lnkSidur.Style.Add("color", "red");
-
+                            if (_ProfileRashemet)
+                                lnkSidur.Style.Add("color", "red");
+                           
                         break;
                     case clGeneral.enCardStatus.Valid:
                         //lDummy.Text = ".";
