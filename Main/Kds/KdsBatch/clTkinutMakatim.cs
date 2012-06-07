@@ -22,7 +22,7 @@ namespace KdsBatch
             DataTable dtKavim = new DataTable();
             clKavim oKavim = new clKavim();
             clBatch oBatch = new clBatch();
-            int numFaild = 0, numSucceeded = 0, iMakatValid;
+            int numFaild = 0, numSucceeded = 0, iMakatValid, invalidMakat=0;
             clKavim.enMakatType oMakatType;
             long lMakatNesia,lRequestNum = 0;
             DateTime dCardDate;
@@ -31,13 +31,12 @@ namespace KdsBatch
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI, "CheckTkinutMakatim", -12);
-              //  lRequestNum = oBatch.InsertProcessLog(77, 0, KdsLibrary.BL.RecordStatus.Wait, "start RunShguimLechishuv", 0);
-              
-                 dtMakatim = oKavim.GetMakatimLeTkinut(dTaarich);
-                if (!File.Exists(sPathFile))
-                    File.Create(sPathFile);
+
+                dtMakatim = oKavim.GetMakatimLeTkinut(dTaarich);
+
                 oFileMakat = new StreamWriter(sPathFile , false, Encoding.Default);
-             
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count= " + dtMakatim.Rows.Count);
+               
                 for (int i = 0; i < dtMakatim.Rows.Count; i++)
                 {
                     try
@@ -64,7 +63,12 @@ namespace KdsBatch
                             Line = lMakatNesia + " ,  " + dCardDate.ToShortDateString();
                             oFileMakat.WriteLine(Line);
                             oFileMakat.Flush();
+                            invalidMakat++;
+                            clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "invalid makat:" + Line);
                         }
+                        if (i % 100 == 0)
+                            clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Tkinut Makatim: Num=" + i);
+                                 
                         numSucceeded += 1;      
                     }
                     catch (Exception ex)
@@ -76,9 +80,8 @@ namespace KdsBatch
                 {
                     oFileMakat.Close();
                 }
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "end CheckTkinutMakatim: Total Makats=" + dtMakatim.Rows.Count + "; numFaild=" + numFaild + ";  numSucceeded=" + numSucceeded);
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "end CheckTkinutMakatim: Total Makats=" + dtMakatim.Rows.Count + "; numFaildException=" + numFaild + "; InvalidMakat=" + invalidMakat + ";  numSucceeded=" + numSucceeded);
                 clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, KdsLibrary.BL.RecordStatus.Finish.GetHashCode());
-               // oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Finish, "end CheckTkinutMakatim: Total Makats=" + dtMakatim.Rows.Count + "; numFaild=" + numFaild + ";  numSucceeded=" + numSucceeded, 0);
             }
             catch (Exception ex)
             {

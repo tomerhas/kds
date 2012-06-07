@@ -230,7 +230,7 @@ public class wsBatch : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public string RunTkinutMakatim( DateTime dTaarich)
     {
-        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        KdsLocalServiceProxy.BatchServiceClient client = new KdsLocalServiceProxy.BatchServiceClient();
         client.TkinutMakatimBatch(dTaarich);
         client.Close();
         return "OK";
