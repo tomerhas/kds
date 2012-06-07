@@ -955,14 +955,23 @@ namespace KdsBatch
 
         private void CalcRechiv12()
         {
-            float fSumDakotRechiv, fMichsaYomit126, fTempDakot;
+            float fSumDakotRechiv, fMichsaYomit126, fTempDakot,fTempZ;
             try
             {
                 oSidur.CalcRechiv12();
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotTosefetMeshek.GetHashCode(), objOved.Taarich); 
+               
                 if (fSumDakotRechiv > 0)
                 {
-                    fMichsaYomit126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
+                    fMichsaYomit126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                    if (fMichsaYomit126 > 0)
+                        fTempZ = 120;
+                    else
+                    {
+                        if (objOved.SugYom == clGeneral.enDay.Shabat.GetHashCode() || clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                            fTempZ = 0;
+                        else fTempZ = 240;
+                     }
 
                     if (fSumDakotRechiv <= fMichsaYomit126)
                     {
@@ -971,14 +980,14 @@ namespace KdsBatch
                     else
                     {
                         fTempDakot = fSumDakotRechiv - fMichsaYomit126;
-                        if (fTempDakot < 120)
+                        if (fTempDakot < fTempZ)
                         {
                             fSumDakotRechiv = ((fMichsaYomit126 * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100) + (fTempDakot * float.Parse("1.25") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100;
 
                         }
                         else
                         {
-                            fSumDakotRechiv = ((fMichsaYomit126 * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100) + (objOved.objParameters.iMaxDakotNosafot / 100 * float.Parse("1.25") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100) + (fTempDakot - objOved.objParameters.iMaxDakotNosafot) * float.Parse("1.5") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100;
+                            fSumDakotRechiv = ((fMichsaYomit126 * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100) + (fTempZ / 100 * float.Parse("1.25") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100) + (fTempDakot - fTempZ) * float.Parse("1.5") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100;
                         }
                     }
                     if (fSumDakotRechiv > 0)
