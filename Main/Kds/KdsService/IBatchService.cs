@@ -73,5 +73,7 @@ namespace KdsService
         [OperationContract]
         void RefreshPirteyOvdim();
 
+        [OperationContract]
+        void TkinutMakatimBatch(DateTime dTaarich);
     }
 }

@@ -244,4 +244,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="TkinutMakatimBatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="dTaarich" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TkinutMakatimBatchResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -909,6 +909,16 @@ public partial class Modules_Test :Page
         lblTimeWithVisut.Text = dTotalTime.ToString();       
     }
 
+
+    protected void btnMakat_Click(object sender, EventArgs e)
+    {
+      //  clTkinutMakatim objMakat = new clTkinutMakatim();
+       // objMakat.CheckTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+
+        wsBatch oBatch = new wsBatch();
+        oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+    }
+
     protected void btnShguimBatch_click(object sender, EventArgs e)
     {
       wsBatch oBatch = new wsBatch();
@@ -919,7 +929,7 @@ public partial class Modules_Test :Page
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfSdrn", -12);
-                oBatch.RunShinuimVeShguim(lRequestNum, dTime, clGeneral.enCalcType.ShinuyimVeSghuimPremiot.GetHashCode(), clGeneral.BatchExecutionType.All.GetHashCode()); // KdsBatch.BatchRequestSource.ImportProcess.GetHashCode(), KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
+                //oBatch.RunShinuimVeShguim(lRequestNum, dTime, clGeneral.enCalcType.ShinuyimVeSghuimPremiot.GetHashCode(), clGeneral.BatchExecutionType.All.GetHashCode()); // KdsBatch.BatchRequestSource.ImportProcess.GetHashCode(), KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
                 //KdsBatch.clBatchFactory.ExecuteInputDataAndErrors(KdsBatch.BatchRequestSource.ImportProcess, KdsBatch.BatchExecutionType.All, DateTime.Now.AddDays(-1), lRequestNum);
             }
             catch (Exception ex)

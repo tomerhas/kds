@@ -69,7 +69,8 @@ namespace KdsLibrary
         public const string cProSaveRikuzPdf = "pkg_batch.Pro_Save_Rikuz_Pdf";
         public const string cProGetRikuzPdf = "pkg_batch.Pro_Get_Rikuz_Pdf";
         public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
-        public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv"; 
+        public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv";
+        public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
         
 #endregion 
 

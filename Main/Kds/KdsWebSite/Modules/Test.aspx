@@ -166,7 +166,12 @@
                         Text="חישוב פרימיות" />
                  <asp:Button ID="ButtonShinuyim" runat="server" onclick="ButtonShinuyim_Click" 
                         Text="שגיאות" />
-                 </td>      
+                 </td>    
+                 
+                   <td>
+                 <asp:Button ID="btnMakat" runat="server" onclick="btnMakat_Click" 
+                        Text="תקינות  מקטים" />
+                 </td>        
             </tr>
          </table>  
           <asp:RadioButton runat="server" AutoPostBack="true" ID="rdoTst" Text="בדיקה" 

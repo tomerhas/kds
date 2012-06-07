@@ -225,5 +225,15 @@ public class wsBatch : System.Web.Services.WebService
         client.Close();
         return "OK";
     }
+
+
+    [WebMethod(EnableSession = true)]
+    public string RunTkinutMakatim( DateTime dTaarich)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.TkinutMakatimBatch(dTaarich);
+        client.Close();
+        return "OK";
+    }
 }
 

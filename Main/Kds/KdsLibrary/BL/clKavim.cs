@@ -648,6 +648,23 @@ namespace KdsLibrary.BL
             }
         }
 
+        public DataTable GetMakatimLeTkinut(DateTime dTaarich)
+        {
+            DataTable dt = new DataTable();
+            clDal dal = new clDal();
+            try
+            {
+                dal.AddParameter("p_date", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                dal.ExecuteSP(clGeneral.cProGetMakatimLeTkinut, ref dt);
+            }
+            catch (Exception ex)
+            {
+                //dt = null;
+                throw (ex);
+            }
+            return dt;
+        }
         public DataTable GetBusesDetailsLeOvedForMonth(DateTime dTarMe, DateTime dTarAd, int iMispar_ishi)
         {
             clDal oDal = new clDal();

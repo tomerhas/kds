@@ -112,6 +112,7 @@
     <Compile Include="clBatchFactory.cs" />
     <Compile Include="clBatchManager.cs" />
     <Compile Include="clPirteyOved.cs" />
+    <Compile Include="clTkinutMakatim.cs" />
     <Compile Include="Entities\CardError.cs" />
     <Compile Include="Entities\ErrorItem.cs" />
     <Compile Include="Errors\BasicChecker.cs" />

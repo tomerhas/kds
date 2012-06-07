@@ -456,6 +456,25 @@ namespace KdsService
                 clGeneral.LogError(ex);
             }
         }
+
+
+        private void RunTkinutMakatimThread(object param)
+        {
+            object[] args = param as object[];
+            DateTime taarich = DateTime.Parse(args[0].ToString());
+            clTkinutMakatim objMakat = new clTkinutMakatim();
+            try
+            {
+                objMakat.CheckTkinutMakatim(taarich);    
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+           // LogThreadEnd("RunTkinutMakatimThread", lRequestNum);
+
+        }
+
         private void LogThreadEnd(string threadName, long btchRequest)
         {
             string message = String.Format("{0} Thread ended at {1} for batch request no. {2}",
@@ -642,6 +661,12 @@ namespace KdsService
             runThread.Start(new object[] { lRequestNum, dTaarich, TypeShguyim,  ExecutionTypeShguim });
         }
 
+        public void TkinutMakatimBatch(DateTime dTaarich)
+        {
+            Thread runThread = new Thread(new ParameterizedThreadStart(RunTkinutMakatimThread));
+            runThread.Start(new object[] { dTaarich });
+        }
+        
         #endregion
     }
 }
