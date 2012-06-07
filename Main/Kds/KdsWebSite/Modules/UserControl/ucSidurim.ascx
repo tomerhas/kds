@@ -29,9 +29,7 @@
         <tr class="WorkCardPanelMessageHeader">
             <td width="380px" align="left">
                  <input type="button" ID="btnCurrentDay" runat="server" value="יום נוכחי" class="btnWorkCardCloseWin"
-                     style="width:74px; height:30px"  on
-                     
-                     click="btnDay_click(0)" CausesValidation="false" />
+                     style="width:74px; height:30px"  onclick="btnDay_click(0)" CausesValidation="false" />                     
             </td>
             <td align="left">
                    <input type="button" ID="btnNextDay"  runat="server" onclick="btnDay_click(1)"  value="יום הבא" class="btnWorkCardCloseWin"

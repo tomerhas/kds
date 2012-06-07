@@ -2313,7 +2313,7 @@ public class wsGeneral : System.Web.Services.WebService
                             sReturnCode = "1| מספר סידור שגוי";
 
                         if (((clGeneral.enMeasherOMistayeg)iMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull) 
-                            && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) < _parameters.iValidDays))
+                            && (clDefinitions.GetDiffDays(DateTime.Parse(sSidurDate), DateTime.Now) + 1 <= _parameters.iValidDays))
                         {   //אם כרטיס ללא התייחסות נבדוק שלא הקלידו סידור ללא מאפיין 99 עם ערך 1
                             //אבל רק במידה והכרטיס הוא בטוו 45 יום (פרמטר 252)
                             dr = dtMeafyenim.Select("Sidur_Key=" + iSidurNumber + " and kod_meafyen=99 and erech='1'");

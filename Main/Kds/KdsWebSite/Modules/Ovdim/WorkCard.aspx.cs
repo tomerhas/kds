@@ -136,7 +136,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                     //רק במידה ולא נעשה שינוי בכרטיס
                     //ורק במידה שאנחנו בטווח של פרמטר 252 (45) יום
-                    bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) >= oBatchManager.oParam.iValidDays;
+                    bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 > oBatchManager.oParam.iValidDays;
                     btnApprove.Disabled = ((bWorkCardWasUpdate) || (bParam252));
                     btnNotApprove.Disabled = ((bWorkCardWasUpdate) || (bParam252));                                     
                 }
@@ -151,7 +151,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         switch (oMasherOMistayeg)
         {
             case clGeneral.enMeasherOMistayeg.ValueNull:
-                if ((!bRashemet) && (clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) < oBatchManager.oParam.iValidDays))
+                if ((!bRashemet) && (clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 <= oBatchManager.oParam.iValidDays))
                 {
                     btnPrint.Enabled = false;
                     btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
@@ -612,7 +612,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
         bool bWorkCardWasUpdateAndDriverInsert=false;
 
-        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays >= oBatchManager.oParam.iValidDays)))
+        if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && ((bWorkCardWasUpdate) || (iDays + 1 > oBatchManager.oParam.iValidDays)))
             bWorkCardWasUpdateAndDriverInsert = true;
 
         return bWorkCardWasUpdateAndDriverInsert;

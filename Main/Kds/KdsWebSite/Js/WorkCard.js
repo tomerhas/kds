@@ -277,12 +277,12 @@
             if (Number(iLvl == 1))
                 $get(id).value = "1";
             else
-                $get(id).value = String(document.getElementById(id).value).concat(iSidurIndex + ",");
+                $get(id).value = String($get(id).value).concat(iSidurIndex + ",");
         }                    
     }    
     function CheckChanges(){    
       if (bScreenChanged) {        
-        document.getElementById("btnHidClose").click();
+        $get("btnHidClose").click();
         return false;
         }        
        else{     
@@ -290,12 +290,12 @@
     }
     function CheckChangesBeforePrint(){    
       if (bScreenChanged) {
-        document.getElementById("btnHidPrint").click();
+        $get("btnHidPrint").click();
         return false;        
         }               
     }
     function RefreshBtn() {      
-        document.getElementById("hidRefresh").value = "1";       
+        $get("hidRefresh").value = "1";       
         EnabledAllFrames(true);
         return true;
     }
@@ -470,13 +470,13 @@
         sQueryString = sQueryString + "&MisparSidur="; 
         sQueryString = sQueryString + "&TimeStart=";
         sQueryString = sQueryString + "&TimeEnd=";
-        sQueryString = sQueryString + "&Status=" + document.getElementById("hidMeasherMistayeg").value;
-        document.getElementById("divHourglass").style.display = 'block';   
+        sQueryString = sQueryString + "&Status=" + $get("hidMeasherMistayeg").value;
+        $get("divHourglass").style.display = 'block';   
         res = window.showModalDialog('DivuachHeadrut.aspx?' + sQueryString, '', 'dialogwidth:655px;dialogheight:405px;dialogtop:280px;dialogleft:380px;status:no;resizable:no;scroll:no');
-        document.getElementById("divHourglass").style.display = 'none';
+        $get("divHourglass").style.display = 'none';
         if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
-            document.getElementById("hidExecInputChg").value = "1";
-            document.getElementById("hidRefresh").value = "1";
+            $get("hidExecInputChg").value = "1";
+            $get("hidRefresh").value = "1";
             __doPostBack('btnAddHeadrut', '');
             bScreenChanged = false;
         }
@@ -494,7 +494,7 @@
         
         var sQueryString;        
         sQueryString = "?dt=" + Date();
-        sQueryString = sQueryString + "&EmpID=" + document.getElementById("txtId").value;
+        sQueryString = sQueryString + "&EmpID=" + $get("txtId").value;
         sQueryString = sQueryString + "&CardDate=" + $get("clnDate").value;
         sQueryString = sQueryString + "&Status=" + $get("hidMeasherMistayeg").value;
         $get("divHourglass").style.display = 'block';
