@@ -597,8 +597,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
       //TimeSpan ts = DateTime.Now-oBatchManager.CardDate;
       //int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
       iDays =clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
-      return ((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
-            || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
+      return (((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
+            || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))))
+            || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)));
     }
     protected bool WorkCardWasUpdateAndDriver(bool bWorkCardWasUpdate)
     {
