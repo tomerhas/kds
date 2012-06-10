@@ -1802,12 +1802,13 @@ function chkMkt(oRow) {
                if (!_imgCancelPeilut.firstChild.disabled){
                    _imgCancelPeilut.firstChild.disabled = bDisabled;                  
                   }  
-               
+               arrKnisa = (_Peilut.firstChild.childNodes[j]).cells[_COL_KNISA].childNodes[0].nodeValue.split(',');
                if (_imgCancelPeilut.firstChild.disabled){
                  if(_imgCancelPeilut.firstChild.className!=undefined){
                      if ((String(_imgCancelPeilut.firstChild.className).indexOf("ImgCheckedPeilut")) > -1) {
                          if ((KnisaLefiZorech(_Peilut.firstChild.childNodes[j].cells[_COL_LINE_DESCRIPTION].innerHTML))
-                          && (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True'))
+                          && (_Peilut.firstChild.childNodes[j].cells[_COL_ACTUAL_MINUTES].children[0].getAttribute("idkunRashemet") != 'True')
+                          &&  (Number(arrKnisa[0]) > 0)) //אם כניסה לפי צורך)         
                              _imgCancelPeilut.firstChild.disabled = false;
                             else
                              _imgCancelPeilut.firstChild.className = "ImgCheckedDisablePeilut";

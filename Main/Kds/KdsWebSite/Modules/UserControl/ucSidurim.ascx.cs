@@ -697,7 +697,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //3ואם זה אלמנט עם מאפיין 9
                 drPeilutyot["knisa"] = oPeilut.iMisparKnisa + "," + oPeilut.bKnisaNeeded.GetHashCode().ToString() + "," + oPeilut.bBusNumberMustExists.GetHashCode() + "," + oPeilut.bElementIgnoreReka.GetHashCode(); 
                 drPeilutyot["DayToAdd"] = "0";
-                if (Mashar.Rows.Count > 0)
+                if ((Mashar !=null) && (Mashar.Rows.Count > 0))
                 {
                     drLicenseNumber = Mashar.Select("bus_number=" + oPeilut.lOtoNo);
                     if (drLicenseNumber.Length > 0)
@@ -2657,11 +2657,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("OrgVal", oSidur.iOldLoLetashlum.ToString());
         chkBox.Attributes.Add("OrgEnabled", bEnable ? "1" : "0");
-       // chkBox.Attributes.Add("class","WorkCardCheckBox");
-       // AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
+      
 
         Image imgRemark = new Image();
-        if (chkBox.Disabled)
+        if (!_ProfileRashemet)
             imgRemark.ImageUrl = "../../Images/Qmark_Dis.png";
         else
         {
@@ -2755,153 +2754,157 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         DateTime dSidurDate;
         int iCancelSidur;
         HtmlInputCheckBox oChk;
+
         //נעבור על הגריד ונעדכן את השינויים שנעשו במסך ועדיין לא נשמרו
-        for (int iIndex = 0; iIndex < this.DataSource.Count; iIndex++)
+        if (this.DataSource != null)
         {
-            try
+            for (int iIndex = 0; iIndex < this.DataSource.Count; iIndex++)
             {
-                oLbl = (Label)this.FindControl("lblSidur" + iIndex);
-            }
-            catch (Exception ex)
-            {
-                oLbl = null;
                 try
                 {
-                    oHypLnk = (HyperLink)this.FindControl("lblSidur" + iIndex);
+                    oLbl = (Label)this.FindControl("lblSidur" + iIndex);
                 }
-                catch (Exception ex1)
+                catch (Exception ex)
                 {
-                    oTxtSidur = ((TextBox)(this.FindControl("lblSidur" + iIndex)));
-                    oHypLnk = null;
-                }                
-            }
-            if ((oLbl != null) || (oHypLnk != null) || (oTxtSidur != null))
-            {
-                oSidur = (clSidur)((htFullEmployeeDetails)[iIndex]);
-
-                oSidur.iMisparSidur = (oLbl == null ? (oHypLnk == null ? (oTxtSidur.Text == string.Empty ? 0 : int.Parse(oTxtSidur.Text)) : int.Parse(oHypLnk.Text)) : int.Parse(oLbl.Text));
-                oTxt = ((TextBox)(this.FindControl("txtSH" + iIndex)));
-                if (oTxt.Text == string.Empty)
-                {
-                    oSidur.dFullShatHatchala = DateTime.Parse("01/01/0001 00:00:00");
-                    oSidur.sShatHatchala = "";
+                    oLbl = null;
+                    try
+                    {
+                        oHypLnk = (HyperLink)this.FindControl("lblSidur" + iIndex);
+                    }
+                    catch (Exception ex1)
+                    {
+                        oTxtSidur = ((TextBox)(this.FindControl("lblSidur" + iIndex)));
+                        oHypLnk = null;
+                    }
                 }
-                else
+                if ((oLbl != null) || (oHypLnk != null) || (oTxtSidur != null))
                 {
-                    oLbl = (Label)this.FindControl("lblDate" + iIndex);
-                    if (oTxt.Text == "__:__") { oTxt.Text = ""; }
-                    oSidur.dFullShatHatchala = DateTime.Parse(oLbl.Text + " " + oTxt.Text);
-                    oSidur.sShatHatchala = oTxt.Text;
-                }
+                    oSidur = (clSidur)((htFullEmployeeDetails)[iIndex]);
 
-                oShatGmar = ((TextBox)(this.FindControl("txtSG" + iIndex)));
-                //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
-                oDayToAdd = ((TextBox)(this.FindControl("txtDayAdd" + iIndex)));
-                sTmp = oShatGmar.Text;
-                dSidurDate = DateTime.Parse(oSidur.dOldFullShatGmar.ToShortDateString() + " " + sTmp);//DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
-                oSidur.sShatGmar = sTmp;
-                if (sTmp != string.Empty)
-                    oSidur.dFullShatGmar = DateTime.Parse(_CardDate.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));
-                else
-                    oSidur.dFullShatGmar = DateTime.Parse("01/01/0001 00:00:00");
-
-
-                oDDL = (DropDownList)this.FindControl("ddlResonIn" + iIndex);
-                if (oDDL != null)//רק אם שונה מסידור רציפות
-                {
-                    oSidur.iKodSibaLedivuchYadaniIn = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
-
-                    oDDL = (DropDownList)this.FindControl("ddlResonOut" + iIndex);
-                    oSidur.iKodSibaLedivuchYadaniOut = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
-
-                    sTmp = ((TextBox)(this.FindControl("txtSHL" + iIndex))).Text;
-                    oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
-                    if (sTmp==string.Empty)
-                        oSidur.sShatHatchalaLetashlum = "";
+                    oSidur.iMisparSidur = (oLbl == null ? (oHypLnk == null ? (oTxtSidur.Text == string.Empty ? 0 : int.Parse(oTxtSidur.Text)) : int.Parse(oHypLnk.Text)) : int.Parse(oLbl.Text));
+                    oTxt = ((TextBox)(this.FindControl("txtSH" + iIndex)));
+                    if (oTxt.Text == string.Empty)
+                    {
+                        oSidur.dFullShatHatchala = DateTime.Parse("01/01/0001 00:00:00");
+                        oSidur.sShatHatchala = "";
+                    }
                     else
-                        oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
+                    {
+                        oLbl = (Label)this.FindControl("lblDate" + iIndex);
+                        if (oTxt.Text == "__:__") { oTxt.Text = ""; }
+                        oSidur.dFullShatHatchala = DateTime.Parse(oLbl.Text + " " + oTxt.Text);
+                        oSidur.sShatHatchala = oTxt.Text;
+                    }
 
-                    
-                    sTmp = ((TextBox)(this.FindControl("txtSGL" + iIndex))).Text;
-                    oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
-                    if (sTmp == string.Empty)
-                        oSidur.sShatGmarLetashlum = "";
+                    oShatGmar = ((TextBox)(this.FindControl("txtSG" + iIndex)));
+                    //מספר ימים להוספה 0 אם יום נוכחי1 - יום הבא
+                    oDayToAdd = ((TextBox)(this.FindControl("txtDayAdd" + iIndex)));
+                    sTmp = oShatGmar.Text;
+                    dSidurDate = DateTime.Parse(oSidur.dOldFullShatGmar.ToShortDateString() + " " + sTmp);//DateTime.Parse(oShatGmar.Attributes["OrgDate"].ToString() + " " + sTmp);
+                    oSidur.sShatGmar = sTmp;
+                    if (sTmp != string.Empty)
+                        oSidur.dFullShatGmar = DateTime.Parse(_CardDate.ToShortDateString() + " " + sTmp).AddDays(int.Parse(oDayToAdd.Text));
                     else
-                        oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
+                        oSidur.dFullShatGmar = DateTime.Parse("01/01/0001 00:00:00");
 
-                    oDDL = (DropDownList)this.FindControl("ddlException" + iIndex);
-                    oSidur.sChariga = oDDL.SelectedValue;
 
-                    oDDL = (DropDownList)this.FindControl("ddlPHfsaka" + iIndex);
-                    oSidur.sPitzulHafsaka = oDDL.SelectedValue.Equals("-1") ? "0" : oDDL.SelectedValue; //oDDL.Attributes["OldV"].ToString();
+                    oDDL = (DropDownList)this.FindControl("ddlResonIn" + iIndex);
+                    if (oDDL != null)//רק אם שונה מסידור רציפות
+                    {
+                        oSidur.iKodSibaLedivuchYadaniIn = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
-                    oDDL = (DropDownList)this.FindControl("ddlHashlama" + iIndex);
-                    oSidur.sHashlama = oDDL.SelectedValue;
-                    if (int.Parse(oDDL.SelectedValue) == clGeneral.enSugHashlama.enNoHashlama.GetHashCode())
-                        oSidur.iSugHashlama = clGeneral.enSugHashlama.enNoHashlama.GetHashCode();
-                    else
-                        oSidur.iSugHashlama = clGeneral.enSugHashlama.enHashlama.GetHashCode();
+                        oDDL = (DropDownList)this.FindControl("ddlResonOut" + iIndex);
+                        oSidur.iKodSibaLedivuchYadaniOut = oDDL.SelectedValue.Equals("-1") ? 0 : int.Parse(oDDL.SelectedValue);
 
-                    oChk = (HtmlInputCheckBox)this.FindControl("chkOutMichsa" + iIndex);
-                    oSidur.sOutMichsa = oChk.Checked ? "1" : "0";
+                        sTmp = ((TextBox)(this.FindControl("txtSHL" + iIndex))).Text;
+                        oSidur.dFullShatHatchalaLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatHatchalaLetashlum.ToShortDateString()));
+                        if (sTmp == string.Empty)
+                            oSidur.sShatHatchalaLetashlum = "";
+                        else
+                            oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToShortTimeString();
 
-                    iCancelSidur = int.Parse(((TextBox)this.FindControl("lblSidurCanceled" + iIndex)).Text);
 
-                    oSidur.iBitulOHosafa = iCancelSidur;
-                   
-                    //לא לתשלום - במידה וסידור בוטל נעדכן בערך המקורי - ישאר ללא שינוי
-                    oChk = (HtmlInputCheckBox)this.FindControl("chkLoLetashlum" + iIndex);
+                        sTmp = ((TextBox)(this.FindControl("txtSGL" + iIndex))).Text;
+                        oSidur.dFullShatGmarLetashlum = clGeneral.GetDateTimeFromStringHour(sTmp, DateTime.Parse(oSidur.dFullShatGmarLetashlum.ToShortDateString()));
+                        if (sTmp == string.Empty)
+                            oSidur.sShatGmarLetashlum = "";
+                        else
+                            oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToShortTimeString();
 
-                    int iLoLetashlumOrgVal = int.Parse(oChk.Attributes["OrgVal"].ToString());
+                        oDDL = (DropDownList)this.FindControl("ddlException" + iIndex);
+                        oSidur.sChariga = oDDL.SelectedValue;
 
-                    if (iCancelSidur == 1)
-                        oSidur.iLoLetashlum = iLoLetashlumOrgVal;
-                    else
-                        oSidur.iLoLetashlum = oChk.Checked ? 1 : 0;
+                        oDDL = (DropDownList)this.FindControl("ddlPHfsaka" + iIndex);
+                        oSidur.sPitzulHafsaka = oDDL.SelectedValue.Equals("-1") ? "0" : oDDL.SelectedValue; //oDDL.Attributes["OldV"].ToString();
 
-                    if ((oSidur.iLoLetashlum == 1) && (iLoLetashlumOrgVal == 0))
-                        oSidur.iKodSibaLoLetashlum = 20;
-                    else
-                        if ((oSidur.iLoLetashlum == 0) && (iLoLetashlumOrgVal == 1))
-                            oSidur.iKodSibaLoLetashlum = 0;
+                        oDDL = (DropDownList)this.FindControl("ddlHashlama" + iIndex);
+                        oSidur.sHashlama = oDDL.SelectedValue;
+                        if (int.Parse(oDDL.SelectedValue) == clGeneral.enSugHashlama.enNoHashlama.GetHashCode())
+                            oSidur.iSugHashlama = clGeneral.enSugHashlama.enNoHashlama.GetHashCode();
+                        else
+                            oSidur.iSugHashlama = clGeneral.enSugHashlama.enHashlama.GetHashCode();
 
-                    //if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
-                    //    oChk.Attributes["OrgEnabled"] = "1";
-                    //DropDownList _DDL;
-                    //TextBox _HitTextBox;
-                    ////התייצבות                            
-                    //if (FirstParticipate != null)
-                    //{
-                    //    _DDL = ((DropDownList)this.FindControl("ddlFirstPart"));
-                    //    _HitTextBox = ((TextBox)this.FindControl("txtFirstPart"));
-                    //    if ((FirstParticipate.iMisparSidur == oSidur.iMisparSidur)
-                    //        && (FirstParticipate.dFullShatHatchala == oSidur.dFullShatHatchala))
-                    //    {
-                    //        if (!String.IsNullOrEmpty(_DDL.SelectedValue))
-                    //            oSidur.iKodSibaLedivuchYadaniIn = _DDL.SelectedValue.Equals("-1") ? 0 : int.Parse(_DDL.SelectedValue);
+                        oChk = (HtmlInputCheckBox)this.FindControl("chkOutMichsa" + iIndex);
+                        oSidur.sOutMichsa = oChk.Checked ? "1" : "0";
 
-                    //        if (!String.IsNullOrEmpty(_HitTextBox.Text) && (_HitTextBox.Text.IndexOf(":") > 0))
-                    //            oSidur.dShatHitiatzvut = DateTime.Parse(_CardDate.ToShortDateString() + " " + _HitTextBox.Text);
-                    //    }
-                    //}
-                    //if (SecondParticipate != null)
-                    //{
-                    //    _DDL = ((DropDownList)this.FindControl("ddlSecPart"));
-                    //    _HitTextBox = ((TextBox)this.FindControl("txtFirstPart"));
-                    //    if ((SecondParticipate.iMisparSidur == oSidur.iMisparSidur)
-                    //        && (SecondParticipate.dFullShatHatchala == oSidur.dFullShatHatchala))
-                    //    {
-                    //        if ((!String.IsNullOrEmpty(_HitTextBox.Text)) && (_HitTextBox.Text.IndexOf(":") > 0))
-                    //            oSidur.dShatHitiatzvut = DateTime.Parse(_HitTextBox.Text);
+                        iCancelSidur = int.Parse(((TextBox)this.FindControl("lblSidurCanceled" + iIndex)).Text);
 
-                    //        if (!String.IsNullOrEmpty(_DDL.SelectedValue))
-                    //            oSidur.iKodSibaLedivuchYadaniIn = _DDL.SelectedValue.Equals("-1") ? 0 : int.Parse(_DDL.SelectedValue);
-                    //    }
-                    //}                   
-                    //אם יש פעילויות, נכניס גם אותן
-                    oGridView = ((GridView)this.FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
-                    if (oGridView != null)
-                        UpdateHashTablePeiltoyWithGridChanges(iIndex, iCancelSidur, ref oGridView, ref htFullEmployeeDetails);
+                        oSidur.iBitulOHosafa = iCancelSidur;
+
+                        //לא לתשלום - במידה וסידור בוטל נעדכן בערך המקורי - ישאר ללא שינוי
+                        oChk = (HtmlInputCheckBox)this.FindControl("chkLoLetashlum" + iIndex);
+
+                        int iLoLetashlumOrgVal = int.Parse(oChk.Attributes["OrgVal"].ToString());
+
+                        if (iCancelSidur == 1)
+                            oSidur.iLoLetashlum = iLoLetashlumOrgVal;
+                        else
+                            oSidur.iLoLetashlum = oChk.Checked ? 1 : 0;
+
+                        if ((oSidur.iLoLetashlum == 1) && (iLoLetashlumOrgVal == 0))
+                            oSidur.iKodSibaLoLetashlum = 20;
+                        else
+                            if ((oSidur.iLoLetashlum == 0) && (iLoLetashlumOrgVal == 1))
+                                oSidur.iKodSibaLoLetashlum = 0;
+
+                        //if (oSidur.oSidurStatus == clSidur.enSidurStatus.enNew)
+                        //    oChk.Attributes["OrgEnabled"] = "1";
+                        //DropDownList _DDL;
+                        //TextBox _HitTextBox;
+                        ////התייצבות                            
+                        //if (FirstParticipate != null)
+                        //{
+                        //    _DDL = ((DropDownList)this.FindControl("ddlFirstPart"));
+                        //    _HitTextBox = ((TextBox)this.FindControl("txtFirstPart"));
+                        //    if ((FirstParticipate.iMisparSidur == oSidur.iMisparSidur)
+                        //        && (FirstParticipate.dFullShatHatchala == oSidur.dFullShatHatchala))
+                        //    {
+                        //        if (!String.IsNullOrEmpty(_DDL.SelectedValue))
+                        //            oSidur.iKodSibaLedivuchYadaniIn = _DDL.SelectedValue.Equals("-1") ? 0 : int.Parse(_DDL.SelectedValue);
+
+                        //        if (!String.IsNullOrEmpty(_HitTextBox.Text) && (_HitTextBox.Text.IndexOf(":") > 0))
+                        //            oSidur.dShatHitiatzvut = DateTime.Parse(_CardDate.ToShortDateString() + " " + _HitTextBox.Text);
+                        //    }
+                        //}
+                        //if (SecondParticipate != null)
+                        //{
+                        //    _DDL = ((DropDownList)this.FindControl("ddlSecPart"));
+                        //    _HitTextBox = ((TextBox)this.FindControl("txtFirstPart"));
+                        //    if ((SecondParticipate.iMisparSidur == oSidur.iMisparSidur)
+                        //        && (SecondParticipate.dFullShatHatchala == oSidur.dFullShatHatchala))
+                        //    {
+                        //        if ((!String.IsNullOrEmpty(_HitTextBox.Text)) && (_HitTextBox.Text.IndexOf(":") > 0))
+                        //            oSidur.dShatHitiatzvut = DateTime.Parse(_HitTextBox.Text);
+
+                        //        if (!String.IsNullOrEmpty(_DDL.SelectedValue))
+                        //            oSidur.iKodSibaLedivuchYadaniIn = _DDL.SelectedValue.Equals("-1") ? 0 : int.Parse(_DDL.SelectedValue);
+                        //    }
+                        //}                   
+                        //אם יש פעילויות, נכניס גם אותן
+                        oGridView = ((GridView)this.FindControl(iIndex.ToString().PadLeft(3, char.Parse("0"))));
+                        if (oGridView != null)
+                            UpdateHashTablePeiltoyWithGridChanges(iIndex, iCancelSidur, ref oGridView, ref htFullEmployeeDetails);
+                    }
                 }
             }
         }
