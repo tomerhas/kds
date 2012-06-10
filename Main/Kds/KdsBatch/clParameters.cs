@@ -1102,9 +1102,6 @@ namespace KdsBatch
                     //iShabatStart = iShabatStartInAuttom; //פרמטר 6  
                 }
             }
-        }
-
-     
+        }     
     }
-
 }
