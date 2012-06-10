@@ -370,7 +370,7 @@ namespace KdsLibrary.BL
                     drResults = pirteyOved.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
                     if (drResults.Length>0)
                         iSectorIsuk=int.Parse(drResults[0]["kod_sector_isuk"].ToString());
-                    drMeafyen = meafyenim.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH and Kod_meafyen=56");
+                    drMeafyen = meafyenim.Select("Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') >= ME_TAARICH and Convert('" + dTemp.ToShortDateString() + "', 'System.DateTime') <= AD_TAARICH and Kod_meafyen='56'");
                     if (drResults.Length > 0)
                         meafyen56 = int.Parse(drMeafyen[0]["value_erech_ishi"].ToString());
                     
