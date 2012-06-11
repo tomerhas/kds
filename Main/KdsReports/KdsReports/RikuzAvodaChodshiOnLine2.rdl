@@ -4502,6 +4502,7 @@
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4514,6 +4515,7 @@
                         <PaddingTop>2pt</PaddingTop>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -4544,6 +4546,7 @@
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5380,6 +5383,10 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                          <Style>=IIF(RowNumber("DsRechivim")= 1 , "Solid", "None")</Style>
+                        </TopBorder>
                         <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
