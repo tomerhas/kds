@@ -1817,8 +1817,33 @@ Public Class ClKds
             Throw ex
         End Try
 
-
     End Sub
+    Public Function change_knisot(ByVal p_dt As String) As DataTable
+
+        'Dim KdsSql As String
+        Dim oDal As KdsLibrary.DAL.clDal
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim dt As DataTable
+        Try
+            'insert into trail before update
+            oDal = New KdsLibrary.DAL.clDal
+            dt = New DataTable
+
+            oDal.ClearCommand()
+            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.ExecuteSP("PKG_sdrn.pro_change_Knisot_sdrm", dt)
+            If dt.Rows.Count = 0 Then
+                'todo:error or stop
+            End If
+            Return dt
+
+        Catch ex As Exception
+            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "change_knisot " & ex.Message, 3)
+            Throw ex
+        End Try
+    End Function
+
 #End Region
 
 #Region "Sadran"
