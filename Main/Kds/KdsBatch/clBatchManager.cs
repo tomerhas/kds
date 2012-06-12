@@ -7738,15 +7738,18 @@ namespace KdsBatch
 
                         if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1 && _iLoginUserId != oSidur.iMisparIshi)
                         {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                            if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                            {
+                                oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                            oSidur.iLoLetashlum = 1;
-                            oSidur.iKodSibaLoLetashlum = 16;
-                            oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
-                            oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 16;
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                oSidur.iLoLetashlum = 1;
+                                oSidur.iKodSibaLoLetashlum = 16;
+                                oObjSidurimOvdimUpd.LO_LETASHLUM = 1;
+                                oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM = 16;
+                                oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                            htEmployeeDetails[i] = oSidur;
+                                htEmployeeDetails[i] = oSidur;
+                            }
                          }      
                     }
              }

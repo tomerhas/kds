@@ -987,7 +987,7 @@ namespace KdsBatch
                         }
                         else
                         {
-                            fSumDakotRechiv = ((fMichsaYomit126 * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100) + (fTempZ / 100 * float.Parse("1.25") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100) + (fTempDakot - fTempZ) * float.Parse("1.5") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100;
+                            fSumDakotRechiv = ((fMichsaYomit126 * objOved.objParameters.fAchuzTosefetLeovdeyMeshek) / 100) + (fTempZ * float.Parse("1.25") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100) + (fTempDakot - fTempZ) * float.Parse("1.5") * objOved.objParameters.fAchuzTosefetLeovdeyMeshek / 100;
                         }
                     }
                     if (fSumDakotRechiv > 0)

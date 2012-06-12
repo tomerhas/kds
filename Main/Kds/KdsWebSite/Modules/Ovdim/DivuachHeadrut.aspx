@@ -135,11 +135,11 @@
     }
 
     function CheckDateEnd(val, args) {
-
+       // debugger;
         var dEndTime = $(selectedSidur).attr('max_gmar_muteret');
         var dSidurDate = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), Number(args.Value.substring(0, 2)), Number(args.Value.substring(3, 5)));
-        if ((Number(args.Value.substring(0, 2))>1 && Number(args.Value.substring(0, 2))<8) || (Number(args.Value.substring(0, 2))==0 && Number(args.Value.substring(3, 5))==1))
-        { dSidurDate.setDate(dSidurDate.getDate() + 1); }
+       // if ((Number(args.Value.substring(0, 2))>1 && Number(args.Value.substring(0, 2))<8) || (Number(args.Value.substring(0, 2))==0 && Number(args.Value.substring(3, 5))==1))
+       // { dSidurDate.setDate(dSidurDate.getDate() + 1); }
         var dSidurToCompar = new Date(Number(dEndTime.substr(6, 4)), Number(dEndTime.substr(3, 2)) - 1, Number(dEndTime.substr(0, 2)), Number(dEndTime.substring(11, 13)), Number(dEndTime.substring(14, 16)));
          if (dSidurDate > dSidurToCompar) {
             args.IsValid = false;
@@ -150,11 +150,11 @@
     }
 
     function CheckDateGreaterStart(val, args) {
-      //  debugger;
+
     var dStartTime = document.all("txtStartTime").value;
         var dSidurDate = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), Number(args.Value.substring(0, 2)), Number(args.Value.substring(3, 5)));
-        if ((Number(args.Value.substring(0, 2)) > 1 && Number(args.Value.substring(0, 2)) < 8) || (Number(args.Value.substring(0, 2)) == 0 && Number(args.Value.substring(3, 5)) == 1))
-        { dSidurDate.setDate(dSidurDate.getDate() + 1);  }
+      //  if ((Number(args.Value.substring(0, 2)) > 1 && Number(args.Value.substring(0, 2)) < 8) || (Number(args.Value.substring(0, 2)) == 0 && Number(args.Value.substring(3, 5)) == 1))
+      //  { dSidurDate.setDate(dSidurDate.getDate() + 1);  }
          var dSidurToCompar = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), Number(dStartTime.substring(0, 2)), Number(dStartTime.substring(3, 5)));
         if (dSidurDate < dSidurToCompar) {
             args.IsValid = false;
