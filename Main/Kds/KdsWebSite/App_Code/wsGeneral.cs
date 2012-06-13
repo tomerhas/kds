@@ -2174,7 +2174,7 @@ public class wsGeneral : System.Web.Services.WebService
         DateTime dtOrgDate, dtCardDate;
         OrderedDictionary odSidurim;
         clSidur _Sidur;
-        dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
+            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
         if (dr.Length > 0)
         {
             dr[0]["sidur_number"] = iSidurKey;

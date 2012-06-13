@@ -1284,6 +1284,5 @@ namespace KdsBatch
             int iDays = ts.Days;
             return iDays;
         }
-
   }
 }

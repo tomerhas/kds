@@ -3174,6 +3174,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     {
         clSidur _Sidur = new clSidur();
 
+        if (_DataSource == null)
+            _DataSource = new OrderedDictionary();
+
         _DataSource.Add(_DataSource.Count, _Sidur);
 
         _Sidur.oSidurStatus = clSidur.enSidurStatus.enNew;
