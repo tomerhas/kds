@@ -27,8 +27,8 @@ namespace KdsBatch
             long lMakatNesia,lRequestNum = 0;
             DateTime dCardDate;
             string Line;
-            string sPathFile = ConfigurationSettings.AppSettings["PathFileReportsTemp"]+ "Tkinut_Makatim.txt";
-            string sPathFileMail = ConfigurationSettings.AppSettings["PathFilePrintReports"] + "Tkinut_Makatim.txt";
+            string sPathFile = ConfigurationSettings.AppSettings["PathFilePrintReports"] + "Tkinut_Makatim.txt";
+            string sPathFileMail = ConfigurationSettings.AppSettings["PathFileReportsTemp"] + "Tkinut_Makatim.txt";
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromUI, "CheckTkinutMakatim", -12);

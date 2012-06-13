@@ -269,6 +269,8 @@ namespace KdsBatch
                     //•	99207 (8512) – קורס, 99011 (8513) – קורס
                     if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
                     {
+                        if(fErechRechiv>fMichsaYomit)
+                            fErechRechiv = fMichsaYomit;
                         //-	ימים א – ה וערב חג [זיהוי ערב חג]: הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
                         if (fErechRechiv >= 480)
                             if(fErechRechiv<fMichsaYomit)
