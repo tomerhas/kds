@@ -196,10 +196,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
                                     {
                                         dShatGmar = clGeneral.GetDateTimeFromStringHour(DateTime.Parse(dtHeadruyot.Select("kod_sidur_meyuchad=" + item.Value).FirstOrDefault(row => row["shat_gmar_muteret"].ToString() != "")["shat_gmar_muteret"].ToString()).ToShortTimeString(),DateTime.Parse(ViewState["DateCard"].ToString()));
 
-                                        if (dShatGmar >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dShatGmar <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
-                                        {
-                                            dShatGmar = dShatGmar.AddDays(1);
-                                        }
+                                        //if (dShatGmar >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dShatGmar <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
+                                        //{
+                                        //    dShatGmar = dShatGmar.AddDays(1);
+                                        //}
 
                                         item.Attributes.Add("max_gmar_muteret", dShatGmar.ToString());
                                      }
@@ -309,10 +309,10 @@ public partial class Modules_Ovdim_DivuachHeadrut :KdsPage
             drRowSidurim = ((DataTable)ViewState["dtSidurim"]).Select("MISPAR_SIDUR <> 99200 AND SHAT_HATCHALA is not null and (MISPAR_SIDUR <> " + ddlHeadrutType.SelectedValue + " or SHAT_HATCHALA<>Convert('" + ViewState["TimeStart"] + "', 'System.DateTime')) AND (Lo_letashlum=0 or (Lo_letashlum=1 and kod_siba_lo_letashlum=1)) and Bitul_O_Hosafa not in(1,3)", "SHAT_HATCHALA ASC");
             dStartSidur = clGeneral.GetDateTimeFromStringHour(txtStartTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
             dEndSidur = clGeneral.GetDateTimeFromStringHour(txtEndTime.Text,DateTime.Parse(ViewState["DateCard"].ToString()));
-            if (dEndSidur >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dEndSidur <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
-            {
-                dEndSidur = dEndSidur.AddDays(1);
-            }
+            //if (dEndSidur >= clGeneral.GetDateTimeFromStringHour("00:01", DateTime.Parse(ViewState["DateCard"].ToString())) && dEndSidur <= clGeneral.GetDateTimeFromStringHour("07:59", DateTime.Parse(ViewState["DateCard"].ToString())))
+            //{
+            //    dEndSidur = dEndSidur.AddDays(1);
+            //}
             for (int I = 0; I < drRowSidurim.Length; I++)
             {
                 if (string.IsNullOrEmpty(drRowSidurim[I]["SHAT_GMAR"].ToString()))
