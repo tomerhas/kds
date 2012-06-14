@@ -8,7 +8,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.32893cm</Width>
+                  <Width>3.99044cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>4.25552cm</Width>
@@ -17,7 +17,7 @@
                   <Width>3.76924cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.01953cm</Width>
+                  <Width>2.35807cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -347,7 +347,7 @@
             <Top>1.63156cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.37322cm</Width>
+            <Width>14.37327cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -1710,7 +1710,6 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -2805,6 +2804,7 @@ iif((CInt(Fields!MAKAT_NESIA.Value)&gt;= 60000000 and  CInt(Fields!MAKAT_NESIA.V
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
