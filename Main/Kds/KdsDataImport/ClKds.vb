@@ -4,6 +4,7 @@ Imports System.Configuration
 Imports System.Math
 Imports System.Net
 Imports KdsLibrary
+Imports KdsLibrary.DAL
 Imports System.Threading
 'Imports kernel32
 'Imports Oracle.DataAccess.Client
@@ -1843,6 +1844,153 @@ Public Class ClKds
             Throw ex
         End Try
     End Function
+    'Public Sub fetch_knisot(ByVal p_dt As String, ByVal dt As DataTable)
+    'for every row in dt from pro_change_Knisot_sdrm fetch GetKavDetails
+    'End Sub
+    Public Sub FetchKnisot(ByVal p_dt As String)
+
+        Dim oDal As KdsLibrary.DAL.clTnua
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim Dt As DataTable
+        Dim Ds As DataSet
+        Dim Makat As Long
+        Dim i As Integer
+        Dim rc As Integer
+        Dim DtMakat As Date
+        Dim TnuaConn As String = ConfigurationSettings.AppSettings("KDS_TNPR_CONNECTION")
+
+
+        Try
+            'p_dt = "20120609"
+            Dt = change_knisot(p_dt)
+            DtMakat = New DateTime(Mid(p_dt, 1, 4), Mid(p_dt, 5, 2), Mid(p_dt, 7, 2))
+            If Dt.Rows.Count > 0 Then
+                For i = 0 To Dt.Rows.Count - 1
+                    Makat = CInt(Dt.Rows(i).Item("makat_nesia").ToString)
+                    If Makat > 0 Then
+                        oDal = New KdsLibrary.DAL.clTnua(TnuaConn)
+                        Try
+                            oDal.ClearCommand()
+                            Ds = New DataSet
+                            rc = 1 'error=1, ok=0
+                            oDal.AddParameter("p_date", KdsLibrary.DAL.ParameterType.ntOracleDate, DtMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, Makat, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.AddParameter("p_rc", KdsLibrary.DAL.ParameterType.ntOracleInteger, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("KavDetailsCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("EntryCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("VisutimCrs", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, DBNull.Value, KdsLibrary.DAL.ParameterDir.pdOutput)
+                            oDal.AddParameter("p_KnisaVisut", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                            oDal.ExecuteSP(clGeneral.cGetKavDetails, Ds)
+                            rc = CInt(oDal.GetValParam("p_rc").ToString)
+                            If rc = 0 Then
+                                'todo: call another function with the ds
+                                DelNInsKnisot(Ds, p_dt)
+                            Else
+                                'todo: rc error
+                            End If
+                        Catch ex As Exception
+                            'todo: getkavimdetails aborted
+                            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "getkavimdetails aborted " & ex.Message, 3)
+                            'Throw ex
+                        End Try
+                    End If
+                Next
+
+            Else
+                'todo:error or stop and mail "no knisot for this date"
+            End If
+
+        Catch ex As Exception
+            'todo: fetch aborted
+        End Try
+
+    End Sub
+    Public Sub DelNInsKnisot(ByVal Ds As DataSet, ByVal p_dt As String)
+
+        Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
+        Dim oDal As KdsLibrary.DAL.clDal
+        Dim Dt As DataTable
+        Dim DtPeilut As DataTable
+        Dim DtKnisot As DataTable
+        Dim PDt As String
+        Dim PMisparKnisa As Integer
+        Dim PMakat As Integer
+        Dim PTeurNesia As String
+        Dim DtMakat As Date
+        Dim NKnisot As Integer
+
+        Try
+            Dt = New DataTable
+            DtPeilut = New DataTable
+            DtKnisot = New DataTable
+            DtPeilut = Ds.Tables(0)
+            DtKnisot = Ds.Tables(1)
+            DtMakat = New DateTime(Mid(p_dt, 1, 4), Mid(p_dt, 5, 2), Mid(p_dt, 7, 2))
+            PDt = DtPeilut.Rows(0).Item(0).ToString
+            'todo: compare PDt and p_dt 'DtMakat
+            PMakat = CInt(DtPeilut.Rows(0).Item(1).ToString)
+            NKnisot = 0
+            oDal = New KdsLibrary.DAL.clDal
+            oDal.ClearCommand()
+            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+            oDal.ExecuteSP("PKG_sdrn.pro_Count_Knisot_sdrm", Dt)
+            If Dt.Rows.Count = 0 Then
+                'todo:error , no original kniot.
+            Else
+                NKnisot = CInt(Dt.Rows(0).Item(0).ToString)
+            End If
+
+            If Not NKnisot < DtKnisot.Rows.Count Then
+                For i = 0 To DtKnisot.Rows.Count - 1
+                    PMisparKnisa = CInt(DtKnisot.Rows(i).Item(0).ToString)
+                    PTeurNesia = DtKnisot.Rows(i).Item(7).ToString
+
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
+                Next
+            Else
+                For i = 0 To NKnisot - 1
+                    PMisparKnisa = CInt(DtKnisot.Rows(i).Item(0).ToString)
+                    PTeurNesia = DtKnisot.Rows(i).Item(7).ToString
+
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
+                Next
+                ' insert more knisot than original
+                For j = NKnisot To DtKnisot.Rows.Count - 1
+                    PMisparKnisa = CInt(DtKnisot.Rows(j).Item(0).ToString)
+                    PTeurNesia = DtKnisot.Rows(j).Item(7).ToString
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.ExecuteSP("PKG_sdrn.pro_Ins_Knisot_sdrm")
+                Next
+            End If
+
+            oDal.ClearCommand()
+            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+            oDal.ExecuteSP("PKG_sdrn.pro_Del_Knisot_sdrm", Dt)
+
+
+        Catch ex As Exception
+            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "DelNInsKnisot aborted " & ex.Message, 3)
+        End Try
+
+
+    End Sub
 
 #End Region
 
@@ -1954,8 +2102,8 @@ Public Class ClKds
                 oBatch.InsertProcessLog(8, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim not run UserBatch=" & UserBatch, 0)
                 ''**KdsWriteProcessLog(8, 1, 4, "shguyim not run UserBatch=" & UserBatch)
             End If
-                oBatch.UpdateProcessLog(iSdrnNumSeq, KdsLibrary.BL.RecordStatus.Finish, "sadran", 0)
-                ''**KdsWriteProcessLog(4, 1, 2, "end ok sadran")
+            oBatch.UpdateProcessLog(iSdrnNumSeq, KdsLibrary.BL.RecordStatus.Finish, "sadran", 0)
+            ''**KdsWriteProcessLog(4, 1, 2, "end ok sadran")
 
         Catch ex As Exception
             oBatch.UpdateProcessLog(iNumSeq, KdsLibrary.BL.RecordStatus.Faild, teur & " abort: " & ex.Message, 10)
@@ -2481,9 +2629,9 @@ Public Class ClKds
                                 oBatch.InsertProcessLog(8, 2, KdsLibrary.BL.RecordStatus.PartialFinish, "shguyim retro not run UserBatch=" & UserBatch, 0)
                                 ''** KdsWriteProcessLog(8, 2, 4, "shguyim retro not run UserBatch=" & UserBatch)
                             End If
-                                oBatch.InsertProcessLog(tahalich, 19, KdsLibrary.BL.RecordStatus.Finish, "end ok rerun sadran", 0)
-                                ''**KdsWriteProcessLog(4, 19, 2, "end ok rerun sadran")
-                            End If
+                            oBatch.InsertProcessLog(tahalich, 19, KdsLibrary.BL.RecordStatus.Finish, "end ok rerun sadran", 0)
+                            ''**KdsWriteProcessLog(4, 19, 2, "end ok rerun sadran")
+                        End If
                         'Else
                         '?
                     End If
