@@ -3504,7 +3504,7 @@ namespace KdsBatch
                 }
                 if (fMichsaYomit == 0 && fDakotNochehut > 0 && oCalcBL.GetSugYomLemichsa(objOved, dTaarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.Shishi.GetHashCode() && objOved.objMeafyeneyOved.sMeafyen32 != "1")
                 {
-                    fErech = fDakotNochehut - 240;
+                    fErech = fDakotNochehut -fDakotNosafotSidurey100 - 240;
                     fErech = Math.Max(0, fErech);
                 }
                 else if (fMichsaYomit == 0 && fDakotNochehut > 0 && oCalcBL.GetSugYomLemichsa(objOved, dTaarich, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56) == clGeneral.enSugYom.Shishi.GetHashCode() && objOved.objMeafyeneyOved.sMeafyen32 == "1")
