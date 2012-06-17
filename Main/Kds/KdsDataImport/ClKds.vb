@@ -1960,6 +1960,12 @@ Public Class ClKds
                     oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
                 Next
+                If Not NKnisot = DtKnisot.Rows.Count Then
+                    oDal.ClearCommand()
+                    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.ExecuteSP("PKG_sdrn.pro_Del_Knisot_sdrm", Dt)
+                End If
             Else
                 For i = 0 To NKnisot - 1
                     PMisparKnisa = CInt(DtKnisot.Rows(i).Item(0).ToString)
@@ -1989,12 +1995,6 @@ Public Class ClKds
                     oDal.ExecuteSP("PKG_sdrn.pro_Ins_Knisot_sdrm")
                 Next
             End If
-
-            oDal.ClearCommand()
-            oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
-            oDal.ExecuteSP("PKG_sdrn.pro_Del_Knisot_sdrm", Dt)
-
 
         Catch ex As Exception
             oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "DelNInsKnisot aborted " & ex.Message, 3)
