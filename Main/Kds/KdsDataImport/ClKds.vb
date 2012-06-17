@@ -1918,6 +1918,7 @@ Public Class ClKds
         Dim PTeurNesia As String
         Dim DtMakat As Date
         Dim NKnisot As Integer
+        Dim PSugKnisa As Integer
 
         Try
             Dt = New DataTable
@@ -1945,35 +1946,45 @@ Public Class ClKds
             If Not NKnisot < DtKnisot.Rows.Count Then
                 For i = 0 To DtKnisot.Rows.Count - 1
                     PMisparKnisa = CInt(DtKnisot.Rows(i).Item(0).ToString)
+                    PSugKnisa = CInt(DtKnisot.Rows(i).Item(5).ToString)
                     PTeurNesia = DtKnisot.Rows(i).Item(7).ToString
+                    'PMisparKnisa = CInt(DtKnisot.Rows(i).Item("Siduri").ToString)
+                    'PSugKnisa = CInt(DtKnisot.Rows(i).Item("SugKnisa").ToString)
+                    'PTeurNesia = DtKnisot.Rows(i).Item("TeurKnisa").ToString
 
                     oDal.ClearCommand()
                     oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PSugKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PSugKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
                 Next
             Else
                 For i = 0 To NKnisot - 1
                     PMisparKnisa = CInt(DtKnisot.Rows(i).Item(0).ToString)
+                    PSugKnisa = CInt(DtKnisot.Rows(i).Item(5).ToString)
                     PTeurNesia = DtKnisot.Rows(i).Item(7).ToString
 
                     oDal.ClearCommand()
                     oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PSugKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PSugKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.ExecuteSP("PKG_sdrn.pro_Upd_Knisot_sdrm")
                 Next
                 ' insert more knisot than original
                 For j = NKnisot To DtKnisot.Rows.Count - 1
                     PMisparKnisa = CInt(DtKnisot.Rows(j).Item(0).ToString)
+                    PSugKnisa = CInt(DtKnisot.Rows(j).Item(5).ToString)
                     PTeurNesia = DtKnisot.Rows(j).Item(7).ToString
+
                     oDal.ClearCommand()
                     oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, p_dt, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("p_makat_nesia", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMakat, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("pMisparKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PMisparKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
+                    oDal.AddParameter("PSugKnisa", KdsLibrary.DAL.ParameterType.ntOracleInteger, PSugKnisa, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.AddParameter("PTeurNesia", KdsLibrary.DAL.ParameterType.ntOracleVarchar, PTeurNesia, KdsLibrary.DAL.ParameterDir.pdInput)
                     oDal.ExecuteSP("PKG_sdrn.pro_Ins_Knisot_sdrm")
                 Next
