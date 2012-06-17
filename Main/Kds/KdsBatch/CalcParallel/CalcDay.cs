@@ -1413,7 +1413,7 @@ namespace KdsBatch
                                 }
                             }
                        
-                        if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode())
+                        if ((objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode() || objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.SachirKavua.GetHashCode()) && ( oCalcBL.CheckYomShishi(objOved.SugYom) && dr.Length > 0)   )
                             fErechRechiv = 1;
 
                         addRowToTable(clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), fErechRechiv);
