@@ -115,5 +115,97 @@ namespace KdsBatch
             }
 
         }
+
+        public void RunRefreshKnisot(DateTime dTaarich)
+        {
+            DataTable dtMakatim = new DataTable();
+            clBatch oBatch = new clBatch();
+            DataSet dsKavim = new DataSet();
+            OBJ_PEILUT_OVDIM oObjPeilutOvdim;
+            COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdim = new COLL_OBJ_PEILUT_OVDIM();
+            DataRow PirteyKav;
+         //   DateTime dCardDate;
+            int iResult = 0,num;
+            clKavim oKavim = new clKavim();
+            long lMakatNesia, lRequestNum;
+            int numFaild = 0;
+            int numFaildEx = 0;
+            int numSucceeded = 0;
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RifreshKnisot, "RunRefreshKnisot", -12);
+                dtMakatim = oBatch.GetMakatimToRefresh(dTaarich);
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count= " + dtMakatim.Rows.Count);
+
+                for (int i = 0; i < dtMakatim.Rows.Count; i++)
+                {
+                    try
+                    {
+                        lMakatNesia = long.Parse(dtMakatim.Rows[i]["MAKAT_NESIA"].ToString());
+                        num = int.Parse(dtMakatim.Rows[i]["num"].ToString()); 
+                        if (num == 1)
+                            dsKavim = oKavim.GetKavimDetailsFromTnuaDS(lMakatNesia, dTaarich, out iResult, 1);
+                        if (iResult == 0)
+                        {
+                            if (dsKavim.Tables[0].Rows.Count > 0)
+                            {
+                                PirteyKav = dsKavim.Tables[0].Rows[0];
+                                foreach (DataRow dr in dsKavim.Tables[1].Rows)
+                                {
+                                    try
+                                    {
+                                        oObjPeilutOvdim = new OBJ_PEILUT_OVDIM();
+
+                                        oObjPeilutOvdim.MISPAR_ISHI = int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString());
+                                        oObjPeilutOvdim.TAARICH = DateTime.Parse(dtMakatim.Rows[i]["TAARICH"].ToString());
+                                        oObjPeilutOvdim.MISPAR_SIDUR = int.Parse(dtMakatim.Rows[i]["MISPAR_SIDUR"].ToString());
+                                        oObjPeilutOvdim.SHAT_HATCHALA_SIDUR = DateTime.Parse(dtMakatim.Rows[i]["SHAT_HATCHALA_SIDUR"].ToString());
+                                        oObjPeilutOvdim.SHAT_YETZIA = DateTime.Parse(dtMakatim.Rows[i]["SHAT_YETZIA"].ToString());
+                                        oObjPeilutOvdim.MISPAR_KNISA = int.Parse(dr["SIDURI"].ToString());
+                                        oObjPeilutOvdim.MAKAT_NESIA = (long)int.Parse(PirteyKav["MAKAT8"].ToString());
+                                        oObjPeilutOvdim.OTO_NO = int.Parse(dtMakatim.Rows[i]["OTO_NO"].ToString());
+                                        oObjPeilutOvdim.MISPAR_SIDURI_OTO = int.Parse(dtMakatim.Rows[i]["MISPAR_SIDURI_OTO"].ToString());
+                                        oObjPeilutOvdim.SNIF_TNUA = int.Parse(dtMakatim.Rows[i]["SNIF_TNUA"].ToString());
+                                        oObjPeilutOvdim.SUG_KNISA = int.Parse(dr["SUGKNISA"].ToString());
+                                        oObjPeilutOvdim.TEUR_NESIA = dr["TEUR_KNISA"].ToString();
+
+                                        oCollPeilutOvdim.Add(oObjPeilutOvdim);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        numFaildEx += 1;
+                                        clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot:" + ex.Message);
+                                    }
+                                }
+                                numSucceeded += 1;
+                            }
+                            else
+                            {
+                                numFaild += 1;
+                            }
+                        }
+                        else
+                        {
+                            numFaild += 1;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        numFaildEx += 1;
+                    }
+                }
+
+                oBatch.InsertKnisot(oCollPeilutOvdim);
+                oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Finish, "end RunRefreshKnisot: Total Rows=" + dtMakatim.Rows.Count + "; numFaildFunction=" + numFaild + "; numFaildEx= " + numFaildEx + "; numSucceeded=" + numSucceeded, 0);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunRefreshKnisot:" + ex.Message);
+            }
+            finally
+            {
+                oBatch = null;
+            }
+        }
     }
 }

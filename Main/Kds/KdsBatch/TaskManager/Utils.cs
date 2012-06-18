@@ -178,5 +178,18 @@ namespace KdsBatch.TaskManager
                oBatch =null;
             }
         }
+
+        public void RefreshKnisot(DateTime p_date)
+        {
+            clTkinutMakatim objMakat = new clTkinutMakatim();
+            try
+            {
+                objMakat.RunRefreshKnisot(p_date);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+        }
     }
 }

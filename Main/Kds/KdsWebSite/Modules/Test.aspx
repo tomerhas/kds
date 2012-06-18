@@ -171,7 +171,11 @@
                    <td>
                  <asp:Button ID="btnMakat" runat="server" onclick="btnMakat_Click" 
                         Text="תקינות  מקטים" />
-                 </td>        
+                 </td>  
+                 <td>   
+                 <asp:Button ID="btnRefreshMakatim" runat="server" onclick="btnRefreshMakatim_Click" 
+                        Text="רענן מקטים" />
+                 </td>         
             </tr>
          </table>  
           <asp:RadioButton runat="server" AutoPostBack="true" ID="rdoTst" Text="בדיקה" 

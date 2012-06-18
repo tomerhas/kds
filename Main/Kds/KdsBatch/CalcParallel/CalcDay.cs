@@ -4602,11 +4602,11 @@ namespace KdsBatch
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                 {
                     //יוצאים מהכלל/הנחות ברמת יום עבודה
-                    if ((int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 23 || int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 22))
+                    if (int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 23 || int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 22 || int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 71 || int.Parse(objOved.objMeafyeneyOved.sMeafyen1) == 72)
                     {
-                        if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                        if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
                             fErechRechiv = 444;
-                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                        else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode() && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedPesach.GetHashCode() || iSugYom == clGeneral.enSugYom.CholHamoedSukot.GetHashCode() || iSugYom == clGeneral.enSugYom.Purim.GetHashCode()))
                             fErechRechiv = 462;
                         else if ((iSugYom >= 13 && iSugYom <= 18) || iSugYom == 11)
                             fErechRechiv = 300;
@@ -4614,7 +4614,7 @@ namespace KdsBatch
                             fErechRechiv = 270;
                     }
 
-                    if (int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 22 && int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 23)
+                    if (int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 22 && int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 23 && int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 71 && int.Parse(objOved.objMeafyeneyOved.sMeafyen1) != 72)
                     {
                         if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
                         {

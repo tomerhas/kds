@@ -48,7 +48,11 @@ namespace KdsLibrary.UDT
         private int m_MISPAR_KNISA;
         
         private bool m_MISPAR_KNISAIsNull;
-        
+
+        private int m_SUG_KNISA;
+
+        private bool m_SUG_KNISAIsNull;
+
         private long m_MAKAT_NETZER;
         
         private bool m_MAKAT_NETZERIsNull;
@@ -160,6 +164,7 @@ namespace KdsLibrary.UDT
             this.m_OTO_NO_NETZERIsNull = true;
             this.m_MISPAR_SIDURIsNull = true;
             this.m_MISPAR_KNISAIsNull = true;
+            this.m_SUG_KNISAIsNull = true;
             this.m_MAKAT_NETZERIsNull = true;
             this.m_MISPAR_VISAIsNull = true;
             this.m_MISPAR_MATALAIsNull = true;
@@ -345,7 +350,33 @@ namespace KdsLibrary.UDT
                 this.m_MISPAR_KNISAIsNull = value;
             }
         }
-        
+
+        [OracleObjectMappingAttribute("SUG_KNISA")]
+        public int SUG_KNISA
+        {
+            get
+            {
+                return this.m_SUG_KNISA;
+            }
+            set
+            {
+                this.m_SUG_KNISA = value;
+                this.m_SUG_KNISAIsNull = false;
+            }
+        }
+
+        public bool SUG_KNISAIsNull
+        {
+            get
+            {
+                return this.m_SUG_KNISAIsNull;
+            }
+            set
+            {
+                this.m_SUG_KNISAIsNull = value;
+            }
+        }
+
         [OracleObjectMappingAttribute("MAKAT_NETZER")]
         public long MAKAT_NETZER {
             get {
@@ -912,6 +943,10 @@ namespace KdsLibrary.UDT
             if ((MISPAR_KNISAIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MISPAR_KNISA", this.MISPAR_KNISA);
             }
+            if ((SUG_KNISAIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "SUG_KNISA", this.SUG_KNISA);
+            }
             if ((MAKAT_NETZERIsNull == false)) {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MAKAT_NETZER", this.MAKAT_NETZER);
             }
@@ -1025,6 +1060,11 @@ namespace KdsLibrary.UDT
             this.MISPAR_KNISAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MISPAR_KNISA");
             if ((MISPAR_KNISAIsNull == false)) {
                 this.MISPAR_KNISA = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MISPAR_KNISA")));
+            }
+            this.SUG_KNISAIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "SUG_KNISA");
+            if ((SUG_KNISAIsNull == false))
+            {
+                this.SUG_KNISA = ((int)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "SUG_KNISA")));
             }
             this.MAKAT_NETZERIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "MAKAT_NETZER");
             if ((MAKAT_NETZERIsNull == false)) {

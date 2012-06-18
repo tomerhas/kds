@@ -73,8 +73,11 @@ namespace KdsLibrary
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
         
 #endregion 
-
-#region pkg_calc constants
+        #region pkg_sdrn constants
+        public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
+        public const string cProInsertKnisot = "PKG_sdrn.pro_insert_knisot";
+        #endregion
+        #region pkg_calc constants
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
         public const string cProGetPeiluyotLeoved = "pkg_calc.pro_get_peiluyot_leoved";
         public const string cProGetPirteyOvedForMonth = "pkg_calc.pro_get_pirtey_oved_ForMonth";
@@ -1061,7 +1064,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             DataComparisonImport = 11,
             CalculationForPremiaPopulation = 12,
             YeziratRikuzim =13,
-            SendRikuzimMail=14
+            SendRikuzimMail=14,
+            RifreshKnisot=15
         }
         public enum enBechishuvSachar
         {

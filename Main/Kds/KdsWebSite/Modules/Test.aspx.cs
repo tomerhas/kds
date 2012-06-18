@@ -919,6 +919,17 @@ public partial class Modules_Test :Page
         oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
     }
 
+
+    protected void btnRefreshMakatim_Click(object sender, EventArgs e)
+    {
+        KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+        clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+        //clTkinutMakatim objMakat = new clTkinutMakatim();
+       // objMakat.(DateTime.Parse(clnFromDate.Text));
+
+        //wsBatch oBatch = new wsBatch();
+        //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+    }
     protected void btnShguimBatch_click(object sender, EventArgs e)
     {
       wsBatch oBatch = new wsBatch();

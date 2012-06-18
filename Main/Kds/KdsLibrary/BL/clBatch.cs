@@ -590,7 +590,42 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
-        
+
+
+        public DataTable GetMakatimToRefresh(DateTime dTaarich)
+        {
+            clDal oDal = new clDal();
+            DataTable dt = new DataTable();
+            try
+            {
+                oDal.AddParameter("pDt", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.ExecuteSP(clGeneral.cProGetKnisotToRefresh, ref dt);
+
+                return dt;
+                
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                throw ex;
+            }
+        }
+
+        public void InsertKnisot(COLL_OBJ_PEILUT_OVDIM oCollPeilutOvdim)
+        {
+            clDal oDal = new clDal();
+            try
+            {
+                oDal.AddParameter("p_coll_obj_peilut_ovdim", ParameterType.ntOracleArray, oCollPeilutOvdim, ParameterDir.pdInput, "COLL_OBJ_PEILUT_OVDIM");
+                oDal.ExecuteSP(clGeneral.cProInsertKnisot);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                throw ex;
+            }
+        }
     }
     public enum RecordStatus
     {
