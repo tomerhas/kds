@@ -133,7 +133,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private const string COL_TRIP_EMPTY = "ריקה";
     private string _sAddPeilut="";
     private int iPeilutSize = 0;
-    
+    private bool _DriverStation;//מציין אם הגענו מעמדת נהג
+
     // Delegate declaration    
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
@@ -218,6 +219,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             return _MisparIshiIdkunRashemet;
         }
+    }
+    public bool DriverStation
+    {
+        set { _DriverStation = value; }
+        get { return _DriverStation; }
     }
     public Table SidurimTable
     {
@@ -3175,7 +3181,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         clSidur _Sidur = new clSidur();
 
         if (_DataSource == null)
-            _DataSource = new OrderedDictionary();
+            _DataSource = new OrderedDictionary ();
 
         _DataSource.Add(_DataSource.Count, _Sidur);
 
@@ -6192,10 +6198,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(40);
             oTxt.CssClass = "WorkCardPeilutTextBox";
             oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
-            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
-          //  oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
-            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
-            //AddAttribute(oTxt, "OldV", dOldShatYetiza.ToShortTimeString());//dShatYetiza.ToShortTimeString());
+            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");        
+            dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());        
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
             sShatYetiza = DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString();
@@ -6208,8 +6212,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                     ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text = "";
                 }
                 else{                
-                    ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text = dShatYetiza.AddMinutes(-iKisuyTor).ToShortTimeString();
-                    //dShatYetiza.AddMinutes(-iKisuyTorMap).ToShortTimeString();
+                    ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text = dShatYetiza.AddMinutes(-iKisuyTor).ToShortTimeString();                  
                 }
                 e.Row.Cells[_COL_KISUY_TOR_MAP].Text = iKisuyTorMap.ToString();
                 oTxt.Attributes.Add("OrgShatYetiza", dOldShatYetiza.ToString());//dShatYetiza.ToString());
@@ -6229,10 +6232,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                                            FullShatHatchala, dShatYetiza, iMisparKnisa);
 
             bool bEnabled = ((!bIdkunRashemet) && (!bElementHachanatMechona) && (iMisparKnisa==0));
-            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
-            //oTxt.Enabled = ((bSidurActive) && (bPeilutActive) && (!bIdkunRashemet));
-            oTxt.ID = e.Row.ClientID + "ShatYetiza";
-            //oTxt.Attributes.Add("onblur", "SetDay('" + oTxt.ClientID + "');");
+            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
+            oTxt.ID = e.Row.ClientID + "ShatYetiza";            
             sTargetControlId = oTxt.ID;
             oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
                                                 AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);

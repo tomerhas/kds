@@ -96,6 +96,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             arrParams = (string[])Session["arrParams"];
             SetUserKiosk(arrParams);
             hidDriver.Value = "1";
+            SD.DriverStation = true;
         }
         else { base.CreateUser(); }
     }
