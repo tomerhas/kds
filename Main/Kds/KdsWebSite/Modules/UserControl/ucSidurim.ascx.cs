@@ -6021,26 +6021,22 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
+            oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
+            oTxt.Width = Unit.Pixel(70);
+            oTxt.Attributes.Add("OrgMakat", oTxt.Text);
+            oTxt.ID = e.Row.ClientID + "MakatNumber";
+            oTxt.CssClass = "WorkCardPeilutTextBox";
             if (EnabledValidator())
             {
                 oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
                 oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
                 oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
-            }
-            oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
-            oTxt.Width = Unit.Pixel(70);
-            oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
-            oTxt.ID = e.Row.ClientID + "MakatNumber";
-            oTxt.CssClass = "WorkCardPeilutTextBox";
-            
+           
+                sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
+                sID = "vFMN";
+                oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
+                e.Row.Cells[_COL_MAKAT].Controls.Add(oFilterTextBox);
 
-            sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
-            sID = "vFMN";
-            oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
-            e.Row.Cells[_COL_MAKAT].Controls.Add(oFilterTextBox);
-
-            if (EnabledValidator())
-            {
                 //Add CustomeValidator
                 sMessage = "מספר מק'ט שגוי";
                 sID = "vMN";
