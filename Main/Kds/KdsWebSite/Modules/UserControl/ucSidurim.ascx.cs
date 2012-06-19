@@ -134,7 +134,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     private string _sAddPeilut="";
     private int iPeilutSize = 0;
     private bool _DriverStation;//מציין אם הגענו מעמדת נהג
-
+    private bool _DisabledFieldsDriverStation; //מציין אם בכלל להתייחס להורדת ולידטורים בעמדת נהג
     // Delegate declaration    
     public delegate void OnButtonClick(string strValue, bool bOpenUpdateBtn);
     
@@ -176,6 +176,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             if (_DataSource != null) 
             {
+                _DisabledFieldsDriverStation = ConfigurationSettings.AppSettings["DisabledFieldsDriverStation"] == "true" ? true : false; 
                 BuildSidurim(_DataSource);
                 SetHideParameters();
             }
@@ -5707,33 +5708,36 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
             bool bEnabled = (!bIdkunRashemet);
 
-
-            oTxt.Enabled = ((_ProfileRashemet) && (!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));
-            oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
+            oTxt.CssClass = "WorkCardPeilutTextBox";  
+            oTxt.Enabled = ((_ProfileRashemet) && (!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));            
             oTxt.Attributes.Add("IdkunRashemet", bIdkunRashemet.ToString());
-            oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
-            oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
-            oTxt.CssClass = "WorkCardPeilutTextBox";            
-            sTargetControlId = oTxt.ID;
-            sID = "defMin";
-            oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
-            e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(oFilterTextBox);
+            if (EnabledValidator())
+            {
+                oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_ACTUAL_MINUTES + ");");
+                oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
+                oTxt.Attributes.Add("OrgEnabled", oTxt.Enabled.GetHashCode().ToString());
 
-            //Add CustomeValidator
-            if ((iMisparKnisa > 0) && (iKnisaType == 1))
-                sMessage = "יש להקליד ערך בין 0 דקות לבין " + Param98.ToString() + " דקות";
+                sTargetControlId = oTxt.ID;
+                sID = "defMin";
+                oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
+                e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(oFilterTextBox);
+
+                //Add CustomeValidator
+                if ((iMisparKnisa > 0) && (iKnisaType == 1))
+                    sMessage = "יש להקליד ערך בין 0 דקות לבין " + Param98.ToString() + " דקות";
                 else
-                sMessage = "יש להקליד ערך בין 0 דקות לבין " + (e.Row.Cells[_COL_MAZAN_TASHLUM].Text) + " דקות";
-            sID = "vldAMin";
-            sClientScriptFunction = "IsAMinValid";
-            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
-            e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(vldCustomValidator);
+                    sMessage = "יש להקליד ערך בין 0 דקות לבין " + (e.Row.Cells[_COL_MAZAN_TASHLUM].Text) + " דקות";
+                sID = "vldAMin";
+                sClientScriptFunction = "IsAMinValid";
+                vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+                e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(vldCustomValidator);
 
-            //Add Ajax CallOutCustomeValidator
-            sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_ACTUAL_MINUTES].Controls[2])).ID;
-            sID = "vldExActualMinutes";
-            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
-            e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(vldExtenderCallOut);
+                //Add Ajax CallOutCustomeValidator
+                sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_ACTUAL_MINUTES].Controls[2])).ID;
+                sID = "vldExActualMinutes";
+                vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
+                e.Row.Cells[_COL_ACTUAL_MINUTES].Controls.Add(vldExtenderCallOut);
+            }
         }
         catch (Exception ex)
         {
@@ -6017,34 +6021,40 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
-            oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
-            oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
-            oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
-           // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+            if (EnabledValidator())
+            {
+                oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
+                oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
+                oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
+            }
             oTxt.MaxLength = MAX_LEN_LINE_NUMBER;
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);            
             oTxt.ID = e.Row.ClientID + "MakatNumber";
             oTxt.CssClass = "WorkCardPeilutTextBox";
-            //AddAttribute(oTxt, "OldV", oTxt.Text);
+            
+
             sTargetControlId = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0])).ID;
             sID = "vFMN";
             oFilterTextBox = AddFilterTextBoxExtender(sTargetControlId, sID, "0123456789", AjaxControlToolkit.FilterModes.ValidChars, AjaxControlToolkit.FilterTypes.Numbers, e);
             e.Row.Cells[_COL_MAKAT].Controls.Add(oFilterTextBox);
-            //Add CustomeValidator
-            sMessage = "מספר מק'ט שגוי";
-            sID = "vMN";
-            sClientScriptFunction = "";
-            vlMakatNumber = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
-            e.Row.Cells[_COL_MAKAT].Controls.Add(vlMakatNumber);
 
-            //Add Ajax CallOutCustomeValidator
-            sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_MAKAT].Controls[2])).ID;
-            sID = "vExMN";
-            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
-            vldExtenderCallOut.BehaviorID = "vMNBeh" + e.Row.ClientID;
-            e.Row.Cells[_COL_MAKAT].Controls.Add(vldExtenderCallOut);
-            //dShatYetiza = DateTime.Parse(CardDate.ToShortDateString() + " " + ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).Text);
+            if (EnabledValidator())
+            {
+                //Add CustomeValidator
+                sMessage = "מספר מק'ט שגוי";
+                sID = "vMN";
+                sClientScriptFunction = "";
+                vlMakatNumber = AddCustomValidator(sTargetControlId, sMessage, sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+                e.Row.Cells[_COL_MAKAT].Controls.Add(vlMakatNumber);
+
+                //Add Ajax CallOutCustomeValidator
+                sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_MAKAT].Controls[2])).ID;
+                sID = "vExMN";
+                vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
+                vldExtenderCallOut.BehaviorID = "vMNBeh" + e.Row.ClientID;
+                e.Row.Cells[_COL_MAKAT].Controls.Add(vldExtenderCallOut);
+            }
            
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
             string sPeilutKey = string.Concat(((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
@@ -6197,8 +6207,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
             oTxt.CssClass = "WorkCardPeilutTextBox";
-            oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
-            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");        
+            if (EnabledValidator())
+            {
+                oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
+                oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
+            }
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());        
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
@@ -6235,28 +6248,30 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
             oTxt.ID = e.Row.ClientID + "ShatYetiza";            
             sTargetControlId = oTxt.ID;
-            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
-                                                AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+            if (EnabledValidator())
+            {
+                oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
+                                                    AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
 
-            e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(oMaskEx);
+                e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(oMaskEx);
 
-            //Add CustomeValidator
-            sMessage = "";//"הוקלד ערך שגוי. יש להקליד שעת יציאה בין " + Param29 + " עד " + Param30 ;
-            sID = "vldPeilutShatYetiza";
-            sClientScriptFunction = "ChkExitHour";
-            vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID,
-                                                    sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
-            e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldCustomValidator);
+                //Add CustomeValidator
+                sMessage = "";//"הוקלד ערך שגוי. יש להקליד שעת יציאה בין " + Param29 + " עד " + Param30 ;
+                sID = "vldPeilutShatYetiza";
+                sClientScriptFunction = "ChkExitHour";
+                vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID,
+                                                        sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+                e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldCustomValidator);
 
-            //Add Ajax CallOutCustomeValidator
-            sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[2])).ID;
-            sID = "vldExShatYetiza";
-            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID,
-                                                      AjaxControlToolkit.ValidatorCalloutPosition.Left);
-            e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldExtenderCallOut);
+                //Add Ajax CallOutCustomeValidator
+                sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[2])).ID;
+                sID = "vldExShatYetiza";
+                vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID,
+                                                          AjaxControlToolkit.ValidatorCalloutPosition.Left);
+                e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldExtenderCallOut);
+            }
             string sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
-
-           
+                       
             DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_yetzia'");
             DateTime dSidurShatHatchala = new DateTime();
                        
@@ -6286,6 +6301,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
+    protected bool EnabledValidator()
+    {
+        return (((!DriverStation) && (_DisabledFieldsDriverStation)) || (!_DisabledFieldsDriverStation));
+    }
     protected void SetKisuyTor(GridViewRowEventArgs e, bool bEnabled, bool bSidurActive, bool bPeilutActive, int iSidurIndex, bool bElementHachanatMechona)
     {
         AjaxControlToolkit.MaskedEditExtender oMaskEx;
@@ -6303,37 +6322,40 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = (TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0]);
 
-            //oTxt.Enabled = ((bEnabled) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet));
+        
             oTxt.CausesValidation = true;
             oTxt.ID = e.Row.ClientID + "KisoyTor";
             oTxt.Width = Unit.Pixel(40);
-            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());
-            oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
+            oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
             oTxt.CssClass="WorkCardPeilutTextBox";
-            oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
-            oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
             oTxt.EnableViewState = false;
-         //   oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
+
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
-            //Add MaskTextBox
-            sTargetControlId = ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).ID;
-            oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutKisuyTor", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-            e.Row.Cells[_COL_KISUY_TOR].Controls.Add(oMaskEx);
-
-            //Add CustomeValidator
-            //sMessage = "כיסוי התור שהוקלד הינו מעל המותר. מותר עד " + ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text;
-            sID = "vldKisuyTor";
-            sClientScriptFunction = "ChkKisyT";
-            vldCustomValidator = AddCustomValidator(sTargetControlId, "", sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
-            e.Row.Cells[_COL_KISUY_TOR].Controls.Add(vldCustomValidator);
+            if (EnabledValidator())
+            {
+                oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
+                oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
+                oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
             
+                //Add MaskTextBox
+                sTargetControlId = ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).ID;
+                oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutKisuyTor", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+                e.Row.Cells[_COL_KISUY_TOR].Controls.Add(oMaskEx);
 
-            //Add Ajax CallOutCustomeValidator
-            sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_KISUY_TOR].Controls[2])).ID;
-            sID = "vldExKisuyTor";
-            vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Left);
-            e.Row.Cells[_COL_KISUY_TOR].Controls.Add(vldExtenderCallOut);
+                //Add CustomeValidator
+                //sMessage = "כיסוי התור שהוקלד הינו מעל המותר. מותר עד " + ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).Text;
+                sID = "vldKisuyTor";
+                sClientScriptFunction = "ChkKisyT";
+                vldCustomValidator = AddCustomValidator(sTargetControlId, "", sID, sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
+                e.Row.Cells[_COL_KISUY_TOR].Controls.Add(vldCustomValidator);
 
+
+                //Add Ajax CallOutCustomeValidator
+                sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_KISUY_TOR].Controls[2])).ID;
+                sID = "vldExKisuyTor";
+                vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Left);
+                e.Row.Cells[_COL_KISUY_TOR].Controls.Add(vldExtenderCallOut);
+            }
             //Check if Error Exists
             oTxt = ((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0]));
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
