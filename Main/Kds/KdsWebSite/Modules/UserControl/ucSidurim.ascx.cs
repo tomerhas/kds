@@ -2692,19 +2692,23 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
     {
         bool bEnabled;
-        bool bEnableApproval = false;
+       
         hCell = CreateTableCell("64px", "", "");
         HtmlInputCheckBox chkBox = new HtmlInputCheckBox();
         chkBox.ID = "chkOutMichsa" + iIndex;
         chkBox.Checked = (oSidur.sOutMichsa == "1");
         bEnabled = (IsOutMichsaAllowed(ref oSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
-        chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
-        chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
         chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
+        chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
+        if (EnabledValidator())
+        {
+            chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+        }
+        
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
-        string sAllApprovalDescription = "";
+       
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Out_michsa'");
        
         switch (_StatusCard)
@@ -3605,8 +3609,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Style.Add("width", "80px");
         ddl.Enabled = ((bEnabled) && (bSidurActive));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1" : "0");
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
-        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        if (EnabledValidator())
+        {
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+            ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        }
         ddl.CssClass = "WorkCardSidurDropDown";
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
@@ -3646,18 +3653,19 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 //    hCell.Controls.Add(imgApp);
                 //}
                 break;
-        }                
-        
-       
-        sErrorMsg = "משך הסידור שווה או גדול מזמן ההשלמה הנבחר ";
-        sClientScriptFunction = "chkHashlama";
-        sID = "vldHashlama" + iIndex;
-        vldHashlamaNumber = AddCustomValidator(ddl.ID, sErrorMsg, sID, sClientScriptFunction,"", iIndex.ToString());
-        vldExtenderCallOut = AddCallOutValidator(sID, "vldCallOutHashlama" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Right);
-        hCell.Controls.Add(ddl);
-        hCell.Controls.Add(vldHashlamaNumber);
-        hCell.Controls.Add(vldExtenderCallOut);
-       // hCell.Style.Add("border-left", "solid 1px gray");
+        }
+
+        if (EnabledValidator())
+        {
+            sErrorMsg = "משך הסידור שווה או גדול מזמן ההשלמה הנבחר ";
+            sClientScriptFunction = "chkHashlama";
+            sID = "vldHashlama" + iIndex;
+            vldHashlamaNumber = AddCustomValidator(ddl.ID, sErrorMsg, sID, sClientScriptFunction, "", iIndex.ToString());
+            vldExtenderCallOut = AddCallOutValidator(sID, "vldCallOutHashlama" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Right);         
+            hCell.Controls.Add(vldHashlamaNumber);
+            hCell.Controls.Add(vldExtenderCallOut);
+        }
+        hCell.Controls.Add(ddl);   
         clUtils.BindTooltip(ddl);
         clUtils.SetDDLToolTip(ddl);
       
@@ -3730,10 +3738,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sPitzulHafsaka;        
-        ddl.Style.Add("width", "80px");       
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+"); chkPitzulHafsaka(" + iIndex + ",false)");
-        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        ddl.Style.Add("width", "80px");
         ddl.CssClass = "WorkCardSidurDropDown";
+        if (EnabledValidator())
+        {
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); chkPitzulHafsaka(" + iIndex + ",false)");
+            ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        }
+        
         //AddAttribute(ddl, "OldV",ddl.SelectedValue);
 
         switch (_StatusCard)
@@ -3778,9 +3790,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("ChrigaType", sCharigaType);
         ddl.Enabled = ((bEnabled) && (bSidurActive) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "CHARIGA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1":"0");
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2,"+iIndex+");ChkCharigaVal(" + iIndex  + ");");
-        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         ddl.CssClass = "WorkCardSidurDropDown";
+        if (EnabledValidator())
+        {
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");ChkCharigaVal(" + iIndex + ");");
+            ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        }
        // AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         
@@ -3857,25 +3872,28 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         bOrgEnable = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || (((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur > 0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnable));
         oTextBox.Width = Unit.Pixel(60);
-       // oTextBox.Height = Unit.Pixel(20);
+      
         oTextBox.CausesValidation = true;
         oTextBox.MaxLength = MAX_LEN_HOUR;
-        oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
-        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
-        oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
         oTextBox.CssClass = "WorkCardSidurTextBox";
-        //AddAttribute(oTextBox, "OldV", oTextBox.Text);
-        hCell.Controls.Add(oTextBox);
-        oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-        hCell.Controls.Add(oMaskedEditExtender);
-        vldShatGmarLetashlum = AddCustomValidator(oTextBox.ID, "", "vldSGL" + iIndex, "ISSHLValid", "");
-        vldExShatGmarLetashlum = AddCallOutValidator(vldShatGmarLetashlum.ID, "vldExSGL" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
-        hCell.Controls.Add(vldShatGmarLetashlum);
-        hCell.Controls.Add(vldExShatGmarLetashlum);
+        if (EnabledValidator())
+        {
+            oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
+            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+
+            hCell.Controls.Add(oTextBox);
+            oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+            hCell.Controls.Add(oMaskedEditExtender);
+            vldShatGmarLetashlum = AddCustomValidator(oTextBox.ID, "", "vldSGL" + iIndex, "ISSHLValid", "");
+            vldExShatGmarLetashlum = AddCallOutValidator(vldShatGmarLetashlum.ID, "vldExSGL" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
+            hCell.Controls.Add(vldShatGmarLetashlum);
+            hCell.Controls.Add(vldExShatGmarLetashlum);
+        }
         oTextBox.EnableViewState = false;
-     //   hCell.Style.Add("border-left", "solid 1px gray");
+     
         
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Gmar_Letashlum'");
         switch (_StatusCard)
@@ -3907,29 +3925,35 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.ID = "txtSHL" + iIndex;
         oTextBox.Text = oSidur.sShatHatchalaLetashlum;
         oTextBox.Width = Unit.Pixel(60);
-       // oTextBox.Height = Unit.Pixel(20);
+      
         oTextBox.CausesValidation = true;
         bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_HATCHALA_LETASHLUM"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0);
         bOrgEnabled = ((IsSidurShaon(ref oSidur)) && (!bIdkunRashemet) && ((oSidur.oSidurStatus != clSidur.enSidurStatus.enNew) || (((oSidur.oSidurStatus == clSidur.enSidurStatus.enNew) && (oSidur.iMisparSidur>0)))));
         oTextBox.Enabled = ((bSidurActive) && (bOrgEnabled));
         oTextBox.MaxLength = MAX_LEN_HOUR;
-        oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-        oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2,"+iIndex+");");
-        oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
+        if (EnabledValidator())
+        {
+            oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
+            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+        }
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
-        oTextBox.CssClass = "WorkCardSidurTextBox";
-        oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-        oTextBox.EnableViewState = false;
-        //AddAttribute(oTextBox, "OldV", oTextBox.Text);
-        hCell.Controls.Add(oTextBox);
-        oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-        hCell.Controls.Add(oMaskedEditExtender);
-       
-        vldShatHatchalaLetashlum = AddCustomValidator(oTextBox.ID, "", "vldSHL" + iIndex, "ISSHLValid", "");
-        vldExShatHatchalaLetashlum = AddCallOutValidator(vldShatHatchalaLetashlum.ID, "vldExSHL" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
-        hCell.Controls.Add(vldShatHatchalaLetashlum);
-        hCell.Controls.Add(vldExShatHatchalaLetashlum);
 
+        oTextBox.CssClass = "WorkCardSidurTextBox";
+        
+        oTextBox.EnableViewState = false;        
+        hCell.Controls.Add(oTextBox);
+        if (EnabledValidator())
+        {
+            oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+            hCell.Controls.Add(oMaskedEditExtender);
+
+            vldShatHatchalaLetashlum = AddCustomValidator(oTextBox.ID, "", "vldSHL" + iIndex, "ISSHLValid", "");
+            vldExShatHatchalaLetashlum = AddCallOutValidator(vldShatHatchalaLetashlum.ID, "vldExSHL" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
+            hCell.Controls.Add(vldShatHatchalaLetashlum);
+            hCell.Controls.Add(vldExShatHatchalaLetashlum);
+        }
       //  hCell.Style.Add("border-left", "solid 1px gray");
 
         DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Hatchala_Letashlum'");
@@ -3968,8 +3992,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
         ddl.SelectedValue = oSidur.iKodSibaLedivuchYadaniOut.ToString();
         ddl.Style.Add("width", "80px");
-        ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
-        ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        if (EnabledValidator())
+        {
+            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",2);");
+            ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+        }
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
         ddl.Attributes.Add("OrgEnabled", OrgEnable ? "1" : "0");
@@ -4037,8 +4064,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             
             ddl.Style.Add("width", "80px");           
             ddl.Attributes.Add("ToolTip", ddl.SelectedValue);
-            ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
-            ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+            if (EnabledValidator())
+            {
+                ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); SwitchHourGmarHatchala(" + iIndex + ",1);");
+                ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+            }
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
             ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
@@ -4895,8 +4925,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox = new TextBox();
             oTextBox.ID = "txtSH" + iIndex;
             oTextBox.Text = oSidur.sShatHatchala;
-            oTextBox.Width = Unit.Pixel(40);
-            //oTextBox.Height = Unit.Pixel(20);
+            oTextBox.Width = Unit.Pixel(40);           
             oTextBox.CssClass = "WorkCardSidurTextBox";
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
@@ -4913,16 +4942,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Enabled = false;
             }
 
-            oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());
-            //oTextBox.Attributes.Add("FullSH", oSidur.dFullShatHatchala.ToString());
-            oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
-           // oTextBox.Attributes.Add("onblur", "SetBtnChanges();");
-           // oTextBox.Attributes.Add("onchange", "disableUpdateBtn();");
-            oTextBox.Attributes.Add("onkeyup", "changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
+            oTextBox.Attributes.Add("OrgShatHatchala",oSidur.dOldFullShatHatchala.ToString());//oSidur.dFullShatHatchala.ToString());           
             oTextBox.Attributes.Add("OrgEnabled", bSidurMustDisabled ? "0" : "1");
-            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-            oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+
+            if (EnabledValidator())
+            {
+                oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+                oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
+                oTextBox.Attributes.Add("onkeyup", "changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
+                oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+            }
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
             oTextBox.EnableViewState = false;
 
@@ -4950,18 +4980,21 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Style.Add("color", "gray");
                 oTextBox.Style.Add("backgroung", "white");
             }
-            oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-            hCell.Controls.Add(oMaskedEditExtender);
-            
-            SetSidurStartHourParameters(oSidur, ref sShatHatchalaMutert, ref sShatGmarMutert);
-            sShatHatchalaMutert = String.IsNullOrEmpty(sShatHatchalaMutert) ? "" : (DateTime.Parse(sShatHatchalaMutert)).ToShortTimeString();
-            sShatGmarMutert = String.IsNullOrEmpty(sShatGmarMutert) ? "" : (DateTime.Parse(sShatGmarMutert)).ToShortTimeString();
-            sMessage = "יש להקליד שעת התחלה תקינה: " + sShatHatchalaMutert + " " + "עד" + " " + sShatGmarMutert;
-            vldShatHatchala = AddCustomValidator(oTextBox.ID,sMessage, "vldSHatchala" + iIndex,"ChkStartHour","");
-            hCell.Controls.Add(vldShatHatchala);
-            vldExShatHatchala = AddCallOutValidator(vldShatHatchala.ID, "vldExSHatchala" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
-            hCell.Controls.Add(vldExShatHatchala);
-           
+
+            if (EnabledValidator())
+            {
+                oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SHMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+                hCell.Controls.Add(oMaskedEditExtender);
+
+                SetSidurStartHourParameters(oSidur, ref sShatHatchalaMutert, ref sShatGmarMutert);
+                sShatHatchalaMutert = String.IsNullOrEmpty(sShatHatchalaMutert) ? "" : (DateTime.Parse(sShatHatchalaMutert)).ToShortTimeString();
+                sShatGmarMutert = String.IsNullOrEmpty(sShatGmarMutert) ? "" : (DateTime.Parse(sShatGmarMutert)).ToShortTimeString();
+                sMessage = "יש להקליד שעת התחלה תקינה: " + sShatHatchalaMutert + " " + "עד" + " " + sShatGmarMutert;
+                vldShatHatchala = AddCustomValidator(oTextBox.ID, sMessage, "vldSHatchala" + iIndex, "ChkStartHour", "");
+                hCell.Controls.Add(vldShatHatchala);
+                vldExShatHatchala = AddCallOutValidator(vldShatHatchala.ID, "vldExSHatchala" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
+                hCell.Controls.Add(vldExShatHatchala);
+            }
         }
         catch (Exception ex)
         {
@@ -5232,13 +5265,16 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.ReadOnly = false;
                 oTextBox.Enabled = false;
             }
-            oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
-            oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
-            oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-            oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
-                       
+
+            if (EnabledValidator())
+            {
+                oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
+                oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
+                oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
+                oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
+                oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+                oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+            }          
             oTextBox.ToolTip = "תאריך גמר הסידור הוא: " + oSidur.dFullShatGmar.ToShortDateString();
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
             oTextBox.EnableViewState = false;
@@ -5266,14 +5302,17 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Style.Add("backgroung", "white");
             }
 
-            oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
-            hCell.Controls.Add(oMaskedEditExtender);            
-            hCell.Controls.Add(oTextBox);
-            sMessage = "";
-            vldShatGmar = AddCustomValidator(oTextBox.ID, sMessage, "vldSG" + iIndex, "ISSGValid", "");
-            vldExSG = AddCallOutValidator(vldShatGmar.ID, "vldExSG" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
-            hCell.Controls.Add(vldShatGmar);
-            hCell.Controls.Add(vldExSG);
+            if (EnabledValidator())
+            {
+                oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
+                hCell.Controls.Add(oMaskedEditExtender);
+                hCell.Controls.Add(oTextBox);
+                sMessage = "";
+                vldShatGmar = AddCustomValidator(oTextBox.ID, sMessage, "vldSG" + iIndex, "ISSGValid", "");
+                vldExSG = AddCallOutValidator(vldShatGmar.ID, "vldExSG" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
+                hCell.Controls.Add(vldShatGmar);
+                hCell.Controls.Add(vldExSG);
+            }
 
         }
         catch (Exception ex)
