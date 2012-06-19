@@ -127,7 +127,7 @@ namespace KdsBatch
          //   DateTime dCardDate;
             int iResult = 0,num;
             clKavim oKavim = new clKavim();
-            long lMakatNesia, lRequestNum;
+            long lMakatNesia, lRequestNum=0;
             int numFaild = 0;
             int numFaildEx = 0;
             int numSucceeded = 0;
@@ -174,7 +174,7 @@ namespace KdsBatch
                                     catch (Exception ex)
                                     {
                                         numFaildEx += 1;
-                                        clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot:" + ex.Message);
+                                        clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot:" + ex.Message);
                                     }
                                 }
                                 numSucceeded += 1;
@@ -182,16 +182,23 @@ namespace KdsBatch
                             else
                             {
                                 numFaild += 1;
+                                clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot: dsKavim.Tables[0].Rows.Count=0");                                 
                             }
+
+                            if (i % 100 == 0)
+                                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Refresh Knisot: Num=" + i);
+                            break;
                         }
                         else
                         {
                             numFaild += 1;
+                            clLogBakashot.InsertErrorToLog(lRequestNum, int.Parse(dtMakatim.Rows[i]["MISPAR_ISHI"].ToString()), "E", 0, null, "RunRefreshKnisot: iResult=1");  
                         }
                     }
                     catch (Exception ex)
                     {
                         numFaildEx += 1;
+                        clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot er: " + ex.Message);
                     }
                 }
 
@@ -200,7 +207,8 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                throw new Exception("RunRefreshKnisot:" + ex.Message);
+                oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Faild, "RunRefreshKnisot Faild: "+ ex.Message, 0);
+              //  throw new Exception("RunRefreshKnisot:" + ex.Message);
             }
             finally
             {

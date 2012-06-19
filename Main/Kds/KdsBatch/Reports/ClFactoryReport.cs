@@ -116,6 +116,7 @@ namespace KdsBatch.Reports
             byte[] fileReport;
             string path, name = string.Empty, ErrorMessage = string.Empty;
             int iStatus = 0,i=0;
+            bool flag = false;
             FileInfo info;
             _RptModule = new ReportModule();// ReportModule.GetInstance();
             try
@@ -126,7 +127,16 @@ namespace KdsBatch.Reports
 //                clGeneral.LogMessage("MakeReports:Before ForEach ,nb of report:" + _Reports.Count.ToString(), System.Diagnostics.EventLogEntryType.Information);
                 foreach (clReport drReport in _Reports)
                 {
-                    fileReport = CreateFile(drReport);
+                    try
+                    {
+                        fileReport = CreateFile(drReport);
+                    }
+                    catch (Exception ex)
+                    {
+                        flag = true;
+                        clLogBakashot.InsertErrorToLog(iRequestId, drReport.MisparIshi, "E", 0, null, "MakeReports: " + ex.Message );
+                        fileReport = null;
+                    }
   
   //                  clGeneral.LogMessage("MakeReports: After CreateOutputFile:" + info.FullName, System.Diagnostics.EventLogEntryType.Information);
                     if (fileReport != null)
@@ -184,7 +194,10 @@ namespace KdsBatch.Reports
                     if (oCollRikuzPdf.Value.Length >0)
                         _BlReport.SaveRikuzmPdf(oCollRikuzPdf, oObjRikuzPdf.BAKASHA_ID);
                 }
-                clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
+                if (flag)
+                    clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now,clGeneral.enStatusRequest.PartEnded.GetHashCode());
+                else
+                    clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, _EndProcesSucceed.GetHashCode());
             }
             catch (Exception ex)
             {
