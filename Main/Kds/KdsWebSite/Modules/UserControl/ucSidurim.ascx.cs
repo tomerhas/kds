@@ -3877,6 +3877,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
         oTextBox.CssClass = "WorkCardSidurTextBox";
+        hCell.Controls.Add(oTextBox);
         if (EnabledValidator())
         {
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
@@ -3884,7 +3885,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
             oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
 
-            hCell.Controls.Add(oTextBox);
+            
             oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
             hCell.Controls.Add(oMaskedEditExtender);
             vldShatGmarLetashlum = AddCustomValidator(oTextBox.ID, "", "vldSGL" + iIndex, "ISSHLValid", "");
@@ -5301,12 +5302,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Style.Add("color", "gray");
                 oTextBox.Style.Add("backgroung", "white");
             }
-
+            hCell.Controls.Add(oTextBox);
             if (EnabledValidator())
             {
                 oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
                 hCell.Controls.Add(oMaskedEditExtender);
-                hCell.Controls.Add(oTextBox);
+                
                 sMessage = "";
                 vldShatGmar = AddCustomValidator(oTextBox.ID, sMessage, "vldSG" + iIndex, "ISSGValid", "");
                 vldExSG = AddCallOutValidator(vldShatGmar.ID, "vldExSG" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);

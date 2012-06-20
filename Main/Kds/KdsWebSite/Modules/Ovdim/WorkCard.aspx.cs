@@ -2401,7 +2401,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
                 ReportParameters.Add("P_URL_BARCODE", urlBarcode);
                 ReportParameters.Add("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
-
+                
                 OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
             }
         }
@@ -4693,9 +4693,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         Session["ReportParameters"] = ReportParameters;
 
+        string sReportViewer = ConfigurationManager.AppSettings["ReportViewer"].ToString();
 
-        EventLog.WriteEntry("kds", "PureUrlRoot: " + this.PureUrlRoot);
-        string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+        EventLog.WriteEntry("kds", "sReportViewer: " + sReportViewer);
+        string sScript = "window.showModalDialog('" + sReportViewer + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                
         ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
 
