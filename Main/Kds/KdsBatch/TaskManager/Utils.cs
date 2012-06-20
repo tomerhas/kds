@@ -184,7 +184,10 @@ namespace KdsBatch.TaskManager
             clTkinutMakatim objMakat = new clTkinutMakatim();
             try
             {
-                objMakat.RunRefreshKnisot(p_date);
+                if (p_date.ToShortDateString() != DateTime.MinValue.ToShortDateString())
+                    objMakat.RunRefreshKnisot(p_date);
+                else
+                    objMakat.RunRefreshKnisot(DateTime.Now.AddDays(-1));
             }
             catch (Exception ex)
             {

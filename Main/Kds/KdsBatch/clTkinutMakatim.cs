@@ -134,8 +134,9 @@ namespace KdsBatch
             try
             {
                 lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RifreshKnisot, "RunRefreshKnisot", -12);
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Taarich= " + dTaarich.ToShortDateString());
                 dtMakatim = oBatch.GetMakatimToRefresh(dTaarich);
-                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count= " + dtMakatim.Rows.Count);
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "count makat av= " + dtMakatim.Rows.Count);
 
                 for (int i = 0; i < dtMakatim.Rows.Count; i++)
                 {
@@ -165,7 +166,8 @@ namespace KdsBatch
                                         oObjPeilutOvdim.MAKAT_NESIA = (long)int.Parse(PirteyKav["MAKAT8"].ToString());
                                         oObjPeilutOvdim.OTO_NO = int.Parse(dtMakatim.Rows[i]["OTO_NO"].ToString());
                                         oObjPeilutOvdim.MISPAR_SIDURI_OTO = int.Parse(dtMakatim.Rows[i]["MISPAR_SIDURI_OTO"].ToString());
-                                        oObjPeilutOvdim.SNIF_TNUA = int.Parse(dtMakatim.Rows[i]["SNIF_TNUA"].ToString());
+                                        if (dtMakatim.Rows[i]["SNIF_TNUA"].ToString() != "")
+                                            oObjPeilutOvdim.SNIF_TNUA = int.Parse(dtMakatim.Rows[i]["SNIF_TNUA"].ToString());
                                         oObjPeilutOvdim.SUG_KNISA = int.Parse(dr["SUGKNISA"].ToString());
                                         oObjPeilutOvdim.TEUR_NESIA = dr["TEUR_KNISA"].ToString();
 
