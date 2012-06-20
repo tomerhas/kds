@@ -2345,7 +2345,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
             //arrParams[3].ToString()=="0") התחברות מהבית
             //לכן רק אם לא התחברנו מהבית ונדפיס ישירות, אחרת נפתח PDF
-            if ((hidFromEmda.Value == "true") &&  (arrParams!=null) && (arrParams[3].ToString() != "1"))
+            if ((hidFromEmda.Value == "true") &&  (arrParams!=null) && (arrParams[2].ToString() != "0"))
             {
                 string sScript = "";
                 string sIp;
