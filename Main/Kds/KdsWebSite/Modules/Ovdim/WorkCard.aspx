@@ -511,7 +511,7 @@
    </center>
         <asp:Button ID="btnErrors" runat="server" CssClass="ImgButtonUpdate" CausesValidation="false"  Style="display: none;" />           
         <cc1:ModalPopupExtender ID="MPEErrors" DropShadow="false" CancelControlID="btnErrClose" BehaviorID="bMpeErr"
-            X="300" Y="200" PopupControlID="paErrorMessage" TargetControlID="btnErrors" runat="server">
+            X="200" Y="100" PopupControlID="paErrorMessage" TargetControlID="btnErrors" runat="server">
         </cc1:ModalPopupExtender>
         <asp:Panel runat="server" Style="display: none" ID="paErrorMessage" CssClass="WorkCardPanelMessageError" Width="520px" height="300px">                       
             <table border="0" width="520px" >
@@ -579,7 +579,7 @@
             </table>                        
       </asp:Panel>     
         <input type="button" ID="btnCopy" runat="server" style="display: none;" />
-        <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="500" Y="280" PopupControlID="paCopy"
+        <cc1:ModalPopupExtender ID="MPECopy" dropshadow="false" X="300" Y="180" PopupControlID="paCopy"
            TargetControlID="btnCopy"  runat="server" behaviorid="pBehvCopy" BackgroundCssClass="modalBackground">
         </cc1:ModalPopupExtender>
         <asp:Panel runat="server" Style="display: none" ID="paCopy" CssClass="WorkCardPanelMessage" Width="450px">          
