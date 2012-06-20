@@ -187,7 +187,6 @@ namespace KdsBatch
 
                             if (i % 100 == 0)
                                 clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Refresh Knisot: Num=" + i);
-                            break;
                         }
                         else
                         {
@@ -201,12 +200,14 @@ namespace KdsBatch
                         clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot er: " + ex.Message);
                     }
                 }
-
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "Num Knisot to insert=" + oCollPeilutOvdim.Count);
                 oBatch.InsertKnisot(oCollPeilutOvdim);
-                oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Finish, "end RunRefreshKnisot: Total Rows=" + dtMakatim.Rows.Count + "; numFaildFunction=" + numFaild + "; numFaildEx= " + numFaildEx + "; numSucceeded=" + numSucceeded, 0);
-            }
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "I", 0, null, "End RunRefreshKnisot");
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, KdsLibrary.BL.RecordStatus.Finish.GetHashCode());  
+           }
             catch (Exception ex)
             {
+                clLogBakashot.InsertErrorToLog(lRequestNum, 0, "E", 0, null, "RunRefreshKnisot Faild:" + ex.Message);
                 oBatch.UpdateProcessLog(int.Parse(lRequestNum.ToString()), KdsLibrary.BL.RecordStatus.Faild, "RunRefreshKnisot Faild: "+ ex.Message, 0);
               //  throw new Exception("RunRefreshKnisot:" + ex.Message);
             }
