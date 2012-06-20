@@ -58,21 +58,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     private bool bRashemet;
    // private bool bNextCardErrorNotFound;
     private int iMisparIshiIdkunRashemet;
-    private bool bParticipationAllowed;
- //   private bool bDisabledFrame;
+    private bool bParticipationAllowed; 
    // private AsyncPostBackTrigger[] TriggerToAdd;
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
     public const int SIDUR_HITYAZVUT = 99200;
-    private bool bAddSidur;
-    //private WorkCardObj _WorkCardBeforeChanges, _WorkCardAfterChanges;
+    private bool bAddSidur;    
 
-    //private enum ErrorLevel
-    //{
-    //    errYomAvoda = 3,
-    //    errSidur = 5,
-    //    errPeilut = 7
-    //}
+    
     protected override void CreateUser()
     {
        
@@ -2349,8 +2342,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             bWorkCardWasUpdate = IsWorkCardWasUpdate();
             key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;
-           
-            if (hidFromEmda.Value == "true")
+
+            //arrParams[3].ToString()=="0") התחברות מהבית
+            //לכן רק אם לא התחברנו מהבית ונדפיס ישירות, אחרת נפתח PDF
+            if ((hidFromEmda.Value == "true") &&  (arrParams!=null) && (arrParams[3].ToString() != "0"))
             {
                 string sScript = "";
                 string sIp;
@@ -4697,6 +4692,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         Session["Report"] = _Report;
 
         Session["ReportParameters"] = ReportParameters;
+
 
         EventLog.WriteEntry("kds", "PureUrlRoot: " + this.PureUrlRoot);
         string sScript = "window.showModalDialog('" + this.PureUrlRoot + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
