@@ -532,11 +532,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetIdkuneyRashemet();
                     RefreshEmployeeData(iMisparIshi, dDateCard);
                     //רק אם יש סידורים 
-                    Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
+                    
                     if (oBatchManager.htFullEmployeeDetails != null)
                     {
                         SD.DataSource = oBatchManager.htFullEmployeeDetails;
-                        
+                        Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
                         if (oBatchManager.dtMashar == null)
                             dtLicenseNumbers = GetMasharData(oBatchManager.htFullEmployeeDetails);
                         else
