@@ -414,7 +414,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                  e.Row.Cells[COL_YOM1 + I].Style.Add("cursor", "pointer");
                  e.Row.Cells[COL_YOM1 + I].Style.Add("text-decoration", "underline");
              }
-             if (!string.IsNullOrEmpty(((DataTable)Session["dtRikuz1To10"]).Compute("sum(KIZUZ_MEAL_MICHSA)","").ToString()))
+           /* if (!string.IsNullOrEmpty(((DataTable)Session["dtRikuz1To10"]).Compute("sum(KIZUZ_MEAL_MICHSA)","").ToString()))
              {
                  if (int.Parse(ViewState["KodSugChishuv"].ToString()) != clGeneral.enSugChishiuv.Patuch.GetHashCode())
                  {
@@ -426,7 +426,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                          e.Row.Cells[COL_KIZUZ_MEAL_MICHSA].Style.Add("text-decoration", "underline");
                      }
                  }
-             }
+             } */
          }
          if (e.Row.RowType == DataControlRowType.Header || e.Row.RowType == DataControlRowType.DataRow )
          {

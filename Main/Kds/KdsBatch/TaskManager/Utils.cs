@@ -187,7 +187,7 @@ namespace KdsBatch.TaskManager
                 if (p_date.ToShortDateString() != DateTime.MinValue.ToShortDateString())
                     objMakat.RunRefreshKnisot(p_date);
                 else
-                    objMakat.RunRefreshKnisot(DateTime.Now.AddDays(-1));
+                    objMakat.RunRefreshKnisot(DateTime.Now.AddDays(-1).Date);
             }
             catch (Exception ex)
             {
