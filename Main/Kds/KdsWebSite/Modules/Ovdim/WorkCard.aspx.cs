@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using KdsLibrary.Utils;
-using System.Text.RegularExpressions;
+
 
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
@@ -4684,17 +4684,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
-    private static string AsDomain( string url)
-    {
-        if (string.IsNullOrEmpty(url))
-            return url;
-
-        var match = Regex.Match(url, @"^http[s]?[:/]+[^/]+");
-        if (match.Success)
-            return match.Captures[0].Value;
-        else
-            return url;
-    }
+    
 
 
     protected void OpenReport(Dictionary<string, string> ReportParameters, Button btnScript, string sRdlName)
@@ -4709,7 +4699,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         Session["ReportParameters"] = ReportParameters;
 
-        sDomain = AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
+        sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
         EventLog.WriteEntry("kds", "Url: " + sDomain);
         string sScript = "window.showModalDialog('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                
