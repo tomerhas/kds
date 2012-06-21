@@ -1111,7 +1111,7 @@
             <Top>4.79389cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>6.87636cm</Width>
+            <Width>6.87637cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1577,7 +1577,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             <Top>2.66215cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
-            <Width>14.37323cm</Width>
+            <Width>14.37322cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1683,7 +1683,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                                 <TextRun>
                                   <Value>=iif (Fields!MEASHER_O_MISTAYEG.Value="1" and Parameters!P_TIKUN.Value ="0","מאשר",
      iif (Fields!MEASHER_O_MISTAYEG.Value="0" and Parameters!P_TIKUN.Value ="0","מסתייג",
-     iif (Fields!MEASHER_O_MISTAYEG.Value="1" and Parameters!P_TIKUN.Value ="1"," מאשר - תיקון",
+     iif (Fields!MEASHER_O_MISTAYEG.Value="1" and Parameters!P_TIKUN.Value ="1" ," מאשר - תיקון",
      iif (Fields!MEASHER_O_MISTAYEG.Value="0" and Parameters!P_TIKUN.Value ="1"," מסתייג - תיקון",
         iif (CStr(Fields!MEASHER_O_MISTAYEG.Value)="" and Parameters!P_TAARICH.Value &lt; Now.AddDays(-Int(reportitems!Textbox2.Value)) ," ללא התייחסות","")))))</Value>
                                   <Style>
@@ -2847,7 +2847,6 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -3517,11 +3516,12 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       <Query>
         <DataSourceName>DsWorkCard</DataSourceName>
         <QueryParameters>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>

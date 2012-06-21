@@ -165,7 +165,8 @@
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif (Fields!MEASHER_O_MISTAYEG.Value=1,"מאשר","מסתייג")</Value>
+                                                <Value>=iif (GetChar(Fields!KOD_MAAMAD.Value,1)="1","חבר",
+     iif (GetChar(Fields!KOD_MAAMAD.Value,1)="2","שכיר",""))</Value>
                                                 <Style>
                                                   <FontSize>16pt</FontSize>
                                                   <FontWeight>Bold</FontWeight>
@@ -2112,7 +2113,6 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
@@ -2343,11 +2343,11 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
       <Query>
         <DataSourceName>DsWorkCard</DataSourceName>
         <QueryParameters>
-          <QueryParameter Name="P_TAARICH">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
@@ -2393,7 +2393,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Field>
         <Field Name="SHAT_YETZIA">
           <DataField>SHAT_YETZIA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="FULL_NAME">
           <DataField>FULL_NAME</DataField>
