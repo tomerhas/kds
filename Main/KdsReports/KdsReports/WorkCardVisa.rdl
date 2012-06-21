@@ -2085,8 +2085,8 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                                               <TextRun>
                                                 <Value>=iif (Fields!SECTOR_VISA.Value="0" and Parameters!P_TIKUN.Value="0","ויזה פנים",
      iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="0","ויזה צהל",
-     iif (Fields!SECTOR_VISA.Value="0"  and Parameters!P_TIKUN.Value="1","צהל ויזה - תיקון",
-     iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="1","תיקון - ויזה צהל",
+     iif (Fields!SECTOR_VISA.Value="0"  and Parameters!P_TIKUN.Value="1","פנים ויזה - תיקון",
+     iif (Fields!SECTOR_VISA.Value="1"  and Parameters!P_TIKUN.Value="1","ויזה צהל - תיקון",
       iif (CStr(Fields!MEASHER_O_MISTAYEG.Value)="" and Parameters!P_TAARICH.Value &lt; Now.AddDays(-Int(reportitems!Textbox2.Value)) ," ללא התייחסות","")))))</Value>
                                                 <Style>
                                                   <FontSize>16pt</FontSize>
@@ -2113,6 +2113,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                 </TablixCells>
