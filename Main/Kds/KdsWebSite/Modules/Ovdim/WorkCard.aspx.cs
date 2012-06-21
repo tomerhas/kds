@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using KdsLibrary.Utils;
+using System.Text.RegularExpressions;
+
 public partial class Modules_Ovdim_WorkCard : KdsPage
 {
     public int iMisparIshi;
@@ -530,10 +532,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetIdkuneyRashemet();
                     RefreshEmployeeData(iMisparIshi, dDateCard);
                     //רק אם יש סידורים 
+                    Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
                     if (oBatchManager.htFullEmployeeDetails != null)
                     {
                         SD.DataSource = oBatchManager.htFullEmployeeDetails;
-                        Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
+                        
                         if (oBatchManager.dtMashar == null)
                             dtLicenseNumbers = GetMasharData(oBatchManager.htFullEmployeeDetails);
                         else
@@ -4681,11 +4684,24 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
+    private static string AsDomain( string url)
+    {
+        if (string.IsNullOrEmpty(url))
+            return url;
+
+        var match = Regex.Match(url, @"^http[s]?[:/]+[^/]+");
+        if (match.Success)
+            return match.Captures[0].Value;
+        else
+            return url;
+    }
+
+
     protected void OpenReport(Dictionary<string, string> ReportParameters, Button btnScript, string sRdlName)
     {
         KdsReport _Report;
         KdsDynamicReport _KdsDynamicReport;
-
+        string sDomain = "";
         _KdsDynamicReport = KdsDynamicReport.GetKdsReport();
         _Report = new KdsReport();
         _Report = _KdsDynamicReport.FindReport(sRdlName);
@@ -4693,10 +4709,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
         Session["ReportParameters"] = ReportParameters;
 
-        string sReportViewer = ConfigurationManager.AppSettings["ReportViewer"].ToString();
-
-        EventLog.WriteEntry("kds", "sReportViewer: " + sReportViewer);
-        string sScript = "window.showModalDialog('" + sReportViewer + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
+        sDomain = AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
+        EventLog.WriteEntry("kds", "Url: " + sDomain);
+        string sScript = "window.showModalDialog('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:1200px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
                
         ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
 
