@@ -621,6 +621,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         string[] sPeilutDetails;
         if (bInpuDataResult)
         {
+            
             //מספר אישי
             SetControlColor(txtId, "black", "white");
             // זמן נסיעות
@@ -644,7 +645,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     break;
             }
 
-
+            //מיקום תמונה של תאריכון
+            if (Request.UrlReferrer != null) //התחברות מהבית
+            {
+                string sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
+                clnDate.ImageUrl = sDomain + "/Images/B_calander.png";
+            }
             //התייצבות
             bParticipationAllowed = SetParticipation();
 

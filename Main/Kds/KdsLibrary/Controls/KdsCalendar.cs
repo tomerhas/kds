@@ -54,6 +54,11 @@ namespace KdsLibrary.Controls
             set { _calendar.CssClass = value; }
             get { return _calendar.Text; }
         }
+        public string ImageUrl
+        {
+            set { imgCal.ImageUrl = value; }        
+        }
+
         public short ImgTabIndex
         {
             set { imgCal.TabIndex = value; }
@@ -132,7 +137,7 @@ namespace KdsLibrary.Controls
             string urlAbs = Page.Request.Url.AbsoluteUri.Remove(LengthToRemove);
             urlAbs += Page.Request.ApplicationPath;
 
-
+            
             imgCal.ID = "Img" + _calendar.ID;
             imgCal.ImageUrl = urlAbs + "/Images/B_calander.png";
             imgCal.Style.Add("padding-right", "5px");
