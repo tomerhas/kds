@@ -2266,7 +2266,7 @@ namespace KdsBatch
         private void CalcRechiv44()
         {
             //כמות גמול חסכון נוספות (רכיב 44) 
-            float fSumDakotRechiv, fZmanHalbasha, fMichsaYomit126, fZmanNesiot, fZmanGrirot,fTempY;
+            float fSumDakotRechiv, fZmanHalbasha, fMichsaYomit126, fZmanGrirot,fTempY;
 
             //א.	אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך = 2 אזי:
             //אין משמעות לרכיב ברמת ביום.
@@ -2289,9 +2289,9 @@ namespace KdsBatch
                                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
 
                                 fZmanHalbasha = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanHalbasha); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanHalbasha.GetHashCode(), objOved.Taarich);  
-                                fZmanNesiot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich);  
+                              //  fZmanNesiot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanNesia); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanNesia.GetHashCode(), objOved.Taarich);  
                                 fZmanGrirot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.ZmanGrirot); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ZmanGrirot.GetHashCode(), objOved.Taarich); 
-                                fSumDakotRechiv = fTempY + fZmanHalbasha + fZmanNesiot + fZmanGrirot;
+                                fSumDakotRechiv = fTempY + fZmanHalbasha + fZmanGrirot;
                                 fMichsaYomit126 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
                                 if (fSumDakotRechiv > fMichsaYomit126)
                                 {

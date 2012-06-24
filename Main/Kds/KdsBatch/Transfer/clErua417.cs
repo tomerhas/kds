@@ -9,9 +9,11 @@ namespace KdsBatch
 {
   public  class clErua417:clErua
     {
-      public clErua417(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      private DataTable _dtPrem;
+      public clErua417(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,417)
       {
+          _dtPrem = dtPrem;
           _sBody = SetBody();
           if (_sBody != null)
             PrepareLines();
@@ -61,7 +63,14 @@ namespace KdsBatch
                 else { sErua417.Append(GetBlank(4)); }
               }
 
-            sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode()), 4, 0));
+            if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),"erech_rechiv_a"), 4, 0));
+            }
+            else
+            {
+                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),_dtPrem), 4, 0));
+            }
             sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"),4,0));
             sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"),4,0));
             sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"),4,0));

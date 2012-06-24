@@ -229,6 +229,20 @@ namespace KdsBatch
         {
             return GetErechRechiv(iKodRechiv, "erech_rechiv");
         }
+
+        protected float GetErechRechivPremiya(int iKodRechiv, DataTable dtPrem)
+        {
+            DataRow[] dr;
+            float erech = 0;
+            if (dtPrem.Rows.Count>0)
+            {
+                dr = dtPrem.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv);
+                if (dr.Length>0)
+                    erech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+            }
+            return erech;
+        }
+
         protected float GetErechRechiv(int iKodRechiv,string col)
         {
             DataRow[] drRechiv;

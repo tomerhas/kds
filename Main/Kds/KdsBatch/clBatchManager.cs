@@ -7833,11 +7833,11 @@ namespace KdsBatch
                                     }
                                  );
 
-                if (oFirstSidurEilat != null && oSecondPeilutEilat != null)
+                if (oFirstSidurEilat != null && oSecondSidurEilat != null)
                 {
                     int firstSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oFirstSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oFirstSidurEilat.dFullShatHatchala));
                     int secondSidurIndex = htEmployeeDetails.Values.Cast<clSidur>().ToList().FindIndex(sidur => (sidur.iMisparSidur == oSecondSidurEilat.iMisparSidur && sidur.dFullShatHatchala == oSecondSidurEilat.dFullShatHatchala));
-                    if (firstSidurIndex + 1 == secondSidurIndex) 
+                    if (firstSidurIndex + 1 == secondSidurIndex && !(_oOvedYomAvodaDetails.iSnifTnua == oSecondPeilutEilat.iSnifAchrai)) 
                     {
                         HosafatHamtana(firstSidurIndex, secondSidurIndex);
                     }

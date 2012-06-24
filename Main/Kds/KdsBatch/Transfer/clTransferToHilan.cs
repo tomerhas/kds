@@ -42,7 +42,7 @@ namespace KdsBatch
        {
 
            int iMisparIshi, i, iMaamad, iMaamadRashi;
-           DataTable dtOvdim, dtRechivim;
+           DataTable dtOvdim, dtRechivim, dtPrem;
            DataSet dsNetunim;
            int iStatus = 0;
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
@@ -78,6 +78,7 @@ namespace KdsBatch
                   
                    dtOvdim = dsNetunim.Tables[0];
                    dtRechivim = dsNetunim.Tables[1];
+                   dtPrem = dsNetunim.Tables[2];
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "count:" + dtOvdim.Rows.Count);
                    _PirteyOved = new List<PirteyOved>();
@@ -97,7 +98,8 @@ namespace KdsBatch
                            if (i==0)
                             sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                            oPirteyOved = new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i], dtRechivim);
+                            oPirteyOved = new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i]);
+                            oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem); 
                             _PirteyOved.Add(oPirteyOved);
 
                             objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();    
@@ -1492,6 +1494,7 @@ namespace KdsBatch
                 oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
                 oDal.AddParameter("p_Cur_list", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                oDal.AddParameter("p_cur_prem", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
                 clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before ExecuteSP");
                 oDal.ExecuteSP(clDefinitions.cProGetOvdimToTransfer, ref ds);

@@ -34,7 +34,8 @@ namespace KdsBatch
         private DataRow _drPirteyOved;
         private DataTable _dtRechivim;
         private DataTable _dtChishuv;
-        public PirteyOved(int Maamad, int MaamadRashi, int Dirug, int Darga, long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+        private DataTable _dtRechiveyPrem;
+        public PirteyOved(int Maamad, int MaamadRashi, int Dirug, int Darga, long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
         {
             iMaamad = Maamad;
             iMaamadRashi = MaamadRashi;
@@ -43,14 +44,16 @@ namespace KdsBatch
             iBakashaId= BakashaId;
             dChodeshChishuv = DateTime.Parse(drPirteyOved["taarich"].ToString());
             _drPirteyOved = drPirteyOved;
-            _dtRechivim = dtDetailsChishuv;
+           
             iBakashaIdRizatChishuv = lRequestNumToTransfer;
           //  iGil =int.Parse(drPirteyOved["gil"].ToString());
-            InitializeErueyOved();
+         //   InitializeErueyOved();
         }
 
-        private void InitializeErueyOved()
+        public void InitializeErueyOved(DataTable dtDetailsChishuv,DataTable dtPrem)
         {
+            _dtRechivim = dtDetailsChishuv;
+            _dtRechiveyPrem = dtPrem;
             try
             {
                 _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
@@ -68,8 +71,8 @@ namespace KdsBatch
                     oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
                     
                     oErua416 = new clErua416(iBakashaId, _drPirteyOved, _dtRechivim);
-                    oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim);
-                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim);
+                    oErua417 = new clErua417(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
+                    oErua460 = new clErua460(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
 
                     if (iMaamadRashi != clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
@@ -78,7 +81,7 @@ namespace KdsBatch
 
                     if (iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                     {
-                        oErua419 = new clErua419(iBakashaId, _drPirteyOved, _dtRechivim);
+                        oErua419 = new clErua419(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
                     }
                 }
             }

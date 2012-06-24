@@ -9,9 +9,11 @@ namespace KdsBatch
 {
   public  class clErua419:clErua
     {
-      public clErua419(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      private DataTable _dtPrem;
+      public clErua419(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,419)
       {
+          _dtPrem = dtPrem;
           _sBody = SetBody();
           if (_sBody != null)
           PrepareLines();
@@ -35,9 +37,9 @@ namespace KdsBatch
               
               sErua419.Append(GetBlank(8));
               
-              sErua419.Append(GetBlank(4)); 
+              sErua419.Append(GetBlank(4));
 
-              sErua419.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaMachsenaim.GetHashCode()), 4, 0));
+              sErua419.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaMachsenaim.GetHashCode(), _dtPrem), 4, 0));
 
               //if (_iMaamad == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode())
               //{
