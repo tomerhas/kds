@@ -12,6 +12,7 @@ using KdsLibrary.DAL;
 using KdsLibrary.Security;
 using KdsLibrary.Controls;
 using System.Configuration;
+using System.Text.RegularExpressions;
 
 namespace KdsLibrary
 {
@@ -1968,6 +1969,17 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
                     default: return 1;
                 }
             }
+        }
+        public static string AsDomain(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return url;
+
+            var match = Regex.Match(url, @"^http[s]?[:/]+[^/]+");
+            if (match.Success)
+                return match.Captures[0].Value;
+            else
+                return url;
         }
     }
 }
