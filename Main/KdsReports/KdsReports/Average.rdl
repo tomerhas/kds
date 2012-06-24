@@ -466,7 +466,7 @@
                           <Top>2.33533cm</Top>
                           <Left>3.06377cm</Left>
                           <Height>1.2cm</Height>
-                          <Width>11.04474cm</Width>
+                          <Width>11.04476cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -554,7 +554,6 @@
                         </Border>
                       </Style>
                     </Rectangle>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -581,8 +580,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Height>7.0926cm</Height>
-        <Width>19.48839cm</Width>
+        <Height>7.09259cm</Height>
+        <Width>19.48838cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -605,11 +604,6 @@
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("30/09/2009")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
