@@ -532,11 +532,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     SetIdkuneyRashemet();
                     RefreshEmployeeData(iMisparIshi, dDateCard);
                     //רק אם יש סידורים 
-                    
+                    Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
                     if (oBatchManager.htFullEmployeeDetails != null)
                     {
                         SD.DataSource = oBatchManager.htFullEmployeeDetails;
-                        Session["Sidurim"] = oBatchManager.htFullEmployeeDetails;
+                        
                         if (oBatchManager.dtMashar == null)
                             dtLicenseNumbers = GetMasharData(oBatchManager.htFullEmployeeDetails);
                         else
@@ -4050,6 +4050,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             clSidur oSidur;
             bool bValid = true;
             string sSidurimThatChanged = "";
+            int iMS = 0;
             //נעבור על כל הסידורים
             
                 for (int iIndex = 0; iIndex < this.SD.DataSource.Count; iIndex++)
@@ -4087,8 +4088,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
                         if (oTxt.Text == string.Empty)
                         {
-                            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:00");
+                            oObjSidurimOvdimUpd.NEW_SHAT_HATCHALA = DateTime.Parse("01/01/0001 00:00:" + iMS.ToString().PadLeft(2,(char)48));
                             oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = 0;
+                            iMS = iMS + 1;
                         }
                         else
                         {//נבדוק אם השתנה התאריך
