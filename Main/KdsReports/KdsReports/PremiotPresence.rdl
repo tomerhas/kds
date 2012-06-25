@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>20.02367cm</Width>
+              <Width>19.85521cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1809,7 +1809,6 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -2238,9 +2237,9 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                             </Parameter>
                           </Parameters>
                           <Top>0.02778in</Top>
-                          <Left>0.9802in</Left>
+                          <Left>0.05144in</Left>
                           <Height>1.2877cm</Height>
-                          <Width>12.45264cm</Width>
+                          <Width>19.3073cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -2286,7 +2285,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         <DataSetName>DsPremiotPresence</DataSetName>
         <Top>0.07056cm</Top>
         <Height>5.82849cm</Height>
-        <Width>20.02367cm</Width>
+        <Width>19.85521cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2404,7 +2403,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
     <Height>3.35532in</Height>
     <Style />
   </Body>
-  <Width>7.88334in</Width>
+  <Width>7.81701in</Width>
   <Page>
     <PageHeader>
       <Height>0.44097cm</Height>
