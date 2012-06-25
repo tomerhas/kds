@@ -572,6 +572,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         {
             NoTachograph = 1064
         }
+
+        public enum enEventId
+        {
+            ProblemOfAccessToTnua=30001
+        }
+
         public enum enRechivim
         {
             DakotNochehutLetashlum = 1,
@@ -1650,6 +1656,24 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
                 // Write an informational entry to the event log.    
                 kdsLog.WriteEntry(message, entryType);
+            }
+            catch (Exception) { }
+        }
+
+        public static void LogMessage(string message, EventLogEntryType entryType, int iEventId)
+        {
+            try
+            {
+                if (!EventLog.SourceExists(KdsEventLogSource))
+                {
+                    EventLog.CreateEventSource(KdsEventLogSource, KdsEventLogSource);
+                }
+                // Create an EventLog instance and assign its source.
+                EventLog kdsLog = new EventLog();
+                kdsLog.Source = KdsEventLogSource;
+
+                // Write an informational entry to the event log.    
+                kdsLog.WriteEntry(message, entryType,iEventId);
             }
             catch (Exception) { }
         }
