@@ -6,6 +6,7 @@ using System.Data;
 using KdsLibrary.DAL;
 using System.Configuration;
 using System.Web;
+using System.Diagnostics;
 namespace KdsLibrary.BL
 {
     public class clKavim
@@ -67,6 +68,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                 throw ex;
             }
         }
@@ -97,6 +99,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -120,6 +124,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: "  + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -139,6 +145,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -158,6 +166,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: "  + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -270,6 +280,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                
                 throw ex;
             }            
         }
@@ -373,6 +384,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -404,6 +417,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -432,6 +447,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -457,6 +474,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -489,6 +508,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -523,6 +544,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 oTxDal.TxRollBack();
                 throw ex;
             }
@@ -542,6 +565,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }            
         }
@@ -564,6 +589,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 _Dal.TxRollBack();
                 throw ex;
             }
@@ -588,7 +615,9 @@ namespace KdsLibrary.BL
                 return dt;
             }
             catch (Exception ex)
-            {               
+            {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -644,6 +673,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
@@ -661,6 +692,7 @@ namespace KdsLibrary.BL
             catch (Exception ex)
             {
                 //dt = null;
+               
                 throw (ex);
             }
             return dt;
@@ -681,6 +713,8 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
+                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+               
                 throw ex;
             }
         }
