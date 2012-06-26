@@ -1,244 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsConnection">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>2dba957a-3919-4bd6-85bf-f70769cf7596</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsRechivValues">
-      <Fields>
-        <Field Name="NOHEHOUT">
-          <DataField>NOHEHOUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOSSAFOT">
-          <DataField>NOSSAFOT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAOT100">
-          <DataField>SHAOT100</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAOT125">
-          <DataField>SHAOT125</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAOT150">
-          <DataField>SHAOT150</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAOTTAFKID">
-          <DataField>SHAOTTAFKID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TAFKIDSHABESS">
-          <DataField>TAFKIDSHABESS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOSAFOTTAFKID">
-          <DataField>NOSAFOTTAFKID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KIZUZTAFKID">
-          <DataField>KIZUZTAFKID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SUMPREMIA">
-          <DataField>SUMPREMIA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DRIVEWEEK">
-          <DataField>DRIVEWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DRIVE6">
-          <DataField>DRIVE6</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DRIVESHABESS">
-          <DataField>DRIVESHABESS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HILLDAYS">
-          <DataField>HILLDAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MILUIMDAYS">
-          <DataField>MILUIMDAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOFESHEADRUT">
-          <DataField>HOFESHEADRUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SUMEADRUT">
-          <DataField>SUMEADRUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ADRAHA">
-          <DataField>ADRAHA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOHEHOUTDAY">
-          <DataField>NOHEHOUTDAY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="WORKDAY">
-          <DataField>WORKDAY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MONTHS">
-          <DataField>MONTHS</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NOHAH1_5">
-          <DataField>NOHAH1_5</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MONTHLYQUOTA">
-          <DataField>MONTHLYQUOTA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOSAFOT1_5">
-          <DataField>NOSAFOT1_5</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ALM1_5">
-          <DataField>ALM1_5</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOURSDAY_6">
-          <DataField>HOURSDAY_6</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOURSSHABESS">
-          <DataField>HOURSSHABESS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOURSNIGHT">
-          <DataField>HOURSNIGHT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PREMIANAAGUT">
-          <DataField>PREMIANAAGUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PITSUL">
-          <DataField>PITSUL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HADRAHADAYS">
-          <DataField>HADRAHADAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOFESHDAYS">
-          <DataField>HOFESHDAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ACCIDENTDAYS">
-          <DataField>ACCIDENTDAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HEADRUTDAYS">
-          <DataField>HEADRUTDAYS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOURSTNUA">
-          <DataField>HOURSTNUA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOSAFOTTNUA">
-          <DataField>NOSAFOTTNUA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KIZUZTNUA">
-          <DataField>KIZUZTNUA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="HOURNAAGUT">
-          <DataField>HOURNAAGUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NOSAFOTNAHAGUT">
-          <DataField>NOSAFOTNAHAGUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KIZUZNAAGUT">
-          <DataField>KIZUZNAAGUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ZMANRETSEF">
-          <DataField>ZMANRETSEF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="GMULSUM">
-          <DataField>GMULSUM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsConnection</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETRECHIVVALUEAVERAGE</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPARISHI">
-            <Value>=Parameters!P_MISPARISHI.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.63893in</Width>
+              <Width>1.76685cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64409in</Width>
+              <Width>1.77996cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.60242in</Width>
+              <Width>1.67412cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63367in</Width>
+              <Width>1.75349cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66492in</Width>
+              <Width>1.83287cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.69617in</Width>
+              <Width>1.91224cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66492in</Width>
+              <Width>1.83287cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.61284in</Width>
+              <Width>1.70059cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.62325in</Width>
+              <Width>1.72703cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.61284in</Width>
+              <Width>1.70059cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.60242in</Width>
+              <Width>1.67412cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.42372in</Height>
+              <Height>1.06302cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -617,7 +420,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.58677cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -992,8 +795,8 @@
         <DataSetName>DsRechivValues</DataSetName>
         <Top>0.18521cm</Top>
         <Left>0.2046cm</Left>
-        <Height>1.67625cm</Height>
-        <Width>17.77103cm</Width>
+        <Height>1.64979cm</Height>
+        <Width>19.35472cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1004,45 +807,45 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.57101in</Width>
+              <Width>1.59084cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.57103in</Width>
+              <Width>1.59089cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.55018in</Width>
+              <Width>1.53793cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.58143in</Width>
+              <Width>1.66136cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.60226in</Width>
+              <Width>1.97425cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63351in</Width>
+              <Width>1.74959cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.59184in</Width>
+              <Width>1.64375cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.5606in</Width>
+              <Width>1.5644cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.56059in</Width>
+              <Width>1.56437cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.55018in</Width>
+              <Width>1.53793cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.53976in</Width>
+              <Width>1.51146cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.64393in</Width>
+              <Width>1.42797cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.42372in</Height>
+              <Height>1.07625cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1455,7 +1258,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1860,10 +1663,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsRechivValues</DataSetName>
-        <Top>5.88274cm</Top>
+        <Top>5.77691cm</Top>
         <Left>0.2046cm</Left>
-        <Height>1.67625cm</Height>
-        <Width>17.66905cm</Width>
+        <Height>1.67626cm</Height>
+        <Width>19.35472cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1875,36 +1678,36 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.71371in</Width>
+              <Width>1.99471cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80746in</Width>
+              <Width>2.23284cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77621in</Width>
+              <Width>2.15346cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83871in</Width>
+              <Width>2.31221cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8283in</Width>
+              <Width>2.28577cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79705in</Width>
+              <Width>2.2064cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7137in</Width>
+              <Width>1.99469cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75538in</Width>
+              <Width>2.10055cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74496in</Width>
+              <Width>2.07409cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.42372in</Height>
+              <Height>0.79402cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2213,7 +2016,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.58236cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2522,10 +2325,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsRechivValues</DataSetName>
-        <Top>4.06539cm</Top>
+        <Top>4.09185cm</Top>
         <Left>0.2046cm</Left>
-        <Height>1.67625cm</Height>
-        <Width>17.71772cm</Width>
+        <Height>1.37638cm</Height>
+        <Width>19.35472cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -2537,39 +2340,39 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.7736in</Width>
+              <Width>2.12863cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.62776in</Width>
+              <Width>1.7582cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.72151in</Width>
+              <Width>1.99632cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.69026in</Width>
+              <Width>1.91695cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75276in</Width>
+              <Width>2.0757cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74234in</Width>
+              <Width>2.04923cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7111in</Width>
+              <Width>1.96988cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.62776in</Width>
+              <Width>1.7582cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66943in</Width>
+              <Width>1.86404cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65901in</Width>
+              <Width>1.83757cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.42372in</Height>
+              <Height>1.0559cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2914,7 +2717,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.57965cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3255,10 +3058,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsRechivValues</DataSetName>
-        <Top>2.17408cm</Top>
+        <Top>2.12116cm</Top>
         <Left>0.2046cm</Left>
-        <Height>1.67625cm</Height>
-        <Width>17.71785cm</Width>
+        <Height>1.63555cm</Height>
+        <Width>19.35472cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -3270,6 +3073,212 @@
     <Height>3.0489in</Height>
     <Style />
   </Body>
+  <Width>7.70052in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsConnection">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>2dba957a-3919-4bd6-85bf-f70769cf7596</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsRechivValues">
+      <Query>
+        <DataSourceName>DsConnection</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPARISHI">
+            <Value>=Parameters!P_MISPARISHI.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETRECHIVVALUEAVERAGE</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="NOHEHOUT">
+          <DataField>NOHEHOUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOSSAFOT">
+          <DataField>NOSSAFOT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAOT100">
+          <DataField>SHAOT100</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAOT125">
+          <DataField>SHAOT125</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAOT150">
+          <DataField>SHAOT150</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAOTTAFKID">
+          <DataField>SHAOTTAFKID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAFKIDSHABESS">
+          <DataField>TAFKIDSHABESS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOSAFOTTAFKID">
+          <DataField>NOSAFOTTAFKID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KIZUZTAFKID">
+          <DataField>KIZUZTAFKID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SUMPREMIA">
+          <DataField>SUMPREMIA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DRIVEWEEK">
+          <DataField>DRIVEWEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DRIVE6">
+          <DataField>DRIVE6</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DRIVESHABESS">
+          <DataField>DRIVESHABESS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HILLDAYS">
+          <DataField>HILLDAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MILUIMDAYS">
+          <DataField>MILUIMDAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOFESHEADRUT">
+          <DataField>HOFESHEADRUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SUMEADRUT">
+          <DataField>SUMEADRUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ADRAHA">
+          <DataField>ADRAHA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOHEHOUTDAY">
+          <DataField>NOHEHOUTDAY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="WORKDAY">
+          <DataField>WORKDAY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MONTHS">
+          <DataField>MONTHS</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NOHAH1_5">
+          <DataField>NOHAH1_5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MONTHLYQUOTA">
+          <DataField>MONTHLYQUOTA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOSAFOT1_5">
+          <DataField>NOSAFOT1_5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ALM1_5">
+          <DataField>ALM1_5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOURSDAY_6">
+          <DataField>HOURSDAY_6</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOURSSHABESS">
+          <DataField>HOURSSHABESS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOURSNIGHT">
+          <DataField>HOURSNIGHT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PREMIANAAGUT">
+          <DataField>PREMIANAAGUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PITSUL">
+          <DataField>PITSUL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HADRAHADAYS">
+          <DataField>HADRAHADAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOFESHDAYS">
+          <DataField>HOFESHDAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ACCIDENTDAYS">
+          <DataField>ACCIDENTDAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HEADRUTDAYS">
+          <DataField>HEADRUTDAYS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOURSTNUA">
+          <DataField>HOURSTNUA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOSAFOTTNUA">
+          <DataField>NOSAFOTTNUA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KIZUZTNUA">
+          <DataField>KIZUZTNUA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HOURNAAGUT">
+          <DataField>HOURNAAGUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NOSAFOTNAHAGUT">
+          <DataField>NOSAFOTNAHAGUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KIZUZNAAGUT">
+          <DataField>KIZUZNAAGUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ZMANRETSEF">
+          <DataField>ZMANRETSEF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GMULSUM">
+          <DataField>GMULSUM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
@@ -3310,13 +3319,6 @@
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.16927in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
-  <rd:ReportID>96621b76-a2a2-4a54-ac11-e5a6bfca6de7</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>96621b76-a2a2-4a54-ac11-e5a6bfca6de7</rd:ReportID>
 </Report>
