@@ -68,7 +68,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetKavimDetailsFromTnuaDS: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                 throw ex;
             }
         }
@@ -99,7 +99,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetKavimDetailsFromTnuaDT: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -124,7 +124,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: "  + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMakatKavShirut: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -145,7 +145,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMakatKavNamak: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -166,7 +166,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: "  + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMakatKavReka: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -384,7 +384,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMakatRekaDetailsFromTnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -417,7 +417,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMakatNamakDetailsFromTnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -447,7 +447,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("IsBusNumberValid: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -474,7 +474,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetBusLicenseNumber: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -508,7 +508,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetSidurDetailsFromTnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -544,7 +544,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetSidurAndPeiluyotFromTnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 oTxDal.TxRollBack();
                 throw ex;
@@ -565,7 +565,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetMasharData: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }            
@@ -589,7 +589,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetKatalogKavim: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 _Dal.TxRollBack();
                 throw ex;
@@ -616,7 +616,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetRekaDetailsByXY: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -673,7 +673,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("CheckHityazvutNehag: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
@@ -713,7 +713,7 @@ namespace KdsLibrary.BL
             }
             catch (Exception ex)
             {
-                clGeneral.LogMessage("Problem Of Access To Tnua: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
+                clGeneral.LogMessage("GetBusesDetailsLeOvedForMonth: " + ex.Message, EventLogEntryType.Error, clGeneral.enEventId.ProblemOfAccessToTnua.GetHashCode());
                
                 throw ex;
             }
