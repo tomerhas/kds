@@ -496,6 +496,8 @@ namespace KdsBatch
                 names += ",Rechivim_Chodshi";
                 oDal.AddParameter("p_Cur_Rechivey_Headrut", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Rechivey_Headrut";
+                oDal.AddParameter("p_Cur_Rechivey_Shonot", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Rechivey_Shonot";
                 oDal.AddParameter("p_Cur_Num_Rechivim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Num_Rechivim";
 

@@ -1410,7 +1410,7 @@ namespace KdsBatch
                 //    fSumDakotRechiv = fSumDakotRechiv * clCalcGeneral.CalcMekademNipuach(_dTaarichChishuv,objOved.Mispar_ishi);
                 //}
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotHeadrut.GetHashCode());
-                fSumDakotRechiv = fSumDakotRechiv / 60;
+                fSumDakotRechiv = float.Parse(Math.Round((fSumDakotRechiv / 60), 1).ToString()); 
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round( fSumDakotRechiv, 3) == 0)
                     fSumDakotRechiv = 0;
@@ -2478,12 +2478,14 @@ namespace KdsBatch
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHeadrut.GetHashCode());
                     fSumDakotRechiv = fSumDakotRechiv - fHashlama;
 
+                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(Math.Round(fHashlama, 3).ToString());
                 //   UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
                  }
 
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round(fSumDakotRechiv, 3) == 0)
                     fSumDakotRechiv = 0;
+                fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv, 2).ToString()); 
                 addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fSumDakotRechiv);
 
                 
@@ -2652,13 +2654,14 @@ namespace KdsBatch
                     fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
                     fSumDakotRechiv = float.Parse(fSumDakotRechiv.ToString()) - float.Parse(fHashlama.ToString());
-                   
-                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(fHashlama.ToString());
+
+                    objOved.fHashlamaAlCheshbonNosafot = float.Parse(Math.Round(fHashlama, 3).ToString());
                 //    UpdateRechiv146(fNochehutChodshitChelkit, fMichsaChodshitChelkit);
                 }
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round(fSumDakotRechiv, 3) == 0)
                     fSumDakotRechiv = 0;
+                fSumDakotRechiv = float.Parse(Math.Round(fSumDakotRechiv, 2).ToString()); 
                 addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -4994,7 +4997,7 @@ namespace KdsBatch
             {
                 //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
                 fDakotChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotChofesh.GetHashCode());
-                fSumDakotRechiv = fDakotChofesh / 60;
+                fSumDakotRechiv = float.Parse(Math.Round((fDakotChofesh / 60), 1).ToString());  
                 //איפוס ערך רכיב קטן מאוד
                 if (Math.Round(fSumDakotRechiv, 3) == 0)
                     fSumDakotRechiv = 0;
@@ -5033,7 +5036,7 @@ namespace KdsBatch
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotHeadrut.GetHashCode());
 
                 }
-                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), fSumDakotRechiv);
+                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
 
             }
             catch (Exception ex)
@@ -5049,7 +5052,7 @@ namespace KdsBatch
             try
             {
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotChofesh.GetHashCode());
-                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), fSumDakotRechiv);
+                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
 
             }
             catch (Exception ex)
@@ -5997,9 +6000,9 @@ namespace KdsBatch
             //}
             //drRowToRemove = null;
             drRowToRemove = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV IN(" + sRechivim + ")");
-            for (int i = 0; i < drRowToRemove.Length - 1; i++)
+            for (int i = 0; i < drRowToRemove.Length ; i++)
             {
-                drRowToRemove[0].Delete();
+                drRowToRemove[i].Delete();
             }
             drRowToRemove = null;
 

@@ -42,13 +42,13 @@ namespace KdsBatch.Premia
                 scriptProc.StartInfo.Arguments =
                     String.Format("//B //Nologo {0}runmacro.vbs {1}",
                     AppDomain.CurrentDomain.BaseDirectory, filename);
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, scriptProc.StartInfo.Arguments);
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Start()");
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, scriptProc.StartInfo.Arguments);
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Start()");
           
                 scriptProc.Start();
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before  scriptProc.WaitForExit()");
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before  scriptProc.WaitForExit()");
                 scriptProc.WaitForExit();
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Close()");
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before scriptProc.Close()");
                 scriptProc.Close();
             }
             catch (Exception ex)
@@ -68,18 +68,18 @@ namespace KdsBatch.Premia
                 if(!_settings.IsMacroFileExists(_periodDate))
                     throw new Exception(String.Format("Path {0} does not exist",
                         _settings.GetMacroFullPath(_periodDate)));
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After IsMacroFileExists");
+               // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After IsMacroFileExists");
                 exAdpt.OpenExistingWorkBook();
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After OpenExistingWorkBook");
+               // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After OpenExistingWorkBook");
                 bool saved = false;
                 int attempts=0;
                 while (!saved && attempts < 3)
                 {
                     try
                     {
-                        clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "Before SaveExistingWorkBook");
+                     //   clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "Before SaveExistingWorkBook");
                         exAdpt.SaveExistingWorkBook();
-                        clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After SaveExistingWorkBook");
+                     //   clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "After SaveExistingWorkBook");
                         saved = true;
                     }
                     catch (System.Runtime.InteropServices.COMException comEx)

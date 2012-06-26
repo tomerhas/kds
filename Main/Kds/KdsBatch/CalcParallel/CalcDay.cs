@@ -3053,7 +3053,7 @@ namespace KdsBatch
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
-                            			
+                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,3).ToString()); 			
                             addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                         }
                     }
@@ -3170,7 +3170,7 @@ namespace KdsBatch
                         {
                             fErechRechiv = fErechRechiv * float.Parse("0.6");
                         }
-
+                        fErechRechiv = float.Parse(Math.Round(fErechRechiv, 3).ToString()); 
                         addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                     }
                 }
@@ -6569,7 +6569,7 @@ namespace KdsBatch
                 {
                     fSumDakotRechiv = fYomHeadrut * fMichsaYomit;
                 }
-                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), fSumDakotRechiv);
+                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
             }
             catch (Exception ex)
             {
@@ -6593,7 +6593,7 @@ namespace KdsBatch
                 {
                     fSumDakotRechiv = fYomChofesh * fMichsaYomit;
                 }
-                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), fSumDakotRechiv);
+                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
             }
             catch (Exception ex)
             {
