@@ -84,7 +84,7 @@
             </td>
         </tr>
     </table>
-    
+   <input type="hidden" runat="server" id="HiddenLoginPage" value="Login Page Loaded Ok" name="HiddenLoginPage" />   
 <script language="javascript" type="text/javascript">
     function OpenEmpWorkCard() {
         var EmpId = <%=sUserId%>;

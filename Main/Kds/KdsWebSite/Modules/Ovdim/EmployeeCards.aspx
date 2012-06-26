@@ -178,6 +178,7 @@
         </tr>
      </table>
        <input type="hidden" runat="server" id="hidFromEmda" name="hidFromEmda" />
+       <input type="hidden" runat="server" id="HiddenEmployeeCardsPage" value="Employee Cards Page Loaded Ok" name="HiddenEmployeeCardsPage" />  
      <div id="divHeadruyot_Parent" style="display:none;">
         <div id="divHeadruyot">
             <iframe id="frameHeadruyot" frameborder="0" style="overflow:hidden;"></iframe>
