@@ -1,87 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsConnection">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>912b3f51-aa14-44f6-b77b-6aa660c2244e</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsMAINDETAILSAVERAGE">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_KOD_GIL">
-          <DataField>TEUR_KOD_GIL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD">
-          <DataField>TEUR_MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsConnection</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GETMAINDETAILSAVERAGE</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MAMAD">
-            <Value>=Parameters!P_MAMAD.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ISUK">
-            <Value>=Parameters!P_ISUK.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_COMPANYID">
-            <Value>=Parameters!P_COMPANYID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPARISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_KOD_YECHIDA">
-            <Value>=Parameters!P_KOD_YECHIDA.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SECTORISUK">
-            <Value>=Parameters!P_SECTORISUK.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TbList">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.67259in</Width>
+              <Width>19.48838cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.79236in</Height>
+              <Height>7.09259cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -91,24 +21,24 @@
                           <TablixBody>
                             <TablixColumns>
                               <TablixColumn>
-                                <Width>0.98425in</Width>
+                                <Width>2.49999cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.98425in</Width>
+                                <Width>2.49999cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.58147in</Width>
+                                <Width>1.47693cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>1.21689in</Width>
+                                <Width>3.0909cm</Width>
                               </TablixColumn>
                               <TablixColumn>
-                                <Width>0.58147in</Width>
+                                <Width>1.47693cm</Width>
                               </TablixColumn>
                             </TablixColumns>
                             <TablixRows>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -283,7 +213,7 @@
                                 </TablixCells>
                               </TablixRow>
                               <TablixRow>
-                                <Height>0.23622in</Height>
+                                <Height>0.6cm</Height>
                                 <TablixCells>
                                   <TablixCell>
                                     <CellContents>
@@ -464,7 +394,7 @@
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
                           <Top>2.33533cm</Top>
-                          <Left>3.06377cm</Left>
+                          <Left>4.49252cm</Left>
                           <Height>1.2cm</Height>
                           <Width>11.04476cm</Width>
                           <Style>
@@ -538,7 +468,7 @@
                             </Parameter>
                           </Parameters>
                           <Height>1.80071cm</Height>
-                          <Width>19.22381cm</Width>
+                          <Width>19.48838cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -592,18 +522,106 @@
     <Height>2.82403in</Height>
     <Style />
   </Body>
+  <Width>7.67259in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.5cm</LeftMargin>
+    <RightMargin>0.5cm</RightMargin>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsConnection">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>912b3f51-aa14-44f6-b77b-6aa660c2244e</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsMAINDETAILSAVERAGE">
+      <Query>
+        <DataSourceName>DsConnection</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MAMAD">
+            <Value>=Parameters!P_MAMAD.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ISUK">
+            <Value>=Parameters!P_ISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_COMPANYID">
+            <Value>=Parameters!P_COMPANYID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPARISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_KOD_YECHIDA">
+            <Value>=Parameters!P_KOD_YECHIDA.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SECTORISUK">
+            <Value>=Parameters!P_SECTORISUK.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GETMAINDETAILSAVERAGE</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_KOD_GIL">
+          <DataField>TEUR_KOD_GIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD">
+          <DataField>TEUR_MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>= CDate("01/07/2009")</Value>
+          <Value>= CDate("01/08/2010")</Value>
         </Values>
       </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>= CDate("31/08/2010")</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
@@ -641,7 +659,7 @@
       <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
-          <Value>71323,75290,78856,48410</Value>
+          <Value>71323,75290,78856,48410,75437</Value>
         </Values>
       </DefaultValue>
       <AllowBlank>true</AllowBlank>
@@ -668,17 +686,6 @@
       <Prompt>P SECTORISUK</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>7.67259in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0.5cm</LeftMargin>
-    <RightMargin>0.5cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -689,6 +696,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>bc1ab053-1aaa-4bfb-ad14-e82fd37a50de</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>bc1ab053-1aaa-4bfb-ad14-e82fd37a50de</rd:ReportID>
 </Report>
