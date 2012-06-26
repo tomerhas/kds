@@ -102,4 +102,13 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         Response.Redirect("~/Main.aspx");
     }
+    protected void ImgHelp_Click(object sender, ImageClickEventArgs e)
+    {
+        string ServerName = Environment.MachineName;
+        string VersionNumber = ConfigurationManager.AppSettings["VersionNumber"].ToString();
+        string sScript;
+        sScript = "ShowDetailsServer('" + ServerName + "','" + VersionNumber + "');";
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "Report", sScript, true);
+
+    }
 }

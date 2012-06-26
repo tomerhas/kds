@@ -55,7 +55,10 @@
          retvalue = window.showModalDialog(PureUrl + '/Modules/Reports/ShowMessageReport.aspx?Dt=" + DateTime.Now.ToString() + "', '', 'dialogwidth:400px;dialogheight:100px;center:yes;status:no;resizable:no;scroll:no;');
          if (retvalue == "open")
              window.location.href = PureUrl + "/Modules/Reports/ShowHeavyReportsList.aspx";
-    }
+     }
+     function ShowDetailsServer(ServerName, VersionNumber) {
+         alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
+     }
     </script>
             <table width="998px" border="0" cellpadding="0" cellspacing="0" id="tblMenuMain">
                 <tr>
@@ -119,7 +122,8 @@
                     onclick="ImageHome_Click"  CausesValidation="false" />                
             </td>
             <td>
-               <asp:ImageButton runat="server" ID="ImgHelp" ImageUrl="~/Images/icon-help.jpg"  ImageAlign="Top" ToolTip="עזרה"  />
+               <asp:ImageButton runat="server" ID="ImgHelp" ImageUrl="~/Images/icon-help.jpg"  
+                    ImageAlign="Top" ToolTip="עזרה" onclick="ImgHelp_Click"  />
             </td>
             <td> 
                 <asp:Image runat="server" ID="ImageExit" ImageUrl="~/Images/icon-exit.jpg"  ImageAlign="Top" ToolTip="יציאה מהמערכת"  />                
