@@ -1099,9 +1099,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             tGridField.ItemStyle.Width = Unit.Pixel(50);
             grdPeiluyot.Columns.Add(tGridField);
 
-            //דקות הגדרה
+            //דקות תכנון
             boundGridField = new BoundField();
-            boundGridField.HeaderText = "ד. הגדרה";
+            boundGridField.HeaderText = "ד. תכנון";
             boundGridField.DataField = "mazan_tichnun";
             boundGridField.HeaderStyle.CssClass = "wcard_header";
             boundGridField.FooterStyle.CssClass = "wcard_footer";
