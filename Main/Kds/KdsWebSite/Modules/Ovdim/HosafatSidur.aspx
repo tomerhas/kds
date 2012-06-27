@@ -1334,7 +1334,7 @@
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvMakat" BehaviorID="vldExvldMakat"  TargetControlID="vldMakat" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
                                    </asp:TemplateField>
-                                   <asp:BoundField DataField="DAKOT_HAGDARA" HeaderText="דקות הגדרה" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px"/>
+                                   <asp:BoundField DataField="DAKOT_HAGDARA" HeaderText="דקות תכנון" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px"/>
                                  
                                   <asp:BoundField DataField="DAKOT_BAFOAL" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px" HeaderStyle-Wrap="true" HeaderText="דקות בפועל" >
