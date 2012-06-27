@@ -26,7 +26,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
         <Top>0.54087cm</Top>
-        <Left>7.87503cm</Left>
+        <Left>7.94609cm</Left>
         <Height>0.50271cm</Height>
         <Width>5.05749cm</Width>
         <Style>
@@ -43,7 +43,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>19.6402cm</Left>
+        <Left>19.71126cm</Left>
         <Height>1.15604cm</Height>
         <Width>1.26188cm</Width>
         <ZIndex>1</ZIndex>
@@ -86,7 +86,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>0.15254cm</Top>
-        <Left>14.38093cm</Left>
+        <Left>14.45199cm</Left>
         <Height>0.89104cm</Height>
         <Width>4.72895cm</Width>
         <ZIndex>2</ZIndex>
@@ -330,7 +330,7 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>5.18705cm</Top>
-        <Left>2.857cm</Left>
+        <Left>2.92806cm</Left>
         <Height>0.46373cm</Height>
         <Width>16.92904cm</Width>
         <ZIndex>3</ZIndex>
@@ -464,8 +464,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>7.52582cm</Top>
-        <Left>0.31505cm</Left>
+        <Top>7.32355cm</Top>
+        <Left>0.45363cm</Left>
         <Height>3.74854cm</Height>
         <Width>20.55873cm</Width>
         <ZIndex>4</ZIndex>
@@ -1235,7 +1235,7 @@
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
         <Top>1.48497cm</Top>
-        <Left>0.43742cm</Left>
+        <Left>0.50848cm</Left>
         <Height>0.7961cm</Height>
         <Width>20.46464cm</Width>
         <ZIndex>5</ZIndex>
@@ -1252,7 +1252,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")</Value>
+                <Value>=iif( (Sum(Fields!R1B.Value, "dsRechiveyShonot")&lt;&gt; 0 and Sum(Fields!R126.Value, "dsRechiveyShonot") &lt;&gt; 0 ) and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=51 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=61 ), Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")-2,
+ iif(  (Sum(Fields!R1B.Value, "dsRechiveyShonot")&lt;&gt; 0 or Sum(Fields!R126.Value, "dsRechiveyShonot") &lt;&gt; 0  ) and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=51 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=61 ),Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")-1,
+ Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim") ))</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1260,7 +1262,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.31219cm</Top>
-        <Left>0.67577cm</Left>
+        <Left>0.74683cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
         <ZIndex>6</ZIndex>
@@ -1292,7 +1294,7 @@
           </Paragraph>
         </Paragraphs>
         <Top>5.266cm</Top>
-        <Left>19.96243cm</Left>
+        <Left>20.03349cm</Left>
         <Height>0.24807cm</Height>
         <Width>0.97887cm</Width>
         <ZIndex>7</ZIndex>
@@ -1355,7 +1357,7 @@
               <Width>0.92604cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7898cm</Width>
+              <Width>0.85cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.83198cm</Width>
@@ -1376,7 +1378,7 @@
               <Width>1.40847cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80481cm</Width>
+              <Width>1cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.03136cm</Width>
@@ -1951,7 +1953,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה מחס</Value>
+                              <Value>פרמיה מחסן</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3174,12 +3176,12 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R1B.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R1B.Value &lt;&gt; Nothing and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=52 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=62), False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R126.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R126.Value &lt;&gt; Nothing and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=52 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=62 ) and Fields!R75.Value &lt;&gt; Nothing , False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -3257,9 +3259,9 @@
         <FixedRowHeaders>true</FixedRowHeaders>
         <DataSetName>dsRechiveyShonot</DataSetName>
         <Top>5.90434cm</Top>
-        <Left>0.30485cm</Left>
+        <Left>0.44637cm</Left>
         <Height>1.24282cm</Height>
-        <Width>22.58571cm</Width>
+        <Width>22.8411cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -3325,7 +3327,7 @@
               <Width>0.95165cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81936cm</Width>
+              <Width>0.95cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.81936cm</Width>
@@ -4262,10 +4264,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Fields!R56.Value,2)&gt;0,Round(Fields!R56.Value,2),"")</Value>
+                              <Value>=iif(Round(Fields!R65.Value,2)&gt;0,Round(Fields!R65.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4878,9 +4879,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
         <Top>5.90213cm</Top>
-        <Left>9.51411cm</Left>
+        <Left>8.55348cm</Left>
         <Height>1.24282cm</Height>
-        <Width>18.81225cm</Width>
+        <Width>18.94289cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -6861,7 +6862,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>DsRechivim</DataSetName>
         <Top>2.36297cm</Top>
-        <Left>0.43686cm</Left>
+        <Left>0.50792cm</Left>
         <Height>1.05505cm</Height>
         <Width>20.46989cm</Width>
         <ZIndex>10</ZIndex>
@@ -7557,7 +7558,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R76.Value)</Value>
+                              <Value>=Sum(Fields!R76.Value, "DsRechivim")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -8353,7 +8354,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Fields!R76.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R76.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -8376,6 +8377,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9563,7 +9565,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R22.Value+Fields!R44.Value</Value>
+                              <Value>=iif(Fields!R22.Value+Fields!R44.Value&gt;0,Fields!R22.Value+Fields!R44.Value,"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -9592,7 +9594,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10190,7 +10191,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </TablixRowHierarchy>
         <DataSetName>dsRechivimChodshiym</DataSetName>
         <Top>3.41802cm</Top>
-        <Left>0.43742cm</Left>
+        <Left>0.50848cm</Left>
         <Height>1.49816cm</Height>
         <Width>20.46979cm</Width>
         <ZIndex>11</ZIndex>
@@ -10201,14 +10202,14 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.50134in</Height>
+    <Height>5.49451in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>11.15211in</Width>
+  <Width>10.82534in</Width>
   <Page>
     <PageHeight>13in</PageHeight>
     <PageWidth>9in</PageWidth>
@@ -10307,6 +10308,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Field>
         <Field Name="MEAFYEN83">
           <DataField>MEAFYEN83</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MEAFYEN56">
+          <DataField>MEAFYEN56</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -10889,11 +10894,13 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
     </ReportParameter>
     <ReportParameter Name="P_sug_chishuv">
       <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <DefaultValue>
         <Values>
           <Value>רגיל</Value>
         </Values>
       </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>P_sug_chishuv</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_Oved_5_Yamim">

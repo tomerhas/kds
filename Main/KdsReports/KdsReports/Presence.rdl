@@ -973,7 +973,8 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(DateDiff("n",iif( (InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 or Fields!MISPAR_SIDUR.Value = 99200 or Fields!LO_LETASHLUM.Value="1"), Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_HATCHALA.Value = nothing,Fields!SHAT_GMAR.Value,Fields!SHAT_HATCHALA.Value )),iif( InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 or Fields!MISPAR_SIDUR.Value = 99200 or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_GMAR.Value = nothing,Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))/60)</Value>
+                                                    <Value>=Sum(DateDiff("n",iif( Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_HATCHALA.Value = nothing,Fields!SHAT_GMAR.Value,Fields!SHAT_HATCHALA.Value )),
+			      iif( Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_GMAR.Value = nothing,Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1110,8 +1111,8 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                               </SortExpressions>
                               <Top>1.66688cm</Top>
                               <Left>0.00812in</Left>
-                              <Height>2.17041cm</Height>
-                              <Width>19.72092cm</Width>
+                              <Height>2.17042cm</Height>
+                              <Width>19.7209cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -1707,7 +1708,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                     </SortExpression>
                                   </SortExpressions>
                                   <Height>1.2cm</Height>
-                                  <Width>19.74154cm</Width>
+                                  <Width>19.74155cm</Width>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>

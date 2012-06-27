@@ -344,7 +344,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>1.63156cm</Top>
+            <Top>1.70587cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
             <Width>14.37325cm</Width>
@@ -765,7 +765,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>3.72802cm</Top>
+            <Top>3.80233cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
             <Width>11.80798cm</Width>
@@ -1108,7 +1108,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>4.79389cm</Top>
+            <Top>4.8682cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
             <Width>6.87637cm</Width>
@@ -1225,7 +1225,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>3.72802cm</Top>
+            <Top>3.80233cm</Top>
             <Left>17.28431cm</Left>
             <Height>0.92476cm</Height>
             <Width>2.31999cm</Width>
@@ -1574,7 +1574,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>2.66215cm</Top>
+            <Top>2.73646cm</Top>
             <Left>5.23113cm</Left>
             <Height>0.92476cm</Height>
             <Width>14.37322cm</Width>
@@ -1650,7 +1650,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>2.71939cm</Top>
+            <Top>2.7937cm</Top>
             <Left>0.33596cm</Left>
             <Height>0.47546cm</Height>
             <Width>4.65305cm</Width>
@@ -1729,7 +1729,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>3.26541cm</Top>
+            <Top>3.33972cm</Top>
             <Left>0.33596cm</Left>
             <Height>0.47546cm</Height>
             <Width>4.65305cm</Width>
@@ -1761,7 +1761,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>3.88199cm</Top>
+            <Top>3.9563cm</Top>
             <Left>0.34536cm</Left>
             <Height>0.37057cm</Height>
             <Width>4.65306cm</Width>
@@ -1800,7 +1800,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>4.32312cm</Top>
+            <Top>4.39743cm</Top>
             <Left>0.3704cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.62802cm</Width>
@@ -1839,7 +1839,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>4.78242cm</Top>
+            <Top>4.85673cm</Top>
             <Left>0.34536cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.64365cm</Width>
@@ -1878,7 +1878,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>5.20644cm</Top>
+            <Top>5.28075cm</Top>
             <Left>0.34536cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.65306cm</Width>
@@ -1917,7 +1917,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>5.59519cm</Top>
+            <Top>5.6695cm</Top>
             <Left>0.39544cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.62802cm</Width>
@@ -2963,7 +2963,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </TablixRowHierarchy>
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>dsSidurimVePeiluyot</DataSetName>
-            <Top>6.01921cm</Top>
+            <Top>6.09352cm</Top>
             <Left>0.09187in</Left>
             <Height>0.81773cm</Height>
             <Width>19.37095cm</Width>
@@ -2978,7 +2978,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Source>Embedded</Source>
             <Value>logo1</Value>
             <Sizing>FitProportional</Sizing>
-            <Top>0.03791in</Top>
+            <Top>0.06717in</Top>
             <Left>18.10437cm</Left>
             <Height>1.42944cm</Height>
             <Width>1.5cm</Width>
@@ -3015,7 +3015,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>0.11523cm</Top>
+            <Top>0.18954cm</Top>
             <Left>5.92314cm</Left>
             <Height>0.59972cm</Height>
             <Width>9.83447cm</Width>
@@ -3031,7 +3031,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Source>Embedded</Source>
             <Value>Logo_E_T</Value>
             <Sizing>FitProportional</Sizing>
-            <Top>0.03791in</Top>
+            <Top>0.06717in</Top>
             <Left>17.90955cm</Left>
             <Height>1.46472cm</Height>
             <Width>1.69477cm</Width>
@@ -3068,7 +3068,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>0.89134cm</Top>
+            <Top>0.96565cm</Top>
             <Left>5.92314cm</Left>
             <Height>0.59911cm</Height>
             <Width>9.83447cm</Width>
@@ -3100,7 +3100,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
-            <Top>2.35402cm</Top>
+            <Top>2.42833cm</Top>
             <Left>0.15568in</Left>
             <Height>0.22425cm</Height>
             <Width>4.65931cm</Width>
@@ -3135,7 +3135,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                 </Style>
               </Paragraph>
             </Paragraphs>
-            <Top>2.09394cm</Top>
+            <Top>2.16825cm</Top>
             <Left>0.37041cm</Left>
             <Height>0.2248cm</Height>
             <Width>4.65305cm</Width>
@@ -3154,6 +3154,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Source>External</Source>
             <Value>=Parameters!P_URL_BARCODE.Value</Value>
             <Sizing>FitProportional</Sizing>
+            <Top>0.07431cm</Top>
             <Left>1.56388cm</Left>
             <Height>2.05866cm</Height>
             <Width>2.41392cm</Width>
@@ -3424,7 +3425,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
-            <Top>4.79389cm</Top>
+            <Top>4.8682cm</Top>
             <Left>12.28397cm</Left>
             <Height>0.92476cm</Height>
             <Width>7.32043cm</Width>
@@ -3450,7 +3451,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>0.81703cm</Top>
+            <Top>0.89134cm</Top>
             <Left>0.39544cm</Left>
             <Height>0.6cm</Height>
             <Width>0.83138cm</Width>
@@ -3470,8 +3471,9 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Height>6.83694cm</Height>
-        <Width>19.87734cm</Width>
+        <Top>0.15566cm</Top>
+        <Height>6.91125cm</Height>
+        <Width>19.6044cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3483,14 +3485,14 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>2.69171in</Height>
+    <Height>2.78225in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>7.82573in</Width>
+  <Width>7.71827in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>
