@@ -249,9 +249,7 @@
                if (rdo.checked && document.getElementById("ctl00_KdsContent_txtId").value == "")
                    document.getElementById("ctl00_KdsContent_txtId").focus();
                else if (document.getElementById("ctl00_KdsContent_rdoName").checked) {
-                   if (document.getElementById("ctl00_KdsContent_txtId").value == "")
-                       document.getElementById("ctl00_KdsContent_txtId").focus();
-                   else if (document.getElementById("ctl00_KdsContent_txtName").value == "")
+                     if (document.getElementById("ctl00_KdsContent_txtName").value == "")
                        document.getElementById("ctl00_KdsContent_txtName").focus();
                }
                else if (document.getElementById("ctl00_KdsContent_rdoMonth").checked) {

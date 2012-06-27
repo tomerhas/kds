@@ -59,6 +59,14 @@
      function ShowDetailsServer(ServerName, VersionNumber) {
          alert("מספר גרסה" + VersionNumber + "\n" + "שם שרת:" + ServerName );
      }
+
+     function ImgHelp_Click() {
+       //  debugger;
+         $find("ModalPopupEx").show();
+     }
+     function btnConfirm_Click() {
+         $find("ModalPopupEx").hide();
+     }
     </script>
             <table width="998px" border="0" cellpadding="0" cellspacing="0" id="tblMenuMain">
                 <tr>
@@ -71,7 +79,9 @@
                                  <td style="width:3px"><br /></td>
                                  <td style="width:100%" align="center"><a class="HeaderLink" href="<%# (string.IsNullOrEmpty((String)Eval("NavigateUrl"))) ? "#" : Eval("NavigateUrl")%>"><%# Eval("Text")%></a></td>
                                 <td style="width:3px"><br /></td>
-                                <td><asp:Image runat="server" ID="imgHelp" ImageUrl="~/Images/space-menu.png"  ImageAlign="Top"/></td>
+                                <td><asp:Image runat="server" ID="imgHelp" ImageUrl="~/Images/space-menu.png"  ImageAlign="Top"/>
+                                 
+                                </td>
                                 </tr>
                                 </table>
                             </StaticItemTemplate>   
@@ -81,8 +91,11 @@
                     </td>                
                 </tr>               
              </table>
+                
          </ContentTemplate>
       </asp:UpdatePanel>
+    
+     
 
      <table border="0" cellpadding="0" cellspacing="2" width="998px">
         <tr>
@@ -100,9 +113,7 @@
                     </tr>
                 </table>
             </td>  
-            <td width="10%">
-                <label>Version: 10.5</label>
-            </td>  
+           
             <td> <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                    <ContentTemplate>
                 <asp:ImageButton runat="server" ID="ImagePrint" ImageUrl="~/Images/icon-print.jpg"  ImageAlign="Top" ToolTip="הדפסה" />                
@@ -122,14 +133,32 @@
                     onclick="ImageHome_Click"  CausesValidation="false" />                
             </td>
             <td>
-               <asp:ImageButton runat="server" ID="ImgHelp" ImageUrl="~/Images/icon-help.jpg"  
-                    ImageAlign="Top" ToolTip="עזרה" onclick="ImgHelp_Click"  />
+               <asp:ImageButton runat="server" ID="ImgHelpBtn" ImageUrl="~/Images/icon-help.jpg"  
+                    ImageAlign="Top" ToolTip="אודות" OnClientClick="ImgHelp_Click"  />
             </td>
             <td> 
                 <asp:Image runat="server" ID="ImageExit" ImageUrl="~/Images/icon-exit.jpg"  ImageAlign="Top" ToolTip="יציאה מהמערכת"  />                
             </td>
         </tr>   
      </table>
+
+
+      <div>
+               <AjxToolKit:ModalPopupExtender ID="ModalPopupEx" OkControlID="ImgHelpBtn" CancelControlID="btnConfirm" 
+                        DropShadow="false" X="400" Y="200" PopupControlID="paMessage" TargetControlID="ImgHelpBtn"  runat="server" >
+                </AjxToolKit:ModalPopupExtender>
+                <asp:Panel runat="server" style="display:none"   ID="paMessage" CssClass="PanelMessage"  >
+                <asp:Label ID="lblHeaderMessage" runat ="server" Font-Bold="true" Width="97%" Text="אודות:" BackColor="#696969"></asp:Label>
+                <br /><br />
+                <asp:Label ID="lblGirsa" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br />  
+                <asp:Label ID="lblServerName" Font-Bold="true"  runat ="server" Width="90%"></asp:Label>
+                <br /><br />
+                <asp:Button ID="btnConfirm" runat="server" Text="אישור" CssClass="ImgButtonMake" OnClientClick="btnConfirm_Click"/>
+                </asp:Panel>
+       </div>
+
+
      <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="XmlSiteMapProvider" ShowStartingNode="false"/>
      
      <table style="height:480px;width:985px;border:solid 1px lightgray;margin:4px;">
@@ -179,11 +208,15 @@
                 </td> 
               </tr>
          </table>
+
+
     </form>
 </body>
  <script language="javascript" type="text/javascript">
     if (document.getElementsByName("MainLevel0").length>0)
         document.getElementsByName("MainLevel0").item(document.getElementsByName("MainLevel0").length - 1).lastChild.lastChild.lastChild.style.display = "none";
 
+  
+   
  </script>
 </html>

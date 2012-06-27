@@ -91,14 +91,11 @@ namespace KdsBatch
                        
                        //try
                        //{
-                           iMaamad = int.Parse(dtOvdim.Rows[i]["maamad"].ToString());
-                           iMaamadRashi = int.Parse(dtOvdim.Rows[i]["maamad_rashi"].ToString());
-                           iDirug = int.Parse(dtOvdim.Rows[i]["dirug"].ToString());
-                           iDarga = int.Parse(dtOvdim.Rows[i]["darga"].ToString());
+                       
                            if (i==0)
                             sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                            oPirteyOved = new PirteyOved(iMaamad, iMaamadRashi, iDirug, iDarga, lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i]);
+                            oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i]);
                             oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem); 
                             _PirteyOved.Add(oPirteyOved);
 

@@ -14,6 +14,7 @@ namespace KdsBatch
         public int iDirug { get; set; }
         public int iDarga { get; set; }
         public int iGil { get; set; }
+    public int iMakorNetunim { get; set; }
         public long iBakashaId { get; set; }
         public long iBakashaIdRizatChishuv { get; set; }
         public DateTime dChodeshChishuv { get; set; }
@@ -35,14 +36,17 @@ namespace KdsBatch
         private DataTable _dtRechivim;
         private DataTable _dtChishuv;
         private DataTable _dtRechiveyPrem;
-        public PirteyOved(int Maamad, int MaamadRashi, int Dirug, int Darga, long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
+        public PirteyOved(  long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
         {
-            iMaamad = Maamad;
-            iMaamadRashi = MaamadRashi;
-            iDirug = Dirug;
-            iDarga = Darga;
-            iBakashaId= BakashaId;
+            iBakashaId = BakashaId;
+           
+            iMaamad = int.Parse(drPirteyOved["maamad"].ToString());
+            iMaamadRashi = int.Parse(drPirteyOved["maamad_rashi"].ToString());
+            iDirug = int.Parse(drPirteyOved["dirug"].ToString());
+            iDarga = int.Parse(drPirteyOved["darga"].ToString());
             dChodeshChishuv = DateTime.Parse(drPirteyOved["taarich"].ToString());
+            iMakorNetunim = int.Parse(drPirteyOved["makor"].ToString());
+
             _drPirteyOved = drPirteyOved;
            
             iBakashaIdRizatChishuv = lRequestNumToTransfer;
@@ -65,7 +69,8 @@ namespace KdsBatch
                 else
                 {
                     oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-                    oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                    if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
+                        oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim);
                 
                     oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);

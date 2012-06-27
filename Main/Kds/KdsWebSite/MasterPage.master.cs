@@ -40,7 +40,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         ImageExit.Style.Add("cursor", "hand");
         KdsPage kdsPage = this.Page as KdsPage;
 
-       
+        string ServerName = Environment.MachineName;
+        string VersionNumber = ConfigurationManager.AppSettings["VersionNumber"].ToString();
+        lblGirsa.Text = " מספר גרסה: " + VersionNumber;
+        lblServerName.Text = " שם שרת: " + ServerName;
+
         if (kdsPage != null)
         {
             KdsSecurityLevel iSecurity = kdsPage.PageModule.SecurityLevel;
@@ -91,7 +95,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             imgTopBanner.Visible = !value;
             MenuMain.Visible = !value;
-            ImgHelp.Visible = !value;
+            ImagePrint.Visible = !value;
             ImageHome.Visible = !value;
             ImageExit.Visible = !value;
             ImageExcel.Visible = !value;
@@ -102,13 +106,5 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         Response.Redirect("~/Main.aspx");
     }
-    protected void ImgHelp_Click(object sender, ImageClickEventArgs e)
-    {
-        string ServerName = Environment.MachineName;
-        string VersionNumber = ConfigurationManager.AppSettings["VersionNumber"].ToString();
-        string sScript;
-        sScript = "ShowDetailsServer('" + ServerName + "','" + VersionNumber + "');";
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "Report", sScript, true);
 
-    }
 }
