@@ -25,8 +25,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>0.55411cm</Top>
-        <Left>7.55998cm</Left>
+        <Top>0.54087cm</Top>
+        <Left>7.81587cm</Left>
         <Height>0.50271cm</Height>
         <Width>5.05749cm</Width>
         <Style>
@@ -43,8 +43,7 @@
         <Source>Embedded</Source>
         <Value>logo1</Value>
         <Sizing>FitProportional</Sizing>
-        <Top>0.01324cm</Top>
-        <Left>19.32515cm</Left>
+        <Left>19.58104cm</Left>
         <Height>1.15604cm</Height>
         <Width>1.26188cm</Width>
         <ZIndex>1</ZIndex>
@@ -86,8 +85,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>0.16578cm</Top>
-        <Left>14.06588cm</Left>
+        <Top>0.15254cm</Top>
+        <Left>14.32177cm</Left>
         <Height>0.89104cm</Height>
         <Width>4.72895cm</Width>
         <ZIndex>2</ZIndex>
@@ -142,7 +141,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=FormatDateTime(Parameters!P_Tar_chishuv.Value,2)</Value>
+                    <Value>=Format(parameters!P_Tar_chishuv.Value,"dd/MM/yyyy")</Value>
                     <Style>
                       <Language>he-IL</Language>
                     </Style>
@@ -330,8 +329,8 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>5.20029cm</Top>
-        <Left>2.54195cm</Left>
+        <Top>5.18705cm</Top>
+        <Left>2.79784cm</Left>
         <Height>0.46373cm</Height>
         <Width>16.92904cm</Width>
         <ZIndex>3</ZIndex>
@@ -379,12 +378,6 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>.</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-              <TextRun>
                 <Value>חובה על עובד</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
@@ -392,7 +385,20 @@
                 </Style>
               </TextRun>
               <TextRun>
-                <Value> הנמצא בחופשה לדווח על כך באמצעות כרטיס עבודה או טופס דיווח העדרות אל מחלקת רישום במידה ולא יתקבל דיווח מתאים </Value>
+                <Value> הנמצא בחופשה לדווח על כך באמצעות כרטיס עבודה או טופס דיווח העדרות אל מחלקת רישום. במידה ולא יתקבל דיווח מתאים </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -431,6 +437,20 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
+                <Value />
+                <Style>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
                 <Value>בברכת     חברים             מחלקת     רישום</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
@@ -444,16 +464,16 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>7.03634cm</Top>
-        <Left>0.0283cm</Left>
-        <Height>2.84896cm</Height>
+        <Top>7.32355cm</Top>
+        <Left>0.32341cm</Left>
+        <Height>3.74854cm</Height>
         <Width>20.55873cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
           </Border>
-          <BackgroundColor>#edecec</BackgroundColor>
+          <BackgroundColor>Gainsboro</BackgroundColor>
           <PaddingLeft>2pt</PaddingLeft>
           <PaddingRight>2pt</PaddingRight>
           <PaddingTop>2pt</PaddingTop>
@@ -1214,8 +1234,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsPirteyOved</DataSetName>
-        <Top>1.49821cm</Top>
-        <Left>0.12237cm</Left>
+        <Top>1.48497cm</Top>
+        <Left>0.37826cm</Left>
         <Height>0.7961cm</Height>
         <Width>20.46464cm</Width>
         <ZIndex>5</ZIndex>
@@ -1232,15 +1252,17 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")</Value>
+                <Value>=iif( (Sum(Fields!R1B.Value, "dsRechiveyShonot")&lt;&gt; 0 and Sum(Fields!R126.Value, "dsRechiveyShonot") &lt;&gt; 0 ) and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=51 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=61 ), Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")-2,
+ iif(  (Sum(Fields!R1B.Value, "dsRechiveyShonot")&lt;&gt; 0 or Sum(Fields!R126.Value, "dsRechiveyShonot") &lt;&gt; 0  ) and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=51 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=61 ),Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim")-1,
+ Sum(Fields!CNT_SHONOT.Value, "dsCntRechivim") ))</Value>
                 <Style />
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>5.32543cm</Top>
-        <Left>0.36072cm</Left>
+        <Top>5.31219cm</Top>
+        <Left>0.61661cm</Left>
         <Height>0.29819cm</Height>
         <Width>1.26948cm</Width>
         <ZIndex>6</ZIndex>
@@ -1271,9 +1293,9 @@
             <Style />
           </Paragraph>
         </Paragraphs>
-        <Top>5.27924cm</Top>
-        <Left>19.64738cm</Left>
-        <Height>0.02646cm</Height>
+        <Top>5.266cm</Top>
+        <Left>19.90327cm</Left>
+        <Height>0.24807cm</Height>
         <Width>0.97887cm</Width>
         <ZIndex>7</ZIndex>
         <Visibility>
@@ -1323,19 +1345,40 @@
               <Width>1.12507cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79185cm</Width>
+              <Width>0.92547cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.94627cm</Width>
+              <Width>1.15256cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.83571cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.92604cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.85cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.83198cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.83571cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.92604cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.7898cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.92068cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.8927cm</Width>
+              <Width>1.40847cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80481cm</Width>
+              <Width>1cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.03136cm</Width>
@@ -1374,7 +1417,6 @@
                       <rd:DefaultName>Textbox285</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1383,9 +1425,16 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>17</ColSpan>
+                    <ColSpan>24</ColSpan>
                   </CellContents>
                 </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
                 <TablixCell />
                 <TablixCell />
                 <TablixCell />
@@ -1432,7 +1481,6 @@
                       <rd:DefaultName>Textbox286</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1468,7 +1516,6 @@
                       <rd:DefaultName>Textbox280</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1504,7 +1551,6 @@
                       <rd:DefaultName>Textbox277</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1540,7 +1586,6 @@
                       <rd:DefaultName>Textbox274</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1576,7 +1621,6 @@
                       <rd:DefaultName>Textbox271</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1612,7 +1656,6 @@
                       <rd:DefaultName>Textbox268</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1648,7 +1691,6 @@
                       <rd:DefaultName>Textbox265</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1684,7 +1726,6 @@
                       <rd:DefaultName>Textbox51</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1720,7 +1761,6 @@
                       <rd:DefaultName>Textbox26</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1756,7 +1796,6 @@
                       <rd:DefaultName>Textbox45</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1792,7 +1831,6 @@
                       <rd:DefaultName>Textbox34</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1828,7 +1866,244 @@
                       <rd:DefaultName>Textbox18</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox80">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה גרירה</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox80</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox69">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה משק</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox69</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox67">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה מחסן</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox67</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox64">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה רשם</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox64</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox40">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה מנ''ס</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox40</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox20">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה רכז</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox20</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>פרמיה פקח</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1849,7 +2124,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה משק</Value>
+                              <Value>פרמיה סדרן</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1864,7 +2139,6 @@
                       <rd:DefaultName>Textbox10</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1885,7 +2159,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>פרמיה ניהול תנועה</Value>
+                              <Value>פרמיה מתכנן תנועה</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1900,7 +2174,6 @@
                       <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1936,7 +2209,6 @@
                       <rd:DefaultName>Textbox92</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -1972,7 +2244,6 @@
                       <rd:DefaultName>Textbox69</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2008,7 +2279,6 @@
                       <rd:DefaultName>Textbox54</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2049,7 +2319,6 @@
                       <rd:DefaultName>Textbox287</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2084,7 +2353,6 @@
                       <rd:DefaultName>Textbox281</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2119,7 +2387,6 @@
                       <rd:DefaultName>Textbox278</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2154,7 +2421,6 @@
                       <rd:DefaultName>Textbox275</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2189,7 +2455,6 @@
                       <rd:DefaultName>Textbox272</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2224,7 +2489,6 @@
                       <rd:DefaultName>Textbox269</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2259,7 +2523,6 @@
                       <rd:DefaultName>Textbox266</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2283,6 +2546,7 @@
                               <Value>=Fields!R41.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2294,7 +2558,6 @@
                       <rd:DefaultName>R72</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2318,6 +2581,7 @@
                               <Value>=Fields!R43.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2329,7 +2593,6 @@
                       <rd:DefaultName>R71</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2353,6 +2616,7 @@
                               <Value>=Fields!R39.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2364,7 +2628,6 @@
                       <rd:DefaultName>R70</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2385,7 +2648,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=iif(Round(Fields!R1B.Value/60,1)&gt;0,Round(Fields!R1B.Value/60,1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -2399,7 +2662,6 @@
                       <rd:DefaultName>R69</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2420,10 +2682,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R126.Value/60</Value>
+                              <Value>=iif(Round(Fields!R126.Value*Fields!R75.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R126.Value*Fields!R75.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2435,7 +2696,244 @@
                       <rd:DefaultName>R68</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R112">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R112.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R112</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R115">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R115.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R115</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R113">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R113.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R113</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R204">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R204.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R204</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R114">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R114.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R114</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R118">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R118.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R118</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="R117">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!R117.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>R117</rd:DefaultName>
+                      <Style>
+                        <Border>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2456,9 +2954,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!R116.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2470,7 +2969,6 @@
                       <rd:DefaultName>R64</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2491,9 +2989,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!R205.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2505,7 +3004,6 @@
                       <rd:DefaultName>R57</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2541,7 +3039,6 @@
                       <rd:DefaultName>R561</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2562,10 +3059,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R95.Value/60</Value>
+                              <Value>=iif (Round(Fields!R95.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R95.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2577,7 +3073,6 @@
                       <rd:DefaultName>Textbox70</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2590,7 +3085,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox64">
+                    <Textbox Name="R12">
                       <CanGrow>true</CanGrow>
                       <CanShrink>true</CanShrink>
                       <KeepTogether>true</KeepTogether>
@@ -2598,9 +3093,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!R12.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2609,10 +3105,9 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox64</rd:DefaultName>
+                      <rd:DefaultName>R12</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2681,22 +3176,57 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R95.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R1B.Value &lt;&gt; Nothing and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=52 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=62), False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R126.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R126.Value &lt;&gt; Nothing and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=52 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=62 ) and Fields!R75.Value &lt;&gt; Nothing , False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R95.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R112.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R95.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(Fields!R115.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R113.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R204.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R114.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R118.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R117.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R116.Value &lt;&gt; Nothing, False, True)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Fields!R205.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -2727,15 +3257,15 @@
         </TablixRowHierarchy>
         <FixedColumnHeaders>true</FixedColumnHeaders>
         <FixedRowHeaders>true</FixedRowHeaders>
-        <DataSetName>dsRechivimChodshiym</DataSetName>
-        <Top>5.67945cm</Top>
-        <Left>0.12237cm</Left>
+        <DataSetName>dsRechiveyShonot</DataSetName>
+        <Top>5.90434cm</Top>
+        <Left>0.31615cm</Left>
         <Height>1.24282cm</Height>
-        <Width>15.79495cm</Width>
+        <Width>22.8411cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
-            <Style>None</Style>
+            <Style>Solid</Style>
           </Border>
         </Style>
       </Tablix>
@@ -2776,31 +3306,31 @@
               <Width>0.80028cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75148cm</Width>
+              <Width>0.98496cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.7287cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.95165cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.95165cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>1.00457cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.95165cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.95165cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.95cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.1104cm</Width>
+              <Width>0.81936cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -2832,7 +3362,6 @@
                       <rd:DefaultName>Textbox34</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2892,7 +3421,6 @@
                       <rd:DefaultName>Textbox48</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2927,7 +3455,6 @@
                       <rd:DefaultName>Textbox303</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2962,7 +3489,6 @@
                       <rd:DefaultName>Textbox300</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -2997,7 +3523,6 @@
                       <rd:DefaultName>Textbox297</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3031,7 +3556,6 @@
                       <rd:DefaultName>Textbox55</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3079,7 +3603,6 @@
                       <rd:DefaultName>Textbox51</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3114,7 +3637,6 @@
                       <rd:DefaultName>Textbox26</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3148,7 +3670,6 @@
                       <rd:DefaultName>Textbox45</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3183,7 +3704,6 @@
                       <rd:DefaultName>Textbox34</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3218,7 +3738,6 @@
                       <rd:DefaultName>Textbox18</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3253,7 +3772,6 @@
                       <rd:DefaultName>Textbox10</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3288,7 +3806,6 @@
                       <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3323,7 +3840,6 @@
                       <rd:DefaultName>Textbox92</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3372,7 +3888,6 @@
                       <rd:DefaultName>Textbox63</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3421,7 +3936,6 @@
                       <rd:DefaultName>Textbox65</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3456,7 +3970,6 @@
                       <rd:DefaultName>Textbox67</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3491,7 +4004,6 @@
                       <rd:DefaultName>Textbox71</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3526,7 +4038,6 @@
                       <rd:DefaultName>Textbox75</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3561,7 +4072,6 @@
                       <rd:DefaultName>Textbox73</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3596,7 +4106,6 @@
                       <rd:DefaultName>Textbox69</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3636,7 +4145,6 @@
                       <rd:DefaultName>Textbox49</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3671,7 +4179,6 @@
                       <rd:DefaultName>Textbox304</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3705,7 +4212,6 @@
                       <rd:DefaultName>Textbox301</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3739,7 +4245,6 @@
                       <rd:DefaultName>Textbox298</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3759,7 +4264,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R65.Value</Value>
+                              <Value>=iif(Round(Fields!R65.Value,2)&gt;0,Round(Fields!R65.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3773,7 +4278,6 @@
                       <rd:DefaultName>R65</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3793,7 +4297,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R72.Value</Value>
+                              <Value>=Round(Fields!R72.Value,2)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3807,7 +4311,6 @@
                       <rd:DefaultName>R72</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3827,7 +4330,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R71.Value</Value>
+                              <Value>=iif(Round(Fields!R71.Value,2)&gt;0,Round(Fields!R71.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3841,7 +4344,6 @@
                       <rd:DefaultName>R71</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3860,7 +4362,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R70.Value</Value>
+                              <Value>=iif(Round(Fields!R70.Value,2)&gt;0,Round(Fields!R70.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3874,7 +4376,6 @@
                       <rd:DefaultName>R70</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3894,7 +4395,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R69.Value</Value>
+                              <Value>=iif(Round(Fields!R69.Value,2)&gt;0,Round(Fields!R69.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3908,7 +4409,6 @@
                       <rd:DefaultName>R69</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3928,7 +4428,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R68.Value</Value>
+                              <Value>=iif(Round(Fields!R68.Value,2)&gt;0,Round(Fields!R68.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3942,7 +4442,6 @@
                       <rd:DefaultName>R68</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3962,7 +4461,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R64.Value</Value>
+                              <Value>=iif(Round(Fields!R64.Value,2)&gt;0,Round(Fields!R64.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3976,7 +4475,6 @@
                       <rd:DefaultName>R64</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -3996,7 +4494,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R57.Value</Value>
+                              <Value>=iif(Round(Fields!R57.Value,2)&gt;0,Round(Fields!R57.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4010,7 +4508,6 @@
                       <rd:DefaultName>R57</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4030,7 +4527,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R56.Value</Value>
+                              <Value>=iif(Round(Fields!R56.Value,2)&gt;0,Round(Fields!R56.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4044,7 +4541,6 @@
                       <rd:DefaultName>R561</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4064,7 +4560,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R60.Value</Value>
+                              <Value>=iif(Round(Fields!R60.Value,2)&gt;0,Round(Fields!R60.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4078,7 +4574,6 @@
                       <rd:DefaultName>R60</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4098,7 +4593,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R61.Value</Value>
+                              <Value>=iif(Round(Fields!R61.Value,2)&gt;0,Round(Fields!R61.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4112,7 +4607,6 @@
                       <rd:DefaultName>R61</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4132,7 +4626,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R62.Value</Value>
+                              <Value>=iif(Round(Fields!R62.Value,2)&gt;0,Round(Fields!R62.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4146,7 +4640,6 @@
                       <rd:DefaultName>R62</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4166,7 +4659,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=iif(Round(Fields!R266.Value,2)&gt;0,Round(Fields!R266.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4180,7 +4673,6 @@
                       <rd:DefaultName>Textbox72</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4200,10 +4692,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R66.Value</Value>
+                              <Value>=iif(Round(Fields!R66.Value,2)&gt;0,Round(Fields!R66.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4215,7 +4706,6 @@
                       <rd:DefaultName>R66</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4235,10 +4725,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R67.Value</Value>
+                              <Value>=iif(Round(Fields!R67.Value,2)&gt;0,Round(Fields!R67.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4250,7 +4739,6 @@
                       <rd:DefaultName>Textbox74</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4270,7 +4758,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value EvaluationMode="Constant" />
+                              <Value>=iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="0",iif(Round(Fields!R53.Value/516,2)&gt;0,Round(Fields!R53.Value/516,2),""),
+iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="1",iif(Round(Fields!R53.Value/444,2)&gt;0,Round(Fields!R53.Value/444,2),""),
+iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480,2)&gt;0,Round(Fields!R53.Value/480,2),""),"")))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -4284,7 +4774,6 @@
                       <rd:DefaultName>Textbox70</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -4389,14 +4878,14 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsHeadruyot</DataSetName>
-        <Top>5.7037cm</Top>
-        <Left>7.78062cm</Left>
+        <Top>5.90213cm</Top>
+        <Left>9.75508cm</Left>
         <Height>1.24282cm</Height>
-        <Width>19.90168cm</Width>
+        <Width>18.94289cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
-            <Style>None</Style>
+            <Style>Solid</Style>
           </Border>
         </Style>
       </Tablix>
@@ -4497,7 +4986,6 @@
                       <rd:DefaultName>Textbox43</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
@@ -4515,7 +5003,6 @@
                         <PaddingTop>2pt</PaddingTop>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -4541,7 +5028,6 @@
                       <rd:DefaultName>Textbox41</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
@@ -4584,11 +5070,11 @@
                       <rd:DefaultName>Textbox39</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4626,11 +5112,11 @@
                       <rd:DefaultName>Textbox37</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4668,11 +5154,11 @@
                       <rd:DefaultName>Textbox35</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4710,11 +5196,11 @@
                       <rd:DefaultName>Textbox33</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4752,11 +5238,11 @@
                       <rd:DefaultName>Textbox31</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4794,11 +5280,11 @@
                       <rd:DefaultName>Textbox29</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4836,11 +5322,11 @@
                       <rd:DefaultName>Textbox27</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4878,11 +5364,11 @@
                       <rd:DefaultName>Textbox25</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4920,11 +5406,11 @@
                       <rd:DefaultName>Textbox23</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -4962,11 +5448,11 @@
                       <rd:DefaultName>Textbox21</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5018,11 +5504,11 @@
                       <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5060,11 +5546,11 @@
                       <rd:DefaultName>Textbox19</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5102,11 +5588,11 @@
                       <rd:DefaultName>Textbox17</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5144,11 +5630,11 @@
                       <rd:DefaultName>Textbox15</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5201,11 +5687,11 @@
                       <rd:DefaultName>Textbox13</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5245,11 +5731,11 @@
                       <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5287,11 +5773,11 @@
                       <rd:DefaultName>Textbox5</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5330,11 +5816,11 @@
                       <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <BottomBorder>
                           <Color>Black</Color>
+                          <Style>Solid</Style>
                         </BottomBorder>
                         <LeftBorder>
                           <Color>Black</Color>
@@ -5359,14 +5845,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox44">
+                    <Textbox Name="HEARA">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!HEARA.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -5377,7 +5863,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox44</rd:DefaultName>
+                      <rd:DefaultName>HEARA</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -5385,9 +5871,8 @@
                         </Border>
                         <TopBorder>
                           <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
-                          <Style>=IIF(RowNumber("DsRechivim")= 1 , "Solid", "None")</Style>
                         </TopBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5423,13 +5908,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5450,7 +5938,7 @@
                               <Value>=Fields!R125.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5465,13 +5953,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5492,6 +5983,7 @@
                               <Value>=iif(Fields!R47.Value&gt;0,"ל",iif(Fields!R48.Value&gt;0,"לכ",""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5506,13 +5998,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5548,13 +6043,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5589,13 +6087,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5631,13 +6132,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5673,13 +6177,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5700,6 +6207,7 @@
                               <Value>=Fields!R92.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5714,13 +6222,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5741,6 +6252,7 @@
                               <Value>=Fields!R91.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5755,13 +6267,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5782,6 +6297,7 @@
                               <Value>=Fields!R53.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5796,13 +6312,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5823,6 +6342,7 @@
                               <Value>=Fields!R131.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5837,13 +6357,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5864,6 +6387,7 @@
                               <Value>=Fields!R55.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5878,13 +6402,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5905,6 +6432,7 @@
                               <Value>=Fields!R78.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5919,13 +6447,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5946,6 +6477,7 @@
                               <Value>=Fields!R77.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -5960,13 +6492,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -5987,6 +6522,7 @@
                               <Value>=Fields!R76.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6001,13 +6537,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6025,10 +6564,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R67.Value+Fields!R66.Value</Value>
+                              <Value>=iif(Round(Fields!R67.Value+Fields!R66.Value,2)&gt;0,Round(Fields!R67.Value+Fields!R66.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6043,13 +6581,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6085,13 +6626,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6112,6 +6656,7 @@
                               <Value>=Fields!R1.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6126,13 +6671,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6153,6 +6701,7 @@
                               <Value>=Fields!R126.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6167,13 +6716,16 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
                         <RightBorder>
                           <Color>Black</Color>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6208,6 +6760,9 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Color>Black</Color>
                         </LeftBorder>
@@ -6215,7 +6770,7 @@
                           <Color>Black</Color>
                           <Style>None</Style>
                         </RightBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.5pt</PaddingLeft>
                         <PaddingRight>0.1pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6250,10 +6805,13 @@
                           <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>=IIF(RowNumber("DsRechivim")= 1 , "Black", "LightGrey")</Color>
+                        </TopBorder>
                         <LeftBorder>
                           <Style>None</Style>
                         </LeftBorder>
-                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"#edecec", "White" )</BackgroundColor>
+                        <BackgroundColor>=IIF(Fields!DAY_NUM.Value Mod 2 ,"Gainsboro", "White" )</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
                         <PaddingTop>0.5pt</PaddingTop>
@@ -6303,8 +6861,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsRechivim</DataSetName>
-        <Top>2.37621cm</Top>
-        <Left>0.12237cm</Left>
+        <Top>2.36297cm</Top>
+        <Left>0.3777cm</Left>
         <Height>1.05505cm</Height>
         <Width>20.46989cm</Width>
         <ZIndex>10</ZIndex>
@@ -6471,7 +7029,7 @@
                               <Value>=Fields!R125.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6550,7 +7108,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R49.Value)+Fields!R50.Value</Value>
+                              <Value>=Sum(Fields!R49.Value)+(Fields!R50.Value*2)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -6594,7 +7152,6 @@
                               <Value>=Fields!R22.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6635,7 +7192,7 @@
                               <Value>=Fields!R29.Value+Fields!R28.Value+Fields!R203.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6676,7 +7233,7 @@
                               <Value>=Fields!R26.Value+Fields!R30.Value+Fields!R202.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6717,7 +7274,7 @@
                               <Value>=Sum(Fields!R92.Value, "DsRechivim")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6758,7 +7315,7 @@
                               <Value>=Sum(Fields!R91.Value, "DsRechivim")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6799,7 +7356,7 @@
                               <Value>=Sum(Fields!R53.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6840,7 +7397,7 @@
                               <Value>=Sum(Fields!R131.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6881,7 +7438,7 @@
                               <Value>=Fields!R55.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6922,7 +7479,7 @@
                               <Value>=Sum(Fields!R78.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -6963,7 +7520,7 @@
                               <Value>=Sum(Fields!R77.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7001,10 +7558,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R76.Value)</Value>
+                              <Value>=Sum(Fields!R76.Value, "DsRechivim")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7036,10 +7593,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R66.Value+Fields!R67.Value</Value>
+                              <Value>=iif(Round(Fields!R67.Value+Fields!R66.Value,2)&gt;0,Round(Fields!R67.Value+Fields!R66.Value,2),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.00;(0.00);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7053,12 +7609,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                        </RightBorder>
                         <BackgroundColor>="White"</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
@@ -7121,7 +7671,7 @@
                               <Value>=Sum(Fields!R1.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0)</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7610,10 +8160,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R10.Value)/60</Value>
+                              <Value>=iif(Round(Fields!R53.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R53.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7651,10 +8200,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R131.Value)/60</Value>
+                              <Value>=iif(Round(Fields!R131.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R131.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7686,10 +8234,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R55.Value/60</Value>
+                              <Value>=iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7727,10 +8274,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif (Fields!R78.Value &lt;&gt; nothing,Fields!R78.Value/60,"")</Value>
+                              <Value>=iif(Round(Fields!R78.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R78.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7768,10 +8314,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif (Fields!R77.Value &lt;&gt; nothing,Fields!R77.Value/60,"")</Value>
+                              <Value>=iif(Round(Fields!R77.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R77.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7809,10 +8354,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif (Fields!R76.Value &lt;&gt; nothing,Fields!R76.Value/60,"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7926,10 +8470,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif (Fields!R1.Value &lt;&gt; nothing,Fields!R1.Value/60,"")</Value>
+                              <Value>=iif(Round(Fields!R1.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R1.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7943,12 +8486,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                        </RightBorder>
                         <BackgroundColor>="White"</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
@@ -8907,7 +9444,7 @@
                               <Value>=Fields!R125.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0)</Format>
+                                <Format>0;(0);'-'</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -8948,7 +9485,7 @@
                               <Value>=Fields!R47.Value+Fields!R48.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -8986,10 +9523,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R49.Value)+Fields!R50.Value</Value>
+                              <Value>=Sum(Fields!R49.Value)+(Fields!R50.Value*2)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9027,10 +9564,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R22.Value+Fields!R24.Value</Value>
+                              <Value>=iif(Fields!R22.Value+Fields!R44.Value&gt;0,Fields!R22.Value+Fields!R44.Value,"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9071,7 +9607,7 @@
                               <Value>=Fields!R29.Value+Fields!R28.Value+Fields!R203.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9112,7 +9648,7 @@
                               <Value>=Fields!R26.Value+Fields!R30.Value+Fields!R202.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
+                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9232,10 +9768,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R10.Value)/60</Value>
+                              <Value>=iif(Round(Fields!R53.Value/60,1)&gt;0,Round(Fields!R53.Value/60,1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9273,10 +9808,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R131.Value)/60</Value>
+                              <Value>=iif(Round(Fields!R131.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R131.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9314,7 +9848,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!KOD_MAAMAD.Value, "dsPirteyOved")&lt;&gt;23,iif(FormatNumber((Sum(Fields!R55.Value)/60),1)="0.0","", FormatNumber((Sum(Fields!R55.Value)/60),1)),"")</Value>
+                              <Value>=iif(First(Fields!KOD_MAAMAD.Value, "dsPirteyOved")&lt;&gt;23,iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),""),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0)</Format>
@@ -9355,10 +9889,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber((Sum(Fields!R103.Value)/60),1)="0.0","", FormatNumber((Sum(Fields!R103.Value)/60),1) ))</Value>
+                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R103.Value/60,1,System.MidpointRounding.AwayFromZero),""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9372,12 +9905,6 @@
                         <Border>
                           <Style>Solid</Style>
                         </Border>
-                        <LeftBorder>
-                          <Color>Black</Color>
-                        </LeftBorder>
-                        <RightBorder>
-                          <Color>Black</Color>
-                        </RightBorder>
                         <BackgroundColor>="White"</BackgroundColor>
                         <PaddingLeft>0.1pt</PaddingLeft>
                         <PaddingRight>1.5pt</PaddingRight>
@@ -9396,7 +9923,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber((Sum(Fields!R102.Value)/60),1)="0.0","", FormatNumber((Sum(Fields!R102.Value)/60),1) ))</Value>
+                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(Round(Fields!R102.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R102.Value/60,1,System.MidpointRounding.AwayFromZero),""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0);''</Format>
@@ -9437,7 +9964,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber((Sum(Fields!R101.Value)/60),1)="0.0","", FormatNumber((Sum(Fields!R101.Value)/60),1) ))</Value>
+                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(Round(Sum(Fields!R101.Value)/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Sum(Fields!R101.Value)/60,1,System.MidpointRounding.AwayFromZero),""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0);''</Format>
@@ -9560,10 +10087,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif (Fields!R1.Value &lt;&gt; nothing,(Fields!R1.Value - (Fields!R108.Value*60))/60 ,"")</Value>
+                              <Value>=iif(Round((Fields!R1.Value - (Fields!R108.Value*60))/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round((Fields!R1.Value - (Fields!R108.Value*60))/60,1, System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0.0;(0.0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9663,8 +10189,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsRechivimChodshiym</DataSetName>
-        <Top>3.43126cm</Top>
-        <Left>0.12237cm</Left>
+        <Top>3.41802cm</Top>
+        <Left>0.37826cm</Left>
         <Height>1.49816cm</Height>
         <Width>20.46979cm</Width>
         <ZIndex>11</ZIndex>
@@ -9675,10 +10201,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.89706in</Height>
+    <Height>4.35909in</Height>
     <Style />
   </Body>
-  <Width>10.89854in</Width>
+  <Width>11.29841in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -9767,6 +10293,10 @@
           <DataField>GIL</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="KOD_GIL">
+          <DataField>KOD_GIL</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="TCHILAT_AVODA">
           <DataField>TCHILAT_AVODA</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -9777,6 +10307,10 @@
         </Field>
         <Field Name="MEAFYEN83">
           <DataField>MEAFYEN83</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MEAFYEN56">
+          <DataField>MEAFYEN56</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -9802,20 +10336,12 @@
           <DataField>R5</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="R10">
-          <DataField>R10</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R11">
-          <DataField>R11</DataField>
+        <Field Name="R44">
+          <DataField>R44</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R22">
           <DataField>R22</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R24">
-          <DataField>R24</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R26">
@@ -9832,18 +10358,6 @@
         </Field>
         <Field Name="R30">
           <DataField>R30</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R39">
-          <DataField>R39</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R41">
-          <DataField>R41</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R43">
-          <DataField>R43</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R55">
@@ -9896,10 +10410,6 @@
         </Field>
         <Field Name="R92">
           <DataField>R92</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R95">
-          <DataField>R95</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R100">
@@ -10108,6 +10618,10 @@
           <DataField>R221</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsHeadruyot">
@@ -10124,6 +10638,10 @@
       <Fields>
         <Field Name="R56">
           <DataField>R56</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R53">
+          <DataField>R53</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="R57">
@@ -10178,6 +10696,10 @@
           <DataField>R72</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="R266">
+          <DataField>R266</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsCntRechivim">
@@ -10198,6 +10720,100 @@
         </Field>
         <Field Name="CNT_SHONOT">
           <DataField>CNT_SHONOT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsRechiveyShonot">
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Rechivey_Shonot</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="R1">
+          <DataField>R1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R10">
+          <DataField>R10</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R11">
+          <DataField>R11</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R12">
+          <DataField>R12</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R39">
+          <DataField>R39</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R41">
+          <DataField>R41</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R43">
+          <DataField>R43</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R75">
+          <DataField>R75</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R95">
+          <DataField>R95</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R112">
+          <DataField>R112</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R113">
+          <DataField>R113</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R114">
+          <DataField>R114</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R115">
+          <DataField>R115</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R116">
+          <DataField>R116</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R117">
+          <DataField>R117</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R118">
+          <DataField>R118</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R204">
+          <DataField>R204</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R205">
+          <DataField>R205</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R1B">
+          <DataField>R1B</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
