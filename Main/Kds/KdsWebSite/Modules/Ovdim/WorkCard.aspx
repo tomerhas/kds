@@ -78,7 +78,7 @@
          <table width="100%" class="WorkCardTable2" cellspacing="0">
             <tr>
               <td width="89%">                                      
-                            <table width="100%" cellpadding="0" cellspacing="0">
+                <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td style="width: 8%">
                                         <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>  
@@ -135,7 +135,7 @@
                                     </td>                                            
                                 </tr>                                        
                             </table>                                                       
-            </td>
+              </td>
               <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">              
                 <table style="width: 100%" cellpadding="0" cellspacing="0">
                     <tr valign="bottom">
