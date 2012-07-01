@@ -79,62 +79,62 @@
             <tr>
               <td width="89%">                                      
                 <table width="100%" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td style="width: 8%">
-                                        <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>  
-                                        <label  runat="server" id="lblId" class = "WorkCardTable1Label">מספר אישי:</label>                                                           
-                                    </td>
-                                    <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
-                                    <td style="width: 7%">                                                                                      
-                                        <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                                            dir="rtl" Style="width: 50px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
-                                        <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
-                                            CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
-                                            ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
-                                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
-                                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID">
-                                        </cc1:AutoCompleteExtender>
-                                    </td>
-                                    <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
-                                    <td style="width: 15%">
-                                        <asp:TextBox ID="txtName" CssClass="WorkCardTextBox" runat="server" AutoComplete="Off"
-                                            Style="width: 110px;"  OnTextChanged="txtName_TextChanged" ></asp:TextBox>
-                                        <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
-                                            CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
-                                            ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
-                                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
-                                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">
-                                        </cc1:AutoCompleteExtender>
-                                    </td>
-                                    <td style="width: 188px" class = "WorkCardTable1Label">מעמד:</td>                                
-                                    <td style="width: 21%;height:45px; " class="WorkCardTdBorder" align="right">
-                                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtMaamad" ReadOnly="true"
-                                            Style="width: 173px;"> </asp:TextBox>
-                                    </td>
-                                    <td style="width: 5%" class = "WorkCardTable1Label">תאריך:</td>
-                                    <td dir="ltr" align="right" style="width: 15%">                                                                                                       
-                                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox" OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="90px"></KdsCalendar:KdsCalendar>
-                                        <asp:CustomValidator runat="server" ID="vldDay" ErrorMessage="לא נמצא כרטיס לתאריך זה"
-                                            ControlToValidate="clnDate" Display="None"></asp:CustomValidator>
-                                        <cc1:ValidatorCalloutExtender runat="server" ID="vldEx" BehaviorID="vldExBehavior"
-                                            TargetControlID="vldDay" Width="200px" PopupPosition="Left">
-                                        </cc1:ValidatorCalloutExtender>    
-                                    </td>
-                                    <td style="width: 3%" class="WorkCardTable1Label">יום:</td>
-                                    <td style="width: 9%" class="WorkCardTdBorder">
-                                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 70px;"> </asp:TextBox>
-                                    </td>                                           
-                                    <td>
-                                        <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
-                                        <input type="hidden" id="hidRefresh" runat="server"/>
-                                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
-                                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:54px"/>
-                                            <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
-                                    </td>                                            
-                                </tr>                                        
-                            </table>                                                       
+                   <tr>
+                    <td style="width: 8%">
+                        <a href="#" runat="server" id="lnkId" onclick="ShowEmployeeDetails();" target="_self">מספר אישי:</a>  
+                        <label  runat="server" id="lblId" class = "WorkCardTable1Label">מספר אישי:</label>                                                           
+                    </td>
+                    <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
+                    <td style="width: 7%">                                                                                      
+                        <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
+                            dir="rtl" Style="width: 50px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
+                        <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
+                            CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
+                            ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
+                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
+                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
+                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID">
+                        </cc1:AutoCompleteExtender>
+                    </td>
+                    <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
+                    <td style="width: 15%">
+                        <asp:TextBox ID="txtName" CssClass="WorkCardTextBox" runat="server" AutoComplete="Off"
+                            Style="width: 110px;"  OnTextChanged="txtName_TextChanged" ></asp:TextBox>
+                        <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
+                            CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
+                            ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
+                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
+                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
+                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">
+                        </cc1:AutoCompleteExtender>
+                    </td>
+                    <td style="width: 188px" class = "WorkCardTable1Label">מעמד:</td>                                
+                    <td style="width: 21%;height:45px; " class="WorkCardTdBorder" align="right">
+                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtMaamad" ReadOnly="true"
+                            Style="width: 173px;"> </asp:TextBox>
+                    </td>
+                    <td style="width: 5%" class = "WorkCardTable1Label">תאריך:</td>
+                    <td dir="ltr" align="right" style="width: 15%">                                                                                                       
+                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox" OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="90px"></KdsCalendar:KdsCalendar>
+                        <asp:CustomValidator runat="server" ID="vldDay" ErrorMessage="לא נמצא כרטיס לתאריך זה"
+                            ControlToValidate="clnDate" Display="None"></asp:CustomValidator>
+                        <cc1:ValidatorCalloutExtender runat="server" ID="vldEx" BehaviorID="vldExBehavior"
+                            TargetControlID="vldDay" Width="200px" PopupPosition="Left">
+                        </cc1:ValidatorCalloutExtender>    
+                    </td>
+                    <td style="width: 3%" class="WorkCardTable1Label">יום:</td>
+                    <td style="width: 9%" class="WorkCardTdBorder">
+                        <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtDay" Style="width: 70px;"> </asp:TextBox>
+                    </td>                                           
+                    <td>
+                        <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
+                        <input type="hidden" id="hidRefresh" runat="server"/>
+                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
+                            CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:54px"/>
+                            <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
+                    </td>                                            
+                   </tr>                                        
+                </table>                                                       
               </td>
               <td runat="server" id="tdCardStatus" style="width: 11%" rowspan="2">              
                 <table style="width: 100%" cellpadding="0" cellspacing="0">
