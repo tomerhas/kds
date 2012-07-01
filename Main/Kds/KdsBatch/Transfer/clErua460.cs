@@ -30,10 +30,11 @@ namespace KdsBatch
               {
                   sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a"), 4, 0));
               }
-              else
+              else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
                   sErua460.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaGrira.GetHashCode(), _dtPrem), 4, 0));
               }
+              else sErua460.Append(GetBlank(4));
 
               sErua460.Append(GetBlank(4));
 
