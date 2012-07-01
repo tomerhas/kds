@@ -154,7 +154,7 @@ namespace KdsBatch
                 sErech = fErech.ToString(sFormat).Replace(".", "").Replace("0", " ");
             else sErech = fErech.ToString(sFormat).Replace(".", "");
 
-            if (_iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && fErech < 0)
+            if (_iKodErua != 162 && _iKodErua != 462 && _iKodErua != 589 && sErech.Trim() != "" && fErech < 0)
             {
                 iLastDigit = int.Parse(sErech.Substring(sErech.Length - 1, 1));
                 sErech = sErech.Substring(1, sErech.Length - 2);
