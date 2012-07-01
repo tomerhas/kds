@@ -72,8 +72,7 @@
             <td class="WorkCardTable1Label" align="left">תאריך עדכון אחרון:</td>                               
             <td class="WorkCardTable1Label" align="right"><label id="lblLastUpdateDate" runat="server"></label></td>                    
         </tr>
-      </table>
-     
+      </table>     
       <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
         <ContentTemplate>
          <table width="100%" class="WorkCardTable2" cellspacing="0">
@@ -166,8 +165,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
             <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                         
         </Triggers>
-      </asp:UpdatePanel>
-           
+      </asp:UpdatePanel>           
       <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
             <ContentTemplate>         
                 <table width="100%" id="tbTabs" runat="server" class="WorkCardTable2" cellpadding="0" cellspacing="0" >
@@ -359,8 +357,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
             <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />        
         </Triggers>
-    </asp:UpdatePanel>            
-   
+    </asp:UpdatePanel>               
       <asp:UpdatePanel ID="upCollpase" runat="server" RenderMode="Inline" UpdateMode="Always">                                
         <ContentTemplate>
         <div style="text-align: right; overflow: auto; height:500px;">
