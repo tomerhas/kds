@@ -2453,7 +2453,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
           
             //hCell.Controls.Add(lDummy);
            
-            DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
+            //DataRow[] dr = dtApprovals.Select("mafne_lesade='mispar_sidur'");
 
             //יצירת ToolTip
             string sToolTip = CreateToolTip(oSidur, fSidurTime);
@@ -2709,7 +2709,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
        
-        DataRow[] dr = dtApprovals.Select("mafne_lesade='Out_michsa'");
+        //DataRow[] dr = dtApprovals.Select("mafne_lesade='Out_michsa'");
        
         switch (_StatusCard)
         {
@@ -3671,20 +3671,20 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
       
     }
 
-    private void SetIsurim(DropDownList ddl, int iIndex, string sFieldName, string oImagName, ref clSidur oSidur, ref HtmlTableCell hCell)
-    {
-        bool bEnableApproval=false;
-        string sAllApprovalDescription = "";      
-        DataRow[] dr = dtApprovals.Select("mafne_lesade='" + sFieldName + "'");
-        if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription, ref bEnableApproval))
-        {
-            Image imgApp;
-            imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", oImagName + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
-            ddl.Attributes.Add("class", "ApprovalField");
-            ddl.Enabled = bEnableApproval;
-            hCell.Controls.Add(imgApp);
-        }
-    }
+    //private void SetIsurim(DropDownList ddl, int iIndex, string sFieldName, string oImagName, ref clSidur oSidur, ref HtmlTableCell hCell)
+    //{
+    //    bool bEnableApproval=false;
+    //    string sAllApprovalDescription = "";      
+    //    DataRow[] dr = dtApprovals.Select("mafne_lesade='" + sFieldName + "'");
+    //    if (CheckIfApprovalExists(FillApprovalKeys(dr), ref oSidur, ref sAllApprovalDescription, ref bEnableApproval))
+    //    {
+    //        Image imgApp;
+    //        imgApp = CreateImgForApp("../../Images/ApprovalSign.jpg", oImagName + iIndex, "GetAppMsg(this)", "MovePanel(" + iIndex + ");", sAllApprovalDescription);
+    //        ddl.Attributes.Add("class", "ApprovalField");
+    //        ddl.Enabled = bEnableApproval;
+    //        hCell.Controls.Add(imgApp);
+    //    }
+    //}
     //protected void CreateHamaraCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive, DataRow[] drSugSidur)
     //{
     //    bool bErrorExists, bEnabled;
@@ -3896,7 +3896,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.EnableViewState = false;
      
         
-        DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Gmar_Letashlum'");
+        //DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Gmar_Letashlum'");
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
@@ -3957,7 +3957,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         }
       //  hCell.Style.Add("border-left", "solid 1px gray");
 
-        DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Hatchala_Letashlum'");
+       // DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_Hatchala_Letashlum'");
         switch (_StatusCard)
         {
             case clGeneral.enCardStatus.Error:
@@ -4960,7 +4960,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             //AddAttribute(oTextBox,"OldV",oSidur.dOldFullShatHatchala.ToShortTimeString());//oTextBox.Text);
             hCell.Controls.Add(oTextBox);
 
-            DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_hatchala'");
+            //DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_hatchala'");
             switch (_StatusCard)
             {
                 case clGeneral.enCardStatus.Valid:
@@ -5280,7 +5280,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
             oTextBox.EnableViewState = false;
             
-            DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_gmar'");
+            //DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_gmar'");
             
             switch (_StatusCard)
             {                             
@@ -6308,7 +6308,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             }
             string sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
                        
-            DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_yetzia'");
+            //DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_yetzia'");
             DateTime dSidurShatHatchala = new DateTime();
                        
             switch (_StatusCard)

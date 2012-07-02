@@ -488,7 +488,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 SetImageForButtonValiditiy();
 
                 ////אישורים               
-                GetApproval();
+               // GetApproval();
                 SD.btnHandler += new Modules_UserControl_ucSidurim.OnButtonClick(SD_btnHandler);
                 //SD.btnReka +=new Modules_UserControl_ucSidurim.OnButtonClick(SD_btnReka);
                 //if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))
@@ -1008,54 +1008,54 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
 
     }
-    protected void GetApproval()
-    {
-        //if (_StatusCard == clGeneral.enCardStatus.Valid)
-        //{
-            // btnCalcItem.Disabled = false;
-            ApprovalManager _Approvals = new ApprovalManager(LoginUser);
-            DataTable dt;
+    //protected void GetApproval()
+    //{
+    //    //if (_StatusCard == clGeneral.enCardStatus.Valid)
+    //    //{
+    //        // btnCalcItem.Disabled = false;
+    //        ApprovalManager _Approvals = new ApprovalManager(LoginUser);
+    //        DataTable dt;
             
-            dt = _Approvals.GetApprovalCodes();
-            //נכניס ל USER CONTROL SIDURIM
-            SD.dtApprovals = dt;
-       // }
-    }
-    protected void SetApprovalInPage()
-    {
-        //נבדוק אם יש אישורים על שדה השלמה ליום
-        //if (_StatusCard == clGeneral.enCardStatus.Valid)
-        //{
+    //        dt = _Approvals.GetApprovalCodes();
+    //        //נכניס ל USER CONTROL SIDURIM
+    //        SD.dtApprovals = dt;
+    //   // }
+    //}
+    //protected void SetApprovalInPage()
+    //{
+    //    //נבדוק אם יש אישורים על שדה השלמה ליום
+    //    //if (_StatusCard == clGeneral.enCardStatus.Valid)
+    //    //{
 
-            DataRow[] dr;
+    //        DataRow[] dr;
             
-            bool bEnableApprove = false;
-            //// btnCalcItem.Disabled = false;
-            //ApprovalManager _Approvals = new ApprovalManager(LoginUser);
-            //DataTable dt;
-            //DataRow[] dr;
+    //        bool bEnableApprove = false;
+    //        //// btnCalcItem.Disabled = false;
+    //        //ApprovalManager _Approvals = new ApprovalManager(LoginUser);
+    //        //DataTable dt;
+    //        //DataRow[] dr;
 
-            //dt = _Approvals.GetApprovalCodes();
-            ////נכניס ל USER CONTROL SIDURIM
-            //SD.dtApprovals = dt;
-            //אישורים לשדה השלמה
-            dr = SD.dtApprovals.Select("mafne_lesade = 'Hashlama_Leyom'");
-            if (dr.Length > 0)
-            {
-                string sAllApprovalDescription = "";
-                if (CheckIfApprovalExists(FillApprovalKeys(dr), ref sAllApprovalDescription, ref bEnableApprove))
-                {
-                    ddlHashlamaReason.Attributes.Add("class", "ApprovalField");                    
-                    imgDayHaslamaErr.Src = "../../Images/ApprovalSign.jpg";
-                    imgDayHaslamaErr.Attributes.Add("ondblclick", "GetAppMsg(this)");
-                    imgDayHaslamaErr.Attributes.Add("App", sAllApprovalDescription);
-                    ErrorImage(imgDayHaslamaErr, true);
-                    ddlHashlamaReason.Enabled = bEnableApprove;
-                    btnHashlamaForDay.Disabled =!bEnableApprove;
-                }
-            }
-        //}
-    }
+    //        //dt = _Approvals.GetApprovalCodes();
+    //        ////נכניס ל USER CONTROL SIDURIM
+    //        //SD.dtApprovals = dt;
+    //        //אישורים לשדה השלמה
+    //        dr = SD.dtApprovals.Select("mafne_lesade = 'Hashlama_Leyom'");
+    //        if (dr.Length > 0)
+    //        {
+    //            string sAllApprovalDescription = "";
+    //            if (CheckIfApprovalExists(FillApprovalKeys(dr), ref sAllApprovalDescription, ref bEnableApprove))
+    //            {
+    //                ddlHashlamaReason.Attributes.Add("class", "ApprovalField");                    
+    //                imgDayHaslamaErr.Src = "../../Images/ApprovalSign.jpg";
+    //                imgDayHaslamaErr.Attributes.Add("ondblclick", "GetAppMsg(this)");
+    //                imgDayHaslamaErr.Attributes.Add("App", sAllApprovalDescription);
+    //                ErrorImage(imgDayHaslamaErr, true);
+    //                ddlHashlamaReason.Enabled = bEnableApprove;
+    //                btnHashlamaForDay.Disabled =!bEnableApprove;
+    //            }
+    //        }
+    //    //}
+    //}
 
     protected bool CheckIfApprovalExists(int[] arrApprovalKey, ref string sAllApprovalDescription, ref bool bEnableApprove)
     {
