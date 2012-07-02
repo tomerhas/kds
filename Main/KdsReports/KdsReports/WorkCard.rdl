@@ -1963,10 +1963,10 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                   <Width>1.41536cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.45011cm</Width>
+                  <Width>1.3cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.20655cm</Width>
+                  <Width>1.4cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.76685cm</Width>
@@ -2416,8 +2416,9 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>מספר סידורי</Value>
+                                  <Value>מ. סידורי/ מ. כניסה</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -2436,8 +2437,8 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
                               <Style>Double</Style>
                             </BottomBorder>
                             <BackgroundColor>LightGrey</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingLeft>1pt</PaddingLeft>
+                            <PaddingRight>1pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
@@ -2858,7 +2859,8 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif((Fields!MISPAR_KNISA.Value=0 and Fields!ONATIUT.Value=71 and CInt(Fields!MAKAT_NESIA.Value)&gt;= 100000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 50000000), Fields!MISPAR_SIDURI_OTO.Value,"")</Value>
+                                  <Value>=iif((Fields!MISPAR_KNISA.Value=0 and Fields!ONATIUT.Value=71 and CInt(Fields!MAKAT_NESIA.Value)&gt;= 100000 and  CInt(Fields!MAKAT_NESIA.Value) &lt; 50000000), Fields!MISPAR_SIDURI_OTO.Value,
+     iif(Fields!MISPAR_KNISA.Value&gt;0 and Fields!DAKOT_BAFOAL.Value&gt;0,Fields!DAKOT_BAFOAL.Value,""))</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -2966,7 +2968,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Top>6.09352cm</Top>
             <Left>0.09187in</Left>
             <Height>0.81773cm</Height>
-            <Width>19.37095cm</Width>
+            <Width>19.41429cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -3473,7 +3475,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         <KeepTogether>true</KeepTogether>
         <Top>0.15566cm</Top>
         <Height>6.91125cm</Height>
-        <Width>19.6044cm</Width>
+        <Width>19.64764cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3492,7 +3494,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
       </Border>
     </Style>
   </Body>
-  <Width>7.71827in</Width>
+  <Width>7.73529in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -3647,6 +3649,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         <QueryParameters>
           <QueryParameter Name="P_TAARICH">
             <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="P_MISPAR_ISHI">
             <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
@@ -3736,6 +3739,10 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         <Field Name="TEUR_ELEMENT">
           <DataField>TEUR_ELEMENT</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DAKOT_BAFOAL">
+          <DataField>DAKOT_BAFOAL</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="NUM_ROW">
           <DataField>NUM_ROW</DataField>

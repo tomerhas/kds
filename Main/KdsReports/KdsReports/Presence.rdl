@@ -592,7 +592,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value ="1"
+                                                    <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value ="1" or Year(Fields!SHAT_HATCHALA.Value)=1
 ,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
@@ -759,7 +759,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=iif(Fields!SHAT_HATCHALA.Value = nothing,"", FormatDateTime(Fields!SHAT_HATCHALA.Value,4))</Value>
+                                                    <Value>=iif(Fields!SHAT_HATCHALA.Value = nothing or Year(Fields!SHAT_HATCHALA.Value)=1,"", FormatDateTime(Fields!SHAT_HATCHALA.Value,4))</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                     </Style>
@@ -973,8 +973,8 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Sum(DateDiff("n",iif( Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_HATCHALA.Value = nothing,Fields!SHAT_GMAR.Value,Fields!SHAT_HATCHALA.Value )),
-			      iif( Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1", Fields!SHAT_HATCHALA.Value,iif(Fields!SHAT_GMAR.Value = nothing,Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)))/60)</Value>
+                                                    <Value>=Sum(DateDiff("n",iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1" or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_HATCHALA.Value),
+			      iif(Fields!MEAFYEN_53.Value&lt;&gt; nothing or Fields!LO_LETASHLUM.Value="1" or Year(Fields!SHAT_HATCHALA.Value)=1 or Fields!SHAT_HATCHALA.Value = nothing or Fields!SHAT_GMAR.Value = nothing,CDate("01/01/0001"),Fields!SHAT_GMAR.Value))/60)</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
                                                       <FontWeight>Bold</FontWeight>
@@ -1001,6 +1001,7 @@ iif((Fields!MISPAR_SIDUR.Value &lt;&gt; nothing ) and(Fields!SHAT_HATCHALA.Value
                                               <PaddingBottom>1pt</PaddingBottom>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
