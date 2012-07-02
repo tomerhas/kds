@@ -673,14 +673,6 @@ namespace KdsBatch
                           {
                               iSugMishmeret = clGeneral.enSugMishmeret.Liyla.GetHashCode();
                            }
-
-                          dTemp1 = oParameters.dMinEndMishmeretMafilimLilaChol2;
-
-                          //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 01 או 03 או 04 או 05 וגם [שעת גמר אחרונה] >= 23:15 אזי [סוג משמרת] = לילה
-                          if ( dShatGmarSidur > dTemp1)
-                          {
-                              iSugMishmeret = clGeneral.enSugMishmeret.Liyla.GetHashCode();
-                          }
                       }
                       //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 11 או 13 או 14 או 15 או 16 או 17 או 18 וגם [שעת גמר אחרונה] > 13:00 אזי [סוג משמרת] = צהריים
                       if (iSugYom == 11 || iSugYom == 13 || (iSugYom >= 14 && iSugYom <= 15))
@@ -690,6 +682,13 @@ namespace KdsBatch
                           {
                               iSugMishmeret = clGeneral.enSugMishmeret.Tzaharim.GetHashCode();
                           }
+                      }
+
+                      dTemp1 = oParameters.dMinEndMishmeretMafilimLilaChol2;
+                      //-	אם סוג יום [שליפת סוג יום לשליפת מכסה יומית (תאריך, מ.א.)] הוא אחד מתוך 01 או 03 או 04 או 05 וגם [שעת גמר אחרונה] >= 23:15 אזי [סוג משמרת] = לילה
+                      if (dShatGmarSidur >= dTemp1)
+                      {
+                          iSugMishmeret = clGeneral.enSugMishmeret.Liyla.GetHashCode();
                       }
                  
                 return iSugMishmeret;

@@ -858,7 +858,7 @@ namespace KdsBatch
 
                  //211 -מפעילים משמרת לילה חול מינימום סיום לא תלוי התחלה
                  sTmp = GetOneParam(211, dCardDate.AddDays(1));
-                 dMinEndMishmeretMafilimLilaChol2 = GetParamHour(sTmp, dCardDate.AddDays(1));
+                 dMinEndMishmeretMafilimLilaChol2 = GetParamHour(sTmp, dCardDate);
                                  
                 //220 שעת התחלה משמרת לילה
                  sTmp = GetOneParam(220, dCardDate);

@@ -6,7 +6,7 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Configuration;
 using System.Data;
-
+using KdsLibrary.TaskManager;
 
 namespace KdsBatch.TaskManager
 {
@@ -182,12 +182,19 @@ namespace KdsBatch.TaskManager
         public void RefreshKnisot(DateTime p_date)
         {
             clTkinutMakatim objMakat = new clTkinutMakatim();
+            KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
             try
             {
-                if (p_date.ToShortDateString() != DateTime.MinValue.ToShortDateString())
-                    objMakat.RunRefreshKnisot(p_date);
-                else
-                    objMakat.RunRefreshKnisot(DateTime.Now.AddDays(-1).Date);
+                if (p_date.ToShortDateString() != "01/01/2000")
+                {
+                    if (p_date.ToShortDateString() != DateTime.MinValue.ToShortDateString())
+                    {
+                        oUtilsTask.SendNotice(15, 1, "Update Knisot For Taarich=" + p_date.ToShortDateString());
+                        objMakat.RunRefreshKnisot(p_date);
+                    }
+                    else
+                        objMakat.RunRefreshKnisot(DateTime.Now.AddDays(-1).Date);
+                }
             }
             catch (Exception ex)
             {
