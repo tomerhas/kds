@@ -73,15 +73,15 @@
       <Filter ClassName="כרטיס עבודה"  ParameterName="P_MAKAT" Caption="מקט" BoxeType="ListBoxExtended" DataType="System.Int32">
       <DropDownList Select="GetMakatOfActivity" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
-    <Filter ClassName="נתוני HR"  ParameterName="P_WORKERID" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
-      <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
-    </Filter>
-    <Filter ClassName="נתוני HR"  ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
-      <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
-    </Filter>
-    <Filter ClassName="נתוני HR"  ParameterName="P_RISHUYCAR" Caption="רישוי" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <Filter ClassName="כרטיס עבודה"  ParameterName="P_RISHUYCAR" Caption="רישוי" BoxeType="ListBoxExtended" DataType="System.Int32">
         <DropDownList QueryType="Select"  Select="select LICENSE_NUMBER from VEHICLE_SPECIFICATIONS" ValueField="LICENSE_NUMBER" TextField="LICENSE_NUMBER" />
       </Filter>
+      <Filter ClassName="נתוני HR"  ParameterName="P_WORKERID" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
+    </Filter>
+      <Filter ClassName="נתוני HR"  ParameterName="P_SNIF" Caption="סניף אב" BoxeType="ListBox" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="select KOD_SNIF_AV,teur_snif_av from ctb_snif_av ORDER BY teur_snif_av" ValueField="KOD_SNIF_AV" TextField="teur_snif_av" />
+    </Filter>
   </Report>
   <Report  RdlName="Presence" Roles="kds_administrators" FilterByLine="3" PageHeader="נוכחות" ZoomPercent="100">
     <Filter ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  RunAtServer="true" Required="true">
