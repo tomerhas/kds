@@ -91,27 +91,40 @@ namespace KdsLibrary.TaskManager
         {
             clTaskManager tm = clTaskManager.GetInstance();
             DataTable dt = tm.GetStuckGroup(GroupId, ActionId);
-            string GroupDesc = string.Empty , ActionDesc = string.Empty, Delta = string.Empty;
-            string Body = string.Empty ,Subject = string.Empty;
+            string GroupDesc = string.Empty, ActionDesc = string.Empty, Delta = string.Empty;
+            string Body = string.Empty, Subject = string.Empty;
             if (dt.Rows.Count > 0)
             {
-                foreach(DataRow Row in dt.Rows)
+                foreach (DataRow Row in dt.Rows)
                 {
                     GroupDesc = Row["GroupDesc"].ToString();
                     ActionDesc = Row["ActionDesc"].ToString();
-                    Delta= Row["Delta"].ToString();
+                    Delta = Row["Delta"].ToString();
                     clMail omail;
                     Subject = "פעילות תקועה";
-                    Body = "פעולה: " + ActionDesc + "<br/>" + "קבוצה: " + GroupDesc + "<br/>"  + "זמן ריצה: " + Delta;
-                    Body += "<br/>" + "לידיעתך," + "<br/>"  + "מנהל משימות -TaskManager";
+                    Body = "פעולה: " + ActionDesc + "<br/>" + "קבוצה: " + GroupDesc + "<br/>" + "זמן ריצה: " + Delta;
+                    Body += "<br/>" + "לידיעתך," + "<br/>" + "מנהל משימות -TaskManager";
                     string[] RecipientsList = (ConfigurationSettings.AppSettings["RecipientsMailList"].ToString()).Split(';');
                     RecipientsList.ToList().ForEach(recipient =>
                     {
-                        omail = new clMail(recipient, Subject, Body,clMail.DirectionType.Rtl);
+                        omail = new clMail(recipient, Subject, Body, clMail.DirectionType.Rtl);
                         omail.SendMail();
                     });
                 }
             }
+        }
+        public void SendNotice(int GroupId, int ActionId, string Message)
+        {
+            string Subject = string.Empty;
+            clMail omail;
+            Subject = " התראה מקבוצה " + GroupId + ",פעולה:" + ActionId;
+            string[] RecipientsList = (ConfigurationManager.AppSettings["RecipientsMailList"].ToString()).Split(';');
+            RecipientsList.ToList().ForEach(recipient =>
+            {
+                omail = new clMail(recipient, Subject, Message, clMail.DirectionType.Rtl);
+                omail.SendMail();
+            });
+
         }
     }
 }
