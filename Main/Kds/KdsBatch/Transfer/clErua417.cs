@@ -62,7 +62,7 @@ namespace KdsBatch
                 }
                 else { sErua417.Append(GetBlank(4)); }
               }
-
+           //פרמיה משק - 115
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
             {
                 sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),"erech_rechiv_a"), 4, 0));
@@ -71,11 +71,38 @@ namespace KdsBatch
             {
                 sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),_dtPrem), 4, 0));
             }
-            else sErua417.Append(GetBlank(4));  
-       
-            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"),4,0));
-            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"),4,0));
-            sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"),4,0));
+            else sErua417.Append(GetBlank(4));
+            //פרמיה פקחים - 117
+            if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+            }
+            else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), _dtPrem), 4, 0));
+            }
+            else sErua417.Append(GetBlank(4));
+            //פרמיה סדרנים - 116
+            if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+            }
+            else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), _dtPrem), 4, 0));
+            }
+            else sErua417.Append(GetBlank(4));
+            //פרמיה רכזים - 118
+            if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"), 4, 0));      
+            }
+            else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+            {
+                sErua417.Append(FormatNumber(GetErechRechivPremiya(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), _dtPrem), 4, 0));
+            }
+            else sErua417.Append(GetBlank(4)); 
+           
             fErech = GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisa.GetHashCode());
             fErech += GetErechRechiv(clGeneral.enRechivim.DakotPremiaVisaShishi.GetHashCode());
             sErua417.Append(FormatNumber(fErech, 4,0));

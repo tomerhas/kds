@@ -6572,7 +6572,8 @@ namespace KdsBatch
                 {
                     fSumDakotRechiv = fYomHeadrut * fMichsaYomit;
                 }
-                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
+                fSumDakotRechiv = float.Parse(Math.Floor(Math.Round( fSumDakotRechiv,MidpointRounding.AwayFromZero)).ToString());
+                addRowToTable(clGeneral.enRechivim.DakotHeadrut.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {
@@ -6596,7 +6597,9 @@ namespace KdsBatch
                 {
                     fSumDakotRechiv = fYomChofesh * fMichsaYomit;
                 }
-                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), float.Parse(Math.Floor(fSumDakotRechiv).ToString()));
+                
+                fSumDakotRechiv = float.Parse(Math.Floor(Math.Round( fSumDakotRechiv,MidpointRounding.AwayFromZero)).ToString());
+                addRowToTable(clGeneral.enRechivim.DakotChofesh.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
             {

@@ -9,11 +9,13 @@ namespace KdsBatch
 {
   public  class clErua413:clErua
     {
+      private DataTable _dtPrem;
       private List<string> _ListErua;
 
-      public clErua413(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      public clErua413(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, DataTable dtPrem)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,413)
       {
+          _dtPrem = dtPrem;
           _sBody = SetBody();
           if (_sBody != null)
           PrepareLines();
@@ -113,7 +115,7 @@ namespace KdsBatch
                   //CreateData413("316", clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a", 7, 2);
                   //CreateData413("317", clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a", 7, 2);
                 // CreateData413("319", clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode(), "erech_rechiv_a", 7, 2);
-                  CreateData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), "erech_rechiv_a", 7, 2);
+                  CreatePremiyaData413("321", clGeneral.enRechivim.PremiaManasim.GetHashCode(), 7, 2);
                //   CreateData413("322", clGeneral.enRechivim.PremiaMeshek.GetHashCode(), "erech_rechiv_a", 7, 2);
                  // CreateData413("330", clGeneral.enRechivim.PremiaGrira.GetHashCode(), "erech_rechiv_a", 7, 2);
                   CreateData413("339", clGeneral.enRechivim.PremiaMachsanKatisim.GetHashCode(),"erech_rechiv", 7, 2);
@@ -147,45 +149,69 @@ namespace KdsBatch
       private void CreateData413(string sSaifHilan, int iKodRechiv,string col, int iLen, int iNumDigit)
       {
           float fErech=0;
-          int iLastDigit;
-          bKayamEfreshBErua = false;
-          string sErech="";
-         // string[] sKods;
           try
           {
-              //sKods = sKodRechiv.Split(',');
-              //for (int i = 0; i < sKods.Length; i++)
-              //{
-              //    fErech += GetErechRechiv(int.Parse(sKods[i]),col);
-              //}
               fErech = GetErechRechiv(iKodRechiv,col);
-              //if (fErech > 0)
-              //{
-                  StringBuilder sErua413 = new StringBuilder();
-
-                  sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
-                  sErech=GetBlank(17);
-                  sErech+=FormatNumber(fErech, iLen, iNumDigit);
-                  sErech+=GetBlank(12);
-
-                  SetFooter();
-                  if (bKayamEfreshBErua)
-                  {
-                      iLastDigit =  int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
-                      _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
-                     // _sFooter += GetSimanEfresh(iLastDigit);
-                  }
-                  if (!IsEmptyErua(sErech.ToString()))
-                  {
-                      sErua413.Append(sErech);
-                      _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
-                  }
-              //}
+              CreateData(sSaifHilan, fErech, iLen, iNumDigit);
           }
           catch (Exception ex)
           {
               WriteError("CreateData413: " + ex.Message);
              // throw ex;
+          }
+      }
+
+
+
+      private void CreatePremiyaData413(string sSaifHilan, int iKodRechiv,  int iLen, int iNumDigit)
+      {
+          float fErech=0;
+          try
+          {
+              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                  fErech = GetErechRechivPremiya(iKodRechiv, _dtPrem);
+             
+                CreateData(sSaifHilan,  fErech,  iLen, iNumDigit);
+          }
+          catch (Exception ex)
+          {
+              WriteError("CreateData413: " + ex.Message);
+             // throw ex;
+          }
+      }
+
+
+      private void CreateData(string sSaifHilan, float fErech, int iLen, int iNumDigit)
+      {
+          int iLastDigit;
+          bKayamEfreshBErua = false;
+          string sErech = "";
+          try
+          {
+              StringBuilder sErua413 = new StringBuilder();
+
+              sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
+              sErech = GetBlank(17);
+              sErech += FormatNumber(fErech, iLen, iNumDigit);
+              sErech += GetBlank(12);
+
+              SetFooter();
+              if (bKayamEfreshBErua)
+              {
+                  iLastDigit = int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
+                  _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
+                  // _sFooter += GetSimanEfresh(iLastDigit);
+              }
+              if (!IsEmptyErua(sErech.ToString()))
+              {
+                  sErua413.Append(sErech);
+                  _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
+              }
+          }
+          catch (Exception ex)
+          {
+              WriteError("CreateData413: " + ex.Message);
+              // throw ex;
           }
       }
     }
