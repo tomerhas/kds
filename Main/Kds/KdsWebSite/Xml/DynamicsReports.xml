@@ -51,7 +51,7 @@
       <DropDownList QueryType="StoredProcedure" Select="PKG_REPORTS.pro_get_Factors_Confirm" ValueField="mispar_ishi" TextField="FullName" />
     </Filter>
   </Report>
-    <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="4" PageHeader="איתור כרטיס עבודה" Orientation="Landscape" ProductionType="Heavy">
+    <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="5" PageHeader="איתור כרטיס עבודה" Orientation="Landscape" ProductionType="Heavy">
       <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005"  RunAtServer="true" Required="true">
         <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
         <FilterValidator ValidatorName="ValidFindMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
@@ -61,13 +61,13 @@
       <!--<FilterValidator ValidatorName="ValidFindAd" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>-->
     </Filter>
     <Filter  ClassName="כללי" ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
-    <Filter ClassName="כרטיס עבודה"  ParameterName="P_SIDURNUMBER" Caption="מס. סידור עבודה" BoxeType="ListBoxExtended" DataType="System.Int32">
+    <Filter ClassName="כרטיס עבודה"  ParameterName="P_SIDURNUMBER" Caption="מס' סידור עבודה" BoxeType="ListBoxExtended" DataType="System.Int32">
       <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetSidurimOvdim" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
     </Filter>
-      <Filter ClassName="כרטיס עבודה"  ParameterName="P_WORKSTATION" Caption="תחנת עבודה" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <Filter ClassName="כרטיס עבודה"  ParameterName="P_WORKSTATION" Caption="ת. עבודה" BoxeType="ListBoxExtended" DataType="System.Int32">
         <DropDownList QueryType="AjaxAutoComplete" Select="GetWorkStation" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
       </Filter>
-      <Filter ClassName="כרטיס עבודה"  ParameterName="P_CARNUMBER" Caption="מספר רכב פנימי" BoxeType="ListBoxExtended" DataType="System.Int32">
+      <Filter ClassName="כרטיס עבודה"  ParameterName="P_CARNUMBER" Caption="מס' רכב פנימי" BoxeType="ListBoxExtended" DataType="System.Int32">
         <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetLicenceNumber" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
       </Filter>
       <Filter ClassName="כרטיס עבודה"  ParameterName="P_MAKAT" Caption="מקט" BoxeType="ListBoxExtended" DataType="System.Int32">
