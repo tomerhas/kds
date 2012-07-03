@@ -10,7 +10,7 @@ using KdsLibrary.UDT;
 using KdsLibrary;
 using KdsLibrary.BL;
 using System.Web;
-
+using System.Configuration;
 
 namespace KdsBatch
 {
@@ -225,7 +225,7 @@ namespace KdsBatch
             if (_Peiluyot == null)
             {
                 _Peiluyot = _Kavim.GetKatalogKavim(iMisparIshi, dCardDate, dCardDate);
-                HttpRuntime.Cache.Insert(sCacheKey, _Peiluyot, null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
+                HttpRuntime.Cache.Insert(sCacheKey, _Peiluyot, null, DateTime.MaxValue, TimeSpan.FromMinutes(int.Parse((ConfigurationSettings.AppSettings["PeilyutCacheTimeOutMinutes"]))));
             }
 
             return _Peiluyot;
@@ -678,7 +678,7 @@ namespace KdsBatch
                       if (iSugYom == 11 || iSugYom == 13 || (iSugYom >= 14 && iSugYom <= 15))
                       {
                           dTemp1 = oParameters.dMinEndMishmeretMafilimShishi;
-                          if (dShatGmarSidur >= dTemp1 )
+                          if (dShatGmarSidur >= dTemp1)
                           {
                               iSugMishmeret = clGeneral.enSugMishmeret.Tzaharim.GetHashCode();
                           }

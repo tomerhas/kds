@@ -402,7 +402,7 @@
             </tr>
             <tr class="WorkCardTableBottomTrBottom">    
                 <td width="100%">
-                    <table width="100%" border="0">
+                    <table width="100%">
                         <tr>                                                                                                                                                                                   
                             <td style="width: 128px">
                                 <input type="button" value="רכיבים מחושבים" name="btnCalcItem" id="btnCalcItem" runat="server" 
@@ -411,8 +411,7 @@
                             <td  style="width: 90px">
                                 <input type="hidden" runat="server" id="hidChanges" />
                                 <input type="hidden" value="" id="btnHidClose" runat="server" causesvalidation="false" />                                         
-                                <asp:Button Text="סגור כרטיס" ID="btnCloseCard" runat="server" Style="width: 89px;" 
-                                        CssClass="btnWorkCardCloseCard" CausesValidation="false" OnClientClick='return CheckChanges();' />                                                                           
+                                <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                                                                           
                                 <asp:Button ID="btnShowMessage" runat="server" OnClick="btnShowMessage_Click" Style="display: none;" />
                                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paCloseMsg"
                                     TargetControlID="btnHidClose" CancelControlID="btnCancel"  OnCancelScript="CloseWindow();" runat="server" BehaviorID="MPClose">
@@ -489,8 +488,10 @@
                             <td style="width: 30px">
                                 <asp:Button ID="btnPrint" runat="server"  CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             
                             </td>                                                                       
-                            <td>
-                                <asp:Button Text="שגיאות לעובד" ID="btnDrvErrors" runat="server" CssClass="btnWorkCardAddMap" Style="width: 102px; " OnClientClick="return ShowDrvErr();"  CausesValidation="false" />                    
+                            <td align="right">
+                                <asp:Button Text="סגור כרטיס" ID="btnCloseCard" runat="server" Style="width: 89px;" 
+                                        CssClass="btnWorkCardCloseCard" CausesValidation="false" OnClientClick='return CheckChanges();' />  
+                                
                             </td>  
                             <td>
                                 <asp:Button Text="דוח אישורים" ID="btnApprovalReport" runat="server" CssClass="ImgButtonShow" Style="width: 90px; height: 25px; display:none;" OnClick="btnApprovalReport_click" CausesValidation="false" />                    
