@@ -309,7 +309,7 @@
       var sFullYear = $get("clnDate").value.substr(6,4);         
       id = $get("txtId").value;
       date = $get("clnDate").value;
-      if (date!=''){    
+      if (date != '') {          
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
       }      
@@ -445,7 +445,7 @@
               }
             }            
         }     
-    }         
+    }        
     function ApproveError(id){
         $find("bMpeErr").hide();    
         iMisparIshi = $get("txtId").value;

@@ -43,17 +43,26 @@ public class wsGeneral : System.Web.Services.WebService
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
-    [WebMethod]
+    [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
     {
         clWorkCard _WorkCard = new clWorkCard();
         DateTime dWorkCard;
         int iCardCount;
         try
-        {
+        {   //נבדוק שני דברים:
+            //1. אם החודש שנבחר נמצא בטווח של פרמטר 100
+            //2. במידה ואחד מתקיים נבדוק אם קיים כרטיס לתאריך זה
             dWorkCard = DateTime.Parse(sWorkCard);
-            iCardCount = _WorkCard.GetIsCardExistsInYemeyAvodaOvdim(iMisparIshi, dWorkCard);
-            return iCardCount.ToString() + "|" + clGeneral.arrDays[dWorkCard.DayOfWeek.GetHashCode()];
+            int iMaxMonthToDisplay = ((clParameters)Session["Parameters"]).iMaxMonthToDisplay;
+            
+            if ((Math.Abs((DateTime.Now.Month - dWorkCard.Month) + 12 * ((DateTime.Now.Year - dWorkCard.Year))) + 1 <= iMaxMonthToDisplay))
+            {
+                iCardCount = _WorkCard.GetIsCardExistsInYemeyAvodaOvdim(iMisparIshi, dWorkCard);
+                return iCardCount.ToString() + "|" + clGeneral.arrDays[dWorkCard.DayOfWeek.GetHashCode()] + "|" + "1";
+            }
+            else
+                return   "0|0|0";
         }
         catch (System.FormatException ex)
         {
@@ -1802,6 +1811,18 @@ public class wsGeneral : System.Web.Services.WebService
     //    // Return that HTML, as a string.
     //    return writer.ToString();
     //}
+    [WebMethod(EnableSession = true)]
+    public string IsMonthValid(string sCardDate)
+    {        
+        //נשווה לפרמטר 100 שאומר כמה חודשים אחורה ניתן להציג
+        //למשל אם הפרמטר מציין 2 וכרגע אנחנו בחודש 7, אז ניתן לראות כרטיסים של חודש 7 ו6
+        int iMaxMonthToDisplay = ((clParameters)Session["Parameters"]).iMaxMonthToDisplay;
+        if ((DateTime.Now.Month - DateTime.Parse(sCardDate).Month)+1 <= iMaxMonthToDisplay)
+           return "1";
+         else
+            return "0";
+    }
+
     [WebMethod(EnableSession = true)]
     public string GetFieldErrors(int iLevel, int iMisparIshi, string sCardDate, int iSidurNumber,
                                  string sSidurStartHour, string sPeilutShatYetiza, int iMisparKnisa,

@@ -129,7 +129,7 @@
                     <td>
                         <input type="hidden" runat="server" id="hidMeasherMistayeg" />  
                         <input type="hidden" id="hidRefresh" runat="server"/>
-                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();" OnClick="btnRefreshOvedDetails_Click"
+                        <asp:Button runat="server" ID="btnRefreshOvedDetails" Text="הצג" OnClientClick="RefreshBtn();"  OnClick="btnRefreshOvedDetails_Click"
                             CausesValidation="false" CssClass="ImgButtonShow"  TabIndex="2" Style="height: 30px; width:54px"/>
                             <input type="hidden" runat="server" id="hidSave"/>                                                                                                                                               
                     </td>                                            

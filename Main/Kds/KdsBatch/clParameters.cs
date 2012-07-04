@@ -94,6 +94,7 @@ namespace KdsBatch
         public DateTime dSiyumTosLilaTaavura; //אגד תעבור סיום תוספת לילה  - 96
         public float fChelkiyutAchuzMiluim; //97 חלקיות אחוז מילואים
         public int iMaxMinutsForKnisot; //98 מקסימום דקות בפועל לכניסות לפי הצורך
+        public int iMaxMonthToDisplay;//מציג את מספר החודשים אחורה שניתן להציג 100
         public int iHashlamaYomRagil; //parameter 101
         public int iHashlamaShisi;   //parameter 102
         public int iHashlamaShabat; //parameter 103
@@ -532,6 +533,10 @@ namespace KdsBatch
                 //98 - מקסימום דקות בפועל לכניסות לפי הצורך
                 sTmp = GetOneParam(98, dCardDate);
                 iMaxMinutsForKnisot = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+
+                //- מציין את מספר החודשים שניתן להציג  100
+                sTmp = GetOneParam(100, dCardDate);
+                iMaxMonthToDisplay = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
 
                 //זמן מינימום לסידור חול להשלמה-  101
                 sTmp = GetOneParam(101, dCardDate);
