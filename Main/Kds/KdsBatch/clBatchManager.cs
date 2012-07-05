@@ -964,11 +964,16 @@ namespace KdsBatch
         {
             DataRow[] dr;
             bool bOvedMatzavExists;
+            
             try
             {
                 //נחזיר אם קיים לעובד מצב
                 // למשל מצב 1 מציין אם עובד פעיל, מצב 5 מציין אם עובד במצב של מחלה 
-                dr = dtMatzavOved.Select(string.Concat("kod_matzav=",sKodMatzav));
+                if (clGeneral.IsNumeric(sKodMatzav))
+                    if (int.Parse(sKodMatzav) > 0 && int.Parse(sKodMatzav) < 10)
+                        sKodMatzav = "0" + sKodMatzav.Trim();
+
+                dr = dtMatzavOved.Select(string.Concat("kod_matzav='",sKodMatzav+"'"));
                 bOvedMatzavExists = dr.Length > 0;
                 return bOvedMatzavExists;
             }
@@ -6332,7 +6337,7 @@ namespace KdsBatch
             bool bHeadrutMachalaMiluimTeuna = false;
             DataRow[] drSugSidur;
            DateTime dShatHatchalaNew; //עבור שינוי מספר 12
-           bool bFirstHayavHityazvut, bSecondHayavHityazvut;
+           bool bFirstHayavHityazvut, bSecondHayavHityazvut, bHayavHityazvut;
             bool bUpdateShatHatchala;
             oCollYameyAvodaUpd = new COLL_YAMEY_AVODA_OVDIM();
             oCollSidurimOvdimUpd = new COLL_SIDURIM_OVDIM();
@@ -6559,6 +6564,7 @@ namespace KdsBatch
                     bFirstHayavHityazvut = false;
                     bSecondHayavHityazvut = false;
                     oSidurNidrashHityatvut = null;
+                    bHayavHityazvut = false;
                     //IpusSidurimMevutalimYadanit23();
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
@@ -6566,8 +6572,17 @@ namespace KdsBatch
                         oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
                         if (!(CheckIdkunRashemet("KOD_SIBA_LEDIVUCH_YADANI_IN", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && (oSidur.iNidreshetHitiatzvut == 1 || oSidur.iNidreshetHitiatzvut == 2)))
                         {
-                            FixedItyatzvutNahag23(i, ref oSidur,ref oSidurNidrashHityatvut, ref oObjSidurimOvdimUpd, ref bFirstHayavHityazvut, ref bSecondHayavHityazvut);
+                            FixedItyatzvutNahag23(i, ref oSidur, ref oSidurNidrashHityatvut, ref oObjSidurimOvdimUpd, ref bFirstHayavHityazvut, ref bSecondHayavHityazvut);
                             htEmployeeDetails[i] = oSidur;
+                        }
+                        else
+                        {
+                            CheckHovatHityazvut(oSidur, ref oObjSidurimOvdimUpd, 1, ref bHayavHityazvut, true);
+                            if (bHayavHityazvut)
+                                if (!bFirstHayavHityazvut) 
+                                    bFirstHayavHityazvut = true;
+                                else if (!bSecondHayavHityazvut) 
+                                    bSecondHayavHityazvut = true;
                         }
                     }
 
@@ -8106,7 +8121,7 @@ namespace KdsBatch
                 if (!bFirstHayavHityazvut)
                 { // מחפשים סידור שמצריך התייצבות )
 
-                    bNidrashHityazvut = CheckHovatHityazvut(oSidur, ref oObjSidurimOvdimUpd,1, ref bHayavHityazvut);
+                    bNidrashHityazvut = CheckHovatHityazvut(oSidur, ref oObjSidurimOvdimUpd,1, ref bHayavHityazvut,false);
                     if (bHayavHityazvut) bFirstHayavHityazvut = true;
 
                     if (bNidrashHityazvut)
@@ -8131,7 +8146,7 @@ namespace KdsBatch
 
                     if (oSidurNidrashHityazvut != null)
                     {
-                        bNidrashHityazvut = CheckHovatHityazvut(oSidur, ref oObjSidurimOvdimUpd, 2, ref bHayavHityazvut);
+                        bNidrashHityazvut = CheckHovatHityazvut(oSidur, ref oObjSidurimOvdimUpd, 2, ref bHayavHityazvut,false);
                         if (bNidrashHityazvut)
                         {
                             bSecondHayavHityazvut = true;
@@ -8161,7 +8176,7 @@ namespace KdsBatch
             }
         }
 
-        private bool CheckHovatHityazvut(clSidur oSidur,ref  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,int iHityazvut,ref bool  bHayavHityazvut)
+        private bool CheckHovatHityazvut(clSidur oSidur,ref  OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd,int iHityazvut,ref bool  bHayavHityazvut,bool bHaveIdkunRashamet)
         {
             bool bHaveMatala;
             bool  bNidrashHityazvut=false;
@@ -8186,7 +8201,7 @@ namespace KdsBatch
                     if (bHaveMatala)
                     {
                         bHayavHityazvut = true;
-                        if (oSidur.sHovatHityatzvut == "")
+                        if (oSidur.sHovatHityatzvut == "" && !bHaveIdkunRashamet)
                         {
                             oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
                             oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = iHityazvut;
@@ -8209,7 +8224,7 @@ namespace KdsBatch
                     drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, _dCardDate, _dtSugSidur);
                     if (drSugSidur.Length > 0)
                     {
-                        if (drSugSidur[0]["lo_nidreshet_hityazvut"].ToString() != "")
+                        if (drSugSidur[0]["lo_nidreshet_hityazvut"].ToString() != "" && !bHaveIdkunRashamet)
                         {
                             oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT = 1;
                             oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT = iHityazvut;
@@ -9128,6 +9143,7 @@ namespace KdsBatch
         {
             clNewSidurim oNewSidurim;
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+            int index;
             try
             {
                 //נעבור על האובייקט שמחזיק את כל הסידורים להן השתנה מספר הסידור בעקבות שינוי מספר 1                    
@@ -9136,75 +9152,98 @@ namespace KdsBatch
                     oNewSidurim = (clNewSidurim)htNewSidurim[i];
                     //נביא את הסידור עם הנתונים העדכניים
                     oObjSidurimOvdimUpd = GetSidurOvdimObject(oNewSidurim.SidurNew, oNewSidurim.ShatHatchalaNew);
-
-                    if (!(oNewSidurim.SidurNew == oNewSidurim.SidurOld && oNewSidurim.ShatHatchalaNew == oNewSidurim.ShatHatchalaOld))
+                    index = -1;
+                    if (!CheckSidurNewKeyInObjectDelete(oNewSidurim, ref index))
                     {
-
-                        //נכניס סידור חדש עם כל הנתונים העדכניים ועם מספר הסידור החדש
-                        oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
-
-                        oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
-                        oObjSidurimOvdimIns.CHARIGA = oObjSidurimOvdimUpd.CHARIGA;
-                        oObjSidurimOvdimIns.HAMARAT_SHABAT = oObjSidurimOvdimUpd.HAMARAT_SHABAT;
-                        if (!oObjSidurimOvdimUpd.HASHLAMAIsNull)
+                        if (!(oNewSidurim.SidurNew == oNewSidurim.SidurOld && oNewSidurim.ShatHatchalaNew == oNewSidurim.ShatHatchalaOld))
                         {
-                            oObjSidurimOvdimIns.HASHLAMA = oObjSidurimOvdimUpd.HASHLAMA;
+
+                            //נכניס סידור חדש עם כל הנתונים העדכניים ועם מספר הסידור החדש
+                            oObjSidurimOvdimIns = new OBJ_SIDURIM_OVDIM();
+
+                            oObjSidurimOvdimIns.MISPAR_ISHI = _iMisparIshi;
+                            oObjSidurimOvdimIns.CHARIGA = oObjSidurimOvdimUpd.CHARIGA;
+                            oObjSidurimOvdimIns.HAMARAT_SHABAT = oObjSidurimOvdimUpd.HAMARAT_SHABAT;
+                            if (!oObjSidurimOvdimUpd.HASHLAMAIsNull)
+                            {
+                                oObjSidurimOvdimIns.HASHLAMA = oObjSidurimOvdimUpd.HASHLAMA;
+                            }
+                            oObjSidurimOvdimIns.LO_LETASHLUM = oObjSidurimOvdimUpd.LO_LETASHLUM;
+                            if (!oObjSidurimOvdimUpd.OUT_MICHSAIsNull)
+                            {
+                                oObjSidurimOvdimIns.OUT_MICHSA = oObjSidurimOvdimUpd.OUT_MICHSA;
+                            }
+                            oObjSidurimOvdimIns.PITZUL_HAFSAKA = oObjSidurimOvdimUpd.PITZUL_HAFSAKA;
+                            oObjSidurimOvdimIns.SHAT_GMAR = oObjSidurimOvdimUpd.SHAT_GMAR; //(oNewSidurim.ShatGmarNew != DateTime.MinValue ? oNewSidurim.ShatGmarNew : oObjSidurimOvdimUpd.SHAT_GMAR);
+                            oObjSidurimOvdimIns.SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
+                            oObjSidurimOvdimIns.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
+                            oObjSidurimOvdimIns.TAARICH = _dCardDate;
+                            oObjSidurimOvdimIns.YOM_VISA = oObjSidurimOvdimUpd.YOM_VISA;
+                            oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
+                            oObjSidurimOvdimIns.MEZAKE_NESIOT = oObjSidurimOvdimUpd.MEZAKE_NESIOT;
+                            oObjSidurimOvdimIns.MEZAKE_HALBASHA = oObjSidurimOvdimUpd.MEZAKE_HALBASHA;
+                            oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                            oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                            oObjSidurimOvdimIns.MISPAR_SIDUR = oNewSidurim.SidurNew;
+                            oObjSidurimOvdimIns.NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
+                            oObjSidurimOvdimIns.BITUL_O_HOSAFA = oObjSidurimOvdimUpd.BITUL_O_HOSAFA;
+                            oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
+                            oObjSidurimOvdimIns.TOSEFET_GRIRA = oObjSidurimOvdimUpd.TOSEFET_GRIRA;
+                            oObjSidurimOvdimIns.MIKUM_SHAON_KNISA = oObjSidurimOvdimUpd.MIKUM_SHAON_KNISA;
+                            oObjSidurimOvdimIns.MIKUM_SHAON_YETZIA = oObjSidurimOvdimUpd.MIKUM_SHAON_YETZIA;
+                            // oObjSidurimOvdimIns.KM_VISA_LEPREMIA = oObjSidurimOvdimUpd.KM_VISA_LEPREMIA;
+                            oObjSidurimOvdimIns.ACHUZ_KNAS_LEPREMYAT_VISA = oObjSidurimOvdimUpd.ACHUZ_KNAS_LEPREMYAT_VISA;
+                            oObjSidurimOvdimIns.ACHUZ_VIZA_BESIKUN = oObjSidurimOvdimUpd.ACHUZ_VIZA_BESIKUN;
+                            //oObjSidurimOvdimIns.SUG_VISA = oObjSidurimOvdimUpd.SUG_VISA;
+                            oObjSidurimOvdimIns.MISPAR_MUSACH_O_MACHSAN = oObjSidurimOvdimUpd.MISPAR_MUSACH_O_MACHSAN;
+                            oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_IN = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
+                            oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_OUT = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
+                            oObjSidurimOvdimIns.KOD_SIBA_LO_LETASHLUM = oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM;
+                            oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
+                            oObjSidurimOvdimIns.MEADKEN_ACHARON = oObjSidurimOvdimUpd.MEADKEN_ACHARON;
+                            oObjSidurimOvdimIns.TAARICH_IDKUN_ACHARON = oObjSidurimOvdimUpd.TAARICH_IDKUN_ACHARON;
+                            oObjSidurimOvdimIns.HEARA = oObjSidurimOvdimUpd.HEARA;
+                            oObjSidurimOvdimIns.MISPAR_SHIUREY_NEHIGA = oObjSidurimOvdimUpd.MISPAR_SHIUREY_NEHIGA;
+                            //oObjSidurimOvdimIns.BUTAL = oObjSidurimOvdimUpd.BUTAL;
+                            oObjSidurimOvdimIns.SUG_HAZMANAT_VISA = oObjSidurimOvdimUpd.SUG_HAZMANAT_VISA;
+                            oObjSidurimOvdimIns.SHAT_HITIATZVUT = oObjSidurimOvdimUpd.SHAT_HITIATZVUT;
+
+                            if (!oObjSidurimOvdimUpd.SECTOR_VISAIsNull)
+                            {
+                                oObjSidurimOvdimIns.SECTOR_VISA = oObjSidurimOvdimUpd.SECTOR_VISA;
+                            }
+                            oObjSidurimOvdimIns.NIDRESHET_HITIATZVUT = oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT;
+                            oObjSidurimOvdimIns.PTOR_MEHITIATZVUT = oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT;
+                            oObjSidurimOvdimIns.HACHTAMA_BEATAR_LO_TAKIN = oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN;
+                            if (oObjSidurimOvdimUpd.SUG_SIDUR != 0)
+                                oObjSidurimOvdimIns.SUG_SIDUR = oObjSidurimOvdimUpd.SUG_SIDUR;
+
+                            oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
+
+                            //באובייקט העדכון, נאפס את המשתנה שמציין שיש לעדכן את הרשומה
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
+
+                            //נמחוק את הסידור השגוי    
+                            oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
+                            oObjSidurimOvdimDel.MISPAR_ISHI = oObjSidurimOvdimUpd.MISPAR_ISHI;
+                            oObjSidurimOvdimDel.SHAT_HATCHALA = oNewSidurim.ShatHatchalaOld;
+                            oObjSidurimOvdimDel.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;//DateTime.Parse(string.Concat(DateTime.Parse(oSidur.sSidurDate).ToShortDateString(), " ", oSidur.sShatHatchala));
+                            oObjSidurimOvdimDel.TAARICH = oObjSidurimOvdimUpd.TAARICH;
+                            oObjSidurimOvdimDel.MISPAR_SIDUR = oNewSidurim.SidurOld; //מספר סידור קודם
+                            oObjSidurimOvdimDel.UPDATE_OBJECT = 0;
+                            oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
+
                         }
-                        oObjSidurimOvdimIns.LO_LETASHLUM = oObjSidurimOvdimUpd.LO_LETASHLUM;
-                        if (!oObjSidurimOvdimUpd.OUT_MICHSAIsNull)
+                        else
                         {
-                            oObjSidurimOvdimIns.OUT_MICHSA = oObjSidurimOvdimUpd.OUT_MICHSA;
+                            //if(oNewSidurim.ShatGmarNew!=oNewSidurim.ShatGmarOld)
+                            //    oObjSidurimOvdimUpd.SHAT_GMAR=oNewSidurim.ShatGmarNew;             
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                         }
-                        oObjSidurimOvdimIns.PITZUL_HAFSAKA = oObjSidurimOvdimUpd.PITZUL_HAFSAKA;
-                        oObjSidurimOvdimIns.SHAT_GMAR =oObjSidurimOvdimUpd.SHAT_GMAR; //(oNewSidurim.ShatGmarNew != DateTime.MinValue ? oNewSidurim.ShatGmarNew : oObjSidurimOvdimUpd.SHAT_GMAR);
-                        oObjSidurimOvdimIns.SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
-                        oObjSidurimOvdimIns.NEW_SHAT_HATCHALA = oNewSidurim.ShatHatchalaNew;
-                        oObjSidurimOvdimIns.TAARICH = _dCardDate;
-                        oObjSidurimOvdimIns.YOM_VISA = oObjSidurimOvdimUpd.YOM_VISA;
-                        oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
-                        oObjSidurimOvdimIns.MEZAKE_NESIOT = oObjSidurimOvdimUpd.MEZAKE_NESIOT;
-                        oObjSidurimOvdimIns.MEZAKE_HALBASHA = oObjSidurimOvdimUpd.MEZAKE_HALBASHA;
-                        oObjSidurimOvdimIns.SHAT_HATCHALA_LETASHLUM = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
-                        oObjSidurimOvdimIns.SHAT_GMAR_LETASHLUM = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
-                        oObjSidurimOvdimIns.MISPAR_SIDUR = oNewSidurim.SidurNew;
-                        oObjSidurimOvdimIns.NEW_MISPAR_SIDUR = oNewSidurim.SidurNew;
-                        oObjSidurimOvdimIns.BITUL_O_HOSAFA = oObjSidurimOvdimUpd.BITUL_O_HOSAFA;
-                        oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
-                        oObjSidurimOvdimIns.TOSEFET_GRIRA = oObjSidurimOvdimUpd.TOSEFET_GRIRA;
-                        oObjSidurimOvdimIns.MIKUM_SHAON_KNISA = oObjSidurimOvdimUpd.MIKUM_SHAON_KNISA;
-                        oObjSidurimOvdimIns.MIKUM_SHAON_YETZIA = oObjSidurimOvdimUpd.MIKUM_SHAON_YETZIA;
-                        // oObjSidurimOvdimIns.KM_VISA_LEPREMIA = oObjSidurimOvdimUpd.KM_VISA_LEPREMIA;
-                        oObjSidurimOvdimIns.ACHUZ_KNAS_LEPREMYAT_VISA = oObjSidurimOvdimUpd.ACHUZ_KNAS_LEPREMYAT_VISA;
-                        oObjSidurimOvdimIns.ACHUZ_VIZA_BESIKUN = oObjSidurimOvdimUpd.ACHUZ_VIZA_BESIKUN;
-                        //oObjSidurimOvdimIns.SUG_VISA = oObjSidurimOvdimUpd.SUG_VISA;
-                        oObjSidurimOvdimIns.MISPAR_MUSACH_O_MACHSAN = oObjSidurimOvdimUpd.MISPAR_MUSACH_O_MACHSAN;
-                        oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_IN = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_IN;
-                        oObjSidurimOvdimIns.KOD_SIBA_LEDIVUCH_YADANI_OUT = oObjSidurimOvdimUpd.KOD_SIBA_LEDIVUCH_YADANI_OUT;
-                        oObjSidurimOvdimIns.KOD_SIBA_LO_LETASHLUM = oObjSidurimOvdimUpd.KOD_SIBA_LO_LETASHLUM;
-                        oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
-                        oObjSidurimOvdimIns.MEADKEN_ACHARON = oObjSidurimOvdimUpd.MEADKEN_ACHARON;
-                        oObjSidurimOvdimIns.TAARICH_IDKUN_ACHARON = oObjSidurimOvdimUpd.TAARICH_IDKUN_ACHARON;
-                        oObjSidurimOvdimIns.HEARA = oObjSidurimOvdimUpd.HEARA;
-                        oObjSidurimOvdimIns.MISPAR_SHIUREY_NEHIGA = oObjSidurimOvdimUpd.MISPAR_SHIUREY_NEHIGA;
-                        //oObjSidurimOvdimIns.BUTAL = oObjSidurimOvdimUpd.BUTAL;
-                        oObjSidurimOvdimIns.SUG_HAZMANAT_VISA = oObjSidurimOvdimUpd.SUG_HAZMANAT_VISA;
-                        oObjSidurimOvdimIns.SHAT_HITIATZVUT = oObjSidurimOvdimUpd.SHAT_HITIATZVUT;
-                        
-                        if (!oObjSidurimOvdimUpd.SECTOR_VISAIsNull)
-                        {
-                            oObjSidurimOvdimIns.SECTOR_VISA = oObjSidurimOvdimUpd.SECTOR_VISA;
-                        }
-                        oObjSidurimOvdimIns.NIDRESHET_HITIATZVUT = oObjSidurimOvdimUpd.NIDRESHET_HITIATZVUT;
-                        oObjSidurimOvdimIns.PTOR_MEHITIATZVUT = oObjSidurimOvdimUpd.PTOR_MEHITIATZVUT;
-                        oObjSidurimOvdimIns.HACHTAMA_BEATAR_LO_TAKIN = oObjSidurimOvdimUpd.HACHTAMA_BEATAR_LO_TAKIN;
-                        if (oObjSidurimOvdimUpd.SUG_SIDUR != 0)
-                            oObjSidurimOvdimIns.SUG_SIDUR = oObjSidurimOvdimUpd.SUG_SIDUR;
-
-                        oCollSidurimOvdimIns.Add(oObjSidurimOvdimIns);
-
-                        //באובייקט העדכון, נאפס את המשתנה שמציין שיש לעדכן את הרשומה
-                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
-
+                    }
+                    else
+                    {
+                        oCollSidurimOvdimDel.RemoveAt(index);
                         //נמחוק את הסידור השגוי    
                         oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
                         oObjSidurimOvdimDel.MISPAR_ISHI = oObjSidurimOvdimUpd.MISPAR_ISHI;
@@ -9214,11 +9253,7 @@ namespace KdsBatch
                         oObjSidurimOvdimDel.MISPAR_SIDUR = oNewSidurim.SidurOld; //מספר סידור קודם
                         oObjSidurimOvdimDel.UPDATE_OBJECT = 0;
                         oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
-                                                
-                    }
-                    else {
-                        //if(oNewSidurim.ShatGmarNew!=oNewSidurim.ShatGmarOld)
-                        //    oObjSidurimOvdimUpd.SHAT_GMAR=oNewSidurim.ShatGmarNew;
+
                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
                     }
                 }
@@ -9228,6 +9263,33 @@ namespace KdsBatch
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", 1, "SetSidurObjects: " + ex.Message);
                 _bSuccsess = false;
             }
+        }
+
+        private bool CheckSidurNewKeyInObjectDelete(clNewSidurim oSidurNew,ref int index)
+        {
+           // clPeilut oPeilut;
+           // clSidur oSidur;
+            bool bExist = false;
+            try
+            {
+                //נמצא את הפעילות באובייקט פעילויות לעדכון
+               
+                for (int i = 0; i <= oCollSidurimOvdimDel.Count - 1; i++)
+                {
+                   // oSidur = (clSidur)htEmployeeDetails[i];
+                    if ((oCollSidurimOvdimDel.Value[i].MISPAR_SIDUR == oSidurNew.SidurNew) && (oCollSidurimOvdimDel.Value[i].SHAT_HATCHALA == oSidurNew.ShatHatchalaNew))
+                    {
+                        bExist = true;
+                        index = i;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bExist;
         }
 
         private void InsertToObjSidurimOvdimForInsert(ref clSidur oSidur, ref OBJ_SIDURIM_OVDIM oObjSidurimOvdimIns)
@@ -10899,7 +10961,9 @@ namespace KdsBatch
                 for (i = iPeilutNesiaIndex; i <= oSidur.htPeilut.Values.Count - 1; i++)
                 {
                     oNextPeilut = (clPeilut)oSidur.htPeilut[i];
-                    if (oNextPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+
+                  //  if (oNextPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || oNextPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || (oNextPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString()) && (oNextPeilut.iElementLeShatGmar > 0 || oNextPeilut.iElementLeShatGmar == -1 || oNextPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                    if (isPeilutMashmautit(oNextPeilut))
                     {
                         oFirstPeilutMashmautit = oNextPeilut;
                         iIndexPeilutMashmautit = i;
@@ -14477,7 +14541,7 @@ namespace KdsBatch
         {
             if (oPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || oPeilut.iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || oPeilut.iMakatType == clKavim.enMakatType.mNamak.GetHashCode() ||
                 (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element701.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element712.GetHashCode().ToString() && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) != KdsLibrary.clGeneral.enElementHachanatMechona.Element711.GetHashCode().ToString())
-                                && (oPeilut.iElementLeShatGmar > 0 || oPeilut.iElementLeShatGmar == -1 || oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700")))
+                                && (oPeilut.iElementLeShatGmar > 0 || oPeilut.iElementLeShatGmar == -1)))
                 return true;
             else return false;          
         }

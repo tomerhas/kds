@@ -45,7 +45,7 @@ namespace KdsBatch
                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzul.GetHashCode()),4,0));
                sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachPitzulKaful.GetHashCode()),4,0));
                sErua417.Append(GetBlank(4));          //sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelBoker.GetHashCode()),4,0));
-               sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode(), "erech_rechiv_a"), 4, 0));
+               sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaTichnunTnua.GetHashCode()), 4, 0));
                sErua417.Append(GetBlank(4));            // sErua417.Append(FormatNumber(GetErechRechiv( clGeneral.enRechivim.SachEshelErev.GetHashCode()),4,0));
                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.DakotPremiaBetochMichsa.GetHashCode()),4,0));
 
