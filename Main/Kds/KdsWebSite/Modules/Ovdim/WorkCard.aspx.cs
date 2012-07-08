@@ -231,7 +231,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");        
         btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
         btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");
-       
+        clnDate.Attributes.Add("onclick", "SetRefreshBtn(true)");
 
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
@@ -595,7 +595,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
       //int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
       iDays =clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
       return (((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
-            || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))))
+            || ((iDays <= 2) && (!bRashemet) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))))
             || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)));
     }
     protected bool WorkCardWasUpdateAndDriver(bool bWorkCardWasUpdate)
@@ -1913,6 +1913,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             }
             hidGoremMeasher.Value = LoginUser.UserInfo.EmployeeNumber;
             Session["SecurityLevel"] = iSecurity;
+        
         }
         catch (Exception ex)
         {

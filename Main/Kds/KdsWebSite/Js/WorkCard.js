@@ -309,7 +309,8 @@
       var sFullYear = $get("clnDate").value.substr(6,4);         
       id = $get("txtId").value;
       date = $get("clnDate").value;
-      if (date != '') {          
+      if (date != '') {
+          SetRefreshBtn(false);   
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
       }      
@@ -318,10 +319,10 @@
     {   var arrReturnValue = result.split("|"); 
         if (arrReturnValue[0]=="0")
         {
+            SetRefreshBtn(true);
             var sBehaviorId='vldExBehavior';
             $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);            
-            SetRefreshBtn(true);
+            $find(sBehaviorId).show(true);                        
             $get("txtDay").value ="";
         }
         else

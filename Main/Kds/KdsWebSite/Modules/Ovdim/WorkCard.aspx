@@ -115,7 +115,7 @@
                     </td>
                     <td style="width: 5%" class = "WorkCardTable1Label">תאריך:</td>
                     <td dir="ltr" align="right" style="width: 15%">                                                                                                       
-                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox" OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="90px"></KdsCalendar:KdsCalendar>
+                        <KdsCalendar:KdsCalendar runat="server" ID="clnDate" TextBoxCssClass="WorkCardTextBox"  OnChangeCalScript="CheckIfCardExists();" CalenderTabIndex="1"  AutoPostBack="false"  dir="rtl" PopupPositionCallOut="Left" TextBoxWidth="90px"></KdsCalendar:KdsCalendar>
                         <asp:CustomValidator runat="server" ID="vldDay" ErrorMessage="לא נמצא כרטיס לתאריך זה"
                             ControlToValidate="clnDate" Display="None"></asp:CustomValidator>
                         <cc1:ValidatorCalloutExtender runat="server" ID="vldEx" BehaviorID="vldExBehavior"
