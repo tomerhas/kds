@@ -6453,18 +6453,18 @@ namespace KdsBatch
                         }
                     }
 
-                    // שינוי 04
-                    for (i = 0; i < htEmployeeDetails.Count; i++)
-                    {
-                        oSidur = (clSidur)htEmployeeDetails[i];
-                        if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
-                        {
-                            oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
+                    ////// שינוי 04
+                    ////for (i = 0; i < htEmployeeDetails.Count; i++)
+                    ////{
+                    ////    oSidur = (clSidur)htEmployeeDetails[i];
+                    ////    if (!CheckIdkunRashemet("SHAT_HATCHALA", oSidur.iMisparSidur, oSidur.dFullShatHatchala) && !CheckIdkunRashemet("SHAT_GMAR", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
+                    ////    {
+                    ////        oObjSidurimOvdimUpd = GetUpdSidurObject(oSidur);
 
-                            FixedShaotForSidurWithOneNesiaReeka04(i, ref oSidur, ref oObjSidurimOvdimUpd);
-                            htEmployeeDetails[i] = oSidur;
-                        }
-                    }
+                    ////        FixedShaotForSidurWithOneNesiaReeka04(i, ref oSidur, ref oObjSidurimOvdimUpd);
+                    ////        htEmployeeDetails[i] = oSidur;
+                    ////    }
+                    ////}
 
                     //שינוי 11
                     for (i = 0; i < htEmployeeDetails.Count; i++)
@@ -10269,7 +10269,7 @@ namespace KdsBatch
                     {
                         oPeilut = (clPeilut)oSidur.htPeilut[l];
 
-                        if (oPeilut.IsMustBusNumber())
+                        if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                         {
                             iPeilutNesiaIndex = l;
                             lOtoNo = oPeilut.lOtoNo;
@@ -10290,7 +10290,7 @@ namespace KdsBatch
                                         {
                                             oPeilut = (clPeilut)oLocalSidur.htPeilut[j];
 
-                                            if (oPeilut.IsMustBusNumber())
+                                            if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                                             {
                                                 if (oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
                                                 {
@@ -10358,7 +10358,7 @@ namespace KdsBatch
                 {
                     oPeilut = (clPeilut)oSidur.htPeilut[j];
 
-                    if (oPeilut.IsMustBusNumber())
+                    if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                     {
                         bPeilutNesiaMustBusNumber = true;
                         iPeilutNesiaIndex = j;
@@ -10671,7 +10671,7 @@ namespace KdsBatch
                 {
                     oPeilut = (clPeilut)oSidur.htPeilut[j];
 
-                    if (oPeilut.IsMustBusNumber())
+                    if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                     {
                         bPeilutNesiaMustBusNumber = true;
                         iPeilutNesiaIndex = j;
@@ -10786,7 +10786,7 @@ namespace KdsBatch
                     {
                         oPeilut = (clPeilut)oSidur.htPeilut[l];
 
-                        if (oPeilut.IsMustBusNumber())
+                        if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                         {
                             iPeilutNesiaIndex = l;
                             lOtoNo = oPeilut.lOtoNo;
@@ -10807,7 +10807,7 @@ namespace KdsBatch
                                         {
                                             oPeilut = (clPeilut)oLocalSidur.htPeilut[j];
 
-                                            if (oPeilut.IsMustBusNumber())
+                                            if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC))
                                             {
                                                 if (oPeilut.lOtoNo != lOtoNo && oPeilut.lOtoNo > 0 && lOtoNo > 0 && oPeilut.lOtoNo.ToString().Length >= 5)
                                                 {
@@ -10924,9 +10924,9 @@ namespace KdsBatch
                 {
                     iMeshechElement = int.Parse(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(3, 3));
                     if (idakot <= iMeshechElement)
-                        oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", (iMeshechElement - idakot).ToString().PadLeft(3, (char)48), "00"));
-                    else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
-                    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-idakot);
+                        oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(0,3), (iMeshechElement - idakot).ToString().PadLeft(3, (char)48), "00"));
+                    else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat(oObjPeilutOvdimIns.MAKAT_NESIA.ToString().Substring(0, 3), "000", "00"));
+                    dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(idakot);
                 }
 
                 oObjPeilutOvdimIns.SHAT_YETZIA = dShatYetziaPeilut;
@@ -11105,9 +11105,9 @@ namespace KdsBatch
                         oPeilut = (clPeilut)oSidur.htPeilut[j];
                         if (oPeilut.dFullShatYetzia == dShatYetzia)
                         {
-                            if (!CheckPeilutObjectDelete(iSidurIndex, j) && !isPeilutMashmautit(oPeilut))
+                            if (!CheckPeilutObjectDelete(iSidurIndex, j))
                             {
-                                if (!CheckIdkunRashemet("SHAT_YETZIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia))
+                                if (!CheckIdkunRashemet("SHAT_YETZIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia) && !isPeilutMashmautit(oPeilut))
                                 {
                                     oObjPeilutUpd = GetUpdPeilutObject(iSidurIndex, oPeilut, out SourceObject, oObjSidurimOvdimUpd);
                                     if (SourceObject == SourceObj.Insert)
@@ -11131,7 +11131,6 @@ namespace KdsBatch
                                 }
                                 else// if (!CheckPeilutObjectDelete(iSidurIndex, j) && !isPeilutMashmautit(oPeilut) && (CheckIdkunRashemet("SHAT_YETZIA", oSidur.iMisparSidur, oSidur.dFullShatHatchala, oPeilut.iMisparKnisa, oPeilut.dFullShatYetzia)))
                                 {
-
                                     for (int i = j - 1; i >= 0; i--)
                                     {
                                         if (iPeilutNesiaIndex != i)
@@ -11160,7 +11159,7 @@ namespace KdsBatch
                                         }
                                     }
                                     iDakot += 1;
-                                    dShatYetzia = dShatYetzia.AddMinutes(-1);   
+                                    dShatYetzia = dShatYetzia.AddMinutes(1);   
                                     FindDuplicatPeiluyot_2(iPeilutNesiaIndex, dShatYetzia, iSidurIndex, ref oSidur, ref oObjSidurimOvdimUpd);
                                 }
                             }
@@ -14420,7 +14419,7 @@ namespace KdsBatch
                     else if (indexPeilutMechona > 0)
                     {
                         oPeilut = (clPeilut)oSidur.htPeilut[0];
-                        if (oPeilut.IsMustBusNumber() && !isPeilutMashmautit(oPeilut))
+                        if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC) && !isPeilutMashmautit(oPeilut))
                         {
                             oPeilut = (clPeilut)oSidur.htPeilut[indexPeilutMechona];
                             otoNum = oPeilut.lOtoNo;
@@ -14428,7 +14427,7 @@ namespace KdsBatch
                             while (i >= 0)
                             {
                                 oPeilut = (clPeilut)oSidur.htPeilut[i];
-                                if (oPeilut.IsMustBusNumber() && oPeilut.lOtoNo != otoNum)
+                                if (oPeilut.IsMustBusNumber(oParam.iVisutMustRechevWC) && oPeilut.lOtoNo != otoNum)
                                     break;
                                 i--;
                             }

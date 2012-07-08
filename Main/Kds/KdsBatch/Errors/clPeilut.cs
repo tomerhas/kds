@@ -663,12 +663,13 @@ namespace KdsBatch
             }
         }
 
-        public bool IsMustBusNumber()
+        public bool IsMustBusNumber(int iVisutMustRechevWC)
         {
+          
             try
             {
                 return ((iMakatType == clKavim.enMakatType.mVisa.GetHashCode() || iMakatType == clKavim.enMakatType.mKavShirut.GetHashCode() || iMakatType == clKavim.enMakatType.mNamak.GetHashCode() || iMakatType == clKavim.enMakatType.mEmpty.GetHashCode()
-                   || (iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (bBusNumberMustExists ||  lMakatNesia.ToString().PadLeft(8).Substring(0, 3)=="700") && !bElementHachanatMechona)));
+                   || (iMakatType == clKavim.enMakatType.mElement.GetHashCode() && (bBusNumberMustExists || (lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "700" && iVisutMustRechevWC==1)) && !bElementHachanatMechona)));
             }
             catch (Exception ex)
             {
