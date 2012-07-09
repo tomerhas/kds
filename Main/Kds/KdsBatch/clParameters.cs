@@ -203,6 +203,7 @@ namespace KdsBatch
         public DateTime dStartAruchatTzaharayim246;//246 - תחילת ארוחת צהריים
         public DateTime dEndAruchatTzaharayim247;//247 - סיום ארוחת צהריים
         public int iVisutMustRechevWC; //261 - ויסות דורש רכב בכרטיס עבוד
+        public int iDaysToViewWorkCard;//263 - מספר הימים שניתן לראות כרטיס עבודה ללא סידורים (נהג או משתמש רגיל)
         public float fBasisLechishuvPremia; //504 -אגד תעבורה- בסיס לחישוב פרמיית נהיגה
         public float fMichsatSaotChodshitET; //503 -אגד תעבורה- מכסת שעות חודשית 
         public float fMaxPremiatNehiga; //505 - אגד תעבורה - מקסימום פרמיית נהיגה
@@ -990,7 +991,11 @@ namespace KdsBatch
                 //261 - ויסות דורש רכב בכרטיס עבוד
                 sTmp = GetOneParam(261, dCardDate);
                 iVisutMustRechevWC = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
-               
+
+                //263 - מספר הימים שניתן לראות כרטיס עבודה ללא סידורים (נהג או משתמש רגיל)
+                sTmp = GetOneParam(263, dCardDate);
+                iDaysToViewWorkCard = String.IsNullOrEmpty(sTmp) ? 0 : int.Parse(sTmp);
+                
                 //505 - אגד תעבורה - מקסימום פרמיית נהיגה
                 sTmp = GetOneParam(505, dCardDate);
                 fMaxPremiatNehiga = String.IsNullOrEmpty(sTmp) ? 0 : float.Parse(sTmp);
