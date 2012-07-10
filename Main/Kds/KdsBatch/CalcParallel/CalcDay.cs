@@ -2987,8 +2987,7 @@ namespace KdsBatch
                             { fErechRechiv = 1; }
 
                             //ה
-                            if (objOved.objPirteyOved.iMutamBitachon > 0 &&
-                               (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8))
+                            if (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1)
                             {
                                 if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                                 {
@@ -2997,20 +2996,20 @@ namespace KdsBatch
                                         fErechRechiv = ((fMichsaYomit - fDakotNochehut) / fMichsaYomit);
                                     }
                                    
-                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
-                                        fErechRechiv = ((objOved.objPirteyOved.iMutamBitachon - fDakotNochehut) / fMichsaYomit);
+                                        fErechRechiv = ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
                                     }
                                 }
                                 else if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode())
                                 {
-                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
                                         fErechRechiv = ((fMichsaYomit - fDakotNochehut) / fMichsaYomit);
                                     }
                                     //else if (objOved.objMeafyeneyOved.iMeafyen33 == 0 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
                                     //{
-                                    //    fErechRechiv = ((objOved.objPirteyOved.iMutamBitachon - fDakotNochehut) / fMichsaYomit);
+                                    //    fErechRechiv = ((objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit);
                                     //}
                                 }
                             }
@@ -3106,8 +3105,7 @@ namespace KdsBatch
 
                         //ג
 
-                        if ((objOved.objPirteyOved.iMutamBitachon > 0) &&
-                             (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8))
+                        if (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8 || objOved.objPirteyOved.iMutamut == 1)
                         {
                                 if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Friends.GetHashCode())
                                 {
@@ -3118,16 +3116,16 @@ namespace KdsBatch
                                         fErechRechiv = (fMichsaYomit - fDakotNochehut) / fMichsaYomit;     
                                     }
 
-                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
-                                        fErechRechiv = (objOved.objPirteyOved.iMutamBitachon - fDakotNochehut) / fMichsaYomit;    
+                                        fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;    
                                     }
                                 }
                                 else if (objOved.objPirteyOved.iKodMaamdRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
                                 {
-                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iMutamBitachon)
+                                    if (objOved.objMeafyeneyOved.iMeafyen33 == 1 && fDakotNochehut < objOved.objPirteyOved.iZmanMutamut)
                                     {
-                                        fErechRechiv = (objOved.objPirteyOved.iMutamBitachon - fDakotNochehut) / fMichsaYomit;    
+                                        fErechRechiv = (objOved.objPirteyOved.iZmanMutamut - fDakotNochehut) / fMichsaYomit;    
                                     }
                                 }
                         }
