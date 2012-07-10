@@ -68,9 +68,9 @@
                                              <asp:TextBox ID="txtMisparElement" runat="server"  width="80px" MaxLength="2" onChange="CheckKodElement()"  tabindex="4"  ></asp:TextBox>
                                                   <cc1:AutoCompleteExtender id="AutoMisElement"  runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                     TargetControlID="txtMisparElement" MinimumPrefixLength="1" ServiceMethod="GetElements" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement" 
-                                                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" OnClientHidden ="OnShown"
-                                                    CompletionListItemCssClass="autocomplete_completionListItemElement"   >                               
+                                                    EnableCaching="true"  CompletionListCssClass="ACLst" 
+                                                    CompletionListHighlightedItemCssClass="ACLstItmSel" OnClientHidden ="OnShown"
+                                                    CompletionListItemCssClass="ACLstItmE"   >                               
                                                 </cc1:AutoCompleteExtender>  
                                              <asp:CustomValidator runat="server" id="vldKod"   ControlToValidate="txtMisparElement" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="vldExK" BehaviorID="vldExKod"   TargetControlID="vldKod" Width="200px" PopupPosition="Left"  ></cc1:ValidatorCalloutExtender>                                                
@@ -80,9 +80,9 @@
                                              <asp:TextBox ID="txtTeurElement" runat="server" onChange="CheckTeurElement()"  width="141px" tabindex="6"  ></asp:TextBox>
                                                  <cc1:AutoCompleteExtender id="AautoTeurElement"  runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                     TargetControlID="txtTeurElement" MinimumPrefixLength="1" ServiceMethod="GetTeurElements" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                    CompletionListItemCssClass="autocomplete_completionListItemElement">                               
+                                                    EnableCaching="true"  CompletionListCssClass="ACLst"
+                                                    CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                    CompletionListItemCssClass="ACLstItmE">                               
                                                 </cc1:AutoCompleteExtender>   
                                              <asp:CustomValidator runat="server" id="vldTeur" ControlToValidate="txtTeurElement" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender  runat="server" ID="vldExT" BehaviorID="vldExTeur"   TargetControlID="vldTeur" Width="200px" PopupPosition="Right" ></cc1:ValidatorCalloutExtender>                                                

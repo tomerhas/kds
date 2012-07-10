@@ -63,9 +63,9 @@
                                            <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement"   
+                                            EnableCaching="true"  CompletionListCssClass="ACLst"
+                                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                            CompletionListItemCssClass="ACLstItmE"   
                                             OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                         
                                           </cc1:AutoCompleteExtender>                      
                                       <%-- </ContentTemplate>                       
@@ -85,9 +85,9 @@
                                             <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();" ></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement" FirstRowSelected="true"
-                                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                                        EnableCaching="true"  CompletionListCssClass="ACLst" FirstRowSelected="true"
+                                                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                        CompletionListItemCssClass="ACLstItmE"
                                                         OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >                                                                                     
                                             </cc1:AutoCompleteExtender> 
                                         <%-- </ContentTemplate>                       

@@ -20,9 +20,9 @@ return window_onload()
                     <asp:TextBox ID="txtIdDetail" runat="server" onchange="FindSingle()" AutoComplete="Off" dir="rtl" ></asp:TextBox>                            
                       <cc1:AutoCompleteExtender id="AutoCompleteExtenderID"  runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                         TargetControlID="txtIdDetail" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                        CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
+                        EnableCaching="true"  CompletionListCssClass="ACLst"
+                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                        CompletionListItemCssClass="ACLstItmE"  >                               
                     </cc1:AutoCompleteExtender>                              
                     <asp:HiddenField ID="HidListVisible" runat="server" />
                                                 </ContentTemplate>

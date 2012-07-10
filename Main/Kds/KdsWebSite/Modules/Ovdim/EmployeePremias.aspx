@@ -88,9 +88,9 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 CompletionSetCount="12"   UseContextKey="true" TargetControlID="txtId"   MinimumPrefixLength="1" 
                                 ServiceMethod="GetOvdimById"
                                 EnableCaching="true" 
-                                CompletionListCssClass="autocomplete_completionListElement"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                CompletionListCssClass="ACLst"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE"
                                 OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >   
                             </cc1:AutoCompleteExtender>     
                        </ContentTemplate>
@@ -127,9 +127,9 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                                 CompletionSetCount="12"                                                        UseContextKey="true" TargetControlID="txtName"                                 MinimumPrefixLength="1" 
                                 ServiceMethod="GetOvdimByName" 
                                 EnableCaching="true" 
-                                CompletionListCssClass="autocomplete_completionListElement"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  
+                                CompletionListCssClass="ACLst"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE"  
                                  OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >      
                             </cc1:AutoCompleteExtender> 
                              <%--   OnClientHidden="onClientHiddenHandler_getName"--%>

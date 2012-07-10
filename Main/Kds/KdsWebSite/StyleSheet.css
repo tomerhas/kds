@@ -14,18 +14,8 @@
 	color:Red;
 	font-size:12px;
 }
-.DeleteError
-{
-	color:Black;
-	background:white;
-	font-size:12px;
-}
-.RaiseError
-{
-	color:White;
-	background:Red;
-	font-size:12px;
-}
+
+
 .collapsePanel	
 {
     height:20px;
@@ -85,7 +75,6 @@
 	width:145px;
 		 
 }
-
 .clLevel1over
 {
 	padding:2px;
@@ -126,19 +115,6 @@
 	vertical-align:middle;
 	text-align:right;
 	width:1005px;
-}
-
-.WorkCardFieldSet
-{
-	width:930px;
-	height:100px;
-	border-style:solid; 
-	border-width:1px; 
-	border-color:#DFDFDF;
-	font:16px;
-	padding:2px;
-	vertical-align:middle;
-	color:Gray;
 }
 .FilterTable
 {
@@ -196,8 +172,6 @@
 {
 	width:100px;
 }
-
-
 
 .ImgButtonSearch
 {
@@ -579,24 +553,6 @@ cursor:pointer;
 	height:30px; 
 	color: White;		
 }
-
-.ImgButtonApprovalCheckedOld
-{
-	background-image: url(Images/btn-approval-checked.jpg);	
-	width:80px; 
-	height:30px; 	
-	color: white;
-	font-weight:bold;		
-	cursor:pointer;
-}
-.ImgButtonApprovalRegularOld
-{
-	background-image: url(Images/btn-approval-regular.jpg);	
-	width:80px; 
-	height:30px; 
-	color: White;	
-	font-family:Arial;	
-}
 .ImgButtonApprovalChecked
 {
 	background-image: url(Images/B_approve_press.png);			
@@ -612,21 +568,6 @@ cursor:pointer;
 	vertical-align:bottom;
 	cursor:pointer;
 }
-.ImgButtonApprovalCheckedDisabled
-{
-	background-image: url(Images/B_approve_press.png);	
-	color: black;
-	text-align:center;		
-	font-weight:bold;
-	font-size:19px;	
-	height:36px;
-	width:95px;
-	border-style:none; 
-	background-color:transparent;
-	font-family:Arial;
-	vertical-align:bottom;
-}
-
 .ImgButtonApprovalRegular
 {
 	background-image: url(Images/B_approve.png);	
@@ -1211,9 +1152,7 @@ a
 	text-decoration:underline;
 }
 
-
-
-.autocomplete_completionListElement 
+.ACLst 
 {  	
     overflow :auto;      
     border-width : 1px;
@@ -1227,7 +1166,7 @@ a
     background-color:White;  
 }
 
-.autocomplete_completionListItemElement 
+.ACLstItmE 
 {  
   background-color:White;
   text-align:right;      
@@ -1237,7 +1176,7 @@ a
    padding-right:1px;
 }
 
-.autocomplete_completionListItemElement_Select 
+.ACLstItmSel 
 {  
   background-color:Navy;
   color:White;
@@ -1325,8 +1264,6 @@ a
 
 }
 
-
-
 .CustomTabStyle .ajax__tab_body
 {
 	background-color: #F3F3F3;
@@ -1380,7 +1317,6 @@ a
 	background-color: Red;
 	color:Yellow;
 }
-
 
 .TextBoxReadOnly
 {
@@ -1740,7 +1676,7 @@ a
        width:250px;
 }
 
-.MaskedEditFocus{
+.MEFocus{
 	background-color:#3399FF;
 	color:White;
 }         
@@ -1777,7 +1713,7 @@ a
 	 text-align:center;
 	 color:Black;
 }
-.WorkCardSidurTextBoxFocus
+.WCSidurTxtF
 {
 	background-color:#1A8CFF;
 	color:white;	 
@@ -1789,7 +1725,7 @@ a
 	border-style:none;	 
 	text-align:center;	 
 }
-.WorkCardSidurTextBox
+.WCSidurTxt
 {
 	 background-color:#F2F7FB;	
 	 color:Black;	 
@@ -1801,7 +1737,7 @@ a
 	 border-style:none;	 
 	 text-align:center;	 	 	 	 
 }
-.WorkCardSidurDropDown
+.WCSidurDDL
 {
 	 background-color:#F2F7FB;	
 	 font-weight:bolder;	
@@ -1812,7 +1748,7 @@ a
 	 border-color:#E4EDF3;
 	 border-width :1px;
 }
-.WorkCardPeilutTextBoxFocus
+.WCPilutTxtF
 {
 	 background-color:#1A8CFF;	
 	 color:White;
@@ -1826,7 +1762,7 @@ a
 	 border-width :1px;
 	 font-size: 14px;
 }	
-.WorkCardPeilutTextBox
+.WCPilutTxt
 {
 	 background-color:#F6FBFF;	
 	 color:Black;

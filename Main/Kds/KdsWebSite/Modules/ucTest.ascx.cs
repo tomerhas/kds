@@ -430,8 +430,8 @@ public partial class Modules_ucTest : System.Web.UI.UserControl
             MaskTextBox.TargetControlID = sTargetControlId;
             MaskTextBox.Mask = "99:99";
             MaskTextBox.MessageValidatorTip = true;
-            MaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-            MaskTextBox.OnInvalidCssClass = "MaskedEditError";
+            MaskTextBox.OnFocusCssClass = "MEFocus";
+            MaskTextBox.OnInvalidCssClass = "MEError";
             MaskTextBox.MaskType = AjaxControlToolkit.MaskedEditType.Time;
             MaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
             MaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.Left;
@@ -446,8 +446,8 @@ public partial class Modules_ucTest : System.Web.UI.UserControl
             MaskTextBox.TargetControlID = sTargetControlId;
             MaskTextBox.Mask = "999999999";
             MaskTextBox.MessageValidatorTip = true;
-            MaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-            MaskTextBox.OnInvalidCssClass = "MaskedEditError";
+            MaskTextBox.OnFocusCssClass = "MEFocus";
+            MaskTextBox.OnInvalidCssClass = "MEError";
             MaskTextBox.MaskType = AjaxControlToolkit.MaskedEditType.Number;
             MaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
             MaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.Left;

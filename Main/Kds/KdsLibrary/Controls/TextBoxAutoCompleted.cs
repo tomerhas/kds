@@ -80,9 +80,9 @@ namespace KdsLibrary.Controls
                 _AutoCompleteExtender.ServicePath = LibraryName;
                 _AutoCompleteExtender.EnableCaching = true;
                 _AutoCompleteExtender.EnableViewState = true;
-                _AutoCompleteExtender.CompletionListCssClass = "autocomplete_completionListElement";
-                _AutoCompleteExtender.CompletionListHighlightedItemCssClass = "autocomplete_completionListItemElement_Select";
-                _AutoCompleteExtender.CompletionListItemCssClass = "autocomplete_completionListItemElement";
+                _AutoCompleteExtender.CompletionListCssClass = "ACLst";
+                _AutoCompleteExtender.CompletionListHighlightedItemCssClass = "ACLstItmSel";
+                _AutoCompleteExtender.CompletionListItemCssClass = "ACLstItmE";
                 _AutoCompleteExtender.FirstRowSelected = true;
             }
             catch (Exception ex)

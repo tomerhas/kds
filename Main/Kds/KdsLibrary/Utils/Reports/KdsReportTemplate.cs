@@ -178,9 +178,9 @@ namespace KdsLibrary.Utils.Reports
             Ext.ServiceMethod = Filter.DropDownList.SelectMethod;
             Ext.ServicePath = Filter.DropDownList.LibraryName;
             Ext.EnableCaching = true;
-            Ext.CompletionListCssClass="autocomplete_completionListElement";
-            Ext.CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select";
-            Ext.CompletionListItemCssClass = "autocomplete_completionListItemElement";
+            Ext.CompletionListCssClass="ACLst";
+            Ext.CompletionListHighlightedItemCssClass="ACLstItmSel";
+            Ext.CompletionListItemCssClass = "ACLstItmE";
             TdAutoComplete.Controls.Add((System.Web.UI.Control)Ext);
         }
         private void AddValidationSummary()

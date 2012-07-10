@@ -41,7 +41,7 @@
                     <asp:BoundField DataField="SugKnisa" HeaderText="סוג" ItemStyle-CssClass="WorkCardRechivimGridRow" ItemStyle-Width="70px"  />                          
                     <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardRechivimGridRow"  HeaderText="דקות בפועל" >
                         <ItemTemplate>
-                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="50px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="50px" CssClass="WCPilutTxt"></asp:TextBox>
                             <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotBafoal" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="200px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
                         </ItemTemplate>

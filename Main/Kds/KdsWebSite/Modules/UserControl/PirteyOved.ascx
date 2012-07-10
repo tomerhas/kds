@@ -86,9 +86,9 @@
                                                         Width="60px"  ontextchanged="txtCodeNatun_TextChanged" EnableViewState="true"></asp:TextBox>                            
                                                     <cc1:AutoCompleteExtender id="AutoCompleteExtender1" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                         TargetControlID="txtCodeNatun" MinimumPrefixLength="1" ServiceMethod="GetTeurByKod" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"   EnableViewState="true"
-                                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientItemSelected="ItemSelectedDetails" >                               
+                                                        EnableCaching="true"  CompletionListCssClass="ACLst"   EnableViewState="true"
+                                                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                        CompletionListItemCssClass="ACLstItmE" OnClientItemSelected="ItemSelectedDetails" >                               
                                                     </cc1:AutoCompleteExtender>   
                                                                                      
                                                    </ContentTemplate>
@@ -103,9 +103,9 @@
                                                             Width="180px" AutoPostBack="true" ontextchanged="txtTeurNatun_TextChanged" EnableViewState="true"  ></asp:TextBox>                            
                                                         <cc1:AutoCompleteExtender id="AutoCompleteExtender2" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                             TargetControlID="txtTeurNatun" MinimumPrefixLength="1" ServiceMethod="GetNatunByTeur" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientItemSelected="ItemSelectedDetails" >                               
+                                                            EnableCaching="true"  CompletionListCssClass="ACLst"  EnableViewState="true"
+                                                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                            CompletionListItemCssClass="ACLstItmE" OnClientItemSelected="ItemSelectedDetails" >                               
                                                         </cc1:AutoCompleteExtender>                              
                                                    </ContentTemplate>
                                               </asp:UpdatePanel>

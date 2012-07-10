@@ -97,9 +97,9 @@
                                                         Width="70px"   ontextchanged="txtCodeMeafyen_TextChanged"  EnableViewState="true" ondbclick="this.select();"></asp:TextBox>                            
                                                     <cc1:AutoCompleteExtender    id="AutoCompleteCodeMeafyen" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                         TargetControlID="txtCodeMeafyen" MinimumPrefixLength="1" ServiceMethod="GetMeafyenyeBitzuaCode" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="false"  CompletionListCssClass="autocomplete_completionListElement"    EnableViewState="true"
-                                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                        CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientItemSelected="ItemSelected">                               
+                                                        EnableCaching="false"  CompletionListCssClass="ACLst"    EnableViewState="true"
+                                                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                        CompletionListItemCssClass="ACLstItmE" OnClientItemSelected="ItemSelected">                               
                                                     </cc1:AutoCompleteExtender>   
                                                                                      
                                                    </ContentTemplate>
@@ -114,9 +114,9 @@
                                                             Width="180px" AutoPostBack="true" ontextchanged="txtTeurMeafyen_TextChanged" EnableViewState="true"  ></asp:TextBox>                            
                                                         <cc1:AutoCompleteExtender id="AutoCompleteTeurMeafyen" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                                             TargetControlID="txtTeurMeafyen" MinimumPrefixLength="1" ServiceMethod="GetMeafyenyeBitzuaTeur" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                            CompletionListItemCssClass="autocomplete_completionListItemElement"  OnClientItemSelected="ItemSelected">                               
+                                                            EnableCaching="true"  CompletionListCssClass="ACLst"  EnableViewState="true"
+                                                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                            CompletionListItemCssClass="ACLstItmE"  OnClientItemSelected="ItemSelected">                               
                                                         </cc1:AutoCompleteExtender>                              
                                                    </ContentTemplate>
                                               </asp:UpdatePanel>

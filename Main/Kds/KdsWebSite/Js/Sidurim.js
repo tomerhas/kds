@@ -762,7 +762,7 @@ function chkMkt(oRow) {
         { var dShatYetiza = new Date();                                             
           var dSExitHour = new Date();     
           var dEExitHour = new Date();              
-          var sGridRowID = String(val.id).substr(0,val.id.indexOf('vldPeilutShatYetiza')-1);
+          var sGridRowID = String(val.id).substr(0,val.id.indexOf('vldPilutSY')-1);
           var sActualShatYetiza = $get(sGridRowID).cells[_COL_SHAT_YETIZA].childNodes[0].value;
           var iPDayToAdd = $get(sGridRowID).cells[_COL_DAY_TO_ADD].childNodes[0].value 
           var sParam29 = $get("SD_hidParam29").value;   

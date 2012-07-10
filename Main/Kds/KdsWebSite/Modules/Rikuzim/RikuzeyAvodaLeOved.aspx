@@ -26,9 +26,9 @@
                                 Width="55px"  EnableViewState="true" onfocus="this.select();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="false"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimLefiRikuzim" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  FirstRowSelected="true"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement" >   
+                                EnableCaching="true"  CompletionListCssClass="ACLst"  FirstRowSelected="true"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE" >   
                             </cc1:AutoCompleteExtender>                        
                     </td>
                     <td style="width:10px"></td>

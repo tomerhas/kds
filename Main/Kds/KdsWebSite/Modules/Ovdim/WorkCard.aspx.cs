@@ -991,8 +991,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oMaskTextBox.TargetControlID = sTargetControlId;
             oMaskTextBox.Mask = sMask;
             oMaskTextBox.MessageValidatorTip = true;
-            //oMaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-            oMaskTextBox.OnInvalidCssClass = "MaskedEditError";
+            //oMaskTextBox.OnFocusCssClass = "MEFocus";
+            oMaskTextBox.OnInvalidCssClass = "MEError";
             oMaskTextBox.MaskType = oMaskType;
             oMaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
             oMaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.None;

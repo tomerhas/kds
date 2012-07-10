@@ -125,9 +125,9 @@
                             <asp:TextBox ID="txtId" runat="server" onchange="GetOvedNameById();" AutoComplete="Off" dir="rtl" ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"
+                                EnableCaching="true"  CompletionListCssClass="ACLst"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE"
                                OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                                                         
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
@@ -146,9 +146,9 @@
                             <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" onchange="GetOvedIdByName();" style="width:200px" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                        EnableCaching="true"  CompletionListCssClass="ACLst"
+                                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                        CompletionListItemCssClass="ACLstItmE" 
                                         OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >                              
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>

@@ -309,8 +309,7 @@
       var sFullYear = $get("clnDate").value.substr(6,4);         
       id = $get("txtId").value;
       date = $get("clnDate").value;
-      if (date != '') {
-          SetRefreshBtn(true);   
+      if (date != '') {           
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
       }      

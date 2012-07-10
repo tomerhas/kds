@@ -91,9 +91,9 @@
                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                             CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                             ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
-                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
-                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID">
+                            EnableCaching="true" CompletionListCssClass="ACLst"
+                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="ACLstItmSel"
+                            CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getID" OnClientItemSelected="onClientItemSelected_getID">
                         </cc1:AutoCompleteExtender>
                     </td>
                     <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
@@ -103,9 +103,9 @@
                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
                             CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
                             ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
-                            EnableCaching="true" CompletionListCssClass="autocomplete_completionListElement"
-                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">
+                            EnableCaching="true" CompletionListCssClass="ACLst"
+                            FirstRowSelected="true" CompletionListHighlightedItemCssClass="ACLstItmSel"
+                            CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getName">
                         </cc1:AutoCompleteExtender>
                     </td>
                     <td style="width: 188px" class = "WorkCardTable1Label">מעמד:</td>                                
@@ -280,13 +280,13 @@
                           <tr>         
                             <td width="50px">טכוגרף:</td>               
                             <td width="110px">
-                                <asp:DropDownList runat="server" ID="ddlTachograph"  CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="110px" > </asp:DropDownList>                           
+                                <asp:DropDownList runat="server" ID="ddlTachograph"  CssClass="WCSidurDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="110px" > </asp:DropDownList>                           
                             </td>
                             <td width="40px">לינה:</td>
                             <td width="8px"><img id="imgLinaErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlLina,1,'');" /></td>
                             <td width="110px">
                                 <asp:DropDownList runat="server"
-                                 ID="ddlLina" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"
+                                 ID="ddlLina" CssClass="WCSidurDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"
                                     ondblclick="GetErrorMessage(this,1);" width="100px">
                                 </asp:DropDownList>
                             </td>
@@ -298,7 +298,7 @@
                             <td width="50px">הלבשה:</td>
                             <td width="8px"><img id="imgHalbErr" runat="server" src="../../Images/!.png" ondblclick="GetErrorMessage(ddlHalbasha,1,'');" /></td>
                             <td width="130px">
-                                <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);ChangeHalbashaSelect();" 
+                                <asp:DropDownList runat="server" ID="ddlHalbasha" CssClass="WCSidurDDL" onchange="SetBtnChanges();SetLvlChg(1,0);ChangeHalbashaSelect();" 
                                     ondblclick="GetErrorMessage(this,1,'');" width="130px">
                                 </asp:DropDownList>
                             </td>   
@@ -310,7 +310,7 @@
                                 <input type="hidden" runat="server" id="HashlamaForDayValue" />
                             </td>             
                             <td width="90px">סיבה להשלמה:</td>                                                        
-                            <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WorkCardSidurDropDown" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="160px"></asp:DropDownList></td>
+                            <td><asp:DropDownList runat="server" ID="ddlHashlamaReason" CssClass="WCSidurDDL" onchange="SetBtnChanges();SetLvlChg(1,0);"  width="160px"></asp:DropDownList></td>
                             <td></td>
                         </tr>                         
                         </table>
@@ -330,7 +330,7 @@
                                     </td>
                                     <td style="width: 285px">
                                         סיבת אי התייצבות:
-                                        <asp:DropDownList runat="server" ID="ddlFirstPart" CssClass="WorkCardSidurDropDown" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
+                                        <asp:DropDownList runat="server" ID="ddlFirstPart" CssClass="WCSidurDDL" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                     </td>
                                     <td style="width:210px">
                                         התייצבות 2:
@@ -338,7 +338,7 @@
                                     </td>
                                     <td  style="width: 285px">
                                         סיבת אי התייצבות:
-                                        <asp:DropDownList runat="server" ID="ddlSecPart" CssClass="WorkCardSidurDropDown" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
+                                        <asp:DropDownList runat="server" ID="ddlSecPart" CssClass="WCSidurDDL" style="width:168px" onchange="SetBtnChanges();SetLvlChg(1,0);"></asp:DropDownList>                                                    
                                     </td>
                                 </tr>
                             </table>  

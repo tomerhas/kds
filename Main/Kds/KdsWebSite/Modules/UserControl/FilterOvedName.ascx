@@ -15,9 +15,9 @@
                                        <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" ></asp:TextBox>                            
                                           <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" >                               
+                                            EnableCaching="true"  CompletionListCssClass="ACLst"
+                                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                            CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getID" >                               
                                         </cc1:AutoCompleteExtender>                              
                                        <br /> 
                             </td>                
@@ -28,9 +28,9 @@
                                <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:230px"  ></asp:TextBox>
                                 <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                             TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName" >                               
+                                            EnableCaching="true"  CompletionListCssClass="ACLst"
+                                            CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                            CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getName" >                               
                                 </cc1:AutoCompleteExtender> 
                               </td>
                             <td width="400px">

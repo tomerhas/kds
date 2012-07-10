@@ -26,9 +26,9 @@
                                                     Width="80px" EnableViewState="true"  ></asp:TextBox>                            
                                                 <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"
                                                     TargetControlID="txtRequestNum" MinimumPrefixLength="1" ServiceMethod="GetRequestList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                    CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
+                                                    EnableCaching="true"  CompletionListCssClass="ACLst"  EnableViewState="true"
+                                                    CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                    CompletionListItemCssClass="ACLstItmE"  >                               
                                                 </cc1:AutoCompleteExtender>   
                                             </ContentTemplate>
                                         </asp:UpdatePanel> 

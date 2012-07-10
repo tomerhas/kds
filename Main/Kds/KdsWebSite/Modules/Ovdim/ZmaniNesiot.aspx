@@ -50,24 +50,24 @@
         <tr class="WorkCardRechivim">
             <td style="text-align:right;width:170px"><asp:Label ID="lbl1" runat="server" Font-Bold="true" Font-Underline="true">זמני נסיעות לפי מאפיין:</asp:Label></td>
             <td  style="text-align:right;width:130px; font-weight:normal">זמן נסיעה לעבודה:</td>
-            <td valign="bottom" ><asp:TextBox Width="70px" Height="30px" ID="txtZNLavodaMax" runat="server" ReadOnly="true" CssClass="WorkCardPeilutTextBox"></asp:TextBox></td>
+            <td valign="bottom" ><asp:TextBox Width="70px" Height="30px" ID="txtZNLavodaMax" runat="server" ReadOnly="true" CssClass="WCPilutTxt"></asp:TextBox></td>
             <td style="text-align:center;width:45px">דקות</td> 
             <td width="45px"></td>
             <td style="text-align:right;width:140px;font-weight:normal ">זמן נסיעה מהעבודה:</td> 
-            <td valign="bottom"><asp:TextBox Width="70px" Height="30px" ID="txtZNMavodaMax" runat="server" ReadOnly="true" CssClass="WorkCardPeilutTextBox"></asp:TextBox> </td>  
+            <td valign="bottom"><asp:TextBox Width="70px" Height="30px" ID="txtZNMavodaMax" runat="server" ReadOnly="true" CssClass="WCPilutTxt"></asp:TextBox> </td>  
             <td style="text-align:center;width:40px">דקות</td>     
         </tr>
         <tr class="WorkCardRechivim">
             <td style="text-align:right;width:170px"><asp:Label ID="Label1" runat="server" Font-Bold="true" Font-Underline="true">זמני נסיעות בפועל:</asp:Label></td>
             <td style="text-align:right;width:130px;font-weight:normal">זמן נסיעה לעבודה:</td>
-            <td valign="bottom"><asp:TextBox Width="70px" Height="30px" ID="txtZNLavoda" runat="server" onChange="setChanged()" CssClass="WorkCardPeilutTextBox"></asp:TextBox></td>
+            <td valign="bottom"><asp:TextBox Width="70px" Height="30px" ID="txtZNLavoda" runat="server" onChange="setChanged()" CssClass="WCPilutTxt"></asp:TextBox></td>
                 <asp:CustomValidator ID="CmpValidApprovedInVaadatP_1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן לאשר ערך הגדול מהערך לפי מאפיין זמן נסיעה לעבודה" ControlToValidate="txtZNLavoda" ClientValidationFunction="CmpValidApprovedInZman"></asp:CustomValidator>
                 <asp:CompareValidator ID="CmpValidApprovedInVaadatP_2" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="יש להקליד ערך מספרי בלבד" Type="Integer" Operator="DataTypeCheck" ControlToValidate="txtZNLavoda"></asp:CompareValidator>
                 <asp:CompareValidator ID="CmpValidApprovedInVaadatP_3" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן להגדיר ערך שלילי"  Operator="GreaterThanEqual"  ValueToCompare="0"  ControlToValidate="txtZNLavoda"></asp:CompareValidator>
             <td style="text-align:center;width:40px">דקות</td> 
             <td width="45px"></td>
             <td style="text-align:left;width:140px;font-weight:normal">זמן נסיעה מהעבודה:</td>
-            <td valign="bottom"> <asp:TextBox  Width="70px" Height="30px" ID="txtZNMavoda" runat="server" onChange="setChanged()" CssClass="WorkCardPeilutTextBox"></asp:TextBox></td>
+            <td valign="bottom"> <asp:TextBox  Width="70px" Height="30px" ID="txtZNMavoda" runat="server" onChange="setChanged()" CssClass="WCPilutTxt"></asp:TextBox></td>
             <asp:CustomValidator ID="CustomValidator1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן לאשר ערך הגדול מהערך לפי מאפיין זמן נסיעה מהעבודה" ControlToValidate="txtZNMavoda" ClientValidationFunction="CmpValidApprovedInZman"></asp:CustomValidator>
             <asp:CompareValidator ID="CompareValidator1" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="יש להקליד ערך מספרי בלבד" Type="Integer" Operator="DataTypeCheck" ControlToValidate="txtZNMavoda"></asp:CompareValidator>
             <asp:CompareValidator ID="CompareValidator2" runat="server" Display="Dynamic" CssClass="ErrorMessage" ErrorMessage="לא ניתן להגדיר ערך שלילי"  Operator="GreaterThanEqual"  ValueToCompare="0"  ControlToValidate="txtZNMavoda"></asp:CompareValidator>

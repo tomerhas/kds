@@ -41,9 +41,9 @@
                 <asp:TextBox runat="server" ID="txtFilterKod" style="width:70px" onChange="CheckKod()" AutoComplete="Off"></asp:TextBox>
                 <AjxToolKit:AutoCompleteExtender id="AutoCompleteKod"  runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  DelimiterCharacters=";" 
                     TargetControlID="txtFilterKod" MinimumPrefixLength="1" ServiceMethod="GetMatchingKod"  ServicePath ="~/Modules/WebServices/wsDynamicForms.asmx" 
-                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                    CompletionListItemCssClass="autocomplete_completionListItemElement" >                                
+                    EnableCaching="true"  CompletionListCssClass="ACLst"
+                    CompletionListHighlightedItemCssClass="ACLstItmSel"
+                    CompletionListItemCssClass="ACLstItmE" >                                
                 </AjxToolKit:AutoCompleteExtender>
                 </ContentTemplate></asp:UpdatePanel>
             </td>
@@ -54,9 +54,9 @@
                 <asp:TextBox Enabled="false" runat="server" ID="txtFilterDescription"  style="width:450px"  onChange="CheckDescription()" ></asp:TextBox>
                 <AjxToolKit:AutoCompleteExtender id="AutoCompleteDescription"  runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  DelimiterCharacters=";" 
                     TargetControlID="txtFilterDescription" MinimumPrefixLength="1" ServiceMethod="GetMatchingDescription" ServicePath ="~/Modules/WebServices/wsDynamicForms.asmx"
-                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                    CompletionListItemCssClass="autocomplete_completionListItemElement" >                                
+                    EnableCaching="true"  CompletionListCssClass="ACLst"
+                    CompletionListHighlightedItemCssClass="ACLstItmSel"
+                    CompletionListItemCssClass="ACLstItmE" >                                
                 </AjxToolKit:AutoCompleteExtender>
                 </ContentTemplate>
                 </asp:UpdatePanel>

@@ -1268,13 +1268,13 @@
                     <tr>
                         <td valign="top" align="center"><asp:Label ID="lblMisSidur" runat="server" Font-Bold="true"></asp:Label></td>
                         <td valign="top" align="center">
-                        <asp:TextBox ID="txtShatHatchala" runat="server" style="Width:40px;" MaxLength="5" onkeyup="onchange_txtShatHatchala(true,'')" CssClass="WorkCardPeilutTextBox" ></asp:TextBox>
+                        <asp:TextBox ID="txtShatHatchala" runat="server" style="Width:40px;" MaxLength="5" onkeyup="onchange_txtShatHatchala(true,'')" CssClass="WCPilutTxt" ></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskStartTime" runat="server" TargetControlID="txtShatHatchala" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatHatchala" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatHatchala"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatHatchala" BehaviorID="vldExvldShatHatchala"  TargetControlID="vldShatHatchala" Width="240px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
                         </td>
                         <td  valign="top"  align="center">
-                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onkeyup="onchange_txtShatGmar(true,'')"  CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                        <asp:TextBox ID="txtShatGmar" runat="server" Width="40px" ToolTip="" MaxLength="5"  onkeyup="onchange_txtShatGmar(true,'')"  CssClass="WCPilutTxt"></asp:TextBox>
                             <cc1:MaskedEditExtender ID="extMaskEndTime" runat="server" TargetControlID="txtShatGmar" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                             <asp:RegularExpressionValidator  runat="server" id="vldShatGmar" EnableClientScript="true" Display="none" ErrorMessage="" ControlToValidate="txtShatGmar"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                             <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatGmar" BehaviorID="vldExvldShatGmar"  TargetControlID="vldShatGmar" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
@@ -1291,7 +1291,7 @@
                                     <asp:BoundField DataField="KiSUY_TOR" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="40px" />
                                     <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="40px" HeaderStyle-Wrap="true"  HeaderText="כיסוי תור" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtKisuiTor" runat="server"  Width="40px" CssClass="WorkCardPeilutTextBox" ></asp:TextBox>
+                                            <asp:TextBox ID="txtKisuiTor" runat="server"  Width="40px" CssClass="WCPilutTxt" ></asp:TextBox>
                                              <cc1:MaskedEditExtender ID="extKisuiTor" runat="server" TargetControlID="txtKisuiTor" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                                              <asp:RegularExpressionValidator  runat="server" id="vldKisuiTor" EnableClientScript="true"  Display="none" ErrorMessage="יש להקליד שעת יציאה בטווח 00:00-23:59" ControlToValidate="txtKisuiTor"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvldKisuiTor" BehaviorID="vldExvldKisuiTor"  TargetControlID="vldKisuiTor" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>         
@@ -1300,7 +1300,7 @@
                                    <asp:BoundField DataField="SHAT_YETZIA" ItemStyle-Width="60px" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" ItemStyle-Width="60px"  HeaderText="שעת יציאה" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtShatYezia" runat="server" Width="60px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                                            <asp:TextBox ID="txtShatYezia" runat="server" Width="60px" CssClass="WCPilutTxt"></asp:TextBox>
                                                <cc1:MaskedEditExtender ID="extMaskShatYezia" runat="server" TargetControlID="txtShatYezia" MaskType="Time" UserTimeFormat="TwentyFourHour" Mask="99:99"  ></cc1:MaskedEditExtender>
                                               <asp:RegularExpressionValidator  runat="server" id="vldShatYezia" EnableClientScript="true"  Display="none" ErrorMessage="יש להקליד שעת יציאה בטווח 00:00-23:59" ControlToValidate="txtShatYezia"   ValidationExpression="^([0-1]?\d|2[0-3])(:[0-5]\d){1,2}$"></asp:RegularExpressionValidator>
                                               <cc1:ValidatorCalloutExtender runat="server" ID="exvldShatYezia" BehaviorID="vldExvldShatYezia"  TargetControlID="vldShatYezia" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>     
@@ -1313,7 +1313,7 @@
                                    <asp:BoundField DataField="MISPAR_RECHEV" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Wrap="true" HeaderText="מספר רכב" ItemStyle-Width="60px">
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtMisRechev" runat="server" MaxLength="6" Width="51px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                                            <asp:TextBox ID="txtMisRechev" runat="server" MaxLength="6" Width="51px" CssClass="WCPilutTxt"></asp:TextBox>
                                             <asp:CustomValidator runat="server" id="vldMisRechev" ControlToValidate="txtMisRechev" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvMisRechev" BehaviorID="vldExvldMisRechev"  TargetControlID="vldMisRechev" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
@@ -1329,7 +1329,7 @@
                                    <asp:BoundField DataField="MAKAT" ItemStyle-CssClass="WorkCardHosafatSidurGridItm" ItemStyle-Width="90px" />
                                    <asp:TemplateField ItemStyle-Width="85px" HeaderStyle-HorizontalAlign="Center"  HeaderStyle-Wrap="true" HeaderText="מק''ט" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="84px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                                            <asp:TextBox ID="txtMakat" runat="server" MaxLength="8" Width="84px" CssClass="WCPilutTxt"></asp:TextBox>
                                              <asp:CustomValidator runat="server" id="vldMakat" ControlToValidate="txtMakat" ErrorMessage=""   Display="None"  ></asp:CustomValidator>
                                              <cc1:ValidatorCalloutExtender runat="server" ID="exvMakat" BehaviorID="vldExvldMakat"  TargetControlID="vldMakat" Width="200px" PopupPosition="Left"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>
@@ -1339,7 +1339,7 @@
                                   <asp:BoundField DataField="DAKOT_BAFOAL" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  />
                                    <asp:TemplateField HeaderStyle-HorizontalAlign="Center" ItemStyle-CssClass="WorkCardHosafatSidurGridItm"  ItemStyle-Width="45px" HeaderStyle-Wrap="true" HeaderText="דקות בפועל" >
                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="40px" CssClass="WorkCardPeilutTextBox"></asp:TextBox>
+                                            <asp:TextBox ID="txtDakotBafoal" runat="server" Width="40px" CssClass="WCPilutTxt"></asp:TextBox>
                                             <asp:CustomValidator runat="server" id="vldDakot" ControlToValidate="txtDakotBafoal" ErrorMessage=""   Display="None"   ></asp:CustomValidator>
                                             <cc1:ValidatorCalloutExtender runat="server" ID="exvdakot" BehaviorID="vldExvldDakot"  TargetControlID="vldDakot" Width="150px" PopupPosition="Right"></cc1:ValidatorCalloutExtender>  
                                        </ItemTemplate>

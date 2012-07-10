@@ -61,9 +61,9 @@ function ChangeKeyCode()
                             
                             <cc1:AutoCompleteExtender id="AutoCompleteSnif"  runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  DelimiterCharacters=";" 
                                 TargetControlID="txtSnif" MinimumPrefixLength="1" ServiceMethod="GetSnifim" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement">                                
+                                EnableCaching="true"  CompletionListCssClass="ACLst"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE">                                
                             </cc1:AutoCompleteExtender>
                             <asp:button id="btnMaamad" runat="server" onclick="btnMaamad_Click"  />
                             <input type="hidden" id="txtCurrSnifKod" runat="server" />
@@ -139,9 +139,9 @@ function ChangeKeyCode()
                             <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" onchange="GetOvedNameById(0);" MaxLength="5" dir="rtl" onfocus="this.select();" TabIndex="7"  ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0"  UseContextKey="true"  
                                 TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimById" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"  CompletionSetCount="25"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                EnableCaching="true"  CompletionListCssClass="ACLst"  CompletionSetCount="25"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE" 
                                  OnClientHidden="SimunExtendeIdClose"  OnClientShowing="SimunExtendeOpen"  >                                   
                             </cc1:AutoCompleteExtender>                              
                        </ContentTemplate>
@@ -160,9 +160,9 @@ function ChangeKeyCode()
                             <asp:TextBox ID="txtName" runat="server" AutoComplete="Off"  onchange="GetOvedIdByName(0);" onfocus="this.select();" style="width:200px" TabIndex="8" ></asp:TextBox>
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                        EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                        CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                        CompletionListItemCssClass="autocomplete_completionListItemElement" 
+                                        EnableCaching="true"  CompletionListCssClass="ACLst"
+                                        CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                        CompletionListItemCssClass="ACLstItmE" 
                                        OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >                                 
                             </cc1:AutoCompleteExtender> 
                          </ContentTemplate>

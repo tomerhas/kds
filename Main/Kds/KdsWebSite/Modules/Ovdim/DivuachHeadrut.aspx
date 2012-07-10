@@ -216,7 +216,7 @@
                          <td></td>
                          <td width="27px" >סוג העדרות:</td> 
                          <td colspan="4"  align="right">  
-                             <asp:DropDownList ID="ddlHeadrutType" runat="server" CssClass="WorkCardSidurDropDown"  Width="360px" Height="25px" TabIndex="1"  EnableViewState="true" AutoPostBack="false"
+                             <asp:DropDownList ID="ddlHeadrutType" runat="server" CssClass="WCSidurDDL"  Width="360px" Height="25px" TabIndex="1"  EnableViewState="true" AutoPostBack="false"
                                  OnDataBound="ddlHeadrutType_DataBound" onchange="HideShaotRow(this.options[this.selectedIndex]);" CausesValidation="false"></asp:DropDownList>
                            
                          </td>

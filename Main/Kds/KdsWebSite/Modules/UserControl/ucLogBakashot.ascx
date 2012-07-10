@@ -31,9 +31,9 @@
                                 ontextchanged="txtRequestNum_TextChanged" ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="autoComRequestNum" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"
                                 TargetControlID="txtRequestNum" MinimumPrefixLength="1" ServiceMethod="GetRequestList" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="false"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
+                                EnableCaching="false"  CompletionListCssClass="ACLst"  EnableViewState="true"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE"  >                               
                             </cc1:AutoCompleteExtender>   
                        </ContentTemplate>
                   </asp:UpdatePanel> 
@@ -69,9 +69,9 @@
                                 Width="65px" EnableViewState="true"  ></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="autoComMisparIshi" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"
                                 TargetControlID="txtMisparIshi" MinimumPrefixLength="1" ServiceMethod="GetOvdimFromLogBakashot" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                EnableCaching="false"  CompletionListCssClass="autocomplete_completionListElement"  EnableViewState="true"
-                                CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                CompletionListItemCssClass="autocomplete_completionListItemElement"  >                               
+                                EnableCaching="false"  CompletionListCssClass="ACLst"  EnableViewState="true"
+                                CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                CompletionListItemCssClass="ACLstItmE"  >                               
                             </cc1:AutoCompleteExtender>   
                        </ContentTemplate>
                   </asp:UpdatePanel> 

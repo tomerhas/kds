@@ -537,9 +537,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
     _TextBoxAutoComplete.CompletionInterval = 0;
     _TextBoxAutoComplete.MinimumPrefixLength = 1;
     _TextBoxAutoComplete.EnableCaching = true;
-    _TextBoxAutoComplete.CompletionListCssClass = "autocomplete_completionListElement";
-    _TextBoxAutoComplete.CompletionListHighlightedItemCssClass = "autocomplete_completionListItemElement_Select";
-    _TextBoxAutoComplete.CompletionListItemCssClass = "autocomplete_completionListItemElement";
+    _TextBoxAutoComplete.CompletionListCssClass = "ACLst";
+    _TextBoxAutoComplete.CompletionListHighlightedItemCssClass = "ACLstItmSel";
+    _TextBoxAutoComplete.CompletionListItemCssClass = "ACLstItmE";
     
     return _TextBoxAutoComplete;
     }
@@ -554,8 +554,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oMaskTextBox.TargetControlID = sTargetControlId;
             oMaskTextBox.Mask = sMask;
             oMaskTextBox.MessageValidatorTip = true;
-            oMaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-            oMaskTextBox.OnInvalidCssClass = "MaskedEditError";
+            oMaskTextBox.OnFocusCssClass = "MEFocus";
+            oMaskTextBox.OnInvalidCssClass = "MEError";
             oMaskTextBox.MaskType = oMaskType;
             oMaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
             oMaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.None;
@@ -2347,7 +2347,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.Attributes.Add("onchange", "chkNewSidur(" + iIndex + ");");
         oTextBox.Attributes.Add("onclick","MovePanel(" + iIndex + ");");
         oTextBox.Attributes.Add("onkeyup", "ClearSidurTitle(" + iIndex + ");");
-        oTextBox.CssClass = "WorkCardSidurTextBox";
+        oTextBox.CssClass = "WCSidurTxt";
         if (oSidur.iMisparSidur > 0)
             oTextBox.Text = oSidur.iMisparSidur.ToString();
        // hCell = CreateTableCell("82px", "", "");       
@@ -3614,7 +3614,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
             ddl.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
         }
-        ddl.CssClass = "WorkCardSidurDropDown";
+        ddl.CssClass = "WCSidurDDL";
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
 
         //string sAllApprovalDescription = "";
@@ -3739,7 +3739,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.DataBind();
         ddl.SelectedValue = oSidur.sPitzulHafsaka;        
         ddl.Style.Add("width", "80px");
-        ddl.CssClass = "WorkCardSidurDropDown";
+        ddl.CssClass = "WCSidurDDL";
         if (EnabledValidator())
         {
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + "); chkPitzulHafsaka(" + iIndex + ",false)");
@@ -3790,7 +3790,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.Attributes.Add("ChrigaType", sCharigaType);
         ddl.Enabled = ((bEnabled) && (bSidurActive) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "CHARIGA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Attributes.Add("OrgEnabled", ddl.Enabled ? "1":"0");
-        ddl.CssClass = "WorkCardSidurDropDown";
+        ddl.CssClass = "WCSidurDDL";
         if (EnabledValidator())
         {
             ddl.Attributes.Add("onchange", "SetBtnChanges();SetLvlChg(2," + iIndex + ");ChkCharigaVal(" + iIndex + ");");
@@ -3876,14 +3876,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         oTextBox.CausesValidation = true;
         oTextBox.MaxLength = MAX_LEN_HOUR;
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
-        oTextBox.CssClass = "WorkCardSidurTextBox";
+        oTextBox.CssClass = "WCSidurTxt";
         hCell.Controls.Add(oTextBox);
         if (EnabledValidator())
         {
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
-            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WCSidurTxt';");
+            oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
 
             
             oMaskedEditExtender = AddTimeMaskedEditExtender(oTextBox.ID, iIndex, "99:99", "SGPMask", AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
@@ -3936,12 +3936,12 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         {
             oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
             oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WorkCardSidurTextBox';");
-            oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
+            oTextBox.Attributes.Add("onblur", "SidurTimeChanged(" + iIndex + ");this.className='WCSidurTxt';");
+            oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
         }
         oTextBox.Attributes.Add("OrgEnabled", bOrgEnabled ? "1" : "0");
 
-        oTextBox.CssClass = "WorkCardSidurTextBox";
+        oTextBox.CssClass = "WCSidurTxt";
         
         oTextBox.EnableViewState = false;        
         hCell.Controls.Add(oTextBox);
@@ -4001,7 +4001,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         OrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonYetzia)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_OUT"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         ddl.Enabled = ((bSidurActive) && (OrgEnable));
         ddl.Attributes.Add("OrgEnabled", OrgEnable ? "1" : "0");
-        ddl.CssClass = "WorkCardSidurDropDown";
+        ddl.CssClass = "WCSidurDDL";
         //AddAttribute(ddl, "OldV", ddl.SelectedValue);
         
       
@@ -4073,7 +4073,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bOrgEnable = ((IsSidurShaon(ref oSidur)) && (IsMikumShaonEmpty(oSidur.sMikumShaonKnisa)) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "KOD_SIBA_LEDIVUCH_YADANI_IN"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
             ddl.Enabled = ((bSidurActive) && (bOrgEnable));
             ddl.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
-            ddl.CssClass = "WorkCardSidurDropDown";
+            ddl.CssClass = "WCSidurDDL";
             // AddAttribute(ddl, "OldV", ddl.SelectedValue);
            
             ////נבדוק אם יש אישורים על שדה כניסה
@@ -4927,7 +4927,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.ID = "txtSH" + iIndex;
             oTextBox.Text = oSidur.sShatHatchala;
             oTextBox.Width = Unit.Pixel(40);           
-            oTextBox.CssClass = "WorkCardSidurTextBox";
+            oTextBox.CssClass = "WCSidurTxt";
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
             bSidurMustDisabled = ((!(IsMikumShaonEmpty(oSidur.sMikumShaonKnisa))) || (bSidurContinue)
@@ -4951,8 +4951,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + "); HasSidurHashlama();");
                 oTextBox.Attributes.Add("onkeyup", "changeStartHour(" + iIndex + "); SidurTimeChanged(" + iIndex + ");");
-                oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-                oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
+                oTextBox.Attributes.Add("onblur", "this.className='WCSidurTxt';");
             }
             oTextBox.ToolTip = "תאריך תחילת הסידור הוא: " + oSidur.dFullShatHatchala.ToShortDateString();
             oTextBox.EnableViewState = false;
@@ -5257,7 +5257,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTextBox.Width = Unit.Pixel(40);          
             oTextBox.CausesValidation = true;
             oTextBox.MaxLength = MAX_LEN_HOUR;
-            oTextBox.CssClass = "WorkCardSidurTextBox";
+            oTextBox.CssClass = "WCSidurTxt";
             bOrgEnable = ((((IsMikumShaonEmpty(oSidur.sMikumShaonYetzia))) && (IsAccessToSidurNotShaon(ref oSidur)) && (!bSidurContinue) && (!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "SHAT_GMAR"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0))));
             oTextBox.ReadOnly = ((!bOrgEnable) || (!bSidurActive));
 
@@ -5273,8 +5273,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 oTextBox.Attributes.Add("onchange", "MovePanel(" + iIndex + "); SetHashlama(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeyup", "SetDay('1|" + iIndex + "'); SidurTimeChanged(" + iIndex + ");");
                 oTextBox.Attributes.Add("onkeypress", "SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-                oTextBox.Attributes.Add("onfocus", "this.className='WorkCardSidurTextBoxFocus';");
-                oTextBox.Attributes.Add("onblur", "this.className='WorkCardSidurTextBox';");
+                oTextBox.Attributes.Add("onfocus", "this.className='WCSidurTxtF';");
+                oTextBox.Attributes.Add("onblur", "this.className='WCSidurTxt';");
             }          
             oTextBox.ToolTip = "תאריך גמר הסידור הוא: " + oSidur.dFullShatGmar.ToShortDateString();
             oTextBox.Attributes.Add("OrgEnabled", bOrgEnable ? "1" : "0");
@@ -5748,7 +5748,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "DAKOT_BAFOAL"), MisparSidur, DateTime.Parse(CardDate.ToShortDateString() + " " + ShatHatchala), dShatYetiza, iMisparKnisa);
             bool bEnabled = (!bIdkunRashemet);
 
-            oTxt.CssClass = "WorkCardPeilutTextBox";  
+            oTxt.CssClass = "WCPilutTxt";  
             oTxt.Enabled = ((_ProfileRashemet) && (!bElementHachanatMechona) && (bSidurActive) && (bPeilutActive) && (!bIdkunRashemet) && (IsMakatHasActualMinPremmision(oMakatType, iMisparKnisa, iKnisaType)));            
             oTxt.Attributes.Add("IdkunRashemet", bIdkunRashemet.ToString());
             if (EnabledValidator())
@@ -6065,7 +6065,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Width = Unit.Pixel(70);
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);
             oTxt.ID = e.Row.ClientID + "MakatNumber";
-            oTxt.CssClass = "WorkCardPeilutTextBox";
+            oTxt.CssClass = "WCPilutTxt";
             if (EnabledValidator())
             {
                 oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
@@ -6157,7 +6157,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("onkeyup", "ChkOto(" + e.Row.Cells[_COL_CAR_NUMBER].ClientID + ");");          
             oTxt.Attributes.Add("onfocus", "SetFocus('" + e.Row.ClientID + "'," + _COL_CAR_NUMBER + ");");
             oTxt.ToolTip = (DataBinder.Eval(e.Row.DataItem, "license_number").ToString());
-            oTxt.CssClass = "WorkCardPeilutTextBox";
+            oTxt.CssClass = "WCPilutTxt";
            // oTxt.Attributes.Add("class", "WCard_GridRowTextBox");
             AddAttribute(oTxt, "OldV",DataBinder.Eval(e.Row.DataItem, "old_oto_no").ToString());//AddAttribute(oTxt, "OldV", oTxt.Text);
 
@@ -6242,11 +6242,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
-            oTxt.CssClass = "WorkCardPeilutTextBox";
+            oTxt.CssClass = "WCPilutTxt";
             if (EnabledValidator())
             {
-                oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
-                oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
+                oTxt.Attributes.Add("onfocus", "this.className='WCPilutTxtF';");
+                oTxt.Attributes.Add("onblur", "this.className='WCPilutTxt';");
             }
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());        
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
@@ -6293,7 +6293,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                 //Add CustomeValidator
                 sMessage = "";//"הוקלד ערך שגוי. יש להקליד שעת יציאה בין " + Param29 + " עד " + Param30 ;
-                sID = "vldPeilutShatYetiza";
+                sID = "vldPilutSY";
                 sClientScriptFunction = "ChkExitHour";
                 vldCustomValidator = AddCustomValidator(sTargetControlId, sMessage, sID,
                                                         sClientScriptFunction, e.Row.ClientID, e.Row.ClientID);
@@ -6301,7 +6301,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
                 //Add Ajax CallOutCustomeValidator
                 sTargetControlId = ((CustomValidator)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[2])).ID;
-                sID = "vldExShatYetiza";
+                sID = "vldExSY";
                 vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID,
                                                           AjaxControlToolkit.ValidatorCalloutPosition.Left);
                 e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldExtenderCallOut);
@@ -6363,15 +6363,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.ID = e.Row.ClientID + "KisoyTor";
             oTxt.Width = Unit.Pixel(40);
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
-            oTxt.CssClass="WorkCardPeilutTextBox";
+            oTxt.CssClass="WCPilutTxt";
             oTxt.EnableViewState = false;
 
             e.Row.Cells[_COL_KISUY_TOR_MAP].Text = e.Row.Cells[_COL_KISUY_TOR_MAP].Text;
             if (EnabledValidator())
             {
                 oTxt.Attributes.Add("onkeypress", "SetBtnChanges();");
-                oTxt.Attributes.Add("onfocus", "this.className='WorkCardPeilutTextBoxFocus';");
-                oTxt.Attributes.Add("onblur", "this.className='WorkCardPeilutTextBox';");
+                oTxt.Attributes.Add("onfocus", "this.className='WCPilutTxtF';");
+                oTxt.Attributes.Add("onblur", "this.className='WCPilutTxt';");
             
                 //Add MaskTextBox
                 sTargetControlId = ((TextBox)(e.Row.Cells[_COL_KISUY_TOR].Controls[0])).ID;
@@ -7287,8 +7287,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 MaskTextBox.TargetControlID = sTargetControlId;
                 MaskTextBox.Mask = "99:99";
                 MaskTextBox.MessageValidatorTip = true;
-                MaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-                MaskTextBox.OnInvalidCssClass = "MaskedEditError";
+                MaskTextBox.OnFocusCssClass = "MEFocus";
+                MaskTextBox.OnInvalidCssClass = "MEError";
                 MaskTextBox.MaskType = AjaxControlToolkit.MaskedEditType.Time;
                 MaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
                 MaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.Left;
@@ -7309,8 +7309,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             MaskTextBox.TargetControlID = sTargetControlId;
             MaskTextBox.Mask = "999999999";
             MaskTextBox.MessageValidatorTip = true;
-            MaskTextBox.OnFocusCssClass = "MaskedEditFocus";
-            MaskTextBox.OnInvalidCssClass = "MaskedEditError";
+            MaskTextBox.OnFocusCssClass = "MEFocus";
+            MaskTextBox.OnInvalidCssClass = "MEError";
             MaskTextBox.MaskType = AjaxControlToolkit.MaskedEditType.Number;
             MaskTextBox.InputDirection = AjaxControlToolkit.MaskedEditInputDirection.RightToLeft;
             MaskTextBox.AcceptNegative = AjaxControlToolkit.MaskedEditShowSymbol.Left;

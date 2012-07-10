@@ -68,9 +68,9 @@
                                         <asp:TextBox ID="txtId" runat="server"  dir="rtl" Width="100px" onChange="GetOveNameBydMisparIshi();" ></asp:TextBox>                            
                                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" FirstRowSelected="true" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetWorkersDetailsOfHoursApproval" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                            EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                            CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select" 
-                                            CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getID" >                               
+                                            EnableCaching="true"  CompletionListCssClass="ACLst"
+                                            CompletionListHighlightedItemCssClass="ACLstItmSel" 
+                                            CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getID" >                               
                                         </cc1:AutoCompleteExtender>                              
                                     </td>
                                     <td width="12px"></td>                
@@ -81,9 +81,9 @@
                                         <asp:TextBox ID="txtName" runat="server" style="width:100px" onChange="GetOvedMisparIshiByName();" ></asp:TextBox>
                                         <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                     TargetControlID="txtName" MinimumPrefixLength="1" FirstRowSelected="true" ServiceMethod="GetWorkersDetailsOfHoursApproval" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                    EnableCaching="true"  CompletionListCssClass="autocomplete_completionListElement"
-                                                    CompletionListHighlightedItemCssClass="autocomplete_completionListItemElement_Select"
-                                                    CompletionListItemCssClass="autocomplete_completionListItemElement" OnClientHidden="onClientHiddenHandler_getName">                               
+                                                    EnableCaching="true"  CompletionListCssClass="ACLst"
+                                                    CompletionListHighlightedItemCssClass="ACLstItmSel"
+                                                    CompletionListItemCssClass="ACLstItmE" OnClientHidden="onClientHiddenHandler_getName">                               
                                         </cc1:AutoCompleteExtender> 
                                     </td>
                                  </tr></table>
