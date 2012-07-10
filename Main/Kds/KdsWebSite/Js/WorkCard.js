@@ -310,7 +310,7 @@
       id = $get("txtId").value;
       date = $get("clnDate").value;
       if (date != '') {
-          SetRefreshBtn(false);   
+          SetRefreshBtn(true);   
           wsGeneral.IsCardExists(id, date, callBackCheckCardExists);
           EnabledAllFrames(false);
       }      

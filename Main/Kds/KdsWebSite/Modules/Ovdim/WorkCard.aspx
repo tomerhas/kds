@@ -111,7 +111,7 @@
                     <td style="width: 188px" class = "WorkCardTable1Label">מעמד:</td>                                
                     <td style="width: 21%;height:45px; " class="WorkCardTdBorder" align="right">
                         <asp:TextBox runat="server" CssClass="WorkCardTextBox" ID="txtMaamad" ReadOnly="true"
-                            Style="width: 173px;"> </asp:TextBox>
+                            Style="width: 173px;"></asp:TextBox>
                     </td>
                     <td style="width: 5%" class = "WorkCardTable1Label">תאריך:</td>
                     <td dir="ltr" align="right" style="width: 15%">                                                                                                       
