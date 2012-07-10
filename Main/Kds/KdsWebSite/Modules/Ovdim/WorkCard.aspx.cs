@@ -231,7 +231,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         btnRefreshOvedDetails.Attributes.Add("onfocusout","onButtonFocusOut(" + btnRefreshOvedDetails.ID + ")");        
         btnUpdateCard.Attributes.Add("onfocus", "onButtonFocusIn(" + btnUpdateCard.ID + ")");
         btnUpdateCard.Attributes.Add("onfocusout", "onButtonFocusOut(" + btnUpdateCard.ID + ")");
-        clnDate.Attributes.Add("onclick", "SetRefreshBtn(true)");
+        clnDate.Attributes.Add("onclick", "SetRefreshBtn(true);");
+        clnDate.Attributes.Add("OnChangeCalScript", "SetRefreshBtn(true);");
 
         ErrorImage(imgIdErr, false);
         ErrorImage(imgTimeErr, false);
