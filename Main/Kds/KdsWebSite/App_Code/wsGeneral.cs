@@ -43,6 +43,9 @@ public class wsGeneral : System.Web.Services.WebService
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
+    public string Test(int iMisparIshi, string sWorkCard)
+    {
+    }
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
     {
