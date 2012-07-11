@@ -42,7 +42,12 @@ public class wsGeneral : System.Web.Services.WebService
     {
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
-    }  
+    }
+    [WebMethod]
+    public string TestVered()
+    {
+        return "0";
+    }
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
     {
