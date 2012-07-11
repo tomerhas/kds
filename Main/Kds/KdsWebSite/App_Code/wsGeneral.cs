@@ -45,6 +45,7 @@ public class wsGeneral : System.Web.Services.WebService
     }
     public string Test(int iMisparIshi, string sWorkCard)
     {
+        return "4";
     }
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
