@@ -325,7 +325,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                 dt = oUtils.GetOvdimLeRitza(clGeneral.GetIntegerValue(clGeneral.GetControlValue(Ritza).ToString()), (string)clGeneral.GetControlValue(Maamad), (string)clGeneral.GetControlValue(Isuk), "");
                 break;
             case ReportName.Average:
-                dt = oReport.GetIdOfYameyAvoda(StartMonth,EndMonth, (string)clGeneral.GetControlValue(CompanyId));
+                dt = oReport.GetIdOfYameyAvoda(DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-7),EndMonth, (string)clGeneral.GetControlValue(CompanyId));
                 break;
             case ReportName.HityazvutBePundakimTlunot:
             case ReportName.HityazvutBePundakimKalkalit:
@@ -404,7 +404,7 @@ public partial class Modules_Reports_ReportFilters : KdsPage
                                                                  (string)clGeneral.GetControlValue(Isuk);
                     break;
                 case ReportName.Average:
-                    MisparIshi.ContextKey = StartMonth.ToString("dd/MM/yyyy") + ";" +
+                    MisparIshi.ContextKey = DateTime.Parse(EndMonth.ToString("dd/MM/yyyy")).AddDays(1).AddMonths(-6).ToShortDateString() + ";" + // StartMonth.ToString("dd/MM/yyyy") + ";" +
                                                                  EndMonth.ToString("dd/MM/yyyy") + ";" +
                                                                     clGeneral.GetControlValue(CompanyId);
                     break;

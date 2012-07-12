@@ -288,14 +288,7 @@
   </Report>
   
   <Report  RdlName="Average" Roles="kds_administrators" FilterByLine="3" PageHeader="דוח ממוצעים וסיכומים" Orientation="Portrait" ZoomPercent="100" ProductionType="Heavy">
-    <Filter ParameterName="P_STARTDATE" Caption="מחודש " BoxeType="DropDown"  RunAtServer="true" DataType="System.String"  >
-      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
-        <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
-        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
-        <ParameterOfFunction Type="ByValue" Value="הכל" DataType="System.String" />
-      </DropDownList>
-      <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מחודש חייב להיות יותר קטן משדה עד חודש" ValidationFunction="ValidateTvachChodashim"/>
-    </Filter>
+   
     <Filter ParameterName="P_ENDDATE" Caption="עד חודש" BoxeType="DropDown" DataType="System.String"  >
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Average" DataType="System.String" />
