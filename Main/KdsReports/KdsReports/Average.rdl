@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>19.48838cm</Width>
+              <Width>17.4192cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>7.09259cm</Height>
+              <Height>4.88802cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -394,9 +394,9 @@
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
                           <Top>2.33533cm</Top>
-                          <Left>4.49252cm</Left>
+                          <Left>4.25439cm</Left>
                           <Height>1.2cm</Height>
-                          <Width>11.04476cm</Width>
+                          <Width>11.04474cm</Width>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -404,21 +404,22 @@
                           </Style>
                         </Tablix>
                         <Subreport Name="Subreport3">
-                          <ReportName>AverageRechivValues</ReportName>
+                          <ReportName>AverageRechivim</ReportName>
                           <Parameters>
-                            <Parameter Name="P_STARTDATE">
-                              <Value>=Parameters!P_STARTDATE.Value</Value>
+                            <Parameter Name="P_START_DATE">
+                              <Value>=DateAdd("m",-6,Parameters!P_ENDDATE.Value)</Value>
                             </Parameter>
-                            <Parameter Name="P_ENDDATE">
+                            <Parameter Name="P_END_DATE">
                               <Value>=Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
-                            <Parameter Name="P_MISPARISHI">
+                            <Parameter Name="P_MISPAR_ISHI">
                               <Value>=reportitems!mI.Value</Value>
                             </Parameter>
                           </Parameters>
                           <Top>3.87614cm</Top>
-                          <Height>2.99625cm</Height>
-                          <Width>19.48839cm</Width>
+                          <Left>1.35278cm</Left>
+                          <Height>1.01188cm</Height>
+                          <Width>16.06642cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
@@ -440,7 +441,7 @@
                             </Paragraph>
                           </Paragraphs>
                           <Top>2.97656cm</Top>
-                          <Left>0.29446cm</Left>
+                          <Left>0.82362cm</Left>
                           <Height>0.55877cm</Height>
                           <Width>2.59292cm</Width>
                           <ZIndex>2</ZIndex>
@@ -463,12 +464,13 @@
                           <ReportName>GeneralHeader</ReportName>
                           <Parameters>
                             <Parameter Name="P_Title">
-                              <Value>= "דו''ח ממוצעי שעות , ימי עבודה והעדרות לעובד" + Chr(10) + 
-" מתאריך " + Parameters!P_STARTDATE.Value + " עד לתאריך " + Parameters!P_ENDDATE.Value</Value>
+                              <Value>= "פירוט תקופתי  לעובד" &amp; Chr(10) &amp; 
+" לחודש " &amp; DateAdd("m",-6,Parameters!P_ENDDATE.Value).ToShortDateString() &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
+                          <Left>1.35278cm</Left>
                           <Height>1.80071cm</Height>
-                          <Width>19.48838cm</Width>
+                          <Width>16.06642cm</Width>
                           <ZIndex>3</ZIndex>
                           <Style>
                             <Border>
@@ -477,7 +479,6 @@
                           </Style>
                         </Subreport>
                       </ReportItems>
-                      <KeepTogether>true</KeepTogether>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -510,8 +511,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Height>7.09259cm</Height>
-        <Width>19.48838cm</Width>
+        <Height>4.88802cm</Height>
+        <Width>17.4192cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -519,15 +520,15 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>2.82403in</Height>
+    <Height>1.92442in</Height>
     <Style />
   </Body>
-  <Width>7.67259in</Width>
+  <Width>6.85795in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>0.5cm</LeftMargin>
-    <RightMargin>0.5cm</RightMargin>
+    <RightMargin>0cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
@@ -547,7 +548,7 @@
         <DataSourceName>DsConnection</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
+            <Value>=DateAdd("m",-6,Parameters!P_ENDDATE.Value)</Value>
           </QueryParameter>
           <QueryParameter Name="P_ENDDATE">
             <Value>=Parameters!P_ENDDATE.Value</Value>
@@ -606,23 +607,14 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
-    <ReportParameter Name="P_STARTDATE">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>= CDate("01/08/2010")</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>P STARTDATE</Prompt>
-    </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>= CDate("31/08/2010")</Value>
+          <Value>01/08/2010 00:00:00</Value>
         </Values>
       </DefaultValue>
-      <Prompt>P ENDDATE</Prompt>
+      <Prompt>P_ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_SNIF">
       <DataType>String</DataType>
