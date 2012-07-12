@@ -704,6 +704,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -715,9 +716,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=iif (Fields!KOD_TACHOGRAF.Value=0,"אין צורך",
-  iif(Fields!KOD_TACHOGRAF.Value=1,"חסר טכוגרף",
-	  iif(Fields!KOD_TACHOGRAF.Value=2,"צירף טכוגרף","")))</Value>
+                                  <Value />
                                   <Style />
                                 </TextRun>
                               </TextRuns>
