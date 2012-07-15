@@ -40,6 +40,8 @@ namespace KdsCalcul
                     oCalculMain.RunShinuyimVeShguimHR();
                     break;
                 case clGeneral.enCalcType.ShinuyimVeSghuimPremiot:
+                  //  oCalculMain = new clCalculMain(7970,1, clGeneral.BatchExecutionType.All);
+
                     oCalculMain = new clCalculMain((long)int.Parse(args[1]), int.Parse(args[3]), (clGeneral.BatchExecutionType)int.Parse(args[2]));
 
                     oCalculMain.RunShinuyimVeShguimHR();
