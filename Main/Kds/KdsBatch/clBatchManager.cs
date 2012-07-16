@@ -10616,7 +10616,7 @@ namespace KdsBatch
                                             if (idakot <= iMeshechElement)
                                                 oObjPeilutUpd.MAKAT_NESIA = long.Parse(String.Concat("701", (iMeshechElement - idakot).ToString().PadLeft(3, (char)48), "00"));
                                             else oObjPeilutUpd.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
-                                            oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala.AddMinutes(-idakot);
+                                            oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala.AddMinutes(idakot);
                                         }
                                         else  oObjPeilutUpd.SHAT_YETZIA = oSidur.dFullShatHatchala;
 
@@ -10769,7 +10769,7 @@ namespace KdsBatch
                         if (idakot <= iMeshechElement)
                             oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", (iMeshechElement - idakot).ToString().PadLeft(3, (char)48), "00"));
                         else oObjPeilutOvdimIns.MAKAT_NESIA = long.Parse(String.Concat("701", "000", "00"));
-                        dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(-idakot);
+                        dShatYetziaPeilut = dShatYetziaPeilut.AddMinutes(idakot);
                     }
                     oObjPeilutOvdimIns.SHAT_YETZIA = dShatYetziaPeilut;
 
@@ -14579,7 +14579,8 @@ namespace KdsBatch
                                 for (i = iIndexPeilutMashmautit-1; i >= 0; i--)
                                 {
                                     oPeilut = (clPeilut)oSidur.htPeilut[i];
-                                    dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
+                                    if (isElemntLoMashmauti(oPeilut) || oPeilut.iMakatType == clKavim.enMakatType.mEmpty.GetHashCode())
+                                        dShatHatchala = dShatHatchala.AddMinutes(-(GetMeshechPeilutHachnatMechona(iIndexSidur, oPeilut, oSidur, ref bUsedMazanTichnun, ref bUsedMazanTichnunInSidur)));
                                 }
                             }
                         }
