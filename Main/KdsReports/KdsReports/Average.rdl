@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>4.88802cm</Height>
+              <Height>6.50198cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -503,15 +503,12 @@
                 <GroupExpressions>
                   <GroupExpression>=Fields!MISPAR_ISHI.Value</GroupExpression>
                 </GroupExpressions>
-                <PageBreak>
-                  <BreakLocation>Between</BreakLocation>
-                </PageBreak>
               </Group>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
-        <Height>4.88802cm</Height>
+        <Height>6.50198cm</Height>
         <Width>17.4192cm</Width>
         <Style>
           <Border>
@@ -520,7 +517,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.92442in</Height>
+    <Height>2.55983in</Height>
     <Style />
   </Body>
   <Width>6.85795in</Width>
