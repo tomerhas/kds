@@ -44,7 +44,7 @@ namespace KdsCalcul
 
                     oCalculMain = new clCalculMain((long)int.Parse(args[1]), int.Parse(args[3]), (clGeneral.BatchExecutionType)int.Parse(args[2]));
 
-                    oCalculMain.RunShinuyimVeShguimHR();
+                    oCalculMain.RunShinuyimVeShguimPremiot();
                     break;
             }
 

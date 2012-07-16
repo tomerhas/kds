@@ -384,7 +384,7 @@ namespace KdsCalcul
     /// Run batch process for InputData and/or Errors from Import process
     /// for population that has Premiot
     /// </summary>
-    public class clBatchProcessFromInputForPremiot : clBatchProcessFromInput //שגויים אחרי hr
+    public class clBatchProcessFromInputForPremiot : clBatchProcessFromInput //שגויים לפרמיות
     {
         public clBatchProcessFromInputForPremiot(clGeneral.BatchRequestSource batchSource,
             clGeneral.BatchExecutionType execType, DateTime workDate, long btchRequest) :

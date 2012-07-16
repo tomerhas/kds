@@ -218,7 +218,7 @@ namespace KdsCalcul
             catch (Exception ex)
             {
                 clGeneral.LogError(ex);
-                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimHR " + iNumProcess + ": " + ex.Message);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "clCalculMain.RunShinuyimVeShguimPremiot " + iNumProcess + ": " + ex.Message);
             }
         }
     }
