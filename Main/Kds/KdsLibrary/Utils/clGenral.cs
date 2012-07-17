@@ -439,7 +439,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
         }
         public enum enLoLetashlum
         {
-            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission = 4, SidurInNonePremissionHours = 10, WorkWitoutPremmision = 17 //17 -  עבודה ביום חול ללא הרשאה
+            WorkAtFridayWithoutPremission = 5, WorkAtSaturdayWithoutPremission = 4, SidurInNonePremissionHours = 10, WorkWitoutPremmision = 17,WorkCardWithoutHityachasut = 16 //17 -  עבודה ביום חול ללא הרשאה
         }
         public enum enNetuneyOved
         {

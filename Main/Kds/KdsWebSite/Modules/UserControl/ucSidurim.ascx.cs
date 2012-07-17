@@ -327,7 +327,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    protected bool IsOnatiyutInPeilutExists(ref clSidur oSidur)
+    public bool IsOnatiyutInPeilutExists(ref clSidur oSidur)
     {
         //אם לא מצאנו מספר סידור או קודי מאפיין, נבדוק ברמת פעילות
         //סידור שיש בו לפחות פעילות אחת מסוג שירות שיש לה 71=Onatiut.
