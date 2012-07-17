@@ -4353,11 +4353,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             {
                                 bValid = false;
                                 break;
-                            }
-                        }
+                            }                         
+                        }                     
                     }
                 }
-       
+           //oCollPeilutOvdimUpd.Sort();
             return bValid;
         }
         catch (Exception ex)
