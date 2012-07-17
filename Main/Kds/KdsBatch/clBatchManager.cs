@@ -14002,7 +14002,7 @@ namespace KdsBatch
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
             DateTime dShatHatchalaLetashlum = DateTime.MinValue;
             DateTime dShatGmarLetashlum = DateTime.MinValue;
-            bool bFromMeafyenHatchala, bFromMeafyenGmar;
+            bool bFromMeafyenHatchala, bFromMeafyenGmar,bLoLeadken=false;
             //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
             try
             {
@@ -14033,8 +14033,9 @@ namespace KdsBatch
                 if (dShatGmarLetashlumToUpd == DateTime.MinValue)
                     dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
 
-
-                if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
+                if (oSidur.iMenahelMusachMeadken > 0 && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
+                    bLoLeadken = true;
+                if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM && !bLoLeadken)
                 {
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -14044,7 +14045,10 @@ namespace KdsBatch
                         oSidur.sShatHatchalaLetashlum = "";
                 }
 
-                if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
+                bLoLeadken = false;
+                if (oSidur.iMenahelMusachMeadken > 0 && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
+                    bLoLeadken = true;
+                if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM && !bLoLeadken)
                 {
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;

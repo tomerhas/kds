@@ -137,6 +137,7 @@ namespace KdsBatch
         //public int iSugVisa;
         public int iMisparMusachOMachsan;
         public int iSugHazmanatVisa;
+        public int iMenahelMusachMeadken;
         public bool bHovaMisparMachsan;
         //public int iButal;
         public long lMeadkenAcharon;
@@ -350,6 +351,7 @@ namespace KdsBatch
             sHovatHityatzvut = dr["hovat_hityazvut"].ToString();
             bHovaMisparMachsan = !(String.IsNullOrEmpty(dr["hova_ledaveach_mispar_machsan"].ToString()));
             sSidurDescription = dr["teur_sidur_meychad"].ToString();
+            iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
             if (bSidurMyuhad)
             {
                 bSidurRetizfut = IsSidurRetzifut(iMisparSidur);
@@ -581,7 +583,7 @@ namespace KdsBatch
         iPtorMehitiatzvut = System.Convert.IsDBNull(dr["ptor_mehitiatzvut"]) ? 0 : int.Parse(dr["ptor_mehitiatzvut"].ToString());
         dTaarichIdkunAcharon = System.Convert.IsDBNull(dr["taarich_idkun_acharon"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon"].ToString());
         iHachtamaBeatarLoTakin = System.Convert.IsDBNull(dr["Hachtama_Beatar_Lo_Takin"]) ? 0 : int.Parse(dr["Hachtama_Beatar_Lo_Takin"].ToString());
-           
+        iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString()); 
            
     }
 
@@ -649,7 +651,7 @@ namespace KdsBatch
             iMisparMusachOMachsan = oSidurKodem.iMisparMusachOMachsan;
             iSugHazmanatVisa = oSidurKodem.iSugHazmanatVisa;
             iSidurLoNibdakSofShavua = oSidurKodem.iSidurLoNibdakSofShavua;
-
+            iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
             bSidurMyuhad = IsSidurMyuhad(iMisparSidur.ToString());
 
             if (bSidurMyuhad)
@@ -808,6 +810,8 @@ namespace KdsBatch
         }
         else if(dr["SUG_SIDUR"] != null &&  dr["SUG_SIDUR"].ToString() != "")
             iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
+        
+        iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
         //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
         // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
         //bSidurRagilExists = false;
