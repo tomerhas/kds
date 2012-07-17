@@ -2689,7 +2689,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
 
        // hCell.Style.Add("border-left", "solid 1px gray");        
     }
-    protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive)
+    protected void CreateOutMichsaCell(clSidur oSidur, ref HtmlTableCell hCell, int iIndex, bool bSidurActive, DataRow[] drSugSidur)
     {
         bool bEnabled;
        
@@ -2697,7 +2697,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlInputCheckBox chkBox = new HtmlInputCheckBox();
         chkBox.ID = "chkOutMichsa" + iIndex;
         chkBox.Checked = (oSidur.sOutMichsa == "1");
-        bEnabled = (IsOutMichsaAllowed(ref oSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
+        bEnabled = (IsOutMichsaAllowed(ref oSidur, drSugSidur)) && ((!IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelSidur, clUtils.GetPakadId(dtPakadim, "OUT_MICHSA"), oSidur.iMisparSidur, oSidur.dFullShatHatchala, DateTime.MinValue, 0)));
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
@@ -4320,7 +4320,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hTable.Rows[0].Cells.Add(hCell);
 
                 //מחוץ למכסה
-                CreateOutMichsaCell(oSidur, ref hCell, iIndex, bSidurActive);
+                CreateOutMichsaCell(oSidur, ref hCell, iIndex, bSidurActive, drSugSidur);
                 hTable.Rows[0].Cells.Add(hCell);
 
                 //לא לתשלום
@@ -4651,7 +4651,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //}
         return bPitzulHafsakaAllowed;
     }
-    protected bool IsOutMichsaAllowed(ref clSidur oSidur)
+    protected bool IsOutMichsaAllowed(ref clSidur oSidur, DataRow[] drSugSidur)
     {
         bool bOutMichsaAllowed= false;
         // DataRow[] dr;
@@ -4674,8 +4674,18 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //}
         //else
         //{
-            if ((OvedYomAvoda.iKodHevra) != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+        if (OvedYomAvoda.iKodHevra != clGeneral.enEmployeeType.enEggedTaavora.GetHashCode())
+        {
+            if ((oSidur.bSidurMyuhad) && (oSidur.sZakayMichutzLamichsa == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
                 bOutMichsaAllowed = true;
+            else
+            {
+                if ((!oSidur.bSidurMyuhad) && (drSugSidur[0]["ZAKAY_MICHUTZ_LAMICHSA"].ToString() == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+                {
+                    bOutMichsaAllowed = true;
+                }
+            }
+        }
        // }
         
         return bOutMichsaAllowed;
