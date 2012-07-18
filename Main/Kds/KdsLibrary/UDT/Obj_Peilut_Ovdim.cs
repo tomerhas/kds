@@ -15,9 +15,10 @@ namespace KdsLibrary.UDT
     using Oracle.DataAccess.Types;
     using System.Xml.Serialization;
     using System.Xml.Schema;
-    
-    
-    public class OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
+
+
+    public class OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable
+    {
         
         private bool m_IsNull;
         
@@ -210,7 +211,20 @@ namespace KdsLibrary.UDT
                 return obj;
             }
         }
-        
+        public int CompareTo(object obj)
+        {
+           
+            if (obj is OBJ_PEILUT_OVDIM)
+            {
+                //return this.CompareTo((obj as OBJ_PEILUT_OVDIM).NEW_SHAT_YETZIA);  // compare by shat yetiza
+                return NEW_SHAT_YETZIA.CompareTo((obj as OBJ_PEILUT_OVDIM).NEW_SHAT_YETZIA);
+            }
+            else
+            {
+                throw new ArgumentException("Object is not a OBJ_PEILUT_OVDIM");
+            }
+                        
+        }
         [OracleObjectMappingAttribute("OTO_NO")]
         public long OTO_NO {
             get {

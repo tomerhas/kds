@@ -15,9 +15,10 @@ namespace KdsLibrary.UDT
     using Oracle.DataAccess.Types;
     using System.Xml.Serialization;
     using System.Xml.Schema;
+    using System.Collections;
+
     
-    
-    public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
+    public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable {
         
         private bool m_IsNull;
         private int _Count;
@@ -30,7 +31,24 @@ namespace KdsLibrary.UDT
         public COLL_OBJ_PEILUT_OVDIM(string str) {
             // TODO : Add code to initialise the object based on the given string 
         }
-        
+
+        public void Sort()
+        {
+            ArrayList peilutOBJ = ArrayList.Adapter(m_OBJ_PEILUT_OVDIM);
+            peilutOBJ.Sort();
+        }
+        public int CompareTo(object obj)
+        {
+            if (obj is OBJ_PEILUT_OVDIM)
+            {
+                return this.CompareTo((obj as OBJ_PEILUT_OVDIM).NEW_SHAT_YETZIA);  // compare by shat yetiza
+            }
+            else
+            {
+                throw new ArgumentException("Object is not a OBJ_PEILUT_OVDIM");
+            }
+        }
+
         public virtual bool IsNull {
             get {
                 return this.m_IsNull;
@@ -65,7 +83,7 @@ namespace KdsLibrary.UDT
 
         public void RemoveAt(int index)
         {
-            OBJ_PEILUT_OVDIM[] newObj = new OBJ_PEILUT_OVDIM[m_OBJ_PEILUT_OVDIM.Length - 1];
+            OBJ_PEILUT_OVDIM[] newObj = new OBJ_PEILUT_OVDIM[m_OBJ_PEILUT_OVDIM.Length - 1];            
             for (int i = 0; i < m_OBJ_PEILUT_OVDIM.Length; i++)
             {
                 if (i < index) newObj[i] = m_OBJ_PEILUT_OVDIM[i];
