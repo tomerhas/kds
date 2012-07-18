@@ -4692,9 +4692,13 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 bOutMichsaAllowed = true;
             else
             {
-                if ((!oSidur.bSidurMyuhad) && (drSugSidur[0]["ZAKAY_MICHUTZ_LAMICHSA"].ToString() == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString()))
+                if (!oSidur.bSidurMyuhad)                     
                 {
-                    bOutMichsaAllowed = true;
+                    if (drSugSidur.Length>0)
+                    {
+                        if (drSugSidur[0]["ZAKAY_MICHUTZ_LAMICHSA"].ToString() == clGeneral.enMeafyenSidur25.enZakai.GetHashCode().ToString())
+                            bOutMichsaAllowed = true;
+                    }
                 }
             }
         }

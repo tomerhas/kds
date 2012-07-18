@@ -302,7 +302,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     || (IsSidurVisa())
                     || (IsSidurMatalaNotValidExists())
                     || (IsPeilutEilatExist())
-                    || (IsCarNumberErrorExists()));
+                    || (IsCarNumberErrorExists())
+                    || IsSidurChosem());
         
 
          return bDisable;
@@ -4708,6 +4709,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
             oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
             oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
+            
             if (!oSidur.bSidurMyuhad) 
                 oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
             oObjSidurimOvdimIns.UPDATE_OBJECT = 1;
@@ -4871,6 +4873,31 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         clOvdim _ovdim = new clOvdim();
         dtPakadim = _ovdim.GetPakadIdForMasach(MASACH_ID);
         return dtPakadim;
+    }
+    protected bool IsSidurChosem()
+    {   
+        //בכרטיס לפחות סידור מיוחד   
+        //אחד ללא מאפיין 90 והסידור לא מקורו במטלה. זיהוי סידור שמקורו במטלה לפי שבאחת הרשומות של הפעילויות 
+        // בסידור 0< TB_peilut_Ovdim. Mispar_matala.    
+
+        clSidur _Sidur;
+        bool bExists = false;
+        if (oBatchManager.htFullEmployeeDetails != null)
+        {
+            for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
+            {
+                _Sidur = (clSidur)(oBatchManager.htFullEmployeeDetails[i]);
+                if ((_Sidur.bSidurMyuhad) && (!_Sidur.bSidurLoChosemExists))
+                {
+                    if (!IsSidurMatala(ref _Sidur))
+                    {
+                        bExists = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return bExists;
     }
     protected bool IsSidurVisa()
     {   //נכון גם לפני וגם אחרי שינויי קלט

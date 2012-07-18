@@ -66,6 +66,8 @@ namespace KdsBatch
         public bool bSectorAvodaExists;
         public int iSectorVisa;
         public bool bSectorVisaExists;
+        public int iSidurLoChosem;//מאפיין 90
+        public bool bSidurLoChosemExists;        
         public string sZakaiLehamara;
         public bool bZakaiLehamaraExists;
         public string sZakaiLeChariga;
@@ -256,6 +258,8 @@ namespace KdsBatch
             bSectorAvodaExists = !String.IsNullOrEmpty(dr["sector_avoda"].ToString());
             iSectorVisa = (System.Convert.IsDBNull(dr["sector_visa"]) ? 0: int.Parse(dr["sector_visa"].ToString()));
             bSectorVisaExists = !String.IsNullOrEmpty(dr["sector_visa"].ToString());
+            iSidurLoChosem = (System.Convert.IsDBNull(dr["sidur_lo_chosem"]) ? 0 : int.Parse(dr["sidur_lo_chosem"].ToString()));
+            bSidurLoChosemExists = !String.IsNullOrEmpty(dr["sidur_lo_chosem"].ToString());
             iSidurLoNibdakSofShavua = (System.Convert.IsDBNull(dr["sidur_lo_nivdak_sofash"]) ? 0 : int.Parse(dr["sidur_lo_nivdak_sofash"].ToString()));
             iMivtzaVisa = (System.Convert.IsDBNull(dr["mivtza_visa"]) ? 0 : int.Parse(dr["mivtza_visa"].ToString()));
             iTafkidVisa = (System.Convert.IsDBNull(dr["tafkid_visa"]) ? 0 : int.Parse(dr["tafkid_visa"].ToString()));
@@ -639,6 +643,7 @@ namespace KdsBatch
             iPtorMehitiatzvut = oSidurKodem.iPtorMehitiatzvut;
             iSectorVisa = oSidurKodem.iSectorVisa;
             iMivtzaVisa = oSidurKodem.iMivtzaVisa;
+            iSidurLoChosem = oSidurKodem.iSidurLoChosem;
             bSectorVisaExists = oSidurKodem.bSectorVisaExists;
             iKodSibaLedivuchYadaniIn = oSidurKodem.iKodSibaLedivuchYadaniIn;
             iKodSibaLedivuchYadaniOut = oSidurKodem.iKodSibaLedivuchYadaniOut;
