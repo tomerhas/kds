@@ -4625,11 +4625,15 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         //                        || ((!oSidur.bSidurMyuhad)) && (iPitzulHafasaka > 0) && (!oSidur.bShaonNochachutExists)
         //                        || ((bSidurShaonMyuchad) && (iPitzulHafasaka > 0) && (MeafyenyOved.Meafyen41Exists)));
 
+
+        //סידור  שעון (מיוחד+מאפיין 54) + מיקום שעון כניסה יציאה גדול מאפס + פיצול =0
+        // או פיצול הפסקה גדול מאפס ולא קיים מאפיין 54
+        // או סידור שעון ופיצול הפסקה גדול מאפס וגם קיים מאפיין 41
         bPitzulHafsakaAllowed = ((bSidurShaonMyuchad && (iMikumShaonKnisa > 0) && (iMikumShaonYetiza > 0) && (iPitzulHafasaka == 0))
                               || ((iPitzulHafasaka > 0)  && (!oSidur.bShaonNochachutExists))                              
                               || ((bSidurShaonMyuchad) && (iPitzulHafasaka > 0) && (MeafyenyOved.Meafyen41Exists)));
-             
-            //במקרה של סידור מיוחד עם מאפיין 54 (שעון נוכחות) השדה זמין תמיד ויש להציג בו רק את הערכים הבאים:
+
+        //במקרה של סידור  שעון (מיוחד+מאפיין 54) + מיקום שעון כניסה יציאה גדול מאפס + פיצול =0 השדה זמין תמיד ויש להציג בו רק את הערכים הבאים:
             //ב. "הפסקה ע"ח העובד
             // (KOD_PIZUL_HAFSAKA=3) 
         bSidurMyuchadShaon = ((bSidurShaonMyuchad) && (iPitzulHafasaka == 0) && (iMikumShaonKnisa > 0) && (iMikumShaonYetiza > 0)); // במידה וTRUE, נאפשררק שני ערכים בקומבו 
