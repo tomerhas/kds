@@ -226,7 +226,8 @@ namespace KdsBatch
             errMutamLoBeNahagutBizeaNahagut = 186,
             errKupaiWithNihulTnua = 187,
             errChofeshAlCheshbonShaotNosafot = 188,
-            errKisuyTorLifneyHatchalatSidur =189
+            errKisuyTorLifneyHatchalatSidur =189,
+            errSidurLoTakefLetaarich=190
         }
 
         private enum errNesiaMeshtana
@@ -1270,7 +1271,8 @@ namespace KdsBatch
 
                     if (CheckErrorActive(180)) IsShatHatchalaLetashlumNull180(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
-                   
+                    if (CheckErrorActive(190)) SidurLoTakefLetarich190(ref oSidur, ref dtErrors);
+
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
                     int numPrev;
@@ -1560,7 +1562,32 @@ namespace KdsBatch
             }
             return isValid;
         }
-        
+
+
+        private bool SidurLoTakefLetarich190(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate < DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate > DateTime.Parse(oSidur.sTokefSiyum)))
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "סידור לא תקף לתאריך", enErrors.errSidurLoTakefLetaarich.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errSidurLoTakefLetaarich.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "SidurLoTakefLetarich190: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;
@@ -12007,7 +12034,7 @@ namespace KdsBatch
             //ביטול אלמנט השאלת רכב
             //תמיד לבטל  אלמנט "השאלת רכב" (73800000). 
             //אלא אם זוהי פעילות יחידה בסידור – לא לבטל אלא לסמן את הסידור "לא לתשלום" .
-            int i, iCountInsPeiluyot;
+            //int i, iCountInsPeiluyot;
             try
             {
                 if (oPeilut.lMakatNesia.ToString().Length >= 3)
