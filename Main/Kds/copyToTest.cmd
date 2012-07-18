@@ -12,6 +12,7 @@ copy \\KdsCalc01\KdsCalculTest\*.config \\KdsCalc01\KdsCalculTest\old\
 @echo off 
 copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.exe  \\KdsCalc01\KdsCalculTest\
 copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.dll  \\KdsCalc01\KdsCalculTest\
+del \\KdsCalc01\KdsCalculTest\KdsCalculTest.exe.*
 Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe  KdsCalculTest.exe 
 Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe.config  KdsCalculTest.exe.config 
 pause 
