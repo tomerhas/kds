@@ -4220,6 +4220,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oObjSidurimOvdimUpd.MISPAR_SIDUR = (oLbl == null ? (oHypLnk == null ? (oTxtSidur.Text=="" ? 0 : int.Parse(oTxtSidur.Text)) : int.Parse(oHypLnk.Text)) : int.Parse(oLbl.Text)); 
                         oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = oObjSidurimOvdimUpd.MISPAR_SIDUR;
                         oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM = oSidur.iShayahLeyomKodem;
+                        oObjSidurimOvdimUpd.MENAHEL_MUSACH_MEADKEN = oSidur.iMenahelMusachMeadken;
                         oTxt = ((TextBox)(this.FindControl("SD").FindControl("txtSH" + iIndex)));
                         oObjSidurimOvdimUpd.SHAT_HATCHALA = DateTime.Parse(oTxt.Attributes["OrgShatHatchala"]);
 
@@ -4709,7 +4710,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             oObjSidurimOvdimIns.MIVTZA_VISA = oObjSidurimOvdimUpd.MIVTZA_VISA;
             oObjSidurimOvdimIns.TAFKID_VISA = oObjSidurimOvdimUpd.TAFKID_VISA;
             oObjSidurimOvdimIns.SHAYAH_LEYOM_KODEM = oObjSidurimOvdimUpd.SHAYAH_LEYOM_KODEM;
-            
+            oObjSidurimOvdimIns.MENAHEL_MUSACH_MEADKEN = oObjSidurimOvdimUpd.MENAHEL_MUSACH_MEADKEN;
             if (!oSidur.bSidurMyuhad) 
                 oObjSidurimOvdimIns.SUG_SIDUR = oSidur.iSugSidurRagil;
             oObjSidurimOvdimIns.UPDATE_OBJECT = 1;

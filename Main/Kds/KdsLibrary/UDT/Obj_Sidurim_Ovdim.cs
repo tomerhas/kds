@@ -131,6 +131,9 @@ namespace KdsLibrary.UDT
         private long m_MEADKEN_ACHARON;
         private bool m_MEADKEN_ACHARONIsNull;
 
+        private long m_MENAHEL_MUSACH_MEADKEN;
+        private bool m_MENAHEL_MUSACH_MEADKENIsNull;
+        
         private System.DateTime m_TAARICH_IDKUN_ACHARON;
         private bool m_TAARICH_IDKUN_ACHARONIsNull;
 
@@ -202,6 +205,7 @@ namespace KdsLibrary.UDT
             //this.m_BUTALIsNull = true;
             this.m_SUG_HAZMANAT_VISAIsNull = true;
             this.m_MEADKEN_ACHARONIsNull = true;
+            this.m_MENAHEL_MUSACH_MEADKENIsNull = true;
             this.m_TAARICH_IDKUN_ACHARONIsNull = true;
             this.m_BITUL_O_HOSAFAIsNull = true;
             this.m_SHAT_HITIATZVUTIsNull = true;
@@ -1130,6 +1134,32 @@ namespace KdsLibrary.UDT
                 this.m_MEADKEN_ACHARONIsNull = value;
             }
         }
+        [OracleObjectMappingAttribute("MENAHEL_MUSACH_MEADKEN")]
+        public long MENAHEL_MUSACH_MEADKEN
+        {
+            get
+            {
+                return this.m_MENAHEL_MUSACH_MEADKEN;
+            }
+            set
+            {
+                this.m_MENAHEL_MUSACH_MEADKEN = value;
+                this.m_MENAHEL_MUSACH_MEADKENIsNull = false;
+            }
+        }
+
+        public bool MENAHEL_MUSACH_MEADKENIsNull
+        {
+            get
+            {
+                return this.m_MENAHEL_MUSACH_MEADKENIsNull;
+            }
+            set
+            {
+                this.m_MENAHEL_MUSACH_MEADKENIsNull = value;
+            }
+        }
+        
         [OracleObjectMappingAttribute("TAARICH_IDKUN_ACHARON")]
         public System.DateTime TAARICH_IDKUN_ACHARON
         {
@@ -1525,6 +1555,11 @@ namespace KdsLibrary.UDT
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MEADKEN_ACHARON", this.MEADKEN_ACHARON);
             }
+            if ((MENAHEL_MUSACH_MEADKENIsNull == false))
+            {
+                Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "MENAHEL_MUSACH_MEADKEN", this.MENAHEL_MUSACH_MEADKEN);
+            }
+            
             if ((TAARICH_IDKUN_ACHARONIsNull == false))
             {
                 Oracle.DataAccess.Types.OracleUdt.SetValue(con, pUdt, "TAARICH_IDKUN_ACHARON", this.TAARICH_IDKUN_ACHARON);
@@ -1741,6 +1776,11 @@ namespace KdsLibrary.UDT
             {
                 this.MEADKEN_ACHARON = ((long)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MEADKEN_ACHARON")));
             }
+            if ((MENAHEL_MUSACH_MEADKENIsNull == false))
+            {
+                this.MENAHEL_MUSACH_MEADKEN = ((long)(Oracle.DataAccess.Types.OracleUdt.GetValue(con, pUdt, "MENAHEL_MUSACH_MEADKEN")));
+            }
+            
             this.TAARICH_IDKUN_ACHARONIsNull = Oracle.DataAccess.Types.OracleUdt.IsDBNull(con, pUdt, "TAARICH_IDKUN_ACHARON");
             if ((TAARICH_IDKUN_ACHARONIsNull == false))
             {
