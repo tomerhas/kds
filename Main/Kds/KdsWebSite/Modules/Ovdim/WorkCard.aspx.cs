@@ -283,7 +283,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      }
      protected bool IsCarNumberErrorExists()
      {
-         return (oBatchManager.dtErrors.Select("check_num=69").Length > 0); 
+         bool bErrExists = false;
+
+         if (oBatchManager.dtErrors!=null)
+             if (oBatchManager.dtErrors.Rows.Count>0)
+                 bErrExists = (oBatchManager.dtErrors.Select("check_num=69").Length > 0);
+
+         return bErrExists;
      }
      protected bool DisabledMeasherBtn()
      {
@@ -4407,13 +4413,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         oCollSidurimOvdimUpd.Add(oObjSidurimOvdimUpd);
 
                         if (iCancelSidur == clGeneral.enBitulOHosafa.BitulByUser.GetHashCode())
-                        {
-                            //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim   
+                        {                        
+                          //אם סידור בוטל, נמחוק אותו מטבלת tb_sidurim_ovdim   
                             oObjSidurimOvdimDel = new OBJ_SIDURIM_OVDIM();
                             FillSidurimForDelete(ref oObjSidurimOvdimDel, ref oObjSidurimOvdimUpd);
                             oObjSidurimOvdimDel.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode(); //^^^^
-                            oObjSidurimOvdimDel.UPDATE_OBJECT = 0;  //^^^^^
-                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;                            
+                            //נבדוק אם לא קיים סידור באותו מפתח שאנחנו רוצים לבטל, כלומר שני סידורים עם אותו מפתח
+                            //במידה ויש, לא נבטל את הסידור על מנת שלא יבוטל הסידור האחר                                                     
+                            if ((HasSidurWithKey(oObjSidurimOvdimUpd)))
+                                oObjSidurimOvdimDel.UPDATE_OBJECT = 100;  //^^^^^
+                            else
+                                oObjSidurimOvdimDel.UPDATE_OBJECT = 0;  //^^^^^
+                            oObjSidurimOvdimUpd.UPDATE_OBJECT = 0;
                             oCollSidurimOvdimDel.Add(oObjSidurimOvdimDel);
                             if (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew))
                             {//אם ביטלו סידור חדש, נשווה את הערכים הישנים לחדשים כדי שלא ייכנסו רשומות לעדכוני רשמת
@@ -4432,7 +4443,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                                 //remove fro hashtable
                                 //RemoveSidurFromHashTable(iIndex);
                             }
-                        }
+                           }
                         else
                         {
                             if ((bInsert))
@@ -4495,6 +4506,31 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
+    private bool HasSidurWithKey(OBJ_SIDURIM_OVDIM objSidurimOvdim)
+    {
+        clSidur _Sidur;
+        OrderedDictionary _Sidurim=(OrderedDictionary)Session["Sidurim"];
+        bool bHasSidurWithKey = false;
+        int iCount = 0;
+        
+        //מחפש אם קיים סידור עם אותו מפתח
+        for (int iIndex = 0; iIndex < _Sidurim.Count; iIndex++)
+        {
+            _Sidur = (clSidur)_Sidurim[iIndex];
+            if ((_Sidur.iMisparSidur == objSidurimOvdim.MISPAR_SIDUR) && (_Sidur.dFullShatHatchala == objSidurimOvdim.NEW_SHAT_HATCHALA))
+            {
+                iCount = iCount + 1;
+                if (iCount == 2)
+                {
+                    bHasSidurWithKey = true;
+                    break;
+                }
+                
+            }
+        }
+        return bHasSidurWithKey;
+    }
+
     private void RemoveSidurFromHashTable(int iIndex)
     {
         oBatchManager.htEmployeeDetails.RemoveAt(iIndex);
