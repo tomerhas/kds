@@ -131,6 +131,7 @@ namespace KdsBatch
         public bool bKizuzAlPiHatchalaGmarExists;
         public int iBitulOHosafa;
         public bool bCancelSidurDisabled;
+        public int iZakaiLelina;
         public int iTosefetGrira;
         public int iAchuzKnasLepremyatVisa;
         public int iAchuzVizaBesikun;
@@ -283,6 +284,9 @@ namespace KdsBatch
             bZakaiLehamaraExists = !(String.IsNullOrEmpty(dr["zakay_lehamara"].ToString()));
             sZakaiLeChariga = dr["zakay_lechariga"].ToString();
             bZakaiLeCharigaExists = !(String.IsNullOrEmpty(dr["zakay_lechariga"].ToString()));
+            iZakaiLelina = System.Convert.IsDBNull(dr["zakay_lelina"]) ? 0 : int.Parse(dr["zakay_lelina"].ToString());
+         
+            
             sZakayLezamanNesia = dr["Zakay_Leaman_Nesia"].ToString();
             bZakayLezamanNesiaExists = !(String.IsNullOrEmpty(dr["zakay_leaman_nesia"].ToString()));
             sShabaton = dr["shbaton"].ToString();
@@ -656,7 +660,8 @@ namespace KdsBatch
             iMisparMusachOMachsan = oSidurKodem.iMisparMusachOMachsan;
             iSugHazmanatVisa = oSidurKodem.iSugHazmanatVisa;
             iSidurLoNibdakSofShavua = oSidurKodem.iSidurLoNibdakSofShavua;
-            iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
+            iMenahelMusachMeadken = oSidurKodem.iMenahelMusachMeadken;
+
             bSidurMyuhad = IsSidurMyuhad(iMisparSidur.ToString());
 
             if (bSidurMyuhad)
@@ -681,6 +686,8 @@ namespace KdsBatch
                 bZakaiLeCharigaExists = !(String.IsNullOrEmpty(dr["zakay_lechariga"].ToString()));
                 sZakayLezamanNesia = dr["Zakay_Leaman_Nesia"].ToString();
                 bZakayLezamanNesiaExists = !(String.IsNullOrEmpty(dr["zakay_leaman_nesia"].ToString()));
+                iZakaiLelina = System.Convert.IsDBNull(dr["zakay_lelina"]) ? 0 : int.Parse(dr["zakay_lelina"].ToString());
+            
                 sSidurInSummer = dr["sidur_in_summer"].ToString();
                 bSidurInSummerExists = !(String.IsNullOrEmpty(dr["sidur_in_summer"].ToString()));
                 sNoOtoNo = dr["no_oto_no"].ToString();
@@ -780,6 +787,8 @@ namespace KdsBatch
             bZakayLezamanNesiaExists = !(String.IsNullOrEmpty(dr["zakay_leaman_nesia"].ToString()));
             sSidurInSummer = dr["sidur_in_summer"].ToString();
             bSidurInSummerExists = !(String.IsNullOrEmpty(dr["sidur_in_summer"].ToString()));
+            iZakaiLelina = System.Convert.IsDBNull(dr["zakay_lelina"]) ? 0 : int.Parse(dr["zakay_lelina"].ToString());
+            
             sNoOtoNo = dr["no_oto_no"].ToString();
             bNoOtoNoExists = !(String.IsNullOrEmpty(dr["no_oto_no"].ToString()));
             sHashlamaKod = dr["hashlama_kod"].ToString();

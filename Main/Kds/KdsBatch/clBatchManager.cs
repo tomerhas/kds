@@ -6773,7 +6773,7 @@ namespace KdsBatch
 
                 //שינוי 7
                 if (!CheckIdkunRashemet("LINA"))
-                 FixedLina07();
+                       FixedLina07();
 
                 //עבור שינויים 5,1,2,4,12
                 SetSidurObjects();
@@ -7774,15 +7774,43 @@ namespace KdsBatch
         private void SiduryMapaWhithStatusNullLoLetashlum29()
         {
             clSidur oSidur = new clSidur();
+            clPeilut oPeilut = new clPeilut();
             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd = null;
+            bool bHaveSidurFromMatala = false;
+            bool bHaveSidurVisaFromMapa = false;
             int i = 0;
-            try{
-                if (htEmployeeDetails  != null)
+            try
+            {
+                if (htEmployeeDetails != null)
                     for (i = 0; i < htEmployeeDetails.Count; i++)
                     {
                         oSidur = (clSidur)htEmployeeDetails[i];
 
-                        if (!oSidur.bSidurMyuhad && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1 && _iLoginUserId != oSidur.iMisparIshi)
+                        //סידור מפה: אינו מתחיל בספרות 99/
+                        //סידור מיוחד שמקורו במטלה מהמפה (באחת הרשומות של הפעילויות בסידור0< TB_peilut_Ovdim. Mispar_matala)/
+                        //סידור ויזה שהגיע מהמפה (בפעילות שהיא מסוג מק"ט 5 קיים ערך בשדה MISPAR_VISA
+                        if (oSidur.bSidurMyuhad)
+                        {
+                            for (int j = 0; j < oSidur.htPeilut.Count; j++)
+                            {
+                                oPeilut = (clPeilut)oSidur.htPeilut[j];
+
+                                if (oPeilut.lMisparMatala > 0)
+                                {
+                                    bHaveSidurFromMatala = true;
+                                }
+                                if (oSidur.bSidurVisaKodExists || oSidur.iSectorVisa == 0 || oSidur.iSectorVisa == 1)
+                                {
+                                    if (oPeilut.iMakatType == clKavim.enMakatType.mVisa.GetHashCode() && oPeilut.lMisparVisa > 0)
+                                    {
+                                        bHaveSidurVisaFromMapa = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        //&& _iLoginUserId != oSidur.iMisparIshi
+                        if ((!oSidur.bSidurMyuhad || (oSidur.bSidurMyuhad && bHaveSidurFromMatala) || bHaveSidurVisaFromMapa) && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1)
                         {
                             if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                             {
@@ -7796,9 +7824,9 @@ namespace KdsBatch
 
                                 htEmployeeDetails[i] = oSidur;
                             }
-                         }      
+                        }
                     }
-             }
+            }
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, _iMisparIshi, "E", 29, _dCardDate, "SiduryMapaLoLetashlum29: " + ex.Message);
@@ -9100,9 +9128,26 @@ namespace KdsBatch
 
         private void FixedLina07()
         {
+            clSidur oSidur = new clSidur();
+            int iLina = 0;
+           int iCountLina=0;
             try
             {
-                oObjYameyAvodaUpd.LINA = 0;
+                
+                if (htEmployeeDetails != null)
+                {
+                    for (int i = 0; i < htEmployeeDetails.Count; i++)
+                    {
+                        oSidur = (clSidur)htEmployeeDetails[i];
+
+                        if (oSidur.iZakaiLelina == 3) { iLina = 1; iCountLina += 1; }
+                        else if (oSidur.iZakaiLelina == 4) { iLina = 2; iCountLina += 1; }
+                    }
+                }
+
+                if (iCountLina==1) oObjYameyAvodaUpd.LINA = iLina;
+                else oObjYameyAvodaUpd.LINA =0;
+
                 oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
             }
             catch (Exception ex)
