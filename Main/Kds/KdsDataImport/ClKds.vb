@@ -1163,7 +1163,7 @@ Public Class ClKds
                                     If SRV_D_KOD_HAZMANA_X = "7" And (Not Trim(check_lo_letashlum) = "1") Then
                                         ifUpdletashlum = True
                                         p_letashlum = 1
-                                    ElseIf SRV_D_KOD_HAZMANA_X = "0" And Trim(check_lo_letashlum) = "1" Then
+                                    ElseIf SRV_D_KOD_HAZMANA_X = "0" And Trim(check_lo_letashlum) = "1" And Not (calc_D_new_sidur = 99200) Then
                                         ifUpdletashlum = True
                                         p_letashlum = 0
                                         ' hazmana = 0 and lo_letashlum null is the same.
