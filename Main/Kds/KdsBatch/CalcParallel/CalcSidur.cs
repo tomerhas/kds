@@ -134,6 +134,8 @@ namespace KdsBatch
                             addRowToTable(clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErechRechiv);
                         }
                     }
+
+                 
                 }
             }
             catch (Exception ex)
@@ -168,71 +170,105 @@ namespace KdsBatch
                 fErechRechiv = float.Parse(drSidur["ZMAN_LELO_HAFSAKA"].ToString()); //float.Parse((dShatGmarLetashlum - dShatHatchalaLetashlum).TotalMinutes.ToString());              
             
                 //יוצאי דופן סידורים מיוחדים  
-                if (iMisparSidur == 99707)
-                    fErechRechiv = fMichsaYomit + 120;
-                else if (iMisparSidur == 99708)
-                    fErechRechiv = fMichsaYomit + 60;
-                else if (iMisparSidur == 99010)
+                //if (iMisparSidur == 99707)
+                //    fErechRechiv = fMichsaYomit + 120;
+                //else if (iMisparSidur == 99708)
+                //    fErechRechiv = fMichsaYomit + 60;
+                //else
+                if (iMisparSidur == 99010)
                 {
                     //•	סידור 99010 (8549) – כדורגל: הנמוך מבין (נוכחות מחושבת, 180 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 60 ) ).
                     fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_dakot_boded"].ToString()));
                 }
-                else if (iMisparSidur == 99706)
+                else if (!string.IsNullOrEmpty(drSidur["shat_gmar_auto"].ToString()))
                 {
-                    //•	סידור 99706 (8552) – קייטנה מאבטח: הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126)).
-                    fErechRechiv = fMichsaYomit; // Math.Min(fErechRechiv, fMichsaYomit);
+                   //ג.	סידור עם מאפיין שעת גמר אוטומטית לחישוב:
+                    //אם לסידור מאפיין שעת גמר אוטומטית לחישוב שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 89):
+                    //ערך הרכיב  = ערך מאפיין 89 פחות ש.התחלה לתשלום.
+                    fErechRechiv =float.Parse((clGeneral.GetDateTimeFromStringHour(drSidur["shat_gmar_auto"].ToString(), objOved.Taarich)  - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                }
+                //	סידורים מוגבלים בדקות התשלום היומיות  
+                else if (!string.IsNullOrEmpty(drSidur["max_shaot_byom_hol"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                {
+                    fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_hol"].ToString()));
+                }
+                else if (!string.IsNullOrEmpty(drSidur["max_shaot_byom_shishi"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+                {
+                    fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_shishi"].ToString()));
+                }
+                else if (!string.IsNullOrEmpty(drSidur["max_shaot_beshabaton"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Shabat.GetHashCode())
+                {
+                    fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_beshabaton"].ToString()));
+                }
+                //•	סידורים המזכים בדקות קבועות ליום עבודה
+                else if (fErechRechiv>0 && !string.IsNullOrEmpty(drSidur["tashlum_kavua_bchol"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode())
+                {
+                    fErechRechiv = float.Parse(drSidur["tashlum_kavua_bchol"].ToString());
+                }
+                else if (fErechRechiv > 0 && !string.IsNullOrEmpty(drSidur["tashlum_kavua_beshishi"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+                {
+                    fErechRechiv = float.Parse(drSidur["tashlum_kavua_beshishi"].ToString());
+                }
+                else if (fErechRechiv > 0 && !string.IsNullOrEmpty(drSidur["shabaton_tashlum_kavua"].ToString()) && objOved.SugYom == clGeneral.enSugYom.Shabat.GetHashCode())
+                {
+                    fErechRechiv =  float.Parse(drSidur["shabaton_tashlum_kavua"].ToString());
+                }
+                //else if (iMisparSidur == 99706)
+                //{
+                //    //•	סידור 99706 (8552) – קייטנה מאבטח: הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126)).
+                //    fErechRechiv = fMichsaYomit; // Math.Min(fErechRechiv, fMichsaYomit);
 
-                }
-                else if (iMisparSidur == 99703)
-                {
-                    //	סידור 99703 (8567) – קייטנה השתלמות טרום: 
-                    if (fMichsaYomit > 0)
-                    {
-                        ////אם קיימת מכסה יומית מחושבת (רכיב 126): הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126)).
-                        fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
-                    }
-                    else
-                    {
-                        // לא קיימת מכסה יומית מחושבת (רכיב 126) וזה יום שישי : הנמוך מבין (נוכחות מחושבת,390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 18 ])
-                        if (oCalcBL.CheckYomShishi(objOved.SugYom))
-                        {
-                            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_shishi"].ToString()));
-                        }
-                        //-	אם לא קיימת מכסה וזה שבת/שבתון [זיהוי שבת/ון]: הנמוך מבין (נוכחות מחושבת,480 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 ]).
-                        else if (clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
-                        {
-                            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_beshabaton"].ToString()));
-                        }
-                    }
-                }
-                else if (iMisparSidur == 99700)
-                {
-                    //•	סידור 99700 (8589) – אירועי קיץ 
-                    //-	אם לא שבת/שבתון: מכסה יומית (רכיב 126) + 390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62 ]). 
-                    if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
-                    {
-                        fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
-                    }
-                    else
-                    {
-                        //-	אם שבת/שבתון [זיהוי שבת/ון]: 240 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 )].
-                        fErechRechiv = int.Parse(drSidur["max_shaot_beshabaton"].ToString());
-                    }
-                }
-                else if (iMisparSidur == 99711)
-                {
-                    //•	סידור 99711 (חדש)– אירועי קיץ – חוצה ישראל 
-                    //-	אם לא שבת/שבתון : מכסה יומית (רכיב 126) + 390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62 )]). 
-                    if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
-                    {
-                        fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
-                    }
-                    else
-                    {
-                        //-	בשבת/שבתון: 420 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 ).
-                        fErechRechiv = int.Parse(drSidur["max_shaot_beshabaton"].ToString());
-                    }
-                }
+            //}
+                //else if (iMisparSidur == 99703)
+                //{
+                //    //	סידור 99703 (8567) – קייטנה השתלמות טרום: 
+                //    if (fMichsaYomit > 0)
+                //    {
+                //        ////אם קיימת מכסה יומית מחושבת (רכיב 126): הנמוך מבין (נוכחות מחושבת, מכסה יומית מחושבת (רכיב 126)).
+                //        fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
+                //    }
+                //    else
+                //    {
+                //        // לא קיימת מכסה יומית מחושבת (רכיב 126) וזה יום שישי : הנמוך מבין (נוכחות מחושבת,390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 18 ])
+                //        if (oCalcBL.CheckYomShishi(objOved.SugYom))
+                //        {
+                //            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_shishi"].ToString()));
+                //        }
+                //        //-	אם לא קיימת מכסה וזה שבת/שבתון [זיהוי שבת/ון]: הנמוך מבין (נוכחות מחושבת,480 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 ]).
+                //        else if (clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                //        {
+                //            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_beshabaton"].ToString()));
+                //        }
+                //    }
+                //}
+                //else if (iMisparSidur == 99700)
+                //{
+                //    //•	סידור 99700 (8589) – אירועי קיץ 
+                //    //-	אם לא שבת/שבתון: מכסה יומית (רכיב 126) + 390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62 ]). 
+                //    if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                //    {
+                //        fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
+                //    }
+                //    else
+                //    {
+                //        //-	אם שבת/שבתון [זיהוי שבת/ון]: 240 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 )].
+                //        fErechRechiv = int.Parse(drSidur["max_shaot_beshabaton"].ToString());
+                //    }
+                //}
+                //else if (iMisparSidur == 99711)
+                //{
+                //    //•	סידור 99711 (חדש)– אירועי קיץ – חוצה ישראל 
+                //    //-	אם לא שבת/שבתון : מכסה יומית (רכיב 126) + 390 [שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62 )]). 
+                //    if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom, objOved.Taarich))
+                //    {
+                //        fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
+                //    }
+                //    else
+                //    {
+                //        //-	בשבת/שבתון: 420 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 19 ).
+                //        fErechRechiv = int.Parse(drSidur["max_shaot_beshabaton"].ToString());
+                //    }
+                //}
                 else if (iMisparSidur == 99006)
                 {//•	סידור 99006 (8554) – שליחות בחו"ל: 
                     if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode())
@@ -269,11 +305,11 @@ namespace KdsBatch
                     //•	99207 (8512) – קורס, 99011 (8513) – קורס
                     if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
                     {
-                        if(fErechRechiv>fMichsaYomit)
+                        if (fErechRechiv > fMichsaYomit)
                             fErechRechiv = fMichsaYomit;
                         //-	ימים א – ה וערב חג [זיהוי ערב חג]: הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
                         if (fErechRechiv >= 480)
-                            if(fErechRechiv<fMichsaYomit)
+                            if (fErechRechiv < fMichsaYomit)
                                 fErechRechiv = fMichsaYomit;
                     }
                     else if (oCalcBL.CheckYomShishi(objOved.SugYom))
@@ -298,12 +334,26 @@ namespace KdsBatch
                     // הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126) ).
                     if (fMichsaYomit > 0)
                         fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
-                   // else fErechRechiv = fErechRechiv;
+                    // else fErechRechiv = fErechRechiv;
                 }
                 else if (iMisparSidur == 99220)
                 {
                     //•	סידור גרירה בפועל 99220 : ערך הרכיב = ערך רכיב זמן גרירות (רכיב 128) ברמת סידור 
                     fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "MISPAR_SIDUR=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') AND KOD_RECHIV=" + clGeneral.enRechivim.ZmanGrirot.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                }
+                else if (!string.IsNullOrEmpty(drSidur["dakot_n_letashlum_hol"].ToString()) && fMichsaYomit > 0)
+                {
+                    //	סידורים עם מאפיין לתשלום ביום חול :
+                    // אם מכסה יומית מחושבת (רכיב 126) > 0 (בימי חול וערבי חג יש מכסה): ערך הרכיב = מכסה יומית מחושבת (רכיב 126) + ערך מאפיין 62 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 62)
+
+                    fErechRechiv = fMichsaYomit + int.Parse(drSidur["dakot_n_letashlum_hol"].ToString());
+                }
+                else if (!string.IsNullOrEmpty(drSidur["michsat_shishi_lebaley_x"].ToString()) && fMichsaYomit > 0 && objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode())
+                {
+                    //	סידורים עם מאפיין לתשלום ביום שישי לעובדים בעלי מיכסה 
+                    //אם מכסה יומית מחושבת (רכיב 126) > 0 וגם יום הוא שישי (לא ערב חג
+                    //ערך הרכיב = מכסה יומית מחושבת (רכיב 126) + ערך מאפיין 63 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 63)
+                    fErechRechiv = fMichsaYomit + int.Parse(drSidur["michsat_shishi_lebaley_x"].ToString());
                 }
 
                 oPeilut.CalcRechiv1(iMisparSidur, dShatHatchalaSidur);

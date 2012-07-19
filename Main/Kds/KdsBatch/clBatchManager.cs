@@ -1476,7 +1476,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (  oSidur.dFullShatHatchalaLetashlum ==DateTime.MinValue)
+                if (oSidur.dFullShatHatchalaLetashlum == DateTime.MinValue || oSidur.dFullShatHatchalaLetashlum.Date == DateTime.MinValue.Date)
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "חסרה שעת התחלה לתשלום", enErrors.IsShatHatchalaLetashlumNull.GetHashCode());
@@ -1501,7 +1501,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (oSidur.dFullShatGmarLetashlum==DateTime.MinValue)
+                if (oSidur.dFullShatGmarLetashlum == DateTime.MinValue || oSidur.dFullShatGmarLetashlum.Date == DateTime.MinValue.Date)
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "חסרה שעת גמר לתשלום", enErrors.IsShatGmarLetashlumNull.GetHashCode());
