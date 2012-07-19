@@ -1116,7 +1116,7 @@ Public Class ClKds
                                     NumLInDS = NumLInDS + 1
                                 End If
 
-                                'phase6: match, and no update except chariga etc
+                                'phase6: match, and no update except chariga halbasha nesiot lo_letashlum
                                 If FoundAMatch = True And FoundAchange = True Then
                                     ifUpdChariga = False
                                     ifUpdhalbasha = False
@@ -1195,6 +1195,7 @@ Public Class ClKds
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_letashlum", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_letashlum, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updletashlum")
                                         If Not (p_letashlum = 0 Or p_letashlum = 1) Then
                                             'todo: send an error to waiman
@@ -1212,6 +1213,7 @@ Public Class ClKds
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_chariga", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updchariga")
                                     End If
                                     If ifUpdnesiot = True Then
@@ -1226,6 +1228,7 @@ Public Class ClKds
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_nesiot", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updnesiot")
                                     End If
                                     If ifUpdhalbasha = True Then
@@ -1240,6 +1243,7 @@ Public Class ClKds
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_halbasha", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updhalbasha")
                                     End If
 
