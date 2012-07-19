@@ -80,20 +80,20 @@ Public Class ClKds
         Dim SRV_D_YETZIA_X As String
         Dim SRV_D_MIKUM_YETZIA As String
         Dim SRV_D_ISHI_MEADKEN As String
-        Dim SRV_D_KOD_PITZUL_X As String
+        'Dim SRV_D_KOD_PITZUL_X As String
         Dim SRV_D_KOD_BITUL_ZMAN_NESIA_X As String
-        Dim SRV_D_KOD_LINA_X As String
+        'Dim SRV_D_KOD_LINA_X As String
         Dim SRV_D_KOD_CHARIGA_X As String
         Dim SRV_D_KOD_HALBASHA_X As String
-        Dim SRV_D_KOD_MICHUTZ_LAMICHSA_X As String
-        Dim SRV_D_KOD_HAMARA_X As String
+        'Dim SRV_D_KOD_MICHUTZ_LAMICHSA_X As String
+        'Dim SRV_D_KOD_HAMARA_X As String
         Dim SRV_D_KOD_HAZMANA_X As String
         Dim SRV_D_new_sidur As String
         Dim calc_D_new_sidur As String
         Dim TAARICH_knisa_p24 As String
         Dim TAARICH_yetzia_p24 As String
         Dim efes As String
-        Dim Whr As String
+        'Dim Whr As String
         Dim retsql As String
         Dim SQ99_COUNTER As Integer
         Dim WS99_EZER As Integer
@@ -125,6 +125,17 @@ Public Class ClKds
         Dim Times_yetzia_letashlum_p24 As Integer
         'Dim pro_upd_yamey As Boolean
         Dim InpStr As String
+        Dim FoundAchange As Boolean
+        Dim check_chariga As String
+        Dim check_lo_letashlum As String
+        Dim check_nesiot As String
+        Dim check_halbasha As String
+        Dim ifUpdChariga As Boolean
+        Dim ifUpdhashlama As Boolean
+        Dim ifUpdhalbasha As Boolean
+        Dim ifUpdnesiot As Boolean
+        Dim ifUpdletashlum As Boolean
+        Dim p_letashlum As Integer
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         Try
 
@@ -287,14 +298,27 @@ Public Class ClKds
                         End If
                         'todo: in case 95-96 or 97-98 is not numeric...
                         SRV_D_ISHI_MEADKEN = Mid(line, 61, 5)
-                        SRV_D_KOD_PITZUL_X = Mid(line, 74, 1)
+                        FoundAchange = False
+                        'SRV_D_KOD_PITZUL_X = Mid(line, 74, 1)
                         SRV_D_KOD_BITUL_ZMAN_NESIA_X = Mid(line, 75, 1)
-                        SRV_D_KOD_LINA_X = Mid(line, 76, 1)
+                        If Not Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X) = "" Then
+                            FoundAchange = True
+                        End If
+                        'SRV_D_KOD_LINA_X = Mid(line, 76, 1)
                         SRV_D_KOD_CHARIGA_X = Mid(line, 77, 1)
+                        If Not Trim(SRV_D_KOD_CHARIGA_X) = "" Then
+                            FoundAchange = True
+                        End If
                         SRV_D_KOD_HALBASHA_X = Mid(line, 78, 1)
-                        SRV_D_KOD_MICHUTZ_LAMICHSA_X = Mid(line, 79, 1)
-                        SRV_D_KOD_HAMARA_X = Mid(line, 80, 1)
+                        If Not Trim(SRV_D_KOD_HALBASHA_X) = "" Then
+                            FoundAchange = True
+                        End If
+                        'SRV_D_KOD_MICHUTZ_LAMICHSA_X = Mid(line, 79, 1)
+                        'SRV_D_KOD_HAMARA_X = Mid(line, 80, 1)
                         SRV_D_KOD_HAZMANA_X = Mid(line, 81, 1)
+                        If Not Trim(SRV_D_KOD_HAZMANA_X) = "" Then
+                            FoundAchange = True
+                        End If
                         'SRV_D_new_sidur = Mid(line, 82, 5)
                         SRV_D_KNISA_letashlum_X = Mid(line, 87, 4)
                         If SRV_D_KNISA_letashlum_X = "0000" Then
@@ -352,42 +376,42 @@ Public Class ClKds
                                 SRV_D_YETZIA_X = "2359"
                             End If
                         End If
-                        If Not (SRV_D_KOD_HAMARA_X = "0" Or Trim(SRV_D_KOD_HAMARA_X) = "") Then
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("waiman:hamara " & line)
-                            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:hamara " & line, 6)
-                            ''** KdsWriteProcessLog(2, 1, 4, "waiman:hamara " & line, "6")
-                        End If
-                        If Not (SRV_D_KOD_MICHUTZ_LAMICHSA_X = "0" Or Trim(SRV_D_KOD_MICHUTZ_LAMICHSA_X) = "") Then
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("waiman:MICHUTZ_LAMICHSA " & line)
-                            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:MICHUTZ_LAMICHSA " & line, 6)
-                            ''**  KdsWriteProcessLog(2, 1, 4, "waiman:MICHUTZ_LAMICHSA " & line, "6")
-                        End If
-                        If Not (SRV_D_KOD_LINA_X = "0" Or Trim(SRV_D_KOD_LINA_X) = "") Then
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("waiman:LINA " & line)
-                            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:LINA " & line, 6)
-                            ''**KdsWriteProcessLog(2, 1, 4, "waiman:LINA " & line, "6")
-                        End If
-                        If Not (SRV_D_KOD_PITZUL_X = "0" Or Trim(SRV_D_KOD_PITZUL_X) = "") Then
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("waiman:PITZUL " & line)
-                            oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:PITZUL " & line, 6)
-                            ''**  KdsWriteProcessLog(2, 1, 4, "waiman:PITZUL " & line, "6")
-                        End If
+                        'If Not (SRV_D_KOD_HAMARA_X = "0" Or Trim(SRV_D_KOD_HAMARA_X) = "") Then
+                        '    If SwIsOpen = False Then
+                        '        sw = New StreamWriter(ErrFileName, False)
+                        '        SwIsOpen = True
+                        '    End If
+                        '    sw.WriteLine("waiman:hamara " & line)
+                        '    oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:hamara " & line, 6)
+                        '    ''** KdsWriteProcessLog(2, 1, 4, "waiman:hamara " & line, "6")
+                        'End If
+                        'If Not (SRV_D_KOD_MICHUTZ_LAMICHSA_X = "0" Or Trim(SRV_D_KOD_MICHUTZ_LAMICHSA_X) = "") Then
+                        '    If SwIsOpen = False Then
+                        '        sw = New StreamWriter(ErrFileName, False)
+                        '        SwIsOpen = True
+                        '    End If
+                        '    sw.WriteLine("waiman:MICHUTZ_LAMICHSA " & line)
+                        '    oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:MICHUTZ_LAMICHSA " & line, 6)
+                        '    ''**  KdsWriteProcessLog(2, 1, 4, "waiman:MICHUTZ_LAMICHSA " & line, "6")
+                        'End If
+                        'If Not (SRV_D_KOD_LINA_X = "0" Or Trim(SRV_D_KOD_LINA_X) = "") Then
+                        '    If SwIsOpen = False Then
+                        '        sw = New StreamWriter(ErrFileName, False)
+                        '        SwIsOpen = True
+                        '    End If
+                        '    sw.WriteLine("waiman:LINA " & line)
+                        '    oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:LINA " & line, 6)
+                        '    ''**KdsWriteProcessLog(2, 1, 4, "waiman:LINA " & line, "6")
+                        'End If
+                        'If Not (SRV_D_KOD_PITZUL_X = "0" Or Trim(SRV_D_KOD_PITZUL_X) = "") Then
+                        '    If SwIsOpen = False Then
+                        '        sw = New StreamWriter(ErrFileName, False)
+                        '        SwIsOpen = True
+                        '    End If
+                        '    sw.WriteLine("waiman:PITZUL " & line)
+                        '    oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.PartialFinish, "waiman:PITZUL " & line, 6)
+                        '    ''**  KdsWriteProcessLog(2, 1, 4, "waiman:PITZUL " & line, "6")
+                        'End If
                         If Not (SRV_D_KOD_HAZMANA_X = "0" Or Trim(SRV_D_KOD_HAZMANA_X) = "" Or SRV_D_KOD_HAZMANA_X = "7") Then
                             If SwIsOpen = False Then
                                 sw = New StreamWriter(ErrFileName, False)
@@ -449,17 +473,26 @@ Public Class ClKds
                         'KdsSql2 = ""
                         'ErrFileName = ConfigurationSettings.AppSettings("LogistKdsFilePath") & "Kds" & CStr(Now.Year) & CStr(Now.Month) & CStr(Now.Day) & CStr(Now.Hour) & CStr(Now.Minute) & ".err"
                         'check if the date exists, or prepare a new insert to yamey_avoda
-                        Whr = "mispar_ishi=" & SRV_D_ISHI
-                        Whr = Whr & " and taarich=" & "to_date('" & SRV_D_TAARICH & "','yyyymmdd') " & TAARICH_knisa_p24
-                        dt = GetRowKds("tb_yamey_avoda_ovdim", Whr, "count(*) ct99", retsql)
-                        If Not retsql = "" Then
-                            If SwIsOpen = False Then
-                                sw = New StreamWriter(ErrFileName, False)
-                                SwIsOpen = True
-                            End If
-                            sw.WriteLine("getrow " & retsql)
-                            'KdsWriteProcessLog(2, 1, 4, "getrow " & retsql)
-                        End If
+                        '20120718: need to use sp and not direct sql
+                        'Whr = "mispar_ishi=" & SRV_D_ISHI
+                        'Whr = Whr & " and taarich=" & "to_date('" & SRV_D_TAARICH & "','yyyymmdd') " & TAARICH_knisa_p24
+                        'dt = GetRowKds("tb_yamey_avoda_ovdim", Whr, "count(*) ct99", retsql)
+                        'If Not retsql = "" Then
+                        '    If SwIsOpen = False Then
+                        '        sw = New StreamWriter(ErrFileName, False)
+                        '        SwIsOpen = True
+                        '    End If
+                        '    sw.WriteLine("getrow " & retsql)
+                        '    'KdsWriteProcessLog(2, 1, 4, "getrow " & retsql)
+                        'End If
+                        dt = New DataTable
+                        oDal.ClearCommand()
+                        oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleVarchar, TAARICH_knisa_p24, KdsLibrary.DAL.ParameterDir.pdInput)
+                        oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                        oDal.ExecuteSP("Pkg_clock.pro_GetRowKds", dt)
+
                         SQ99_COUNTER = CInt(dt.Rows(0).Item("ct99").ToString)
                         If SQ99_COUNTER = 0 Then
                             'insert tb_yamey_avoda_ovdim
@@ -503,6 +536,7 @@ Public Class ClKds
                             'If calc_D_new_sidur <> 99200 Then
                             '    pro_upd_yamey = True
                             'End If
+                            FoundAchange = False
                             InpStr = "new_rec:" & line & ":" & InpStr
                             new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
         SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -617,6 +651,7 @@ Public Class ClKds
                                         If Not Trim(SRV_D_KNISA_letashlum_X) = "" Then
                                             If Not ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum").ToString = SRV_D_KNISA_letashlum_X Then
                                                 'KdsSql2 = 
+                                                FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
                                                 upd_in_out_letashlum(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                  SRV_D_KNISA_X, SRV_D_YETZIA_X, SRV_D_ISHI_MEADKEN, _
@@ -646,6 +681,7 @@ Public Class ClKds
                                                 '    pro_upd_yamey = True
                                                 'End If
                                                 'todo: 20091217 check if this in already exists then out
+                                                FoundAchange = False
                                                 InpStr = "upd_in_blank:" & line & ":" & InpStr
                                                 upd_in_blank(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                 SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -697,6 +733,7 @@ Public Class ClKds
                                             'If calc_D_new_sidur <> 99200 Then
                                             '    pro_upd_yamey = True
                                             'End If
+                                            FoundAchange = False
                                             InpStr = "new_rec:" & line & ":" & InpStr
                                             new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                 Mid(thenextdt, 9, 6), SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -712,6 +749,7 @@ Public Class ClKds
                                             'If calc_D_new_sidur <> 99200 Then
                                             '    pro_upd_yamey = True
                                             'End If
+                                            FoundAchange = False
                                             InpStr = "new_rec:" & line & ":" & InpStr
                                             new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                 SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -764,6 +802,7 @@ Public Class ClKds
                                             If Not (ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum").ToString = SRV_D_KNISA_letashlum_X _
                                                 And ds.Tables(0).Rows(i).Item("shat_gmar_letashlum").ToString = SRV_D_YETZIA_letashlum_X) Then
                                                 'KdsSql2 = 
+                                                FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
                                                 upd_in_out_letashlum(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                  SRV_D_KNISA_X, SRV_D_YETZIA_X, SRV_D_ISHI_MEADKEN, _
@@ -805,6 +844,7 @@ Public Class ClKds
                                             'If calc_D_new_sidur <> 99200 Then
                                             '    pro_upd_yamey = True
                                             'End If
+                                            FoundAchange = False
                                             InpStr = "upd_out_blank:" & line & ":" & InpStr
                                             upd_out_blank(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                             SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -828,6 +868,7 @@ Public Class ClKds
                                             '    pro_upd_yamey = True
                                             'End If
                                             'todo: 20091217 check if this in already exists
+                                            FoundAchange = False
                                             InpStr = "upd_in_blank:" & line & ":" & InpStr
                                             upd_in_blank(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                             SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -859,6 +900,7 @@ Public Class ClKds
                                         'If calc_D_new_sidur <> 99200 Then
                                         '    pro_upd_yamey = True
                                         'End If
+                                        FoundAchange = False
                                         InpStr = "new_rec:" & line & ":" & InpStr
                                         new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                             SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -899,6 +941,7 @@ Public Class ClKds
                                         If Not Trim(SRV_D_YETZIA_letashlum_X) = "" Then
                                             If Not ds.Tables(0).Rows(i).Item("shat_gmar_letashlum").ToString = SRV_D_YETZIA_letashlum_X Then
                                                 'KdsSql2 = 
+                                                FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
                                                 upd_in_out_letashlum(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                  SRV_D_KNISA_X, SRV_D_YETZIA_X, SRV_D_ISHI_MEADKEN, _
@@ -921,6 +964,7 @@ Public Class ClKds
                                         'If calc_D_new_sidur <> 99200 Then
                                         '    pro_upd_yamey = True
                                         'End If
+                                        FoundAchange = False
                                         InpStr = "upd_out_blank:" & line & ":" & InpStr
                                         upd_out_blank(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                             Mid(ds.Tables(0).Rows(i).Item("shat_hatchala").ToString, 9, 4), SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -941,6 +985,7 @@ Public Class ClKds
                                         'If calc_D_new_sidur <> 99200 Then
                                         '    pro_upd_yamey = True
                                         'End If
+                                        FoundAchange = False
                                         InpStr = "new_rec:" & line & ":" & InpStr
                                         new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                             SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -1021,6 +1066,7 @@ Public Class ClKds
                                         'If calc_D_new_sidur <> 99200 Then
                                         '    pro_upd_yamey = True
                                         'End If
+                                        FoundAchange = False
                                         InpStr = "new_rec:" & line & ":" & InpStr
                                         new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                             Mid(thenextdt, 9, 6), SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -1036,6 +1082,7 @@ Public Class ClKds
                                         'If calc_D_new_sidur <> 99200 Then
                                         '    pro_upd_yamey = True
                                         'End If
+                                        FoundAchange = False
                                         InpStr = "new_rec:" & line & ":" & InpStr
                                         new_rec(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                             SRV_D_KNISA_X, SRV_D_MIKUM_KNISA, SRV_D_SIBAT_DIVUACH_KNISA, _
@@ -1068,6 +1115,137 @@ Public Class ClKds
                                     FoundAMatch = True
                                     NumLInDS = NumLInDS + 1
                                 End If
+
+                                'phase6: match, and no update except chariga etc
+                                If FoundAMatch = True And FoundAchange = True Then
+                                    ifUpdChariga = False
+                                    ifUpdhalbasha = False
+                                    ifUpdhashlama = False
+                                    ifUpdletashlum = False
+                                    ifUpdnesiot = False
+                                    p_letashlum = 2
+                                    dt = New DataTable
+                                    oDal.ClearCommand()
+                                    oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    oDal.AddParameter("SRV_D_TAARICH", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    If SRV_D_KNISA_X = "" Then
+                                        oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                    Else
+                                        oDal.AddParameter("SRV_D_KNISA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    End If
+                                    If SRV_D_YETZIA_X = "" Then
+                                        oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                    Else
+                                        oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    End If
+                                    oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
+                                    oDal.ExecuteSP("Pkg_clock.pro_checkCharigaEtc", dt)
+                                    check_chariga = dt.Rows(0).Item("chariga").ToString
+                                    check_lo_letashlum = dt.Rows(0).Item("lo_letashlum").ToString
+                                    check_nesiot = dt.Rows(0).Item("mezake_nesiot").ToString
+                                    check_halbasha = dt.Rows(0).Item("mezake_halbasha").ToString
+                                    If Not (Trim(SRV_D_KOD_CHARIGA_X) = "") Then
+                                        If Not (Trim(check_chariga) = Trim(SRV_D_KOD_CHARIGA_X)) Then
+                                            ifUpdChariga = True
+                                        End If
+                                    End If
+                                    If Not (Trim(SRV_D_KOD_HALBASHA_X) = "") Then
+                                        If Not (Trim(check_halbasha) = Trim(SRV_D_KOD_HALBASHA_X)) Then
+                                            ifUpdhalbasha = True
+                                        End If
+                                    End If
+                                    If Not (Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X) = "") Then
+                                        If Not (Trim(check_nesiot) = Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)) Then
+                                            ifUpdnesiot = True
+                                        End If
+                                    End If
+                                    If SRV_D_KOD_HAZMANA_X = "7" And (Not Trim(check_lo_letashlum) = "1") Then
+                                        ifUpdletashlum = True
+                                        p_letashlum = 1
+                                    ElseIf SRV_D_KOD_HAZMANA_X = "0" And Trim(check_lo_letashlum) = "1" Then
+                                        ifUpdletashlum = True
+                                        p_letashlum = 0
+                                        ' hazmana = 0 and lo_letashlum null is the same.
+                                    End If
+
+                                    If ifUpdletashlum = True Or ifUpdnesiot = True Or ifUpdhalbasha = True Or ifUpdChariga = True Then
+                                        'insert into trail before update
+                                        oDal.ClearCommand()
+                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        If SRV_D_KNISA_X = "" Then
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
+                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.ExecuteSP("Pkg_Clock.InsIntoTrail")
+                                    End If
+
+                                    If ifUpdletashlum = True Then
+                                        'update lo_letashlum
+                                        oDal.ClearCommand()
+                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        If SRV_D_KNISA_X = "" Then
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
+                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("p_letashlum", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_letashlum, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.ExecuteSP("Pkg_Clock.pro_Updletashlum")
+                                        If Not (p_letashlum = 0 Or p_letashlum = 1) Then
+                                            'todo: send an error to waiman
+                                        End If
+                                    End If
+                                    If ifUpdChariga = True Then
+                                        'update chariga
+                                        oDal.ClearCommand()
+                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        If SRV_D_KNISA_X = "" Then
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
+                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("p_chariga", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.ExecuteSP("Pkg_Clock.pro_Updchariga")
+                                    End If
+                                    If ifUpdnesiot = True Then
+                                        'update nesiot
+                                        oDal.ClearCommand()
+                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        If SRV_D_KNISA_X = "" Then
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
+                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("p_nesiot", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.ExecuteSP("Pkg_Clock.pro_Updnesiot")
+                                    End If
+                                    If ifUpdhalbasha = True Then
+                                        'update halbasha
+                                        oDal.ClearCommand()
+                                        oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        If SRV_D_KNISA_X = "" Then
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, "0000", KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("p_KNISA", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KNISA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
+                                        oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.AddParameter("p_halbasha", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        oDal.ExecuteSP("Pkg_Clock.pro_Updhalbasha")
+                                    End If
+
+
+                                End If
+
                             Next
                         End If
 
