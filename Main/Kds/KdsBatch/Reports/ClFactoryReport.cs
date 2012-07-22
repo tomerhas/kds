@@ -110,17 +110,25 @@ namespace KdsBatch.Reports
             }
         }
 
+     
 
         public void MakeReports(long iRequestId)
         {
             byte[] fileReport;
-            string path, name = string.Empty, ErrorMessage = string.Empty;
+            string pathAda = string.Empty, path, name = string.Empty, ErrorMessage = string.Empty;
             int iStatus = 0,i=0;
             bool flag = false;
             FileInfo info;
             _RptModule = new ReportModule();// ReportModule.GetInstance();
             try
             {
+                if (_enTypeRepot == clGeneral.enReportType.Rikuz)
+                {
+                    pathAda = ConfigurationSettings.AppSettings["PhysPathRikuzimAda"];
+                    if (!Directory.Exists(pathAda))
+                        Directory.CreateDirectory(pathAda);
+                }
+
                 path = ConfigurationSettings.AppSettings["PathFileReports"];
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
@@ -181,10 +189,14 @@ namespace KdsBatch.Reports
                                   oObjRikuzPdf.SUG_CHISHUV = drReport.sug_chishuv;
                                   oObjRikuzPdf.RIKUZ_PDF = fileReport;
                                   oCollRikuzPdf.Add(oObjRikuzPdf);
+
+                                  TransferFileToAda(iRequestId,pathAda,drReport, fileReport);
                                   i++;
                                   if (i % 100 == 0)
                                       clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "I", 0, null, "Yezirat Rikuzim: Num=" + i);
                                   break;
+
+
                         }
                     }
                 }
@@ -205,6 +217,33 @@ namespace KdsBatch.Reports
                 iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                 clDefinitions.UpdateLogBakasha(iRequestId, DateTime.Now, iStatus);
                 clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "MakeReports: " + ex.Message +  ((name != string.Empty)? " for report :" + name : ""));
+            }
+        }
+
+        private void TransferFileToAda(long iRequestId, string path, clReport drReport, byte[] fileReport)
+        {
+            FileStream fs;
+            string sFileName;
+            try
+            {
+                sFileName = "RIKUZ" + drReport.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
+                sFileName += drReport.Month.Year.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drReport.Month.Month.ToString().PadLeft(2, char.Parse("0"));
+                sFileName += drReport.Maamad.ToString().PadLeft(2, char.Parse("0"));
+                sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drReport.sug_chishuv.ToString();
+                sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
+                sFileName += drReport.Ezor.ToString();
+                sFileName += ".PDF";
+
+                fs = new FileStream(path + sFileName, FileMode.Create, FileAccess.Write);
+                fs.Write(fileReport, 0, fileReport.Length);
+                fs.Flush();
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "TransferFileToAda:" + ex.Message);
             }
         }
 

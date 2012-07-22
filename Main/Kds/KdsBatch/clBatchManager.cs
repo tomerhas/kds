@@ -7837,7 +7837,7 @@ namespace KdsBatch
                         }
 
                         //&& _iLoginUserId != oSidur.iMisparIshi
-                        if ((!oSidur.bSidurMyuhad || (oSidur.bSidurMyuhad && bHaveSidurFromMatala) || bHaveSidurVisaFromMapa) && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1)
+                        if (((!oSidur.bSidurMyuhad && oSidur.iSugSidurRagil!=73) || (oSidur.bSidurMyuhad && bHaveSidurFromMatala) || bHaveSidurVisaFromMapa) && _oOvedYomAvodaDetails.iMeasherOMistayeg == -1)
                         {
                             if (!CheckIdkunRashemet("LO_LETASHLUM", oSidur.iMisparSidur, oSidur.dFullShatHatchala))
                             {

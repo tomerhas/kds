@@ -66,7 +66,8 @@ namespace KdsBatch.Reports
                     _Reports.Add(new clReport(_lBakashaIdForRikuzim,
                                  clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
                                  DateTime.Parse(dr["TAARICH"].ToString()),
-                                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()): -1) ));
+                                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()): -1) ,
+                                 clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString())));
                 }
                 FillReports();
             }
@@ -99,7 +100,7 @@ namespace KdsBatch.Reports
                         drReport.Add("P_MISPAR_ISHI", drReport.MisparIshi.ToString());
                         drReport.Add("P_TAARICH", drReport.Month.AddMonths(1).AddDays(-1).ToShortDateString());
                         drReport.Add("P_BAKASHA_ID", drReport.BakashaId.ToString());
-                        drReport.Add("P_Tar_chishuv", DateTime.Parse(drParams[0]["ZMAN_HATCHALA"].ToString()).ToShortDateString());
+                        drReport.Add("P_Tar_chishuv", drReport.TarChishuv.ToShortDateString());
                         if (drParams[0]["sug_chishuv"].ToString() != "")
                             drReport.Add("P_sug_chishuv", clGeneral.arrCalcType[int.Parse(drParams[0]["sug_chishuv"].ToString())]);
                         else drReport.Add("P_sug_chishuv", "");
