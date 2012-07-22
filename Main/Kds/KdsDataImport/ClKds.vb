@@ -489,7 +489,11 @@ Public Class ClKds
                         oDal.ClearCommand()
                         oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleInteger, CInt(SRV_D_ISHI), KdsLibrary.DAL.ParameterDir.pdInput)
                         oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-                        oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleVarchar, TAARICH_knisa_p24, KdsLibrary.DAL.ParameterDir.pdInput)
+                        If Trim(TAARICH_knisa_p24) = "" Then
+                            oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                        Else
+                            oDal.AddParameter("pDt24", KdsLibrary.DAL.ParameterType.ntOracleInteger, CInt(Right(TAARICH_knisa_p24, 1)), KdsLibrary.DAL.ParameterDir.pdInput)
+                        End If
                         oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
                         oDal.ExecuteSP("Pkg_clock.pro_GetRowKds", dt)
 
