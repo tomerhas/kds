@@ -3724,7 +3724,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         ddl.ID = "ddlPHfsaka" + iIndex;
         ddl.DataTextField = "teur";
         ddl.DataValueField = "kod";
-        if ((bSidurMychadShaon) && (iMikumShaonKnisa > 0) && (iMikumShaonYetiza > 0) && (!MeafyenyOved.Meafyen41Exists))
+        if (bSidurMychadShaon)//נראה רק שני ערכים בקומבו
         {
             _dvPitzulHafsaka.RowFilter = string.Concat("table_name='", clGeneral.cCtbPitzulaHafsaka, "'", " and (kod='", clGeneral.enShowPitzul.enLoZakaiLepitzul.GetHashCode(), "' or kod='", clGeneral.enShowPitzul.enOvedHafsaka.GetHashCode(), "')");
             ddl.DataSource = _dvPitzulHafsaka;

@@ -146,34 +146,36 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         bool bAllSidurimLoLetashlum = true;
         
         clSidur _Sidur;
-        for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
+        if (oBatchManager.htFullEmployeeDetails != null)
         {
-            _Sidur = ((clSidur)oBatchManager.htFullEmployeeDetails[i]);
-            if (_Sidur.bSidurMyuhad)
-            //אם סידור מיוחד, נבדוק שאם מקורו במטלה, אז הוא מסומן כלא לתשלום
+            for (int i = 0; i < oBatchManager.htFullEmployeeDetails.Count; i++)
             {
-                if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                _Sidur = ((clSidur)oBatchManager.htFullEmployeeDetails[i]);
+                if (_Sidur.bSidurMyuhad)
+                //אם סידור מיוחד, נבדוק שאם מקורו במטלה, אז הוא מסומן כלא לתשלום
                 {
-                    //אם סידור התגלה כסידור לתשלום או לא לתשלום אבל לא בגלל סיבה 16, נבדוק שמקור הסידור הוא לא במטלה
-                    //במידה ומקורו במטלה נחזיר שגוי
-                    if (IsSidurMatala(ref _Sidur))
+                    if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                    {
+                        //אם סידור התגלה כסידור לתשלום או לא לתשלום אבל לא בגלל סיבה 16, נבדוק שמקור הסידור הוא לא במטלה
+                        //במידה ומקורו במטלה נחזיר שגוי
+                        if (IsSidurMatala(ref _Sidur))
+                        {
+                            bAllSidurimLoLetashlum = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    //אם סידור מפה נבדוק שהוא מסומן כלא לתשלום
+                    if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
                     {
                         bAllSidurimLoLetashlum = false;
                         break;
                     }
                 }
             }
-            else
-            {
-                //אם סידור מפה נבדוק שהוא מסומן כלא לתשלום
-                if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
-                {
-                    bAllSidurimLoLetashlum = false;
-                    break;
-                }
-            }
         }
-
         return bAllSidurimLoLetashlum;
      }
     protected bool IsSidurMatalaNotValidExists()
