@@ -1139,6 +1139,17 @@ Public Class ClKds
                                     Else
                                         oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                     End If
+                                    'TAARICH_knisa_letashlum_p24 knisa & yetzia
+                                    If Trim(TAARICH_knisa_p24) = "" Then
+                                        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    Else
+                                        oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    End If
+                                    If Trim(TAARICH_yetzia_p24) = "" Then
+                                        oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    Else
+                                        oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                    End If
                                     oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
                                     oDal.ExecuteSP("Pkg_clock.pro_checkCharigaEtc", dt)
                                     check_chariga = dt.Rows(0).Item("chariga").ToString
@@ -1180,6 +1191,12 @@ Public Class ClKds
                                         End If
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        If Trim(TAARICH_knisa_p24) = "" Then
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
                                         oDal.ExecuteSP("Pkg_Clock.InsIntoTrail")
                                     End If
 
@@ -1196,6 +1213,12 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_letashlum", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_letashlum, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        If Trim(TAARICH_knisa_p24) = "" Then
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updletashlum")
                                         If Not (p_letashlum = 0 Or p_letashlum = 1) Then
                                             'todo: send an error to waiman
@@ -1214,6 +1237,12 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_chariga", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        If Trim(TAARICH_knisa_p24) = "" Then
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updchariga")
                                     End If
                                     If ifUpdnesiot = True Then
@@ -1229,6 +1258,12 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_nesiot", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        If Trim(TAARICH_knisa_p24) = "" Then
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updnesiot")
                                     End If
                                     If ifUpdhalbasha = True Then
@@ -1244,6 +1279,12 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_halbasha", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        If Trim(TAARICH_knisa_p24) = "" Then
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        Else
+                                            oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                                        End If
                                         oDal.ExecuteSP("Pkg_Clock.pro_Updhalbasha")
                                     End If
 
