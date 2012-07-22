@@ -229,7 +229,7 @@ namespace KdsBatch.Reports
                 sFileName = "RIKUZ" + drReport.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
                 sFileName += drReport.Month.Year.ToString().PadLeft(4, char.Parse("0"));
                 sFileName += drReport.Month.Month.ToString().PadLeft(2, char.Parse("0"));
-                sFileName += drReport.Maamad.ToString().PadLeft(2, char.Parse("0"));
+                sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
                 sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
                 sFileName += drReport.sug_chishuv.ToString();
                 sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
