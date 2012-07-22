@@ -430,7 +430,7 @@ namespace KdsBatch
                 CalcRechiv146();
 
                 //שעות % 100 לתשלום (רכיב 100
-               // CalcRechiv100();
+              CalcRechiv100();
 
                 //שעות 25% (רכיב 91
                 CalcRechiv91();
@@ -3870,21 +3870,24 @@ namespace KdsBatch
             float fSumDakotRechiv, fMichsaYomit, fDakotNochehut;
             try
             {
-                fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
-                fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
-
-                if (fMichsaYomit > 0 && fDakotNochehut > 0)
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
                 {
-                    if (fMichsaYomit <= fDakotNochehut)
-                        fSumDakotRechiv = fMichsaYomit;
-                    else fSumDakotRechiv = fDakotNochehut;
+                    fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                    fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
 
-                    addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
+                    if (fMichsaYomit > 0 && fDakotNochehut > 0)
+                    {
+                        if (fMichsaYomit <= fDakotNochehut)
+                            fSumDakotRechiv = fMichsaYomit;
+                        else fSumDakotRechiv = fDakotNochehut;
+
+                        addRowToTable(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), fSumDakotRechiv);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
