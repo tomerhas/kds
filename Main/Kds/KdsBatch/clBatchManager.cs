@@ -5819,7 +5819,7 @@ namespace KdsBatch
             try
             {
                 //לעובד מאפיין זמן נסיעות  (51, 61) ועשה סידור נהגות.
-                if ((oMeafyeneyOved.Meafyen51Exists) || (oMeafyeneyOved.Meafyen61Exists))
+                if (oMeafyeneyOved.Meafyen51Exists) //|| (oMeafyeneyOved.Meafyen61Exists))
                 {
                     if (bHaveSidurNahagut)
                        bError = true;
