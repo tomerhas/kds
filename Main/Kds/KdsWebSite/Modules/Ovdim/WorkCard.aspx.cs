@@ -196,10 +196,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         }
         return bIsSidurMatalaNotValidExists;
     }
-     protected void SetMeasherMistayeg(bool bChishuvShachar, bool bCalculateAndNotRashemet)
+     protected void SetMeasherMistayeg(bool bChishuvShachar)
      {
          bool bParam252 = false;
          bool bWorkCardEmpty = false;
+         bool bCalculate = (oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode());
          //במידה ותאריך הכרטיס הוא התאריך של היום לא נאפשר את כפתורי מאשר מסתייג
          if (dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())){        
              btnApprove.Disabled = true;
@@ -215,7 +216,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 > oBatchManager.oParam.iValidDays;
              int iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
              bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty) && (!bCalculateAndNotRashemet))
+
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty) && (!bCalculate))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
@@ -812,7 +814,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              //או שהכרטיס הוא ללא סידורים והתאריך הכרטיס הוא של היום + 2 והמשתמש הוא לא רשמת\רשמת על\מנהל מערכת
              if (DisabledCard())            
                  bCalculateAndNotRashemet = true;
-             SetMeasherMistayeg(bChishuvShachar, bCalculateAndNotRashemet);             
+             SetMeasherMistayeg(bChishuvShachar);             
              clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
              //במידה והמשתמש הוא מנהל עם כפופים (לצפיה או לעדכון) וגם המספר האישי של הכרטיס שונה מממספר האישי של המשתמש שנכנס
              //או שהתאריך הוא תאריך של היום. לא נאפשר עדכון כרטיס
