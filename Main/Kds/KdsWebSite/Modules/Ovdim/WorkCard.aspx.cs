@@ -208,13 +208,14 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          else
          {
              //פרמטר 252 - אם הכרטיס מעל 45 יום, מאשר מסתייג יהיה חסום
-             //אם בחישוב שכר - מאשר מסתייג יהיה חסום            
+             //אם בחישוב שכר - מאשר מסתייג יהיה חסום   
+             //אם הועבר לשכר - מאשר מסתייג יהיה חסום
              //אז מאשר מסתייג יהיה חסום - 99200  אם מספר הימים קטן מ72 שעות (פרמטר 263?) וגם אין סידורים או שיש סידור אחד והוא התייצבות 
             
              bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 > oBatchManager.oParam.iValidDays;
              int iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
              bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty))
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty) && (!bCalculateAndNotRashemet))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
@@ -2572,6 +2573,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
                 ReportParameters.Add("P_EMDA", "0");
                 ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
+                
+                
                 ReportParameters.Add("P_URL_BARCODE", urlBarcode);
                 if (bWorkCardWasUpdate)
                 {
