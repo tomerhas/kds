@@ -300,34 +300,39 @@ namespace KdsBatch
                     // הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126) ).
                     fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit);
                 }
-                else if (iMisparSidur == 99207 || iMisparSidur == 99011 || iMisparSidur == 99007)
-                {
-                    //•	99207 (8512) – קורס, 99011 (8513) – קורס
-                    if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
-                    {
-                        if (fErechRechiv > fMichsaYomit)
-                            fErechRechiv = fMichsaYomit;
-                        //-	ימים א – ה וערב חג [זיהוי ערב חג]: הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
-                        if (fErechRechiv >= 480)
-                            if (fErechRechiv < fMichsaYomit)
-                                fErechRechiv = fMichsaYomit;
-                    }
-                    else if (oCalcBL.CheckYomShishi(objOved.SugYom))
-                    {
-                        // -	שישי: אם מכסה יומית (רכיב 126) > 0 אזי הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
-                        if (fMichsaYomit > 0)
-                        {
-                            if (fErechRechiv >= 480)
-                                fErechRechiv = fMichsaYomit;
-
-                        }
-                        else
-                        {
-                            //אחרת: הנמוך מבין (נוכחות מחושבת, 390 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 18 ). 
-                            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_shishi"].ToString()));
-                        }
-                    }
+                else if (!string.IsNullOrEmpty(drSidur["realy_veod_yom"].ToString()) && fMichsaYomit > 0)
+                { //•	סידור עם מאפיין ריאלי ועד מכסה:
+                    //אם לסידור מאפיין 91 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 91) וגם מכסה יומית מחושבת (רכיב 126) > 0 ערך הרכיב = הנמוך מבין (דקות נוכחות לתשלום (רכיב 1) שחושבו עד כה, מכסה יומית מחושבת (רכיב 126) ) 
+                    fErechRechiv = Math.Min(fErechRechiv, fMichsaYomit); 
                 }
+                //else if (iMisparSidur == 99207 || iMisparSidur == 99011 || iMisparSidur == 99007)
+                //{
+                //    //•	99207 (8512) – קורס, 99011 (8513) – קורס
+                //    if (objOved.SugYom == clGeneral.enSugYom.Chol.GetHashCode() || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
+                //    {
+                //        if (fErechRechiv > fMichsaYomit)
+                //            fErechRechiv = fMichsaYomit;
+                //        //-	ימים א – ה וערב חג [זיהוי ערב חג]: הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
+                //        if (fErechRechiv >= 480)
+                //            if (fErechRechiv < fMichsaYomit)
+                //                fErechRechiv = fMichsaYomit;
+                //    }
+                //    else if (oCalcBL.CheckYomShishi(objOved.SugYom))
+                //    {
+                //        // -	שישי: אם מכסה יומית (רכיב 126) > 0 אזי הנמוך מבין (נוכחות מחושבת, מכסה יומית (רכיב 126)).
+                //        if (fMichsaYomit > 0)
+                //        {
+                //            if (fErechRechiv >= 480)
+                //                fErechRechiv = fMichsaYomit;
+
+                                //        }
+                //        else
+                //        {
+                //            //אחרת: הנמוך מבין (נוכחות מחושבת, 390 שליפת מאפיינים (מס' סידור מיוחד, קוד מאפיין = 18 ). 
+                //            fErechRechiv = Math.Min(fErechRechiv, int.Parse(drSidur["max_shaot_byom_shishi"].ToString()));
+                //        }
+                //    }
+                //}
                 else if (iMisparSidur == 99013)
                 {
                     //•	סידור 99013 (8585) – שעות 100% בלבד

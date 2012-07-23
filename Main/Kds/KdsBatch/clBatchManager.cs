@@ -1571,7 +1571,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate < DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate > DateTime.Parse(oSidur.sTokefSiyum)))
+                if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate <= DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate >= DateTime.Parse(oSidur.sTokefSiyum)))
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "סידור לא תקף לתאריך", enErrors.errSidurLoTakefLetaarich.GetHashCode());
@@ -11829,8 +11829,6 @@ namespace KdsBatch
                                 DataRow[] drSidurMeyuchad;
                                 drSidurMeyuchad = _dtSidurimMeyuchadim.Select("mispar_sidur=" + iNewMisparSidur);
 
-                              
-
                                 oSidur = new clSidur(oSidur, _dCardDate, iNewMisparSidur, drSidurMeyuchad[0]);
                                 oObjSidurimOvdimUpd.NEW_MISPAR_SIDUR = iNewMisparSidur;
                                 oObjSidurimOvdimUpd.HASHLAMA = 0;
@@ -11858,6 +11856,7 @@ namespace KdsBatch
                                         oObjPeilutOvdimUpd.UPDATE_OBJECT = 1;
                                     }
                                     oPeilut.iPeilutMisparSidur = iNewMisparSidur;
+                                    oPeilut.lMisparMatala = iNewMisparMatala;
                                 }
                                 //UpdatePeiluyotMevutalotYadani(iSidurIndex, oNewSidurim, oObjSidurimOvdimUpd);
                                 
