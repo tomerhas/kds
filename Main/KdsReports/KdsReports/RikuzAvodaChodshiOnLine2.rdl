@@ -1,5 +1,614 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSources>
+    <DataSource Name="DsRikuzOnLine">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:DataSourceID>88fddfaf-2a79-4de8-94a4-60f6c809acb8</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="DsLocalReport">
+      <DataSourceReference>DsExtension</DataSourceReference>
+      <rd:DataSourceID>c56f22e7-6d87-464d-85a2-3effdb27a9ad</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsPirteyOved">
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_MISH">
+          <DataField>SHEM_MISH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHEM_PRAT">
+          <DataField>SHEM_PRAT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MONTH_YEAR">
+          <DataField>MONTH_YEAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_HEVRA">
+          <DataField>KOD_HEVRA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KOD_MAAMAD">
+          <DataField>KOD_MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAAMAD">
+          <DataField>MAAMAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DIRUG">
+          <DataField>DIRUG</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="EZOR">
+          <DataField>EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DARGA">
+          <DataField>DARGA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_AV">
+          <DataField>SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TACHANAT_SACHAR">
+          <DataField>TACHANAT_SACHAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ISUK">
+          <DataField>ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GIL">
+          <DataField>GIL</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KOD_GIL">
+          <DataField>KOD_GIL</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TCHILAT_AVODA">
+          <DataField>TCHILAT_AVODA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_TACHANA">
+          <DataField>KOD_TACHANA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MEAFYEN83">
+          <DataField>MEAFYEN83</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MEAFYEN56">
+          <DataField>MEAFYEN56</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsRikuzOnLine</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsRechivimChodshiym">
+      <Fields>
+        <Field Name="R1">
+          <DataField>R1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R5">
+          <DataField>R5</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R44">
+          <DataField>R44</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R22">
+          <DataField>R22</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R26">
+          <DataField>R26</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R28">
+          <DataField>R28</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R29">
+          <DataField>R29</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R30">
+          <DataField>R30</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R55">
+          <DataField>R55</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R47">
+          <DataField>R47</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R66">
+          <DataField>R66</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R48">
+          <DataField>R48</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R49">
+          <DataField>R49</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R67">
+          <DataField>R67</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R76">
+          <DataField>R76</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R50">
+          <DataField>R50</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R77">
+          <DataField>R77</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R53">
+          <DataField>R53</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R78">
+          <DataField>R78</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R91">
+          <DataField>R91</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R92">
+          <DataField>R92</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R100">
+          <DataField>R100</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R101">
+          <DataField>R101</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R102">
+          <DataField>R102</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R103">
+          <DataField>R103</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R108">
+          <DataField>R108</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R119">
+          <DataField>R119</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R120">
+          <DataField>R120</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R121">
+          <DataField>R121</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R122">
+          <DataField>R122</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R146">
+          <DataField>R146</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R202">
+          <DataField>R202</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R203">
+          <DataField>R203</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R219">
+          <DataField>R219</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R125">
+          <DataField>R125</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R220">
+          <DataField>R220</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R221">
+          <DataField>R221</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R131">
+          <DataField>R131</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <CommandText>Rechivim_Chodshi</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+    </DataSet>
+    <DataSet Name="DsRechivim">
+      <Fields>
+        <Field Name="DAY_NUM">
+          <DataField>DAY_NUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DAY_OT">
+          <DataField>DAY_OT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="R1">
+          <DataField>R1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R22">
+          <DataField>R22</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R26">
+          <DataField>R26</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R28">
+          <DataField>R28</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R29">
+          <DataField>R29</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R30">
+          <DataField>R30</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R47">
+          <DataField>R47</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R48">
+          <DataField>R48</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R49">
+          <DataField>R49</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R50">
+          <DataField>R50</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R53">
+          <DataField>R53</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R55">
+          <DataField>R55</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R66">
+          <DataField>R66</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R67">
+          <DataField>R67</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R76">
+          <DataField>R76</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R77">
+          <DataField>R77</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R78">
+          <DataField>R78</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R91">
+          <DataField>R91</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R92">
+          <DataField>R92</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R125">
+          <DataField>R125</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R131">
+          <DataField>R131</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R202">
+          <DataField>R202</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R203">
+          <DataField>R203</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R220">
+          <DataField>R220</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R221">
+          <DataField>R221</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HEARA">
+          <DataField>HEARA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <CommandText>Rechivim_Yomi</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsHeadruyot">
+      <Fields>
+        <Field Name="R56">
+          <DataField>R56</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R53">
+          <DataField>R53</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R57">
+          <DataField>R57</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R60">
+          <DataField>R60</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R61">
+          <DataField>R61</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R62">
+          <DataField>R62</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R64">
+          <DataField>R64</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R65">
+          <DataField>R65</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R66">
+          <DataField>R66</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R68">
+          <DataField>R68</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R67">
+          <DataField>R67</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R69">
+          <DataField>R69</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R70">
+          <DataField>R70</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R71">
+          <DataField>R71</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R72">
+          <DataField>R72</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R266">
+          <DataField>R266</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <CommandText>Rechivey_Headrut</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsCntRechivim">
+      <Fields>
+        <Field Name="CNT_HEADRUT">
+          <DataField>CNT_HEADRUT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="CNT_SHONOT">
+          <DataField>CNT_SHONOT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <CommandText>Num_Rechivim</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="dsRechiveyShonot">
+      <Fields>
+        <Field Name="R1">
+          <DataField>R1</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R10">
+          <DataField>R10</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R11">
+          <DataField>R11</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R12">
+          <DataField>R12</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R39">
+          <DataField>R39</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R41">
+          <DataField>R41</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R43">
+          <DataField>R43</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R75">
+          <DataField>R75</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R95">
+          <DataField>R95</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R112">
+          <DataField>R112</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R113">
+          <DataField>R113</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R114">
+          <DataField>R114</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R115">
+          <DataField>R115</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R116">
+          <DataField>R116</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R117">
+          <DataField>R117</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R118">
+          <DataField>R118</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R204">
+          <DataField>R204</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R205">
+          <DataField>R205</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R1B">
+          <DataField>R1B</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DsLocalReport</DataSourceName>
+        <CommandText>Rechivey_Shonot</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DataSource">
+            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+  </DataSets>
   <Body>
     <ReportItems>
       <Textbox Name="Textbox12">
@@ -484,36 +1093,36 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.85656cm</Width>
+              <Width>1.12463in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.41438cm</Width>
+              <Width>0.55684in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.70818cm</Width>
+              <Width>0.67251in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.30591cm</Width>
+              <Width>0.90784in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5872cm</Width>
+              <Width>1.01858in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.84921cm</Width>
+              <Width>0.72804in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.51605cm</Width>
+              <Width>0.99057in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.07068cm</Width>
+              <Width>1.20893in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.15647cm</Width>
+              <Width>0.849in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.40894cm</Height>
+              <Height>0.161in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -926,7 +1535,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.38716cm</Height>
+              <Height>0.15243in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1315,81 +1924,81 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05253cm</Width>
+              <Width>0.41438in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97769cm</Width>
+              <Width>0.38492in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.12507cm</Width>
+              <Width>0.44294in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92547cm</Width>
+              <Width>0.36436in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.15256cm</Width>
+              <Width>0.45376in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83571cm</Width>
+              <Width>0.32902in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92604cm</Width>
+              <Width>0.36458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.85cm</Width>
+              <Width>0.33465in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83198cm</Width>
+              <Width>0.32755in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83571cm</Width>
+              <Width>0.32902in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92604cm</Width>
+              <Width>0.36458in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7898cm</Width>
+              <Width>0.31094in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.92068cm</Width>
+              <Width>0.36247in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.40847cm</Width>
+              <Width>0.55452in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1cm</Width>
+              <Width>0.3937in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.03136cm</Width>
+              <Width>0.40605in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95199cm</Width>
+              <Width>0.3748in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.4cm</Height>
+              <Height>0.15748in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1454,7 +2063,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.49944cm</Height>
+              <Height>0.19663in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2292,7 +2901,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.34338cm</Height>
+              <Height>0.13519in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3273,69 +3882,69 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9cm</Width>
+              <Width>0.35433in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.43155cm</Width>
+              <Width>0.5636in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.48109cm</Width>
+              <Width>0.58311in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.82308cm</Width>
+              <Width>0.32405in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80028cm</Width>
+              <Width>0.31507in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.88934cm</Width>
+              <Width>0.35013in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.82308cm</Width>
+              <Width>0.32405in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80028cm</Width>
+              <Width>0.31507in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98496cm</Width>
+              <Width>0.38778in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7287cm</Width>
+              <Width>0.28689in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95165cm</Width>
+              <Width>0.37467in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95165cm</Width>
+              <Width>0.37467in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.00457cm</Width>
+              <Width>0.3955in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95165cm</Width>
+              <Width>0.37467in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95165cm</Width>
+              <Width>0.37467in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.95cm</Width>
+              <Width>0.37402in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.81936cm</Width>
+              <Width>0.32258in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.4cm</Height>
+              <Height>0.15748in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3395,7 +4004,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.49944cm</Height>
+              <Height>0.19663in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4119,7 +4728,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.34338cm</Height>
+              <Height>0.13519in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -4893,75 +5502,75 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.50843cm</Width>
+              <Width>0.59387in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75395cm</Width>
+              <Width>0.29683in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93915cm</Width>
+              <Width>0.36974in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.59501cm</Width>
+              <Width>0.23426in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74264cm</Width>
+              <Width>0.29238in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97461cm</Width>
+              <Width>0.3837in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07251cm</Width>
+              <Width>0.42225in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07251cm</Width>
+              <Width>0.42225in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.69442cm</Width>
+              <Width>0.27339in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.91914cm</Width>
+              <Width>0.36187in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80646cm</Width>
+              <Width>0.3175in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.39254cm</Width>
+              <Width>0.54824in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96072cm</Width>
+              <Width>0.37824in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9219cm</Width>
+              <Width>0.36295in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05399cm</Width>
+              <Width>0.41496in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.0419cm</Width>
+              <Width>0.4102in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96194cm</Width>
+              <Width>0.37872in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.01162cm</Width>
+              <Width>0.39828in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.26947cm</Width>
+              <Width>0.49979in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9418cm</Width>
+              <Width>0.37079in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.30447cm</Width>
+              <Width>0.11987in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.53071cm</Width>
+              <Width>0.20894in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.71167cm</Height>
+              <Height>0.28019in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -5841,7 +6450,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.34338cm</Height>
+              <Height>0.13519in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -6876,69 +7485,69 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.50853cm</Width>
+              <Width>0.59391in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75405cm</Width>
+              <Width>0.29687in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93925cm</Width>
+              <Width>0.36978in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.59511cm</Width>
+              <Width>0.2343in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.74274cm</Width>
+              <Width>0.29242in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97471cm</Width>
+              <Width>0.38374in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07261cm</Width>
+              <Width>0.42229in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07125cm</Width>
+              <Width>0.42175in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.69452cm</Width>
+              <Width>0.27343in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.91924cm</Width>
+              <Width>0.36191in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.80656cm</Width>
+              <Width>0.31754in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.39264cm</Width>
+              <Width>0.54828in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96107cm</Width>
+              <Width>0.37837in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.922cm</Width>
+              <Width>0.36299in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05409cm</Width>
+              <Width>0.415in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.042cm</Width>
+              <Width>0.41024in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.96204cm</Width>
+              <Width>0.37876in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.01172cm</Width>
+              <Width>0.39832in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.26957cm</Width>
+              <Width>0.49983in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.77609cm</Width>
+              <Width>0.69925in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.36635cm</Height>
+              <Height>0.14423in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -7743,7 +8352,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.37727cm</Height>
+              <Height>0.14853in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -8538,7 +9147,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.37727cm</Height>
+              <Height>0.14853in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -9352,7 +9961,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.37727cm</Height>
+              <Height>0.14853in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -10204,621 +10813,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
     <Height>4.35909in</Height>
     <Style />
   </Body>
-  <Width>11.29841in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0.1cm</TopMargin>
-    <BottomMargin>0.05cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
-  <AutoRefresh>0</AutoRefresh>
-  <DataSources>
-    <DataSource Name="DsRikuzOnLine">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>88fddfaf-2a79-4de8-94a4-60f6c809acb8</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="DsLocalReport">
-      <DataSourceReference>DsExtension</DataSourceReference>
-      <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>c56f22e7-6d87-464d-85a2-3effdb27a9ad</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsPirteyOved">
-      <Query>
-        <DataSourceName>DsRikuzOnLine</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="p_taarich">
-            <Value>=Parameters!P_TAARICH.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_OVDIM.PRO_GET_PIRTEY_OVED</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_MISH">
-          <DataField>SHEM_MISH</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHEM_PRAT">
-          <DataField>SHEM_PRAT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MONTH_YEAR">
-          <DataField>MONTH_YEAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_HEVRA">
-          <DataField>KOD_HEVRA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KOD_MAAMAD">
-          <DataField>KOD_MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MAAMAD">
-          <DataField>MAAMAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EZOR">
-          <DataField>EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SNIF_AV">
-          <DataField>SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TACHANAT_SACHAR">
-          <DataField>TACHANAT_SACHAR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ISUK">
-          <DataField>ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="GIL">
-          <DataField>GIL</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KOD_GIL">
-          <DataField>KOD_GIL</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TCHILAT_AVODA">
-          <DataField>TCHILAT_AVODA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_TACHANA">
-          <DataField>KOD_TACHANA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MEAFYEN83">
-          <DataField>MEAFYEN83</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MEAFYEN56">
-          <DataField>MEAFYEN56</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsRechivimChodshiym">
-      <Query>
-        <DataSourceName>DsLocalReport</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>Rechivim_Chodshi</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-      <Fields>
-        <Field Name="R1">
-          <DataField>R1</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R5">
-          <DataField>R5</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R44">
-          <DataField>R44</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R22">
-          <DataField>R22</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R26">
-          <DataField>R26</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R28">
-          <DataField>R28</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R29">
-          <DataField>R29</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R30">
-          <DataField>R30</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R55">
-          <DataField>R55</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R47">
-          <DataField>R47</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R66">
-          <DataField>R66</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R48">
-          <DataField>R48</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R49">
-          <DataField>R49</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R67">
-          <DataField>R67</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R76">
-          <DataField>R76</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R50">
-          <DataField>R50</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R77">
-          <DataField>R77</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R53">
-          <DataField>R53</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R78">
-          <DataField>R78</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R91">
-          <DataField>R91</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R92">
-          <DataField>R92</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R100">
-          <DataField>R100</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R101">
-          <DataField>R101</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R102">
-          <DataField>R102</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R103">
-          <DataField>R103</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R108">
-          <DataField>R108</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R119">
-          <DataField>R119</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R120">
-          <DataField>R120</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R121">
-          <DataField>R121</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R122">
-          <DataField>R122</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R126">
-          <DataField>R126</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R146">
-          <DataField>R146</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R202">
-          <DataField>R202</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R203">
-          <DataField>R203</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R219">
-          <DataField>R219</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R125">
-          <DataField>R125</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R220">
-          <DataField>R220</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R221">
-          <DataField>R221</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R131">
-          <DataField>R131</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="DsRechivim">
-      <Query>
-        <DataSourceName>DsLocalReport</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>Rechivim_Yomi</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="DAY_NUM">
-          <DataField>DAY_NUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="DAY_OT">
-          <DataField>DAY_OT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="R1">
-          <DataField>R1</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R22">
-          <DataField>R22</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R26">
-          <DataField>R26</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R28">
-          <DataField>R28</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R29">
-          <DataField>R29</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R30">
-          <DataField>R30</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R47">
-          <DataField>R47</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R48">
-          <DataField>R48</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R49">
-          <DataField>R49</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R50">
-          <DataField>R50</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R53">
-          <DataField>R53</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R55">
-          <DataField>R55</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R66">
-          <DataField>R66</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R67">
-          <DataField>R67</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R76">
-          <DataField>R76</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R77">
-          <DataField>R77</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R78">
-          <DataField>R78</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R91">
-          <DataField>R91</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R92">
-          <DataField>R92</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R126">
-          <DataField>R126</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R125">
-          <DataField>R125</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R131">
-          <DataField>R131</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R202">
-          <DataField>R202</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R203">
-          <DataField>R203</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R220">
-          <DataField>R220</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R221">
-          <DataField>R221</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HEARA">
-          <DataField>HEARA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsHeadruyot">
-      <Query>
-        <DataSourceName>DsLocalReport</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>Rechivey_Headrut</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="R56">
-          <DataField>R56</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R53">
-          <DataField>R53</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R57">
-          <DataField>R57</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R60">
-          <DataField>R60</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R61">
-          <DataField>R61</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R62">
-          <DataField>R62</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R64">
-          <DataField>R64</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R65">
-          <DataField>R65</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R66">
-          <DataField>R66</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R68">
-          <DataField>R68</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R67">
-          <DataField>R67</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R69">
-          <DataField>R69</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R70">
-          <DataField>R70</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R71">
-          <DataField>R71</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R72">
-          <DataField>R72</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R266">
-          <DataField>R266</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsCntRechivim">
-      <Query>
-        <DataSourceName>DsLocalReport</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>Num_Rechivim</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="CNT_HEADRUT">
-          <DataField>CNT_HEADRUT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="CNT_SHONOT">
-          <DataField>CNT_SHONOT</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-    <DataSet Name="dsRechiveyShonot">
-      <Query>
-        <DataSourceName>DsLocalReport</DataSourceName>
-        <QueryParameters>
-          <QueryParameter Name="@DataSource">
-            <Value>=Parameters!P_DT_RIKUZ.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <CommandText>Rechivey_Shonot</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="R1">
-          <DataField>R1</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R10">
-          <DataField>R10</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R11">
-          <DataField>R11</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R12">
-          <DataField>R12</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R39">
-          <DataField>R39</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R41">
-          <DataField>R41</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R43">
-          <DataField>R43</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R75">
-          <DataField>R75</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R95">
-          <DataField>R95</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R112">
-          <DataField>R112</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R113">
-          <DataField>R113</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R114">
-          <DataField>R114</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R115">
-          <DataField>R115</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R116">
-          <DataField>R116</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R117">
-          <DataField>R117</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R118">
-          <DataField>R118</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R126">
-          <DataField>R126</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R204">
-          <DataField>R204</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R205">
-          <DataField>R205</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="R1B">
-          <DataField>R1B</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-    </DataSet>
-  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_MISPAR_ISHI">
       <DataType>Integer</DataType>
@@ -10858,6 +10852,17 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
       <Prompt>P_DT</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <Width>11.29841in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0.1cm</TopMargin>
+    <BottomMargin>0.05cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -10867,6 +10872,6 @@ vp759a0p6ySub0Pemot6HpAtLcKB5EfHqopfstv/AM8Iv++BUtFd1j1LCKqooVQAB0AFLRRQAUUUUANk
 FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbwpDCipFGoVEUYCgcACn0UUygrltd+H+g6/ctdTxS29w5y8tswUv8AUEEZ98ZoopNJ6MmUVJWaMj/hUHh//n81P/v7H/8AEUf8Kg8P/wDP5qf/AH9j/wDiKKKn2cOxHsKfY3/DXg+y8KvObG7vZEmA3xzurLkdCMKOe1dDRRVJJKyNIxUVZH//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>5c6076a6-d334-4b34-8a22-cc28203390e3</rd:ReportID>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
 </Report>
