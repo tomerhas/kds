@@ -2514,7 +2514,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 Report.AddParameter("P_EMDA", "0");
                 Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
                 Report.AddParameter("P_URL_BARCODE", urlBarcode);
-                Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+               
+                clGeneral.enMeasherOMistayeg oMeasherMistayeg=(clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
+                    
+                if ((oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull) && (hidFromEmda.Value=="1"))
+                    Report.AddParameter("P_TIKUN", "");
+                else
+                    Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
 
                 s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
                 string sFileName, sPathFile;
@@ -2555,8 +2561,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
                 ReportParameters.Add("P_EMDA", "0");
                 ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-                ReportParameters.Add("P_URL_BARCODE", urlBarcode);
+                ReportParameters.Add("P_URL_BARCODE", urlBarcode);               
                 ReportParameters.Add("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+
                 
                 OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
             }
