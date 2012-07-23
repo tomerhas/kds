@@ -168,10 +168,13 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 else
                 {
                     //אם סידור מפה נבדוק שהוא מסומן כלא לתשלום
-                    if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                    if (_Sidur.iSugSidurRagil != clGeneral.enSugSidur.SugSidur73.GetHashCode())
                     {
-                        bAllSidurimLoLetashlum = false;
-                        break;
+                        if (!IsSidurLoLetashlumAndLoHitychasut(ref _Sidur))
+                        {
+                            bAllSidurimLoLetashlum = false;
+                            break;
+                        }
                     }
                 }
             }
@@ -306,12 +309,17 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          //     בסידור 0< TB_peilut_Ovdim. Mispar_matala.
          bool bDisable = false;
 
-         bDisable = (((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT)))
-                    || (IsSidurVisa())
-                    || (IsSidurMatalaNotValidExists())
-                    || (IsPeilutEilatExist())
-                    || (IsCarNumberErrorExists())
-                    || IsSidurChosem());
+         if (oBatchManager.htFullEmployeeDetails == null)
+             bDisable = true;
+         else
+         {
+             bDisable = (((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT)))
+                        || (IsSidurVisa())
+                        || (IsSidurMatalaNotValidExists())
+                        || (IsPeilutEilatExist())
+                        || (IsCarNumberErrorExists())
+                        || IsSidurChosem());
+         }
         
 
          return bDisable;
@@ -4422,7 +4430,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                             oObjSidurimOvdimDel.BITUL_O_HOSAFA = clGeneral.enBitulOHosafa.BitulByUser.GetHashCode(); //^^^^
                             //נבדוק אם לא קיים סידור באותו מפתח שאנחנו רוצים לבטל, כלומר שני סידורים עם אותו מפתח
                             //במידה ויש, לא נבטל את הסידור על מנת שלא יבוטל הסידור האחר                                                     
-                            if ((HasSidurWithKey(oObjSidurimOvdimUpd)))
+                            if ((HasSidurWithKey(oObjSidurimOvdimUpd)) && (oSidur.oSidurStatus.Equals(clSidur.enSidurStatus.enNew)))
                                 oObjSidurimOvdimDel.UPDATE_OBJECT = 100;  //^^^^^
                             else
                                 oObjSidurimOvdimDel.UPDATE_OBJECT = 0;  //^^^^^

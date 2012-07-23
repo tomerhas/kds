@@ -859,6 +859,12 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Meafyen54 = 54,
             EinLeshalemTosLila = 61
         }
+        public enum enSugSidur
+        {
+            //סוג סידור
+           SugSidur73 = 73
+        }
+
 
         public enum enSugAvoda
         {
