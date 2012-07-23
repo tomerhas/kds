@@ -626,7 +626,7 @@
         <input type="hidden" runat="server" id="hidDriver"/>
         <input type="hidden" runat="server" id="hidUpdateBtn"/>
         <input type="hidden" runat="server" id="hidSdrInd"/>
-        <input type="hidden" runat="server" id="hidPrevHalbasha"/>
+        <input type="hidden" runat="server" id="hidPrevHalbasha"/>        
     </form>   
     <script language="vbscript" type="text/vbscript">
         sub ShiftTab()

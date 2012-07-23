@@ -65,8 +65,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     public const int SIDUR_CONTINUE_NAHAGUT = 99500;
     public const int SIDUR_CONTINUE_NOT_NAHAGUT = 99501;
     public const int SIDUR_HITYAZVUT = 99200;
-    private bool bAddSidur;    
-
+    private bool bAddSidur;
+   
     
     protected override void CreateUser()
     {
@@ -1831,7 +1831,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.Param42 = oBatchManager.oParam.fFactor;
         SD.Param43 = oBatchManager.oParam.fFactorNesiotRekot;
         SD.MeasherOMistayeg =  (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
-
+        
     }
     private DataTable GetMeafyeneyElementim()
     {
@@ -2180,6 +2180,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     strImageUrlNotApprove = "ImgButtonDisApprovalRegular";
                     break;
             }
+            Session["MeasherMistyeg"] = oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
         }
         else
         {
@@ -2495,6 +2496,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         string urlBarcode,key;
         try
         {
+            int iOldMeasherMistayeg = int.Parse(Session["MeasherMistyeg"].ToString());
+            clGeneral.enMeasherOMistayeg oMeasherMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
             bWorkCardWasUpdate = IsWorkCardWasUpdate();
             key = "|" + iMisparIshi.ToString() + "|" + dDateCard.ToString("yyyyMMdd") + "|";
             urlBarcode = ConfigurationManager.AppSettings["WsBarcode"].ToString() +"&text=" + key;
@@ -2515,12 +2518,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 Report.AddParameter("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
                 Report.AddParameter("P_URL_BARCODE", urlBarcode);
                
-                clGeneral.enMeasherOMistayeg oMeasherMistayeg=(clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
-                    
-                if ((oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull) && (hidFromEmda.Value=="1"))
-                    Report.AddParameter("P_TIKUN", "");
+                
+                if (bWorkCardWasUpdate)
+                {
+                    //במידה ויש ערך בטבלת מעדכן אחרון והכרטיס עלה ללא התייחסות ולחצו על מאשר או מסתייג נשלח תיקון 0, שלא היה תיקון
+                    if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
+                        Report.AddParameter("P_TIKUN", "0");
+                    else
+                        Report.AddParameter("P_TIKUN", "1");
+                }
                 else
-                    Report.AddParameter("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+                {   //אם אין ערך המעדכן אחרון, לא נשלח תיקון, כלומר 0
+                    Report.AddParameter("P_TIKUN",  "0");
+                }
+                
 
                 s = Report.CreateReport("/KdsReports/PrintWorkCard", eFormat.PDF, true);
                 string sFileName, sPathFile;
@@ -2561,8 +2572,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 ReportParameters.Add("P_TAARICH", dDateCard.ToShortDateString());
                 ReportParameters.Add("P_EMDA", "0");
                 ReportParameters.Add("P_SIDUR_VISA", IsSidurVisaExists().GetHashCode().ToString());
-                ReportParameters.Add("P_URL_BARCODE", urlBarcode);               
-                ReportParameters.Add("P_TIKUN", bWorkCardWasUpdate ? "1" : "0");
+                ReportParameters.Add("P_URL_BARCODE", urlBarcode);
+                if (bWorkCardWasUpdate)
+                {
+                    if ((iOldMeasherMistayeg == clGeneral.enMeasherOMistayeg.ValueNull.GetHashCode()) && (oMeasherMistayeg != clGeneral.enMeasherOMistayeg.ValueNull))
+                        ReportParameters.Add("P_TIKUN", "0");
+                    else
+                        ReportParameters.Add("P_TIKUN", "1");
+                }
+                else
+                    ReportParameters.Add("P_TIKUN", "0");
 
                 
                 OpenReport(ReportParameters, (Button)sender, ReportName.PrintWorkCard.ToString());
