@@ -231,7 +231,9 @@ namespace KdsBatch.Reports
                 sFileName += drReport.Month.Month.ToString().PadLeft(2, char.Parse("0"));
                 sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
                 sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
-                sFileName += drReport.sug_chishuv.ToString();
+                if (drReport.sug_chishuv == -1)
+                    sFileName += "3";
+                else sFileName += ((drReport.sug_chishuv) + 1).ToString();
                 sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
                 sFileName += drReport.Ezor.ToString();
                 sFileName += ".PDF";
