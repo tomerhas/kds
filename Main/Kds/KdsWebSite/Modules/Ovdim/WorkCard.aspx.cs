@@ -2607,6 +2607,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         bool bChishuvShachar = false;
         bool  bCalculateAndNotRashemet = false;
 
+        hidExecInputChg.Value = "";
         if (hidChanges.Value.ToLower() == "true")
             btnShowPrintMsg_Click(sender, e);
         else
