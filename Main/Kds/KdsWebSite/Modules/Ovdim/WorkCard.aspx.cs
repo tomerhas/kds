@@ -247,20 +247,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
                  }               
                  break;
-             case clGeneral.enMeasherOMistayeg.Measher:               
-                 if (!btnApprove.Disabled)
-                 {
-                     btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
-                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
-                 }               
-                 break;
-             case clGeneral.enMeasherOMistayeg.Mistayeg:                
-                 if (!btnNotApprove.Disabled)
-                 {
-                     btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
-                     btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
-                 }
-                 break;
+             //case clGeneral.enMeasherOMistayeg.Measher:               
+             //    if (!btnApprove.Disabled)
+             //    {
+             //        btnApprove.Attributes.Add("class", "ImgButtonApprovalChecked");
+             //        btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegularDisabled"); 
+             //    }               
+             //    break;
+             //case clGeneral.enMeasherOMistayeg.Mistayeg:                
+             //    if (!btnNotApprove.Disabled)
+             //    {
+             //        btnNotApprove.Attributes.Add("class", "ImgButtonDisApproveChecked");
+             //        btnApprove.Attributes.Add("class", "ImgButtonApprovalRegularDisabled"); 
+             //    }
+             //    break;
 
              default:                
                  if (!btnApprove.Disabled) 
@@ -271,6 +271,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  btnPrint.Attributes.Add("class", "btnWorkCardPrint");
                  break;
          }
+         SetImageForButtonMeasherOMistayeg();
          hidMeasherMistayeg.Value = oMasherOMistayeg.GetHashCode().ToString();
      }
      protected bool IsPeilutEilatExist()

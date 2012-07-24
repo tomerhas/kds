@@ -486,7 +486,7 @@
                                 <asp:Button Text="שעונים" ID="btnClock" runat="server" CssClass="btnWorkCardClocks" Style="width: 88px;" OnClick="btnClock_click" CausesValidation="false" />                                           
                             </td>
                             <td style="width: 30px">
-                                <asp:Button ID="btnPrint" runat="server"  CausesValidation="false" onclick ="btnPrint_click" OnClientClick='return SetChgFlag();' />                                             
+                                <asp:Button ID="btnPrint" runat="server"  CausesValidation="false" onclick ="btnPrint_click" OnClientClick= 'return SetChgFlag();' />                                             
                             </td>                                                                       
                             <td align="right">
                                 <asp:Button Text="סגור כרטיס" ID="btnCloseCard" runat="server" Style="width: 89px;" 
