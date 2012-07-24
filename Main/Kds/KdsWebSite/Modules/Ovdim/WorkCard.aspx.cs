@@ -316,11 +316,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              bDisable = true;
          else
          {
+             //|| (IsCarNumberErrorExists())
              bDisable = (((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT)))
                         || (IsSidurVisa())
                         || (IsSidurMatalaNotValidExists())
-                        || (IsPeilutEilatExist())
-                        || (IsCarNumberErrorExists())
+                        || (IsPeilutEilatExist())                        
                         || IsSidurChosem());
          }
         
