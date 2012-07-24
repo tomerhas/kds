@@ -2040,11 +2040,6 @@ function SwitchHourGmarHatchala(iIndex,bTypeInOrOut){
         document.getElementById(focusControlID).focus();
     }
 
-//    function DisabledShinuyKelet() {alert('');
-//        $get('hidExecInputChg').Value = '0';
-//        return SetChgFlag();
-//    }
-
     function btnCopyOtoNum(iAction)
     {
      $find("pBehvCopy").hide();
