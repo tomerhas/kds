@@ -226,17 +226,18 @@ namespace KdsBatch.Reports
             string sFileName;
             try
             {
-                sFileName = "RIKUZ" + drReport.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
+                sFileName = "RIKUZ";
+                sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drReport.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
                 sFileName += drReport.Month.Year.ToString().PadLeft(4, char.Parse("0"));
                 sFileName += drReport.Month.Month.ToString().PadLeft(2, char.Parse("0"));
-                sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
-                sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
                 if (drReport.sug_chishuv == -1)
                     sFileName += "3";
                 else sFileName += ((drReport.sug_chishuv) + 1).ToString();
-                sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
                 sFileName += drReport.Ezor.ToString();
-                sFileName += ".PDF";
+               sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
+                 sFileName += ".PDF";
 
                 fs = new FileStream(path + sFileName, FileMode.Create, FileAccess.Write);
                 fs.Write(fileReport, 0, fileReport.Length);
