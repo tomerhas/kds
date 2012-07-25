@@ -1571,7 +1571,7 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate <= DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate >= DateTime.Parse(oSidur.sTokefSiyum)))
+                if (oSidur.sTokefHatchala.Length > 0 && oSidur.sTokefSiyum.Length > 0 && (_dCardDate < DateTime.Parse(oSidur.sTokefHatchala) || _dCardDate > DateTime.Parse(oSidur.sTokefSiyum)))
                 {
                     drNew = dtErrors.NewRow();
                     InsertErrorRow(oSidur, ref drNew, "סידור לא תקף לתאריך", enErrors.errSidurLoTakefLetaarich.GetHashCode());
@@ -14104,7 +14104,7 @@ namespace KdsBatch
                 if (dShatGmarLetashlumToUpd == DateTime.MinValue)
                     dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
 
-                if (oSidur.iMenahelMusachMeadken > 0 && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
+                if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM != DateTime.MinValue && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
                     bLoLeadken = true;
                 if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM && !bLoLeadken)
                 {
@@ -14117,7 +14117,7 @@ namespace KdsBatch
                 }
 
                 bLoLeadken = false;
-                if (oSidur.iMenahelMusachMeadken > 0 && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
+                if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM != DateTime.MinValue && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
                     bLoLeadken = true;
                 if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM && !bLoLeadken)
                 {

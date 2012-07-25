@@ -96,13 +96,18 @@ namespace KdsBatch
                             sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
                             oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i]);
-                            oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem); 
-                            _PirteyOved.Add(oPirteyOved);
+                            //עובדי קייטנה 
+                            //לא מבצעים להם העברה לשכר
+                            if (!((oPirteyOved.iDirug == 12 && oPirteyOved.iDarga >= 21 && oPirteyOved.iDarga <= 30) || (oPirteyOved.iDirug == 12 && oPirteyOved.iDarga >= 62 && oPirteyOved.iDarga <= 72) ||
+                                 (oPirteyOved.iDirug == 13 && (oPirteyOved.iDarga == 2 || oPirteyOved.iDarga == 64 || oPirteyOved.iDarga == 70))))
+                            {
+                                 oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
+                                _PirteyOved.Add(oPirteyOved);
 
-                            objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();    
-                            SetSugChishuvUDT(iMisparIshi, dChodesh,oPirteyOved, ref objMisparIshiSugChishuv);
-                            objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
-                           
+                                objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
+                                SetSugChishuvUDT(iMisparIshi, dChodesh, oPirteyOved, ref objMisparIshiSugChishuv);
+                                objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
+                            }
                             //if (i%50 ==0)
                             //   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
                        //}
@@ -226,7 +231,7 @@ namespace KdsBatch
                WriteEruaToFile(sFileStrEtBakara, oOved.oBakaraEt);
                WriteEruaToFile(sFileStrEt, oOved.oDataEt);
            }
-           else
+          else
            {
                _sFileToWrite = GetFileToWrite(oOved.iMaamad, oOved.iMaamadRashi, oOved.iDirug, oOved.iDarga);
 
