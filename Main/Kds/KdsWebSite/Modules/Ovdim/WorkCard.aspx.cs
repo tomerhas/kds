@@ -235,7 +235,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     btnNotApprove.Disabled = true;                    
                 }           
          }
-         btnPrint.Enabled = true;
+         // btnPrint.Enabled = true;
+         btnPrint.Attributes.Add("Disabled", "false");
          btnPrint.Attributes.Add("class","btnWorkCardPrint");
          clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
          switch (oMasherOMistayeg)
@@ -243,7 +244,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              case clGeneral.enMeasherOMistayeg.ValueNull:
                  if ((!bRashemet) && (clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 <= oBatchManager.oParam.iValidDays))
                  {
-                     btnPrint.Enabled = false;
+                     //btnPrint.Enabled = false;
+                     btnPrint.Attributes.Add("Disabled", "true");
                      btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
                  }               
                  break;
@@ -267,7 +269,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      btnApprove.Attributes.Add("class", "ImgButtonApprovalRegular"); 
                  if (!btnNotApprove.Disabled)
                      btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
-                 btnPrint.Enabled = true;
+                 //btnPrint.Enabled = true;
+                 btnPrint.Attributes.Add("Disabled", "false");
                  btnPrint.Attributes.Add("class", "btnWorkCardPrint");
                  break;
          }
