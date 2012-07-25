@@ -82,42 +82,40 @@ namespace KdsBatch
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "count:" + dtOvdim.Rows.Count);
                    _PirteyOved = new List<PirteyOved>();
-                  
+
                    for (i = 0; i <= dtOvdim.Rows.Count - 1; i++)
                    {
-                      
-                        iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
-                        dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
-                       
+
+                       iMisparIshi = int.Parse(dtOvdim.Rows[i]["mispar_ishi"].ToString());
+                       dChodesh = DateTime.Parse(dtOvdim.Rows[i]["taarich"].ToString());
+
                        //try
                        //{
-                       
-                           if (i==0)
-                            sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                            oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer,dtOvdim.Rows[i]);
-                            //עובדי קייטנה 
-                            //לא מבצעים להם העברה לשכר
-                            if (!((oPirteyOved.iDirug == 12 && oPirteyOved.iDarga >= 21 && oPirteyOved.iDarga <= 30) || (oPirteyOved.iDirug == 12 && oPirteyOved.iDarga >= 62 && oPirteyOved.iDarga <= 72) ||
-                                 (oPirteyOved.iDirug == 13 && (oPirteyOved.iDarga == 2 || oPirteyOved.iDarga == 64 || oPirteyOved.iDarga == 70))))
-                            {
-                                 oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
-                                _PirteyOved.Add(oPirteyOved);
+                       if (i == 0)
+                           sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
-                                objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
-                                SetSugChishuvUDT(iMisparIshi, dChodesh, oPirteyOved, ref objMisparIshiSugChishuv);
-                                objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
-                            }
-                            //if (i%50 ==0)
-                            //   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
+                       oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
+                       //עובדי קייטנה 
+                       //לא מבצעים להם העברה לשכר
+
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
+                       _PirteyOved.Add(oPirteyOved);
+
+                       objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
+                       SetSugChishuvUDT(iMisparIshi, dChodesh, oPirteyOved, ref objMisparIshiSugChishuv);
+                       objCollMisparIshiSugChishuv.Add(objMisparIshiSugChishuv);
+
+                       //if (i%50 ==0)
+                       //   clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer i=" + i);
                        //}
                        //catch (Exception ex)
                        //{
                        //    clLogBakashot.InsertErrorToLog(lBakashaId, iMisparIshi, "E", 0, dChodesh, "Transfer: " + ex.Message);
                        //}
 
-                      // ClearObject();
-                    }
+                       // ClearObject();
+                   }
 
                    if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
                    {
