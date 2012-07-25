@@ -2672,9 +2672,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         sScript = "bScreenChanged=true; ExecSadotLsidur(" + iSidurIndex + ",true);";
                         ScriptManager.RegisterStartupScript(Page, this.GetType(), "ExecSadotNosafim", sScript, true);
                        
-                    }
-            
-            }
+                    }            
+              }
         }
         //Response.Redirect("WorkCard.aspx?EmpID=" + iMisparIshi + "&WCardDate=" + dDateCard.ToShortDateString());
         //שינויי קלט
