@@ -28,7 +28,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatNumber(round(avg(Fields!ERECH_RECHIV.Value),2),1,0)</Value>
+                              <Value>=FormatNumber(round(Code.GetErech(Fields!KOD_RECHIV.Value,avg(Fields!ERECH_RECHIV.Value)),2),1,0)</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -45,11 +45,12 @@
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>4pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -60,7 +61,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Fields!ERECH_RECHIV.Value,2),1,0),"")</Value>
+                              <Value>=iif(not isnothing(Fields!ERECH_RECHIV.Value) ,FormatNumber(round(Code.GetErech(Fields!KOD_RECHIV.Value,Fields!ERECH_RECHIV.Value),2),1,0),"")</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -77,7 +78,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>4pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -109,7 +110,7 @@
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>4pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -390,6 +391,15 @@
       <Prompt>P MISPAR ISHI</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <Code>function GetErech(byVal iKodRechiiv as integer,byVal dErech as Decimal)  As Decimal
+        select  iKodRechiiv
+	case  269, 129,126,118,117,1,115,114,113,112,78,77,76,54,33,30,28,26,7,1
+		Return (dErech /60)
+	case else
+		 Return dErech 
+        end select
+end function
+</Code>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>aa34a6fa-e2e7-4477-b1b3-02ab5cf63f1e</rd:ReportID>
 </Report>
