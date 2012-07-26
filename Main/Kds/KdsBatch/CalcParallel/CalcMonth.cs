@@ -1410,11 +1410,14 @@ namespace KdsBatch
                 //    fSumDakotRechiv = fSumDakotRechiv * clCalcGeneral.CalcMekademNipuach(_dTaarichChishuv,objOved.Mispar_ishi);
                 //}
                 fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotHeadrut.GetHashCode());
-                fSumDakotRechiv = float.Parse(Math.Round((fSumDakotRechiv / 60), 1).ToString()); 
-                //איפוס ערך רכיב קטן מאוד
-                if (Math.Round( fSumDakotRechiv, 3) == 0)
-                    fSumDakotRechiv = 0;
-                addRowToTable(clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), fSumDakotRechiv);
+                if (fSumDakotRechiv > 0)
+                {
+                    fSumDakotRechiv = float.Parse(Math.Round((fSumDakotRechiv / 60), 1).ToString());
+                    //איפוס ערך רכיב קטן מאוד
+                    if (Math.Round(fSumDakotRechiv, 3) == 0)
+                        fSumDakotRechiv = 0;
+                    addRowToTable(clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), fSumDakotRechiv);
+                }
             }
             catch (Exception ex)
             {
@@ -5027,11 +5030,14 @@ namespace KdsBatch
             {
                 //ערך הרכיב = סכימת ערך הרכיב לכל הימים בחודש  
                 fDakotChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotChofesh.GetHashCode());
-                fSumDakotRechiv = float.Parse(Math.Round((fDakotChofesh / 60), 1).ToString());  
-                //איפוס ערך רכיב קטן מאוד
-                if (Math.Round(fSumDakotRechiv, 3) == 0)
-                    fSumDakotRechiv = 0;
-                addRowToTable(clGeneral.enRechivim.ShaotChofesh.GetHashCode(), fSumDakotRechiv);
+                if (fDakotChofesh > 0)
+                {
+                    fSumDakotRechiv = float.Parse(Math.Round((fDakotChofesh / 60), 1).ToString());
+                    //איפוס ערך רכיב קטן מאוד
+                    if (Math.Round(fSumDakotRechiv, 3) == 0)
+                        fSumDakotRechiv = 0;
+                    addRowToTable(clGeneral.enRechivim.ShaotChofesh.GetHashCode(), fSumDakotRechiv);
+                }
             }
             catch (Exception ex)
             {
