@@ -879,16 +879,19 @@ namespace KdsBatch
                 //           }
                 //       }
                 //   }
-                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotHeadrut.GetHashCode(), objOved.Taarich); 
-                fSumDakotRechiv = fSumDakotRechiv / 60;
-                if (fSumDakotRechiv != 0)
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotHeadrut.GetHashCode(), objOved.Taarich);
+                if (fSumDakotRechiv > 0)
                 {
-                    addRowToTable(clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), fSumDakotRechiv);
+                    fSumDakotRechiv = fSumDakotRechiv / 60;
+                    if (fSumDakotRechiv != 0)
+                    {
+                        addRowToTable(clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), fSumDakotRechiv);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ShaotHeadrut.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }
@@ -6553,8 +6556,11 @@ namespace KdsBatch
             try
             {
                 fDakotChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotChofesh.GetHashCode(), objOved.Taarich);
-                fSumDakotRechiv = fDakotChofesh / 60;
-                addRowToTable(clGeneral.enRechivim.ShaotChofesh.GetHashCode(), fSumDakotRechiv);
+                if (fDakotChofesh > 0)
+                {
+                    fSumDakotRechiv = fDakotChofesh / 60;
+                    addRowToTable(clGeneral.enRechivim.ShaotChofesh.GetHashCode(), fSumDakotRechiv);
+                }
             }
             catch (Exception ex)
             {
