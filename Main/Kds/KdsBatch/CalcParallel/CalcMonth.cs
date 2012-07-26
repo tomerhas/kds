@@ -2591,7 +2591,7 @@ namespace KdsBatch
                             fErechYomi66 = float.Parse(days[i]["ERECH_RECHIV"].ToString());
                             if (objOved.fHashlamaAlCheshbonNosafot > 0)
                             {
-                                if (objOved.fHashlamaAlCheshbonNosafot >= fErechYomi66)
+                                if (float.Parse(Math.Round(objOved.fHashlamaAlCheshbonNosafot, 3).ToString()) >= fErechYomi66)
                                 {
                                     objOved.fHashlamaAlCheshbonNosafot -= fErechYomi66;
                                     objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.YomHeadrut.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')")[0]["ERECH_RECHIV"] = 0;
@@ -2717,7 +2717,7 @@ namespace KdsBatch
                             fErechYomi67 = float.Parse(days[i]["ERECH_RECHIV"].ToString());
                             if (objOved.fHashlamaAlCheshbonNosafot > 0)
                             {
-                                if (objOved.fHashlamaAlCheshbonNosafot >= fErechYomi67)
+                                if (float.Parse(Math.Round(objOved.fHashlamaAlCheshbonNosafot, 3).ToString()) >= fErechYomi67)
                                 {
                                     objOved.fHashlamaAlCheshbonNosafot -= fErechYomi67;
                                     objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.YomChofesh.GetHashCode().ToString() + " and taarich=Convert('" + taarich.ToShortDateString() + "', 'System.DateTime')")[0]["ERECH_RECHIV"] = 0;
