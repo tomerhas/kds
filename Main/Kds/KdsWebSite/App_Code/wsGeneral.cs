@@ -2200,8 +2200,11 @@ public class wsGeneral : System.Web.Services.WebService
         DateTime dtOrgDate, dtCardDate;
         OrderedDictionary odSidurim;
         clSidur _Sidur;
-            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
-        if (dr.Length > 0)
+        
+        odSidurim = (OrderedDictionary)Session["Sidurim"];
+        _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+        dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOldStartHour).ToShortTimeString() + "'");
+        if ((dr.Length > 0) && (_Sidur.oSidurStatus != clSidur.enSidurStatus.enNew))
         {
             dr[0]["sidur_number"] = iSidurKey;
             dr[0]["sidur_start_hour"] = sNewStartHour;
@@ -2229,8 +2232,7 @@ public class wsGeneral : System.Web.Services.WebService
         }
         else // new sidur
         {
-            odSidurim = (OrderedDictionary)Session["Sidurim"];
-            _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+            
             _Sidur.dSidurDate = DateTime.Parse(sCardDate).AddDays(iAddDay); //DateTime.Parse(sNewStartHour);
             _Sidur.dFullShatHatchala = DateTime.Parse(DateTime.Parse(sCardDate).AddDays(iAddDay).ToShortDateString() + " " + sNewStartHour);
             //_Sidur.dOldFullShatHatchala = _Sidur.dFullShatHatchala;
