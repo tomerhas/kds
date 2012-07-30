@@ -78,11 +78,11 @@ namespace KdsBatch
            {
               sErua416.Append(GetBlank(4));
            }
-          
+          //סעיף 4
            if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode())
            {
                fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
-               fErech += GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
+            //   fErech += GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
@@ -141,16 +141,19 @@ namespace KdsBatch
                }
                sErua416.Append(GetBlank(4));
               // sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
-               sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode()), 4, 2));
+               sErua416.Append(GetBlank(4));
+               //sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode()), 4, 2));
            }
            else
            {
                sErua416.Append(GetBlank(32));
            }
-
-           if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+           //_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() &&
+           if ( _iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
            {
-               sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode()),4,2));
+               fErech=GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
+               fErech+=GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode());
+               sErua416.Append(FormatNumber(fErech, 4, 2));
            }
            else
            {
