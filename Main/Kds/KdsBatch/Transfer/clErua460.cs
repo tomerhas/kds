@@ -23,6 +23,7 @@ namespace KdsBatch
       { 
           List<string> ListErua=new List<string>();
           StringBuilder sErua460 = new StringBuilder();
+          float fErech;
           try
           {
               sErua460.Append(GetBlank(8));
@@ -40,7 +41,9 @@ namespace KdsBatch
 
               if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
               {
-                  sErua460.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode()), 4, 2));
+                  fErech = GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode());
+                  sErua460.Append(FormatNumber(fErech, 4, 2));
               }
               else
               {
