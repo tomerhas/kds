@@ -54,9 +54,9 @@ namespace KdsBatch
            OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv; 
            int iDirug, iDarga;
 
-           sFileNameChaverim = "EGD3TEST.txt"; //"EGD3NOCH.txt";
-           sFileNameSchirim = "EGD6TEST.txt"; //"EGD6NOCH.txt";
-           sFileNameChozim = "EGB2TEST.txt"; //"EGB2NOCH.txt";
+           sFileNameChaverim = "EGD3NOCH.txt"; //"EGD3TEST.txt"; //
+           sFileNameSchirim = "EGD6NOCH.txt"; //"EGD6TEST.txt"; //
+           sFileNameChozim = "EGB2NOCH.txt"; //"EGB2TEST.txt"; //
            sFileNameETBTashlum = "QDIVmmyy.162";
            sFileNameETBakara = "REGLmmyy.162";
 
