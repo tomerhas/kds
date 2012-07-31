@@ -4867,13 +4867,14 @@ namespace KdsBatch
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                 fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                 fShaot100 = 0; fShaot100ET = 0; fErechRechiv = 0;
+
+                oSidur.CalcRechiv131();
+                fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
+
                 //ב
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                 {
                    
-                    oSidur.CalcRechiv131();
-                    fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
-
                     fTempY = oSidur.GetSumSidurim100(clGeneral.enRechivim.ShaotShabat100) + oSidur.GetSumShaotShabat100();
                     if (fMichsaYomit == 0)
                     {
