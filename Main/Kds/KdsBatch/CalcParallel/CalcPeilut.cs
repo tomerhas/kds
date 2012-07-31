@@ -383,13 +383,13 @@ namespace KdsBatch
 
                                   if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                                   {
-                                      fHistaglutMifraki = (objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                                      fHistaglutMifraki = (objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
                                   }
 
                                   if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)
-                                  { fHistaglutEilat = (float.Parse("20") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
+                                  { fHistaglutEilat = (float.Parse("20") / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
                                   else if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 3)
-                                  { fHistaglutEilat = (float.Parse("10") / 100) * CalcHagdaraLetichnunPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
+                                  { fHistaglutEilat = (float.Parse("10") / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa); }
 
                                   fErech = fHistaglutMifraki + fHistaglutEilat;
 
@@ -897,9 +897,9 @@ namespace KdsBatch
                      if (sMakat.Substring(0, 1) != "5" && sMakat.Substring(0, 1) != "7" && iMisparKnisa==0)
                      {
                          drDetailsPeilut = GetDetailsFromCatalaog(objOved.Taarich, long.Parse(sMakat));
-                         if (drDetailsPeilut["Mazan_Tashlum"].ToString().Length > 0)
+                         if (drDetailsPeilut["MAZAN_TICHNUN"].ToString().Length > 0)
                          {
-                             fHagdara = int.Parse(drDetailsPeilut["Mazan_Tashlum"].ToString());
+                             fHagdara = int.Parse(drDetailsPeilut["MAZAN_TICHNUN"].ToString());
                          }
 
                      }
