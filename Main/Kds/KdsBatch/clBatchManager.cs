@@ -1781,8 +1781,8 @@ namespace KdsBatch
                 //If ther is one sidur then pitizul field should be empty  
                 //אם יש סידור אחד ביום, לא ייתכן שיהיה לו ערך בשדה פיצול הפסקה. כנ"ל לגבי סידור אחרון ביום
                 if ((htEmployeeDetails.Count == 1) || (htEmployeeDetails.Count - 1 == iSidur))
-                {                    
-                    if (!string.IsNullOrEmpty(oSidur.sPitzulHafsaka) && Int32.Parse(oSidur.sPitzulHafsaka) > 0)
+                {
+                    if (!string.IsNullOrEmpty(oSidur.sPitzulHafsaka) && Int32.Parse(oSidur.sPitzulHafsaka) > 0 && Int32.Parse(oSidur.sPitzulHafsaka)!=3)
                     {
                         drNew = dtErrors.NewRow();
                         InsertErrorRow(oSidur, ref drNew, "פצול/הפסקה בסדור בודד אחרון", enErrors.errPizulValueNotValid.GetHashCode());
