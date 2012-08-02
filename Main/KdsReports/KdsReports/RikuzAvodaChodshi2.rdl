@@ -9078,7 +9078,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value),1)="0.0","", FormatNumber(Sum(Fields!R121.Value),1) ))</Value>
+                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value),1)="0.0","", FormatNumber(Sum(Fields!R121.Value)/60,1) ))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0);''</Format>
@@ -9102,6 +9102,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
