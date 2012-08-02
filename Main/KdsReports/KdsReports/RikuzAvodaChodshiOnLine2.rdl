@@ -1237,7 +1237,7 @@
         <Top>1.48497cm</Top>
         <Left>0.37826cm</Left>
         <Height>0.79611cm</Height>
-        <Width>20.46463cm</Width>
+        <Width>20.46462cm</Width>
         <ZIndex>5</ZIndex>
         <Style>
           <Border>
@@ -3261,7 +3261,7 @@
         <Top>5.90434cm</Top>
         <Left>0.31615cm</Left>
         <Height>1.24282cm</Height>
-        <Width>22.84108cm</Width>
+        <Width>22.84109cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -6863,8 +6863,8 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <DataSetName>DsRechivim</DataSetName>
         <Top>2.36297cm</Top>
         <Left>0.3777cm</Left>
-        <Height>1.05507cm</Height>
-        <Width>20.46991cm</Width>
+        <Height>1.05506cm</Height>
+        <Width>20.46992cm</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -9078,7 +9078,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value),1)="0.0","", FormatNumber(Sum(Fields!R121.Value),1) ))</Value>
+                              <Value>=iif(First(Fields!MEAFYEN83.Value, "dsPirteyOved")=1,"",iif(FormatNumber(Sum(Fields!R121.Value),1)="0.0","", FormatNumber(Sum(Fields!R121.Value)/60,1) ))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0);''</Format>
@@ -9102,6 +9102,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9389,7 +9390,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10192,7 +10192,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <DataSetName>dsRechivimChodshiym</DataSetName>
         <Top>3.41802cm</Top>
         <Left>0.37826cm</Left>
-        <Height>1.49814cm</Height>
+        <Height>1.49815cm</Height>
         <Width>20.46981cm</Width>
         <ZIndex>11</ZIndex>
         <Style>
