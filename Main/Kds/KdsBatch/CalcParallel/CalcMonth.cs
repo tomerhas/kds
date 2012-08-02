@@ -247,7 +247,7 @@ namespace KdsBatch
         private void ChangingChofeshFromShaotNosafot()
         {
             //טיפול בחופש ע"ח שעות נוספות 
-            DataRow[] drSidurimToChange, drMichsaYomit, drNosafot100, drChofesh, drDakotNochehut;
+            DataRow[] drSidurimToChange, drMichsaYomit, drNosafot100, drChofesh, drDakotNochehut, dr100Letashlum;
             DateTime dTaarich, dShatHatchalaSidur;
             float fMichsaYomit, fNosafot100LeOved; 
             int I, iSachSidurimKuzezu, iOutMichsa, iMisparSidur;
@@ -255,6 +255,8 @@ namespace KdsBatch
             {
                 iSachSidurimKuzezu = 0;
                 objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select(null, "KOD_RECHIV");
+                dr100Letashlum = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.Shaot100Letashlum.GetHashCode().ToString());
+               
                 drNosafot100 = objOved._dsChishuv.Tables["CHISHUV_CHODESH"].Select("KOD_RECHIV=" + clGeneral.enRechivim.Nosafot100.GetHashCode().ToString());
                 if (drNosafot100.Length > 0)
                 {
@@ -276,8 +278,15 @@ namespace KdsBatch
 
                             if (fMichsaYomit <= (fNosafot100LeOved*60) && (oCalcBL.CheckOutMichsa(objOved.Mispar_ishi, dTaarich, iMisparSidur, dShatHatchalaSidur, iOutMichsa) || iSachSidurimKuzezu < objOved.objParameters.iMaxYamimHamaratShaotNosafot))
                             {
+                                //עדכון רכיב 146
                                 fNosafot100LeOved = fNosafot100LeOved - (fMichsaYomit / 60);
                                 drNosafot100[0]["ERECH_RECHIV"] = fNosafot100LeOved;
+
+                                //עדכון רכיב 100
+                                if (dr100Letashlum.Length > 0)
+                                {
+                                    dr100Letashlum[0]["ERECH_RECHIV"] = (float)(dr100Letashlum[0]["ERECH_RECHIV"])- (fMichsaYomit / 60);
+                                }
 
                                 // -	לעדכן את רכיב 67 כדלקמן: 
                                 //•	ברמת יום עבודה – לבטל את הרשומה של הרכיב ביום העבודה אליו שייך הסידור.
@@ -2632,7 +2641,7 @@ namespace KdsBatch
 
             float fSumDakotRechiv, fNosafot100,fSachKizuzMeheadrut;
             float fShaotNosafot, fMichsaYomit;
-            float fMichsaChodshitChelkit, fNochehutChodshitChelkit,fHashlama;
+            float fMichsaChodshitChelkit, fNochehutChodshitChelkit,fHashlama,fChofeshChelki;
             clCalcBL oCalcBL = new clCalcBL();
             string sTnaim;
             try
@@ -2673,10 +2682,16 @@ namespace KdsBatch
                 {
                     objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
                     sTnaim = "ERECH_RECHIV>0 and ERECH_RECHIV<1 ";
-                    CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, sTnaim,clGeneral.enRechivim.YomChofesh,true);
+                    //CalcNochehutVeMichsaChelkiim(ref fNochehutChodshitChelkit, ref fMichsaChodshitChelkit, sTnaim,clGeneral.enRechivim.YomChofesh,true);
                     fNosafot100 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Nosafot100); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
 
-                    fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
+                   // fHashlama = Math.Min((fMichsaChodshitChelkit - fNochehutChodshitChelkit) / objOved.fmichsatYom, (fNosafot100 * 60) / objOved.fmichsatYom);
+                    fChofeshChelki = (from c in objOved._dsChishuv.Tables["CHISHUV_YOM"].AsEnumerable()
+                                      where c.Field<int>("KOD_RECHIV").Equals(clGeneral.enRechivim.YomChofesh.GetHashCode())
+                                      && c.Field<float>("ERECH_RECHIV") < 1
+                                      select c.Field<float>("ERECH_RECHIV")).Sum();
+                    fHashlama = Math.Min(fChofeshChelki, (fNosafot100 * 60) / objOved.fmichsatYom);
+                   
                     objOved.fHashlamaAlCheshbonNosafot = float.Parse(Math.Round(fHashlama, 3).ToString());
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode());
                     fSumDakotRechiv = float.Parse(fSumDakotRechiv.ToString()) - float.Parse(fHashlama.ToString());
