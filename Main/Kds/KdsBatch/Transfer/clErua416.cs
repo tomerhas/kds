@@ -164,14 +164,14 @@ namespace KdsBatch
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTipatChalav.GetHashCode()),4,2));
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode()),4,2));
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomHadracha.GetHashCode()),4,2));
-               if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
-               {
+               //if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() && _iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode())
+               //{
                    sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomEvel.GetHashCode()),4,2));
-               }
-               else
-               {
-                   sErua416.Append(GetBlank(4));
-               }
+               //}
+               //else
+               //{
+               //    sErua416.Append(GetBlank(4));
+               //}
 
                fErech = GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode());
