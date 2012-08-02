@@ -3933,7 +3933,7 @@ namespace KdsBatch
                 //אם  יש ערך בשדה לינה ובסידור האחרון יש פעילות מסוג אלמנט (לפי רוטינת זיהוי מקט) ולאלמנט יש מאפיין המתנה (15) - יוצא לשגיאה
                 if (!string.IsNullOrEmpty(oOvedYomAvodaDetails.sLina))
                 {
-                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists ))
+                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists ) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
                     {
                         drNew = dtErrors.NewRow();
                         drNew["check_num"] = enErrors.errLoZakaiLLina.GetHashCode();
