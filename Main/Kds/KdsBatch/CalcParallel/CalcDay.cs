@@ -3058,7 +3058,7 @@ namespace KdsBatch
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
-                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,3).ToString()); 			
+                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString()); 			
                             addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                         }
                     }
@@ -3174,7 +3174,7 @@ namespace KdsBatch
                         {
                             fErechRechiv = fErechRechiv * float.Parse("0.6");
                         }
-                        fErechRechiv = float.Parse(Math.Round(fErechRechiv, 3).ToString()); 
+                        fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2).ToString()); 
                         addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                     }
                 }
@@ -3560,10 +3560,11 @@ namespace KdsBatch
         private void CalcRechiv78()
         {
             float fSumDakotRechiv, fDakotNahagut, fDakotTnua, fDakotTafkid,fTosefetZmanNesia, fDakotZikuyChofesh;
-            float fDakotRechiv76, fDakotRechiv77, fZmanRetzifutShabat275;
+            float fDakotRechiv76, fDakotRechiv77, fZmanRetzifutShabat275,fNosafotShabatKizuz;
             try
             {
                 fSumDakotRechiv = 0;
+                fDakotZikuyChofesh = 0;
                 if ((!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30 && objOved.SugYom == clGeneral.enSugYom.Bchirot.GetHashCode())))
                 {
                     Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
@@ -3581,14 +3582,19 @@ namespace KdsBatch
                         fSumDakotRechiv = (fDakotNahagut + fDakotTnua + fDakotTafkid + fZmanRetzifutShabat275) - (fDakotZikuyChofesh + fTosefetZmanNesia);
                         addRowToTable(clGeneral.enRechivim.NosafotShabat.GetHashCode(), fSumDakotRechiv);
                     }
-
+                    fNosafotShabatKizuz = 0;
                     if (fSumDakotRechiv > 0)
+                    { fNosafotShabatKizuz = fSumDakotRechiv; }
+                    else if (fDakotZikuyChofesh>0)
+                    { fNosafotShabatKizuz = fDakotZikuyChofesh;}
+
+                    if (fNosafotShabatKizuz > 0)
                     {
                         //קיזוז נוספות שבת (200%) (רכיב 78) מרכיבים נוספות 125% ונוספות 150%:
-                        kizuzNosafotShabat(fSumDakotRechiv, clGeneral.enRechivim.Nosafot125, clGeneral.enRechivim.Nosafot150);
+                        kizuzNosafotShabat(fNosafotShabatKizuz, clGeneral.enRechivim.Nosafot125, clGeneral.enRechivim.Nosafot150);
 
                         //קיזוז נוספות שבת (200%) (רכיב 78) מרכיבים שעות 25% ושעות 50%:
-                        kizuzNosafotShabat(fSumDakotRechiv, clGeneral.enRechivim.Shaot25, clGeneral.enRechivim.Shaot50);
+                        kizuzNosafotShabat(fNosafotShabatKizuz, clGeneral.enRechivim.Shaot25, clGeneral.enRechivim.Shaot50);
                        
                     }
                 }
@@ -4894,6 +4900,8 @@ namespace KdsBatch
                         if (fMichsaYomit == 0 && fDakotNocheut > 0)
                         {
                             fShaot100ET = Math.Min(120, fDakotNocheut);
+                            fShaot100ET = Math.Min(fErechRechiv, fShaot100ET);
+                            fErechRechiv = 0;
                          //   addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fErechRechiv);
                         }
                     }
@@ -7631,6 +7639,48 @@ namespace KdsBatch
                 throw (ex);
             }
         }
+
+        public void CalcChofeshHeadrutToShguyim(clGeneral.enRechivim iKodRechiv)
+        {
+            DateTime dTarMe, dTarAd;
+            float fMichsatYom = 0,fDakotNochehut=0;
+            float fChofesh = 0,fHeadrut=0;
+            try
+            {
+                dTarMe = objOved.Month;
+                dTarAd = objOved.Month.AddMonths(1).AddDays(-1);
+                 
+                while (dTarMe <= dTarAd)
+                {
+                    fMichsatYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), dTarMe);
+                    fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dTarMe);
+                    fChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode(), dTarMe);
+                    fHeadrut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHeadrut.GetHashCode(), dTarMe);
+
+                    if (fMichsatYom > 0 && fDakotNochehut == 0 && fChofesh == 0 && fHeadrut == 0 && objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') and Lo_letashlum=0 and mispar_sidur is not null").Length == 0)
+                    {
+                        
+                        objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTarMe));
+                        
+                        if (iKodRechiv.GetHashCode()== clGeneral.enRechivim.YomChofesh.GetHashCode() && objOved.objMeafyeneyOved.iMeafyen33 == 0)
+                        {
+                            addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1);
+                        }
+                        if (iKodRechiv.GetHashCode() == clGeneral.enRechivim.YomHeadrut.GetHashCode() && objOved.objMeafyeneyOved.iMeafyen33 == 1)
+                        {
+                            addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1);
+                        }
+                    }
+
+                    dTarMe = dTarMe.AddDays(1);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
         private void addRowToTable(int iKodRechiv, float fErechRechiv)
         {
             DataRow drChishuv;

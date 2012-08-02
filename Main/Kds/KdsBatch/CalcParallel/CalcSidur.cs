@@ -4110,7 +4110,34 @@ namespace KdsBatch
                     }
 
                 }
+                //ו'
+                if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
+                {
+                    _drSidurim = null;
+                    _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
+                    fErech = 0;
+                    for (int I = 0; I < _drSidurim.Length; I++)
+                    {
+                        iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
 
+                        dShatHatchalaSidur = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
+                        dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
+                        dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
+
+                        fErech = 0;
+                        if (oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom) || oCalcBL.CheckYomShishi(objOved.SugYom))
+                        {
+                            if (dShatGmarLetashlum > objOved.objParameters.dKnisatShabat && dShatHatchalaSidur < objOved.objParameters.dKnisatShabat)
+                            { fErech = float.Parse((objOved.objParameters.dKnisatShabat - dShatHatchalaLetashlum).TotalMinutes.ToString()); }
+
+                            if (fErech > 0)
+                            {
+                                addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                            }
+                        }
+                    }
+                   
+                }
                 //if ((oCalcBL.CheckYomShishi(iSugYom) || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim,iSugYom)) && fMichsaYomit == 0)
                 //{
                 //    _drSidurim = objOved.DtYemeyAvoda.Select("Lo_letashlum=0 and mispar_sidur is not null and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') and MISPAR_SIDUR IN(99011,99207,99007)");

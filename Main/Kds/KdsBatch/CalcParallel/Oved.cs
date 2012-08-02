@@ -37,7 +37,7 @@ namespace KdsBatch
         private DataTable _DtPeilut;
         public DateTime dTchilatAvoda;
         public DateTime dSiyumAvoda;
-
+        private float _fHashlamaAlCheshbonNosafot;
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
         public clMeafyenyOved objMeafyeneyOved { get; set; }
@@ -50,7 +50,10 @@ namespace KdsBatch
         public DataTable DtPeiluyotTnuaYomi { set; get; }
 
         public float fTotalAruchatZaharimForDay { set; get; }
-        public float fHashlamaAlCheshbonNosafot { set; get; }
+        public float fHashlamaAlCheshbonNosafot
+        {
+            set { _fHashlamaAlCheshbonNosafot = float.Parse(Math.Round(value, 3).ToString()); } 
+           get { return _fHashlamaAlCheshbonNosafot; } }
         
         public Oved(int mis_ishi, DateTime month, DateTime tarMe, DateTime tarAd, long BakashaId)
         {
@@ -485,6 +488,7 @@ namespace KdsBatch
             _DtDay = null;
             _DtPeilut = null;
             _DtPeilut = null;
+            _fHashlamaAlCheshbonNosafot=0;
             MeafyeneyOved = null;
             PirteyOved = null;
             oGeneralData = null;
