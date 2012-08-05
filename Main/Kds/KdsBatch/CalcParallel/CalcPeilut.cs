@@ -854,7 +854,7 @@ namespace KdsBatch
              }
              catch (Exception ex)
              {
-                 clLogBakashot.SetError(objOved.iBakashaId,  objOved.Mispar_ishi, "E", 0,objOved.Taarich, "CalcPeilut: " + ex.Message);
+                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, objOved.Taarich, "CalcPeilut: GetDetailsFromCatalaog:makat8=" + lMakatNesia + " " + ex.Message);
                  throw (ex);
              }
          }
