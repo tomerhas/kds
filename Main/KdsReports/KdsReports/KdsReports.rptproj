@@ -22,6 +22,10 @@
       <FullPath>Average.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>AverageRechivim.rdl</Name>
+      <FullPath>AverageRechivim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>AverageRechivValues.rdl</Name>
       <FullPath>AverageRechivValues.rdl</FullPath>
     </ProjectItem>
@@ -164,8 +168,8 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>AverageRechivim.rdl</Name>
-      <FullPath>AverageRechivim.rdl</FullPath>
+      <Name>Barcode.rdl</Name>
+      <FullPath>Barcode.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
