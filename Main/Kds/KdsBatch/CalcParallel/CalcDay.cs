@@ -4900,7 +4900,10 @@ namespace KdsBatch
                         if (fMichsaYomit == 0 && fDakotNocheut > 0)
                         {
                             fShaot100ET = Math.Min(120, fDakotNocheut);
-                            fShaot100ET = Math.Min(fErechRechiv, fShaot100ET);
+                            if (fErechRechiv > 0)
+                            {
+                                fShaot100ET = Math.Min(fErechRechiv, fShaot100ET);
+                            }
                             fErechRechiv = 0;
                          //   addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fErechRechiv);
                         }
