@@ -96,8 +96,8 @@ namespace KdsBatch
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
            }
 
-           if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
-           {
+           //if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
+           //{
                fErech = GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode());
                switch (_iGil)
                {
@@ -143,11 +143,11 @@ namespace KdsBatch
               // sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
                sErua416.Append(GetBlank(4));
                //sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode()), 4, 2));
-           }
-           else
-           {
-               sErua416.Append(GetBlank(32));
-           }
+           //}
+           //else
+           //{
+           //    sErua416.Append(GetBlank(32));
+           //}
            //_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode() &&
            if ( _iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
            {
@@ -159,8 +159,8 @@ namespace KdsBatch
            {
                sErua416.Append(GetBlank(4));
            }
-           if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
-           {
+           //if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
+           //{
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTipatChalav.GetHashCode()),4,2));
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomTeuna.GetHashCode()),4,2));
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomHadracha.GetHashCode()),4,2));
@@ -176,11 +176,11 @@ namespace KdsBatch
                fErech = GetErechRechiv(clGeneral.enRechivim.DakotTamritzNahagut.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.DakotTamritzTafkid.GetHashCode());
                sErua416.Append(FormatNumber(fErech, 5, 1));
-           }
-           else 
-           {
-               sErua416.Append(GetBlank(21));
-           }
+           //}
+           //else 
+           //{
+           //    sErua416.Append(GetBlank(21));
+           //}
 
            if (!IsEmptyErua(sErua416.ToString()))
            {
