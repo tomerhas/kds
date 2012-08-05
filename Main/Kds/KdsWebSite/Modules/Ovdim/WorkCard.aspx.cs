@@ -591,7 +591,10 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              btnPrevCard.Style.Add("Display", "none");
          }
      }
-
+     protected void UnloadPage()
+     {        
+        
+     }
      protected void LoadPage()
      {
          DataTable dtLicenseNumbers = new DataTable();
@@ -649,7 +652,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  //SD.btnReka +=new Modules_UserControl_ucSidurim.OnButtonClick(SD_btnReka);
                  //if ((!Page.IsPostBack) || (bool.Parse(ViewState["LoadNewCard"].ToString())))
                  if ((!Page.IsPostBack) || (hidRefresh.Value.Equals("1")))
-                 {
+                 {                     
                      Session["OvedYomAvodaDetails"] = oBatchManager.oOvedYomAvodaDetails;
                      Session["Errors"] = oBatchManager.dtErrors;
                      Session["Parameters"] = oBatchManager.oParam;
@@ -868,12 +871,18 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
 
              ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
+
+             if (Session["LoginUserEmp"] == null)
+                 UnloadCard();
          }
          //Before Load page, save field data for compare
          //_WorkCardBeforeChanges = InitWorkCardObject();             
 
      }
-
+     private void UnloadCard()
+     {
+         ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "UnloadCard", "alert('זמן התחברות נגמר, יש להתחבר מחדש'); window.close();", true);
+     }
      private string SendScript(bool bChishuvShachar, bool bCalculateAndNotRashemet)
      {
          string sScript = "";

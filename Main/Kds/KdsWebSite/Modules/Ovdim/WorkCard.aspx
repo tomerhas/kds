@@ -2,6 +2,7 @@
 <%@ Register Assembly="KdsLibrary" Namespace="KdsLibrary.Controls" TagPrefix="KdsCalendar"%>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <%@ Register TagPrefix="uc" Src="~/Modules/UserControl/ucSidurim.ascx" TagName="ucSidurim" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server" id="WCard">
@@ -17,7 +18,7 @@
 <body dir="rtl" style="margin:0px">
     <form id="frmWorkCard" runat="server" >    
     <asp:ScriptManager runat="server" ID="ScriptManagerKds" EnablePartialRendering="true" >        
-        <Scripts>
+        <Scripts>            
             <asp:ScriptReference Name="MicrosoftAjax.js" />
             <asp:ScriptReference Name="MicrosoftAjaxWebForms.js" />
             <asp:ScriptReference Name="AjaxControlToolkit.Common.Common.js" Assembly="AjaxControlToolkit, Version=3.0.30930.28736, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e" />
