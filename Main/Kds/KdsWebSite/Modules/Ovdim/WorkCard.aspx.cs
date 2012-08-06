@@ -4957,7 +4957,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ReportParameters.Add("P_MISPAR_ISHI", iMisparIshi.ToString());
 
         ReportParameters.Add("P_STARTDATE",dDateCard.AddDays(-DateTime.DaysInMonth(dDateCard.Year, dDateCard.Month)).ToShortDateString());
-        ReportParameters.Add("P_ENDDATE", dDateCard.ToShortDateString());
+        ReportParameters.Add("P_ENDDATE", DateTime.Now.ToShortDateString());
        
         OpenReport(ReportParameters, (Button)sender, ReportName.Presence.ToString());
     }
