@@ -957,7 +957,7 @@
                           <Top>1.49937cm</Top>
                           <Left>0.08805cm</Left>
                           <Height>1.62334cm</Height>
-                          <Width>19.66741cm</Width>
+                          <Width>19.66742cm</Width>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
                           </Visibility>
@@ -1663,8 +1663,9 @@
                                               <TextRun>
                                                 <Value>=iif(Fields!STATUS.Value=0 ,"כרטיס שגוי",
 iif(Fields!MICHSA_YOMIT.Value&gt;0 and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"חסר דיווח",
+iif((Fields!SHAT_HATCHALA.Value&lt;&gt;nothing or Fields!SHAT_GMAR.Value&lt;&gt;nothing) and (Fields!DAKOT_NOCHECHUT.Value=nothing or Fields!DAKOT_NOCHECHUT.Value=0) ,"לא לחישוב",
 iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אין דיווח" , 
- iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח",""))))</Value>
+ iif(Fields!SHAT_HATCHALA.Value=nothing or Fields!SHAT_GMAR.Value=nothing ,"חסר דיווח","")))))</Value>
                                                 <Style />
                                               </TextRun>
                                             </TextRuns>
@@ -1685,6 +1686,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -2348,7 +2350,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                           <Top>3.15536cm</Top>
                           <Left>0.13066cm</Left>
                           <Height>2.62021cm</Height>
-                          <Width>19.72455cm</Width>
+                          <Width>19.7246cm</Width>
                           <ZIndex>1</ZIndex>
                           <Visibility>
                             <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,false ,true)</Hidden>
@@ -2420,7 +2422,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                           <DataSetName>DsPremiotPresence</DataSetName>
                           <Top>0.03528cm</Top>
                           <Height>0.6cm</Height>
-                          <Width>2.5cm</Width>
+                          <Width>2.49999cm</Width>
                           <ZIndex>2</ZIndex>
                           <Style>
                             <Border>
@@ -2484,7 +2486,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         <DataSetName>DsPremiotPresence</DataSetName>
         <Top>0.07056cm</Top>
         <Height>5.82849cm</Height>
-        <Width>19.85521cm</Width>
+        <Width>19.8552cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2587,7 +2589,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
         <Top>5.98724cm</Top>
         <Left>0.50359cm</Left>
         <Height>2.53528cm</Height>
-        <Width>15.35954cm</Width>
+        <Width>15.35953cm</Width>
         <ZIndex>1</ZIndex>
         <Visibility>
           <Hidden>=iif(CountRows("DsPremiotPresence")&gt;0 ,true ,false)</Hidden>
