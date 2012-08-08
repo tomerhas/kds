@@ -1745,6 +1745,63 @@ namespace KdsLibrary.BL
                throw ex;
            }
        }
+
+       public int GetCountWorkCardNoShaotLetashlum(DateTime dTarMe, DateTime dTarAd, string sMaamad)
+       {
+           clDal oDal = new clDal();
+           int iCount;
+           try
+           {
+               oDal.AddParameter("p_count", ParameterType.ntOracleInteger, null, ParameterDir.pdReturnValue);
+               oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+               oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+               if (sMaamad.IndexOf(",") > 0)
+               {
+                   oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+               }
+               else
+               {
+                   oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
+               }
+               oDal.ExecuteSP(clGeneral.cProGetCountWorkCardNoShaotLetahlum);
+
+               iCount= int.Parse(oDal.GetValParam("p_count"));
+
+               return iCount;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
+
+       public DataTable GetWorkCardNoShaotLetashlum(DateTime dTarMe, DateTime dTarAd, string sMaamad)
+       {
+           DataTable dt = new DataTable();
+           clDal oDal = new clDal();
+           try
+           {
+               oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dTarMe, ParameterDir.pdInput);
+               oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dTarAd, ParameterDir.pdInput);
+               if (sMaamad.IndexOf(",") > 0)
+               {
+                   oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+               }
+               else
+               {
+                   oDal.AddParameter("p_maamad", ParameterType.ntOracleInteger, sMaamad, ParameterDir.pdInput);
+               }
+               oDal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+               oDal.ExecuteSP(clGeneral.cProGetWorkCardNoShaotLetahlum,ref dt);
+
+              
+               return dt;
+           }
+           catch (Exception ex)
+           {
+               throw ex;
+           }
+       }
     }
 }
 

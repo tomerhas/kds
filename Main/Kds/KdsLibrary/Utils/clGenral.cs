@@ -213,6 +213,9 @@ namespace KdsLibrary
         public const string cProGetMeafyenOvedLetkufot = "pkg_ovdim.pro_get_meafyen_oved_letkufot";
         public const string cProGetRikuzeyAvodaLeoved = "pkg_ovdim.pro_get_rikuzey_avoda_leoved";
         public const string cProGetOvdimLefiRikuzim = "pkg_ovdim.get_ovdim_by_Rikuzim";
+        public const string cProGetCountWorkCardNoShaotLetahlum = "pkg_ovdim.fun_get_count_no_val_letashlum";
+        public const string cProGetWorkCardNoShaotLetahlum = "pkg_ovdim.pro_get_workcad_no_val_letash";
+        
 #endregion
 
 #region PKG_PARAMETERS constants

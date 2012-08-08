@@ -11,6 +11,7 @@ using System.Web.UI.WebControls.WebParts;
 using KdsLibrary.BL;
 using KdsLibrary.UI;
 using KdsLibrary;
+using KdsBatch;
 
 public partial class Modules_Batches_RunCalcBatch : KdsPage
 {
@@ -43,9 +44,94 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
         }
     }
 
-    
 
 
+    protected void btnRunShinuyKelet_Click(object sender, EventArgs e)
+    {
+        clOvdim objOvdim = new clOvdim();
+        string sMaamad = "";
+        DateTime dFrom, dTo;
+        DataTable dtParametrim,dt;
+        clUtils oUtils = new clUtils();
+        int i;
+        bool nextStep = false;
+        string sMessage;
+        try
+        {
+            if (chkFriends.Checked) { sMaamad = clGeneral.enMaamad.Friends.GetHashCode().ToString(); }
+
+            if (chkSalarieds.Checked)
+            {
+                if (sMaamad.Length > 0) { sMaamad += ","; }
+                sMaamad += clGeneral.enMaamad.Salarieds.GetHashCode().ToString();
+            }
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
+            dt = objOvdim.GetWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
+            for (i = 0; i < dt.Rows.Count; i++)
+            {
+                clBatchManager btchMan = new clBatchManager(0);
+
+                try
+                {
+                    nextStep = btchMan.MainInputData(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
+
+                    if (nextStep)
+                    {
+                        nextStep = btchMan.MainOvedErrors(int.Parse(dt.Rows[i]["mispar_ishi"].ToString()), DateTime.Parse(dt.Rows[i]["taarich"].ToString()));
+                    }
+                 }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    btchMan.Dispose();
+                }
+            }
+            sMessage = "ההרצה בוצעה בהצלחה";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Err", "alert('" + sMessage + "');", true);
+         }
+        catch (Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message);
+        }
+    }
+
+    protected void btnCount_Click(object sender, EventArgs e)
+    {
+          clOvdim objOvdim = new clOvdim();
+         string sMaamad = "";
+         DateTime dFrom, dTo;
+         DataTable dtParametrim;
+         clUtils oUtils = new clUtils();
+         int iCount;
+         string sMessage;
+        try
+        {
+             if (chkFriends.Checked) { sMaamad = clGeneral.enMaamad.Friends.GetHashCode().ToString(); }
+
+            if (chkSalarieds.Checked)
+            {
+                if (sMaamad.Length > 0) { sMaamad += ","; }
+                sMaamad += clGeneral.enMaamad.Salarieds.GetHashCode().ToString();
+            }
+            dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
+            dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
+           iCount= objOvdim.GetCountWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
+           sMessage = "מספר כרטיסי עבודה עם שעת התחלה.גמר לתשלום חסרה: " + iCount;
+
+           ScriptManager.RegisterStartupScript(this,this.GetType(), "Err", "alert('" + sMessage + "');", true);
+
+        }
+        catch (Exception ex)
+        {
+            clGeneral.BuildError(Page, ex.Message);
+        }
+    }
 
     protected void btnRun_Click(object sender, EventArgs e)
     {
@@ -77,6 +163,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
             sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
              lblMessage.Text = sMessage;
              btnShowMessage_Click(this, new EventArgs());
+
            
         }
         catch (Exception ex)
@@ -89,7 +176,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
     protected void btnConfirm_Click(object sender, EventArgs e)
     {
         ModalPopupEx.Hide();
-        Page.Response.Redirect("~/Modules/Requests/MaakavBakashot.aspx?RequestId=" + ViewState["iRequestId"]);
+      Page.Response.Redirect("~/Modules/Requests/MaakavBakashot.aspx?RequestId=" + ViewState["iRequestId"]);
     
     }
 
