@@ -337,7 +337,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      protected void Page_PreRender(object sender, EventArgs e)
      {
        if (Session["Pakadim"] == null)
-            UnloadCard();
+           SD.UnloadCard(btnRefreshOvedDetails);
        else
             RenderPage();                
      }
@@ -882,10 +882,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          //_WorkCardBeforeChanges = InitWorkCardObject();             
 
      }
-     private void UnloadCard()
-     {
-         ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "UnloadCard", "alert('זמן ההתחברות נגמר, יש להתחבר מחדש'); window.close();", true);
-     }
+     //private void UnloadCard(Control ctl)
+     //{
+     //    ScriptManager.RegisterStartupScript(ctl, this.GetType(), "UnloadCard", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש לכרטיס העבודה'); window.close();", true);
+     //    //ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "UnloadCard", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש לכרטיס העבודה'); window.close();", true);
+     //}
      private string SendScript(bool bChishuvShachar, bool bCalculateAndNotRashemet)
      {
          string sScript = "";
@@ -2438,7 +2439,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
     {   //הוספת סידור מיוחד     
         if (Session["Parameters"] == null)
-            UnloadCard();
+           SD.UnloadCard(btnRefreshOvedDetails);
         else
         {
             SD.AddNewSidur();

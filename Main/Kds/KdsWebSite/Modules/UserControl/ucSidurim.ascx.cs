@@ -3167,7 +3167,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         try
         {
             if (Session["Pakadim"] == null)
-                UnloadCard();
+                UnloadCard(this);
             else
             {
                 OrderedDictionary hashSidurimPeiluyot = DataSource;
@@ -3186,9 +3186,9 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             throw ex;
         }
     }
-    private void UnloadCard()
+    public void UnloadCard(Control ctl)
     {
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "UnloadCard", "alert('זמן ההתחברות נגמר, יש להתחבר מחדש'); window.close();", true);
+        ScriptManager.RegisterStartupScript(ctl, this.GetType(), "UnloadCard", "alert('זמן ההתחברות הסתיים, יש להכנס מחדש לכרטיס העבודה'); window.close();", true);
     }
     private void AddNewSidurToHashTable()
     {

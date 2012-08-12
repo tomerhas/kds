@@ -470,25 +470,20 @@ function chkMkt(oRow) {
         }           
     }
     function callBackOto(result, oRow) {
-//        if (result == '-1') {
-//            unloadCard();
-//        }
-//        else {
-            var oId = String(oRow.id).substr(0, oRow.id.length - 6);
-            if (result == '0') {
-                var sBehaviorId = 'vldCarNumBehv'.concat(oId);
-                $find(sBehaviorId)._ensureCallout();
-                $find(sBehaviorId).show(true);
-                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";
-                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
-            }
-            else {
-                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
-                var OrgDisable = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled;
-                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = true;
-                CopyOtoNum(oRow);
-            }
-       // }
+        var oId = String(oRow.id).substr(0, oRow.id.length - 6);
+        if (result == '0') {
+            var sBehaviorId = 'vldCarNumBehv'.concat(oId);
+            $find(sBehaviorId)._ensureCallout();
+            $find(sBehaviorId).show(true);
+            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";
+            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
+        }
+        else {
+            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
+            var OrgDisable = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled;
+            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = true;
+            CopyOtoNum(oRow);
+        }     
     }
     function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt, PeilutAv)
     {   SetBtnChanges();

@@ -324,7 +324,7 @@ function GetDateDDMMYYYY(dDate){
    }
 
    function unloadCard() {
-       alert('זמן התחברות נגמר, יש להתחבר מחדש');
+       alert(' זמן ההתחברות הסתיים, יש להכנס מחדש לכרטיס העבודה');
        window.close();
    }
 
