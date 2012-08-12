@@ -43,11 +43,8 @@ public class wsGeneral : System.Web.Services.WebService
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
-    [WebMethod]
-    public string TestVered()
-    {
-        return "0";
-    }
+    
+    
     [WebMethod(EnableSession = true)]
     public string IsCardExists(int iMisparIshi, string sWorkCard)
     {
@@ -829,6 +826,15 @@ public class wsGeneral : System.Web.Services.WebService
         }
     }
     [WebMethod(EnableSession = true)]
+    public string IsSessionEnd()
+    {
+        if (Session["Pakadim"] == null)
+            return "{\"status\":\"1\"}" ;
+        else
+            return "{\"status\":\"0\"}";
+    }
+
+    [WebMethod(EnableSession = true)]
     public string[] GetAdminEmployeeById(string prefixText, int count, string contextKey)
     {   //מביא את כל המספרים האישיים  של העובדים הכפופים
         DataTable dt;
@@ -836,30 +842,36 @@ public class wsGeneral : System.Web.Services.WebService
 
         try
         {
-            KdsSecurityLevel _SecurityLevel = (KdsSecurityLevel)(Session["SecurityLevel"]);
-
-            if (_SecurityLevel == KdsSecurityLevel.ViewAll)
-            {
-                contextKey = "";
-            }
-            prefixText = string.Concat(prefixText, "%");
-            if (contextKey.Length > 0)
-            {
-                dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
-            }
+            List<string> items = new List<string>(count);
+            if (Session["SecurityLevel"] == null)
+                items.Add("-1");
             else
             {
-                dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
-            }
+                KdsSecurityLevel _SecurityLevel = (KdsSecurityLevel)(Session["SecurityLevel"]);
 
-            List<string> items = new List<string>(count);
+                if (_SecurityLevel == KdsSecurityLevel.ViewAll)
+                {
+                    contextKey = "";
+                }
+                prefixText = string.Concat(prefixText, "%");
+                if (contextKey.Length > 0)
+                {
+                    dt = oOvdim.GetOvdimToUser(prefixText, int.Parse(contextKey));
+                }
+                else
+                {
+                    dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
+                }
 
-            int i = 0;
-            foreach (DataRow dr in dt.Rows)
-            {
-                if (i > count) { break; }
-                items.Add(dr["mispar_ishi"].ToString());
-                i++;
+                
+
+                int i = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if (i > count) { break; }
+                    items.Add(dr["mispar_ishi"].ToString());
+                    i++;
+                }
             }
             return items.ToArray();
         }
@@ -1152,16 +1164,21 @@ public class wsGeneral : System.Web.Services.WebService
 
         try
         {
-            if (lOtoNo > 0)
-            {
-                //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
-                oKavim.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
-            }
+            //if (Session["Parameters"] == null)
+            //    lLicenseNumber =-1;
+            //else
+            //{
+                if (lOtoNo > 0)
+                {
+                    //בודק אם מספר רכב קיים בתנועה ואם כן מחזיר מספר רישוי
+                    oKavim.GetBusLicenseNumber(lOtoNo, ref lLicenseNumber);
+                }
+           // }
             return lLicenseNumber.ToString();
         }
         catch (Exception ex)
         {
-            throw ex;
+                throw ex;
         }
     }
     [WebMethod]
@@ -1188,20 +1205,25 @@ public class wsGeneral : System.Web.Services.WebService
         clPeilut _PeilutElement = new clPeilut();
         try
         {
-            if (lNewMakat > 0)
+            if (Session["Parameters"] == null)
+                sResult = "-1";
+            else
             {
-                //if ((sShatYetiza != string.Empty) || (sTravelDate != "01/01/0001"))
-                //{
+                if (lNewMakat > 0)
+                {
+                    //if ((sShatYetiza != string.Empty) || (sTravelDate != "01/01/0001"))
+                    //{
                     //בדיקה אם קיים מקט בתנועה
                     dtDetailsFromTnua = oKavim.GetMakatDetails(lNewMakat, DateTime.Parse(sCardDate));
                     if (dtDetailsFromTnua.Rows.Count > 0)
                     {
                         sResult = BuildMakatDetails(dtDetailsFromTnua, DateTime.Parse(sCardDate).ToShortDateString(),
-                                                    sShatYetiza, sDayToAdd, lNewMakat, lOldMakat,  iSidurIndex,  iPeilutIndex, ref _PeilutElement);
+                                                    sShatYetiza, sDayToAdd, lNewMakat, lOldMakat, iSidurIndex, iPeilutIndex, ref _PeilutElement);
                         //Update cash peilyot details from tnua
                         GetPeilyotTnuaDetails(iMisparIshi, DateTime.Parse(sCardDate), iSidurIndex, iPeilutIndex, lNewMakat, dtDetailsFromTnua, _PeilutElement);
                     }
-                //}
+                    //}
+                }
             }
             return sResult;
         }
@@ -2049,55 +2071,62 @@ public class wsGeneral : System.Web.Services.WebService
     [WebMethod(EnableSession = true)]
     public string SidurStartHourChanged(string sCardDate, int iSidurKey, string sNewStartHour, string sOrgStartHour, int iSidurIndex)
     {
-        OrderedDictionary odSidurim;
-        clSidur _Sidur = new clSidur();
-        DateTime dSidurStartHour;
-        DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0,0,0);
-        string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
-        if (!sNewStartHour.Equals(string.Empty))
-            dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
+        string sResult;
+        if (Session["Parameters"] == null)
+            sResult = "-1";
         else
-            dSidurStartHour = dStartHour;
-        
-        DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3,2)), 0);
-        
-        DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
-        DataRow[] dr;
-        string sResult = "0,0";
-        //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
-        if ((dSidurStartHour >= dStartHour) && (dSidurStartHour <= dEndHour) && ((!sNewStartHour.Equals(string.Empty)))) 
         {
-            sResult = "0,1";   
-            dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
-            if (dr.Length > 0)
+            OrderedDictionary odSidurim;
+            clSidur _Sidur = new clSidur();
+            DateTime dSidurStartHour;
+            DateTime dStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+
+            string sParam244 = ((KdsBatch.clParameters)(Session["Parameters"])).dShatHatchalaNahagutNihulTnua.ToShortTimeString();
+            if (!sNewStartHour.Equals(string.Empty))
+                dSidurStartHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sNewStartHour.Substring(0, 2)), int.Parse(sNewStartHour.Substring(3, 2)), 0);
+            else
+                dSidurStartHour = dStartHour;
+
+            DateTime dEndHour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, int.Parse(sParam244.Substring(0, 2)), int.Parse(sParam244.Substring(3, 2)), 0);
+
+            DataTable dtUpdateSidurim = (DataTable)Session["SidurimUpdated"];
+            DataRow[] dr;
+            sResult = "0,0";
+            //אם סידור נהגות או ניהול ושעת ההתחלה היא בין 0 ל- פרמרטר 244, נעלה הודעה של היום הבא
+            if ((dSidurStartHour >= dStartHour) && (dSidurStartHour <= dEndHour) && ((!sNewStartHour.Equals(string.Empty))))
             {
-                if (IsSidurMyuhad(iSidurKey.ToString()))
+                sResult = "0,1";
+                dr = dtUpdateSidurim.Select("sidur_number=" + iSidurKey + " and sidur_org_start_hour='" + DateTime.Parse(sOrgStartHour).ToShortTimeString() + "'");
+                if (dr.Length > 0)
                 {
-                    if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                    if (IsSidurMyuhad(iSidurKey.ToString()))
+                    {
+                        if ((dr[0]["sidur_nihul_tnua"].ToString().Equals("1")) || (dr[0]["sidur_nahagut"].ToString().Equals("1")))
+                            sResult = "1,1";
+                    }
+                    else
+                    {
                         sResult = "1,1";
+                    }
                 }
                 else
                 {
-                    sResult = "1,1";
+                    odSidurim = (OrderedDictionary)Session["Sidurim"];
+                    _Sidur = (clSidur)(odSidurim[iSidurIndex]);
+                    _Sidur.dSidurDate = DateTime.Parse(sOrgStartHour);
+                    if (IsNewSidurNahagutOrNihul(_Sidur))
+                        sResult = "1,1";
                 }
             }
-            else
-            {
-                odSidurim = (OrderedDictionary)Session["Sidurim"];
-                _Sidur = (clSidur)(odSidurim[iSidurIndex]);
-                _Sidur.dSidurDate = DateTime.Parse(sOrgStartHour);
-                if (IsNewSidurNahagutOrNihul(_Sidur))
-                    sResult = "1,1";
-            }           
-        }
 
-        if (sResult.Substring(0,1).Equals("0"))
-            UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0, iSidurIndex);
-        
-        //שינוי שעת התחלה - נבדוק אם צריך לפתוח/לסגור את שדה השלמה
-        string sRes = (IsHashlamaAllowed(iSidurIndex, sCardDate));
-        string sExecp = IsExecptionAllowed(iSidurIndex);
-        sResult = sResult + "," + sRes + "," + sExecp;
+            if (sResult.Substring(0, 1).Equals("0"))
+                UpdateSidurDate(sCardDate, iSidurKey, sOrgStartHour, sNewStartHour, 0, iSidurIndex);
+
+            //שינוי שעת התחלה - נבדוק אם צריך לפתוח/לסגור את שדה השלמה
+            string sRes = (IsHashlamaAllowed(iSidurIndex, sCardDate));
+            string sExecp = IsExecptionAllowed(iSidurIndex);
+            sResult = sResult + "," + sRes + "," + sExecp;
+        }
         return sResult;       
     }
 

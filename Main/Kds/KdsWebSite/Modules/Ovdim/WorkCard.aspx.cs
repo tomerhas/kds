@@ -335,8 +335,11 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          return bDisable;
      }
      protected void Page_PreRender(object sender, EventArgs e)
-     {        
-        RenderPage();                
+     {
+       if (Session["Pakadim"] == null)
+            UnloadCard();
+       else
+            RenderPage();                
      }
 
      protected void SetDDLToolTip(){
@@ -730,7 +733,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      SD.dtPakadim = (DataTable)Session["Pakadim"];
                      SD.dtIdkuneyRashemet = (DataTable)Session["IdkuneyRashemet"];                              
                  }
-             }            
+             }          
          }
          catch (Exception ex)
          {
@@ -872,8 +875,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
 
              ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "ColpImg", sScript, true);
 
-             if (Session["LoginUserEmp"] == null)
-                 UnloadCard();
+             //if (Session["LoginUserEmp"] == null)
+             //    UnloadCard();
          }
          //Before Load page, save field data for compare
          //_WorkCardBeforeChanges = InitWorkCardObject();             
@@ -881,7 +884,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      }
      private void UnloadCard()
      {
-         ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "UnloadCard", "alert('זמן התחברות נגמר, יש להתחבר מחדש'); window.close();", true);
+         ScriptManager.RegisterStartupScript(btnRefreshOvedDetails, this.GetType(), "UnloadCard", "alert('זמן ההתחברות נגמר, יש להתחבר מחדש'); window.close();", true);
      }
      private string SendScript(bool bChishuvShachar, bool bCalculateAndNotRashemet)
      {
@@ -2433,11 +2436,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         SD.BuildPage();
     }
     protected void btnAddSpecialSidur_Click(object sender, EventArgs e)
-    {   //הוספת סידור מיוחד       
-        SD.AddNewSidur();        
-        string sScript = "$get('SD_lblSidur" + (SD.DataSource.Count - 1).ToString() + "').focus();";
-        ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
-        bAddSidur = true;        
+    {   //הוספת סידור מיוחד     
+        if (Session["Parameters"] == null)
+            UnloadCard();
+        else
+        {
+            SD.AddNewSidur();
+            string sScript = "$get('SD_lblSidur" + (SD.DataSource.Count - 1).ToString() + "').focus();";
+            ScriptManager.RegisterStartupScript(btnAddMyuchad, this.GetType(), "AddSidur", sScript, true);
+            bAddSidur = true;
+        }
     }
     protected void btnFindSidur_Click(object sender, EventArgs e)
     {
@@ -2724,7 +2732,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     protected void RefreshScreen()
     {
         hidRefresh.Value = "1";
-        hidChanges.Value = "";
+        //hidChanges.Value = "";
         RunBatchFunctions();
 
         SetImageForButtonMeasherOMistayeg();
@@ -3035,6 +3043,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 break;
             case "SHAT_GMAR_LETASHLUM":
+                if (int.Parse((ConfigurationSettings.AppSettings["WriteToLog"]))==1)
+                    EventLog.WriteEntry("kds", "Rashemet shat_gmar_old: "+ oSidur.dOldFullShatGmarLetashlum + " shat_gmar_new: " + oSidur.dFullShatGmarLetashlum);
                 if (!oSidur.dOldFullShatGmarLetashlum.Equals(oSidur.dFullShatGmarLetashlum))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();

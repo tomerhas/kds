@@ -1,4 +1,6 @@
-﻿var bScreenChanged = false;
+﻿var webserviceUrl = "http://localhost:1813/KdsWebSite/Modules/WebServices/wsGeneral.asmx";
+var bScreenChanged = false;
+
     function OpenDiv(DivId, btnId){
         var oDiv = $get(DivId.toString());
         if (oDiv.style.display=='none'){        
@@ -760,16 +762,45 @@ function onUsrValidSuccess(result){
         EnabledAllFrames(false);
         SetRefreshBtn(true);
     }
-    else{
-        SetRefreshBtn(false);
+    else {
+        if (result.length == 1) {
+            if (result[0] == -1)
+                unloadCard();
+            else
+                SetRefreshBtn(false);
+        }
+        else
+            SetRefreshBtn(false);
     }
 }
+
 function onButtonFocusIn(btnID) {
   btnID.style.border = "1px solid black";
 }
 function onButtonFocusOut(btnID){
     btnID.style.border = "none";
 }
+
+
+//function IsSessionEnd() {   
+//    GetSessionStatus();
+//    setTimeout(IsSessionEnd(), 100000);
+//}
+//function GetSessionStatus() {
+//    $.ajax({
+//        type: "POST",
+//        url: webserviceUrl + "/IsSessionEnd",
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (data) {
+//            alert(data.d);
+//            // prepareStaticData(data.d);
+//        },
+//        error: function (result) {
+//           
+//        }
+//    });
+//}
 function setBorderBtns(){
     var aButton = document.getElementsByTagName('Input');
     for (var i = 0; i < aButton.length; i++) {

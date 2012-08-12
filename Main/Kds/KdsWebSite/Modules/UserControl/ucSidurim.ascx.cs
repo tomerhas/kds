@@ -3165,21 +3165,30 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         
         //הוספת סידור חדש
         try
-        {                    
-            OrderedDictionary hashSidurimPeiluyot = DataSource;
-            //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
-            UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
-            //נוסיף סידור חדש ל- Hash Table
-            AddNewSidurToHashTable();
+        {
+            if (Session["Pakadim"] == null)
+                UnloadCard();
+            else
+            {
+                OrderedDictionary hashSidurimPeiluyot = DataSource;
+                //נעדכן את השינויים שנעשו ברמת סידור ופעילויות
+                UpdateHashTableWithGridChanges(ref hashSidurimPeiluyot);
+                //נוסיף סידור חדש ל- Hash Table
+                AddNewSidurToHashTable();
 
-            //נציין כאילו שינוי הקלט עבדו בהצלחה
-            if (btnHandler != null)
-                btnHandler(string.Empty, true);
+                //נציין כאילו שינוי הקלט עבדו בהצלחה
+                if (btnHandler != null)
+                    btnHandler(string.Empty, true);
+            }
         }
         catch (Exception ex)
         {
             throw ex;
         }
+    }
+    private void UnloadCard()
+    {
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "UnloadCard", "alert('זמן ההתחברות נגמר, יש להתחבר מחדש'); window.close();", true);
     }
     private void AddNewSidurToHashTable()
     {

@@ -637,6 +637,12 @@
     </script>
     
     <script language="javascript" type="text/javascript">
+//      $(document).ready(function () {
+//         $("button").click(function () {
+//             $("div").load('txt1.txt');
+//         });
+//     });
+
          var iCount=0;
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck; 

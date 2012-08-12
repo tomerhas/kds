@@ -323,7 +323,10 @@ function GetDateDDMMYYYY(dDate){
        }
    }
 
-
+   function unloadCard() {
+       alert('זמן התחברות נגמר, יש להתחבר מחדש');
+       window.close();
+   }
 
    function GetOvedNameByIdSucceeded(result) {
       // alert(result);

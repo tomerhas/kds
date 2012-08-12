@@ -52,267 +52,275 @@ function chkMkt(oRow) {
             }         
         }
     function callBackMkt(result,sArrPrm)
-    {   
-        var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-        xmlDoc.async="false";
-        xmlDoc.loadXML(result);
-        root=xmlDoc.documentElement;
-        var sMeafyen6='0';
-        var sMeafyen7='999';
-        var bMeafyen6,bMeafyen7;
-        var bExist=false;var bMustCarNum=true;
-        var oRId=sArrPrm[0]; 
-        var iSidur=sArrPrm[1]; 
-        var iSidurVisa=sArrPrm[2]; 
-        var lOMkt=sArrPrm[6];
-        var lNewMkt = $get(oRId).cells[_COL_MAKAT].childNodes[0].value;
-        var iElementVal = lOMkt.substr(1,2);
-        var iSidurIndex = sArrPrm[7];
-        //אם לסידור יש מאפיין 93,94,95 אחד מהן לפחות ומשנים אלמנט שהספרות 2-3 שלו שוות לערך המאפיין
-        //לא ניתן לשנות את מספר האלמנט
-        if (Number(lOMkt.substr(0,1))==7){
-            if (((sArrPrm[3]==iElementVal) && (Number(sArrPrm[3])!=0)) || ((sArrPrm[4]==iElementVal) && (Number(sArrPrm[4])!=0)) || ((sArrPrm[5]==iElementVal) && (Number(sArrPrm[5])!=0))){                 
-                if (((lOMkt.substr(0,3)==lNewMkt.substr(0,3)))){}
-                else
-                {
-                    $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
-                    bExist=true;
-                    alert((' אלמנט '.concat(lOMkt)).concat(' חובה בסידור זה'));
+    {
+        if (result == "-1") {
+            unloadCard();
+        }
+        else {
+            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = "false";
+            xmlDoc.loadXML(result);
+            root = xmlDoc.documentElement;
+            var sMeafyen6 = '0';
+            var sMeafyen7 = '999';
+            var bMeafyen6, bMeafyen7;
+            var bExist = false; var bMustCarNum = true;
+            var oRId = sArrPrm[0];
+            var iSidur = sArrPrm[1];
+            var iSidurVisa = sArrPrm[2];
+            var lOMkt = sArrPrm[6];
+            var lNewMkt = $get(oRId).cells[_COL_MAKAT].childNodes[0].value;
+            var iElementVal = lOMkt.substr(1, 2);
+            var iSidurIndex = sArrPrm[7];
+            //אם לסידור יש מאפיין 93,94,95 אחד מהן לפחות ומשנים אלמנט שהספרות 2-3 שלו שוות לערך המאפיין
+            //לא ניתן לשנות את מספר האלמנט
+            if (Number(lOMkt.substr(0, 1)) == 7) {
+                if (((sArrPrm[3] == iElementVal) && (Number(sArrPrm[3]) != 0)) || ((sArrPrm[4] == iElementVal) && (Number(sArrPrm[4]) != 0)) || ((sArrPrm[5] == iElementVal) && (Number(sArrPrm[5]) != 0))) {
+                    if (((lOMkt.substr(0, 3) == lNewMkt.substr(0, 3)))) { }
+                    else {
+                        $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+                        bExist = true;
+                        alert((' אלמנט '.concat(lOMkt)).concat(' חובה בסידור זה'));
+                    }
                 }
             }
-        }
-        var oReka;
-        if (root != null) {
-            if (root.childNodes.length > 0) {
-                var _FirstChild = root.firstChild;
-                var iPeilutIndex;
-                iPos = String($get(oRId).id).indexOf("ctl");
-                iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
-                if (GetMakatType(lNewMkt) != MKT_ELEMENT) {                    
-                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + $get(oRId).id + "_AddReka" + $get(oRId).id + " name=SD$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaSD_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/down.png' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
+            var oReka;
+            if (root != null) {
+                if (root.childNodes.length > 0) {
+                    var _FirstChild = root.firstChild;
+                    var iPeilutIndex;
+                    iPos = String($get(oRId).id).indexOf("ctl");
+                    iPeilutIndex = String($get(oRId).id).substr(iPos + 3);
+                    if (GetMakatType(lNewMkt) != MKT_ELEMENT) {
+                        $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id=" + $get(oRId).id + "_AddReka" + $get(oRId).id + " name=SD$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaSD_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + " src='../../images/down.png' type=image  SdrInd=" + iSidurIndex + " PeilutInd=" + String(iPeilutIndex) + " NesiaReka='1'>"
+                    }
+                    else {
+                        if ($get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
+                            oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
+                            if ((oReka != null) && (oReka != undefined))
+                                $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
+                        }
+                        if ($get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes.length > 0) {
+                            oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute;
+                            if ((oReka != null) && (oReka != undefined))
+                                $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute("NesiaRekaUp", "0");
+                        }
+                        $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
+                        $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "";
+                    }
+                    while ((_FirstChild != null) && (!bExist)) {
+                        switch (_FirstChild.nodeName) {
+                            case "KISUY_TOR":
+                                $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
+                                break;
+                            case "KISUY_TOR_ENABLED":
+                                $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled = (_FirstChild.text == "0");
+                                break;
+                            case "KISUY_TOR_MAP":
+                                $get(oRId).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "DESC":
+                                if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue = _FirstChild.text;
+                                else
+                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "SHILUT":
+                                $get(oRId).cells[_COL_LINE].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "SHILUT_NAME":
+                                $get(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "MAZAN_TASHLUM":
+                                $get(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "DAKOT_DEF":
+                                $get(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;
+                                break;
+                            case "DAKOT_DEF_TITLE":
+                                $get(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;
+                                break;
+                            case "DAKOT_BAFOAL":
+                                $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
+                                $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat($get(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
+                                break;
+                            case "DAKOT_BAFOAL_ENABLED":
+                                $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled = (_FirstChild.text == "0");
+                                break;
+                            case "OTO_NO":
+                                $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
+                                break;
+                            case "OTO_NO_ENABLED":
+                                $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
+                                bMustCarNum = (_FirstChild.text == "1");
+                                if (_FirstChild.text == "1")
+                                    $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
+                                break;
+                            case "OTO_NO_TITEL":
+                                $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
+                                break;
+                            case "SHAT_YETIZA":
+                                $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
+                                break;
+                            case "SHAT_YETIZA_ENABLED":
+                                $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled = (_FirstChild.text == "0");
+                                break;
+                            case "MAKAT_NOT_EXIST":
+                                $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+                                $get(oRId).cells[_COL_MAKAT].childNodes[0].select();
+                                bExist = true;
+                                alert("אלמנט לא קיים");
+                                break;
+                            case "MEAFYEN6ERR":
+                                sMeafyen6 = _FirstChild.text;
+                                bMeafyen6 = true;
+                                break;
+                            case "MEAFYEN7ERR":
+                                sMeafyen7 = _FirstChild.text;
+                                bMeafyen7 = true;
+                                break;
+                            case "REKA_UP":
+                                $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='SD$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUpSD_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/up.png' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
+                                break;
+                            case "HYPER_LINK":
+                                if (_FirstChild.text == "1") {
+                                    if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                        $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + $get(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue + "</a>"; //"<".concat(_FirstChild.text) + "</a>";
+                                    else
+                                        $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + $get(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue + "</a>"; // "<".concat(_FirstChild.text) + "</a>";                            
+                                }
+                                else
+                                    if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML != null) {
+                                        if (($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML.toUpperCase().indexOf('<A')) > -1)
+                                            if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
+                                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue;
+                                            else
+                                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue;
+                                    }
+                                break;
+                        }
+                        _FirstChild = _FirstChild.nextSibling;
+                    }
+                    if ((!bExist)) {
+                        $get(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
+                        $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
+                        if ((bMeafyen6) || (bMeafyen7)) {
+                            alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
+                        } else
+                        //נשתול מספר רכב
+                            if (bMustCarNum)
+                                SetCarNumber(iSidurIndex, oRId, iPeilutIndex);
+                        SetBtnChanges();
+                    }
                 }
                 else {
-                    if ($get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes.length > 0) {
-                        oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute;
-                        if ((oReka != null) && (oReka != undefined))
-                            $get(oRId).cells[_COL_ADD_NESIA_REKA].childNodes[0].setAttribute("NesiaReka", "0");
-                    }
-                    if ($get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes.length > 0) {
-                        oReka = $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute;
-                        if ((oReka != null) && (oReka != undefined))
-                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].childNodes[0].setAttribute("NesiaRekaUp", "0");
-                    }
-                    $get(oRId).cells[_COL_ADD_NESIA_REKA].innerHTML = "";
-                    $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "";
+                    var sBehaviorId = 'vMNBeh'.concat(oRId);
+                    $find(sBehaviorId)._ensureCallout();
+                    $find(sBehaviorId).show(true);
                 }
-                while ((_FirstChild != null) && (!bExist)) {                    
-                    switch (_FirstChild.nodeName) {
-                        case "KISUY_TOR":
-                            $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].value = _FirstChild.text;
-                            break;
-                        case "KISUY_TOR_ENABLED":
-                            $get(oRId).cells[_COL_KISUY_TOR].childNodes[0].disabled = (_FirstChild.text == "0");
-                            break;
-                        case "KISUY_TOR_MAP":
-                            $get(oRId).cells[_COL_KISUY_TOR_MAP].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "DESC":
-                            if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue = _FirstChild.text;
-                            else
-                                $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "SHILUT":
-                            $get(oRId).cells[_COL_LINE].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "SHILUT_NAME":
-                            $get(oRId).cells[_COL_LINE_TYPE].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "MAZAN_TASHLUM":
-                            $get(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "DAKOT_DEF":
-                            $get(oRId).cells[_COL_DEF_MINUTES].childNodes[0].nodeValue = _FirstChild.text;
-                            break;
-                        case "DAKOT_DEF_TITLE":
-                            $get(oRId).cells[_COL_DEF_MINUTES].title = _FirstChild.text;
-                            break;
-                        case "DAKOT_BAFOAL":
-                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].value = _FirstChild.text;
-                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[1].errormessage = "יש להקליד ערך בין 0 ל -".concat($get(oRId).cells[_COL_MAZAN_TASHLUM].childNodes[0].nodeValue) + " דקות ";
-                            break;
-                        case "DAKOT_BAFOAL_ENABLED":
-                            $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].disabled = (_FirstChild.text == "0");
-                            break;
-                        case "OTO_NO":
-                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
-                            break;
-                        case "OTO_NO_ENABLED":
-                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = (_FirstChild.text == "0");
-                            bMustCarNum = (_FirstChild.text == "1"); 
-                            if (_FirstChild.text == "1")
-                                $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].setAttribute("MustOtoNum", "1");
-                            break;
-                        case "OTO_NO_TITEL":
-                            $get(oRId).cells[_COL_CAR_NUMBER].childNodes[0].title = _FirstChild.text;
-                            break;
-                        case "SHAT_YETIZA":
-                            $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].value = "";
-                            break;
-                        case "SHAT_YETIZA_ENABLED":
-                            $get(oRId).cells[_COL_SHAT_YETIZA].childNodes[0].disabled = (_FirstChild.text == "0");
-                            break;
-                        case "MAKAT_NOT_EXIST":
-                            $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
-                            $get(oRId).cells[_COL_MAKAT].childNodes[0].select();
-                            bExist = true;
-                            alert("אלמנט לא קיים");
-                            break;
-                        case "MEAFYEN6ERR":
-                            sMeafyen6 = _FirstChild.text;
-                            bMeafyen6 = true;
-                            break;
-                        case "MEAFYEN7ERR":
-                            sMeafyen7 = _FirstChild.text;
-                            bMeafyen7 = true;
-                            break;
-                        case "REKA_UP":
-                            $get(oRId).cells[_COL_ADD_NESIA_REKA_UP].innerHTML = "<INPUT style='BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px' id='" + $get(oRId).id + "_AddRekaUp" + $get(oRId).id + "' name='SD$" + PadDigits(iSidurIndex.toString(), 3) + "$ctl" + String(iPeilutIndex) + "$AddRekaUpSD_" + PadDigits(iSidurIndex.toString(), 3) + "_ctl" + String(iPeilutIndex) + "' src='../../images/up.png' type='image'  SdrInd='" + iSidurIndex + "' PeilutInd='" + String(iPeilutIndex) + "' NesiaRekaUp='1'>"
-                             break;
-                        case "HYPER_LINK":
-                            if (_FirstChild.text == "1") {
-                                if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + $get(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue + "</a>"; //"<".concat(_FirstChild.text) + "</a>";
-                                else
-                                    $get(oRId).cells[_COL_LINE_DESCRIPTION].innerHTML = "<a onclick='AddHosafatKnisot(" + iSidurIndex + "," + $get(oRId).id + ");' style='text-decoration:underline;cursor:pointer;'>" + $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue + "</a>"; // "<".concat(_FirstChild.text) + "</a>";                            
-                            }
-                            else
-                                if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML != null) {
-                                    if (($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML.toUpperCase().indexOf('<A')) > -1)
-                                        if ($get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue == null)
-                                            $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].firstChild.nodeValue;
-                                        else
-                                            $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].outerHTML = $get(oRId).cells[_COL_LINE_DESCRIPTION].childNodes[0].nodeValue;
-                                }
-                            break;
-                    }
-                    _FirstChild = _FirstChild.nextSibling;
-                }
-                if ((!bExist)){
-                    $get(oRId).cells[_COL_NETZER].childNodes[0].nodeValue = 'לא';
-                    $get(oRId).cells[_COL_ACTUAL_MINUTES].childNodes[0].nodeValue = '';
-                    if ((bMeafyen6) || (bMeafyen7)) {
-                        alert('יש להקליד ערך בתחום: ' + sMeafyen6 + " " + " עד " + sMeafyen7);
-                    } else
-                        //נשתול מספר רכב
-                        if (bMustCarNum)
-                            SetCarNumber(iSidurIndex, oRId, iPeilutIndex);
-                    SetBtnChanges();
-                } 
+            } else {
+                $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
+                alert('מספר מק"ט לא תקין');
             }
-            else {
-                var sBehaviorId = 'vMNBeh'.concat(oRId);
-                $find(sBehaviorId)._ensureCallout();
-                $find(sBehaviorId).show(true);
-            }
-        } else {
-            $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
-            alert('מספר מק"ט לא תקין');
-            }
+        }
     }
     function SetNewSidurCtls(iSidurNum, result){
-        //אחרי שמזינים מספר סידור חדש, נאפשר את שאר השדות לפי מאפייני הסידור    
-        var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-        xmlDoc.async="false";
-        xmlDoc.loadXML(result);
-        root = xmlDoc.documentElement;
-        if (root != null) {
-            if (root.childNodes.length > 0) {
-                 var _FirstChild = root.firstChild;
-                 while (_FirstChild != null){
-                     switch (_FirstChild.nodeName) {
-                         case "SHAT_HATCHALA":
-                            $get("SD_txtSH" + iSidurNum).disabled = false;               
-                             break;
-                         case "SHAT_GMAR":
-                               $get("SD_txtSG" + iSidurNum).disabled = false;                        
-                               break;
-                          case "SHAT_HATCHALA_LETASHLUM":
-                                 $get("SD_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
-                                 $get("SD_txtSHL" + iSidurNum).value = "";
-                                 break;
-                         case "SHAT_GMAR_LETASHLUM":
-                                 $get("SD_txtSGL" + iSidurNum).disabled = (_FirstChild.text == "0");
-                                 $get("SD_txtSGL" + iSidurNum).value = "";
-                                 break;
-                             case "DIVUCH_KNISA":
-                                 $get("SD_ddlResonIn" + iSidurNum).selected = "value";
-                                 $get("SD_ddlResonIn" + iSidurNum).value = "-1";
-                                 $get("SD_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");                                 
-                                 break;
-                             case "DIVUCH_YETIZA":
-                                 $get("SD_ddlResonOut" + iSidurNum).selected = "value";
-                                 $get("SD_ddlResonOut" + iSidurNum).value = -1;
-                                 $get("SD_ddlResonOut" + iSidurNum).disabled = (_FirstChild.text == "0");                                 
-                                 break;
-                         case "PITZUL_HAFSAKA":
-                             $get("SD_ddlPHfsaka" + iSidurNum).disabled = true;
-                             break;
-                         case "CHARIGA":
-                             $get("SD_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
-                             if (_FirstChild.text == "0")
-                                $get("SD_ddlException" + iSidurNum).value = "-1";
-                               break;
-                           case "HASHLAMA":
-                               if (_FirstChild.text == "0") {
-                                   $get("SD_ddlHashlama" + iSidurNum).disabled = true;
-                                   $get("SD_ddlHashlama" + iSidurNum).value = 0;
-                               }
-                               else {
-                                   wsGeneral.IsHashlamaAllowed(iSidurNum, $get("clnDate").value, callBackHashlama, null, iSidurNum);
+        //אחרי שמזינים מספר סידור חדש, נאפשר את שאר השדות לפי מאפייני הסידור
+        if (result == '-1')
+            unloadCard();
+        else {
+            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = "false";
+            xmlDoc.loadXML(result);
+            root = xmlDoc.documentElement;
+            if (root != null) {
+                if (root.childNodes.length > 0) {
+                    var _FirstChild = root.firstChild;
+                    while (_FirstChild != null) {
+                        switch (_FirstChild.nodeName) {
+                            case "SHAT_HATCHALA":
+                                $get("SD_txtSH" + iSidurNum).disabled = false;
+                                break;
+                            case "SHAT_GMAR":
+                                $get("SD_txtSG" + iSidurNum).disabled = false;
+                                break;
+                            case "SHAT_HATCHALA_LETASHLUM":
+                                $get("SD_txtSHL" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                $get("SD_txtSHL" + iSidurNum).value = "";
+                                break;
+                            case "SHAT_GMAR_LETASHLUM":
+                                $get("SD_txtSGL" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                $get("SD_txtSGL" + iSidurNum).value = "";
+                                break;
+                            case "DIVUCH_KNISA":
+                                $get("SD_ddlResonIn" + iSidurNum).selected = "value";
+                                $get("SD_ddlResonIn" + iSidurNum).value = "-1";
+                                $get("SD_ddlResonIn" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                break;
+                            case "DIVUCH_YETIZA":
+                                $get("SD_ddlResonOut" + iSidurNum).selected = "value";
+                                $get("SD_ddlResonOut" + iSidurNum).value = -1;
+                                $get("SD_ddlResonOut" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                break;
+                            case "PITZUL_HAFSAKA":
+                                $get("SD_ddlPHfsaka" + iSidurNum).disabled = true;
+                                break;
+                            case "CHARIGA":
+                                $get("SD_ddlException" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                if (_FirstChild.text == "0")
+                                    $get("SD_ddlException" + iSidurNum).value = "-1";
+                                break;
+                            case "HASHLAMA":
+                                if (_FirstChild.text == "0") {
+                                    $get("SD_ddlHashlama" + iSidurNum).disabled = true;
+                                    $get("SD_ddlHashlama" + iSidurNum).value = 0;
+                                }
+                                else {
+                                    wsGeneral.IsHashlamaAllowed(iSidurNum, $get("clnDate").value, callBackHashlama, null, iSidurNum);
 
-                               }
-                               break;
-                         case "OUT_MICHSA":
-                             $get("SD_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
-                             $get("SD_chkOutMichsa" + iSidurNum).checked = false;
-                             break;
-                         case "ADD_PEILUT":
-                             var sPrev = $get("SD_imgAddPeilut" + iSidurNum).style.display;
-                             if (_FirstChild.text == "0") {
-                                 $get("SD_imgAddPeilut" + iSidurNum).style.display = 'none';
-                                 if (sPrev == 'block')
-                                     $get("SD_imgAddPeilut" + iSidurNum).click();
-                             }
-                             else {
-                                 $get("SD_imgAddPeilut" + iSidurNum).style.display = 'block';
-                                 $get("SD_imgAddPeilut" + iSidurNum).disabled = false;
-                                 if (PeilutVisaExists(iSidurNum)){
-                                     $get("SD_hidGeneralParam").value="1";
-                                     $get("SD_imgAddPeilut" + iSidurNum).click();
-                                 }
-                             }
-                             break;
-                         case "SIDUR_VISA":
-                             if (_FirstChild.text == "1"){
-                                 //סידור ויזה   - הוספת פעילות   
-                                 $get("SD_hidGeneralParam").value = "1";
-                                 $get("SD_imgAddPeilut" + iSidurNum).click();
-                             }
-                             break;
-                     }                   
-                     _FirstChild = _FirstChild.nextSibling;
+                                }
+                                break;
+                            case "OUT_MICHSA":
+                                $get("SD_chkOutMichsa" + iSidurNum).disabled = (_FirstChild.text == "0");
+                                $get("SD_chkOutMichsa" + iSidurNum).checked = false;
+                                break;
+                            case "ADD_PEILUT":
+                                var sPrev = $get("SD_imgAddPeilut" + iSidurNum).style.display;
+                                if (_FirstChild.text == "0") {
+                                    $get("SD_imgAddPeilut" + iSidurNum).style.display = 'none';
+                                    if (sPrev == 'block')
+                                        $get("SD_imgAddPeilut" + iSidurNum).click();
+                                }
+                                else {
+                                    $get("SD_imgAddPeilut" + iSidurNum).style.display = 'block';
+                                    $get("SD_imgAddPeilut" + iSidurNum).disabled = false;
+                                    if (PeilutVisaExists(iSidurNum)) {
+                                        $get("SD_hidGeneralParam").value = "1";
+                                        $get("SD_imgAddPeilut" + iSidurNum).click();
+                                    }
+                                }
+                                break;
+                            case "SIDUR_VISA":
+                                if (_FirstChild.text == "1") {
+                                    //סידור ויזה   - הוספת פעילות   
+                                    $get("SD_hidGeneralParam").value = "1";
+                                    $get("SD_imgAddPeilut" + iSidurNum).click();
+                                }
+                                break;
+                        }
+                        _FirstChild = _FirstChild.nextSibling;
+                    }
                 }
             }
-         }
-         $get("SD_imgCancel".concat(iSidurNum)).disabled = false;
-         $get("SD_lblSidurCanceled".concat(iSidurNum)).disabled = false;
-         $get("SD_chkLoLetashlum".concat(iSidurNum)).disabled = false;
-         $get("SD_chkLoLetashlum".concat(iSidurNum)).setAttribute("OrgEnabled", "1");
-         $get("SD_chkLoLetashlum".concat(iSidurNum)).checked = false;
-         $get("SD_imgCancel".concat(iSidurNum)).className = "ImgChecked";
-         if ($get("SD_txtSH" + iSidurNum).disabled == false)
-             ($get("SD_txtSH" + iSidurNum)).focus();
+            $get("SD_imgCancel".concat(iSidurNum)).disabled = false;
+            $get("SD_lblSidurCanceled".concat(iSidurNum)).disabled = false;
+            $get("SD_chkLoLetashlum".concat(iSidurNum)).disabled = false;
+            $get("SD_chkLoLetashlum".concat(iSidurNum)).setAttribute("OrgEnabled", "1");
+            $get("SD_chkLoLetashlum".concat(iSidurNum)).checked = false;
+            $get("SD_imgCancel".concat(iSidurNum)).className = "ImgChecked";
+            if ($get("SD_txtSH" + iSidurNum).disabled == false)
+                ($get("SD_txtSH" + iSidurNum)).focus();
+        }
      }
      function ClearSidurTitle(iSidurIndex){
          _Sidur = $get("SD_lblSidur" + iSidurIndex);
@@ -461,21 +469,26 @@ function chkMkt(oRow) {
             }
         }           
     }
-    function callBackOto(result, oRow) {       
-        var oId = String(oRow.id).substr(0, oRow.id.length - 6);  
-        if (result=='0'){        
-            var sBehaviorId='vldCarNumBehv'.concat(oId);
-            $find(sBehaviorId)._ensureCallout();
-            $find(sBehaviorId).show(true);
-            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";
-            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";                                    
-        }
-        else{
-            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
-            var OrgDisable = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled;
-            $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = true;
-            CopyOtoNum(oRow);            
-        }    
+    function callBackOto(result, oRow) {
+//        if (result == '-1') {
+//            unloadCard();
+//        }
+//        else {
+            var oId = String(oRow.id).substr(0, oRow.id.length - 6);
+            if (result == '0') {
+                var sBehaviorId = 'vldCarNumBehv'.concat(oId);
+                $find(sBehaviorId)._ensureCallout();
+                $find(sBehaviorId).show(true);
+                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = "מספר רכב שגוי";
+                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].value = "";
+            }
+            else {
+                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].title = result;
+                var OrgDisable = $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled;
+                $get(oId).cells[_COL_CAR_NUMBER].childNodes[0].disabled = true;
+                CopyOtoNum(oRow);
+            }
+       // }
     }
     function ChangeStatusPeilut(Row, FirstMkt, OrgMktType, SubMkt, PeilutAv)
     {   SetBtnChanges();
@@ -968,33 +981,37 @@ function chkMkt(oRow) {
       var sCardDate = $get("clnDate").value;
 
       result = result.split(",");
-      if ((result[0] == '1') && (GetKeyPressPosition($get("SD_txtSH".concat(iIndex)))==5)) {
-          $get("SD_lblSidur".concat(iIndex)).disabled = true;
-          $get("SD_btnShowMessage").click();
-          $get("SD_lblSidur".concat(iIndex)).disabled = false;
-      }
-      else {
-          $get("SD_lblDate".concat(iIndex)).innerHTML = sCardDate;
-      }
-     var dSdDate = new Date();
-     var _SHNew = $get("SD_txtSH".concat(iIndex));
+      if  (result[0]=='-1')
+          unloadCard();
+        else{
+              if ((result[0] == '1') && (GetKeyPressPosition($get("SD_txtSH".concat(iIndex)))==5)) {
+                  $get("SD_lblSidur".concat(iIndex)).disabled = true;
+                  $get("SD_btnShowMessage").click();
+                  $get("SD_lblSidur".concat(iIndex)).disabled = false;
+              }
+              else {
+                  $get("SD_lblDate".concat(iIndex)).innerHTML = sCardDate;
+              }
+             var dSdDate = new Date();
+             var _SHNew = $get("SD_txtSH".concat(iIndex));
 
-     SetDate(dSidurSHDate, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), "0", "0");
-     dSidurSHDate.setDate(dSidurSHDate.getDate() + Number(result[1]));    
-     $get("SD_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(dSidurSHDate);
-     var sSdDate = $get("SD_lblDate".concat(iIndex)).innerHTML; 
-     var sYear = sSdDate.substr(sSdDate.length-4,4);
-     var sMonth = Number(sSdDate.substr(3, 2)) - 1;
-     var sDay = sSdDate.substr(0, 2);
-     SetDate(dSdDate, Number(sYear), Number(sMonth), Number(sDay), 0, 0);
-     _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
-     //השלמה 
-     $get("SD_ddlHashlama" + iIndex).disabled = (result[2] == '0');
-     if (result[2]=='1')
-         HasSidurHashlama();
+             SetDate(dSidurSHDate, Number(sCardDate.substr(6, 4)), Number(sCardDate.substr(3, 2)) - 1, Number(sCardDate.substr(0, 2)), "0", "0");
+             dSidurSHDate.setDate(dSidurSHDate.getDate() + Number(result[1]));    
+             $get("SD_lblDate".concat(iIndex)).innerHTML = GetDateDDMMYYYY(dSidurSHDate);
+             var sSdDate = $get("SD_lblDate".concat(iIndex)).innerHTML; 
+             var sYear = sSdDate.substr(sSdDate.length-4,4);
+             var sMonth = Number(sSdDate.substr(3, 2)) - 1;
+             var sDay = sSdDate.substr(0, 2);
+             SetDate(dSdDate, Number(sYear), Number(sMonth), Number(sDay), 0, 0);
+             _SHNew.title = "תאריך התחלת הסידור הוא: " + GetDateDDMMYYYY(dSdDate);
+             //השלמה 
+             $get("SD_ddlHashlama" + iIndex).disabled = (result[2] == '0');
+             if (result[2]=='1')
+                 HasSidurHashlama();
 
-     //חריגה
-     $get("SD_ddlException" + iIndex).disabled = (result[3] == '0');
+             //חריגה
+             $get("SD_ddlException" + iIndex).disabled = (result[3] == '0');
+        }
   }
   function ChkStartHour(val, args){      
         var iIndex = String(val.id).substr(String(val.id).length - 1, 1);
