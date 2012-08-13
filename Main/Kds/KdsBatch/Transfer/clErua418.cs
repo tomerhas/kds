@@ -26,7 +26,7 @@ namespace KdsBatch
           {
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  sErua418.Append(GetBlank(61));
+                  sErua418.Append(GetBlank(60));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode()), 5, 2));
