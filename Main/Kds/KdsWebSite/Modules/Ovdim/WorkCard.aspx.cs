@@ -3045,7 +3045,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 break;
             case "SHAT_GMAR_LETASHLUM":
                 if (int.Parse((ConfigurationSettings.AppSettings["WriteToLog"]))==1)
-                    EventLog.WriteEntry("kds", "Rashemet shat_gmar_old: "+ oSidur.dOldFullShatGmarLetashlum + " shat_gmar_new: " + oSidur.dFullShatGmarLetashlum);
+                    EventLog.WriteEntry("kds", "Rashemet shat_gmar_old: "+ oSidur.dOldFullShatGmarLetashlum + " shat_gmar_new: " + oSidur.dFullShatGmarLetashlum + " mispar-ishi: " + oSidur.iMisparIshi );
                 if (!oSidur.dOldFullShatGmarLetashlum.Equals(oSidur.dFullShatGmarLetashlum))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
