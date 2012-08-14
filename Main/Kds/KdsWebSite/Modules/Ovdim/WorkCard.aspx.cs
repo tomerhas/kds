@@ -3086,6 +3086,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 }
                 break;
             case "LO_LETASHLUM":
+                if (int.Parse((ConfigurationSettings.AppSettings["WriteToLog"])) == 1)
+                    EventLog.WriteEntry("kds", "Rashemet LoLetashlum_old: " + oSidur.iOldLoLetashlum + " LoLetashlum_new: " + oSidur.iLoLetashlum + " mispar-ishi: " + oSidur.iMisparIshi);
                 if (!oSidur.iOldLoLetashlum.Equals(oSidur.iLoLetashlum))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
@@ -3207,6 +3209,9 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 break;
             case "System.Web.UI.WebControls.DropDownList":
                 DropDownList _DDL = (DropDownList)obj;
+                if (int.Parse((ConfigurationSettings.AppSettings["WriteToLog"])) == 1)
+                    EventLog.WriteEntry("kds", "Rashemet DDL_old: " + _DDL.Attributes["OldV"].ToString() + " DDL_new: " + _DDL.SelectedValue + " mispar-ishi: " + iMisparIshi);
+                
                 if (!(_DDL.Attributes["OldV"]).ToString().Equals(_DDL.SelectedValue))
                 {
                     _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
