@@ -4866,7 +4866,8 @@ namespace KdsBatch
         private void CalcRechiv131()
         {
             //שבת/שעות 100% (רכיב 131):
-            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET ;
+            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET, fDakotNocheutGmar;
+            string sSidurim="";
             DataRow[] dr;
             try
             {
@@ -4900,9 +4901,14 @@ namespace KdsBatch
                         if (fMichsaYomit == 0 && fDakotNocheut > 0)
                         {
                             fShaot100ET = Math.Min(120, fDakotNocheut);
-                            if (fErechRechiv > 0)
+                            dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and Shat_gmar_Letashlum<=Convert('" + objOved.objParameters.dKnisatShabat.ToString() + "', 'System.DateTime')", "");
+                            for (int i = 0; i < dr.Length; i++)
+                                sSidurim += dr[i]["mispar_sidur"].ToString() + ",";
+                            sSidurim = sSidurim.Substring(0, sSidurim.Length - 1) ;
+                            fDakotNocheutGmar = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR in (" + sSidurim +")"));
+                            if (fErechRechiv > 0 && fDakotNocheutGmar>0)
                             {
-                                fShaot100ET = Math.Min(fErechRechiv, fShaot100ET);
+                                fShaot100ET = Math.Min(fErechRechiv + fDakotNocheutGmar, fShaot100ET);
                             }
                             fErechRechiv = 0;
                          //   addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fErechRechiv);
