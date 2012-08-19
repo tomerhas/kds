@@ -540,7 +540,8 @@ namespace KdsLibrary.Utils.Reports
         DriverWithPlaints,
         ChafifotSidureyNihulTnua,
         ReportNesiotKfulot,
-        IdkuneyRashemetMasach4
+        IdkuneyRashemetMasach4,
+        Query4
     }
     public enum Orientation
     {

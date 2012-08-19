@@ -439,4 +439,15 @@
       <DropDownList QueryType="Select"  Select="select -1 KOD_SNIF_TNUAA,'הכל' teur from dual union select KOD_SNIF_TNUAA,teur_snif_tnuaa ||' (' ||KOD_SNIF_TNUAA||')' teur from ctb_snifey_tnuaa ORDER BY KOD_SNIF_TNUAA" ValueField="KOD_SNIF_TNUAA" TextField="teur" />
     </Filter>
   </Report>
+  <Report  RdlName="Query4" Roles="kds_administrators" FilterByLine="3" PageHeader="רשימת סידורים לעובד (שאילתה 4) " >
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="TextBox" DataType="System.Int32">     
+    </Filter>
+    <Filter ParameterName="P_DATE" Caption="חודש" BoxeType="DropDown" DataType="System.String">
+      <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
+        <ParameterOfFunction Type="ByValue" Value="Query4" DataType="System.String" />
+        <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
+        <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
+      </DropDownList>
+    </Filter>
+  </Report>
 </DynamicReport>
