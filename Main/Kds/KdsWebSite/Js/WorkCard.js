@@ -150,17 +150,19 @@ var bScreenChanged = false;
         $get("btnCalcItem").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
         $get("btnPrevCard").disabled = (!bEnable);
-        $get("btnPrint").disabled = (!bEnable);
+        //$get("btnPrint").disabled = (!bEnable);
         $get("btnAddMyuchad").disabled = (!bEnable);
         $get("btnCloseCard").disabled = (!bEnable);
+        //$get("btnPrint").removeAttribute("disabled", 0);
         if (bEnable){
             $get("btnPrevCard").className = "btnPrevDay";
             $get("btnNextCard").className = "btnNextDay";
             $get("btnPrint").className = "btnWorkCardPrint";
-            $get("btnNextErrCard").className = "btnNextError";          
+            $get("btnNextErrCard").className = "btnNextError";
+            $get("btnPrint").disabled = "";         
           }
-        else
-        {
+        else {
+          $get("btnPrint").disabled = "disabled";
           $get("btnPrevCard").className = "btnPrevDayDis";
           $get("btnNextCard").className = "btnNextDayDis";
           $get("btnPrint").className = "btnWorkCardPrintDis";
@@ -683,7 +685,8 @@ function onMeasherSuccuss(result,iStatus)
         alert("אירעה שגיאה -סטטוס כרטיס לא התעדכן");    
     else
     {
-        $get("btnPrint").disabled = false;
+       // $get("btnPrint").removeAttribute("disabled", 0);
+        $get("btnPrint").attributes["disabled"] = ""; //false;
         $get("btnPrint").className = "btnWorkCardPrint";
         
         if(iStatus==1)
