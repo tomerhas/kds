@@ -4539,6 +4539,7 @@ namespace KdsBatch
         {
             float fSumDakotRechiv;
             DateTime dShatGmarAvoda;
+            string sSidurimMeyuchadim = "";
             try
             {
                 //יש לבצע את חישוב הרכיב רק עבור עובדים עם [שליפת מאפיין ביצוע (קוד מאפיין = 42, מ.א., תאריך)] עם ערך 70, אחרת אין לפתוח רשומה לרכיב זה בשום רמה.
@@ -4552,10 +4553,14 @@ namespace KdsBatch
                     fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), objOved.Taarich);
                     if (fSumDakotRechiv > objOved.objParameters.iMinZmanMishmeretShniaBameshek)
                     {
-                        dShatGmarAvoda = DateTime.Parse(objOved.DtYemeyAvodaYomi.Select(null, "SHAT_GMAR_SIDUR DESC")[0]["SHAT_GMAR_SIDUR"].ToString());
-                        if (dShatGmarAvoda >= objOved.objParameters.dSiyumMishmeretShniaBameshek)
+                        sSidurimMeyuchadim = oSidur.GetSidurimMeyuchRechiv(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode());
+                        if (sSidurimMeyuchadim.Length > 0)
                         {
-                            addRowToTable(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), 1);
+                            dShatGmarAvoda = DateTime.Parse(objOved.DtYemeyAvodaYomi.Select("MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")", "SHAT_GMAR_SIDUR DESC")[0]["SHAT_GMAR_SIDUR"].ToString());
+                            if (dShatGmarAvoda >= objOved.objParameters.dSiyumMishmeretShniaBameshek)
+                            {
+                                addRowToTable(clGeneral.enRechivim.MishmeretShniaBameshek.GetHashCode(), 1);
+                            }
                         }
                     }
                 }
