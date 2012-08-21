@@ -997,7 +997,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             Shtachim = 26,
             Aray = 27,
             GimlaiBechoze = 28,
-            Chanich=29
+            Chanich = 29,
+            PensyonerBechoze = 38,
+            GimlayTaktziviBechoze = 48,
+            PensyonerTakziviBechoze = 58
         }
         public enum enHrMaamad
         {            
