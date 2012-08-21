@@ -828,8 +828,7 @@
             SetMeasher(value); 
             if ($get('hidFromEmda').value =='true') 
             {        
-                $get("btnPrint").removeAttribute("disabled"); 
-                $get("btnPrint").setAttribute("disabled")='';                    
+                $get("btnPrint").disabled = false;                
                 $get("btnPrint").className="btnWorkCardPrint";
                 document.all('btnPrint').click(); 
             }            

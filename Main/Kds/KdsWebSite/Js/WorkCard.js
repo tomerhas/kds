@@ -150,19 +150,19 @@ var bScreenChanged = false;
         $get("btnCalcItem").disabled = (!bEnable);
         $get("btnNextCard").disabled = (!bEnable);
         $get("btnPrevCard").disabled = (!bEnable);
-        //$get("btnPrint").disabled = (!bEnable);
+        $get("btnPrint").disabled = (!bEnable);
         $get("btnAddMyuchad").disabled = (!bEnable);
         $get("btnCloseCard").disabled = (!bEnable);
         //$get("btnPrint").removeAttribute('disabled');
         if (bEnable) {
-            $get("btnPrint").attributes("disabled").nodeValue = '';            
+            //$get("btnPrint").attributes("disabled").nodeValue = '';            
             $get("btnPrevCard").className = "btnPrevDay";
             $get("btnNextCard").className = "btnNextDay";
             $get("btnPrint").className = "btnWorkCardPrint";
             $get("btnNextErrCard").className = "btnNextError";             
           }
         else {
-            $get("btnPrint").attributes("disabled").nodeValue = 'disabled';    
+           // $get("btnPrint").attributes("disabled").nodeValue = 'disabled';    
          // $get("btnPrint").disabled = "disabled";
           $get("btnPrevCard").className = "btnPrevDayDis";
           $get("btnNextCard").className = "btnNextDayDis";
