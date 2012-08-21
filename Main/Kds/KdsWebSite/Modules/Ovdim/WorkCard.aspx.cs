@@ -238,20 +238,22 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     btnNotApprove.Disabled = true;                    
                 }           
          }
-         // btnPrint.Enabled = true;
-         //btnPrint.Attributes.Remove("disabeld");
-         btnPrint.Attributes.Add("disabeld", "");
-         btnPrint.Attributes.Add("class","btnWorkCardPrint");
+         // btnPrint.Enabled = true;  
+         //btnPrint.Attributes.Remove("disabled");
+         //btnPrint.Attributes.Add("disabled", "");
+         //btnPrint.Attributes.Add("class","btnWorkCardPrint");
+         EnableCtl(btnPrint, false, "btnWorkCardPrint");
          clGeneral.enMeasherOMistayeg oMasherOMistayeg = (clGeneral.enMeasherOMistayeg)oBatchManager.oOvedYomAvodaDetails.iMeasherOMistayeg;
          switch (oMasherOMistayeg)
          {
              case clGeneral.enMeasherOMistayeg.ValueNull:
                  if ((!bRashemet) && (clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 <= oBatchManager.oParam.iValidDays))
                  {
-                     //btnPrint.Enabled = false;
-                     //btnPrint.Attributes.Remove("disabeld");
-                     btnPrint.Attributes.Add("disabeld", "disabled");
-                     btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
+                     //btnPrint.Enabled = false;    
+                     //btnPrint.Attributes.Remove("disabled");
+                     //btnPrint.Attributes.Add("disabled", "disabled");
+                     //btnPrint.Attributes.Add("class", "btnWorkCardPrintDis");
+                     EnableCtl(btnPrint, true, "btnWorkCardPrintDis");
                  }               
                  break;
              //case clGeneral.enMeasherOMistayeg.Measher:               
@@ -276,13 +278,20 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                      btnNotApprove.Attributes.Add("class", "ImgButtonDisApprovalRegular"); 
                  //btnPrint.Enabled = true;
 
-                 //btnPrint.Attributes.Remove("disabeld");
-                 btnPrint.Attributes.Add("disabeld", "");
-                 btnPrint.Attributes.Add("class", "btnWorkCardPrint");
+                 //btnPrint.Attributes.Remove("disabled");
+                 //btnPrint.Attributes.Add("disabled", "");
+                 //btnPrint.Attributes.Add("class", "btnWorkCardPrint");
+                 EnableCtl(btnPrint, false, "btnWorkCardPrint");
                  break;
          }
          SetImageForButtonMeasherOMistayeg();
          hidMeasherMistayeg.Value = oMasherOMistayeg.GetHashCode().ToString();
+     }
+     protected void EnableCtl(Button bCtl, bool bValue, string sClass)
+     {
+        //bCtl.Attributes.Add("disabled", bValue.ToString());
+        bCtl.Enabled = (!bValue);
+        bCtl.Attributes.Add("class", sClass);
      }
      protected bool IsPeilutEilatExist()
      {
