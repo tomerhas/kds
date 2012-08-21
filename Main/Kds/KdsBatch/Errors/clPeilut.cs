@@ -90,7 +90,8 @@ namespace KdsBatch
         public string sKodLechishuvPremia;
         public int iElementLeShatGmar;
         public enPeilutStatus oPeilutStatus;
-       
+        public string sHamtanaEilat;
+
         private const string COL_TRIP_EMPTY = "ריקה";
         private const string COL_TRIP_NAMAK = "נמ'ק";
         private const string COL_TRIP_ELEMENT = "אלמנט";
@@ -210,8 +211,9 @@ namespace KdsBatch
                     sElementNesiaReka = drMeafyeneyElements["nesia_reika"].ToString();
                     sElementInMinutes = drMeafyeneyElements["element_in_minutes"].ToString();
                     sKodLechishuvPremia = drMeafyeneyElements["kod_lechishuv_premia"].ToString();
-                    sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();    
-                       
+                    sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();
+                    sHamtanaEilat = drMeafyeneyElements["hamtana_eilat"].ToString();
+                    
                     sElementLershut = drMeafyeneyElements["Lershut"].ToString();
                     bElementLershutExists = !String.IsNullOrEmpty(drMeafyeneyElements["Lershut"].ToString());
                     iElementLeShatGmar = System.Convert.IsDBNull(drMeafyeneyElements["peilut_mashmautit"]) ? 0 : int.Parse(drMeafyeneyElements["peilut_mashmautit"].ToString());
@@ -300,7 +302,8 @@ namespace KdsBatch
                         sElementInMinutes = drMeafyeneyElements["element_in_minutes"].ToString();
                         sKodLechishuvPremia = drMeafyeneyElements["kod_lechishuv_premia"].ToString();
                         sElementLershut = drMeafyeneyElements["Lershut"].ToString();
-                        sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();    
+                        sLoNitzbarLishatGmar = drMeafyeneyElements["lo_nizbar_leshat_gmar"].ToString();
+                        sHamtanaEilat = drMeafyeneyElements["hamtana_eilat"].ToString();
                         bElementLershutExists = !String.IsNullOrEmpty(drMeafyeneyElements["Lershut"].ToString());
                         iElementLeShatGmar = System.Convert.IsDBNull(drMeafyeneyElements["peilut_mashmautit"]) ? 0 : int.Parse(drMeafyeneyElements["peilut_mashmautit"].ToString());
             
@@ -351,6 +354,7 @@ namespace KdsBatch
             sKodLechishuvPremia = dr["kod_lechishuv_premia"].ToString();
             sElementLershut= dr["Lershut"].ToString();
             sLoNitzbarLishatGmar= dr["lo_nizbar_leshat_gmar"].ToString();
+            sHamtanaEilat = dr["hamtana_eilat"].ToString();
             bElementLershutExists = !String.IsNullOrEmpty(dr["Lershut"].ToString());
             lMisparMatala = (System.Convert.IsDBNull(dr["mispar_matala"]) ? 0 : int.Parse(dr["mispar_matala"].ToString()));
             sBitulBiglalIchurLasidur = dr["bitul_biglal_ichur_lasidur"].ToString();
