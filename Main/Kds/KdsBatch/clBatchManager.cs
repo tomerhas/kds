@@ -227,7 +227,8 @@ namespace KdsBatch
             errKupaiWithNihulTnua = 187,
             errChofeshAlCheshbonShaotNosafot = 188,
             errKisuyTorLifneyHatchalatSidur =189,
-            errSidurLoTakefLetaarich=190
+            errSidurLoTakefLetaarich=190,
+            errIsukNahagImSidurTafkidNoMefyen=191
         }
 
         private enum errNesiaMeshtana
@@ -1272,6 +1273,7 @@ namespace KdsBatch
                     if (CheckErrorActive(180)) IsShatHatchalaLetashlumNull180(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(190)) SidurLoTakefLetarich190(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(191)) IsukNahagImSidurTafkidNoMefyen191(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -1588,6 +1590,30 @@ namespace KdsBatch
             return isValid;
         }
 
+        private bool IsukNahagImSidurTafkidNoMefyen191(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if (oOvedYomAvodaDetails.iIsuk >= 500 && oOvedYomAvodaDetails.iIsuk <= 600 && oSidur.iLoLetashlum == 1 && (oSidur.iKodSibaLoLetashlum == 4 || oSidur.iKodSibaLoLetashlum == 5 || oSidur.iKodSibaLoLetashlum == 17))
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק נהג עם סידור תפקיד ללא מאפיינים", enErrors.errIsukNahagImSidurTafkidNoMefyen.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errIsukNahagImSidurTafkidNoMefyen.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsukNahagImSidurTafkidNoMefyen191: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+        
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;
@@ -3933,7 +3959,7 @@ namespace KdsBatch
                 //אם  יש ערך בשדה לינה ובסידור האחרון יש פעילות מסוג אלמנט (לפי רוטינת זיהוי מקט) ולאלמנט יש מאפיין המתנה (15) - יוצא לשגיאה
                 if (!string.IsNullOrEmpty(oOvedYomAvodaDetails.sLina))
                 {
-                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists ) && oPeilut.lMakatNesia.ToString().PadLeft(8).Substring(0, 3) == "735")
+                    if ((oSidur.iMisparSidur == iLastMisaprSidur) && (int.Parse(oOvedYomAvodaDetails.sLina) > 0) && (oPeilut.iMakatType == clKavim.enMakatType.mElement.GetHashCode()) && (oPeilut.bElementHamtanaExists) && oPeilut.sHamtanaEilat == "1")
                     {
                         drNew = dtErrors.NewRow();
                         drNew["check_num"] = enErrors.errLoZakaiLLina.GetHashCode();
@@ -13290,25 +13316,8 @@ namespace KdsBatch
             try
             {
                 //אם אין מאפיין נסיעות (51, 61) - נעדכן ל0- 
-                if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
-                {
-                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                    {
-                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                }
-                else if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+               
+                 if (oOvedYomAvodaDetails.iKodHevra == clGeneral.enEmployeeType.enEggedTaavora.GetHashCode() && (!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
                 {
                     if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                     {
@@ -13326,6 +13335,24 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
                 }
+               else if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+                 {
+                     if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                     {
+                         oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = 0;
+                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                     }
+                     if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                     {
+                         oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
+                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                     }
+                     if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                     {
+                         oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
+                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                     }
+                 }
                 //else if ((oMeafyeneyOved.Meafyen61Exists || oMeafyeneyOved.Meafyen51Exists) && !bSidurShaon)
                 //{
                 //    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT")){
