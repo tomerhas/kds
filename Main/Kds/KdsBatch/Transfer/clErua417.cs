@@ -56,11 +56,12 @@ namespace KdsBatch
               }
               else if (_iMaamadRashi == clGeneral.enMaamad.Salarieds.GetHashCode())
               {
-                if (_iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode()&& _iMaamad != clGeneral.enKodMaamad.OvedBechoze.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Aray.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode())
-                {
+                  if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
+                   _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+                  {
                       sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode()), 4, 2));
-                }
-                else { sErua417.Append(GetBlank(4)); }
+                  }
+                  else { sErua417.Append(GetBlank(4)); }
               }
            //פרמיה משק - 115
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())

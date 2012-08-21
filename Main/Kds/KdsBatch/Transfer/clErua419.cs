@@ -29,7 +29,8 @@ namespace KdsBatch
           {
              
               sErua419.Append(GetBlank(32));
-              if (_iMaamadRashi != clGeneral.enMaamad.Friends.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode() && _iMaamad != clGeneral.enKodMaamad.Sachir12.GetHashCode())
+              if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
+                  _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
               {
                   sErua419.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode()), 4, 2));
               }
