@@ -379,8 +379,8 @@ namespace KdsBatch
             try
             {
                oGeneralData.dtSugeyYechidaAll.Select(null, "mispar_ishi");
-    
-                rows = oGeneralData.dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and me_tarich <= Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich  >= Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime') ");
+
+               rows = oGeneralData.dtSugeyYechidaAll.Select("mispar_ishi= " + Mispar_ishi + " and ((Convert('" + Month.ToShortDateString() + "', 'System.DateTime')>=me_tarich and  Convert('" + Month.ToShortDateString() + "', 'System.DateTime')<=ad_tarich)  or (Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')>=me_tarich  and  Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')<=ad_tarich) or  (me_tarich>=Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and ad_tarich<=Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')))");
                 if (rows.Length > 0)
                 {
                     DtSugeyYechida = rows.CopyToDataTable();
