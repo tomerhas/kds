@@ -37,7 +37,8 @@ namespace KdsBatch
 
                sErua416.Append(FormatNumber(fErech,4,2));
            }
-          else if (_iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Chanich.GetHashCode())
+          else if (_iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.GimlaiBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Chanich.GetHashCode() ||
+              _iMaamad == clGeneral.enKodMaamad.PensyonerBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.GimlayTaktziviBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.PensyonerTakziviBechoze.GetHashCode())
            {
                fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
@@ -83,6 +84,7 @@ namespace KdsBatch
            {
                fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
             //   fErech += GetErechRechiv(clGeneral.enRechivim.YomMiluim.GetHashCode());
+               fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
                fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
