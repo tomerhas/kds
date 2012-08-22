@@ -113,12 +113,12 @@ Public Class ClKds
         Dim FoundAMatch As Boolean
         Dim SwIsOpen As Boolean
         Dim KeepIin As Integer
-        Dim SRV_D_KNISA_letashlum_X As String
-        Dim SRV_D_YETZIA_letashlum_X As String
-        Dim TAARICH_knisa_letashlum_p24 As String
-        Dim TAARICH_yetzia_letashlum_p24 As String
-        Dim Times_knisa_letashlum_p24 As Integer
-        Dim Times_yetzia_letashlum_p24 As Integer
+        Dim SRV_D_KNISA_letashlum_musach_X As String
+        Dim SRV_D_gmar_letashlum_musach_X As String
+        Dim TAARICH_knisa_musach_p24 As String
+        Dim TAARICH_gmar_musach_p24 As String
+        Dim Times_knisa_musach_p24 As Integer
+        Dim Times_gmar_musach_p24 As Integer
         Dim InpStr As String
         Dim FoundAchange As Boolean
         Dim check_chariga As String
@@ -307,13 +307,13 @@ Public Class ClKds
                             FoundAchange = True
                         End If
                         'SRV_D_new_sidur = Mid(line, 82, 5)
-                        SRV_D_KNISA_letashlum_X = Mid(line, 87, 4)
-                        If SRV_D_KNISA_letashlum_X = "0000" Then
-                            SRV_D_KNISA_letashlum_X = "  "
+                        SRV_D_KNISA_letashlum_musach_X = Mid(line, 87, 4)
+                        If SRV_D_KNISA_letashlum_musach_X = "0000" Then
+                            SRV_D_KNISA_letashlum_musach_X = "  "
                         End If
-                        SRV_D_YETZIA_letashlum_X = Mid(line, 91, 4)
-                        If SRV_D_YETZIA_letashlum_X = "0000" Then
-                            SRV_D_YETZIA_letashlum_X = "  "
+                        SRV_D_gmar_letashlum_musach_X = Mid(line, 91, 4)
+                        If SRV_D_gmar_letashlum_musach_X = "0000" Then
+                            SRV_D_gmar_letashlum_musach_X = "  "
                         End If
 
                         TAARICH_yetzia_p24 = ""
@@ -329,29 +329,29 @@ Public Class ClKds
                                 End If
                             End If
                         End If
-                        TAARICH_knisa_letashlum_p24 = ""
-                        'Times_knisa_letashlum_p24 = 0
-                        If Not Trim(Mid(SRV_D_KNISA_letashlum_X, 1, 2)) = "" Then
-                            If CInt(Mid(SRV_D_KNISA_letashlum_X, 1, 2)) >= 24 Then
+                        TAARICH_knisa_musach_p24 = ""
+                        'Times_knisa_musach_p24 = 0
+                        If Not Trim(Mid(SRV_D_KNISA_letashlum_musach_X, 1, 2)) = "" Then
+                            If CInt(Mid(SRV_D_KNISA_letashlum_musach_X, 1, 2)) >= 24 Then
                                 'in case hour is=>24
-                                Times_knisa_letashlum_p24 = CInt(Abs(CInt(Mid(SRV_D_KNISA_letashlum_X, 1, 2)) / 24))
-                                SRV_D_KNISA_letashlum_X = (CInt(SRV_D_KNISA_letashlum_X) - Times_knisa_letashlum_p24 * 2400).ToString
-                                TAARICH_knisa_letashlum_p24 = "+" & Times_knisa_letashlum_p24.ToString
-                                If Len(SRV_D_KNISA_letashlum_X) < 4 Then
-                                    SRV_D_KNISA_letashlum_X = Left(efes, 4 - Len(SRV_D_KNISA_letashlum_X)) & SRV_D_KNISA_letashlum_X
+                                Times_knisa_musach_p24 = CInt(Abs(CInt(Mid(SRV_D_KNISA_letashlum_musach_X, 1, 2)) / 24))
+                                SRV_D_KNISA_letashlum_musach_X = (CInt(SRV_D_KNISA_letashlum_musach_X) - Times_knisa_musach_p24 * 2400).ToString
+                                TAARICH_knisa_musach_p24 = "+" & Times_knisa_musach_p24.ToString
+                                If Len(SRV_D_KNISA_letashlum_musach_X) < 4 Then
+                                    SRV_D_KNISA_letashlum_musach_X = Left(efes, 4 - Len(SRV_D_KNISA_letashlum_musach_X)) & SRV_D_KNISA_letashlum_musach_X
                                 End If
                             End If
                         End If
-                        TAARICH_yetzia_letashlum_p24 = ""
-                        'Times_yetzia_letashlum_p24 = 0
-                        If Not Trim(Mid(SRV_D_YETZIA_letashlum_X, 1, 2)) = "" Then
-                            If CInt(Mid(SRV_D_YETZIA_letashlum_X, 1, 2)) >= 24 Then
+                        TAARICH_gmar_musach_p24 = ""
+                        'Times_gmar_musach_p24 = 0
+                        If Not Trim(Mid(SRV_D_gmar_letashlum_musach_X, 1, 2)) = "" Then
+                            If CInt(Mid(SRV_D_gmar_letashlum_musach_X, 1, 2)) >= 24 Then
                                 'in case hour is=>24
-                                Times_yetzia_letashlum_p24 = CInt(Abs(CInt(Mid(SRV_D_YETZIA_letashlum_X, 1, 2)) / 24))
-                                SRV_D_YETZIA_letashlum_X = (CInt(SRV_D_YETZIA_letashlum_X) - Times_yetzia_letashlum_p24 * 2400).ToString
-                                TAARICH_yetzia_letashlum_p24 = "+" & Times_yetzia_letashlum_p24.ToString
-                                If Len(SRV_D_YETZIA_letashlum_X) < 4 Then
-                                    SRV_D_YETZIA_letashlum_X = Left(efes, 4 - Len(SRV_D_YETZIA_letashlum_X)) & SRV_D_YETZIA_letashlum_X
+                                Times_gmar_musach_p24 = CInt(Abs(CInt(Mid(SRV_D_gmar_letashlum_musach_X, 1, 2)) / 24))
+                                SRV_D_gmar_letashlum_musach_X = (CInt(SRV_D_gmar_letashlum_musach_X) - Times_gmar_musach_p24 * 2400).ToString
+                                TAARICH_gmar_musach_p24 = "+" & Times_gmar_musach_p24.ToString
+                                If Len(SRV_D_gmar_letashlum_musach_X) < 4 Then
+                                    SRV_D_gmar_letashlum_musach_X = Left(efes, 4 - Len(SRV_D_gmar_letashlum_musach_X)) & SRV_D_gmar_letashlum_musach_X
                                 End If
                             End If
                         End If
@@ -385,8 +385,8 @@ Public Class ClKds
                         InpStr = InpStr & "," & SRV_D_ISHI_MEADKEN & "," & SRV_D_KOD_BITUL_ZMAN_NESIA_X
                         InpStr = InpStr & "," & SRV_D_KOD_CHARIGA_X & "," & SRV_D_KOD_HALBASHA_X & "," & SRV_D_KOD_HAZMANA_X
                         InpStr = InpStr & "," & TAARICH_knisa_p24 & "," & TAARICH_yetzia_p24 & "," & DatEfes
-                        InpStr = InpStr & "," & TAARICH_knisa_letashlum_p24 & "," & SRV_D_KNISA_letashlum_X
-                        InpStr = InpStr & "," & TAARICH_yetzia_letashlum_p24 & "," & SRV_D_YETZIA_letashlum_X
+                        InpStr = InpStr & "," & TAARICH_knisa_musach_p24 & "," & SRV_D_KNISA_letashlum_musach_X
+                        InpStr = InpStr & "," & TAARICH_gmar_musach_p24 & "," & SRV_D_gmar_letashlum_musach_X
                         'find the day after
                         dt = Nothing
                         dt = New DataTable
@@ -429,7 +429,7 @@ Public Class ClKds
                             'KdsSql = KdsSql & " values  ( "
                             'KdsSql = KdsSql & SRV_D_ISHI & ","
                             'KdsSql = KdsSql & "to_date('" & SRV_D_TAARICH & "','yyyymmdd')" & TAARICH_knisa_p24 & " ); "
-                    End If
+                        End If
 
                         'extract all records from sidurim_ovdim to a dataset
                         'clean parameters:
@@ -444,7 +444,7 @@ Public Class ClKds
                         oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                         oDal.AddParameter("psidur", KdsLibrary.DAL.ParameterType.ntOracleVarchar, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                         oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
-                        oDal.ExecuteSP("PKG_BATCH.pro_GetListDs", ds)
+                        oDal.ExecuteSP("PKG_clock.pro_GetListDs", ds)
                         NumLInDS = ds.Tables(0).Rows.Count
                         'End If
 
@@ -465,8 +465,8 @@ Public Class ClKds
         SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
         SRV_D_KOD_HAZMANA_X, _
         TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-        TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-        TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+        TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+        TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                             'todo: send datefes for new_rec
                             'add this new rec to the dataset for the next line.
                             dr = ds.Tables(0).NewRow
@@ -494,18 +494,18 @@ Public Class ClKds
                                     dr.Item("shat_gmar") = SRV_D_TAARICH & SRV_D_YETZIA_X
                                 End If
                             End If
-                            If Not SRV_D_KNISA_letashlum_X = "" Then
-                                If Not TAARICH_knisa_letashlum_p24 = "" Then
-                                    dr.Item("shat_hatchala_letashlum") = thenextday & SRV_D_KNISA_letashlum_X
+                            If Not SRV_D_KNISA_letashlum_musach_X = "" Then
+                                If Not TAARICH_knisa_musach_p24 = "" Then
+                                    dr.Item("shat_hatchala_letashlum_musach") = thenextday & SRV_D_KNISA_letashlum_musach_X
                                 Else
-                                    dr.Item("shat_hatchala_letashlum") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_X
+                                    dr.Item("shat_hatchala_letashlum_musach") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X
                                 End If
                             End If
-                            If Not SRV_D_YETZIA_letashlum_X = "" Then
-                                If Not TAARICH_yetzia_letashlum_p24 = "" Then
-                                    dr.Item("shat_gmar_letashlum") = thenextday & SRV_D_YETZIA_letashlum_X
+                            If Not SRV_D_gmar_letashlum_musach_X = "" Then
+                                If Not TAARICH_gmar_musach_p24 = "" Then
+                                    dr.Item("shat_gmar_letashlum_musach") = thenextday & SRV_D_gmar_letashlum_musach_X
                                 Else
-                                    dr.Item("shat_gmar_letashlum") = SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X
+                                    dr.Item("shat_gmar_letashlum_musach") = SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X
                                 End If
                             End If
                             ds.Tables(0).Rows.InsertAt(dr, NumLInDS)
@@ -568,22 +568,22 @@ Public Class ClKds
                                 If (Not SRV_D_KNISA_X = "") And SRV_D_YETZIA_X = "" Then 'only in
                                     If ez3 = 1 Then
                                         '2) duplicate - exit
-                                        If Not Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                                            If Not ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum").ToString = SRV_D_KNISA_letashlum_X Then
+                                        If Not Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                                            If Not ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach").ToString = SRV_D_KNISA_letashlum_musach_X Then
                                                 'KdsSql2 = 
                                                 FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
                                                 upd_in_out_letashlum(SRV_D_ISHI, SRV_D_TAARICH, calc_D_new_sidur, _
                                  SRV_D_KNISA_X, SRV_D_YETZIA_X, SRV_D_ISHI_MEADKEN, _
                                  SRV_D_KOD_BITUL_ZMAN_NESIA_X, SRV_D_KOD_HALBASHA_X, _
-                                 SRV_D_KOD_CHARIGA_X,   SRV_D_KOD_HAZMANA_X, _
+                                 SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HAZMANA_X, _
                                  TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                 TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                 TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
-                                                If Not TAARICH_knisa_letashlum_p24 = "" Then
-                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = thenextday & SRV_D_KNISA_letashlum_X
+                                 TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                 TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
+                                                If Not TAARICH_knisa_musach_p24 = "" Then
+                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = thenextday & SRV_D_KNISA_letashlum_musach_X
                                                 Else
-                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_X
+                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X
                                                 End If
                                             End If
                                         End If
@@ -611,15 +611,15 @@ Public Class ClKds
                                 SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                                 SRV_D_KOD_HAZMANA_X, _
                                 TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                                TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                                 'upd this rec in the dataset.
                                                 ds.Tables(0).Rows(i).Item("shat_hatchala") = knisa_2chck
-                                                If Not SRV_D_KNISA_letashlum_X = "" Then
-                                                    If Not TAARICH_knisa_letashlum_p24 = "" Then
-                                                        ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = thenextday & SRV_D_KNISA_letashlum_X
+                                                If Not SRV_D_KNISA_letashlum_musach_X = "" Then
+                                                    If Not TAARICH_knisa_musach_p24 = "" Then
+                                                        ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = thenextday & SRV_D_KNISA_letashlum_musach_X
                                                     Else
-                                                        ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_X
+                                                        ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X
                                                     End If
                                                 End If
                                                 i = NumLInDS - 1
@@ -663,8 +663,8 @@ Public Class ClKds
                                 SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                                 SRV_D_KOD_HAZMANA_X, _
                                 TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                                TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                         Else
                                             'KdsSql2 = 
                                             'If calc_D_new_sidur <> 99200 Then
@@ -679,8 +679,8 @@ Public Class ClKds
                                 SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                                 SRV_D_KOD_HAZMANA_X, _
                                 TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                                TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                         End If
                                         'add this new rec to the dataset for the next line.
                                         dr = ds.Tables(0).NewRow
@@ -701,11 +701,11 @@ Public Class ClKds
                                         If Not SRV_D_YETZIA_X = "" Then
                                             dr.Item("shat_gmar") = yetzia_2chck
                                         End If
-                                        If Not SRV_D_KNISA_letashlum_X = "" Then
-                                            If Not TAARICH_knisa_letashlum_p24 = "" Then
-                                                dr.Item("shat_hatchala_letashlum") = thenextday & SRV_D_KNISA_letashlum_X
+                                        If Not SRV_D_KNISA_letashlum_musach_X = "" Then
+                                            If Not TAARICH_knisa_musach_p24 = "" Then
+                                                dr.Item("shat_hatchala_letashlum_musach") = thenextday & SRV_D_KNISA_letashlum_musach_X
                                             Else
-                                                dr.Item("shat_hatchala_letashlum") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_X
+                                                dr.Item("shat_hatchala_letashlum_musach") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X
                                             End If
                                         End If
                                         ds.Tables(0).Rows.InsertAt(dr, NumLInDS)
@@ -719,9 +719,9 @@ Public Class ClKds
                                         'check next line
                                     ElseIf ez3 = 1 And ez4 = 1 Then
                                         '5) complete duplicate
-                                        If Not (Trim(SRV_D_KNISA_letashlum_X) = "" And Trim(SRV_D_YETZIA_letashlum_X) = "") Then
-                                            If Not (ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum").ToString = SRV_D_KNISA_letashlum_X _
-                                                And ds.Tables(0).Rows(i).Item("shat_gmar_letashlum").ToString = SRV_D_YETZIA_letashlum_X) Then
+                                        If Not (Trim(SRV_D_KNISA_letashlum_musach_X) = "" And Trim(SRV_D_gmar_letashlum_musach_X) = "") Then
+                                            If Not (ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach").ToString = SRV_D_KNISA_letashlum_musach_X _
+                                                And ds.Tables(0).Rows(i).Item("shat_gmar_letashlum_musach").ToString = SRV_D_gmar_letashlum_musach_X) Then
                                                 'KdsSql2 = 
                                                 FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
@@ -730,21 +730,21 @@ Public Class ClKds
                                  SRV_D_KOD_BITUL_ZMAN_NESIA_X, SRV_D_KOD_HALBASHA_X, _
                                   SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HAZMANA_X, _
                                  TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                 TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                 TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                                 TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                 TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                             End If
-                                            If Not Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                                                If Not TAARICH_knisa_letashlum_p24 = "" Then
-                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = thenextday & SRV_D_KNISA_letashlum_X
+                                            If Not Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                                                If Not TAARICH_knisa_musach_p24 = "" Then
+                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = thenextday & SRV_D_KNISA_letashlum_musach_X
                                                 Else
-                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_X
+                                                    ds.Tables(0).Rows(i).Item("shat_hatchala_letashlum_musach") = SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X
                                                 End If
                                             End If
-                                            If Not Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                                                If Not TAARICH_yetzia_letashlum_p24 = "" Then
-                                                    ds.Tables(0).Rows(i).Item("shat_gmar_letashlum") = thenextday & SRV_D_YETZIA_letashlum_X
+                                            If Not Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                                                If Not TAARICH_gmar_musach_p24 = "" Then
+                                                    ds.Tables(0).Rows(i).Item("shat_gmar_letashlum_musach") = thenextday & SRV_D_gmar_letashlum_musach_X
                                                 Else
-                                                    ds.Tables(0).Rows(i).Item("shat_gmar_letashlum") = SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X
+                                                    ds.Tables(0).Rows(i).Item("shat_gmar_letashlum_musach") = SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X
                                                 End If
                                             End If
                                         End If
@@ -775,8 +775,8 @@ Public Class ClKds
                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                             SRV_D_KOD_HAZMANA_X, _
                             TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                            TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                            TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                            TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                            TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                             'upd this rec in the dataset.
                                             ds.Tables(0).Rows(i).Item("shat_gmar") = yetzia_2chck
                                             FoundAMatch = True
@@ -799,8 +799,8 @@ Public Class ClKds
                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                             SRV_D_KOD_HAZMANA_X, _
                             TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                            TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                            TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                            TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                            TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                             'upd this rec in the dataset.
                                             ds.Tables(0).Rows(i).Item("shat_hatchala") = knisa_2chck
                                             FoundAMatch = True
@@ -831,8 +831,8 @@ Public Class ClKds
                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                             SRV_D_KOD_HAZMANA_X, _
                             TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                            TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                            TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                            TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                            TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                         'add this new rec to the dataset for the next line.
                                         dr = ds.Tables(0).NewRow
                                         If SRV_D_KNISA_X = "" Then
@@ -860,8 +860,8 @@ Public Class ClKds
                                 ElseIf SRV_D_KNISA_X = "" And (Not SRV_D_YETZIA_X = "") Then 'only out
                                     If ez4 = 1 Then
                                         '9) complete duplicate
-                                        If Not Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                                            If Not ds.Tables(0).Rows(i).Item("shat_gmar_letashlum").ToString = SRV_D_YETZIA_letashlum_X Then
+                                        If Not Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                                            If Not ds.Tables(0).Rows(i).Item("shat_gmar_letashlum_musach").ToString = SRV_D_gmar_letashlum_musach_X Then
                                                 'KdsSql2 = 
                                                 FoundAchange = False
                                                 InpStr = "upd_in_out_letashlum:" & line & ":" & InpStr
@@ -870,12 +870,12 @@ Public Class ClKds
                                  SRV_D_KOD_BITUL_ZMAN_NESIA_X, SRV_D_KOD_HALBASHA_X, _
                                  SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HAZMANA_X, _
                                  TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                                 TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                                 TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
-                                                If Not TAARICH_yetzia_letashlum_p24 = "" Then
-                                                    dr.Item("shat_gmar_letashlum") = thenextday & SRV_D_YETZIA_letashlum_X
+                                 TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                                 TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
+                                                If Not TAARICH_gmar_musach_p24 = "" Then
+                                                    dr.Item("shat_gmar_letashlum_musach") = thenextday & SRV_D_gmar_letashlum_musach_X
                                                 Else
-                                                    dr.Item("shat_gmar_letashlum") = SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X
+                                                    dr.Item("shat_gmar_letashlum_musach") = SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X
                                                 End If
                                             End If
                                         End If
@@ -896,8 +896,8 @@ Public Class ClKds
                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                             SRV_D_KOD_HAZMANA_X, _
                             TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                            TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                            TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                            TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                            TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                         'upd this rec in the dataset.
                                         ds.Tables(0).Rows(i).Item("shat_gmar") = yetzia_2chck
                                         FoundAMatch = True
@@ -917,8 +917,8 @@ Public Class ClKds
                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                             SRV_D_KOD_HAZMANA_X, _
                             TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                            TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                            TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                            TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                            TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                         'add this new rec to the dataset for the next line.
                                         dr = ds.Tables(0).NewRow
                                         If SRV_D_KNISA_X = "" Then
@@ -946,7 +946,7 @@ Public Class ClKds
                                 ElseIf SRV_D_KNISA_X = "" And SRV_D_YETZIA_X = "" Then 'no in & no out
                                     If ez1 = 1 And ez2 = 1 And ez3 = 1 And ez4 = 1 Then
                                         'complete duplicate
-                                        If Not (Trim(SRV_D_KNISA_letashlum_X) = "" Or Trim(SRV_D_YETZIA_letashlum_X) = "") Then
+                                        If Not (Trim(SRV_D_KNISA_letashlum_musach_X) = "" Or Trim(SRV_D_gmar_letashlum_musach_X) = "") Then
                                             'impossible4: no in and no out but letashlum???
                                             If SwIsOpen = False Then
                                                 sw = New StreamWriter(ErrFileName, False)
@@ -998,8 +998,8 @@ Public Class ClKds
                                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, _
                                             SRV_D_KOD_HAZMANA_X, _
                         TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                        TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                        TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                        TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                        TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                     Else
                                         'KdsSql2 = 
                                         'If calc_D_new_sidur <> 99200 Then
@@ -1013,8 +1013,8 @@ Public Class ClKds
                                             SRV_D_ISHI_MEADKEN, SRV_D_KOD_BITUL_ZMAN_NESIA_X, _
                                             SRV_D_KOD_CHARIGA_X, SRV_D_KOD_HALBASHA_X, SRV_D_KOD_HAZMANA_X, _
                         TAARICH_knisa_p24, TAARICH_yetzia_p24, DatEfes, _
-                        TAARICH_knisa_letashlum_p24, SRV_D_KNISA_letashlum_X, _
-                        TAARICH_yetzia_letashlum_p24, SRV_D_YETZIA_letashlum_X)
+                        TAARICH_knisa_musach_p24, SRV_D_KNISA_letashlum_musach_X, _
+                        TAARICH_gmar_musach_p24, SRV_D_gmar_letashlum_musach_X)
                                     End If
                                     'add this new rec to the dataset for the next line.
                                     dr = ds.Tables(0).NewRow
@@ -1062,7 +1062,7 @@ Public Class ClKds
                                     Else
                                         oDal.AddParameter("SRV_D_YETZIA_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_YETZIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                     End If
-                                    'TAARICH_knisa_letashlum_p24 knisa & yetzia
+                                    'TAARICH_knisa_musach_p24 knisa & yetzia
                                     If Trim(TAARICH_knisa_p24) = "" Then
                                         oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                     Else
@@ -1114,7 +1114,7 @@ Public Class ClKds
                                         End If
                                         oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleInteger, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
                                             oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                         Else
@@ -1136,7 +1136,7 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_letashlum", KdsLibrary.DAL.ParameterType.ntOracleInteger, p_letashlum, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
                                             oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                         Else
@@ -1160,7 +1160,7 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_chariga", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_CHARIGA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
                                             oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                         Else
@@ -1181,7 +1181,7 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_nesiot", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_BITUL_ZMAN_NESIA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
                                             oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                         Else
@@ -1202,7 +1202,7 @@ Public Class ClKds
                                         oDal.AddParameter("calc_D_new_sidur", KdsLibrary.DAL.ParameterType.ntOracleInteger, calc_D_new_sidur, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("p_halbasha", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_KOD_HALBASHA_X, KdsLibrary.DAL.ParameterDir.pdInput)
                                         oDal.AddParameter("menahel", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI_MEADKEN, KdsLibrary.DAL.ParameterDir.pdInput)
-                                        'TAARICH_knisa_letashlum_p24 only knisa 
+                                        'TAARICH_knisa_musach_p24 only knisa 
                                         If Trim(TAARICH_knisa_p24) = "" Then
                                             oDal.AddParameter("TAARICH_knisa_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
                                         Else
@@ -1237,30 +1237,6 @@ Public Class ClKds
                 line = sr.ReadLine
             End While
 
-            'If KdsSql <> "BEGIN null;" Then
-            '    KdsSql = KdsSql & "END; "
-            '    IfOk = False
-            '    'oDal.ExecuteSQL(KdsSql)
-            '    IfOk = Execute_kds(KdsSql)
-            '    If IfOk = False Then
-            '        If SwIsOpen = False Then
-            '            sw = New StreamWriter(ErrFileName, False)
-            '            SwIsOpen = True
-            '        End If
-            '        sw.WriteLine("sql " & KdsSql)
-            '        'KdsWriteProcessLog(2, 1, 4, "sql " & Trim(KdsSql))
-            '    End If
-            'End If
-            '2010/01/12 no need to update yamey_avoda
-            'If pro_upd_yamey = True Then
-            '    ''todo:shat_hatchala_letashlum
-            '    oDal.ClearCommand()
-            '    oDal.AddParameter("pDt", KdsLibrary.DAL.ParameterType.ntOracleVarchar, kpTAARICH, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.AddParameter("pIshi", KdsLibrary.DAL.ParameterType.ntOracleVarchar, kpISHI, KdsLibrary.DAL.ParameterDir.pdInput)
-            '    oDal.ExecuteSP("PKG_BATCH.pro_upd_yamey_avoda_1oved")
-            'End If
-
-
         Catch ex As Exception
             oBatch.InsertProcessLog(2, 1, KdsLibrary.BL.RecordStatus.Faild, "clKds " & ex.Message, 3)
             ''**KdsWriteProcessLog(2, 1, 3, "clKds " & ex.Message, "3")
@@ -1291,8 +1267,8 @@ Public Class ClKds
      ByVal SRV_D_ISHI_MEADKEN, ByVal SRV_D_KOD_BITUL_ZMAN_NESIA_X, _
      ByVal SRV_D_KOD_CHARIGA_X, ByVal SRV_D_KOD_HALBASHA_X, ByVal SRV_D_KOD_HAZMANA_X, _
      ByVal TAARICH_knisa_p24, ByVal TAARICH_yetzia_p24, ByVal DatEfes, _
-     ByVal TAARICH_knisa_letashlum_p24, ByVal SRV_D_KNISA_letashlum_X, _
-     ByVal TAARICH_yetzia_letashlum_p24, ByVal SRV_D_YETZIA_letashlum_X)
+     ByVal TAARICH_knisa_musach_p24, ByVal SRV_D_KNISA_letashlum_musach_X, _
+     ByVal TAARICH_gmar_musach_p24, ByVal SRV_D_gmar_letashlum_musach_X)
         Dim oBatch As KdsLibrary.BL.clBatch = New KdsLibrary.BL.clBatch
         'ByVal SRV_D_KOD_HAMARA_X, ByVal SRV_D_KOD_MICHUTZ_LAMICHSA_X, ByVal SRV_D_KOD_LINA_X, ByVal SRV_D_KOD_PITZUL_X, _
 
@@ -1337,25 +1313,25 @@ Public Class ClKds
                 oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-            If Trim(TAARICH_knisa_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_knisa_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(TAARICH_yetzia_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_gmar_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_new_rec")
 
@@ -1404,8 +1380,8 @@ Public Class ClKds
     ByVal SRV_D_ISHI_MEADKEN, ByVal SRV_D_KOD_BITUL_ZMAN_NESIA_X, _
     ByVal SRV_D_KOD_CHARIGA_X, ByVal SRV_D_KOD_HALBASHA_X, ByVal SRV_D_KOD_HAZMANA_X, _
      ByVal TAARICH_knisa_p24, ByVal TAARICH_yetzia_p24, ByVal DatEfes, _
-     ByVal TAARICH_knisa_letashlum_p24, ByVal SRV_D_KNISA_letashlum_X, _
-     ByVal TAARICH_yetzia_letashlum_p24, ByVal SRV_D_YETZIA_letashlum_X)
+     ByVal TAARICH_knisa_musach_p24, ByVal SRV_D_KNISA_letashlum_musach_X, _
+     ByVal TAARICH_gmar_musach_p24, ByVal SRV_D_gmar_letashlum_musach_X)
         'ByVal SRV_D_KOD_HAMARA_X, ByVal SRV_D_KOD_MICHUTZ_LAMICHSA_X, ByVal SRV_D_KOD_LINA_X, ByVal SRV_D_KOD_PITZUL_X, _
 
         'Dim KdsSql As String
@@ -1460,25 +1436,25 @@ Public Class ClKds
                 oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-            If Trim(TAARICH_knisa_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_knisa_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(TAARICH_yetzia_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_gmar_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             'not in use:mikum_knisa,sibat_knisa,p24_yetzia,dateefes,p24_letashlum_knisa,p24_letashlum_yetzia
             oDal.ExecuteSP("Pkg_clock.pro_upd_out_blank")
@@ -1510,8 +1486,8 @@ Public Class ClKds
      ByVal SRV_D_ISHI_MEADKEN, ByVal SRV_D_KOD_BITUL_ZMAN_NESIA_X, _
      ByVal SRV_D_KOD_CHARIGA_X, ByVal SRV_D_KOD_HALBASHA_X, ByVal SRV_D_KOD_HAZMANA_X, _
      ByVal TAARICH_knisa_p24, ByVal TAARICH_yetzia_p24, ByVal DatEfes, _
-     ByVal TAARICH_knisa_letashlum_p24, ByVal SRV_D_KNISA_letashlum_X, _
-     ByVal TAARICH_yetzia_letashlum_p24, ByVal SRV_D_YETZIA_letashlum_X)
+     ByVal TAARICH_knisa_musach_p24, ByVal SRV_D_KNISA_letashlum_musach_X, _
+     ByVal TAARICH_gmar_musach_p24, ByVal SRV_D_gmar_letashlum_musach_X)
 
         'Dim KdsSql As String
         Dim oDal As KdsLibrary.DAL.clDal
@@ -1529,7 +1505,7 @@ Public Class ClKds
             Else
                 oDal.AddParameter("P24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            oDal.ExecuteSP("PKG_BATCH.InsIntoTrailYetzia")
+            oDal.ExecuteSP("PKG_clock.InsIntoTrailYetzia")
 
             oDal.ClearCommand()
             oDal.AddParameter("SRV_D_ISHI", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_ISHI, KdsLibrary.DAL.ParameterDir.pdInput)
@@ -1565,25 +1541,25 @@ Public Class ClKds
                 oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-            If Trim(TAARICH_knisa_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_knisa_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(TAARICH_yetzia_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_gmar_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_upd_in_blank")
 
@@ -1615,8 +1591,8 @@ Public Class ClKds
    ByVal SRV_D_KOD_BITUL_ZMAN_NESIA_X, ByVal SRV_D_KOD_HALBASHA_X, _
    ByVal SRV_D_KOD_CHARIGA_X, ByVal SRV_D_KOD_HAZMANA_X, _
    ByVal TAARICH_knisa_p24, ByVal TAARICH_yetzia_p24, ByVal DatEfes, _
-   ByVal TAARICH_knisa_letashlum_p24, ByVal SRV_D_KNISA_letashlum_X, _
-   ByVal TAARICH_yetzia_letashlum_p24, ByVal SRV_D_YETZIA_letashlum_X)
+   ByVal TAARICH_knisa_musach_p24, ByVal SRV_D_KNISA_letashlum_musach_X, _
+   ByVal TAARICH_gmar_musach_p24, ByVal SRV_D_gmar_letashlum_musach_X)
 
 
         'Dim KdsSql As String
@@ -1671,25 +1647,25 @@ Public Class ClKds
                 oDal.AddParameter("TAARICH_yetzia_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.AddParameter("DatEfes", KdsLibrary.DAL.ParameterType.ntOracleVarchar, DatEfes, KdsLibrary.DAL.ParameterDir.pdInput)
-            If Trim(TAARICH_knisa_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_knisa_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_knisa_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_knisa_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_KNISA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_KNISA_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_KNISA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_KNISA_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_KNISA_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(TAARICH_yetzia_letashlum_p24) = "" Then
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(TAARICH_gmar_musach_p24) = "" Then
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 0, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("TAARICH_yetzia_letashlum_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("TAARICH_gmar_musach_p24", KdsLibrary.DAL.ParameterType.ntOracleInteger, 1, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
-            If Trim(SRV_D_YETZIA_letashlum_X) = "" Then
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
+            If Trim(SRV_D_gmar_letashlum_musach_X) = "" Then
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, Nothing, KdsLibrary.DAL.ParameterDir.pdInput)
             Else
-                oDal.AddParameter("SRV_D_YETZIA_letashlum_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_YETZIA_letashlum_X, KdsLibrary.DAL.ParameterDir.pdInput)
+                oDal.AddParameter("SRV_D_gmar_letashlum_musach_X", KdsLibrary.DAL.ParameterType.ntOracleVarchar, SRV_D_TAARICH & SRV_D_gmar_letashlum_musach_X, KdsLibrary.DAL.ParameterDir.pdInput)
             End If
             oDal.ExecuteSP("Pkg_clock.pro_upd_in_out_letashlum")
 
