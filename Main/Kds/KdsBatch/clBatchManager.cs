@@ -12227,9 +12227,9 @@ namespace KdsBatch
                                         if (!bSign)
                                         {
                                             //אגד תעבורה 
-                                            bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
-                                            if (!bSign)
-                                            {
+                                            //bSign =  Saif5EggedTaavura(drSugSidur, ref oSidur);
+                                            //if (!bSign)
+                                            //{
                                                 //תנאי 7
                                                 bSign = Condition7Saif11(drSugSidur, ref oSidur);
                                                 if (!bSign)
@@ -12254,11 +12254,11 @@ namespace KdsBatch
                                                 {
                                                     iKodSibaLoLetashlum = 15;
                                                 }
-                                            }
-                                            else
-                                            {
-                                                iKodSibaLoLetashlum = 12;
-                                            } 
+                                            //}
+                                            //else
+                                            //{
+                                            //    iKodSibaLoLetashlum = 12;
+                                            //} 
                                         }
                                         else
                                         {
