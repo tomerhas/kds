@@ -1075,32 +1075,38 @@ Public Class ClKds
                                     End If
                                     oDal.AddParameter("p_cur", KdsLibrary.DAL.ParameterType.ntOracleRefCursor, Nothing, KdsLibrary.DAL.ParameterDir.pdOutput)
                                     oDal.ExecuteSP("Pkg_clock.pro_checkCharigaEtc", dt)
-                                    check_chariga = dt.Rows(0).Item("chariga").ToString
-                                    check_lo_letashlum = dt.Rows(0).Item("lo_letashlum").ToString
-                                    check_nesiot = dt.Rows(0).Item("mezake_nesiot").ToString
-                                    check_halbasha = dt.Rows(0).Item("mezake_halbasha").ToString
-                                    If Not (Trim(SRV_D_KOD_CHARIGA_X) = "") Then
-                                        If Not (Trim(check_chariga) = Trim(SRV_D_KOD_CHARIGA_X)) Then
-                                            ifUpdChariga = True
+
+                                    '20120822: if there are no lines (clKdsline There is no row at position 0.)
+                                    If dt.Rows.Count > 0 Then
+                                        check_chariga = dt.Rows(0).Item("chariga").ToString
+                                        check_lo_letashlum = dt.Rows(0).Item("lo_letashlum").ToString
+                                        check_nesiot = dt.Rows(0).Item("mezake_nesiot").ToString
+                                        check_halbasha = dt.Rows(0).Item("mezake_halbasha").ToString
+                                        If Not (Trim(SRV_D_KOD_CHARIGA_X) = "") Then
+                                            If Not (Trim(check_chariga) = Trim(SRV_D_KOD_CHARIGA_X)) Then
+                                                ifUpdChariga = True
+                                            End If
                                         End If
-                                    End If
-                                    If Not (Trim(SRV_D_KOD_HALBASHA_X) = "") Then
-                                        If Not (Trim(check_halbasha) = Trim(SRV_D_KOD_HALBASHA_X)) Then
-                                            ifUpdhalbasha = True
+                                        If Not (Trim(SRV_D_KOD_HALBASHA_X) = "") Then
+                                            If Not (Trim(check_halbasha) = Trim(SRV_D_KOD_HALBASHA_X)) Then
+                                                ifUpdhalbasha = True
+                                            End If
                                         End If
-                                    End If
-                                    If Not (Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X) = "") Then
-                                        If Not (Trim(check_nesiot) = Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)) Then
-                                            ifUpdnesiot = True
+                                        If Not (Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X) = "") Then
+                                            If Not (Trim(check_nesiot) = Trim(SRV_D_KOD_BITUL_ZMAN_NESIA_X)) Then
+                                                ifUpdnesiot = True
+                                            End If
                                         End If
-                                    End If
-                                    If SRV_D_KOD_HAZMANA_X = "7" And (Not Trim(check_lo_letashlum) = "1") Then
-                                        ifUpdletashlum = True
-                                        p_letashlum = 1
-                                    ElseIf SRV_D_KOD_HAZMANA_X = "0" And Trim(check_lo_letashlum) = "1" And Not (calc_D_new_sidur = 99200) Then
-                                        ifUpdletashlum = True
-                                        p_letashlum = 0
-                                        ' hazmana = 0 and lo_letashlum null is the same.
+                                        If SRV_D_KOD_HAZMANA_X = "7" And (Not Trim(check_lo_letashlum) = "1") Then
+                                            ifUpdletashlum = True
+                                            p_letashlum = 1
+                                        ElseIf SRV_D_KOD_HAZMANA_X = "0" And Trim(check_lo_letashlum) = "1" And Not (calc_D_new_sidur = 99200) Then
+                                            ifUpdletashlum = True
+                                            p_letashlum = 0
+                                            ' hazmana = 0 and lo_letashlum null is the same.
+                                        End If
+                                        'Else
+                                        'todo: check if it is ok to goon
                                     End If
 
                                     If ifUpdletashlum = True Or ifUpdnesiot = True Or ifUpdhalbasha = True Or ifUpdChariga = True Then
