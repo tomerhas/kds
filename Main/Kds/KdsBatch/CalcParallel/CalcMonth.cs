@@ -3602,7 +3602,7 @@ namespace KdsBatch
 
               
                 fNosafot125 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Nosafot125);
-                if (fTempX <= (fNosafot125/60))
+                if (fTempX <=  float.Parse(Math.Round((fNosafot125 / 60),1).ToString()))
                 {
                     fSumDakotRechiv119 = fTempX;
                     fTempX = 0;
@@ -3611,11 +3611,12 @@ namespace KdsBatch
                 {
                     fSumDakotRechiv119 = fNosafot125/60;
                     fTempX -= (fNosafot125/60);
+                    fTempX = float.Parse(Math.Round(fTempX, 1).ToString());
                 }
 
                
                 fNosafot150 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.Nosafot150);
-                 if (fTempX <= (fNosafot150/60))
+                if (fTempX <= float.Parse(Math.Round((fNosafot150 / 60), 1).ToString()))
                 {
                     fSumDakotRechiv120 = fTempX;
                     fTempX -= (fNosafot150/60);

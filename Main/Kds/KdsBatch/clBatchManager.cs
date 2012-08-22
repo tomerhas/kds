@@ -13161,7 +13161,7 @@ namespace KdsBatch
         //    }
         //}
 
-        private bool IsKnisaValid(ref clSidur oSidur, string sBitulTypeField,bool bSidurHaveNahagut)
+        private bool IsKnisaValid( clSidur oSidur, string sBitulTypeField,bool bSidurHaveNahagut)
         {
             bool bKnisaValid = false;
             bool bSidurShaonNotValid = false;
@@ -13173,7 +13173,7 @@ namespace KdsBatch
                     {
                         bKnisaValid = true;
                     }
-                    else if ((sBitulTypeField == "SIBA_LE_DIVUCH_YADANI_NESIAA" && oMeafyeneyOved.Meafyen51Exists) || (sBitulTypeField != "SIBA_LE_DIVUCH_YADANI_NESIAA"))
+                    else if ((sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA && oMeafyeneyOved.Meafyen51Exists) || (sBitulTypeField != SIBA_LE_DIVUCH_YADANI_NESIAA))
                     {
 
                         if ((!String.IsNullOrEmpty(oSidur.sShatHatchala)) && (String.IsNullOrEmpty(oSidur.sMikumShaonKnisa) || oSidur.sMikumShaonKnisa == "0"))
@@ -13183,7 +13183,7 @@ namespace KdsBatch
                         if (bSidurShaonNotValid)
                         {
                             //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
-                            if (sBitulTypeField == "SIBA_LE_DIVUCH_YADANI_NESIAA")
+                            if (sBitulTypeField == SIBA_LE_DIVUCH_YADANI_NESIAA)
                             {
                                 if (!bSidurHaveNahagut)// && CheckApprovalStatus("111,1,3,101,301", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1)
                                     bKnisaValid = true;
@@ -13203,7 +13203,7 @@ namespace KdsBatch
             return bKnisaValid;
         }
 
-        private bool IsYetizaValid(ref clSidur oSidur, string sBitulTypeField,bool bSidurHaveNahagut)
+        private bool IsYetizaValid( clSidur oSidur, string sBitulTypeField,bool bSidurHaveNahagut)
         {
             bool bYetizaValid = false;
             bool bSidurShaonNotValid = false;
@@ -13215,7 +13215,7 @@ namespace KdsBatch
                     {
                         bYetizaValid = true;
                     }
-                    else if ((sBitulTypeField=="SIBA_LE_DIVUCH_YADANI_NESIAA" && oMeafyeneyOved.Meafyen51Exists) ||(sBitulTypeField!="SIBA_LE_DIVUCH_YADANI_NESIAA"))
+                    else if ((sBitulTypeField==SIBA_LE_DIVUCH_YADANI_NESIAA && oMeafyeneyOved.Meafyen51Exists) ||(sBitulTypeField!=SIBA_LE_DIVUCH_YADANI_NESIAA))
                     {
                        if ((!String.IsNullOrEmpty(oSidur.sShatGmar)) && (String.IsNullOrEmpty(oSidur.sMikumShaonYetzia) || oSidur.sMikumShaonYetzia == "0"))
                                 {  //אם הוחתם שעון וגם אין ערך במיקום יציאה - החתמת שעון ידנית                                                 
@@ -13226,7 +13226,7 @@ namespace KdsBatch
                        if (bSidurShaonNotValid)
                        {
                            //קיום אישור לדיווח החתמת שעון (קוד אישור 1 או 3 עם סטטוס אישור 1 (מאושר)).
-                           if (sBitulTypeField=="SIBA_LE_DIVUCH_YADANI_NESIAA")
+                           if (sBitulTypeField==SIBA_LE_DIVUCH_YADANI_NESIAA)
                             {
                                 if (!bSidurHaveNahagut)// &&(CheckApprovalStatus("111,1,3,102,302", oSidur.iMisparSidur, oSidur.dFullShatHatchala) == 1))
                                         bYetizaValid = true;
@@ -13312,6 +13312,7 @@ namespace KdsBatch
             bool bYetizaValid = false;
             int iSidurZakaiLenesiaKnisa = -1;
             int iSidurZakaiLenesiaYetzia = -1;
+            int iFirstMezake = -1, iLastMezake = -1;
             //עדכון שדה ביטול זמן נסיעות ברמת יום עבודה
             try
             {
@@ -13415,20 +13416,15 @@ namespace KdsBatch
                             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
                             bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
-                            if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
+                            if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1" && oSidur.iLoLetashlum == 0)
                             {
-                                if (iSidurZakaiLenesiaKnisa == -1)
-                                    iSidurZakaiLenesiaKnisa = i;
-                                iSidurZakaiLenesiaYetzia = i;
+                                if (iFirstMezake == -1) { iFirstMezake = i; }
+                                iLastMezake = i;
                             }
                             else if (bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
                             {
-                                bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if (bKnisaValid && iSidurZakaiLenesiaKnisa == -1)
-                                    iSidurZakaiLenesiaKnisa = i;
-                                bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                                if (bYetizaValid)
-                                    iSidurZakaiLenesiaYetzia = i;
+                                if (iFirstMezake == -1) { iFirstMezake = i; }
+                                iLastMezake = i;
                             }
 
                             //if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
@@ -13443,6 +13439,13 @@ namespace KdsBatch
                             //}
 
                         }
+
+                        bKnisaValid = IsKnisaValid((clSidur)htEmployeeDetails[iFirstMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                        if (bKnisaValid)
+                            iSidurZakaiLenesiaKnisa = iFirstMezake;
+                        bYetizaValid = IsYetizaValid((clSidur)htEmployeeDetails[iLastMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                        if (bYetizaValid)
+                            iSidurZakaiLenesiaYetzia = iLastMezake;
 
                         if (iSidurZakaiLenesiaYetzia == -1 && iSidurZakaiLenesiaKnisa == -1)
                         {
@@ -13575,9 +13578,9 @@ namespace KdsBatch
                             {
                                 iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
                                 // ((iSidurZakaiLenesiaKnisa > -1 || CheckIdkunRashemet("BITUL_ZMAN_NESIOT")) &&
-                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0  && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT < 4) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==1  || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==3) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT < 4) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==2 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==3) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
                                     oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
                             }
 
@@ -13698,10 +13701,10 @@ namespace KdsBatch
                                 }
                                 else if (oSidur.iLoLetashlum == 0 && bSidurMisugShaonim && oSidur.sHalbashKod == "1")
                                 {
-                                    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                    bKnisaValid = IsKnisaValid( oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bKnisaValid && iSidurZakaiLehalbashaKnisa == -1) 
                                         iSidurZakaiLehalbashaKnisa = i;
-                                    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
+                                    bYetizaValid = IsYetizaValid( oSidur, SIBA_LE_DIVUCH_YADANI_HALBASHA, false);
                                     if (bYetizaValid)
                                         iSidurZakaiLehalbashaYetzia = i;
                                 }
@@ -14100,7 +14103,7 @@ namespace KdsBatch
             DateTime dShatGmarLetashlumToUpd = oObjSidurimOvdimUpd.SHAT_GMAR;
             DateTime dShatHatchalaLetashlum = DateTime.MinValue;
             DateTime dShatGmarLetashlum = DateTime.MinValue;
-            bool bFromMeafyenHatchala, bFromMeafyenGmar,bLoLeadken=false;
+            bool bFromMeafyenHatchala, bFromMeafyenGmar;//,bLoLeadken=false;
             //קביעת שעות לסידורים שזמן ההתחלה/גמר מותנה במאפיין אישי
             try
             {
@@ -14131,9 +14134,16 @@ namespace KdsBatch
                 if (dShatGmarLetashlumToUpd == DateTime.MinValue)
                     dShatGmarLetashlumToUpd = oSidur.dFullShatGmar;
 
-                if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM != DateTime.MinValue && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
-                    bLoLeadken = true;
-                if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM && !bLoLeadken)
+                //if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM != DateTime.MinValue && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)
+                //    bLoLeadken = true;
+                if (oSidur.dShatHatchalaMenahelMusach != DateTime.MinValue)
+                {
+                    oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = oSidur.dShatHatchalaMenahelMusach;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    oSidur.dFullShatHatchalaLetashlum = oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM;
+                    oSidur.sShatHatchalaLetashlum = oSidur.dFullShatHatchalaLetashlum.ToString("HH:mm");
+                }
+                else if (!bIdkunRashShatHatchala && dShatHatchalaLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM)// && !bLoLeadken)
                 {
                     oObjSidurimOvdimUpd.SHAT_HATCHALA_LETASHLUM = dShatHatchalaLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
@@ -14143,10 +14153,17 @@ namespace KdsBatch
                         oSidur.sShatHatchalaLetashlum = "";
                 }
 
-                bLoLeadken = false;
-                if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM != DateTime.MinValue && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
-                    bLoLeadken = true;
-                if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM && !bLoLeadken)
+                //bLoLeadken = false;
+                //if (oSidur.iMenahelMusachMeadken > 0 && oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM != DateTime.MinValue && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)
+                //    bLoLeadken = true;
+                if (oSidur.dShatGmarMenahelMusach != DateTime.MinValue)
+                {
+                    oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = oSidur.dShatGmarMenahelMusach;
+                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                    oSidur.dFullShatGmarLetashlum = oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM;
+                    oSidur.sShatGmarLetashlum = oSidur.dFullShatGmarLetashlum.ToString("HH:mm");
+                }
+                else if (!bIdkunRashShatGmar && dShatGmarLetashlumToUpd != oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM)// && !bLoLeadken)
                 {
                     oObjSidurimOvdimUpd.SHAT_GMAR_LETASHLUM = dShatGmarLetashlumToUpd;
                     oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;

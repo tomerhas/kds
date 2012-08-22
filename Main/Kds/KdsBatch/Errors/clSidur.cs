@@ -163,6 +163,8 @@ namespace KdsBatch
         public int iMezakeHalbasha;
         public int iLebdikaShguim;
         public string sSidurDescription;
+        public DateTime dShatHatchalaMenahelMusach;
+        public DateTime dShatGmarMenahelMusach;
         public string sZakayMichutzLamichsa; //מאפיין 25
         private const int SIDUR_RETIZVUT99500 = 99500;
         private const int SIDUR_RETIZVUT99501 = 99501;
@@ -233,7 +235,9 @@ namespace KdsBatch
 
             dFullShatGmarLetashlum = System.Convert.IsDBNull(dr["shat_gmar_letashlum"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum"].ToString());
             dOldFullShatGmarLetashlum = dFullShatGmarLetashlum;
-
+            dShatHatchalaMenahelMusach = System.Convert.IsDBNull(dr["shat_hatchala_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala_letashlum_musach"].ToString());
+            dShatGmarMenahelMusach = System.Convert.IsDBNull(dr["shat_gmar_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum_musach"].ToString()); 
+          
             dSidurDate = (DateTime)dr["taarich"];
             sSidurDay = dr["iDay"].ToString();
             sVisa = dr["yom_visa"].ToString();
@@ -593,8 +597,10 @@ namespace KdsBatch
         iPtorMehitiatzvut = System.Convert.IsDBNull(dr["ptor_mehitiatzvut"]) ? 0 : int.Parse(dr["ptor_mehitiatzvut"].ToString());
         dTaarichIdkunAcharon = System.Convert.IsDBNull(dr["taarich_idkun_acharon"]) ? DateTime.MinValue : DateTime.Parse(dr["taarich_idkun_acharon"].ToString());
         iHachtamaBeatarLoTakin = System.Convert.IsDBNull(dr["Hachtama_Beatar_Lo_Takin"]) ? 0 : int.Parse(dr["Hachtama_Beatar_Lo_Takin"].ToString());
-        iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString()); 
-           
+        iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
+        dShatHatchalaMenahelMusach = System.Convert.IsDBNull(dr["shat_hatchala_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala_letashlum_musach"].ToString());
+        dShatGmarMenahelMusach = System.Convert.IsDBNull(dr["shat_gmar_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum_musach"].ToString()); 
+          
     }
 
     public clSidur(clSidur oSidurKodem, DateTime dTaarich, int iMisparSidurNew, DataRow dr)
@@ -663,6 +669,8 @@ namespace KdsBatch
             iSugHazmanatVisa = oSidurKodem.iSugHazmanatVisa;
             iSidurLoNibdakSofShavua = oSidurKodem.iSidurLoNibdakSofShavua;
             iMenahelMusachMeadken = oSidurKodem.iMenahelMusachMeadken;
+            dShatHatchalaMenahelMusach = oSidurKodem.dShatHatchalaMenahelMusach;
+            dShatGmarMenahelMusach = oSidurKodem.dShatGmarMenahelMusach;
 
             bSidurMyuhad = IsSidurMyuhad(iMisparSidur.ToString());
 
@@ -832,6 +840,9 @@ namespace KdsBatch
             iSugSidurRagil = int.Parse(dr["SUG_SIDUR"].ToString());
         
         iMenahelMusachMeadken = System.Convert.IsDBNull(dr["MENAHEL_MUSACH_MEADKEN"]) ? 0 : int.Parse(dr["MENAHEL_MUSACH_MEADKEN"].ToString());
+        dShatHatchalaMenahelMusach = System.Convert.IsDBNull(dr["shat_hatchala_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_hatchala_letashlum_musach"].ToString());
+        dShatGmarMenahelMusach = System.Convert.IsDBNull(dr["shat_gmar_letashlum_musach"]) ? DateTime.MinValue : DateTime.Parse(dr["shat_gmar_letashlum_musach"].ToString()); 
+          
         //לכל סידור רגיל נפנה לתנועה לקבלת פרטים נוספים על הסידור
         // נקבל את סוג הסידור ואם הוא קיים במפת התכנון
         //bSidurRagilExists = false;
