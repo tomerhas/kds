@@ -1,6 +1,4 @@
-﻿var webserviceUrl = "http://localhost:1813/KdsWebSite/Modules/WebServices/wsGeneral.asmx";
-var bScreenChanged = false;
-
+﻿var bScreenChanged = false;
     function OpenDiv(DivId, btnId){
         var oDiv = $get(DivId.toString());
         if (oDiv.style.display=='none'){        
@@ -153,17 +151,14 @@ var bScreenChanged = false;
         $get("btnPrint").disabled = (!bEnable);
         $get("btnAddMyuchad").disabled = (!bEnable);
         $get("btnCloseCard").disabled = (!bEnable);
-        //$get("btnPrint").removeAttribute('disabled');
-        if (bEnable) {
-            //$get("btnPrint").attributes("disabled").nodeValue = '';            
+        
+        if (bEnable) {            
             $get("btnPrevCard").className = "btnPrevDay";
             $get("btnNextCard").className = "btnNextDay";
             $get("btnPrint").className = "btnWorkCardPrint";
             $get("btnNextErrCard").className = "btnNextError";             
           }
-        else {
-           // $get("btnPrint").attributes("disabled").nodeValue = 'disabled';    
-         // $get("btnPrint").disabled = "disabled";
+        else {           
           $get("btnPrevCard").className = "btnPrevDayDis";
           $get("btnNextCard").className = "btnNextDayDis";
           $get("btnPrint").className = "btnWorkCardPrintDis";
