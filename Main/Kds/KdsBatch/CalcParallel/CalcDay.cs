@@ -4907,13 +4907,19 @@ namespace KdsBatch
                         {
                             fShaot100ET = Math.Min(120, fDakotNocheut);
                             dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and Shat_gmar_Letashlum<=Convert('" + objOved.objParameters.dKnisatShabat.ToString() + "', 'System.DateTime')", "");
-                            for (int i = 0; i < dr.Length; i++)
-                                sSidurim += dr[i]["mispar_sidur"].ToString() + ",";
-                            sSidurim = sSidurim.Substring(0, sSidurim.Length - 1) ;
-                            fDakotNocheutGmar = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR in (" + sSidurim +")"));
-                            if (fErechRechiv > 0 && fDakotNocheutGmar>0)
+                            if (dr.Length > 0)
                             {
-                                fShaot100ET = Math.Min(fErechRechiv + fDakotNocheutGmar, fShaot100ET);
+                                for (int i = 0; i < dr.Length; i++)
+                                    sSidurim += dr[i]["mispar_sidur"].ToString() + ",";
+
+                                sSidurim = sSidurim.Substring(0, sSidurim.Length - 1);
+
+
+                                fDakotNocheutGmar = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR in (" + sSidurim + ")"));
+                                if (fErechRechiv > 0 && fDakotNocheutGmar > 0)
+                                {
+                                    fShaot100ET = Math.Min(fErechRechiv + fDakotNocheutGmar, fShaot100ET);
+                                }
                             }
                             fErechRechiv = 0;
                          //   addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fErechRechiv);
