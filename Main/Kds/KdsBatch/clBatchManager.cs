@@ -48,7 +48,7 @@ namespace KdsBatch
         private DataTable _dtIdkuneyRashemet;
         private DataTable _dtApprovalError;
         private DataTable _dtErrorsNotActive;
-
+        private DateTime dTarTchilatMatzav=DateTime.MinValue;
         private bool _bHaveCount = true;
         //private DataTable dtDetails;
         //private DataTable dtLookUp;       
@@ -228,7 +228,8 @@ namespace KdsBatch
             errChofeshAlCheshbonShaotNosafot = 188,
             errKisuyTorLifneyHatchalatSidur =189,
             errSidurLoTakefLetaarich=190,
-            errIsukNahagImSidurTafkidNoMefyen=191
+            errIsukNahagImSidurTafkidNoMefyen=191,
+            errMatzavOvedNotValidFirstDay =192
         }
 
         private enum errNesiaMeshtana
@@ -696,7 +697,10 @@ namespace KdsBatch
 
                 //Get Oved Matzav
                 dtMatzavOved = GetOvedMatzav(iMisparIshi, dCardDate);
-
+                if (dtMatzavOved.Rows.Count > 0)
+                {
+                    dTarTchilatMatzav = DateTime.Parse(dtMatzavOved.Rows[0]["TAARICH_HATCHALA"].ToString());
+                }
                 // iCardDay =clGeneral.GetCardDay(dCardDate);
                 //בדיקות ברמת יום עבודה
                 //Get yom avoda details
@@ -727,6 +731,8 @@ namespace KdsBatch
                     //Check 47
                    if (CheckErrorActive(47)) IsShbatHashlamaValid47(iMisparIshi, dCardDate, ref dtErrors);
 
+                   if (CheckErrorActive(192)) IsMatzavOvedNoValidFirstDay192(dCardDate, iMisparIshi, ref dtErrors);
+                   
                     //Get Oved Details
                     dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
 
@@ -1613,7 +1619,39 @@ namespace KdsBatch
             }
             return isValid;
         }
-        
+
+        private bool IsMatzavOvedNoValidFirstDay192(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
+        {
+            bool isValid = true;
+            int iCountSidurim;
+            try
+            {
+                //בדיקה ברמת יום עבודה
+                if (dTarTchilatMatzav == dCardDate)
+                {
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
+                    //עובד לא יכול לעבוד בכל עבודה באגד אם במחלה. מחלה זה סטטוס ב- HR. מזהים שהעובד עבד ביום מסוים אם יש לו לפחות סידור אחד ביום זה.  
+                    if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
+                    {
+                        drNew = dtErrors.NewRow();
+                        drNew["mispar_ishi"] = iMisparIshi;
+                        drNew["check_num"] = enErrors.errMatzavOvedNotValidFirstDay.GetHashCode();
+                        drNew["taarich"] = dCardDate.ToShortDateString();
+                       
+                        dtErrors.Rows.Add(drNew);
+                        isValid = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, iMisparIshi, "E", enErrors.errMatzavOvedNotValidFirstDay.GetHashCode(), dCardDate, "IsMatzavOvedNoValidFirstDay192: " + ex.Message);
+                isValid = false;
+                _bSuccsess = false;
+            }
+
+            return isValid;
+        }
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;
@@ -2138,21 +2176,22 @@ namespace KdsBatch
         private bool IsHrStatusValid01(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
         {                      
             bool isValid = true;
-       
+
             try
             {
                 //בדיקה ברמת יום עבודה
+
                 if (!IsOvedInMatzav("1,3,4,5,6,7,8"))
                 {
                     drNew = dtErrors.NewRow();
-                    drNew["mispar_ishi"] = iMisparIshi;                    
-                    drNew["check_num"] =  enErrors.errHrStatusNotValid.GetHashCode();
+                    drNew["mispar_ishi"] = iMisparIshi;
+                    drNew["check_num"] = enErrors.errHrStatusNotValid.GetHashCode();
                     drNew["taarich"] = dCardDate.ToShortDateString();
                     //drNew["error_desc"] = "ערך כא שגוי";
-                    
+
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
-                }              
+                }
             }
             catch (Exception ex)
             {
@@ -13313,6 +13352,7 @@ namespace KdsBatch
             int iSidurZakaiLenesiaKnisa = -1;
             int iSidurZakaiLenesiaYetzia = -1;
             int iFirstMezake = -1, iLastMezake = -1;
+            string sMefyen14 = "";
             //עדכון שדה ביטול זמן נסיעות ברמת יום עבודה
             try
             {
@@ -13416,23 +13456,27 @@ namespace KdsBatch
                              drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
                              bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
-                             if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1" && oSidur.iLoLetashlum == 0)
+
+                             sMefyen14=oSidur.sZakayLezamanNesia;
+                             if (!oSidur.bSidurMyuhad) sMefyen14 = drSugSidur[0]["zakay_leaman_nesia"].ToString();
+
+                             if (!bSidurZakaiLnesiot && sMefyen14 == "1" && oSidur.iLoLetashlum == 0)
                              {
                                  if (iFirstMezake == -1) { iFirstMezake = i; }
                                  iLastMezake = i;
                              }
-                             else if (bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
+                             else if (bSidurZakaiLnesiot && sMefyen14 == "1")
                              {
                                  if (iFirstMezake == -1) { iFirstMezake = i; }
                                  iLastMezake = i;
 
-                                 if (iFirstMezake > -1)
+                                 if (iFirstMezake > -1 && iFirstMezake==i)
                                  {
                                      bKnisaValid = IsKnisaValid((clSidur)htEmployeeDetails[iFirstMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
                                      if (!bKnisaValid)
                                          iFirstMezake=-1;
                                  }
-                                 if (iLastMezake > -1)
+                                 if (iLastMezake > -1 && iLastMezake == i)
                                  {
                                      bYetizaValid = IsYetizaValid((clSidur)htEmployeeDetails[iLastMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
                                      if (!bYetizaValid)

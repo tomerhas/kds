@@ -12,6 +12,7 @@ public partial class ShowPrint : System.Web.UI.Page
 
         try
         {
+            
            Response.Clear();
 
            Page.EnableViewState = false;
@@ -20,6 +21,7 @@ public partial class ShowPrint : System.Web.UI.Page
            Response.AppendHeader("content-length", ((byte[])Session["BinaryResult"]).Length.ToString());
            if (Session["TypeReport"].ToString() == "PDF")
            {
+               Response.Buffer = false; 
                Response.ContentType = "application/pdf";
                Response.AddHeader("Content-Disposition", "inline:Filename=" + Session["FileName"].ToString() + ".pdf");
            }
@@ -30,7 +32,7 @@ public partial class ShowPrint : System.Web.UI.Page
 
            }
 
-         Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
 
             Response.ContentEncoding = System.Text.Encoding.UTF7;
             Response.BinaryWrite((byte[])Session["BinaryResult"]);
