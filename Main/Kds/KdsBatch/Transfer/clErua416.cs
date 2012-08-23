@@ -63,7 +63,7 @@ namespace KdsBatch
 
                sErua416.Append(FormatNumber(fErech,4,2));
            }
-           else if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+           else if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() )
            {
                fErech = GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode());
                sErua416.Append(FormatNumber(fErech, 4, 2));
