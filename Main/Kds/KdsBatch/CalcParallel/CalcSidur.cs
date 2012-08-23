@@ -6796,7 +6796,7 @@ namespace KdsBatch
                     {
                         fDakotNochehut = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                        if (CheckSidurBySectorAvoda(ref drSidurim[I], iMisparSidur, clGeneral.enSectorAvoda.Nihul.GetHashCode()))
+                        if (isSidurNihulTnua(drSidurim[I]))
                         {
                             fErech = Math.Max(0, (int.Parse(drSidurim[I]["Hashlama"].ToString()) * 60) - fDakotNochehut);
 
@@ -6870,7 +6870,7 @@ namespace KdsBatch
                     {
                         fDakotNochehut = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutBefoal.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
 
-                        if (CheckSidurBySectorAvoda(ref drSidurim[I], iMisparSidur, clGeneral.enSectorAvoda.Tafkid.GetHashCode()))
+                        if (isSidurTafkid( drSidurim[I]))
                         {
                             fErech = Math.Max(0, (int.Parse(drSidurim[I]["Hashlama"].ToString()) * 60) - fDakotNochehut);
 

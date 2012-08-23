@@ -4828,11 +4828,11 @@ namespace KdsBatch
                         iMutaam = objOved.objPirteyOved.iMutamut;
                         if (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())
                         {
-                            if (objOved.objMeafyeneyOved.iMeafyen60 <= 0)
+                            if (objOved.objMeafyeneyOved.iMeafyen60 == 0)
                             {
                                 fNochehutPremia = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.NochehutPremiaLerishum.GetHashCode());
                                 fSumDakotRechiv = (objOved.objParameters.fAchuzPremiaRishum * fNochehutPremia) / 100;
-                                addRowToTable(clGeneral.enRechivim.PremiaLariushum.GetHashCode(), fSumDakotRechiv);
+                                addRowToTable(clGeneral.enRechivim.PremiaLariushum.GetHashCode(),float.Parse(Math.Round(fSumDakotRechiv).ToString()));
                             }
                         }
                     }

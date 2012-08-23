@@ -13336,7 +13336,7 @@ namespace KdsBatch
                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                     }
                 }
-               else if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
+                 else if ((!oMeafyeneyOved.Meafyen51Exists) && (!oMeafyeneyOved.Meafyen61Exists))
                  {
                      if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                      {
@@ -13354,241 +13354,252 @@ namespace KdsBatch
                          oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
                      }
                  }
-                //else if ((oMeafyeneyOved.Meafyen61Exists || oMeafyeneyOved.Meafyen51Exists) && !bSidurShaon)
-                //{
-                //    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT")){
-                //        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
-                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                //    }
-                //    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                //    {
-                //        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
-                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                //    }
-                //    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                //    {
-                //        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
-                //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                //    }
+                 //else if ((oMeafyeneyOved.Meafyen61Exists || oMeafyeneyOved.Meafyen51Exists) && !bSidurShaon)
+                 //{
+                 //    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT")){
+                 //        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
+                 //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                 //    }
+                 //    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                 //    {
+                 //        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
+                 //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                 //    }
+                 //    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                 //    {
+                 //        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
+                 //        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                 //    }
 
-                //    if (oMeafyeneyOved.Meafyen51Exists && CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                //    {
-                //        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                //        switch (int.Parse(oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString()))
-                //        {
-                //            case 1:
-                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                //                break;
-                //            case 2:
-                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                //                break;
-                //            case 3:
-                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                //                break;
-                //        }
-                //    }
-                //}
-                else
-                {
-                    //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות
-                    //וגם לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
-                    {
-                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
-                        oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
-                    }
-                    //ברגע שמצאנו סידור אחד לפחות שזכאי לזמן נסיעות, נפסיק לחפש
-                    if (htEmployeeDetails != null)
-                    {
-                        for (int i = 0; i < htEmployeeDetails.Count; i++)
-                        {
-                            oSidur = (clSidur)htEmployeeDetails[i];
-                            drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
+                  //    if (oMeafyeneyOved.Meafyen51Exists && CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                 //    {
+                 //        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                 //        switch (int.Parse(oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT.ToString()))
+                 //        {
+                 //            case 1:
+                 //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                 //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                 //                break;
+                 //            case 2:
+                 //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                 //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                 //                break;
+                 //            case 3:
+                 //                if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                 //                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                 //                if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                 //                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                 //                break;
+                 //        }
+                 //    }
+                 //}
+                 else
+                 {
+                     //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות
+                     //וגם לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
+                     if (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH"))
+                     {
+                         oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = 0;
+                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                     }
+                     if (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR"))
+                     {
+                         oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = 0;
+                         oObjYameyAvodaUpd.UPDATE_OBJECT = 1;
+                     }
+                     //ברגע שמצאנו סידור אחד לפחות שזכאי לזמן נסיעות, נפסיק לחפש
+                     if (htEmployeeDetails != null)
+                     {
+                         for (int i = 0; i < htEmployeeDetails.Count; i++)
+                         {
+                             oSidur = (clSidur)htEmployeeDetails[i];
+                             drSugSidur = clDefinitions.GetOneSugSidurMeafyen(oSidur.iSugSidurRagil, dCardDate, _dtSugSidur);
 
-                            bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
-                            if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1" && oSidur.iLoLetashlum == 0)
-                            {
-                                if (iFirstMezake == -1) { iFirstMezake = i; }
-                                iLastMezake = i;
-                            }
-                            else if (bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
-                            {
-                                if (iFirstMezake == -1) { iFirstMezake = i; }
-                                iLastMezake = i;
-                            }
+                             bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
+                             if (!bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1" && oSidur.iLoLetashlum == 0)
+                             {
+                                 if (iFirstMezake == -1) { iFirstMezake = i; }
+                                 iLastMezake = i;
+                             }
+                             else if (bSidurZakaiLnesiot && oSidur.sZakayLezamanNesia == "1")
+                             {
+                                 if (iFirstMezake == -1) { iFirstMezake = i; }
+                                 iLastMezake = i;
 
-                            //if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
-                            //{
-                            //    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                            //    if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLenesiaKnisa == -1))
-                            //        iSidurZakaiLenesiaKnisa = i;
-                            //    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                            //    if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
-                            //        iSidurZakaiLenesiaYetzia = i;
-                            //    else iSidurZakaiLenesiaYetzia = -1;
-                            //}
+                                 if (iFirstMezake > -1)
+                                 {
+                                     bKnisaValid = IsKnisaValid((clSidur)htEmployeeDetails[iFirstMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                                     if (!bKnisaValid)
+                                         iFirstMezake=-1;
+                                 }
+                                 if (iLastMezake > -1)
+                                 {
+                                     bYetizaValid = IsYetizaValid((clSidur)htEmployeeDetails[iLastMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                                     if (!bYetizaValid)
+                                         iLastMezake = -1;
+                                 }
+                             }
 
-                        }
+                             //if (bSidurZakaiLnesiot || oSidur.sZakayLezamanNesia == "1")
+                             //{
+                             //    bKnisaValid = IsKnisaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                             //    if ((bKnisaValid && iSidurZakaiLenesiaKnisa == -1) ||(oSidur.sZakayLezamanNesia == "1" && !String.IsNullOrEmpty(oSidur.sShatHatchala) && iSidurZakaiLenesiaKnisa == -1))
+                             //        iSidurZakaiLenesiaKnisa = i;
+                             //    bYetizaValid = IsYetizaValid(ref oSidur, SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
+                             //    if (bYetizaValid || oSidur.sZakayLezamanNesia == "1")
+                             //        iSidurZakaiLenesiaYetzia = i;
+                             //    else iSidurZakaiLenesiaYetzia = -1;
+                             //}
 
-                        bKnisaValid = IsKnisaValid((clSidur)htEmployeeDetails[iFirstMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                        if (bKnisaValid)
-                            iSidurZakaiLenesiaKnisa = iFirstMezake;
-                        bYetizaValid = IsYetizaValid((clSidur)htEmployeeDetails[iLastMezake], SIBA_LE_DIVUCH_YADANI_NESIAA, bSidurNahagut);
-                        if (bYetizaValid)
-                            iSidurZakaiLenesiaYetzia = iLastMezake;
-
-                        if (iSidurZakaiLenesiaYetzia == -1 && iSidurZakaiLenesiaKnisa == -1)
-                        {
-                            if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
-                        }
-
-                        //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות
-                        //עובד זכאי לנסיעות לעבודה
-                        if (IsOvedZakaiLZmanNesiaLaAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
-                        {
-                            //לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
-                            if (iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
-                            {
-                                if (iSidurZakaiLenesiaKnisa > -1)
-                                {
-                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
-
-                                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
-
-                                    oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
-                                    oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
-
-                                    oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
-                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-
-                                }
-                                //עבור מאפיין 51: 
-                                //אם שדה נסיעות התעדכן בערך 1, אז יש לעדכן את שדה זמן נסיעה הלוך בטבלת ימי עבודה עובדים בערך הזמן ממאפיין 51
-                                if (IsOvedZakaiLZmanNesiaLaAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
-                                {
-                                    if ((oMeafyeneyOved.Meafyen61Exists) && iSidurZakaiLenesiaKnisa>-1)
-                                    {
-                                        //עבור מאפיין 61:
-                                        //אם שדה נסיעות התעדכן בערך 1 ויש ערך בשדה מיקום שעון כניסה בסידור הראשון ביום, יש לעדכן את שדה זמן נסיעה הלוך בערך מטבלה זמן נסיעה משתנה.                                        
-                                        iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaKnisa, 1, dCardDate);
-                                        if (iZmanNesia > -1)
-                                        { oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0)); }
-                                    }
-                                    if (oMeafyeneyOved.Meafyen51Exists)
-                                    {
-                                        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
-                                        if (iZmanNesia > -1)
-                                        {
-                                            oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //עובד זכאי לנסיעות מהעבודה
-                        if (IsOvedZakaiLZmanNesiaMeAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
-                        {
-                            if (iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
-                            {
-                                if (iSidurZakaiLenesiaYetzia > -1)
-                                {
-                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
-
-                                    //אם הסידור הראשון זכאי לנסיעות, נעדכן את שדה MEZAKE_NESIOT 
+                         }
 
 
-                                    OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+                         if (iFirstMezake == -1 && iLastMezake == -1)
+                         {
+                             if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                 oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
+                         }
+                         else
+                         {
+                             iSidurZakaiLenesiaKnisa = iFirstMezake;
+                             iSidurZakaiLenesiaYetzia = iLastMezake;
+                             //לעובד מאפיין 51/61 (מאפיין זמן נסיעות) והעובד זכאי רק לזמן נסיעות לעבודה (ערך 1 בספרה הראשונה של מאפיין זמן נסיעות
+                             //עובד זכאי לנסיעות לעבודה
+                             if (IsOvedZakaiLZmanNesiaLaAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
+                             {
+                                 //לפחות אחד הסידורים מזכה בזמן נסיעה (סידור מזכה בזמן נסיעות אם יש לו ערך 1 (זכאי) במאפיין 14 (זכאות לזמן נסיעה) בטבלת סידורים מיוחדים/מאפייני סוג סידור
+                                 if (iSidurZakaiLenesiaKnisa > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
+                                 {
+                                     if (iSidurZakaiLenesiaKnisa > -1)
+                                     {
+                                         if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                             oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
 
-                                    oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaYetzia];
-                                    oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                                         OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
 
-                                    oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
-                                    oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                                }
-                                if (IsOvedZakaiLZmanNesiaMeAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
-                                {
-                                    if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaYetzia>-1)
-                                    {
-                                        //נשלוף את הסידור האחרון
-                                        iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
-                                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                    }
-                                    if (oMeafyeneyOved.Meafyen51Exists)
-                                    {
-                                        iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                    }
-                                }
-                            }
-                        }
+                                         oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
+                                         oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
 
-                        //עובד זכאי לנסיעות מהעבודה ולעבודה
-                        if (IsOvedZakaiLZmanNesiaLeMeAvoda())
-                        {
-                            if ((iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1) || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
-                            {
-                                if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1)
-                                {
-                                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
+                                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisa.GetHashCode();
+                                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
 
-                                    //אם ביום קיים סידור אחד בלבד  ולפי הסידור מגיע גם נסיעות כניסה וגם נסיעות יציאה - יש לעדכן את השדה "נסיעות" ברמת סידור העבודה בקוד - זכאי לנסיעות לכניסה/יציאה לעבודה.
-                                    if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa == iSidurZakaiLenesiaYetzia)
-                                    {
-                                        OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
-                                        oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
-                                        oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+                                     }
+                                     //עבור מאפיין 51: 
+                                     //אם שדה נסיעות התעדכן בערך 1, אז יש לעדכן את שדה זמן נסיעה הלוך בטבלת ימי עבודה עובדים בערך הזמן ממאפיין 51
+                                     if (IsOvedZakaiLZmanNesiaLaAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                     {
+                                         if ((oMeafyeneyOved.Meafyen61Exists) && iSidurZakaiLenesiaKnisa > -1)
+                                         {
+                                             //עבור מאפיין 61:
+                                             //אם שדה נסיעות התעדכן בערך 1 ויש ערך בשדה מיקום שעון כניסה בסידור הראשון ביום, יש לעדכן את שדה זמן נסיעה הלוך בערך מטבלה זמן נסיעה משתנה.                                        
+                                             iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaKnisa, 1, dCardDate);
+                                             if (iZmanNesia > -1)
+                                             { oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0)); }
+                                         }
+                                         if (oMeafyeneyOved.Meafyen51Exists)
+                                         {
+                                             iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.Substring(1));
+                                             if (iZmanNesia > -1)
+                                             {
+                                                 oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                             }
+                                         }
+                                     }
+                                 }
+                             }
+                             //עובד זכאי לנסיעות מהעבודה
+                             if (IsOvedZakaiLZmanNesiaMeAvoda() || IsOvedZakaiLZmanNesiaLeMeAvoda())
+                             {
+                                 if (iSidurZakaiLenesiaYetzia > -1 || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
+                                 {
+                                     if (iSidurZakaiLenesiaYetzia > -1)
+                                     {
+                                         if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                             oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
 
-                                        oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
-                                        oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
-                                    }
-                                }
-                            }
-                            if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaKnisa>-1)
-                            {
-                                if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
-                                {
-                                    iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaKnisa, 1, dCardDate);
-                                    if (iZmanNesia > -1)
-                                        oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                         //אם הסידור הראשון זכאי לנסיעות, נעדכן את שדה MEZAKE_NESIOT 
 
-                                }
-                                if (iSidurZakaiLenesiaYetzia > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
-                                {
-                                    iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
-                                    if (iZmanNesia > -1)
-                                        oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                }
-                            }
 
-                            if (oMeafyeneyOved.Meafyen51Exists)
-                            {
-                                iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
-                                // ((iSidurZakaiLenesiaKnisa > -1 || CheckIdkunRashemet("BITUL_ZMAN_NESIOT")) &&
-                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==1  || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==3) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                                if ( (oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==2 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT==3) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
-                                    oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
-                            }
+                                         OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
 
-                        }
-                    }
-                    if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 1 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 2 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT !=3)
-                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
-                }
+                                         oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaYetzia];
+                                         oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+
+                                         oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiYetiza.GetHashCode();
+                                         oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                     }
+                                     if (IsOvedZakaiLZmanNesiaMeAvoda() && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                     {
+                                         if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaYetzia > -1)
+                                         {
+                                             //נשלוף את הסידור האחרון
+                                             iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
+                                             oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                         }
+                                         if (oMeafyeneyOved.Meafyen51Exists)
+                                         {
+                                             iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                                             oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                         }
+                                     }
+                                 }
+                             }
+
+                             //עובד זכאי לנסיעות מהעבודה ולעבודה
+                             if (IsOvedZakaiLZmanNesiaLeMeAvoda())
+                             {
+                                 if ((iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1) || (CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT > 0))
+                                 {
+                                     if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa > -1)
+                                     {
+                                         if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
+                                             oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
+
+                                         //אם ביום קיים סידור אחד בלבד  ולפי הסידור מגיע גם נסיעות כניסה וגם נסיעות יציאה - יש לעדכן את השדה "נסיעות" ברמת סידור העבודה בקוד - זכאי לנסיעות לכניסה/יציאה לעבודה.
+                                         if (iSidurZakaiLenesiaYetzia > -1 && iSidurZakaiLenesiaKnisa == iSidurZakaiLenesiaYetzia)
+                                         {
+                                             OBJ_SIDURIM_OVDIM oObjSidurimOvdimUpd;
+                                             oSidur = (clSidur)htEmployeeDetails[iSidurZakaiLenesiaKnisa];
+                                             oObjSidurimOvdimUpd = GetSidurOvdimObject(oSidur.iMisparSidur, oSidur.dFullShatHatchala);
+
+                                             oObjSidurimOvdimUpd.MEZAKE_NESIOT = ZmanNesiotType.ZakaiKnisaYetiza.GetHashCode();
+                                             oObjSidurimOvdimUpd.UPDATE_OBJECT = 1;
+                                         }
+                                     }
+                                 }
+                                 if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaKnisa > -1)
+                                 {
+                                     if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                     {
+                                         iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaKnisa, 1, dCardDate);
+                                         if (iZmanNesia > -1)
+                                             oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+
+                                     }
+                                     if (iSidurZakaiLenesiaYetzia > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                     {
+                                         iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
+                                         if (iZmanNesia > -1)
+                                             oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                     }
+                                 }
+
+                                 if (oMeafyeneyOved.Meafyen51Exists)
+                                 {
+                                     iZmanNesia = int.Parse(oMeafyeneyOved.sMeafyen51.ToString().PadRight(3, char.Parse("0")).Substring(1));
+                                     // ((iSidurZakaiLenesiaKnisa > -1 || CheckIdkunRashemet("BITUL_ZMAN_NESIOT")) &&
+                                     if ((oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 1 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 3) && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                         oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                     if ((oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 2 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 3) && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                         oObjYameyAvodaUpd.ZMAN_NESIA_HAZOR = (int)(Math.Ceiling(iZmanNesia / 2.0));
+                                 }
+
+                             }
+                         }
+                         if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT") && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 1 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 2 && oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT != 3)
+                             oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
+                     }
+                 }
             }
             catch (Exception ex)
             {

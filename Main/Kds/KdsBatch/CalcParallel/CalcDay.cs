@@ -6338,7 +6338,7 @@ namespace KdsBatch
                         iMutaam = objOved.objPirteyOved.iMutamut;
                         if (iMutaam != clGeneral.enMutaam.enMutaam1.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam3.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam5.GetHashCode() && iMutaam != clGeneral.enMutaam.enMutaam7.GetHashCode())
                         {
-                            if (objOved.objMeafyeneyOved.iMeafyen60 > 0)
+                            if (objOved.objMeafyeneyOved.iMeafyen60 == 0)
                             {
                                 fZmanAruchatTzharayim = oSidur.CalcRechiv209();
 
