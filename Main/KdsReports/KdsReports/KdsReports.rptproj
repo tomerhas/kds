@@ -30,6 +30,10 @@
       <FullPath>AverageRechivValues.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Barcode.rdl</Name>
+      <FullPath>Barcode.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>ChafifotSidureyNihulTnua.rdl</Name>
       <FullPath>ChafifotSidureyNihulTnua.rdl</FullPath>
     </ProjectItem>
@@ -168,8 +172,8 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Barcode.rdl</Name>
-      <FullPath>Barcode.rdl</FullPath>
+      <Name>Query4.rdl</Name>
+      <FullPath>Query4.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

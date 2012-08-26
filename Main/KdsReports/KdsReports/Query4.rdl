@@ -6,7 +6,7 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>="שאילתא 4"</Value>
+            <Value>="סידורים לעובד"</Value>
           </Parameter>
         </Parameters>
         <Top>0.47631cm</Top>
@@ -23,34 +23,40 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.28833cm</Width>
+              <Width>1.47576cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.1825cm</Width>
+              <Width>2.22188cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.66687cm</Width>
+              <Width>1.62876cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.58055cm</Width>
+              <Width>1.67158cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.46958cm</Width>
+              <Width>1.53604cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.05562cm</Width>
+              <Width>2.10608cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.89687cm</Width>
+              <Width>2.11635cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.62687cm</Width>
+              <Width>1.50781cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.89146cm</Width>
+              <Width>1.69302cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.62687cm</Width>
+              <Width>0.90083cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.99729cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.50781cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -383,6 +389,78 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox82">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>יום</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox82</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <Direction>RTL</Direction>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox84">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>תאריך</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox84</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <Direction>RTL</Direction>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox33">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -648,14 +726,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="HACHTAMA_IN">
+                    <Textbox Name="SHAT_GMAR">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!HACHTAMA_IN.Value</Value>
+                              <Value>=Fields!SHAT_GMAR.Value</Value>
                               <Style>
                                 <Language>he-IL</Language>
                               </Style>
@@ -664,7 +742,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>HACHTAMA_IN</rd:DefaultName>
+                      <rd:DefaultName>SHAT_GMAR</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -697,6 +775,74 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SHAT_HATCHALA</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <Direction>RTL</Direction>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DAY_OF_WEEK">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DAY_OF_WEEK.Value</Value>
+                              <Style>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DAY_OF_WEEK</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <Direction>RTL</Direction>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="TAARICH">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!TAARICH.Value</Value>
+                              <Style>
+                                <Language>he-IL</Language>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>TAARICH</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -760,6 +906,8 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -773,10 +921,10 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>4.44183cm</Top>
-        <Left>0.27785cm</Left>
-        <Height>1.59687cm</Height>
-        <Width>20.28555cm</Width>
+        <Top>4.75933cm</Top>
+        <Left>0.30166cm</Left>
+        <Height>1.59688cm</Height>
+        <Width>20.36321cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -806,8 +954,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox117</rd:DefaultName>
-        <Top>2.41813cm</Top>
-        <Left>6.95764cm</Left>
+        <Top>2.45341cm</Top>
+        <Left>11.28389cm</Left>
         <Height>0.82048cm</Height>
         <Width>7.24284cm</Width>
         <ZIndex>2</ZIndex>
@@ -845,11 +993,50 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox117</rd:DefaultName>
-        <Top>3.30917cm</Top>
-        <Left>6.95764cm</Left>
+        <Top>2.45341cm</Top>
+        <Left>3.51806cm</Left>
         <Height>0.82048cm</Height>
         <Width>7.24284cm</Width>
         <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <VerticalAlign>Middle</VerticalAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+          <Direction>RTL</Direction>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox120">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="לחודש: " &amp;  Month(Parameters!P_DATE.Value) &amp; "/" &amp; Year(Parameters!P_DATE.Value)</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                  <TextDecoration>Underline</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <LeftIndent>0cm</LeftIndent>
+            <HangingIndent>0cm</HangingIndent>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox117</rd:DefaultName>
+        <Top>3.37973cm</Top>
+        <Left>7.19608cm</Left>
+        <Height>0.82048cm</Height>
+        <Width>7.24284cm</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -911,11 +1098,19 @@
         </Field>
         <Field Name="SHAT_GMAR">
           <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SHAT_HATCHALA">
           <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DAY_OF_WEEK">
+          <DataField>DAY_OF_WEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="OUT_MICHSA">
           <DataField>OUT_MICHSA</DataField>
