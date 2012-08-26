@@ -731,7 +731,6 @@ namespace KdsBatch
                     //Check 47
                    if (CheckErrorActive(47)) IsShbatHashlamaValid47(iMisparIshi, dCardDate, ref dtErrors);
 
-                   if (CheckErrorActive(192)) IsMatzavOvedNoValidFirstDay192(dCardDate, iMisparIshi, ref dtErrors);
                    
                     //Get Oved Details
                     dtDetails = oDefinition.GetOvedDetails(iMisparIshi, dCardDate);
@@ -744,8 +743,8 @@ namespace KdsBatch
                         //Insert Oved Details to Class
                         //if (htEmployeeDetails == null)
                         //{
-                        htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
-                        htFullEmployeeDetails = htFullSidurimDetails;
+                            htEmployeeDetails = oDefinition.InsertEmployeeDetails(true, dtDetails, dCardDate, ref iLastMisaprSidur, out _htSpecialEmployeeDetails, ref htFullSidurimDetails);//, out  _htEmployeeDetailsWithCancled
+                            htFullEmployeeDetails = htFullSidurimDetails;
                         //}
 
                         //מחיקת סידורי רציפות
@@ -773,6 +772,8 @@ namespace KdsBatch
                         //Check132
                         if (CheckErrorActive(132)) IsOvodaInMachalaAllowed132(dCardDate, iMisparIshi, ref dtErrors);
 
+                        if (CheckErrorActive(192)) IsMatzavOvedNoValidFirstDay192(dCardDate, iMisparIshi, ref dtErrors);
+                  
                         CheckAllError(ref dtErrors, dCardDate, iMisparIshi);
                     }
                     //Write errors to tb_shgiot
