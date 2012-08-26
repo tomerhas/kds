@@ -5025,17 +5025,20 @@ namespace KdsBatch
             //בדיקה ברמת עובד
             try
             {
-                iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
-                //עובד לא יכול לעבוד בכל עבודה באגד אם במחלה. מחלה זה סטטוס ב- HR. מזהים שהעובד עבד ביום מסוים אם יש לו לפחות סידור אחד ביום זה.  
-                if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
+                if (dTarTchilatMatzav !=dCardDate)
                 {
-                    drNew = dtErrors.NewRow();
-                    drNew["check_num"] = enErrors.errOvdaInMachalaNotAllowed.GetHashCode();
-                    drNew["mispar_ishi"] = iMisparIshi;
-                    drNew["taarich"] = dCardDate.ToShortDateString();
-                    //drNew["error_desc"] = "עבודה אסורה במחלה ארוכה";
-                    dtErrors.Rows.Add(drNew);
-                    isValid = false;
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
+                    //עובד לא יכול לעבוד בכל עבודה באגד אם במחלה. מחלה זה סטטוס ב- HR. מזהים שהעובד עבד ביום מסוים אם יש לו לפחות סידור אחד ביום זה.  
+                    if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
+                    {
+                        drNew = dtErrors.NewRow();
+                        drNew["check_num"] = enErrors.errOvdaInMachalaNotAllowed.GetHashCode();
+                        drNew["mispar_ishi"] = iMisparIshi;
+                        drNew["taarich"] = dCardDate.ToShortDateString();
+                        //drNew["error_desc"] = "עבודה אסורה במחלה ארוכה";
+                        dtErrors.Rows.Add(drNew);
+                        isValid = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -13459,7 +13462,7 @@ namespace KdsBatch
                              bSidurZakaiLnesiot = IsSidurShonim(drSugSidur, oSidur);
 
                              sMefyen14=oSidur.sZakayLezamanNesia;
-                             if (!oSidur.bSidurMyuhad) sMefyen14 = drSugSidur[0]["zakay_leaman_nesia"].ToString();
+                             if (!oSidur.bSidurMyuhad && drSugSidur.Length>0) sMefyen14 = drSugSidur[0]["zakay_leaman_nesia"].ToString();
 
                              if (!bSidurZakaiLnesiot && sMefyen14 == "1" && oSidur.iLoLetashlum == 0)
                              {

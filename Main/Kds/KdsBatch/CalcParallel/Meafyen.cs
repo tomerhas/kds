@@ -20,6 +20,15 @@ namespace KdsBatch.CalcParallel
             }
         }
 
+        public float FloatValue
+        {
+            get
+            {
+                float val = -1;
+                float.TryParse(Value, out val);
+                return val;
+            }
+        }
         public Meafyen(int kod)
         {
             Kod = kod;
