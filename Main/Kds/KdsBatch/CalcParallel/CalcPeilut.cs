@@ -368,13 +368,16 @@ namespace KdsBatch
                                  iSugAuto = int.Parse(drDetailsPeilut["sug_auto"].ToString());
 
                              // if ((iSugAuto == 4 || iSugAuto == 5))
-                              if (iMisparSidur.ToString().Substring(0, 2) != "99" && objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                              if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
                               {
-                                  dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
-                                  if (dsSidurim.Rows.Count > 0)
+                                  if (iMisparSidur.ToString().Substring(0, 2) != "99" && objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
                                   {
-                                      if (dsSidurim.Rows[0]["bus_type"].ToString()=="4" || dsSidurim.Rows[0]["bus_type"].ToString()=="5")
-                                        SidurMifraki = true;
+                                      dsSidurim = oKavim.GetSidurDetailsFromTnua(iMisparSidur, objOved.Taarich, out iResult);
+                                      if (dsSidurim.Rows.Count > 0)
+                                      {
+                                          if (dsSidurim.Rows[0]["bus_type"].ToString() == "4" || dsSidurim.Rows[0]["bus_type"].ToString() == "5")
+                                              SidurMifraki = true;
+                                      }
                                   }
                               }
                               J++;
