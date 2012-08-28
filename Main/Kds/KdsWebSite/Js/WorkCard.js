@@ -489,8 +489,7 @@
         if (_bScreenChanged) {
             if (!ChkCardVld())
                 return false;
-            $("#hidSave")[0].value = "1";
-            $get("hidChanges").value = "true";            
+            $("#hidSave")[0].value = "1";                      
             __doPostBack('btnConfirm', '');            
         }
         
@@ -505,6 +504,7 @@
         if ((_bScreenChanged) || ((res != undefined) && (!_bScreenChanged))) {
             $get("hidExecInputChg").value = "1";
             $get("hidRefresh").value = "1";
+            $get("hidChanges").value = "true";
             __doPostBack('btnFindSidur', '');
             bScreenChanged = false;
         }
