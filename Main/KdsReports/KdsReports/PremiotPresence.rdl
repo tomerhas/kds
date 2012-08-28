@@ -2,7 +2,7 @@
 <Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
   <DataSources>
     <DataSource Name="DsKds">
-      <DataSourceReference>KdsCon</DataSourceReference>
+      <DataSourceReference>KdsProd</DataSourceReference>
       <rd:DataSourceID>22c64c23-8242-48d8-ba94-2daafa8d273c</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -1697,7 +1697,10 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                           <Paragraph>
                                             <TextRuns>
                                               <TextRun>
-                                                <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or (Fields!SHAT_GMAR.Value = nothing) or  InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0 
+                                                <Value>=iif((Fields!SHAT_HATCHALA.Value = nothing) or 
+	 (Fields!SHAT_GMAR.Value = nothing) or  
+	 (InStr(Fields!TEUR_SIDUR_MEYCHAD.Value,"מחלה")&gt;0)  or
+	 (Fields!STATUS.Value=0)
 ,"",DateDiff("n",Fields!SHAT_HATCHALA.Value,Fields!SHAT_GMAR.Value)/60)</Value>
                                                 <Style>
                                                   <Format>f2</Format>
@@ -1721,6 +1724,7 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                           <PaddingBottom>2pt</PaddingBottom>
                                         </Style>
                                       </Textbox>
+                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell>
@@ -2253,7 +2257,6 @@ iif(Fields!SHAT_HATCHALA.Value=nothing and Fields!SHAT_GMAR.Value=nothing,"אי�
                                         </Style>
                                       </Textbox>
                                       <ColSpan>13</ColSpan>
-                                      <rd:Selected>true</rd:Selected>
                                     </CellContents>
                                   </TablixCell>
                                   <TablixCell />
