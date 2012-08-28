@@ -4164,7 +4164,7 @@ namespace KdsBatch
                 //וגם {דקות סהכ נהגות (רכיב 188) +  וגם סהכ ניהול תנועה (רכיב 190) גדול שווה 180 דקות [שליפת פרמטר (קוד פרמטר = 239)] או סהכ תפקיד (רכיב 192) גדול שווה 240 דקות [שליפת פרמטר (קוד פרמטר = 238)]}
 
                 if (((objOved.objPirteyOved.iIsuk == 183 || objOved.objPirteyOved.iIsuk == 184 || objOved.objPirteyOved.iIsuk == 193) && fSachNihulTnua > objOved.objParameters.iMinDakotLezakautNesiot)
-                            || ((objOved.objPirteyOved.iIsuk != 183 && objOved.objPirteyOved.iIsuk != 184 && objOved.objPirteyOved.iIsuk != 193) && (fSachNahagut + fSachTafkid) > objOved.objParameters.iMinDakotNehigaVetnuaLezakautNesiot || fSachTafkid >= objOved.objParameters.iMinDakotLezakautNesiot))
+                            || ((objOved.objPirteyOved.iIsuk != 183 && objOved.objPirteyOved.iIsuk != 184 && objOved.objPirteyOved.iIsuk != 193) && (fSachNahagut + fSachNihulTnua) > objOved.objParameters.iMinDakotNehigaVetnuaLezakautNesiot || fSachTafkid >= objOved.objParameters.iMinDakotLezakautNesiot))
                 {
                     //תוספת זמן נסיעה – רכיב 95:
                     //א.	ערך הרכיב = [נסיעות תחילת יום] + [נסיעות סוף יום]
@@ -6395,8 +6395,8 @@ namespace KdsBatch
             int iBokerRechiv, iTzharyimRechiv, iErevRechiv;
             try
             {
-                if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
-                {
+                //if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
+                //{
                     oSidur.CalcRechiv211_212(out fZmanAruchatBoker, out fZmanAruchatTzharayim, out fZmanAruchatErev, out  iBokerRechiv, out  iTzharyimRechiv, out  iErevRechiv);
 
                     ////if (fZmanAruchatBoker > 20)
@@ -6433,7 +6433,7 @@ namespace KdsBatch
                     addRowToTable(clGeneral.enRechivim.NochehutPremiaMeshekAchsana.GetHashCode(), fSumRechivAchsana);
                     addRowToTable(clGeneral.enRechivim.NochehutPremiaMeshekMusachim.GetHashCode(), fSumRechivMusachim);
 
-                }
+                //}
 
             }
             catch (Exception ex)
@@ -6448,12 +6448,12 @@ namespace KdsBatch
             float fSumErechRechiv;
             try
             {
-                if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
-                {
+                //if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
+                //{
                     oSidur.CalcRechiv276();
                     fSumErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), objOved.Taarich);
                     addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekGrira.GetHashCode(), fSumErechRechiv);
-                }
+                //}
 
             }
             catch (Exception ex)
@@ -6468,12 +6468,12 @@ namespace KdsBatch
             float fSumErechRechiv;
             try
             {
-                if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
-                {
+                //if (objOved.sSugYechida.ToLower() == "m_ms" || objOved.sSugYechida.ToLower() == "m_me")
+                //{
                     oSidur.CalcRechiv277();
                     fSumErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), objOved.Taarich);
                     addRowToTable(clGeneral.enRechivim.NochechutLePremiyaMeshekKonenutGrira.GetHashCode(), fSumErechRechiv);
-                }
+                //}
 
             }
             catch (Exception ex)
