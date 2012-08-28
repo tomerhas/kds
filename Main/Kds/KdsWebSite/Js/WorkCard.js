@@ -477,6 +477,7 @@
         if ((_bScreenChanged) || ((res != undefined) && (res != '') && (!_bScreenChanged))) {
             $get("hidExecInputChg").value = "1";
             $get("hidRefresh").value = "1";
+            $get("hidChanges").value = "true";           
             __doPostBack('btnAddHeadrut', '');
             bScreenChanged = false;
         }
@@ -489,6 +490,7 @@
             if (!ChkCardVld())
                 return false;
             $("#hidSave")[0].value = "1";
+            $get("hidChanges").value = "true";            
             __doPostBack('btnConfirm', '');            
         }
         
