@@ -120,8 +120,9 @@
            if (root.childNodes.item(7)!=null){           
             $get("ddlHalbasha").selectedValue = root.childNodes.item(7).text; 
            }
-           if (root.childNodes.item(8)!=null){           
-             $get("ddlLina").selectedValue = root.childNodes.item(8).text;  
+           if (root.childNodes.item(8)!=null){
+               $get("ddlLina").selectedValue = root.childNodes.item(8).text;  
+
            }
            if (root.childNodes.item(9)){           
              $get("ddlTravleTime").selectedValue = root.childNodes.item(9).text;  
