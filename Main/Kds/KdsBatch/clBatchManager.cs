@@ -13615,7 +13615,7 @@ namespace KdsBatch
                                          }
                                      }
                                  }
-                                 if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && iSidurZakaiLenesiaKnisa > -1)
+                                 if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && (iSidurZakaiLenesiaKnisa > -1 || iSidurZakaiLenesiaYetzia > -1))
                                  {
                                      if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                      {
