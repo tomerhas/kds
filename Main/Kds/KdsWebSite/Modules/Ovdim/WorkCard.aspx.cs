@@ -498,6 +498,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              }
              if (!bResult)
              {
+                 Session["Pakadim"] = "";
                  if ((Request.QueryString["Page"] != null) || ((Session["arrParams"] != null)))
                  {
                      //string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.location.href = '" + this.PureUrlRoot + "/Main.aspx';";
@@ -616,6 +617,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          DataTable dtLicenseNumbers = new DataTable();
          try
          {          
+             
              ServicePath = "~/Modules/WebServices/wsGeneral.asmx";
              //אם נלחץ השגוי הבא, נמצא את התאריך של הכרטיס הבא השגוי
              if (hidNextErrCard.Value.Equals("1"))

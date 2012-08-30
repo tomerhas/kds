@@ -6090,9 +6090,14 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         HtmlTableCell hCell = new HtmlTableCell();
         bool bIdkunRashemet=false;
         int iMisparKnisa;
+        string[] arrKnisaVal;
 
         try
         {
+            
+            arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
+            iMisparKnisa = int.Parse(arrKnisaVal[0]);
+
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());
             oTxt = ((TextBox)(e.Row.Cells[_COL_MAKAT].Controls[0]));
             oTxt.CausesValidation = true;
@@ -6101,7 +6106,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);
             oTxt.ID = e.Row.ClientID + "MakatNumber";
             oTxt.CssClass = "WCPilutTxt";
-            if (EnabledValidator())
+            if (EnabledValidator() && (iMisparKnisa==0))
             {
                 oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
                 oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
@@ -6129,9 +6134,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
            
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
             string sPeilutKey = string.Concat(((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
-            string[] arrKnisaVal;
-            arrKnisaVal = e.Row.Cells[_COL_KNISA].Text.Split(",".ToCharArray());
-            iMisparKnisa = int.Parse(arrKnisaVal[0]);
+           
 
             bIdkunRashemet = IsIdkunExists(_MisparIshiIdkunRashemet, _ProfileRashemet, clWorkCard.ErrorLevel.LevelPeilut, clUtils.GetPakadId(dtPakadim, "Makat_nesia"), MisparSidur, FullShatHatchala, dShatYetiza, iMisparKnisa);
             bool bEnabled = IsMakatEnabled(bIdkunRashemet, bElementHachanatMechona, oMakatType, iMisparKnisa);//((!bIdkunRashemet) && (!bElementHachanatMechona) && (oMakatType != clKavim.enMakatType.mVisa) && (oMakatType != clKavim.enMakatType.mVisut));
@@ -6278,7 +6281,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
             oTxt.CssClass = "WCPilutTxt";
-            if (EnabledValidator())
+            if (EnabledValidator() && (iMisparKnisa == 0))
             {
                 oTxt.Attributes.Add("onfocus", "this.className='WCPilutTxtF';");
                 oTxt.Attributes.Add("onblur", "this.className='WCPilutTxt';");
@@ -6319,7 +6322,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
             oTxt.ID = e.Row.ClientID + "ShatYetiza";            
             sTargetControlId = oTxt.ID;
-            if (EnabledValidator())
+            if (EnabledValidator() && (iMisparKnisa == 0))
             {
                 oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
                                                     AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
