@@ -970,7 +970,10 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ManasPakch = 422,
             Rasham = 133,
             Poked = 188,
-            MenahelMoreNehiga = 194
+            MenahelMoreNehiga = 194,
+            Mafil=122,
+            AchraaiMishmeretMachshev=123,
+            MetaemTikshoret=124
         }
 
         public enum enEmployeeType
