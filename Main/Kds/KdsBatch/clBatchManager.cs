@@ -1630,7 +1630,7 @@ namespace KdsBatch
                 //בדיקה ברמת יום עבודה
                 if (dTarTchilatMatzav == dCardDate)
                 {
-                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0 && Sidur.iLoLetashlum == 0);
                     //עובד לא יכול לעבוד בכל עבודה באגד אם במחלה. מחלה זה סטטוס ב- HR. מזהים שהעובד עבד ביום מסוים אם יש לו לפחות סידור אחד ביום זה.  
                     if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
                     {
@@ -5027,7 +5027,7 @@ namespace KdsBatch
             {
                 if (dTarTchilatMatzav !=dCardDate)
                 {
-                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0);
+                    iCountSidurim = htEmployeeDetails.Values.Cast<clSidur>().ToList().Count(Sidur => Sidur.iNitanLedaveachBemachalaAruca == 0 && Sidur.iLoLetashlum==0);
                     //עובד לא יכול לעבוד בכל עבודה באגד אם במחלה. מחלה זה סטטוס ב- HR. מזהים שהעובד עבד ביום מסוים אם יש לו לפחות סידור אחד ביום זה.  
                     if ((IsOvedMatzavExists("5")) && (iCountSidurim > 0))
                     {

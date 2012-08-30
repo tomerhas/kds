@@ -11,6 +11,7 @@ using KdsLibrary;
 using KdsLibrary.BL;
 using System.Web;
 using System.Configuration;
+using KdsLibrary.Utils;
 
 namespace KdsBatch
 {
@@ -503,6 +504,14 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
+                clMail omail;
+                string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
+                RecipientsList.ToList().ForEach(recipient =>
+                {
+                    omail = new clMail(recipient, "תקלה בשמירת נתונים למספר אישי: " + oCollYameyAvodaUpd.Value[0].MISPAR_ISHI + "  תאריך:" + oCollYameyAvodaUpd.Value[0].TAARICH.ToShortDateString(), ex.Message);
+                    omail.SendMail();
+                });
+               
                 throw ex;
             }
         }

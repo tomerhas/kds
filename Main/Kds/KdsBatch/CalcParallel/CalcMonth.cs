@@ -3335,7 +3335,7 @@ namespace KdsBatch
                 //	ברמה חודשית: ערך הרכיב = נוספות 125% (רכיב 76) )
                 fNosafot125 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot125.GetHashCode());
                 fKizuz125 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Kizuz125.GetHashCode());
-                fSumDakotRechiv = fNosafot125 - (fKizuz125*60);
+                fSumDakotRechiv = float.Parse((double.Parse(fNosafot125.ToString()) - (double.Parse(fKizuz125.ToString()) * 60)).ToString());
                 addRowToTable(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)
@@ -3355,7 +3355,8 @@ namespace KdsBatch
                 fNosafot150 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Nosafot150.GetHashCode());
                 fKizuz150 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.Kizuz150.GetHashCode());
 
-                fSumDakotRechiv = fNosafot150 - (fKizuz150*60);
+                fSumDakotRechiv = float.Parse((double.Parse(fNosafot150.ToString()) - (double.Parse(fKizuz150.ToString()) * 60)).ToString());
+    
                 addRowToTable(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)

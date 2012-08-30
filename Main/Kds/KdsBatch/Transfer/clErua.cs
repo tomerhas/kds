@@ -128,6 +128,9 @@ namespace KdsBatch
             string sFormat="";
             int iSfarot,iLastDigit;
             string sErech, sErechTmp;
+
+            if (fErech.ToString().IndexOf("E") > -1) fErech = 0;
+
             if (fErech.ToString().IndexOf(".") > -1)
             {
                 sErechTmp = fErech.ToString().Substring(0, fErech.ToString().IndexOf("."));
