@@ -12,7 +12,7 @@ namespace KdsBatch
       public clErua415(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,415)
       {
-          _sBody = SetBody();
+           _sBody = SetBody();
           if (_sBody != null)
             PrepareLines();
       }
@@ -69,6 +69,12 @@ namespace KdsBatch
                //   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
                   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
                   sErua415.Append(FormatNumber((fErech/60), 4, 1));
+              }
+              if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && (_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.Mafil.GetHashCode().ToString() || _drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.AchraaiMishmeretMachshev.GetHashCode().ToString() ||_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.MetaemTikshoret.GetHashCode().ToString()))
+              {
+                  //   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
+                  fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
+                  sErua415.Append(FormatNumber((fErech / 60), 4, 1));
               }
               else { sErua415.Append(GetBlank(4)); }
 
