@@ -541,7 +541,8 @@ namespace KdsLibrary.Utils.Reports
         ChafifotSidureyNihulTnua,
         ReportNesiotKfulot,
         IdkuneyRashemetMasach4,
-        Query4
+        Query4,
+        DayDataEggt
     }
     public enum Orientation
     {
