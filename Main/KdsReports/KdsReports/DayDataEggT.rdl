@@ -1510,7 +1510,7 @@
           <Value>8054</Value>
         </Values>
       </DefaultValue>
-      <Prompt>BakashaId</Prompt>
+      <Prompt>p_BakashaId</Prompt>
     </ReportParameter>
     <ReportParameter Name="p_Period">
       <DataType>String</DataType>
@@ -1520,15 +1520,6 @@
         </Values>
       </DefaultValue>
       <Prompt>Period</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="p_date">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Globals!ExecutionTime</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>p_date</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Width>9.02038in</Width>
