@@ -1472,8 +1472,8 @@
         <DataSetName>DayDataEggT</DataSetName>
         <Top>1.92299cm</Top>
         <Left>0.25612cm</Left>
-        <Height>1.70507cm</Height>
-        <Width>22.39107cm</Width>
+        <Height>1.70508cm</Height>
+        <Width>22.39109cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1520,6 +1520,15 @@
         </Values>
       </DefaultValue>
       <Prompt>Period</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="p_date">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>p_date</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Width>9.02038in</Width>
