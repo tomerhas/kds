@@ -53,8 +53,7 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot125Letashlum.GetHashCode());
               if (sMeafyen83.Trim() == "1")
                   fErech = 0;
-              sErua415.Append(FormatNumber
-                  ((fErech / 60), 4, 1));
+              sErua415.Append(FormatNumber((fErech / 60), 4, 1));
 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot150Letashlum.GetHashCode());
              if (sMeafyen83.Trim() == "1")
@@ -70,7 +69,7 @@ namespace KdsBatch
                   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
                   sErua415.Append(FormatNumber((fErech/60), 4, 1));
               }
-              if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && (_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.Mafil.GetHashCode().ToString() || _drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.AchraaiMishmeretMachshev.GetHashCode().ToString() ||_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.MetaemTikshoret.GetHashCode().ToString()))
+              else if (_iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && (_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.Mafil.GetHashCode().ToString() || _drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.AchraaiMishmeretMachshev.GetHashCode().ToString() ||_drPirteyOved["isuk"].ToString()==clGeneral.enIsukOved.MetaemTikshoret.GetHashCode().ToString()))
               {
                   //   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode());
                   fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode());
