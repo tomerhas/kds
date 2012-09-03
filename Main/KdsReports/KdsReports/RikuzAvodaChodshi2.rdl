@@ -2715,7 +2715,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R112.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R112.Value, "dsRechiveyPremyot"),Fields!R112.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2749,7 +2749,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R115.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R115.Value, "dsRechiveyPremyot"),Fields!R115.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -2783,7 +2783,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!R113.Value</Value>
+                              <Value>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2,First(Fields!R113.Value, "dsRechiveyPremyot"),Fields!R113.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -3186,17 +3186,17 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R112.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R112.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R112.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R115.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R115.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R115.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R113.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")=2 and First(Fields!R113.Value, "dsRechiveyPremyot")&lt;&gt;Nothing,False,iif(Fields!R113.Value &lt;&gt; Nothing, False, True))</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -8354,7 +8354,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,FormatNumber(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -8377,6 +8377,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9102,7 +9103,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10322,6 +10322,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
           <DataField>MEAFYEN56</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="MAAMAD_RASHI">
+          <DataField>MAAMAD_RASHI</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsRechivimChodshiym">
@@ -10858,6 +10862,38 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Field>
         <Field Name="R1B">
           <DataField>R1B</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsRechiveyPremyot">
+      <Query>
+        <DataSourceName>DsRikuz</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_BAKASHA_ID">
+            <Value>=Parameters!P_BAKASHA_ID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_RIKUZ_AVODA.PRO_GET_RECIVEY_PREMYOT</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="R112">
+          <DataField>R112</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R113">
+          <DataField>R113</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="R115">
+          <DataField>R115</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>

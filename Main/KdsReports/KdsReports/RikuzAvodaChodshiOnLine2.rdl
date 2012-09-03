@@ -3186,17 +3186,17 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R112.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")&lt;&gt;2 and Fields!R112.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R115.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")&lt;&gt;2 and Fields!R115.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R113.Value &lt;&gt; Nothing, False, True)</Hidden>
+                <Hidden>=iif(First(Fields!MAAMAD_RASHI.Value, "dsPirteyOved")&lt;&gt;2 and Fields!R113.Value &lt;&gt; Nothing, False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -8354,7 +8354,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,FormatNumber(Round(Sum(Fields!R76.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -8377,6 +8377,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9102,7 +9103,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10321,6 +10321,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         <Field Name="MEAFYEN56">
           <DataField>MEAFYEN56</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAAMAD_RASHI">
+          <DataField>MAAMAD_RASHI</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
         </Field>
       </Fields>
     </DataSet>
