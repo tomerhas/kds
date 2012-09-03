@@ -1138,8 +1138,8 @@ namespace KdsBatch
                     //if (!oCalcBL.CheckIsurShaotNosafot(objOved.objPirteyOved, objOved.oGeneralData.dtMutamutAll))
                     if (kodMutamut != 1 && kodMutamut != 3 && kodMutamut != 5 && kodMutamut != 7)
                     {
-                        if (objOved.objMeafyeneyOved.iMeafyen2 == 0)
-                        {
+                        //if (objOved.objMeafyeneyOved.iMeafyen2 == 0)
+                        //{
                             Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);
 
                             fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum);  
@@ -1272,7 +1272,7 @@ namespace KdsBatch
                                    // }
                                 }
                             }
-                        }
+                        //}
 
                     }
                 }

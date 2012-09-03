@@ -74,7 +74,7 @@ namespace KdsBatch
         public DataTable dtMeafyenyOvedAll { get; set; }
         public DataTable dtSugeyYechidaAll { get; set; }
         public DataTable dtPeiluyotOvdimAll { get; set; }
-        public DataTable dtOvdimShePutru { get; set; }
+        public DataTable dtMatzavOvdim { get; set; }
 
         public GeneralData(DateTime TarMe, DateTime TarAd, string sMaamad, bool rizaGorefet, int mis_ishi,int numProcess)
         {
@@ -125,8 +125,8 @@ namespace KdsBatch
                 dtMutamutAll = dsNetuneyChishuv.Tables["Ctb_Mutamut"]; 
                 dtPeiluyotOvdimAll = dsNetuneyChishuv.Tables["Peiluyot_Ovdim"]; 
                 dtSugeyYechidaAll = dsNetuneyChishuv.Tables["Sug_Yechida"];
-                dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"]; 
-                dtOvdimShePutru = dsNetuneyChishuv.Tables["Ovdim_ShePutru"];
+                dtMeafyenyOvedAll = dsNetuneyChishuv.Tables["Meafyeney_Ovdim"];
+                dtMatzavOvdim = dsNetuneyChishuv.Tables["Matzav_Ovdim"];
             }
             catch (Exception ex)
             {
