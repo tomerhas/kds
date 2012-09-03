@@ -73,6 +73,7 @@ namespace KdsBatch
                             objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                             objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
+                          
                             SetNetunimLeYom();
 
                             oDay.CalcRechiv126(dTaarich);
@@ -97,6 +98,7 @@ namespace KdsBatch
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                             objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
                             objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
+                         
                             // oDay.SugYom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, dTaarich, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
                             SetNetunimLeYom();
                             objOved.fTotalAruchatZaharimForDay = 0;
@@ -169,7 +171,8 @@ namespace KdsBatch
                     else objOved.DtPeiluyotTnuaYomi = objOved.DtPeiluyotFromTnua.Clone();
                     drs = null;
                 }
-               
+
+                objOved.SetMatzavOved();
             }
             catch (Exception ex)
             {
@@ -2452,8 +2455,7 @@ namespace KdsBatch
 
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
 
-                oDay.CalcChofeshHeadrutToShguyim(clGeneral.enRechivim.YomHeadrut);
-
+             
                 //fNochehutChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotNochehutLetashlum); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode());
                 //fMichsaChodshit = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsaYomitMechushevet); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode());
                 if (objOved.dTchilatAvoda > objOved.Month)
@@ -2461,6 +2463,8 @@ namespace KdsBatch
                 
                 if (objOved.dSiyumAvoda <  objOved.Month.AddMonths(1).AddDays(-1))
                     oDay.ChishuvEmptyYemeyAvoda(clGeneral.enRechivim.YomHeadrut,false);
+
+                oDay.CalcChofeshHeadrutToShguyim(clGeneral.enRechivim.YomHeadrut);
 
                 if (objOved.fmichsatYom == 0)
                     oCalcBL.ChishuvMichsatYom(objOved);

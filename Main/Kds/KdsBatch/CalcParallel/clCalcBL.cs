@@ -397,20 +397,13 @@ namespace KdsBatch
         public Boolean CheckOvedPutar(Oved oved)
         {
             Boolean bPutar = false;
-            DataRow[] rows;
             try
             {
-
-                if (oved.oGeneralData.dtMatzavOvdim.Rows.Count > 0)
+                if (oved.sMatazavOved=="P")
                 {
-                    rows = oved.oGeneralData.dtMatzavOvdim.Select("mispar_ishi= " + oved.Mispar_ishi + " and kod_matzav='P' and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime') >= taarich_me and Convert('" + oved.Taarich.ToShortDateString() + "', 'System.DateTime')<= taarich_ad");
-                    //     oved.oGeneralData.dtOvdimShePutru.Select("mispar_ishi= " + oved.Mispar_ishi + " and "+ oved.Taarich.ToShortDateString()  +" >= Convert('taarich_me' , 'System.DateTime') and "+ oved.Taarich.ToShortDateString()  +" <= Convert('taarich_ad' , 'System.DateTime')" );
-                    if (rows.Length > 0)
-                    {
-                        bPutar = true;
-                    }
+                    bPutar = true;
                 }
-
+               
                 return bPutar;
             }
             catch (Exception ex)
@@ -418,6 +411,8 @@ namespace KdsBatch
                 throw ex;
             }
         }
+
+      
         public string InitSugYechida(Oved oved, DateTime dDay)
         {
             DataRow[] drSugYechida;

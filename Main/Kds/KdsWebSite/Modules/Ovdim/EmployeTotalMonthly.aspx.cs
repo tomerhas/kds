@@ -193,9 +193,6 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                     string sFileName,sPathFile;
                     FileStream fs;
 
-                    
-
-                   
                     sIp = "";// arrParams[1];
                     sFileName = "RikuzAvodaChodshi.pdf";
                     sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
@@ -213,17 +210,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 }
                 else
                 {
-                    //Dictionary<string, string> Report = new Dictionary<string, string>();
-       
-                    //Report.Add("P_MISPAR_ISHI", txtEmpId.Text);
-                    //Report.Add("P_TAARICH", ViewState["Taarich"].ToString());
-                    //Report.Add("P_BAKASHA_ID", ViewState["BakashId"].ToString());
-                    //Report.Add("P_Tar_chishuv", ViewState["TarChishuv"].ToString());
-                    //Report.Add("P_sug_chishuv", ViewState["SugChishuv"].ToString());
-                    //Report.Add("P_Oved_5_Yamim", ViewState["WorkDay"].ToString());
-                    //Report.Add("P_SIKUM_CHODSHI", "1");
-                    //OpenReport(Report, (ImageButton)sender, ReportName.RikuzAvodaChodshi2.ToString());
-
+                    
                     Session["BinaryResult"] = s;
                     Session["TypeReport"] = "PDF";
                     Session["FileName"] = "RikuzAvodaChodshi";
@@ -238,25 +225,6 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
         }
     }
 
-
-    protected void OpenReport(Dictionary<string, string> ReportParameters, ImageButton btnScript, string sRdlName)
-    {
-        KdsReport _Report;
-        string sDomain = "";
-        _Report = new KdsReport();
-        _Report.Orientation = KdsLibrary.Utils.Reports.Orientation.Portrait;
-        _Report.ZoomPercent = 95;
-        _Report.RdlName = sRdlName;
-        Session["Report"] = _Report;
-
-        Session["ReportParameters"] = ReportParameters;
-
-        sDomain = clGeneral.AsDomain(Request.UrlReferrer.ToString()) + Request.ApplicationPath;
-        string sScript = "window.showModalDialog('" + sDomain + "/modules/reports/ShowReport.aspx?Dt=" + DateTime.Now.ToString() + "&RdlName=" + sRdlName + "','','dialogwidth:980px;dialogheight:800px;dialogtop:10px;dialogleft:100px;status:no;resizable:no;scroll:no;');";
-
-        ScriptManager.RegisterStartupScript(btnScript, this.GetType(), "ReportViewer", sScript, true);
-
-    }
 
     void ImageExcelClick_Click(object sender, ImageClickEventArgs e)
     {

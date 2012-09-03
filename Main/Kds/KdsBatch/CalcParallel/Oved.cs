@@ -27,6 +27,7 @@ namespace KdsBatch
         public List<clMeafyenyOved> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
         public DataTable dtPremyot { set; get; }
+        public DataTable dtMatzavOved { set; get; }
         public string sSugYechida { get; set; }
         public float fMekademNipuach { set; get; }
         public float fmichsatYom { get; set; }
@@ -36,6 +37,7 @@ namespace KdsBatch
         private DataTable _DtSidur;
         private DataTable _DtPeilut;
         public DateTime dTchilatAvoda;
+        public string sMatazavOved;
         public DateTime dSiyumAvoda;
         private float _fHashlamaAlCheshbonNosafot;
         public clParameters objParameters { get; set; }
@@ -90,6 +92,7 @@ namespace KdsBatch
                 InitSugeyYechida();
 
                 InitDataSetChishuv();
+                InitMatzavOved();
             }
             catch (Exception ex)
             {
@@ -396,6 +399,58 @@ namespace KdsBatch
                 rows = null;
             }
         }
+
+        private void InitMatzavOved()
+        {
+            DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
+            DataRow[] rows;
+            DtSugeyYechida = new DataTable();
+            try
+            {
+                oGeneralData.dtMatzavOvdim.Select(null, "mispar_ishi");
+
+                rows = oGeneralData.dtMatzavOvdim.Select("mispar_ishi= " + Mispar_ishi + " and ((Convert('" + Month.ToShortDateString() + "', 'System.DateTime')>=TAARICH_ME and  Convert('" + Month.ToShortDateString() + "', 'System.DateTime')<=TAARICH_AD)  or (Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')>=TAARICH_ME  and  Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')<=TAARICH_AD) or  (TAARICH_ME>=Convert('" + Month.ToShortDateString() + "', 'System.DateTime') and TAARICH_AD<=Convert('" + TarAd.ToShortDateString() + "', 'System.DateTime')))");
+                if (rows.Length > 0)
+                {
+                    dtMatzavOved = rows.CopyToDataTable();
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMatzavOved: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                rows = null;
+            }
+
+        }
+
+        public void SetMatzavOved()
+        {
+             DataRow[] rows;
+            string sKodMatzav = "0";
+            try
+            {
+
+                if (dtMatzavOved.Rows.Count > 0)
+                {
+                    rows = dtMatzavOved.Select("mispar_ishi= " + Mispar_ishi + " and Convert('" + Taarich.ToShortDateString() + "', 'System.DateTime') >= taarich_me and Convert('" + Taarich.ToShortDateString() + "', 'System.DateTime')<= taarich_ad");
+                    if (rows.Length > 0)
+                    {
+                        sKodMatzav = rows[0]["kod_matzav"].ToString();
+                    }
+                }
+
+                sMatazavOved = sKodMatzav;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #region Initialize
 
         public void InitDataSetChishuv()

@@ -2957,7 +2957,7 @@ namespace KdsBatch
 
         private void CalcRechiv66()
         {
-            float fErechRechiv, fMichsaYomit, fDakotNochehut, fKizuzMeheadrut,fMichsatMutamBitachon;
+            float fErechRechiv=0, fMichsaYomit, fDakotNochehut, fKizuzMeheadrut,fMichsatMutamBitachon;
             DataRow[] rowSidur;
             string sRechivim;
             try
@@ -3058,11 +3058,15 @@ namespace KdsBatch
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
-                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString()); 			
+                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
+
                             addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                         }
                     }
                 }
+             
+
+                        
             }
             catch (Exception ex)
             {
@@ -7679,10 +7683,22 @@ namespace KdsBatch
 
                     if (fMichsatYom > 0 && fDakotNochehut == 0 && fChofesh == 0 && fHeadrut == 0 && objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') and Lo_letashlum=0 and mispar_sidur is not null").Length == 0)
                     {
-                        
+                        objOved.Taarich = dTarMe;
                         objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTarMe));
-                        
-                        if (iKodRechiv.GetHashCode()== clGeneral.enRechivim.YomChofesh.GetHashCode() && objOved.objMeafyeneyOved.iMeafyen33 == 0)
+                        objOved.SetMatzavOved();
+
+                        if (iKodRechiv.GetHashCode() == clGeneral.enRechivim.YomHeadrut.GetHashCode() && objOved.sMatazavOved != clGeneral.enMatzavOved.Pail.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.Chufsha.ToString() &&
+                            objOved.sMatazavOved != clGeneral.enMatzavOved.ChufshBechul.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.MachalaAruka.ToString() &&
+                                objOved.sMatazavOved != clGeneral.enMatzavOved.MasarHashayaImSachar.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.AvodotSherut.ToString()
+                                && objOved.sMatazavOved != clGeneral.enMatzavOved.ChofeshShlila.ToString()
+                                && objOved.objMeafyeneyOved.iMeafyen33 == 0)
+                        { addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1); }
+
+                        if (iKodRechiv.GetHashCode()== clGeneral.enRechivim.YomChofesh.GetHashCode() && objOved.objMeafyeneyOved.iMeafyen33 == 0 &&
+                             (objOved.sMatazavOved == clGeneral.enMatzavOved.Pail.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.Chufsha.ToString() ||
+                                objOved.sMatazavOved == clGeneral.enMatzavOved.ChufshBechul.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.MachalaAruka.ToString() ||
+                                    objOved.sMatazavOved == clGeneral.enMatzavOved.MasarHashayaImSachar.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.AvodotSherut.ToString()
+                                    || objOved.sMatazavOved == clGeneral.enMatzavOved.ChofeshShlila.ToString()))
                         {
                             addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1);
                         }
