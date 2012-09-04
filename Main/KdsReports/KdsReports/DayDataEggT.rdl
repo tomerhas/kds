@@ -147,7 +147,7 @@
               <Width>0.3905in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.35925in</Width>
+              <Width>0.4634in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.35925in</Width>
@@ -1473,7 +1473,7 @@
         <Top>1.92299cm</Top>
         <Left>0.25612cm</Left>
         <Height>1.70508cm</Height>
-        <Width>22.39109cm</Width>
+        <Width>22.65565cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1520,6 +1520,15 @@
         </Values>
       </DefaultValue>
       <Prompt>Period</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>p_dt</Prompt>
     </ReportParameter>
   </ReportParameters>
   <Width>9.02038in</Width>
