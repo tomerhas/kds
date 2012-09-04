@@ -349,7 +349,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      }
      protected void Page_PreRender(object sender, EventArgs e)
      {
-       if (Session["Pakadim"] == null)
+       if ((Session["Pakadim"] == null) &&  (bInpuDataResult))
            SD.UnloadCard(btnRefreshOvedDetails);
        else
             RenderPage();                
@@ -497,8 +497,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                  }
              }
              if (!bResult)
-             {
-                 Session["Pakadim"] = "";
+             {                
                  if ((Request.QueryString["Page"] != null) || ((Session["arrParams"] != null)))
                  {
                      //string sScript = "alert('לא ניתן לעלות כרטיס עבודה'); window.location.href = '" + this.PureUrlRoot + "/Main.aspx';";
