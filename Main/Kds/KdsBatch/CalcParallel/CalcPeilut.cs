@@ -395,9 +395,12 @@ namespace KdsBatch
 
                              if (SidurMifraki)
                              {
-                                 if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                                 if (drPeiluyot[J]["oto_no"].ToString().Length > 0)
                                  {
-                                     fHistaglutMifraki = (objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                                     if (objOved.oGeneralData.dtBusNumbersAll.Select("bus_number=" + drPeiluyot[J]["oto_no"].ToString() + " and SUBSTRING(convert(Vehicle_Type,'System.String'),3,2) in(61,22,31,37,38,48)").Length > 0)
+                                     {
+                                         fHistaglutMifraki = (objOved.objParameters.fAchuzHistaglutPremyaMifraki / 100) * CalcHagdaraLetashlumPeilut(iDakotBefoal, drPeiluyot[J]["MAKAT_NESIA"].ToString(), int.Parse(drPeiluyot[J]["sector_zvira_zman_haelement"].ToString()), iMisparKnisa);
+                                     }
                                  }
                              }
                              if (int.Parse(drPeiluyot[J]["Kod_shinuy_premia"].ToString()) == 2)

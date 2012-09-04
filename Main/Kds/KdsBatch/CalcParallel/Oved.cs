@@ -404,7 +404,7 @@ namespace KdsBatch
         {
             DateTime TarAd = (Month.AddMonths(1)).AddDays(-1);
             DataRow[] rows;
-            DtSugeyYechida = new DataTable();
+
             try
             {
                 oGeneralData.dtMatzavOvdim.Select(null, "mispar_ishi");

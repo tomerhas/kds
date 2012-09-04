@@ -37,7 +37,8 @@ namespace KdsBatch
         public void CalcMonthOved() //int Mispar_ishi, DateTime dTarMe, DateTime dTarAd)
         {
             DateTime dTaarich, dTarMe, dTarAd;
-         
+
+            dTarMe = DateTime.MinValue;
             try
             {
                 //iStatusTipul = clGeneral.enStatusTipul.HistayemTipul.GetHashCode();
@@ -73,7 +74,8 @@ namespace KdsBatch
                             objOved.objParameters = objOved.oGeneralData.ListParameters.Find(Params => (Params._Taarich == dTaarich));
                             objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= dTaarich && Pratim._TaarichAd >= dTaarich));
                             objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTaarich));
-                          
+                            objOved.sSugYechida = oCalcBL.InitSugYechida(objOved, dTaarich);
+
                             SetNetunimLeYom();
 
                             oDay.CalcRechiv126(dTaarich);
@@ -126,7 +128,7 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
-                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, null, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.StackTrace + "\n message: "+ ex.Message);
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", 0, dTarMe, "CalcMonth: " + ex.StackTrace + "\n message: "+ ex.StackTrace + "\n message: "+ ex.Message);
                 throw ex;
             }
         }
