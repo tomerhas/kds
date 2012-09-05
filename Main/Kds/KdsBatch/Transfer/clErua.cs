@@ -239,7 +239,7 @@ namespace KdsBatch
             float erech = 0;
             if (dtPrem.Rows.Count>0)
             {
-                dr = dtPrem.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv);
+                dr = dtPrem.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " AND TAARICH=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
                 if (dr.Length>0)
                     erech = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
             }
