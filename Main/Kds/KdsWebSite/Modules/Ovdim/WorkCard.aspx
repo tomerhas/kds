@@ -388,7 +388,7 @@
                             <td style="width: 127px;" align="right"><asp:Button Text="הוסף סידור מיוחד" ID="btnAddMyuchad" runat="server" Style="width: 124px;" CssClass="btnWorkCardAddSpecial" CausesValidation="false" OnClientClick="$get('hidExecInputChg').value ='0';$get('hidUpdateBtn').value='false'; return true;" OnClick="btnAddSpecialSidur_Click"/></td>
                             <td style="width: 242px;"></td>                                                        
                             <td style="width: 120px;">                                                                         
-                                <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"   Style="width: 150px; height: 33px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click"  />                                                                                                               
+                                <asp:Button Text="עדכן כרטיס" ID="btnUpdateCard" runat="server"   Style="width: 150px; height: 33px;" CausesValidation="false" OnClientClick="return ChkCardVld();" OnClick="btnPopUpd_click"  />
                             </td>   
                             <td style="width: 90px;">                                            
                                <input type="button"  value="מאשר" ID="btnApprove" runat="server" onclientclick="SetStyle(1);" onclick="btnMeasherOrMistayeg_onclick(1);" />

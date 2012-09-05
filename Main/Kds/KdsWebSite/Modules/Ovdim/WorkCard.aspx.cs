@@ -2777,8 +2777,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
     }
     protected void btnPopUpd_click(object sender, EventArgs e)
     {
-        //mpeUpd.Hide();
-
+        //mpeUpd.Hide();       
         if (SaveCard())
         {
             //          hidRefresh.Value = "1";
@@ -2792,8 +2791,6 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             //          SD.BuildPage();  
 
             RefreshScreen();
-
-            
         }       
     }
     protected void btnShowMessage_Click(object sender, EventArgs e)

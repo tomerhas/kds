@@ -627,7 +627,11 @@
         $find("MPClose").hide();
         $find("MPPrint").hide();
         alert(sMsg);
-     }else{bScreenChanged=false;}
+    } else { bScreenChanged = false; }
+    if (bValid) {
+        $get("btnApprove").disabled = true;
+        $get("btnNotApprove").disabled = true;
+    }
      return bValid;
    }
    if (typeof (Sys) !== 'undefined') Sys.Application.notifyScriptLoaded();
