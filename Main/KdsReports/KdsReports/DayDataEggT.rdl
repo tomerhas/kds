@@ -150,7 +150,7 @@
               <Width>0.4634in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.35925in</Width>
+              <Width>0.42177in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.47384in</Width>
@@ -167,7 +167,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.43507in</Height>
+              <Height>0.56712in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -180,6 +180,7 @@
                             <TextRun>
                               <Value>מ.א</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
@@ -197,8 +198,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -216,6 +215,7 @@
                             <TextRun>
                               <Value>חודש</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
@@ -233,8 +233,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -250,12 +248,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R126</Value>
+                              <Value>מכסה יומית</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -267,8 +268,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -284,24 +283,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>שעת</Value>
+                              <Value>התחלה ראשונה ביום</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <LeftIndent>0cm</LeftIndent>
-                          <HangingIndent>0cm</HangingIndent>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>התחלה</Value>
-                              <Style>
-                                <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -318,8 +304,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -335,9 +319,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>שעת גמר</Value>
+                              <Value>סיום אחרון ביום</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -354,8 +340,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -371,12 +355,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R1 108</Value>
+                              <Value>סך נוכחות</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -388,8 +376,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -405,12 +391,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R18</Value>
+                              <Value>נוכחות בפועל</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -422,8 +412,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -439,12 +427,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R32</Value>
+                              <Value>דקות רגילות</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -456,8 +448,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -473,12 +463,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R76</Value>
+                              <Value>נוספות 125%</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -490,8 +484,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -507,12 +499,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R77</Value>
+                              <Value>נוספות 150%</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -524,8 +520,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -541,12 +535,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R78</Value>
+                              <Value>זמן שבת</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -558,8 +556,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -575,12 +571,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R67</Value>
+                              <Value>ימי חופש</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -592,8 +592,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -609,12 +607,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R219</Value>
+                              <Value>דקות חופש</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -626,8 +628,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -643,12 +643,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R66</Value>
+                              <Value>ימי העדרות</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -660,8 +664,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -677,12 +679,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R219 5</Value>
+                              <Value>דקות העדרות</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -694,8 +700,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -711,12 +715,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R60</Value>
+                              <Value>מחלה</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -728,8 +735,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -745,12 +750,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R96</Value>
+                              <Value>סך רציפות</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -762,8 +770,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -779,12 +785,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R49</Value>
+                              <Value>פיצול</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -796,8 +805,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -813,12 +820,15 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>R131</Value>
+                              <Value>שבת/שעות 100%</Value>
                               <Style>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>SemiBold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <LeftIndent>0cm</LeftIndent>
+                          <HangingIndent>0cm</HangingIndent>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -830,8 +840,6 @@
                           <Style>Solid</Style>
                         </Border>
                         <BackgroundColor>LightGrey</BackgroundColor>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -1472,12 +1480,13 @@
         <DataSetName>DayDataEggT</DataSetName>
         <Top>1.92299cm</Top>
         <Left>0.25612cm</Left>
-        <Height>1.70508cm</Height>
-        <Width>22.65565cm</Width>
+        <Height>2.0405cm</Height>
+        <Width>22.81444cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
+          <TextAlign>Center</TextAlign>
         </Style>
       </Tablix>
       <Subreport Name="Subreport1">
@@ -1492,6 +1501,9 @@
         <Height>1.7145cm</Height>
         <Width>21.58444cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1499,7 +1511,7 @@
         </Style>
       </Subreport>
     </ReportItems>
-    <Height>1.42837in</Height>
+    <Height>1.66459in</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1531,7 +1543,7 @@
       <Prompt>p_dt</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>9.02038in</Width>
+  <Width>9.0829in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
