@@ -7687,18 +7687,15 @@ namespace KdsBatch
                         objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTarMe));
                         objOved.SetMatzavOved();
 
-                        if (iKodRechiv.GetHashCode() == clGeneral.enRechivim.YomHeadrut.GetHashCode() && objOved.sMatazavOved != clGeneral.enMatzavOved.Pail.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.Chufsha.ToString() &&
-                            objOved.sMatazavOved != clGeneral.enMatzavOved.ChufshBechul.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.MachalaAruka.ToString() &&
-                                objOved.sMatazavOved != clGeneral.enMatzavOved.MasarHashayaImSachar.ToString() && objOved.sMatazavOved != clGeneral.enMatzavOved.AvodotSherut.ToString()
-                                && objOved.sMatazavOved != clGeneral.enMatzavOved.ChofeshShlila.ToString()
-                                && objOved.objMeafyeneyOved.iMeafyen33 == 0)
+                       //פעיל = "01", חופשה = "03", חופשה בחול = "04",מחלה ארוכה="05", חופש שלילה="06",עבודות שרות="07", מאסר השהיה עם שכר="08"
+                        if (iKodRechiv.GetHashCode() == clGeneral.enRechivim.YomHeadrut.GetHashCode() && objOved.sMatazavOved != "01" && objOved.sMatazavOved != "03" &&
+                            objOved.sMatazavOved != "04" && objOved.sMatazavOved != "05" && objOved.sMatazavOved != "06" && objOved.sMatazavOved != "07"
+                                && objOved.sMatazavOved != "08" && objOved.objMeafyeneyOved.iMeafyen33 == 0)
                         { addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1); }
 
                         if (iKodRechiv.GetHashCode()== clGeneral.enRechivim.YomChofesh.GetHashCode() && objOved.objMeafyeneyOved.iMeafyen33 == 0 &&
-                             (objOved.sMatazavOved == clGeneral.enMatzavOved.Pail.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.Chufsha.ToString() ||
-                                objOved.sMatazavOved == clGeneral.enMatzavOved.ChufshBechul.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.MachalaAruka.ToString() ||
-                                    objOved.sMatazavOved == clGeneral.enMatzavOved.MasarHashayaImSachar.ToString() || objOved.sMatazavOved == clGeneral.enMatzavOved.AvodotSherut.ToString()
-                                    || objOved.sMatazavOved == clGeneral.enMatzavOved.ChofeshShlila.ToString()))
+                             (objOved.sMatazavOved =="01" || objOved.sMatazavOved == "03" || objOved.sMatazavOved == "04" || objOved.sMatazavOved == "05" ||
+                                    objOved.sMatazavOved == "06" || objOved.sMatazavOved == "07" || objOved.sMatazavOved == "08"))
                         {
                             addRowToTable(iKodRechiv.GetHashCode(), dTarMe, 1);
                         }
