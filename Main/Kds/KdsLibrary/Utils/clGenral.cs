@@ -1126,17 +1126,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             ValueNull = -1
         }
 
-        public enum enMatzavOved
-        {
-            Pail = 1,
-            Chufsha = 3,
-            ChufshBechul = 4,
-            MachalaAruka=5,
-            ChofeshShlila=6,
-            AvodotSherut=7,
-            MasarHashayaImSachar=8
-        }
-
+   
         public enum enNetuneyPeilut
         {
             SugPeilut =0, //0-element, 1-nesiaa
