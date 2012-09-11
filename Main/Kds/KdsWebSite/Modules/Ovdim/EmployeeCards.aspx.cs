@@ -101,17 +101,15 @@ public partial class Modules_Ovdim_EmployeeCards :KdsPage
                 txtId.Focus();
                 txtId.Attributes.Add("onfocus", "document.getElementById('" + txtId.ClientID + "').select();");
                 txtName.Attributes.Add("onfocus", "document.getElementById('" + txtName.ClientID + "').select();");
-                txtPageIndex.Value = "0";
-             //   btnHidden.Style.Add("Display", "None");
+                txtPageIndex.Value = "0";             
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 clGeneral.LoadDateCombo(ddlMonth, int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()));
                
                 SetDefault();
                 hidFromEmda.Value = (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1").ToString();
-                  if (!bool.Parse(hidFromEmda.Value))
+                if (!bool.Parse(hidFromEmda.Value))
                 {
-                    divNetunim.Style.Add("overflow-y", "hidden");
-                //    divNetunim.Style["overflow-y"] = "hidden";
+                    divNetunim.Style.Add("overflow-y", "hidden");               
                     grdEmployee.AllowPaging = false;
                      divNetunim.Style["height"] = "250px";
                 }
