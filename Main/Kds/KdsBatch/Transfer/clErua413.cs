@@ -152,7 +152,11 @@ namespace KdsBatch
           try
           {
               fErech = GetErechRechiv(iKodRechiv,col);
-              CreateData(sSaifHilan, fErech, iLen, iNumDigit);
+              if ((sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224")
+                  || ((sSaifHilan == "221" || sSaifHilan == "222" || sSaifHilan == "223" || sSaifHilan == "224") && !bKayamEfreshBErua))
+              {
+                  CreateData(sSaifHilan, fErech, iLen, iNumDigit);
+              }
           }
           catch (Exception ex)
           {

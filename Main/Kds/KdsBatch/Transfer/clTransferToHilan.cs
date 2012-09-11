@@ -25,7 +25,7 @@ namespace KdsBatch
        //private  clErua418 oErua418;
        //private clErua419 oErua419;
        //private clErua460 oErua460;
-       private StreamWriter sFileStrCh, sFileStrS, sFileStrC, sFileStrEt, sFileStrEtBakara;
+       private StreamWriter sFileStrCh, sFileStrS, sFileStrC, sFileStrEt, sFileStrEtBakaraReg, sFileStrEtBakaraHef;
        private StreamWriter _sFileToWrite;
 
        private List<PirteyOved> _PirteyOved;
@@ -34,8 +34,9 @@ namespace KdsBatch
            Friends = 1, 
            Salarieds = 2,
            Choze=23,
-           EtBakara=4,
-           EtData=5
+           EtBakaraReg=4,
+           EtBakaraHef = 5,
+           EtData=6
        }
 
        public void Transfer(long lBakashaId, long lRequestNumToTransfer)
@@ -47,7 +48,7 @@ namespace KdsBatch
            int iStatus = 0;
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
            string sPathFile = ConfigurationSettings.AppSettings["PathFileTransfer"];
-           string sChodeshIbud,sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakara;
+           string sChodeshIbud, sFileNameSchirim, sFileNameChaverim, sFileNameChozim, sFileNameETBTashlum, sFileNameETBakaraReg, sFileNameETBakaraHef;
            PirteyOved oPirteyOved;
            DateTime dChodesh;
            COLL_MISPAR_ISHI_SUG_CHISHUV objCollMisparIshiSugChishuv = new COLL_MISPAR_ISHI_SUG_CHISHUV();
@@ -58,7 +59,8 @@ namespace KdsBatch
            sFileNameSchirim = "EGD6NOCH.txt"; //"EGD6TEST.txt"; //
            sFileNameChozim = "EGB2NOCH.txt"; //"EGB2TEST.txt"; //
            sFileNameETBTashlum = "QDIVmmyy.162";
-           sFileNameETBakara = "REGLmmyy.162";
+           sFileNameETBakaraReg = "REGLmmyy.162";
+           sFileNameETBakaraHef = "HEFRmmyy.162";
 
            _lBakashaId = lBakashaId;
 
@@ -96,6 +98,7 @@ namespace KdsBatch
                            sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
 
                        oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
+                       oPirteyOved.sChodeshIbud = sChodeshIbud;
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
@@ -120,8 +123,11 @@ namespace KdsBatch
                    if (sFileStrEt == null && _PirteyOved.Exists( item =>(item.iDirug == 85 && item.iDarga == 30)) )
                    {
                        sFileStrEt = new StreamWriter(sPathFile + sFileNameETBTashlum.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
-                       sFileStrEtBakara = new StreamWriter(sPathFile + sFileNameETBakara.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
-                   }
+
+                       sFileStrEtBakaraReg = new StreamWriter(sPathFile + sFileNameETBakaraReg.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                       sFileStrEtBakaraHef = new StreamWriter(sPathFile + sFileNameETBakaraHef.Replace("mmyy", sChodeshIbud.Substring(0, 2) + sChodeshIbud.Substring(5, 2)), false, Encoding.Default);
+                    }
+
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before WriteEruimToFile");
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
@@ -200,9 +206,13 @@ namespace KdsBatch
            {
                sFileStrEt.Close();
            }
-           if (!(sFileStrEtBakara == null))
+           if (!(sFileStrEtBakaraReg == null))
            {
-               sFileStrEtBakara.Close();
+               sFileStrEtBakaraReg.Close();
+           }
+           if (!(sFileStrEtBakaraHef == null))
+           {
+               sFileStrEtBakaraHef.Close();
            }
        }
 
@@ -226,7 +236,11 @@ namespace KdsBatch
 
            if (oOved.iDirug == 85 && oOved.iDarga == 30)
            {
-               WriteEruaToFile(sFileStrEtBakara, oOved.oBakaraEt);
+               if (oOved.oBakaraEt.TypeFile == clEruaBakaraEt.enTypeFile.Ragil.GetHashCode())
+                    WriteEruaToFile(sFileStrEtBakaraReg, oOved.oBakaraEt);
+               else
+                    WriteEruaToFile(sFileStrEtBakaraHef, oOved.oBakaraEt);
+
                WriteEruaToFile(sFileStrEt, oOved.oDataEt);
            }
           else
@@ -302,9 +316,13 @@ namespace KdsBatch
        private StreamWriter GetFileToWrite(int iFileType, int iMaamadRashi, int iDirug, int iDarga)
        {
            StreamWriter sFileToWrite;
-           if (iFileType == enFileType.EtBakara.GetHashCode())
+           if (iFileType == enFileType.EtBakaraReg.GetHashCode())
            {
-               sFileToWrite = sFileStrEtBakara;
+               sFileToWrite = sFileStrEtBakaraReg;
+           }
+           else if (iFileType == enFileType.EtBakaraHef.GetHashCode())
+           {
+               sFileToWrite = sFileStrEtBakaraHef;
            }
            else if (iFileType == enFileType.EtData.GetHashCode())
            {
@@ -1496,10 +1514,8 @@ namespace KdsBatch
                 oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 oDal.AddParameter("p_cur_prem", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
-                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before ExecuteSP");
                 oDal.ExecuteSP(clDefinitions.cProGetOvdimToTransfer, ref ds);
-                clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after ExecuteSP");
-
+              
               return ds;
             }
             catch (Exception ex)

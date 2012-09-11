@@ -118,7 +118,7 @@ namespace KdsBatch
                sErua416.Append(GetBlank(4));
 
                if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
-                   _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+                   _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode() || _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
                {
                    sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode()),4,2));
                }

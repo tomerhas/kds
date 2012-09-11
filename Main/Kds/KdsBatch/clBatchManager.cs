@@ -229,7 +229,8 @@ namespace KdsBatch
             errKisuyTorLifneyHatchalatSidur =189,
             errSidurLoTakefLetaarich=190,
             errIsukNahagImSidurTafkidNoMefyen=191,
-            errMatzavOvedNotValidFirstDay =192
+            errMatzavOvedNotValidFirstDay =192,
+            errDivuachSidurLoMatimLeisuk = 193
         }
 
         private enum errNesiaMeshtana
@@ -1281,6 +1282,7 @@ namespace KdsBatch
                     if (CheckErrorActive(181)) IsShatGmarLetashlumNull180(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(190)) SidurLoTakefLetarich190(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(191)) IsukNahagImSidurTafkidNoMefyen191(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(193)) DivuachSidurLoMatimLeisuk193(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -1621,6 +1623,8 @@ namespace KdsBatch
             return isValid;
         }
 
+
+
         private bool IsMatzavOvedNoValidFirstDay192(DateTime dCardDate, int iMisparIshi, ref DataTable dtErrors)
         {
             bool isValid = true;
@@ -1653,6 +1657,31 @@ namespace KdsBatch
 
             return isValid;
         }
+
+        private bool DivuachSidurLoMatimLeisuk193(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if ((oOvedYomAvodaDetails.iIsuk == 420 || oOvedYomAvodaDetails.iIsuk ==422) && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn>0 &&  oSidur.iKodSibaLedivuchYadaniOut>0)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד אחד מבין סדרן-מנס מנס-פקח ודווח סידור 99001. יש לדווח סידור 99224 99225 בהתאמה.", enErrors.errDivuachSidurLoMatimLeisuk.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk193: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
         private bool IsSidurLina30(DateTime dCardDate, ref DataTable dtErrors)
         {                 
             DataRow drNew;

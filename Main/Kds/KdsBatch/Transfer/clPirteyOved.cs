@@ -63,8 +63,10 @@ namespace KdsBatch
                 _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
                 if (iDirug == 85 && iDarga == 30)
                 {
-                    oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-                    oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, _dtRechivim);
+                    if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
+                        oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+
+                    oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, _dtRechivim, sChodeshIbud);
                 }
                 else
                 {

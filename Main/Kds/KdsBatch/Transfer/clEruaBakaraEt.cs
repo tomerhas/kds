@@ -4,18 +4,35 @@ using System.Linq;
 using System.Text;
 using KdsLibrary;
 using System.Data;
+using System.IO;
 
 namespace KdsBatch
 {
+   
   public  class clEruaBakaraEt:clErua
     {
-      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      protected string sFileName;
+
+      public int TypeFile;
+      public enum enTypeFile
+      {
+          Ragil = 1,
+          Hefreshim = 2
+      }
+
+      public clEruaBakaraEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, string sChodeshIbud)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
       {
-          _sBody = SetBody();
+          if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
+              TypeFile = enTypeFile.Ragil.GetHashCode();
+          else TypeFile = enTypeFile.Hefreshim.GetHashCode();
+
+              _sBody = SetBody();
           if (_sBody != null)
             PrepareLines();
       }
+
+    
 
       protected override void SetHeader()
       {
