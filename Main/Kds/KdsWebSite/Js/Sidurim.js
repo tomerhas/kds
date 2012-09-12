@@ -222,6 +222,7 @@ function chkMkt(oRow) {
                 $get(oRId).cells[_COL_MAKAT].childNodes[0].value = lOMkt;
                 alert('מספר מק"ט לא תקין');
             }
+           $get("hidErrChg").value = "";
         }
     }
     function SetNewSidurCtls(iSidurNum, result){

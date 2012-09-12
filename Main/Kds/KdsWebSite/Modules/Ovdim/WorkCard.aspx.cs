@@ -2962,7 +2962,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                         bResult = true;
                         ((HtmlInputHidden)(this.FindControl("hidLvl2Chg"))).Value = "";
                         SetUpdateBtnVisibility("true");
-                        hidChanges.Value = "false";
+                        hidChanges.Value = "false";                        
                         //hidUpdateBtn.Value = "true";
                        // SD.HasSaveCard = false;
                     }
