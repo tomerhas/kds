@@ -60,7 +60,7 @@ namespace KdsBatch
            sFileNameChozim = "EGB2NOCH.txt"; //"EGB2TEST.txt"; //
            sFileNameETBTashlum = "QDIVmmyy.162";
            sFileNameETBakaraReg = "REGLmmyy.162";
-           sFileNameETBakaraHef = "HEFRmmyy.162";
+           sFileNameETBakaraHef = "HEFR_Cmmyy.162";
 
            _lBakashaId = lBakashaId;
 
