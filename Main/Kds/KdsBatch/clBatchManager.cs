@@ -13645,14 +13645,14 @@ namespace KdsBatch
                                  }
                                  if ((oMeafyeneyOved.Meafyen61Exists) && (htEmployeeDetails.Count > 0) && (iSidurZakaiLenesiaKnisa > -1 || iSidurZakaiLenesiaYetzia > -1))
                                  {
-                                     if (iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
+                                     if ((oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 1 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 3) && iSidurZakaiLenesiaKnisa > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HALOCH")))
                                      {
                                          iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaKnisa, 1, dCardDate);
                                          if (iZmanNesia > -1)
                                              oObjYameyAvodaUpd.ZMAN_NESIA_HALOCH = (int)(Math.Ceiling(iZmanNesia / 2.0));
 
                                      }
-                                     if (iSidurZakaiLenesiaYetzia > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
+                                     if ((oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 2 || oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT == 3) &&  iSidurZakaiLenesiaYetzia > -1 && (!CheckIdkunRashemet("ZMAN_NESIA_HAZOR")))
                                      {
                                          iZmanNesia = GetZmanNesiaMeshtana(iSidurZakaiLenesiaYetzia, 2, dCardDate);
                                          if (iZmanNesia > -1)
