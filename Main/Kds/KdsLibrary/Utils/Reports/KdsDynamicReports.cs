@@ -543,7 +543,8 @@ namespace KdsLibrary.Utils.Reports
         IdkuneyRashemetMasach4,
         Query4,
         DayDataEggt,
-        RikuzAvodaChodshi2
+        RikuzAvodaChodshi2,
+        SpecificAverage
     }
     public enum Orientation
     {
