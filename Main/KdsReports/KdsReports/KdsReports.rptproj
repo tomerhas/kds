@@ -180,12 +180,12 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of AverageSpecificRechivim.rdl</Name>
-      <FullPath>Copy of AverageSpecificRechivim.rdl</FullPath>
+      <Name>AverageSpecificRechivim.rdl</Name>
+      <FullPath>AverageSpecificRechivim.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Copy of SpecificAverage.rdl</Name>
-      <FullPath>Copy of SpecificAverage.rdl</FullPath>
+      <Name>SpecificAverage.rdl</Name>
+      <FullPath>SpecificAverage.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
