@@ -13531,10 +13531,9 @@ namespace KdsBatch
                          }
 
 
-                         if (iFirstMezake == -1 && iLastMezake == -1)
+                         if (iFirstMezake == -1 && iLastMezake == -1 && !CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
                          {
-                             if (!CheckIdkunRashemet("BITUL_ZMAN_NESIOT"))
-                                 oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
+                              oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = ZmanNesiotType.LoZakai.GetHashCode();
                          }
                          else
                          {
