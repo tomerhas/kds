@@ -5545,9 +5545,10 @@ namespace KdsBatch
                             { fZmanAruchatBokerSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
                             if (dShatHatchalaLetashlum >= dTempM1 && dShatGmarSidur <= dTempM2)
                             { fZmanAruchatBokerSidur = float.Parse((dShatGmarSidur - dShatHatchalaLetashlum).TotalMinutes.ToString()); }
+                            
                             if (fZmanAruchatBokerSidur > 20)
                             { fZmanAruchatBokerSidur = 20; }
-                            else { fZmanAruchatBokerSidur = 0; }
+                            //else { fZmanAruchatBokerSidur = 0; }
 
                             //חישוב זמן ארוחת צהריים
                             dTempM1 = objOved.objParameters.dStartAruchatTzaharayim;
@@ -5559,9 +5560,10 @@ namespace KdsBatch
                             { fZmanAruchatTzharimSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
                             if (dShatHatchalaSidur >= dTempM1 && dShatGmarSidur <= dTempM2)
                             { fZmanAruchatTzharimSidur = float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                           
                             if (fZmanAruchatTzharimSidur > 30)
                             { fZmanAruchatTzharimSidur = 30; }
-                            else { fZmanAruchatTzharimSidur = 0; }
+                            //else { fZmanAruchatTzharimSidur = 0; }
 
                             //חישוב זמן ארוחת ערב
                             dTempM1 = clGeneral.GetDateTimeFromStringHour("18:00", objOved.Taarich.Date);
@@ -5573,9 +5575,10 @@ namespace KdsBatch
                             { fZmanAruchatErevSidur = float.Parse((dTempM2 - dShatHatchalaSidur).TotalMinutes.ToString()); }
                             if (dShatHatchalaSidur >= dTempM1 && dShatGmarSidur <= dTempM2)
                             { fZmanAruchatErevSidur = float.Parse((dShatGmarSidur - dShatHatchalaSidur).TotalMinutes.ToString()); }
+                            
                             if (fZmanAruchatErevSidur > 20)
                             { fZmanAruchatErevSidur = 20; }
-                            else { fZmanAruchatErevSidur = 0; }
+                            //else { fZmanAruchatErevSidur = 0; }
 
                             fZmanAruchatBoker += fZmanAruchatBokerSidur;
                             fZmanAruchatTzharim += fZmanAruchatTzharimSidur;
