@@ -298,8 +298,8 @@
       <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
-      <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
+      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -331,8 +331,8 @@
       <FilterValidator ValidatorName="ValidChodeshAd" ErrorMessageValidator="לא ניתן להזין תאריך מעבר להיום" ValidationFunction="IsAlowedEndDate"/>
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
-    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32">
-      <!--<DropDownList QueryType="AjaxAutoComplete" Select="GetIdOfYameyAvoda" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />-->
+    <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
+      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -351,6 +351,7 @@
     </Filter>
     <Filter ParameterName="P_SPECIFICRECHIVS" Caption="רכיב" BoxeType="ListBox" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidCountOfRechiv" ErrorMessageValidator="מותר לבחור עד 14 רכיבים" ValidationFunction="CountRechiv"/>
+      <FilterValidator ValidatorName="RechivExist"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת רכיב" ValidationFunction="IsEmpty"/>
       <DropDownList QueryType="Select"  Select="select  R.KOD_RECHIV,R.TEUR_RECHIV from CTB_RECHIVIM r order by 2" ValueField="KOD_RECHIV" TextField="TEUR_RECHIV" />
     </Filter>
   </Report>

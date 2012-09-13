@@ -155,8 +155,7 @@
         }
 
         function CountRechiv(sender, args) {
-//        debugger
-            var CurrentObj = sender.controltovalidate;
+            args.IsValid = ($("#" + sender.controltovalidate).find("option:selected").length < 15)
         }
         function CblMaamadValidation(val, args) {
             args.IsValid = true;
