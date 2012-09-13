@@ -215,7 +215,7 @@
           <Border>
             <Style>Solid</Style>
           </Border>
-          <TextAlign>Right</TextAlign>
+          <TextAlign>Center</TextAlign>
         </Style>
       </Tablix>
     </ReportItems>
