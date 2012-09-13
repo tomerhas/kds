@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>17.41919cm</Width>
+              <Width>27.20877cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>4.96738cm</Height>
+              <Height>5.14036cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -394,7 +394,7 @@
                           </TablixRowHierarchy>
                           <DataSetName>DsMAINDETAILSAVERAGE</DataSetName>
                           <Top>2.33533cm</Top>
-                          <Left>4.25439cm</Left>
+                          <Left>8.35999cm</Left>
                           <Height>1.2cm</Height>
                           <Width>11.04474cm</Width>
                           <Style>
@@ -420,14 +420,15 @@
                             </Parameter>
                           </Parameters>
                           <Top>3.87614cm</Top>
-                          <Left>0.55562cm</Left>
-                          <Height>1.01188cm</Height>
-                          <Width>16.86357cm</Width>
+                          <Left>0.82362cm</Left>
+                          <Height>0.92064cm</Height>
+                          <Width>26.0884cm</Width>
                           <ZIndex>1</ZIndex>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
+                            <TextAlign>Center</TextAlign>
                           </Style>
                         </Subreport>
                         <Textbox Name="mI">
@@ -471,7 +472,8 @@
 " לחודש " &amp; DateAdd("m",-6,Parameters!P_ENDDATE.Value).ToShortDateString() &amp; " - " &amp; Parameters!P_ENDDATE.Value</Value>
                             </Parameter>
                           </Parameters>
-                          <Left>1.35278cm</Left>
+                          <Top>0.35823cm</Top>
+                          <Left>6.35281cm</Left>
                           <Height>1.80071cm</Height>
                           <Width>16.06642cm</Width>
                           <ZIndex>3</ZIndex>
@@ -482,6 +484,7 @@
                           </Style>
                         </Subreport>
                       </ReportItems>
+                      <ZIndex>1</ZIndex>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -514,8 +517,8 @@
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
-        <Height>4.96738cm</Height>
-        <Width>17.41919cm</Width>
+        <Height>5.14036cm</Height>
+        <Width>27.20877cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -523,10 +526,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.95566in</Height>
+    <Height>2.03218in</Height>
     <Style />
   </Body>
-  <Width>6.85795in</Width>
+  <Width>10.71212in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
     <PageWidth>29.7cm</PageWidth>
