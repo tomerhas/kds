@@ -62,7 +62,9 @@
         <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/progress.gif" style="width: 100px; height: 100px" /><br /> 
     </div>  
    <center>       
-      <table class="WorkCardTable1" style="width: 100%">
+       <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
+        <ContentTemplate>
+         <table class="WorkCardTable1" style="width: 100%">
         <tr>                           
             <td class="WorkCardTable1Label" align="right" style="width:25%">כרטיס עבודה</td>                                            
             <td class="WorkCardTable1Label" align="left" style="width:25%">מעדכן אחרון:</td>                                            
@@ -74,8 +76,7 @@
             <td class="WorkCardTable1Label" align="right"><label id="lblLastUpdateDate" runat="server"></label></td>                    
         </tr>
       </table>     
-      <asp:UpdatePanel ID="upEmployeeDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
-        <ContentTemplate>
+    
          <table width="100%" class="WorkCardTable2" cellspacing="0">
             <tr>
               <td width="89%">                                      
@@ -164,7 +165,7 @@
             <asp:AsyncPostBackTrigger ControlID="btnRefreshOvedDetails" /> 
             <asp:AsyncPostBackTrigger ControlID="btnNextErrCard" />  
             <asp:AsyncPostBackTrigger ControlID="btnNextCard" /> 
-            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                         
+            <asp:AsyncPostBackTrigger ControlID="btnPrevCard" />                                                                                                                                                                                                                                                                                                                                                                                                                     
         </Triggers>
       </asp:UpdatePanel>           
       <asp:UpdatePanel ID="upGeneralDetails" runat="server" RenderMode="Inline" UpdateMode="Conditional">
