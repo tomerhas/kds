@@ -1,64 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="DsCon">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>a4db09e9-a331-46db-b57a-d8091ab6c86d</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsRechivim">
-      <Fields>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="KOD_RECHIV">
-          <DataField>KOD_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_RECHIV">
-          <DataField>TEUR_RECHIV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ERECH_RECHIV">
-          <DataField>ERECH_RECHIV</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DsCon</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_RECHIVIM_TO_AVERAGE</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_START_DATE">
-            <Value>=Parameters!P_START_DATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_END_DATE">
-            <Value>=Parameters!P_END_DATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MISPAR_ISHI">
-            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="TbMatrix">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.453in</Width>
+              <Width>1.15062cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.51549in</Width>
+              <Width>1.30934cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.18414in</Height>
+              <Height>0.46772cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -129,7 +85,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.55913in</Size>
+                <Size>1.42019cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox1">
                     <CanGrow>true</CanGrow>
@@ -178,7 +134,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.55913in</Size>
+                    <Size>1.42019cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -266,6 +222,63 @@
     <Height>0.74328in</Height>
     <Style />
   </Body>
+  <Width>0.96849in</Width>
+  <Page>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>19cm</PageWidth>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
+    <TopMargin>0cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DsCon">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>a4db09e9-a331-46db-b57a-d8091ab6c86d</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsRechivim">
+      <Query>
+        <DataSourceName>DsCon</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_START_DATE">
+            <Value>=Parameters!P_START_DATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_END_DATE">
+            <Value>=Parameters!P_END_DATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_RECHIVIM_TO_AVERAGE</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="KOD_RECHIV">
+          <DataField>KOD_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_RECHIV">
+          <DataField>TEUR_RECHIV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ERECH_RECHIV">
+          <DataField>ERECH_RECHIV</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_START_DATE">
       <DataType>DateTime</DataType>
@@ -319,17 +332,6 @@ end function
 
     End Function
 </Code>
-  <Width>0.96849in</Width>
-  <Page>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>19cm</PageWidth>
-    <LeftMargin>0cm</LeftMargin>
-    <RightMargin>0cm</RightMargin>
-    <TopMargin>0cm</TopMargin>
-    <BottomMargin>0cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
-  <rd:ReportID>aa34a6fa-e2e7-4477-b1b3-02ab5cf63f1e</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>aa34a6fa-e2e7-4477-b1b3-02ab5cf63f1e</rd:ReportID>
 </Report>
