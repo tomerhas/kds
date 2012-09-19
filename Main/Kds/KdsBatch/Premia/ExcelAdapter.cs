@@ -33,7 +33,7 @@ namespace KdsBatch.Premia
         #region Methods
         public void OpenNewWorkBook()
         {
-            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In OpenNewWorkBook ");
+           // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In OpenNewWorkBook ");
             //CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
             //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             _workBook = _application.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
@@ -44,7 +44,7 @@ namespace KdsBatch.Premia
 
         public void SaveNewWorkBook(DateTime _periodDate)
         {
-            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In SaveNewWorkBook with period" + _periodDate + ",_filename:" + _filename);
+           // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In SaveNewWorkBook with period" + _periodDate + ",_filename:" + _filename);
             object misValue = System.Reflection.Missing.Value;
            // LocalProcesses.wsLocalProcesses _wsLocalProcesses= new LocalProcesses.wsLocalProcesses();
            // _wsLocalProcesses.DeleteFile(_filename);

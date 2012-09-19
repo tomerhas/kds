@@ -80,6 +80,7 @@ namespace KdsBatch.Premia
         {
             LoadDictionaryTables();
             DataTable dt = GetDataTableFromExcel();
+            Log(_processBtchNumber, "I", String.Format("Found {0} rows in file", dt.Rows.Count), BatchType, _periodDate);
             System.Diagnostics.EventLog.WriteEntry("KDS",
                   String.Format("Found {0} rows in file", dt.Rows.Count));
             FillItems(dt);
@@ -141,6 +142,7 @@ namespace KdsBatch.Premia
             }
             if (stationItems.Count > 0)
                 UpdateStationCounters(stationItems, minutesCounter);
+            Log(_processBtchNumber, "I", String.Format("{0} items for import", _items.Items.Count()), BatchType, _periodDate);
             System.Diagnostics.EventLog.WriteEntry("KDS",
                   String.Format("{0} items for import", _items.Items.Count()));
 

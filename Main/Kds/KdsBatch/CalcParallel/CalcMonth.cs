@@ -230,16 +230,20 @@ namespace KdsBatch
             float fCountMichsa, fCountYomLeloChag;
             int iSugYom;
             objOved._dsChishuv.Tables["CHISHUV_YOM"].Select(null, "KOD_RECHIV");
-            fCountMichsa = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " AND ERECH_RECHIV>0", "").Length;
+            //fCountMichsa = objOved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " AND ERECH_RECHIV>0", "").Length;
             fCountYomLeloChag = 0;
             objOved.fMekademNipuach = 0;
-
+            fCountMichsa = 0;
             do
             {
                 iSugYom = oCalcBL.GetSugYomLemichsa(objOved, dTarMe, objOved.objPirteyOved.iKodSectorIsuk, objOved.objMeafyeneyOved.iMeafyen56);
                 if (iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())
                 {
                     fCountYomLeloChag += 1;
+                }
+                if (!clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom, dTarMe))
+                {
+                    fCountMichsa += 1;
                 }
                 dTarMe = dTarMe.AddDays(1);
             }

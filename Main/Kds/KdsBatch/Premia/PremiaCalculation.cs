@@ -28,10 +28,10 @@ namespace KdsBatch.Premia
         {
             try
             {
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacroWithScript");
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacroWithScript");
           
                 string filename = _settings.GetMacroFullPath(_periodDate);
-                clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before IsMacroFileExists file=" + filename);
+                //clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "before IsMacroFileExists file=" + filename);
           
                 if (!_settings.IsMacroFileExists(_periodDate))
                     throw new Exception(String.Format("Path {0} does not exist",
@@ -53,15 +53,16 @@ namespace KdsBatch.Premia
             }
             catch (Exception ex)
             {
+                Log(_processBtchNumber, "E", ex.Message, BatchType, _periodDate);
                 System.Diagnostics.EventLog.WriteEntry("KDS", ex.ToString());
                 throw ex;
             }
         }
         private void RunMacro()
         {
-            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro before new ExcelAdapter");
+           // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro before new ExcelAdapter");
             var exAdpt = new ExcelAdapter(_settings.GetMacroFullPath(_periodDate));
-            clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro after new ExcelAdapter");
+           // clLogBakashot.InsertErrorToLog(58, 75757, "I", 0, null, "In RunMacro after new ExcelAdapter");
            
             try
             {
@@ -84,6 +85,7 @@ namespace KdsBatch.Premia
                     }
                     catch (System.Runtime.InteropServices.COMException comEx)
                     {
+                        Log(_processBtchNumber, "E", comEx.Message, BatchType, _periodDate);
                         System.Diagnostics.EventLog.WriteEntry("KDS", comEx.ToString());
                         attempts++;
                         if (attempts >= 3) throw comEx;
@@ -94,6 +96,7 @@ namespace KdsBatch.Premia
             }
             catch (Exception ex)
             {
+                Log(_processBtchNumber, "E", ex.Message, BatchType, _periodDate);
                 System.Diagnostics.EventLog.WriteEntry("KDS", ex.ToString());
                 throw ex;
             }
