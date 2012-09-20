@@ -152,6 +152,10 @@ namespace KdsBatch
           try
           {
               fErech = GetErechRechiv(iKodRechiv,col);
+
+              if (sSaifHilan == "223")
+              { fErech = fErech / 60; }
+
               if ((sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224")
                   || ((sSaifHilan == "221" || sSaifHilan == "222" || sSaifHilan == "223" || sSaifHilan == "224") && !bKayamEfreshBErua))
               {
