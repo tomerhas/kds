@@ -52,7 +52,7 @@
     </Filter>
   </Report>
   <Report  RdlName="FindWorkerCard" Roles="kds_administrators" FilterByLine="5" PageHeader="איתור כרטיס עבודה" Orientation="Landscape" ProductionType="Heavy">
-    <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005"  RunAtServer="true" Required="true">
+    <Filter ClassName="כללי" ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" RunAtServer="true" Required="true">
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidFindMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
@@ -299,7 +299,7 @@
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
+      <!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>-->
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -332,7 +332,7 @@
     </Filter>
     <Filter ParameterName="P_Refresh" Caption="רענן" BoxeType="Button" />
     <Filter ParameterName="P_MISPAR_ISHI" Caption="מספר אישי" BoxeType="ListBoxExtended" DataType="System.Int32"  Required="true">
-      <FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>
+      <!--<FilterValidator ValidatorName="ValidMisparIshi"  ErrorMessageValidator="לא ניתן להוציא דוח ללא בחירת מספר אישי" ValidationFunction="IsEmpty"/>-->
     </Filter>
     <Filter ParameterName="P_EZOR" Caption="איזור" BoxeType="DropDown" DataType="System.Int32">
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Regions" ValueField="kod_ezor" TextField="teur_ezor" />
@@ -348,6 +348,9 @@
     </Filter>
     <Filter ParameterName="P_ISUK" Caption="עיסוק" BoxeType="ListBox" DataType="System.Int32">
       <DropDownList QueryType="Select"  Select="select distinct tb.TEUR_ISUK || ' (' || tb.KOD_ISUK  || ')' TEUR_ISUK, tb.KOD_ISUK from CTB_ISUK tb order by 1" ValueField="KOD_ISUK" TextField="TEUR_ISUK" />
+    </Filter>
+    <Filter ParameterName="P_KOD_YECHIDA" Caption="יחידה ארגונית" BoxeType="ListBox" DataType="System.Int32">
+      <DropDownList QueryType="Select"  Select="Select Kod_Yechida, Teur_Yechida From CTB_Yechida order by 2" ValueField="Kod_Yechida" TextField="Teur_Yechida" />
     </Filter>
     <Filter ParameterName="P_SPECIFICRECHIVS" Caption="רכיב" BoxeType="ListBox" DataType="System.Int32" Required="true">
       <FilterValidator ValidatorName="ValidCountOfRechiv" ErrorMessageValidator="מותר לבחור עד 14 רכיבים" ValidationFunction="CountRechiv"/>
