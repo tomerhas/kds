@@ -4917,6 +4917,7 @@ namespace KdsBatch
                         if (fMichsaYomit == 0 && fDakotNocheut > 0)
                         {
                             fShaot100ET = Math.Min(120, fDakotNocheut);
+                            fDakotNocheutGmar = 0;
                             dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and Shat_gmar_Letashlum<=Convert('" + objOved.objParameters.dKnisatShabat.ToString() + "', 'System.DateTime')", "");
                             if (dr.Length > 0)
                             {
@@ -4927,11 +4928,13 @@ namespace KdsBatch
 
 
                                 fDakotNocheutGmar = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"].Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime') AND MISPAR_SIDUR in (" + sSidurim + ")"));
-                                if (fErechRechiv > 0 && fDakotNocheutGmar > 0)
-                                {
-                                    fShaot100ET = Math.Min(fErechRechiv + fDakotNocheutGmar, fShaot100ET);
-                                }
                             }
+
+                            if (fErechRechiv > 0)
+                            {
+                                fShaot100ET = Math.Min(fErechRechiv + fDakotNocheutGmar, fShaot100ET);
+                            }
+                           
                             fErechRechiv = 0;
                          //   addRowToTable(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), fErechRechiv);
                         }
