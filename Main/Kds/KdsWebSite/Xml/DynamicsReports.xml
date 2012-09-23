@@ -491,8 +491,8 @@
   </Report>
 
   <Report  RdlName="DayDataEggt" Roles="kds_administrators" FilterByLine="3" PageHeader="נתוני עבודה יומיים אגד תעבורה" >
-    <Filter ParameterName="P_BakachaId" Caption="מספר בקשה" BoxeType="TextBox" DataType="System.Int32"/>
-    <Filter ParameterName="P_DATE" Caption="חודש" BoxeType="DropDown" DataType="System.String">
+    <Filter ParameterName="P_BakashaId" Caption="מספר בקשה" BoxeType="TextBox" DataType="System.Int32"/>
+    <Filter ParameterName="P_Period" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Query4" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
