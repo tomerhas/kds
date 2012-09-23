@@ -8234,7 +8234,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
+                              <Value>= iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -8263,6 +8263,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -8377,7 +8378,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9849,7 +9849,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(First(Fields!KOD_MAAMAD.Value, "dsPirteyOved")&lt;&gt;23,iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),""),"")</Value>
+                              <Value>=iif(First(Fields!KOD_MAAMAD.Value, "dsPirteyOved")&lt;&gt;"23" or (First(Fields!KOD_MAAMAD.Value, "dsPirteyOved")="23" and (First(Fields!KOD_ISUK.Value, "dsPirteyOved")=122 or First(Fields!KOD_ISUK.Value, "dsPirteyOved")=123 or First(Fields!KOD_ISUK.Value, "dsPirteyOved")=124) ),iif(Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R55.Value/60,1,System.MidpointRounding.AwayFromZero),""),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0.0;(0.0)</Format>
@@ -10324,6 +10324,10 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Field>
         <Field Name="MAAMAD_RASHI">
           <DataField>MAAMAD_RASHI</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="KOD_ISUK">
+          <DataField>KOD_ISUK</DataField>
           <rd:UserDefined>true</rd:UserDefined>
         </Field>
       </Fields>
