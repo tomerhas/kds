@@ -7517,7 +7517,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!R77.Value)</Value>
+                              <Value>=Sum(Fields!R77.Value, "DsRechivim")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>0;(0);''</Format>
@@ -7547,6 +7547,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -8263,7 +8264,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -8315,7 +8315,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Fields!R77.Value/60,1,System.MidpointRounding.AwayFromZero)&gt;0,Round(Fields!R77.Value/60,1,System.MidpointRounding.AwayFromZero),"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R77.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero)&gt;0,FormatNumber(Round(Sum(Fields!R77.Value, "DsRechivim")/60,1,System.MidpointRounding.AwayFromZero),1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
