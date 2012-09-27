@@ -8270,15 +8270,16 @@ namespace KdsBatch
                         for (int I = 0; I < _drSidurim.Length; I++)
                         {
                             iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
-                            dShatSiyum = DateTime.Parse(_drSidurim[I]["shat_siyum"].ToString());
+                            dShatSiyum = DateTime.Parse(_drSidurim[I]["shat_gmar_sidur"].ToString());
                             dShatHatchala = DateTime.Parse(_drSidurim[I]["shat_hatchala_sidur"].ToString());
                             dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
                             dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                            if (dShatSiyum > objOved.objParameters.dKnisatShabat && dShatHatchala < objOved.objParameters.dKnisatShabat)
+                            if (dShatGmarLetashlum > objOved.objParameters.dKnisatShabat)
                             {
-                                dTemp = clDefinitions.GetMinDate(dShatGmarLetashlum, objOved.objParameters.dKnisatShabat);
-                                fDakotNochehutSidur = float.Parse((dTemp - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                               // dTemp = clDefinitions.GetMinDate(dShatGmarLetashlum, objOved.objParameters.dKnisatShabat);
+                               // fDakotNochehutSidur = float.Parse((dTemp - dShatHatchalaLetashlum).TotalMinutes.ToString());
+                                fDakotNochehutSidur = float.Parse((dShatGmarLetashlum - objOved.objParameters.dKnisatShabat).TotalMinutes.ToString()); 
                                 fErech += fDakotNochehutSidur;
                             }
 
