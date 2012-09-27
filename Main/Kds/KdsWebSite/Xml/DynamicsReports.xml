@@ -206,7 +206,7 @@
       <DropDownList QueryType="AjaxAutoComplete" Select="GetOvdimLeRitza" LibraryName="~/Modules/WebServices/wsGeneral.asmx"  />
     </Filter>
   </Report>
-  <Report  RdlName="AbsentWorkers" Roles="kds_administrators" FilterByLine="5" PageHeader="דוח העדרויות">
+  <Report  RdlName="AbsentWorkers" Roles="kds_administrators" FilterByLine="5" PageHeader="דוח העדרויות" ProductionType="Heavy">
     <Filter ParameterName="P_PERIOD" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="AbsentWorkers" DataType="System.String" />
