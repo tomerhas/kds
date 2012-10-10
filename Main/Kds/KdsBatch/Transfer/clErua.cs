@@ -246,6 +246,19 @@ namespace KdsBatch
             return erech;
         }
 
+        protected float GetErechRechivPremiyaFriends(int iKodRechiv)
+        {
+            DataRow[] drRechiv;
+            float fErech = 0;
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and chodesh_ibud=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+
+            if (drRechiv.Length > 0)
+            {
+                fErech = float.Parse(drRechiv[0]["erech_rechiv_a"].ToString());
+            }
+            return fErech;
+        }
+
         protected float GetErechRechiv(int iKodRechiv,string col)
         {
             DataRow[] drRechiv;
@@ -266,8 +279,12 @@ namespace KdsBatch
                     drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=126 and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
 
                     if (drRechiv[0]["bakasha_id_2"] != null)
+                    {
                         if (drRechiv[0]["bakasha_id_2"].ToString() != "")
                             bKayamEfreshBErua = true;
+                        else if (drRechiv[0]["bakasha_id_2"].ToString() == "" && drRechiv[0]["taarich"].ToString() != drRechiv[0]["chodesh_ibud"].ToString())
+                            bKayamEfreshBErua = true;
+                    }
                 }
             }
             return fErech;
@@ -278,18 +295,21 @@ namespace KdsBatch
             string  bakasha2="";
             float Hefresh;
 
-            if (drRechiv["bakasha_id_2"] != null)
-                bakasha2 = drRechiv["bakasha_id_2"].ToString();
+            if (drRechiv["bakasha_id_2"].ToString() != "")
+                    bakasha2 = drRechiv["bakasha_id_2"].ToString();
+           
             Hefresh = float.Parse(drRechiv["erech_rechiv"].ToString());
 
             if (bakasha2 != "" && Hefresh != 0)
+                bKayamEfreshBErua = true;
+            if (drRechiv["bakasha_id_2"].ToString() == "" && drRechiv["taarich"].ToString() != drRechiv["chodesh_ibud"].ToString())
                 bKayamEfreshBErua = true;
         }
 
         protected bool KayemetRitzatHefresh()
         {
             DataRow[] drRechiv;
-            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " and bakasha_id_2 is not null and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " and (bakasha_id_2 is not null or (bakasha_id_2 is null and taarich<>chodesh_ibud)) and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
             if (drRechiv.Length > 0)
                 return true;
             else return false;

@@ -222,7 +222,7 @@ namespace KdsBatch.Reports
 
         private void TransferFileToAda(long iRequestId, string path, clReport drReport, byte[] fileReport)
         {
-            FileStream fs;
+            FileStream fs=null;
             string sFileName;
             try
             {
@@ -236,17 +236,25 @@ namespace KdsBatch.Reports
                     sFileName += "3";
                 else sFileName += ((drReport.sug_chishuv) + 1).ToString();
                 sFileName += drReport.Ezor.ToString();
-               sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
-                 sFileName += ".PDF";
+                sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
+                sFileName += ".PDF";
 
                 fs = new FileStream(path + sFileName, FileMode.Create, FileAccess.Write);
                 fs.Write(fileReport, 0, fileReport.Length);
-                fs.Flush();
-                fs.Close();
+                
             }
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(iRequestId, _loginUser, "E", 0, null, "TransferFileToAda:" + ex.Message);
+            }
+            finally
+            {
+                if (fs != null)
+                {
+                    fs.Flush();
+                    fs.Close();
+                    fs.Dispose();
+                }
             }
         }
 

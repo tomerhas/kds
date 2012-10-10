@@ -66,7 +66,8 @@ namespace KdsBatch
            //פרמיה משק - 115
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),"erech_rechiv_a"), 4, 0));
+               //sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaMeshek.GetHashCode(),"erech_rechiv_a"), 4, 0));
+                sErua417.Append(FormatNumber(GetErechRechivPremiyaFriends(clGeneral.enRechivim.PremiaMeshek.GetHashCode()), 4, 0));
             }
             else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
