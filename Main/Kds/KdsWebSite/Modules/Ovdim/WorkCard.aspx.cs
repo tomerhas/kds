@@ -199,7 +199,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      protected void SetMeasherMistayeg(bool bChishuvShachar)
      {
          bool bParam252 = false;
-         bool bWorkCardEmpty = false;
+        // bool bWorkCardEmpty = false;
          bool bCalculate = (oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode());
          //במידה ותאריך הכרטיס הוא התאריך של היום לא נאפשר את כפתורי מאשר מסתייג
          if (dDateCard.ToShortDateString().Equals(DateTime.Now.ToShortDateString())){        
@@ -215,12 +215,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             
              bParam252 = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now) + 1 > oBatchManager.oParam.iValidDays;
              int iDays = clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
-             if (oBatchManager.htFullEmployeeDetails == null)
-                 bWorkCardEmpty = true;
-             else
-                bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
+             //if (oBatchManager.htFullEmployeeDetails == null)
+             //    bWorkCardEmpty = true;
+             //else
+             //   bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
 
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty))
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
