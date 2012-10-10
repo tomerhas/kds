@@ -220,7 +220,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              else
                 bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
 
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty) && (!bCalculate))
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bWorkCardEmpty))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
@@ -3297,7 +3297,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             {
                 oCollIdkunRashemet.Add(_ObjIdkunRashemet);
             }
-
+           
             //נעבור על כל הסידורים ונבדוק אילו שדות השתנו
             FillIdkunRashemetSidurim(ref oCollIdkunRashemet);
         }

@@ -1462,15 +1462,55 @@ namespace KdsLibrary.BL
                 throw ex;
             }
         }
+        private void FillObjIdkuneyRashemet(ref OBJ_IDKUN_RASHEMET _ObjIdkunRashemet,ref DataTable dtPakadim, int iMisparIshi,
+                                            DateTime dCardDate, int iLoginUser, int iStatus)
+        {
+            _ObjIdkunRashemet.TAARICH = dCardDate;
+            _ObjIdkunRashemet.MISPAR_ISHI = iMisparIshi;
+            _ObjIdkunRashemet.MISPAR_SIDUR = 0;
+            _ObjIdkunRashemet.SHAT_HATCHALA = DateTime.MinValue;
+            _ObjIdkunRashemet.NEW_SHAT_HATCHALA = DateTime.MinValue;
+            _ObjIdkunRashemet.SHAT_YETZIA = DateTime.MinValue;
+            _ObjIdkunRashemet.NEW_SHAT_YETZIA = DateTime.MinValue;
+            _ObjIdkunRashemet.MISPAR_KNISA = 0;
+            _ObjIdkunRashemet.GOREM_MEADKEN =iLoginUser;
+            if (iStatus.Equals(1))
+                _ObjIdkunRashemet.PAKAD_ID = clUtils.GetPakadId(dtPakadim, "MEASHER");
+            else
+                _ObjIdkunRashemet.PAKAD_ID = clUtils.GetPakadId(dtPakadim, "MISTAYEG");
+        }
+        private void SaveIdkunRashemet(COLL_IDKUN_RASHEMET oCollIdkunRashemet)
+        {
+            clDal Dal = new clDal();
+            try
+            {
+                Dal.AddParameter("p_coll_idkun_rashemet", ParameterType.ntOracleArray, oCollIdkunRashemet, ParameterDir.pdInput, "COLL_IDKUN_RASHEMET");
+                Dal.ExecuteSP(clGeneral.cProUpdIdkunRashemet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void UpdateIdkunyRashemet(int iMisparIshi, DateTime dCardDate, ref DataTable dtPakadim, int iLoginUser, int iStatus)
+        {
+            COLL_IDKUN_RASHEMET oCollIdkunRashemet = new COLL_IDKUN_RASHEMET();
+            OBJ_IDKUN_RASHEMET _ObjIdkunRashemet = new OBJ_IDKUN_RASHEMET();
+            FillObjIdkuneyRashemet(ref _ObjIdkunRashemet,ref  dtPakadim, iMisparIshi, dCardDate, iLoginUser,iStatus);            
+            oCollIdkunRashemet.Add(_ObjIdkunRashemet);
+            SaveIdkunRashemet(oCollIdkunRashemet);
+        }
         public void SetMeasherOMistayeg(int iMisparIshi, DateTime dCardDate, int iMeasherOMistayeg)
         {
             clDal oDal = new clDal();
             try
             {
+                //עדכון TB_YAMEY_OVODA_OVDIM
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_date", ParameterType.ntOracleDate, dCardDate, ParameterDir.pdInput);
                 oDal.AddParameter("p_status", ParameterType.ntOracleInteger, iMeasherOMistayeg, ParameterDir.pdInput);
                 oDal.ExecuteSP(clGeneral.cProSaveMeasherOmistayeg);
+
             }
             catch (Exception ex)
             {

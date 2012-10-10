@@ -1972,14 +1972,17 @@ public class wsGeneral : System.Web.Services.WebService
             throw ex;
         }
     }
-    [WebMethod]
+    [WebMethod(EnableSession=true)]
     public string SetMeasherOMistayeg(int iMisaprIshi, string sCardDate, int iStatus)
     {
         clOvdim _Ovdim = clOvdim.GetInstance();
+        DataTable dtPakadim = (DataTable)Session["Pakadim"];
+        int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
         string sResult = "0";
         try
         {
             _Ovdim.SetMeasherOMistayeg(iMisaprIshi, DateTime.Parse(sCardDate), iStatus);
+            _Ovdim.UpdateIdkunyRashemet(iMisaprIshi, DateTime.Parse(sCardDate), ref dtPakadim, iLoginUser, iStatus);
             sResult = "1";
             return sResult;
         }
