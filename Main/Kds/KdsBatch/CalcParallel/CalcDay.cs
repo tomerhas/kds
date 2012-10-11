@@ -4882,7 +4882,7 @@ namespace KdsBatch
         private void CalcRechiv131()
         {
             //שבת/שעות 100% (רכיב 131):
-            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET, fDakotNocheutGmar;
+            float fErechRechiv, fTempY, fDakotNocheut, fMichsaYomit, fShaot100, fShaot100ET, fDakotNocheutGmar,fZmanAdShabat=0;
             string sSidurim="";
             DataRow[] dr;
             try
@@ -4891,7 +4891,7 @@ namespace KdsBatch
                 fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                 fShaot100 = 0; fShaot100ET = 0; fErechRechiv = 0;
 
-                oSidur.CalcRechiv131();
+                oSidur.CalcRechiv131(ref fZmanAdShabat);
                 fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
 
                 //ב
@@ -4905,7 +4905,7 @@ namespace KdsBatch
                     }
                     else
                     {
-                        if (fTempY < fMichsaYomit)
+                        if (fTempY <= fMichsaYomit)
                             fShaot100 = 0;
                         else
                             fShaot100 = fTempY - fMichsaYomit;        
