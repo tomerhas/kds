@@ -2592,13 +2592,16 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 fs.Write(s, 0, s.Length);
                 fs.Flush();
                 fs.Close();
-               
-                for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
+
+                if (oBatchManager.dtErrors != null)
                 {
-                    if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
+                    for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
                     {
-                        sScript = "document.all('msgErrCar').style.display='block';";
-                        break;
+                        if (oBatchManager.dtErrors.Rows[i]["check_num"].ToString().Trim() == "69")
+                        {
+                            sScript = "document.all('msgErrCar').style.display='block';";
+                            break;
+                        }
                     }
                 }
                
