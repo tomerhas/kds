@@ -1976,13 +1976,17 @@ public class wsGeneral : System.Web.Services.WebService
     public string SetMeasherOMistayeg(int iMisaprIshi, string sCardDate, int iStatus)
     {
         clOvdim _Ovdim = clOvdim.GetInstance();
+        clBatchManager _BatchManager = new clBatchManager();
         DataTable dtPakadim = (DataTable)Session["Pakadim"];
         int iLoginUser = int.Parse(Session["LoginUserEmp"].ToString());
         string sResult = "0";
+        DateTime dDateCard = DateTime.Parse(sCardDate);
         try
         {
-            _Ovdim.SetMeasherOMistayeg(iMisaprIshi, DateTime.Parse(sCardDate), iStatus);
-            _Ovdim.UpdateIdkunyRashemet(iMisaprIshi, DateTime.Parse(sCardDate), ref dtPakadim, iLoginUser, iStatus);
+            _Ovdim.SetMeasherOMistayeg(iMisaprIshi, dDateCard, iStatus);
+            _Ovdim.UpdateIdkunyRashemet(iMisaprIshi, dDateCard, ref dtPakadim, iLoginUser, iStatus);
+            _BatchManager.MainInputData(iMisaprIshi, dDateCard);
+            _BatchManager.MainOvedErrors(iMisaprIshi, dDateCard);
             sResult = "1";
             return sResult;
         }
