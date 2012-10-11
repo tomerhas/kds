@@ -1983,9 +1983,13 @@ public class wsGeneral : System.Web.Services.WebService
         DateTime dDateCard = DateTime.Parse(sCardDate);
         try
         {
+            //update tb_yamey_ovoda_ovdim
             _Ovdim.SetMeasherOMistayeg(iMisaprIshi, dDateCard, iStatus);
+            //update idkuney rashemet
             _Ovdim.UpdateIdkunyRashemet(iMisaprIshi, dDateCard, ref dtPakadim, iLoginUser, iStatus);
+            //שינוי קלט
             _BatchManager.MainInputData(iMisaprIshi, dDateCard);
+            //שגויים
             _BatchManager.MainOvedErrors(iMisaprIshi, dDateCard);
             sResult = "1";
             return sResult;
