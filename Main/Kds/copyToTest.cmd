@@ -4,31 +4,29 @@
 pause 
 @echo KdsCalcul install in progress ....
 @echo copy backup KdsCalcul to old folder ....
+@echo on
+copy \\kdstst\KdsCalculTest\*.exe \\kdstst\KdsCalculTest\old\
+copy \\kdstst\KdsCalculTest\*.dll \\kdstst\KdsCalculTest\old\
+copy \\kdstst\KdsCalculTest\*.config \\kdstst\KdsCalculTest\old\
+@echo install KdsCalculTest files to kdstst ....
 @echo off 
-copy \\KdsCalc01\KdsCalculTest\*.exe \\KdsCalc01\KdsCalculTest\old\
-copy \\KdsCalc01\KdsCalculTest\*.dll \\KdsCalc01\KdsCalculTest\old\
-copy \\KdsCalc01\KdsCalculTest\*.config \\KdsCalc01\KdsCalculTest\old\
-@echo install KdsCalculTest files to KdsCalc01 ....
-@echo off 
-copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.exe  \\KdsCalc01\KdsCalculTest\
-copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.dll  \\KdsCalc01\KdsCalculTest\
-del \\KdsCalc01\KdsCalculTest\KdsCalculTest.exe
-Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe  KdsCalculTest.exe 
-Rename \\KdsCalc01\KdsCalculTest\KdsCalcul.exe.config  KdsCalculTest.exe.config 
-pause 
-@echo KdsCalcul was installed in KdsCalc01 !
+copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.exe  \\kdstst\KdsCalculTest\
+copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.dll  \\kdstst\KdsCalculTest\
+del \\kdstst\KdsCalculTest\KdsCalculTest.exe
+Rename \\kdstst\KdsCalculTest\KdsCalcul.exe  KdsCalculTest.exe 
+@echo KdsCalcul was installed in kdstst !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsService install in progress ....
 @echo copy backup KdsService to old folder ....
 @echo off 
-copy \\KdsCalc01\KdsServiceTest\*.exe \\KdsCalc01\KdsServiceTest\old\
-copy \\KdsCalc01\KdsServiceTest\*.dll \\KdsCalc01\KdsServiceTest\old\
-copy \\KdsCalc01\KdsServiceTest\*.config \\KdsCalc01\KdsServiceTest\old\
-copy \\KdsCalc01\KdsServiceTest\*.xml \\KdsCalc01\KdsServiceTest\old\
-@echo install KdsService to KdsCalc01 ....
-copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.exe  \\KdsCalc01\KdsServiceTest\
-copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.dll  \\KdsCalc01\KdsServiceTest\
-@echo KdsService was installed in KdsCalc01 !
+copy \\kdstst\KdsServiceTest\*.exe \\kdstst\KdsServiceTest\old\
+copy \\kdstst\KdsServiceTest\*.dll \\kdstst\KdsServiceTest\old\
+copy \\kdstst\KdsServiceTest\*.config \\kdstst\KdsServiceTest\old\
+copy \\kdstst\KdsServiceTest\*.xml \\kdstst\KdsServiceTest\old\
+@echo install KdsService to kdstst ....
+copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.exe  \\kdstst\KdsServiceTest\
+copy C:\dev\kds\Main\Kds\KdsService\bin\Release\*.dll  \\kdstst\KdsServiceTest\
+@echo KdsService was installed in kdstst !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 @echo KdsService install in progress inds kdsTest....
