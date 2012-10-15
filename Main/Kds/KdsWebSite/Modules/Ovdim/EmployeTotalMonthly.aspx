@@ -87,7 +87,7 @@
                 <asp:UpdatePanel ID="upBtnShow" runat="server" RenderMode="Inline"  >
                   <ContentTemplate> 
                         <asp:button ID="btnShow" runat="server" text="הצג" CssClass ="ImgButtonSearch"  onclick="btnShow_Click"   OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
-               
+                <asp:button ID="btnPrint" runat="server" text="הדפסת ריכוז" CssClass ="ImgButtonSearch"  onclick="btnPrint_Click" Width="100px"   OnClientClick="if (!CheckEmployeeId()) {return false;} else {return true;}" />
                  </ContentTemplate>
               </asp:UpdatePanel> 
              

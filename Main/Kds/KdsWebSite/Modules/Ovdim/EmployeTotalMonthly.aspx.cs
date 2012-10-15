@@ -169,12 +169,17 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
 
     void ImagePrintClick_Click(object sender, ImageClickEventArgs e)
     {
+        Print();
+    }
+
+    void Print()
+    {
         byte[] s;
         string sScript;
         ReportModule Report = new ReportModule();// ReportModule.GetInstance();
-        string sIp="";
+        string sIp = "";
         string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-        
+
         if (Page.IsValid)
         {
             if (ViewState["BakashId"] != null)
@@ -189,8 +194,8 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 s = Report.CreateReport("/KdsReports/RikuzAvodaChodshi2", eFormat.PDF, true);
 
                 if (LoginUser.IsLimitedUser && arrParams[2].ToString() == "1")
-                { 
-                    string sFileName,sPathFile;
+                {
+                    string sFileName, sPathFile;
                     FileStream fs;
 
                     sIp = "";// arrParams[1];
@@ -206,11 +211,11 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                     sScript = "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "')";
 
 
-                   
+
                 }
                 else
                 {
-                    
+
                     Session["BinaryResult"] = s;
                     Session["TypeReport"] = "PDF";
                     Session["FileName"] = "RikuzAvodaChodshi";
@@ -224,7 +229,6 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
             }
         }
     }
-
 
     void ImageExcelClick_Click(object sender, ImageClickEventArgs e)
     {
@@ -364,6 +368,11 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
             clGeneral.BuildError(Page, ex.Message);
         }
 
+    }
+
+    protected void btnPrint_Click(object sender, EventArgs e)
+    {
+        Print();
     }
 
     private float GetSumErechRechiv45(DataTable dtRechivimChodshiym)
