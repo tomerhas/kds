@@ -230,7 +230,8 @@ namespace KdsBatch
             errSidurLoTakefLetaarich=190,
             errIsukNahagImSidurTafkidNoMefyen=191,
             errMatzavOvedNotValidFirstDay =192,
-            errDivuachSidurLoMatimLeisuk = 193
+            errDivuachSidurLoMatimLeisuk420 = 193,
+            errDivuachSidurLoMatimLeisuk422 = 194
         }
 
         private enum errNesiaMeshtana
@@ -1283,6 +1284,7 @@ namespace KdsBatch
                     if (CheckErrorActive(190)) SidurLoTakefLetarich190(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(191)) IsukNahagImSidurTafkidNoMefyen191(ref oSidur, ref dtErrors);
                     if (CheckErrorActive(193)) DivuachSidurLoMatimLeisuk193(ref oSidur, ref dtErrors);
+                    if (CheckErrorActive(194)) DivuachSidurLoMatimLeisuk194(ref oSidur, ref dtErrors);
 
                     clPeilut oPrevPeilut = null;
                     //bool change = true;
@@ -1665,17 +1667,41 @@ namespace KdsBatch
             bool isValid = true;
             try
             {
-                if ((oOvedYomAvodaDetails.iIsuk == 420 || oOvedYomAvodaDetails.iIsuk ==422) && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn>0 &&  oSidur.iKodSibaLedivuchYadaniOut>0)
+                if (oOvedYomAvodaDetails.iIsuk == 420  && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn>0 &&  oSidur.iKodSibaLedivuchYadaniOut>0)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד אחד מבין סדרן-מנס מנס-פקח ודווח סידור 99001. יש לדווח סידור 99224 99225 בהתאמה.", enErrors.errDivuachSidurLoMatimLeisuk.GetHashCode());
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-סדרן ודווח סידור 99001. יש לדווח סידור 99224", enErrors.errDivuachSidurLoMatimLeisuk420.GetHashCode());
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }
             }
             catch (Exception ex)
             {
-                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk193: " + ex.Message, null);
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk420.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk193: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+            return isValid;
+        }
+
+        private bool DivuachSidurLoMatimLeisuk194(ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור         
+            DataRow drNew;
+            bool isValid = true;
+            try
+            {
+                if (oOvedYomAvodaDetails.iIsuk == 422 && oSidur.iMisparSidur == 99001 && oSidur.iKodSibaLedivuchYadaniIn > 0 && oSidur.iKodSibaLedivuchYadaniOut > 0)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "עיסוק העובד מנס-פקח ודווח סידור 99001. יש לדווח סידור 99225 ", enErrors.errDivuachSidurLoMatimLeisuk422.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errDivuachSidurLoMatimLeisuk422.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "DivuachSidurLoMatimLeisuk194: " + ex.Message, null);
                 isValid = false;
                 _bSuccsess = false;
             }
@@ -12590,7 +12616,7 @@ namespace KdsBatch
                             shaa = DateTime.Parse(oSidur.dFullShatHatchala.ToShortDateString() + " 18:00:00");
                             if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists){
                                 if ((oSidur.dFullShatHatchala.Hour >= 11 && oSidur.dFullShatHatchala.Hour <= 17 && oSidur.dFullShatGmar > shaa)
-                                    && (oSidur.sShabaton != "1" && (iSugYom == clGeneral.enSugYom.Chol.GetHashCode())))
+                                    && (oSidur.sShabaton != "1" && (iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())))
                                      bLoLetashlumAutomati = false;
                                  else bLoLetashlumAutomati = true;
                              }
@@ -14641,7 +14667,7 @@ namespace KdsBatch
                 if (!oMeafyeneyOved.Meafyen42Exists && oMeafyeneyOved.Meafyen23Exists && oMeafyeneyOved.Meafyen24Exists)
                     if (oSidur.bKizuzAlPiHatchalaGmarExists)
                         if ((oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour >= 11 && oObjSidurimOvdimUpd.SHAT_HATCHALA.Hour <= 17 && oObjSidurimOvdimUpd.SHAT_GMAR > shaa)
-                             && (oSidur.sShabaton != "1" && iSugYom == clGeneral.enSugYom.Chol.GetHashCode())) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
+                             && (oSidur.sShabaton != "1" && iSugYom >= clGeneral.enSugYom.Chol.GetHashCode() && iSugYom < clGeneral.enSugYom.Shishi.GetHashCode())) //|| ((iSugYom == clGeneral.enSugYom.Shishi.GetHashCode()  && oObjSidurimOvdimUpd.SHAT_GMAR > shaa.AddHours(-5)))))
                             {
                                 shaa23 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_HATCHALA.ToShortDateString() + " " + oMeafyeneyOved.sMeafyen23.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen23.Substring(2, 2));
                                 shaa24 = DateTime.Parse(oObjSidurimOvdimUpd.SHAT_GMAR.ToShortDateString()  + " " + oMeafyeneyOved.sMeafyen24.Substring(0, 2) + ":" + oMeafyeneyOved.sMeafyen24.Substring(2, 2));

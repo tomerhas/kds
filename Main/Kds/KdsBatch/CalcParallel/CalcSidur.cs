@@ -2333,7 +2333,7 @@ namespace KdsBatch
                              (dShatGmarLetashlum > objOved.objParameters.dZmanHatchalaErev))
                                 {
                                     addRowToTable(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
-                                    addRowToTable(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
+                                    addRowToTable(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, 1);
 
                                 }
 

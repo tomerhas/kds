@@ -377,7 +377,7 @@ namespace KdsLibrary.BL
                     sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, clGeneral.GetYamimMeyuchadim(), iSectorIsuk, clGeneral.GetSugeyYamimMeyuchadim(), meafyen56);
                     if (sug_yom < 19 && !((meafyen56 ==clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 ==clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10))
                     {
-                        InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), clGeneral.enMeasherOMistayeg.Measher.GetHashCode(), iUserId);
+                        InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), null, iUserId);
                         InsUpdSidurimOvdim(ref oDal, iMisparIshi, dTemp, iMisparSidur, dShatHatchalaDef, dShatSiyumDef, iUserId);
                     }
                     dTemp = dTemp.AddDays(1);
@@ -394,14 +394,23 @@ namespace KdsLibrary.BL
             }
         }
 
-        private void InsYemeyAvodaLeoved(ref clTxDal oDal, int iMisparIshi, DateTime dTaarich,int iStatus,int iMeasherOrMistayeg,int iUserId)
+        private void InsYemeyAvodaLeoved(ref clTxDal oDal, int iMisparIshi, DateTime dTaarich,int iStatus,int? iMeasherOrMistayeg,int iUserId)
         {
              try
             {
                 oDal.ClearCommand();
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dTaarich, ParameterDir.pdInput);
-                oDal.AddParameter("p_measher_mistayeg", ParameterType.ntOracleInteger, iMeasherOrMistayeg, ParameterDir.pdInput);
+               
+                 if (iMeasherOrMistayeg!=null)
+                {
+                    oDal.AddParameter("p_measher_mistayeg", ParameterType.ntOracleInteger, iMeasherOrMistayeg, ParameterDir.pdInput);
+                }
+                else
+                {
+                    oDal.AddParameter("p_measher_mistayeg", ParameterType.ntOracleInteger, null, ParameterDir.pdInput);
+                }
+
                 oDal.AddParameter("p_status", ParameterType.ntOracleInteger, iStatus, ParameterDir.pdInput);
                 oDal.AddParameter("p_meadken", ParameterType.ntOracleInteger, iUserId, ParameterDir.pdInput);
                 
