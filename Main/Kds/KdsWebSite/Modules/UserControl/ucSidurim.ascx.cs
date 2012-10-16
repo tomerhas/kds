@@ -2701,10 +2701,10 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
         chkBox.Disabled = (!((bEnabled) && (bSidurActive)));
         chkBox.Attributes.Add("cssClass", "WorkCardCheckBox");
         chkBox.Attributes.Add("OrgEnabled", bEnabled ? "1" : "0");
-        if (EnabledValidator())
-        {
+         if (EnabledValidator())
+         {
             chkBox.Attributes.Add("onclick", "MovePanel(" + iIndex + ");SetBtnChanges();SetLvlChg(2," + iIndex + ");");
-        }
+         }
         
         //AddAttribute(chkBox, "OldV", chkBox.Checked.GetHashCode().ToString());
 
@@ -5030,7 +5030,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 hCell.Controls.Add(vldShatHatchala);
                 vldExShatHatchala = AddCallOutValidator(vldShatHatchala.ID, "vldExSHatchala" + iIndex, "", AjaxControlToolkit.ValidatorCalloutPosition.Left);
                 hCell.Controls.Add(vldExShatHatchala);
-            }
+           }
         }
         catch (Exception ex)
         {
@@ -6130,7 +6130,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                 vldExtenderCallOut.BehaviorID = "vMNBeh" + e.Row.ClientID;
                 e.Row.Cells[_COL_MAKAT].Controls.Add(vldExtenderCallOut);
-            }
+           }
            
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
             string sPeilutKey = string.Concat(((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);

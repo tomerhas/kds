@@ -2553,6 +2553,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 string sPathFilePrint = ConfigurationManager.AppSettings["PathFileReportsTemp"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
                 byte[] s;
 
+                //EventLog.WriteEntry("Kds", "PathFileReportsTemp: " + sPathFilePrint, EventLogEntryType.Error);
                 ReportModule Report = new ReportModule();
                 Report.AddParameter("P_MISPAR_ISHI", iMisparIshi.ToString());
                 Report.AddParameter("P_TAARICH", dDateCard.ToShortDateString());
@@ -2582,7 +2583,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 sFileName = "WorkCard.pdf";
 
                 sPathFile = ConfigurationManager.AppSettings["PathFileReports"] + LoginUser.UserInfo.EmployeeNumber + @"\\";
-               
+                EventLog.WriteEntry("Kds", "sPathFile: " + sPathFile, EventLogEntryType.Error);
                 if (!Directory.Exists(sPathFile))
                 {
                     Directory.CreateDirectory(sPathFile);
@@ -2592,7 +2593,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                 fs.Write(s, 0, s.Length);
                 fs.Flush();
                 fs.Close();
-
+                //EventLog.WriteEntry("Kds", "oBatchManager.dtErrors: " + oBatchManager.dtErrors, EventLogEntryType.Error);
                 if (oBatchManager.dtErrors != null)
                 {
                     for (int i = 0; i < oBatchManager.dtErrors.Rows.Count; i++)
@@ -2605,7 +2606,8 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
                     }
                 }
                
-          //      EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
+                EventLog.WriteEntry("kds", Page.Title + ": path = " + sPathFilePrint + sFileName, EventLogEntryType.Error);
+                //EventLog.WriteEntry("kds", "sIp" + sIp, EventLogEntryType.Error);
                 sScript += "PrintDoc('" + sIp + "' ,'" + sPathFilePrint + sFileName + "'); document.all('prtMsg').style.display='block'; setTimeout(\"document.all('prtMsg').style.display = 'none'; document.all('btnCloseCard').click()\", 5000); ";
                
                 ScriptManager.RegisterStartupScript(btnPrint, btnPrint.GetType(), "PrintPdf", sScript, true);          
