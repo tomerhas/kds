@@ -375,7 +375,7 @@ namespace KdsLibrary.BL
                         meafyen56 = int.Parse(drMeafyen[0]["value_erech_ishi"].ToString());
                     
                     sug_yom = clGeneral.GetSugYom(iMisparIshi, dTemp, clGeneral.GetYamimMeyuchadim(), iSectorIsuk, clGeneral.GetSugeyYamimMeyuchadim(), meafyen56);
-                    if (sug_yom < 19 && !((meafyen56 ==clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 ==clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10))
+                    if ((iMisparSidur==99006) || (sug_yom < 19 && !((meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek1.GetHashCode() || meafyen56 == clGeneral.enMeafyenOved56.enOved5DaysInWeek2.GetHashCode()) && sug_yom == 10)))
                     {
                         InsYemeyAvodaLeoved(ref oDal, iMisparIshi, dTemp, clGeneral.enStatusTipul.Betipul.GetHashCode(), null, iUserId);
                         InsUpdSidurimOvdim(ref oDal, iMisparIshi, dTemp, iMisparSidur, dShatHatchalaDef, dShatSiyumDef, iUserId);
