@@ -284,6 +284,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
                 if (dtPirteyOved.Rows.Count > 0)
                 {
                     divNetunim.Visible = true;
+                    btnPrint.Enabled = true;
 
                     lblEmployeId.Text = dtPirteyOved.Rows[0]["MISPAR_ISHI"].ToString();
                     lblFirstName.Text = dtPirteyOved.Rows[0]["SHEM_PRAT"].ToString();
@@ -566,6 +567,7 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
      {
          LoadDdlMonth();
          divNetunim.Visible = false;
+         btnPrint.Enabled = false;
 
          if (rdoId.Checked)
          {
@@ -577,5 +579,15 @@ public partial class Modules_Ovdim_EmployeTotalMonthly : KdsPage
              txtName.Enabled = true;
              txtEmpId.Enabled = false;
          }
+     }
+
+     protected void ddlMonth_SelectedIndexChanged(object sender, EventArgs e)
+     {
+         Session["dtRikuz1To10"] = null;
+         Session["dtRikuz11To20"] = null;
+         Session["dtRikuz21To31"] = null;
+         ViewState["BakashId"] = null;
+         divNetunim.Visible = false;
+         btnPrint.Enabled = false;
      }
 }

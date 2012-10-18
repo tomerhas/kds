@@ -76,7 +76,9 @@
             <td  class="InternalLabel">חודש:</td>
             <td> <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline">
                   <ContentTemplate> 
-                     <asp:DropDownList id="ddlMonth" runat="server"  Width="100px" DataTextField="month_year" DataValueField="month_year" >
+                     <asp:DropDownList id="ddlMonth" runat="server"  Width="100px" 
+                          DataTextField="month_year" DataValueField="month_year" 
+                          onselectedindexchanged="ddlMonth_SelectedIndexChanged" AutoPostBack="true" CausesValidation="false">
                             </asp:DropDownList>
                 </ContentTemplate>
               </asp:UpdatePanel> 
