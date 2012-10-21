@@ -4900,14 +4900,14 @@ namespace KdsBatch
         private void CalcRechiv131()
         {
             //שבת/שעות 100% (רכיב 131):
-            float fErechRechiv, fTempY, fDakotNocheut,fShaotGoleshLeshabaton, fMichsaYomit, fShaot100, fShaot100ET, fDakotNocheutGmar, fZmanAdShabat = 0, fZmanAfterShabat=0;
+            float fErechRechiv, fTempY, fDakotNocheut,fShaotGoleshLeshabaton,fDakotShabat, fMichsaYomit, fShaot100, fShaot100ET, fDakotNocheutGmar, fZmanAdShabat = 0, fZmanAfterShabat=0;
             string sSidurim="";
             DataRow[] dr;
             try
             {
                 fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
                 fDakotNocheut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
-                fShaot100 = 0; fShaot100ET = 0; fErechRechiv = 0;
+                fShaot100 = 0; fShaot100ET = 0; fErechRechiv = 0; fDakotShabat = 0;
 
                 oSidur.CalcRechiv131(ref fZmanAdShabat, ref fZmanAfterShabat);
                 fErechRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.ShaotShabat100.GetHashCode(), objOved.Taarich);
@@ -4915,7 +4915,7 @@ namespace KdsBatch
                 //ב
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                 {
-                    fShaotGoleshLeshabaton=oSidur.GetSumShaotShabat100();
+                    fShaotGoleshLeshabaton = oSidur.GetSumShaotShabat100(ref fDakotShabat);
                     fTempY = oSidur.GetSumSidurim100(clGeneral.enRechivim.ShaotShabat100) + fShaotGoleshLeshabaton;
                     if (fMichsaYomit == 0)
                     {
@@ -4925,9 +4925,9 @@ namespace KdsBatch
                     {
                         if (fTempY <= fMichsaYomit)
                         {
-                            if (fDakotNocheut > 0 && fMichsaYomit > fDakotNocheut)
+                            if (fDakotNocheut > 0 && fMichsaYomit > fDakotNocheut && (fShaotGoleshLeshabaton+fDakotShabat)>0)
                             {
-                                fShaot100=fShaotGoleshLeshabaton;
+                                fShaot100= Math.Min((fShaotGoleshLeshabaton+fDakotShabat), fMichsaYomit);;
                             }
                             else { fShaot100 = 0; }
                         }
