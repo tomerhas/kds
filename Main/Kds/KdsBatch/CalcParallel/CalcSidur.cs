@@ -8312,7 +8312,7 @@ namespace KdsBatch
 
                     if (fMichsaYomit > 0)
                     {
-                        _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null and sug_shaot_byom_hol_if_migbala=100");
+                        _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
                         for (int I = 0; I < _drSidurim.Length; I++)
                         {
                             iMisparSidur = int.Parse(_drSidurim[I]["mispar_sidur"].ToString());
@@ -8321,7 +8321,7 @@ namespace KdsBatch
                             dShatHatchalaLetashlum = DateTime.Parse(_drSidurim[I]["shat_hatchala_letashlum"].ToString());
                             dShatGmarLetashlum = DateTime.Parse(_drSidurim[I]["shat_gmar_letashlum"].ToString());
 
-                            if (dShatGmarLetashlum > objOved.objParameters.dKnisatShabat)
+                            if (dShatGmarLetashlum > objOved.objParameters.dKnisatShabat && dShatHatchalaLetashlum < objOved.objParameters.dKnisatShabat)
                             {
                                // dTemp = clDefinitions.GetMinDate(dShatGmarLetashlum, objOved.objParameters.dKnisatShabat);
                                // fDakotNochehutSidur = float.Parse((dTemp - dShatHatchalaLetashlum).TotalMinutes.ToString());
