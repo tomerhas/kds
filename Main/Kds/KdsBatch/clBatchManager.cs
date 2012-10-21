@@ -2615,7 +2615,7 @@ namespace KdsBatch
                         DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfNextDay);
                     }
 
-                    if (shatGmarOfPrevDay != DateTime.MinValue &&
+                    if (firstSidurOfTheDay.iLoLetashlum==0 && shatGmarOfPrevDay != DateTime.MinValue &&
                         shatGmarOfPrevDay.Day == firstSidurOfTheDay.dFullShatHatchala.Day &&
                         (shatGmarOfPrevDay - firstSidurOfTheDay.dFullShatHatchala) > TimeSpan.Zero)
                     {
@@ -2623,7 +2623,7 @@ namespace KdsBatch
                         hafifaDescription = "חפיפה עם יום קודם";
                     }
 
-                    if (shatHatchalaOfNextDay != DateTime.MinValue &&
+                    if (lastSidurOfTheDay.iLoLetashlum == 0 && shatHatchalaOfNextDay != DateTime.MinValue &&
                         lastSidurOfTheDay.dFullShatGmar != DateTime.MinValue &&
                         lastSidurOfTheDay.dFullShatGmar.Day == shatHatchalaOfNextDay.Day &&
                         (lastSidurOfTheDay.dFullShatGmar - shatHatchalaOfNextDay) > TimeSpan.Zero)
