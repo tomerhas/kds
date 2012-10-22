@@ -14,6 +14,9 @@ copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.exe  \\kdstst\KdsCalculTest\
 copy C:\dev\kds\Main\Kds\KdsCalcul\bin\Release\*.dll  \\kdstst\KdsCalculTest\
 del \\kdstst\KdsCalculTest\KdsCalculTest.exe
 Rename \\kdstst\KdsCalculTest\KdsCalcul.exe  KdsCalculTest.exe 
+
+copy \\kdstst\KdsCalculTest\KdsCalculTest.exe  \\kdstst\KdsCalculTest\KdsRikuzimsTest.exe 
+
 @echo KdsCalcul was installed in kdstst !
 @echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 @echo KdsService install in progress ....
