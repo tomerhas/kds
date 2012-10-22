@@ -60,7 +60,7 @@
             <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" onfocus="this.select();" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName();"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" onfocus="this.select();" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnPרןמא').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName();"></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -255,7 +255,8 @@
     }
 
     function onchange_txtid() {
-        document.getElementById('ctl00_KdsContent_btnShow').disabled=true;
+        document.getElementById('ctl00_KdsContent_btnShow').disabled = true;
+        document.getElementById('ctl00_KdsContent_btnPrint').disabled = true;
         document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable';
         GetOvedNameById();
 //        if (trim(document.getElementById("ctl00_KdsContent_txtEmpId").value) == "") {
