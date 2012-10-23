@@ -89,7 +89,7 @@
                     <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                     <td style="width: 7%">                                                                                      
                         <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                            dir="rtl" Style="width: 50px;" OnTextChanged="txtId_TextChanged" TabIndex="1"></asp:TextBox>
+                            dir="rtl" Style="width: 50px;" TabIndex="1"></asp:TextBox>
                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                             CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                             ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -101,7 +101,7 @@
                     <td style="width: 4%" class = "WorkCardTable1Label">שם:</td>                                                
                     <td style="width: 15%">
                         <asp:TextBox ID="txtName" CssClass="WorkCardTextBox" runat="server" AutoComplete="Off"
-                            Style="width: 110px;"  OnTextChanged="txtName_TextChanged" ></asp:TextBox>
+                            Style="width: 110px;"  ></asp:TextBox>
                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderByName" runat="server" CompletionInterval="0"
                             CompletionSetCount="12" UseContextKey="true" TargetControlID="txtName" MinimumPrefixLength="1"
                             ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
@@ -638,13 +638,7 @@
     </script>
     
     <script language="javascript" type="text/javascript">
-//      $(document).ready(function () {
-//         $("button").click(function () {
-//             $("div").load('txt1.txt');
-//         });
-//     });
-
-         var iCount=0;
+        var iCount=0;
         var SIDUR_CONTINUE_NAHAGUT=<%= SIDUR_CONTINUE_NAHAGUT %>;var SIDUR_CONTINUE_NOT_NAHAGUT=<%= SIDUR_CONTINUE_NOT_NAHAGUT %> 
         document.onkeydown = KeyCheck; 
         function KeyCheck(){  

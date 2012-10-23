@@ -236,11 +236,7 @@
         var ReturnWin=window.showModalDialog('NetuneyOvedModal.aspx' + sQuryString , window , "dialogwidth:970px;dialogheight:600px;dialogtop:130px;dialogleft:25px;status:no;resizable:yes;scroll:0;");                          
         if(ReturnWin=='' || ReturnWin=='undefined') ReturnWin=false;
         return ReturnWin;   
-    }  
-    function RefreshCardData(){    
-         bScreenChanged=false;
-         $get("btnRefreshOvedDetails").click();
-    }
+    }     
     function CheckButton(btnId,HidId){    
         if (HidId.value=="0"){        
          HidId.value="1";                         
@@ -297,7 +293,7 @@
     }
     function RefreshBtn() {      
         $get("hidRefresh").value = "1";       
-        EnabledAllFrames(true);
+        //EnabledAllFrames(true);
         return true;
     }
     function CloseChgBtn(){

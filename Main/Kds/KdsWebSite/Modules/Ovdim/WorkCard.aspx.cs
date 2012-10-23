@@ -2366,10 +2366,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
             throw ex;
         }
     }
-    protected void btnCardStatus_Click(object sender, EventArgs e)
-    {
-
-    }
+   
 
     protected void txtId_TextChanged(object sender, EventArgs e)
     {
@@ -2377,10 +2374,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
         ViewState["LoadNewCard"] = false;
     }
 
-    protected void txtName_TextChanged(object sender, EventArgs e)
-    {
-        
-    }
+  
     protected void clnDate_TextChanged(object sender, EventArgs e)
     {
         oBatchManager.IsExecuteErrors = false;
