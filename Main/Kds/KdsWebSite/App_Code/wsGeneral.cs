@@ -762,7 +762,9 @@ public class wsGeneral : System.Web.Services.WebService
 
         try
         {
-           
+            List<string> items = new List<string>(count);
+            if ((prefixText.Length > 0) && (prefixText.Substring(0, 1) != "|"))            
+            {
                 prefixText = string.Concat(prefixText, "%");
                 if (contextKey.Length > 0)
                 {
@@ -773,7 +775,7 @@ public class wsGeneral : System.Web.Services.WebService
                     dt = oOvdim.GetOvdimMisparIshi(prefixText, contextKey);
                 }
 
-                List<string> items = new List<string>(count);
+            
 
                 int i = 0;
                 foreach (DataRow dr in dt.Rows)
@@ -781,9 +783,9 @@ public class wsGeneral : System.Web.Services.WebService
                     if (i > count) { break; }
                     items.Add(dr["mispar_ishi"].ToString());
                     i++;
-                }
-
-                return items.ToArray();                        
+                }                           
+             }
+            return items.ToArray();  
         }
         catch (Exception ex)
         {
