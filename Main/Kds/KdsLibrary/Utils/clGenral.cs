@@ -60,6 +60,7 @@ namespace KdsLibrary
         public const string cProMoveNewBrerotMechdalToOld = "pkg_batch.MoveNewBrerotMechdalToOld";
         public const string cProDeleteLogTahalichRecords = "pkg_batch.pro_delete_log_tahalich_rcds";
         public const string cProGetDetailsOvdimLeRikuzim = "pkg_batch.Pro_get_pirtey_ovdim_leRikuzim";
+        public const string cProPrepareOvdimRikuzim = "pkg_batch.Pro_PrepareOvdimRikuzim";
         public const string cProGetEmailOvdimLeRikuzim = "pkg_batch.Pro_get_Email_Ovdim_LeRikuzim";
 
         public const string cProPrepareYameiAvodaMeshek = "pkg_batch.Prepare_yamei_avoda_meshek";
@@ -952,7 +953,13 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
 
         public enum enCalcType
         {
-            MonthlyCalc = 1, PremiotCalc = 2, ShinuyimVeShguyim = 3, ShinuyimVeSghuimHR = 4, ShinuyimVeSghuimPremiot =5
+            MonthlyCalc = 1, 
+            PremiotCalc = 2, 
+            ShinuyimVeShguyim = 3, 
+            ShinuyimVeSghuimHR = 4, 
+            ShinuyimVeSghuimPremiot =5,
+            Rikuzim = 6 
+
         }
         public enum enYechidaIrgunit
         {
