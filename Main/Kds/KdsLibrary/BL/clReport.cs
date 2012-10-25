@@ -374,14 +374,37 @@ namespace KdsLibrary.BL
             return dt;
         }
 
-        public DataTable getDetailsOvdimLeRikuzim(long BakashaId)
+
+
+
+        public bool GetProPrepareOvdimRikuzim(long BakashaId ,long RequestIdForRikuzim, int NumOfProcesses)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                clDal dal = new clDal();
+                dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
+                dal.AddParameter("p_RequestId", ParameterType.ntOracleInt64, RequestIdForRikuzim, ParameterDir.pdInput);
+                dal.AddParameter("p_num_processes", ParameterType.ntOracleInt64, NumOfProcesses, ParameterDir.pdInput);
+                dal.ExecuteSP(clGeneral.cProPrepareOvdimRikuzim, ref dt);
+                return true; 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            }
+
+        public DataTable getDetailsOvdimLeRikuzim(long BakashaId, int numPack)
         {
             DataTable dt = new DataTable();
             try
             {
                 clDal dal = new clDal();
 
-                dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
+                dal.AddParameter("p_bakasha_Id", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
+                dal.AddParameter("p_Num_Pack", ParameterType.ntOracleInt64, numPack, ParameterDir.pdInput);
+                
                 dal.AddParameter("p_cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 dal.ExecuteSP(clGeneral.cProGetDetailsOvdimLeRikuzim, ref dt);
 
@@ -413,7 +436,7 @@ namespace KdsLibrary.BL
             }
         }
 
-        public void SaveRikuzmPdf(COLL_RIKUZ_PDF oCollRikuzPdf, long BakashaId)
+        public void SaveRikuzmPdf(COLL_RIKUZ_PDF oCollRikuzPdf, long BakashaId,int numPack)
         {
             try
             {
@@ -421,6 +444,7 @@ namespace KdsLibrary.BL
 
                 dal.AddParameter("p_BakashatId", ParameterType.ntOracleInt64, BakashaId, ParameterDir.pdInput);
                 dal.AddParameter("p_coll_rikuz_pdf", ParameterType.ntOracleArray, oCollRikuzPdf, ParameterDir.pdInput, "COLL_RIKUZ_PDF");
+                dal.AddParameter("p_Num_Pack", ParameterType.ntOracleInt64, numPack, ParameterDir.pdInput);
                 dal.ExecuteSP(clGeneral.cProSaveRikuzPdf);
             }
             catch (Exception ex)

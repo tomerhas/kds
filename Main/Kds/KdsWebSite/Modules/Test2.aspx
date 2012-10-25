@@ -8,18 +8,18 @@
 
 <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
     </asp:ScriptManagerProxy>
-    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
             
         <table>
             <tr>
                 <td style="padding-top:150px">בדיקת תאריך
              </td>
              <td>
-                <KdsCalendar:KdsCalendar runat="server" ID="KdsCalendar1"  AutoPostBack="false"   dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
+    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
+                <KdsCalendar:KdsCalendar runat="server" ID="KdsCalendar1"  AutoPostBack="true" OnTextChanged="TextChange"  dir="rtl" PopupPositionCallOut="Left" ></KdsCalendar:KdsCalendar>           
              </td>
             </tr>
          </table>
-        <table>
+<%--        <table>
            
             <tr>   
                 <td>               
@@ -55,8 +55,8 @@
                 </td>
             </tr> 
             
-        </table>
-        <br />
+        </table>--%>
+<%--        <br />
   
         <input  id="btnHeadrut" runat="server" value="דיווח העדרות"   type="button"  CausesValidation="false"  />
         <input type="button" id="btnHosafatPeilut" runat="server" value="הוספת פעילות" onclick="OpenHosefPeilut();"   causesvalidation="false"  />
@@ -79,10 +79,10 @@
 <asp:Button ID="btnShowTachograf" runat="server"  Text="צפה בטכוגרף"   
                         CssClass="ImgButtonApprovalRegular"  Width="120px" 
                         onclick="btnShowTachograf_Click"  />     
-   </ContentTemplate>
+--%>   </ContentTemplate>
                </asp:UpdatePanel>  
                
-               
+  <%--             
    
  <asp:UpdatePanel ID="UpdatePanel6" runat="server" RenderMode="Inline" UpdateMode="Conditional">
      <ContentTemplate> 
@@ -174,9 +174,9 @@
    </ContentTemplate>
 </asp:UpdatePanel>                
                
+      --%>         
                
-               
- <script language="javascript" type="text/javascript">
+<%-- <script language="javascript" type="text/javascript">
      $(document).ready(function () {
          $("button").click(function () {
              $("div").load('txt1.txt');
@@ -318,4 +318,4 @@
 //       // }
 //    }
  </script>
-</asp:Content>
+--%></asp:Content>
