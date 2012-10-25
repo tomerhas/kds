@@ -209,6 +209,15 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+    public string TransferTekenNehagim(long lRequestNum, long iRequestIdForTransfer)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.TransferTekenNehagim(lRequestNum, iRequestIdForTransfer);
+        client.Close();
+        return "OK";
+    }
+
+    [WebMethod(EnableSession = true)]
     public string ShlichatRikuzimMail(long lRequestNum, long iRequestIdForRikuzim)
     {
         KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();

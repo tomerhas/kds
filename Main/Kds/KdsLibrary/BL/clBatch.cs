@@ -160,7 +160,31 @@ namespace KdsLibrary.BL
 
             return iRequestId;
         }
-        
+
+        public long InsBakashaAndOneBakashaPraram(clGeneral.enGeneralBatchType iTypeRequest, string sDescription, clGeneral.enStatusRequest iStatus, int iUserId, string sParam)
+        {
+            long iRequestId;
+
+            clTxDal objDal = new clTxDal();
+            try
+            {
+                objDal.TxBegin();
+                iRequestId = InsertBakasha(ref objDal, iTypeRequest, sDescription, iStatus, iUserId);
+
+                objDal.ClearCommand();
+                InsertBakashaParam(ref objDal, iRequestId, 1, sParam);
+
+                objDal.TxCommit();
+            }
+            catch (Exception ex)
+            {
+                objDal.TxRollBack();
+                throw ex;
+            }
+
+            return iRequestId;
+        }
+
         public DataTable GetPirteyRitzotChishuv(DateTime dTaarichMe, DateTime dTaarichAd, Boolean bGetAll)
         {
             clDal oDal = new clDal();
@@ -623,6 +647,23 @@ namespace KdsLibrary.BL
             catch (Exception ex)
             {
                 clGeneral.LogMessage(ex.Message, EventLogEntryType.Error);
+                throw ex;
+            }
+        }
+
+        public void InsertTekenNehagimToTnua(long iRequestIdToTransfer)
+        {
+            clDal oDal = new clDal();
+           
+            try
+            {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, iRequestIdToTransfer, ParameterDir.pdInput);
+               
+                oDal.ExecuteSP(clGeneral.cProInsTekenDriversToTnua);
+                               
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

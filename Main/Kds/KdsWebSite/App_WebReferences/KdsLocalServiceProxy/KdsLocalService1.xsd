@@ -101,6 +101,19 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="TransferTekenNehagim">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+        <xs:element minOccurs="0" name="iRequestIdForTransfer" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TransferTekenNehagimResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ShlichatRikuzimMail">
     <xs:complexType>
       <xs:sequence>

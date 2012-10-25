@@ -100,6 +100,7 @@
                                        <asp:button ID="btnNo"  runat="server"  Width="30px" text="לא" Enabled="true" CssClass ="ImgButtonSearch"  OnClick="TransferRitza" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                        <asp:BoundField DataField="PARAM1" ItemStyle-CssClass="ItemRow"  ItemStyle-Width="0px"/>
                      </Columns> 
                     <RowStyle CssClass="GridAltRow"   />
                  </asp:GridView>

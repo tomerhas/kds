@@ -334,6 +334,29 @@ namespace KdsService
             LogThreadEnd("YeziratRikuzim", lRequestNum);
         }
 
+        private void RunTransferTekenNehagimThread(object param)
+        {
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            long lRequestNumToTransfer = (long)args[1];
+            int iStatus;
+            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
+            clBatch oBatch = new clBatch();
+            try
+            {
+                oBatch.InsertTekenNehagimToTnua(lRequestNumToTransfer);
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunTransferTekenNehagimThread: " + ex.Message);
+            }
+            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "End");
+            LogThreadEnd("TransferTekenNehagim", lRequestNum);
+            clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, clGeneral.enStatusRequest.ToBeEnded.GetHashCode());
+           
+        }
 
         private void RunShlichatRikuzimMailThread(object param)
         {
@@ -579,6 +602,14 @@ namespace KdsService
                 new ParameterizedThreadStart(RunYeziratRikuzimThread));
             LogThreadStart("YeziratRikuzim", lRequestNum);
             runThread.Start(new object[] { lRequestNum, iRequestIdForRikuzim });
+        }
+
+        public void TransferTekenNehagim(long lRequestNum, long iRequestIdForTransfer)
+        {
+            Thread runThread = new Thread(
+                new ParameterizedThreadStart(RunTransferTekenNehagimThread));
+            LogThreadStart("TransferTekenNehagim", lRequestNum);
+            runThread.Start(new object[] { lRequestNum, iRequestIdForTransfer });
         }
 
         public void ShlichatRikuzimMail(long lRequestNum, long iRequestIdForRikuzim)

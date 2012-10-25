@@ -31,7 +31,8 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
         status_yezirat_rikuzim,
         btn_send,
         rizot_zehot,
-        btns_ishur_hilan
+        btns_ishur_hilan,
+        param1
     }
 
 
@@ -156,6 +157,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          e.Row.Cells[enGrdRitzot.status_yezirat_rikuzim.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.param1.GetHashCode()].Style.Add("display", "none");
 
          iColSort = GetCurrentColSort();
          lbl.Text = " ";
@@ -197,6 +199,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.rizot_zehot.GetHashCode()].Style.Add("display", "none");
          e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Style.Add("display", "none");
+         e.Row.Cells[enGrdRitzot.param1.GetHashCode()].Style.Add("display", "none");
 
          huavara_lesachar =e.Row.Cells[enGrdRitzot.HUAVRA_LESACHAR.GetHashCode()].Text.Trim() ;
          status_haavara_lesachar = e.Row.Cells[enGrdRitzot.status_haavara_lesachar.GetHashCode()].Text.Trim();
@@ -254,7 +257,7 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          ((Button)e.Row.Cells[enGrdRitzot.btns_kvazim.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_Rikuzim.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
          ((Button)e.Row.Cells[enGrdRitzot.btn_send.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
-         ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
+         ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[1]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.tkufa_date.GetHashCode()].Text + "," + e.Row.Cells[enGrdRitzot.param1.GetHashCode()].Text.Replace(",","|"); ;
          ((Button)e.Row.Cells[enGrdRitzot.btns_ishur_hilan.GetHashCode()].Controls[3]).CommandArgument = e.Row.Cells[enGrdRitzot.bakasha_id.GetHashCode()].Text;
           
      }
@@ -320,10 +323,11 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
  {
      string RizotZehot;
      string[] commandArgsAccept;
-     
+     string sCodesh;
     clBatch objBatch = new clBatch();
      try
      {
+         ViewState["RunTeken"]="false";
          commandArgsAccept = ((Button)sender).CommandArgument.ToString().Split(new char[] { ',' });
          inputHiddenBakasha.Value = commandArgsAccept[0]; 
          if (((Button)sender).ClientID.IndexOf("btnNo") > -1)
@@ -351,9 +355,18 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
              btnNoTransfer.Style.Add("Display", "inline");
              paMessage.Style["Width"] = "450px";
              paMessage.Style["Height"] = "100px";
-             ModalPopupEx.X = 250;
-            
-             lblMessage.Text = "ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?";
+             ModalPopupEx.X = 380;
+
+             lblMessage.Text = "ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן? ";
+             //מופעל רק בריצת חברים
+             if (commandArgsAccept[2].ToString().IndexOf("1") !=-1)
+             { 
+                   ViewState["RunTeken"]="true";
+                   paMessage.Style["Height"] = "120px";
+                   sCodesh = DateTime.Parse(commandArgsAccept[1].ToString()).AddDays(-1).ToShortDateString() + " -  " + DateTime.Parse(commandArgsAccept[1].ToString()).AddMonths(-6).ToShortDateString();
+                   lblMessage.Text += "\n שים לב! בעת אישור הריצה, יועברו לתנועה נתוני תקן נהגים לחברים ושכירים לחודשים: " + sCodesh;
+             }
+          
              btnShowMessage_Click(this, new EventArgs());
            //  ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowMesssage", "ShowMessageHilan('ריצת החישוב טרם אושרה בחילן, האם ברצונך לסמן אותה כאושרה בחילן?');", true);
          }
@@ -395,8 +408,15 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
      {
          source = inputSourceBtnHilan.Value;
          iRequestToTransfer = long.Parse(inputHiddenBakasha.Value);
-         if (source =="Yes")
-             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 1);       
+         if (source == "Yes")
+         {
+             clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 1);
+             if (ViewState["RunTeken"].ToString() == "true")
+             {
+                 ModalPopupEx.Hide();
+                  TransferNetuneyTekenToTnua(iRequestToTransfer);
+             }
+         }
          else
              clDefinitions.UpdateLogBakasha(iRequestToTransfer, DateTime.MinValue, 0, -1, DateTime.MinValue, 0);
          GetRitzot();
@@ -478,6 +498,40 @@ public partial class Modules_Batches_HaavaraLesachar :KdsPage
          btnConfirm.Style.Add("Display", "inline");
          btnYesTransfer.Style.Add("Display", "none");
          btnNoTransfer.Style.Add("Display", "none");
+         btnYesHilan.Style.Add("Display", "None");
+         paMessage.Style["Width"] = "220px";
+         paMessage.Style["Height"] = "115px";
+         ModalPopupEx.X = 400;
+         sMessage = " בקשתך נשלחה לביצוע באצווה מספרה הוא: " + iRequestId;
+         lblMessage.Text = sMessage;
+         btnShowMessage_Click(this, new EventArgs());
+
+     }
+     catch (Exception ex)
+     {
+         clGeneral.BuildError(Page, ex.Message);
+     }
+ }
+
+
+ private void TransferNetuneyTekenToTnua(long iRequestToTransfer)
+ {
+     long iRequestId;
+     string sMessage;
+     int iUserId;
+     wsBatch obach = new wsBatch();
+     clBatch objBatch = new clBatch();
+     try
+     {
+         iUserId = int.Parse(LoginUser.UserInfo.EmployeeNumber);
+
+         iRequestId = objBatch.InsBakashaAndOneBakashaPraram(clGeneral.enGeneralBatchType.TransferTekenNehagim, "העברת תקן לנהגים לבקשה מס':" + iRequestToTransfer.ToString(), clGeneral.enStatusRequest.InProcess, iUserId, iRequestToTransfer.ToString());
+         ViewState["iRequestId"] = iRequestId;
+         obach.TransferTekenNehagim(iRequestId, iRequestToTransfer);
+
+         btnYesTransfer.Style.Add("Display", "none");
+         btnNoTransfer.Style.Add("Display", "none");
+         btnConfirm.Style.Add("Display", "inline");
          btnYesHilan.Style.Add("Display", "None");
          paMessage.Style["Width"] = "220px";
          paMessage.Style["Height"] = "115px";

@@ -36,6 +36,9 @@ namespace KdsService
         void YeziratRikuzim(long lRequestNum, long iRequestIdForRikuzim);
 
         [OperationContract]
+        void TransferTekenNehagim(long lRequestNum, long iRequestIdForTransfer);
+
+        [OperationContract]
         void ShlichatRikuzimMail(long lRequestNum, long iRequestIdForRikuzim);
         
         //[OperationContract]

@@ -5656,22 +5656,23 @@ namespace KdsBatch
         private void CalcRechiv251()
         {
             float fSumDakotRechiv, fTempX, fNosafotMichutz;
-            float fMichsatNosafot, fSumDakotRechiv208, fTempY;
+            float fMichsatNosafot, fSumDakotRechiv208, fTempY, fSumDakotRechiv184;
             try
             {
 
                 Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_CHODESH"]);
 
-                fTempX = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.SachNosafotTnuaCholVeshishi);
+                fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode());
 
-                fNosafotMichutz = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua);
+
+                fSumDakotRechiv184 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.DakotMichutzLamichsaNihulTnua);
                 fSumDakotRechiv208 = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichutzLamichsaTnuaShishi);
-                fNosafotMichutz = fTempX - ((fNosafotMichutz + fSumDakotRechiv208) / 60);
+                fNosafotMichutz = fTempX - ((fSumDakotRechiv184 + fSumDakotRechiv208) / 60);
 
                 fMichsatNosafot = oCalcBL.GetSumErechRechiv(ListOfSum, clGeneral.enRechivim.MichsatShaotNosafotNihul);
                 fTempY = fNosafotMichutz > fMichsatNosafot ? fMichsatNosafot : fNosafotMichutz;
 
-                fSumDakotRechiv = (fTempY * 60) + fNosafotMichutz + fSumDakotRechiv208;
+                fSumDakotRechiv = (fTempY * 60) + fSumDakotRechiv184 + fSumDakotRechiv208;
 
                 addRowToTable(clGeneral.enRechivim.SachNosafotTnuaCholVeshishi.GetHashCode(), fSumDakotRechiv);
           }

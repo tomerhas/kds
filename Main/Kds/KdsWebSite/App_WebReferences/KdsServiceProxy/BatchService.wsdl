@@ -362,6 +362,44 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TransferTekenNehagim_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_TransferTekenNehagim_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_ShlichatRikuzimMail_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -867,6 +905,12 @@
   <wsdl:message name="IBatchService_YeziratRikuzim_OutputMessage">
     <wsdl:part name="parameters" element="tns:YeziratRikuzimResponse" />
   </wsdl:message>
+  <wsdl:message name="IBatchService_TransferTekenNehagim_InputMessage">
+    <wsdl:part name="parameters" element="tns:TransferTekenNehagim" />
+  </wsdl:message>
+  <wsdl:message name="IBatchService_TransferTekenNehagim_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TransferTekenNehagimResponse" />
+  </wsdl:message>
   <wsdl:message name="IBatchService_ShlichatRikuzimMail_InputMessage">
     <wsdl:part name="parameters" element="tns:ShlichatRikuzimMail" />
   </wsdl:message>
@@ -967,6 +1011,10 @@
     <wsdl:operation name="YeziratRikuzim">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/YeziratRikuzim" message="tns:IBatchService_YeziratRikuzim_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/YeziratRikuzimResponse" message="tns:IBatchService_YeziratRikuzim_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TransferTekenNehagim">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/TransferTekenNehagim" message="tns:IBatchService_TransferTekenNehagim_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/TransferTekenNehagimResponse" message="tns:IBatchService_TransferTekenNehagim_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ShlichatRikuzimMail">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/ShlichatRikuzimMail" message="tns:IBatchService_ShlichatRikuzimMail_InputMessage" />
@@ -1094,6 +1142,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_YeziratRikuzim_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TransferTekenNehagim">
+      <soap12:operation soapAction="http://tempuri.org/IBatchService/TransferTekenNehagim" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_TransferTekenNehagim_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_TransferTekenNehagim_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
