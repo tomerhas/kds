@@ -66,11 +66,17 @@ namespace KdsBatch.Reports
             {
                 foreach (DataRow dr in _dtDetailsReport.Rows)
                 {
-                    _Reports.Add(new clReport(_lBakashaIdForRikuzim,
-                                 clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
-                                 DateTime.Parse(dr["TAARICH"].ToString()),
-                                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()) : -1),
-                                 clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString())));
+                    _Reports.Add(new clRikuz(_lBakashaIdForRikuzim,
+                                clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
+                                DateTime.Parse(dr["TAARICH"].ToString()),
+                                (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()) : -1),
+                                clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString())));
+
+                    //    _Reports.Add(new clReport(_lBakashaIdForRikuzim,
+                    //                 clGeneral.GetIntegerValue(dr["MISPAR_ISHI"].ToString()),
+                    //                 DateTime.Parse(dr["TAARICH"].ToString()),
+                    //                 (dr["sug_chishuv"].ToString() != "" ? int.Parse(dr["sug_chishuv"].ToString()) : -1),
+                    //                 clGeneral.GetIntegerValue(dr["EZOR"].ToString()), clGeneral.GetIntegerValue(dr["MAAMAD"].ToString()), clGeneral.GetIntegerValue(dr["KOD_HEVRA"].ToString()), DateTime.Parse(dr["ZMAN_HATCHALA"].ToString())));
                 }
                 FillReports();
             }
@@ -93,21 +99,21 @@ namespace KdsBatch.Reports
 
             try
             {
-                foreach (clReport drReport in _Reports)
+                foreach (clRikuz drRikuz in _Reports)
                 {
-                    drParams = _dtDetailsReport.Select("MISPAR_ISHI=" + drReport.MisparIshi + " and taarich=Convert('" + drReport.Month.ToShortDateString() + "', 'System.DateTime')");
+                    drParams = _dtDetailsReport.Select("MISPAR_ISHI=" + drRikuz.MisparIshi + " and taarich=Convert('" + drRikuz.Month.ToShortDateString() + "', 'System.DateTime')");
 
                     if (drParams.Length > 0)
                     {
-                        drReport.Add("P_MISPAR_ISHI", drReport.MisparIshi.ToString());
-                        drReport.Add("P_TAARICH", drReport.Month.AddMonths(1).AddDays(-1).ToShortDateString());
-                        drReport.Add("P_BAKASHA_ID", drReport.BakashaId.ToString());
-                        drReport.Add("P_Tar_chishuv", drReport.TarChishuv.ToShortDateString());
+                        drRikuz.Add("P_MISPAR_ISHI", drRikuz.MisparIshi.ToString());
+                        drRikuz.Add("P_TAARICH", drRikuz.Month.AddMonths(1).AddDays(-1).ToShortDateString());
+                        drRikuz.Add("P_BAKASHA_ID", drRikuz.BakashaId.ToString());
+                        drRikuz.Add("P_Tar_chishuv", drRikuz.TarChishuv.ToShortDateString());
                         if (drParams[0]["sug_chishuv"].ToString() != "")
-                            drReport.Add("P_sug_chishuv", clGeneral.arrCalcType[int.Parse(drParams[0]["sug_chishuv"].ToString())]);
-                        else drReport.Add("P_sug_chishuv", "");
-                        drReport.Add("P_Oved_5_Yamim", getTeurWorkDay(drParams[0]["WorkDay"].ToString()));
-                        drReport.Add("P_SIKUM_CHODSHI", "1");
+                            drRikuz.Add("P_sug_chishuv", clGeneral.arrCalcType[int.Parse(drParams[0]["sug_chishuv"].ToString())]);
+                        else drRikuz.Add("P_sug_chishuv", "");
+                        drRikuz.Add("P_Oved_5_Yamim", getTeurWorkDay(drParams[0]["WorkDay"].ToString()));
+                        drRikuz.Add("P_SIKUM_CHODSHI", "1");
                     }
                 }
             }
@@ -128,9 +134,9 @@ namespace KdsBatch.Reports
             else { return "6 ימים חודשי"; }
         }
 
-        protected override string SetNameOfReportFile(clReport CurrentReport)
+        protected override string SetNameOfReportFile(clReport CurrentRikuz)
         {
-            return "Rikuz_" + CurrentReport.Month.ToString("yyMM") + CurrentReport.MisparIshi.ToString().PadLeft(5, '0'); //, CurrentReport.Month.Year.ToString().Substring(2, 2) +
+            return "Rikuz_" + ((clRikuz)CurrentRikuz).Month.ToString("yyMM") + CurrentRikuz.MisparIshi.ToString().PadLeft(5, '0'); //, CurrentReport.Month.Year.ToString().Substring(2, 2) +
             //  CurrentReport.Month.Month.ToString() + CurrentReport.MisparIshi;
         }
 
@@ -138,7 +144,7 @@ namespace KdsBatch.Reports
         {
             List<clDestinationReport> ListDest = _DestinationReports.FindAll(delegate(clDestinationReport Dest)
             {
-                if ((Dest.Kod == CurrentReport.KodReport) & (Dest.MisparIshi == CurrentReport.MisparIshi) & (Dest.Month == CurrentReport.Month)) return true;
+                if ((Dest.Kod == CurrentReport.KodReport) & (Dest.MisparIshi == CurrentReport.MisparIshi) & (Dest.Month == ((clRikuz)CurrentReport).Month)) return true;
                 else return false;
             });
             return ListDest;
@@ -154,9 +160,9 @@ namespace KdsBatch.Reports
             {
 
                 CreateFoldersByMonth(ref PathFolderRikuzim, ref PathFolderHefreshim);
-                foreach (clReport drReport in _Reports)
+                foreach (clRikuz drRikuz in _Reports)
                 {
-                    drDest = _dtDestinations.Select("MISPAR_ISHI=" + drReport.MisparIshi + " and taarich=Convert('" + drReport.Month.ToShortDateString() + "', 'System.DateTime')");
+                    drDest = _dtDestinations.Select("MISPAR_ISHI=" + drRikuz.MisparIshi + " and taarich=Convert('" + drRikuz.Month.ToShortDateString() + "', 'System.DateTime')");
 
                     if (drDest[0]["SUG_CHISHUV"].ToString() == "0")
                     {
@@ -168,18 +174,18 @@ namespace KdsBatch.Reports
                     }
 
                     _DestinationReports.Add(new clDestinationReport(TypeSending.Folder,
-                                            drReport.KodReport,
+                                            drRikuz.KodReport,
                                             PathFolder,
-                                            drReport.MisparIshi,
-                                            drReport.Month));
+                                            drRikuz.MisparIshi,
+                                            drRikuz.Month));
 
                     if (drDest.Length > 0 && !string.IsNullOrEmpty(drDest[0]["EMAIL"].ToString()))
                     {
                         _DestinationReports.Add(new clDestinationReport(TypeSending.EMail,
-                                                drReport.KodReport,
+                                                drRikuz.KodReport,
                                                "meravn@egged.co.il", // drDest[0]["EMAIL"].ToString(),
-                                                drReport.MisparIshi,
-                                                drReport.Month));
+                                                drRikuz.MisparIshi,
+                                                drRikuz.Month));
                     }
                 }
             }
@@ -238,32 +244,32 @@ namespace KdsBatch.Reports
                     Directory.CreateDirectory(path);
                 if (_Reports.Count > 0)
                 {
-                    foreach (clReport drReport in _Reports)
+                    foreach (clRikuz drRikuz in _Reports)
                     {
                         try
                         {
-                            fileReport = CreateFile(drReport);
+                            fileReport = CreateFile(drRikuz);
                         }
                         catch (Exception ex)
                         {
                             flag = true;
                             string Msg = ex.Message + "\n" + ex.StackTrace + ((ex.InnerException != null)? ex.InnerException.ToString() : "");
                             clGeneral.LogMessage(Msg, System.Diagnostics.EventLogEntryType.Error, true);
-                            clLogBakashot.InsertErrorToLog(iRequestId, drReport.MisparIshi, "E", 0, null, "MakeReports: " + ex.Message);
+                            clLogBakashot.InsertErrorToLog(iRequestId, drRikuz.MisparIshi, "E", 0, null, "MakeReports: " + ex.Message);
                             fileReport = null;
                         }
 
                         if (fileReport != null)
                         {
                             oObjRikuzPdf = new OBJ_RIKUZ_PDF();
-                            oObjRikuzPdf.MISPAR_ISHI = drReport.MisparIshi;
-                            oObjRikuzPdf.BAKASHA_ID = drReport.BakashaId;
-                            oObjRikuzPdf.TAARICH = drReport.Month;
-                            oObjRikuzPdf.SUG_CHISHUV = drReport.sug_chishuv;
+                            oObjRikuzPdf.MISPAR_ISHI = drRikuz.MisparIshi;
+                            oObjRikuzPdf.BAKASHA_ID = drRikuz.BakashaId;
+                            oObjRikuzPdf.TAARICH = drRikuz.Month;
+                            oObjRikuzPdf.SUG_CHISHUV = drRikuz.sug_chishuv;
                             oObjRikuzPdf.RIKUZ_PDF = fileReport;
                             oCollRikuzPdf.Add(oObjRikuzPdf);
 
-                            TransferFileToAda(iRequestId, pathAda, drReport, fileReport);
+                            TransferFileToAda(iRequestId, pathAda, drRikuz, fileReport);
                             iCntDone++;
                         }
                     }
@@ -282,23 +288,23 @@ namespace KdsBatch.Reports
             }
         }
 
-        private void TransferFileToAda(long iRequestId, string path, clReport drReport, byte[] fileReport)
+        private void TransferFileToAda(long iRequestId, string path, clRikuz drRikuz, byte[] fileReport)
         {
             FileStream fs = null;
             string sFileName =string.Empty;
             try
             {
                 sFileName = "RIKUZ";
-                sFileName += drReport.Hevra.ToString().PadLeft(4, char.Parse("0"));
-                sFileName += drReport.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
-                sFileName += drReport.Month.Year.ToString().PadLeft(4, char.Parse("0"));
-                sFileName += drReport.Month.Month.ToString().PadLeft(2, char.Parse("0"));
-                sFileName += drReport.TarChishuv.ToString("ddMMyyyy");
-                if (drReport.sug_chishuv == -1)
+                sFileName += drRikuz.Hevra.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drRikuz.MisparIshi.ToString().PadLeft(5, char.Parse("0"));
+                sFileName += drRikuz.Month.Year.ToString().PadLeft(4, char.Parse("0"));
+                sFileName += drRikuz.Month.Month.ToString().PadLeft(2, char.Parse("0"));
+                sFileName += drRikuz.TarChishuv.ToString("ddMMyyyy");
+                if (drRikuz.sug_chishuv == -1)
                     sFileName += "3";
-                else sFileName += ((drReport.sug_chishuv) + 1).ToString();
-                sFileName += drReport.Ezor.ToString();
-                sFileName += drReport.Maamad.ToString().PadLeft(3, char.Parse("0"));
+                else sFileName += ((drRikuz.sug_chishuv) + 1).ToString();
+                sFileName += drRikuz.Ezor.ToString();
+                sFileName += drRikuz.Maamad.ToString().PadLeft(3, char.Parse("0"));
                 sFileName += ".PDF";
 
                 fs = new FileStream(path + sFileName, FileMode.Create, FileAccess.Write);

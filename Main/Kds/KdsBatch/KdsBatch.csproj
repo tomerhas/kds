@@ -170,6 +170,7 @@
     <Compile Include="Premia\SystemCompare\CompareScope.cs" />
     <Compile Include="Premia\SystemCompare\ImportColumn.cs" />
     <Compile Include="Premia\SystemCompare\ImportStructure.cs" />
+    <Compile Include="Reports\clRikuz.cs" />
     <Compile Include="Service References\KdsServiceProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
