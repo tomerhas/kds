@@ -132,10 +132,12 @@ namespace KdsBatch
                    _PirteyOved.ForEach(item => { WriteEruimToFile(item); });
                   // WriteToFile(iMaamad, iMaamadRashi, iDirug, iDarga);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after WriteEruimToFile");
-                   if (bDelete == "true")
-                        DeleteChishuvAfterTransfer(lRequestNumToTransfer);
+                   
                    UpdateStatusYameyAvoda(lRequestNumToTransfer);
                    InserIntoTableSugChishuv(objCollMisparIshiSugChishuv, lRequestNumToTransfer);
+
+                   if (bDelete == "true")
+                       DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);
 
                    iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();

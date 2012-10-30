@@ -153,7 +153,7 @@ namespace KdsBatch
           {
               if (iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode() && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
-                  GetErechRechivPremiyaFriends(iKodRechiv);
+                 fErech = GetErechRechivPremiyaFriends(iKodRechiv);
               }
               else
               {
