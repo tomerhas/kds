@@ -302,7 +302,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -405,6 +404,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DsIdkuneyRashemet</DataSetName>
+        <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!TAARICH_IDKUN.Value</Value>
+          </SortExpression>
+        </SortExpressions>
         <Top>0.47625cm</Top>
         <Height>4.3cm</Height>
         <Width>15.66787cm</Width>
