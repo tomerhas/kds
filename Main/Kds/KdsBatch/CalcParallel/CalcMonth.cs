@@ -777,6 +777,9 @@ namespace KdsBatch
                 //יום הסבה לקו (רכיב 72) : 
                 CalcRechiv72();
 
+                // יום שליחות בחו''ל
+                CalcRechiv73();
+
                 //  CalcRechiv74();
 
                 //ימי נוכחות לעובד (רכיב 75) 
@@ -2935,6 +2938,25 @@ namespace KdsBatch
             }
         }
 
+
+        public void CalcRechiv73()
+        {
+            float fErech;
+            try
+            {
+
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomShlichutBeChul.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), fErech);
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Taarich, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+
         private void CalcRechiv75()
         {
             float fSumDakotRechiv;
@@ -3752,14 +3774,23 @@ namespace KdsBatch
         private void CalcRechiv126()
         {
             float fSumDakotRechiv;
+            DateTime last_taarich;
             try
             {
+                last_taarich = objOved.Taarich;
                 if (objOved.dTchilatAvoda > objOved.Month)
+                {
+                    //objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= objOved.dTchilatAvoda && Pratim._TaarichAd >= objOved.dTchilatAvoda));
+                    //objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == objOved.dTchilatAvoda)); 
                     oDay.ChishuvEmptyYemeyAvoda(clGeneral.enRechivim.MichsaYomitMechushevet, true);
-
+                }
                 if (objOved.dSiyumAvoda < objOved.Month.AddMonths(1).AddDays(-1))
+                {
+                    //objOved.objPirteyOved = objOved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= objOved.Month && Pratim._TaarichAd >= objOved.Month));
+                    //objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == objOved.Month));  
                     oDay.ChishuvEmptyYemeyAvoda(clGeneral.enRechivim.MichsaYomitMechushevet, false);
-
+                }
+                objOved.Taarich = last_taarich;
                 if (objOved.objMeafyeneyOved.iMeafyen2 > 0)
                 {
                     fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen2;

@@ -64,7 +64,7 @@ namespace KdsBatch
                 if (iDirug == 85 && iDarga == 30)
                 {
                     if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
-                        oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                        oDataEt = new clEruaDataEt(iBakashaId, _drPirteyOved, _dtRechivim);
 
                     oBakaraEt = new clEruaBakaraEt(iBakashaId, _drPirteyOved, _dtRechivim, sChodeshIbud);
                 }

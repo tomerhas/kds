@@ -649,6 +649,7 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             YomMachalatHorim = 70,
             YomMachalaYeled = 71,
             YomKursHasavaLekav = 72,
+            YomShlichutBeChul=73,
             YemeyNochehutLeoved = 75,
             Nosafot125 = 76,
             Nosafot150 = 77,

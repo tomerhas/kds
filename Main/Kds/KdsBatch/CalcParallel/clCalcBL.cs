@@ -525,5 +525,68 @@ namespace KdsBatch
             }
         }
 
+        public float getMichsaYomit(Oved objOved)
+        {
+            int iSugYom=0;
+            try
+            {
+                return getMichsaYomit(objOved, ref iSugYom);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public float getMichsaYomit(Oved objOved, ref int iSugYom)
+        {
+            int iSugYomLemichsa;
+            float fErechRechiv;
+            try
+            {
+                iSugYomLemichsa = 0;
+                fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                iSugYom = iSugYomLemichsa;
+                if (iSugYom == clGeneral.enSugYom.Purim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
+                {
+                    if (!CheckYomShishi(iSugYom))
+                    {
+                        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
+                        fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                    }
+                    else
+                    {
+                        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
+                        fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                    }
+                }
+
+                if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
+                {
+                    iSugYomLemichsa = clGeneral.enSugYom.Purim.GetHashCode();
+                    fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                }
+
+                if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor != clGeneral.enEzor.Yerushalim.GetHashCode())
+                {
+                    if (!CheckYomShishi(iSugYom))
+                    {
+                        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
+                        fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                    }
+                    else
+                    {
+                        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
+                        fErechRechiv = GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                    }
+                }
+
+                return fErechRechiv;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

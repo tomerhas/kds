@@ -10,11 +10,11 @@ namespace KdsBatch
     public class clEruaDataEt : clErua
     {
         private List<string> _ListErua;
-        private DataTable dtChishuvYomi;
-        public clEruaDataEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
+      //  private DataTable dtChishuvYomi;
+        public clEruaDataEt(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
             : base(lBakashaId, drPirteyOved, dtDetailsChishuv,162)
       {
-          dtChishuvYomi = dtChishuv;
+        //  dtChishuvYomi = dtChishuv;
            _sBody = SetBody();
            if (_sBody != null)
             PrepareLines();

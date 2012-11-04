@@ -187,6 +187,9 @@ namespace KdsBatch
                 //יום הסבה לקו (רכיב 72) : 
                 CalcRechiv72();
 
+                // יום שליחות בחו''ל
+                CalcRechiv73();
+
                 //ימי נוכחות לעובד (רכיב 75) 
                 CalcRechiv75();
 
@@ -1326,10 +1329,8 @@ namespace KdsBatch
         private void CalcRechiv22()
         {
             //יש לפתוח רכיב רק אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך כלשהו ו/או קיים סידור מזכה לגמול 
-            float fSumDakotTafkid4,fErechRechiv,fNochechtKursim, fDakotNehiga,fErechRechivSidur=0, fMichsaYomit126, fNochechtLeTashlum,sum,fMichsatMutam,fTempX;
-            DataRow[] drSidurim;
+            float fErechRechiv, fDakotNehiga,fErechRechivSidur=0, fMichsaYomit126, fNochechtLeTashlum,fMichsatMutam,fTempX;
             DataRow[] dr;
-            int iSugSidur;
             clCalcBL oCalcBL = new clCalcBL();
             try
             {
@@ -1342,10 +1343,10 @@ namespace KdsBatch
                 dr = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur=99006");
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30) && !(objOved.objPirteyOved.iKodMaamdMishni == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() && dr.Length > 0))
                 {
-                    fMichsaYomit126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); 
-                         
+                    fMichsaYomit126 = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                    fNochechtLeTashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich); 
                     //יש לבדוק האם ביום העבודה בו מוגדר הסידור קיימת מכסה יומית מחושבת (רכיב 126) > 0. אם קיימת, להמשיך בחישוב. אם לא קיימת, אין לבצע את החישוב בשום רמה 
-                    if (fMichsaYomit126 > 0)
+                    if (fMichsaYomit126 > 0 && fNochechtLeTashlum>0)
                     {
                         oSidur.CalcRechiv22();
                         if (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
@@ -3293,6 +3294,23 @@ namespace KdsBatch
             }
         }
 
+        public void CalcRechiv73()
+        {
+            float fErech;
+            try
+            {
+                oSidur.CalcRechiv73();
+                fErech = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Taarich); 
+                if (fErech >0)
+                    addRowToTable(clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), 1);
+
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YomShlichutBeChul.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
 
         private float CalcHeadruyot(int iKodRechiv)
         {
@@ -4604,53 +4622,54 @@ namespace KdsBatch
         public void CalcRechiv126(DateTime dTaarich)
         {
             //מכסה יומית מחושבת רכיב 126 
-            int iSugYom, iSugMishmeret, iSugYomLemichsa, iMeafyen1;
+            int iSugYom, iSugMishmeret, iMeafyen1, iSugYomLemichsa;
             DataRow[] rowSidurim;
             float fErechRechiv = 0;
             iSugYomLemichsa = 0;
-            bool flag = false;
+           // bool flag = false;
             objOved.Taarich = dTaarich;
 
             try
             {
+                iSugYom = 0;
+                fErechRechiv = oCalcBL.getMichsaYomit(objOved, ref iSugYom);
 
-                fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa); 
+                //fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
 
+                //iSugYom = iSugYomLemichsa;
+                //if (iSugYom == clGeneral.enSugYom.Purim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
+                //{
+                //    if (!oCalcBL.CheckYomShishi(iSugYom))
+                //    {
+                //        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
+                //        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                //    }
+                //    else
+                //    {
+                //        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
+                //        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                //    }
+                //}
 
-                iSugYom = iSugYomLemichsa;
-                if (iSugYom == clGeneral.enSugYom.Purim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
-                {
-                    if (!oCalcBL.CheckYomShishi(iSugYom))
-                    {
-                        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa ); 
-                    }
-                    else
-                    {
-                        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa); 
-                    }
-                }
+                //if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
+                //{
+                //    iSugYomLemichsa = clGeneral.enSugYom.Purim.GetHashCode();
+                //    fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                //}
 
-                if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor == clGeneral.enEzor.Yerushalim.GetHashCode())
-                {
-                    iSugYomLemichsa = clGeneral.enSugYom.Purim.GetHashCode();
-                    fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
-                }
-
-                if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor != clGeneral.enEzor.Yerushalim.GetHashCode())
-                {
-                    if (!oCalcBL.CheckYomShishi(iSugYom))
-                    {
-                        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
-                    }
-                    else
-                    {
-                        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
-                        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
-                    }
-                }
+                //if (iSugYom == clGeneral.enSugYom.ShushanPurim.GetHashCode() && objOved.objPirteyOved.iEzor != clGeneral.enEzor.Yerushalim.GetHashCode())
+                //{
+                //    if (!oCalcBL.CheckYomShishi(iSugYom))
+                //    {
+                //        iSugYomLemichsa = clGeneral.enSugYom.Chol.GetHashCode();
+                //        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                //    }
+                //    else
+                //    {
+                //        iSugYomLemichsa = clGeneral.enSugYom.Shishi.GetHashCode();
+                //        fErechRechiv = oCalcBL.GetMichsaYomit(objOved, ref iSugYomLemichsa);
+                //    }
+                //}
 
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30))
                 {
@@ -7632,13 +7651,13 @@ namespace KdsBatch
         public void ChishuvEmptyYemeyAvoda(clGeneral.enRechivim iKodRechiv, bool bBefore)
         {
             DateTime taarich_me, taarich_ad;
-            float fMichsatYom=0,fErechRechiv;
+            float fMichsatYom = 0, fErechRechiv, fMichsatYomit;
             int sug_yom;
             clMeafyenyOved objMeafyeneyOved= null;
             try
             {
                
-                if (iKodRechiv == clGeneral.enRechivim.MichsaYomitMechushevet || iKodRechiv == clGeneral.enRechivim.DakotHeadrut)
+                if (iKodRechiv == clGeneral.enRechivim.DakotHeadrut)
                 {
                     if (bBefore)
                         taarich_me = objOved.dTchilatAvoda;
@@ -7675,9 +7694,9 @@ namespace KdsBatch
                 while (taarich_me < taarich_ad)
                 {
                     sug_yom = clGeneral.GetSugYom(objOved.oGeneralData.dtYamimMeyuchadim, taarich_me, objOved.oGeneralData.dtSugeyYamimMeyuchadim);
-                    if (sug_yom != clGeneral.enSugYom.Shishi.GetHashCode() &&
+                    if ((sug_yom != clGeneral.enSugYom.Shishi.GetHashCode() &&
                         !clDefinitions.CheckShaaton(objOved.oGeneralData.dtSugeyYamimMeyuchadim, sug_yom, taarich_me) &&
-                        !oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, sug_yom))
+                        !oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, sug_yom)) || iKodRechiv == clGeneral.enRechivim.MichsaYomitMechushevet)
                     {
                         switch (iKodRechiv)
                         {
@@ -7685,7 +7704,9 @@ namespace KdsBatch
                                 addRowToTable(iKodRechiv.GetHashCode(), taarich_me, 1);
                                 break;
                             case clGeneral.enRechivim.MichsaYomitMechushevet:
-                                addRowToTable(iKodRechiv.GetHashCode(), taarich_me, fMichsatYom);
+                                objOved.Taarich = taarich_me;
+                                fMichsatYomit = oCalcBL.getMichsaYomit(objOved);
+                                addRowToTable(iKodRechiv.GetHashCode(), taarich_me, fMichsatYomit);
                                 break;
                             case clGeneral.enRechivim.DakotHeadrut:
                                 fErechRechiv = fMichsatYom;
