@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("KdsService")]
 [assembly: AssemblyDescription("")]
-#if  DEBUG 
-[assembly: AssemblyConfiguration("Debug")]
-#else 
+//#if DEBUG
+//[assembly: AssemblyConfiguration("Debug")]
+//#else
 [assembly: AssemblyConfiguration("Release")]
-#endif
+//#endif
 [assembly: AssemblyCompany("EGGED")]
 [assembly: AssemblyProduct("KdsService")]
 [assembly: AssemblyCopyright("Copyright © EGGED 2010")]
