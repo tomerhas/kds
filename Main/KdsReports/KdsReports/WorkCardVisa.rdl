@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>23.17051cm</Height>
+              <Height>23.06467cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2583,7 +2583,7 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                               </Paragraphs>
                               <rd:DefaultName>Textbox8</rd:DefaultName>
                               <Top>9.0091cm</Top>
-                              <Left>0.03662cm</Left>
+                              <Left>0.01725cm</Left>
                               <Height>0.6cm</Height>
                               <Width>19.4808cm</Width>
                               <ZIndex>8</ZIndex>
@@ -2611,6 +2611,136 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
                             </Border>
                           </Style>
                         </Rectangle>
+                        <Tablix Name="Tablix11">
+                          <TablixBody>
+                            <TablixColumns>
+                              <TablixColumn>
+                                <Width>19.32007cm</Width>
+                              </TablixColumn>
+                            </TablixColumns>
+                            <TablixRows>
+                              <TablixRow>
+                                <Height>0.33542cm</Height>
+                                <TablixCells>
+                                  <TablixCell>
+                                    <CellContents>
+                                      <Rectangle Name="Rectangle2">
+                                        <ReportItems>
+                                          <Textbox Name="S_LIST">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!S_LIST.Value</Value>
+                                                    <Style>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>S_LIST</rd:DefaultName>
+                                            <Left>0.03529cm</Left>
+                                            <Height>0.33542cm</Height>
+                                            <Width>17.63837cm</Width>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                          <Textbox Name="Textbox18">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>:מספרי רכב</Value>
+                                                    <Style>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                      <TextDecoration>Underline</TextDecoration>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Right</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox16</rd:DefaultName>
+                                            <Left>17.70894cm</Left>
+                                            <Height>0.33542cm</Height>
+                                            <Width>1.61113cm</Width>
+                                            <ZIndex>1</ZIndex>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <PaddingLeft>2pt</PaddingLeft>
+                                              <PaddingRight>2pt</PaddingRight>
+                                              <PaddingTop>2pt</PaddingTop>
+                                              <PaddingBottom>2pt</PaddingBottom>
+                                            </Style>
+                                          </Textbox>
+                                        </ReportItems>
+                                        <KeepTogether>true</KeepTogether>
+                                        <Style>
+                                          <Border>
+                                            <Style>None</Style>
+                                          </Border>
+                                        </Style>
+                                      </Rectangle>
+                                    </CellContents>
+                                  </TablixCell>
+                                </TablixCells>
+                              </TablixRow>
+                            </TablixRows>
+                          </TablixBody>
+                          <TablixColumnHierarchy>
+                            <TablixMembers>
+                              <TablixMember />
+                            </TablixMembers>
+                          </TablixColumnHierarchy>
+                          <TablixRowHierarchy>
+                            <TablixMembers>
+                              <TablixMember>
+                                <Group Name="Details1">
+                                  <GroupExpressions>
+                                    <GroupExpression>=Fields!MISPAR_SIDUR.Value</GroupExpression>
+                                    <GroupExpression>=Fields!SHAT_HATCHALA.Value</GroupExpression>
+                                    <GroupExpression>=Fields!SHAT_GMAR.Value</GroupExpression>
+                                  </GroupExpressions>
+                                </Group>
+                              </TablixMember>
+                            </TablixMembers>
+                          </TablixRowHierarchy>
+                          <DataSetName>dsListOto</DataSetName>
+                          <Top>10.79682cm</Top>
+                          <Left>0.42015cm</Left>
+                          <Height>0.33542cm</Height>
+                          <Width>19.32007cm</Width>
+                          <ZIndex>15</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif(Fields!S_LIST.Value &lt;&gt; "",false  ,true )</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Tablix>
                       </ReportItems>
                       <KeepTogether>true</KeepTogether>
                       <Style>
@@ -2651,7 +2781,8 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsSidurimVePeiluyot</DataSetName>
-        <Height>23.17051cm</Height>
+        <Left>0.19422cm</Left>
+        <Height>23.06467cm</Height>
         <Width>20.05362cm</Width>
         <Style>
           <Border>
@@ -2660,12 +2791,12 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>9.12225in</Height>
+    <Height>9.2543in</Height>
     <Style>
       <Border />
     </Style>
   </Body>
-  <Width>7.89513in</Width>
+  <Width>7.97159in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -2793,6 +2924,10 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
           <DataField>HAMARAT_SHABAT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="S_LIST">
+          <DataField>S_LIST</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
     <DataSet Name="dsParam">
@@ -2842,6 +2977,30 @@ Previous(Fields!SHAT_GMAR.Value) = Fields!SHAT_GMAR.Value,"",Fields!MISPAR_SIDUR
         </Field>
         <Field Name="ERECH_PARAM">
           <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsListOto">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TYPE">
+            <Value>5</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_LIST_RISHUY_RECHEV</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="S_LIST">
+          <DataField>S_LIST</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

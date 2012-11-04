@@ -345,7 +345,7 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>1.70587cm</Top>
-            <Left>5.23113cm</Left>
+            <Left>4.99778cm</Left>
             <Height>0.92476cm</Height>
             <Width>14.37325cm</Width>
             <Style>
@@ -704,7 +704,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -765,7 +764,7 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.80233cm</Top>
-            <Left>5.23113cm</Left>
+            <Left>4.99778cm</Left>
             <Height>0.92476cm</Height>
             <Width>11.80798cm</Width>
             <ZIndex>1</ZIndex>
@@ -1108,7 +1107,7 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>4.8682cm</Top>
-            <Left>5.23113cm</Left>
+            <Left>4.99778cm</Left>
             <Height>0.92476cm</Height>
             <Width>6.87637cm</Width>
             <ZIndex>2</ZIndex>
@@ -1225,7 +1224,7 @@
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.80233cm</Top>
-            <Left>17.28431cm</Left>
+            <Left>17.05096cm</Left>
             <Height>0.92476cm</Height>
             <Width>2.31999cm</Width>
             <ZIndex>3</ZIndex>
@@ -1574,7 +1573,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>2.73646cm</Top>
-            <Left>5.23113cm</Left>
+            <Left>4.99778cm</Left>
             <Height>0.92476cm</Height>
             <Width>14.37322cm</Width>
             <ZIndex>4</ZIndex>
@@ -1650,7 +1649,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>2.7937cm</Top>
-            <Left>0.33596cm</Left>
+            <Left>0.10261cm</Left>
             <Height>0.47546cm</Height>
             <Width>4.65305cm</Width>
             <ZIndex>5</ZIndex>
@@ -1729,7 +1728,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>3.33972cm</Top>
-            <Left>0.33596cm</Left>
+            <Left>0.10261cm</Left>
             <Height>0.47546cm</Height>
             <Width>4.65305cm</Width>
             <ZIndex>6</ZIndex>
@@ -1761,7 +1760,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>3.9563cm</Top>
-            <Left>0.34536cm</Left>
+            <Left>0.11201cm</Left>
             <Height>0.37057cm</Height>
             <Width>4.65306cm</Width>
             <ZIndex>7</ZIndex>
@@ -1800,7 +1799,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>4.39743cm</Top>
-            <Left>0.3704cm</Left>
+            <Left>0.13705cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.62802cm</Width>
             <ZIndex>8</ZIndex>
@@ -1839,7 +1838,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>4.85673cm</Top>
-            <Left>0.34536cm</Left>
+            <Left>0.11201cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.64365cm</Width>
             <ZIndex>9</ZIndex>
@@ -1878,7 +1877,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>5.28075cm</Top>
-            <Left>0.34536cm</Left>
+            <Left>0.11201cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.65306cm</Width>
             <ZIndex>10</ZIndex>
@@ -1917,7 +1916,7 @@ iif(Trim(Fields!SHAT_HITIATZVUT_A.Value) = "" and Fields!PTOR_A.Value = 1,"פט�
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>5.6695cm</Top>
-            <Left>0.39544cm</Left>
+            <Left>0.16209cm</Left>
             <Height>0.31819cm</Height>
             <Width>4.62802cm</Width>
             <ZIndex>11</ZIndex>
@@ -2965,7 +2964,6 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <LayoutDirection>RTL</LayoutDirection>
             <DataSetName>dsSidurimVePeiluyot</DataSetName>
             <Top>6.09352cm</Top>
-            <Left>0.09187in</Left>
             <Height>0.81773cm</Height>
             <Width>19.41429cm</Width>
             <ZIndex>12</ZIndex>
@@ -2980,7 +2978,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Value>logo1</Value>
             <Sizing>FitProportional</Sizing>
             <Top>0.06717in</Top>
-            <Left>18.10437cm</Left>
+            <Left>17.87102cm</Left>
             <Height>1.42944cm</Height>
             <Width>1.5cm</Width>
             <ZIndex>13</ZIndex>
@@ -3017,7 +3015,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>0.18954cm</Top>
-            <Left>5.92314cm</Left>
+            <Left>5.68979cm</Left>
             <Height>0.59972cm</Height>
             <Width>9.83447cm</Width>
             <ZIndex>14</ZIndex>
@@ -3033,7 +3031,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Value>Logo_E_T</Value>
             <Sizing>FitProportional</Sizing>
             <Top>0.06717in</Top>
-            <Left>17.90955cm</Left>
+            <Left>17.6762cm</Left>
             <Height>1.46472cm</Height>
             <Width>1.69477cm</Width>
             <ZIndex>15</ZIndex>
@@ -3070,7 +3068,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>0.96565cm</Top>
-            <Left>5.92314cm</Left>
+            <Left>5.68979cm</Left>
             <Height>0.59911cm</Height>
             <Width>9.83447cm</Width>
             <ZIndex>16</ZIndex>
@@ -3102,7 +3100,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </Paragraphs>
             <rd:DefaultName>Textbox12</rd:DefaultName>
             <Top>2.42833cm</Top>
-            <Left>0.15568in</Left>
+            <Left>0.06381in</Left>
             <Height>0.22425cm</Height>
             <Width>4.65931cm</Width>
             <ZIndex>17</ZIndex>
@@ -3137,7 +3135,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               </Paragraph>
             </Paragraphs>
             <Top>2.16825cm</Top>
-            <Left>0.37041cm</Left>
+            <Left>0.13706cm</Left>
             <Height>0.2248cm</Height>
             <Width>4.65305cm</Width>
             <ZIndex>18</ZIndex>
@@ -3156,7 +3154,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             <Value>=Parameters!P_URL_BARCODE.Value</Value>
             <Sizing>FitProportional</Sizing>
             <Top>0.07431cm</Top>
-            <Left>1.56388cm</Left>
+            <Left>1.33053cm</Left>
             <Height>2.05866cm</Height>
             <Width>2.41392cm</Width>
             <ZIndex>19</ZIndex>
@@ -3427,7 +3425,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </TablixRowHierarchy>
             <DataSetName>dsPirteyOved</DataSetName>
             <Top>4.8682cm</Top>
-            <Left>12.28397cm</Left>
+            <Left>12.05062cm</Left>
             <Height>0.92476cm</Height>
             <Width>7.32043cm</Width>
             <ZIndex>20</ZIndex>
@@ -3453,7 +3451,7 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
             <Top>0.89134cm</Top>
-            <Left>0.39544cm</Left>
+            <Left>0.16209cm</Left>
             <Height>0.6cm</Height>
             <Width>0.83138cm</Width>
             <ZIndex>21</ZIndex>
@@ -3470,11 +3468,136 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Tablix Name="Tablix10">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>19.32007cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.37069cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Rectangle Name="Rectangle2">
+                          <ReportItems>
+                            <Textbox Name="S_LIST">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!S_LIST.Value</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>S_LIST</rd:DefaultName>
+                              <Left>0.00001cm</Left>
+                              <Height>0.33542cm</Height>
+                              <Width>17.63837cm</Width>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox16">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>:מספרי רכב</Value>
+                                      <Style>
+                                        <FontSize>8pt</FontSize>
+                                        <FontWeight>Bold</FontWeight>
+                                        <TextDecoration>Underline</TextDecoration>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox16</rd:DefaultName>
+                              <Left>17.70894cm</Left>
+                              <Height>0.33542cm</Height>
+                              <Width>1.61113cm</Width>
+                              <ZIndex>1</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                          </ReportItems>
+                          <KeepTogether>true</KeepTogether>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Rectangle>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>dsListOto</DataSetName>
+            <Top>7.05236cm</Top>
+            <Left>0.09422cm</Left>
+            <Height>0.37069cm</Height>
+            <Width>19.32007cm</Width>
+            <ZIndex>22</ZIndex>
+            <Visibility>
+              <Hidden>=iif(Fields!S_LIST.Value &lt;&gt; "" and Sum(Fields!MISPAR_SIDUR.Value, "dsSidurimVePeiluyot") ,false  ,true )</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>0.15566cm</Top>
-        <Height>6.91125cm</Height>
-        <Width>19.64764cm</Width>
+        <Left>0.23335cm</Left>
+        <Height>7.42306cm</Height>
+        <Width>19.48215cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3486,14 +3609,14 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>2.78225in</Height>
+    <Height>2.98375in</Height>
     <Style>
       <Border>
         <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>7.73529in</Width>
+  <Width>7.76201in</Width>
   <Page>
     <PageHeight>28cm</PageHeight>
     <PageWidth>21cm</PageWidth>
@@ -3808,6 +3931,32 @@ and (Fields!MAKAT_NESIA.Value&gt;0 andalso Left(Fields!MAKAT_NESIA.Value.ToStrin
         </Field>
         <Field Name="ERECH_PARAM">
           <DataField>ERECH_PARAM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsListOto">
+      <Query>
+        <DataSourceName>DsWorkCard</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_TAARICH">
+            <Value>=Parameters!P_TAARICH.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="P_MISPAR_ISHI">
+            <Value>=Parameters!P_MISPAR_ISHI.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_TYPE">
+            <Value>1</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_LIST_RISHUY_RECHEV</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="S_LIST">
+          <DataField>S_LIST</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
