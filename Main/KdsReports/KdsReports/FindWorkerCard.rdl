@@ -1,264 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="KdsConnection">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>e15a87bf-ad60-49e5-a1fd-840e45f7525d</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DsWorker_Card">
-      <Fields>
-        <Field Name="MISPARISHI">
-          <DataField>MISPARISHI</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MAKAT_NESIA">
-          <DataField>MAKAT_NESIA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_YETZIA">
-          <DataField>SHAT_YETZIA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_KNISA">
-          <DataField>MISPAR_KNISA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OTO_NO">
-          <DataField>OTO_NO</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SNIF_AV">
-          <DataField>TEUR_SNIF_AV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SNIF_TNUA">
-          <DataField>SNIF_TNUA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="FULL_NAME">
-          <DataField>FULL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CHARIGA">
-          <DataField>CHARIGA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="HASHLAMA">
-          <DataField>HASHLAMA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="OUT_MICHSA">
-          <DataField>OUT_MICHSA</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="MEADKEN_ACHARON">
-          <DataField>MEADKEN_ACHARON</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_EZOR">
-          <DataField>TEUR_EZOR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MISPAR_SIDUR">
-          <DataField>MISPAR_SIDUR</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="TAARICH">
-          <DataField>TAARICH</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="DAYOFWEEK">
-          <DataField>DAYOFWEEK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_SIDUR_MEYCHAD">
-          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_MAAMAD_HR">
-          <DataField>TEUR_MAAMAD_HR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="TEUR_ISUK">
-          <DataField>TEUR_ISUK</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BUS_NUMBER">
-          <DataField>BUS_NUMBER</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="LICENSE_NUMBER">
-          <DataField>LICENSE_NUMBER</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="ACTIVITY_DATE">
-          <DataField>ACTIVITY_DATE</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="MAKAT8">
-          <DataField>MAKAT8</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="DESCRIPTION">
-          <DataField>DESCRIPTION</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHILUT">
-          <DataField>SHILUT</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="MAZAN_TASHLUM">
-          <DataField>MAZAN_TASHLUM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KM">
-          <DataField>KM</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="NIHUL_NAME">
-          <DataField>NIHUL_NAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>KdsConnection</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.PRO_GET_FIND_WORKER_CARD</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_STARTDATE">
-            <Value>=Parameters!P_STARTDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_ENDDATE">
-            <Value>=Parameters!P_ENDDATE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MAKAT">
-            <Value>=Parameters!P_MAKAT.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SIDURNUMBER">
-            <Value>=Parameters!P_SIDURNUMBER.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_CARNUMBER">
-            <Value>=Parameters!P_CARNUMBER.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF">
-            <Value>=Parameters!P_SNIF.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_WORKSTATION">
-            <Value>=Parameters!P_WORKSTATION.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_WORKERID">
-            <Value>=Parameters!P_WORKERID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_DAYTYPE">
-            <Value>=Parameters!P_DAYTYPE.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SNIF_MASHAR">
-            <Value>=Parameters!P_SNIF_MASHAR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_RISHUYCAR">
-            <Value>=Parameters!P_RISHUYCAR.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_SECTORISUK">
-            <Value>=Parameters!P_SECTORISUK.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_COMPANYID">
-            <Value>=Parameters!P_COMPANYID.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_MAMAD">
-            <Value>=Parameters!P_MAMAD.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_EZOR">
-            <Value>=Parameters!P_EZOR.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-          <QueryParameter Name="P_ISUK">
-            <Value>=Parameters!P_ISUK.Value</Value>
-            <rd:UserDefined>true</rd:UserDefined>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.54675in</Width>
+              <Width>1.38874cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.30717in</Width>
+              <Width>0.78021cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.28634in</Width>
+              <Width>0.7273cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.36732in</Width>
+              <Width>0.93299cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.21341in</Width>
+              <Width>0.54206cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.67175in</Width>
+              <Width>4.24625cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.56759in</Width>
+              <Width>1.44168cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.38008in</Width>
+              <Width>0.9654cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.42175in</Width>
+              <Width>1.07124cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.13292in</Width>
+              <Width>0.33762cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.15883in</Width>
+              <Width>0.40343cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.13283in</Width>
+              <Width>0.33739cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.41134in</Width>
+              <Width>1.0448cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.41916in</Width>
+              <Width>1.06467cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.44259in</Width>
+              <Width>1.12418cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.73425in</Width>
+              <Width>1.86499cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93242in</Width>
+              <Width>2.36835cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.78633in</Width>
+              <Width>1.99728cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.58842in</Width>
+              <Width>1.49459cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79675in</Width>
+              <Width>2.02374cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.7874in</Height>
+              <Height>2cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -301,7 +111,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -361,7 +171,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -519,7 +329,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.43414in</Height>
+              <Height>1.10272cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1261,7 +1071,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1928,7 +1738,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2100,8 +1910,8 @@
         <DataSetName>DsWorker_Card</DataSetName>
         <Top>0.12383cm</Top>
         <Left>0.06811cm</Left>
-        <Height>5.50272cm</Height>
-        <Width>26.15691cm</Width>
+        <Height>5.50271cm</Height>
+        <Width>26.15692cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsWorker_Card")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -2128,6 +1938,207 @@
     <Height>2.44771in</Height>
     <Style />
   </Body>
+  <Width>10.37602in</Width>
+  <Page>
+    <PageHeight>21cm</PageHeight>
+    <PageWidth>29.7cm</PageWidth>
+    <TopMargin>2cm</TopMargin>
+    <BottomMargin>2cm</BottomMargin>
+    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="KdsConnection">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>e15a87bf-ad60-49e5-a1fd-840e45f7525d</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DsWorker_Card">
+      <Query>
+        <DataSourceName>KdsConnection</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_STARTDATE">
+            <Value>=Parameters!P_STARTDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_ENDDATE">
+            <Value>=Parameters!P_ENDDATE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MAKAT">
+            <Value>=Parameters!P_MAKAT.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SIDURNUMBER">
+            <Value>=Parameters!P_SIDURNUMBER.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_CARNUMBER">
+            <Value>=Parameters!P_CARNUMBER.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF">
+            <Value>=Parameters!P_SNIF.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKSTATION">
+            <Value>=Parameters!P_WORKSTATION.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_WORKERID">
+            <Value>=Parameters!P_WORKERID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_DAYTYPE">
+            <Value>=Parameters!P_DAYTYPE.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SNIF_MASHAR">
+            <Value>=Parameters!P_SNIF_MASHAR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_RISHUYCAR">
+            <Value>=Parameters!P_RISHUYCAR.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_SECTORISUK">
+            <Value>=Parameters!P_SECTORISUK.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_COMPANYID">
+            <Value>=Parameters!P_COMPANYID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_MAMAD">
+            <Value>=Parameters!P_MAMAD.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="P_EZOR">
+            <Value>=Parameters!P_EZOR.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="P_ISUK">
+            <Value>=Parameters!P_ISUK.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.PRO_GET_FIND_WORKER_CARD</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPARISHI">
+          <DataField>MISPARISHI</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAKAT_NESIA">
+          <DataField>MAKAT_NESIA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_YETZIA">
+          <DataField>SHAT_YETZIA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_KNISA">
+          <DataField>MISPAR_KNISA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="OTO_NO">
+          <DataField>OTO_NO</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SNIF_AV">
+          <DataField>TEUR_SNIF_AV</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SNIF_TNUA">
+          <DataField>SNIF_TNUA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FULL_NAME">
+          <DataField>FULL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CHARIGA">
+          <DataField>CHARIGA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HASHLAMA">
+          <DataField>HASHLAMA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="OUT_MICHSA">
+          <DataField>OUT_MICHSA</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MEADKEN_ACHARON">
+          <DataField>MEADKEN_ACHARON</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_EZOR">
+          <DataField>TEUR_EZOR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MISPAR_SIDUR">
+          <DataField>MISPAR_SIDUR</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="TAARICH">
+          <DataField>TAARICH</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DAYOFWEEK">
+          <DataField>DAYOFWEEK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_SIDUR_MEYCHAD">
+          <DataField>TEUR_SIDUR_MEYCHAD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_MAAMAD_HR">
+          <DataField>TEUR_MAAMAD_HR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TEUR_ISUK">
+          <DataField>TEUR_ISUK</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BUS_NUMBER">
+          <DataField>BUS_NUMBER</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="LICENSE_NUMBER">
+          <DataField>LICENSE_NUMBER</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ACTIVITY_DATE">
+          <DataField>ACTIVITY_DATE</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MAKAT8">
+          <DataField>MAKAT8</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DESCRIPTION">
+          <DataField>DESCRIPTION</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHILUT">
+          <DataField>SHILUT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAZAN_TASHLUM">
+          <DataField>MAZAN_TASHLUM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KM">
+          <DataField>KM</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="NIHUL_NAME">
+          <DataField>NIHUL_NAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
@@ -2245,15 +2256,6 @@
       <Prompt>P_ISUK</Prompt>
     </ReportParameter>
   </ReportParameters>
-  <Width>10.37602in</Width>
-  <Page>
-    <PageHeight>21cm</PageHeight>
-    <PageWidth>29.7cm</PageWidth>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
-  </Page>
   <EmbeddedImages>
     <EmbeddedImage Name="logo1">
       <MIMEType>image/jpeg</MIMEType>
@@ -2264,6 +2266,6 @@ FtPbSyym2m8sGABAgCEEAAL0OOabe+HLbU7a8tr+4ubm2udp8qQqFiK9CmFBHT1P6miinyoOVGrDDHbw
     </EmbeddedImage>
   </EmbeddedImages>
   <Language>he-IL</Language>
-  <rd:ReportID>07e309fa-3d23-4a8f-9128-feb45870b092</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>07e309fa-3d23-4a8f-9128-feb45870b092</rd:ReportID>
 </Report>

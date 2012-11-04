@@ -14,7 +14,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.46772cm</Height>
+              <Height>0.67939cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -85,7 +85,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.42019cm</Size>
+                <Size>1.56836cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox1">
                     <CanGrow>true</CanGrow>
@@ -134,7 +134,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.42019cm</Size>
+                    <Size>1.56836cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -209,8 +209,11 @@
             <Value>=Fields!TEUR_RECHIV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Height>1.88791cm</Height>
+        <Height>2.24774cm</Height>
         <Width>2.45996cm</Width>
+        <Visibility>
+          <Hidden>=iif(CountRows("DsRechivim") =0 , False,True)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -218,11 +221,41 @@
           <TextAlign>Center</TextAlign>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=iif(CountRows("DsRechivim") =0 , "","לא נמצאו נתונים")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.81703cm</Top>
+        <Left>0.27517cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.16887cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>0.74328in</Height>
+    <Height>0.88494in</Height>
     <Style />
   </Body>
-  <Width>0.96849in</Width>
+  <Width>1.35592in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>19cm</PageWidth>
