@@ -293,7 +293,7 @@
     }
     function RefreshBtn() {      
         $get("hidRefresh").value = "1";       
-        //EnabledAllFrames(true);
+        EnabledAllFrames(true);
         return true;
     }
     function CloseChgBtn(){
