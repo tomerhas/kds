@@ -40,6 +40,7 @@ namespace KdsLibrary.Security
         }
         internal bool IsModulesListExists
         {
+
             get { return _modules != null; }
         }
 

@@ -89,7 +89,7 @@
                     <td style="width: 1%"><img src="../../Images/!.png" ondblclick="GetErrorMessage(txtId,1,'');" runat="server" id="imgIdErr"/></td>
                     <td style="width: 7%">                                                                                      
                         <asp:TextBox ID="txtId" runat="server" CssClass="WorkCardTextBox" AutoComplete="Off" 
-                            dir="rtl" Style="width: 50px;" TabIndex="1"></asp:TextBox>
+                            dir="rtl" Style="width: 50px;" TabIndex="1" ></asp:TextBox>
                         <cc1:AutoCompleteExtender ID="AutoCompleteExtenderID" runat="server" CompletionInterval="0" 
                             CompletionSetCount="25" UseContextKey="true" TargetControlID="txtId" MinimumPrefixLength="1"
                             ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx"
