@@ -1910,8 +1910,8 @@
         <DataSetName>DsWorker_Card</DataSetName>
         <Top>0.12383cm</Top>
         <Left>0.06811cm</Left>
-        <Height>5.50271cm</Height>
-        <Width>26.15692cm</Width>
+        <Height>5.50272cm</Height>
+        <Width>26.15691cm</Width>
         <Visibility>
           <Hidden>=iif(CountRows("DsWorker_Card")&gt;0 ,false ,true)</Hidden>
         </Visibility>
@@ -2142,20 +2142,10 @@
   <ReportParameters>
     <ReportParameter Name="P_STARTDATE">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("01/08/2010")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P STARTDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_ENDDATE">
       <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=CDate("31/08/2010")</Value>
-        </Values>
-      </DefaultValue>
       <Prompt>P ENDDATE</Prompt>
     </ReportParameter>
     <ReportParameter Name="P_MAKAT">
