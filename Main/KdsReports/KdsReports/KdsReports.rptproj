@@ -34,6 +34,10 @@
       <FullPath>AverageRechivValues.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>AverageSpecificRechivim.rdl</Name>
+      <FullPath>AverageSpecificRechivim.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Barcode.rdl</Name>
       <FullPath>Barcode.rdl</FullPath>
     </ProjectItem>
@@ -157,6 +161,10 @@
       <Name>RikuzAvodaChodshiOnLine2.rdl</Name>
       <FullPath>RikuzAvodaChodshiOnLine2.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>SpecificAverage.rdl</Name>
+      <FullPath>SpecificAverage.rdl</FullPath>
+    </ProjectItem>
     <ResourceProjectItem>
       <Name>Tiuta.bmp</Name>
       <FullPath>Tiuta.bmp</FullPath>
@@ -179,14 +187,6 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>AverageSpecificRechivim.rdl</Name>
-      <FullPath>AverageSpecificRechivim.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>SpecificAverage.rdl</Name>
-      <FullPath>SpecificAverage.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -195,7 +195,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
+        <TargetServerURL>http://kdsappl01/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
