@@ -211,7 +211,7 @@ namespace KdsBatch
               sErech += GetBlank(12);
 
               SetFooter();
-              if (bKayamEfreshBErua)
+              if (bKayamEfreshBErua || _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
                   iLastDigit = int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
                   _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);

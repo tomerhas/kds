@@ -467,7 +467,7 @@ namespace KdsBatch
                     while (oved.fmichsatYom == 0)
                     {
                         dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + d_taarich.ToShortDateString() + "', 'System.DateTime')");
-                        if (dr.Length > 0)
+                        if (dr.Length > 0 && float.Parse(dr[0]["ERECH_RECHIV"].ToString())>0)
                         {
                             oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
                             break;

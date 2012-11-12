@@ -8353,7 +8353,7 @@ namespace KdsBatch
 
         public float GetSumShaotShabat100(ref float fDakotShabat)
         {
-            float fDakotNochehutSidur, fMichsaYomit, fErech = 0;
+            float fDakotNochehutSidur, fDakotNochechut,fMichsaYomit, fErech = 0;
             DataRow[] _drSidurim;
             int iMisparSidur;
             DateTime dShatSiyum, dTemp, dShatHatchala, dShatHatchalaLetashlum, dShatGmarLetashlum;
@@ -8364,8 +8364,9 @@ namespace KdsBatch
                 if (oCalcBL.CheckYomShishi(objOved.SugYom) || oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, objOved.SugYom))
                 {
                     fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);
+                    fDakotNochechut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
 
-                    if (fMichsaYomit > 0)
+                    if (fMichsaYomit > 0 && fDakotNochechut>0)
                     {
                         
                         _drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");

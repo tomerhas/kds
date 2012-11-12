@@ -168,15 +168,15 @@
         if (document.getElementById("clnEndDateHeadrut").value != "__/__/____")
     {
         //        if (Page_ClientValidate()) {
-     //   debugger;
+        debugger;
             ValidatorEnable(document.all("vldStartTime"), false);
             ValidatorEnable(document.all("vldEndTime"), false);
 
             //             if (Page_ClientValidate("vldHeadrut")) {
             var dCardDate = new Date(Number(DateCard.substr(6, 4)), Number(DateCard.substr(3, 2)) - 1, Number(DateCard.substr(0, 2)), 0, 0);
             var dSidurDate = new Date(Number(document.getElementById("clnEndDateHeadrut").value.substr(6, 4)), Number(document.getElementById("clnEndDateHeadrut").value.substr(3, 2)) - 1, Number(document.getElementById("clnEndDateHeadrut").value.substr(0, 2)), 0, 0);
-            dCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
-            dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth() + 1, dSidurDate.getDate(), 0, 0, 0);
+          //  dCardDate = Date.UTC(dCardDate.getFullYear(), dCardDate.getMonth() + 1, dCardDate.getDate(), 0, 0, 0);
+          //  dSidurDate = Date.UTC(dSidurDate.getFullYear(), dSidurDate.getMonth() + 1, dSidurDate.getDate(), 0, 0, 0);
 
             if (dSidurDate > 0 && dCardDate >= dSidurDate) {
                 ValidatorEnable(document.all("vldEndHeadrut"), true);

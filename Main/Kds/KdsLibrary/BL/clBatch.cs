@@ -185,6 +185,20 @@ namespace KdsLibrary.BL
             return iRequestId;
         }
 
+        public void DeleteRikuzimPdf(long lBakashaId)
+        {
+            clDal oDal = new clDal();
+            try
+            {   //פונקציה המחזירה ריצות חישוב
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
+                oDal.ExecuteSP(clGeneral.cProDeleteRikuzimPdf);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public DataTable GetPirteyRitzotChishuv(DateTime dTaarichMe, DateTime dTaarichAd, Boolean bGetAll)
         {
             clDal oDal = new clDal();

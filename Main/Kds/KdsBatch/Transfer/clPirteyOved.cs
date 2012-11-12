@@ -54,13 +54,13 @@ namespace KdsBatch
          //   InitializeErueyOved();
         }
 
-        public void InitializeErueyOved(DataTable dtDetailsChishuv,DataTable dtPrem)
+        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
         {
             _dtRechivim = dtDetailsChishuv;
             _dtRechiveyPrem = dtPrem;
             try
             {
-                _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()));
+                _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
                 if (iDirug == 85 && iDarga == 30)
                 {
                     if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
@@ -98,19 +98,30 @@ namespace KdsBatch
             }
         }
 
-        private DataTable GetChishuvYomiToOved(int iMisparIshi)
+        private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
         {
             DataTable dt = new DataTable();
             clDal oDal = new clDal();
-
+            DataRow[] rows;
             try
             {
-                oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, iBakashaIdRizatChishuv, ParameterDir.pdInput);
-                oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
-                oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dChodeshChishuv, ParameterDir.pdInput);
-                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
 
-                oDal.ExecuteSP(clDefinitions.cProGetChishuvYomiToOved, ref  dt);
+                rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi );
+                if (rows.Length > 0)
+                {
+                    dt = rows.CopyToDataTable();
+                }
+                else
+                {
+                    dt = dtRechivimYomiim.Clone();
+                }
+
+                //oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, iBakashaIdRizatChishuv, ParameterDir.pdInput);
+                //oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
+                //oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dChodeshChishuv, ParameterDir.pdInput);
+                //oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+
+                //oDal.ExecuteSP(clDefinitions.cProGetChishuvYomiToOved, ref  dt);
 
                 return dt;
             }

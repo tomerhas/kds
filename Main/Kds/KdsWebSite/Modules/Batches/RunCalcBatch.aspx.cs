@@ -67,7 +67,9 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
             }
             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
             dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dFrom = dFrom >= DateTime.Parse("01/07/2012") ? dFrom : DateTime.Parse("01/07/2012");
             dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
+          
             dt = objOvdim.GetWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
             for (i = 0; i < dt.Rows.Count; i++)
             {
@@ -120,6 +122,7 @@ public partial class Modules_Batches_RunCalcBatch : KdsPage
             }
             dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
             dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
+            dFrom = dFrom >= DateTime.Parse("01/07/2012") ? dFrom : DateTime.Parse("01/07/2012");
             dTo = (DateTime.Parse(ddlToMonth.SelectedValue)).AddMonths(1).AddDays(-1);
            iCount= objOvdim.GetCountWorkCardNoShaotLetashlum(dFrom, dTo, sMaamad);
            sMessage = "מספר כרטיסי עבודה עם שעת התחלה.גמר לתשלום חסרה: " + iCount;

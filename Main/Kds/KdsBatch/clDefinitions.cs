@@ -57,6 +57,7 @@ namespace KdsBatch
         public const string cProGetAllYameiAvoda = "pkg_batch.pro_get_all_yamei_avoda";
         public const string cProUpdCardStatus = "pkg_errors.pro_upd_card_status";
         public const string cProGetChishuvYomiToOved = "pkg_batch.pro_get_chishuv_yomi";
+        public const string cProGetRechivimChishuvYomi = "pkg_batch.pro_get_rechivim_chishuv_yomi";
         public const string cProDelChishuvAfterTransfer = "pkg_batch.pro_del_chishuv_after_transfer";
         public const string cProUpdStatusYameyAvoda = "pkg_batch.pro_upd_status_yamey_avoda";
         public const string cProUpdOvdimImShinuyHr = "Egd_Mafienim_New.Egd_Idkun_Ovdim_Im_Shinui";

@@ -43,7 +43,7 @@ namespace KdsBatch
        {
 
            int iMisparIshi, i, iMaamad, iMaamadRashi;
-           DataTable dtOvdim, dtRechivim, dtPrem;
+           DataTable dtOvdim, dtRechivim, dtPrem, dtRechivimYomi;
            DataSet dsNetunim;
            int iStatus = 0;
            string bDelete = ConfigurationSettings.AppSettings["DeleteTablesAfterTransfer"];
@@ -76,6 +76,7 @@ namespace KdsBatch
                {
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before GetOvdimToTransfer");
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
+                   dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after GetOvdimToTransfer");
                   
                    dtOvdim = dsNetunim.Tables[0];
@@ -102,7 +103,7 @@ namespace KdsBatch
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
                        _PirteyOved.Add(oPirteyOved);
 
                        objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
@@ -1524,6 +1525,28 @@ namespace KdsBatch
             {
                 clLogBakashot.SetError(_lBakashaId, "E", 0, "GetOvdimToTransfer: " + ex.Message);
                
+                throw ex;
+            }
+        }
+
+        private DataTable GetRechivimYomiim(long lBakashaId)
+        {
+            DataTable dt = new DataTable();
+            clDal oDal = new clDal();
+
+            try
+            {
+                oDal.AddParameter("p_request_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
+                oDal.AddParameter("p_Cur", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+          
+
+                oDal.ExecuteSP(clDefinitions.cProGetRechivimChishuvYomi, ref  dt);
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(_lBakashaId, 0, "E", 0, null, "GetRechivimYomiim: " + ex.Message);
                 throw ex;
             }
         }

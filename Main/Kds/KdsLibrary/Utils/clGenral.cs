@@ -62,6 +62,8 @@ namespace KdsLibrary
         public const string cProGetDetailsOvdimLeRikuzim = "pkg_batch.Pro_get_pirtey_ovdim_leRikuzim";
         public const string cProPrepareOvdimRikuzim = "pkg_batch.Pro_PrepareOvdimRikuzim";
         public const string cProGetEmailOvdimLeRikuzim = "pkg_batch.Pro_get_Email_Ovdim_LeRikuzim";
+        public const string cProDeleteRikuzimPdf = "pkg_batch.Pro_Delete_Rikuzim_Pdf";
+
 
         public const string cProPrepareYameiAvodaMeshek = "pkg_batch.Prepare_yamei_avoda_meshek";
         public const string cProPrepareYameiAvodaShinuiHr = "pkg_batch.Prepare_yamei_avoda_shinui_hr";

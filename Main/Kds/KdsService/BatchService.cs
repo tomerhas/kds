@@ -303,7 +303,8 @@ namespace KdsService
             string path, exfile, sArguments;
             FileInfo KdsRikuzims = null;
             int iStatus = 0;
-            bool result = false; 
+            bool result = false;
+            clBatch oBatch = new clBatch();
             try
             {
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "START");
@@ -314,6 +315,7 @@ namespace KdsService
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "KdsRikuzims will run from " + KdsRikuzims.FullName);
                 if (KdsRikuzims.Exists)
                 {
+                    oBatch.DeleteRikuzimPdf(iRequestIdForRikuzim);
                     result = _ClReport.GetProPrepareOvdimRikuzim(lRequestNum,iRequestIdForRikuzim, iCntProcesses);
                     sArguments = clGeneral.enCalcType.Rikuzim.GetHashCode() + " " + lRequestNum.ToString() + " " + iRequestIdForRikuzim.ToString();
                     iStatus = RunMultiProcesses(lRequestNum, KdsRikuzims, sArguments, iCntProcesses);
