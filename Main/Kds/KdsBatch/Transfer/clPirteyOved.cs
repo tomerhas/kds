@@ -71,8 +71,8 @@ namespace KdsBatch
                 else
                 {
                     oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-                    if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
-                        oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                 //   if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
+                 //       oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);
                 
                     oErua415 = new clErua415(iBakashaId, _drPirteyOved, _dtRechivim);
