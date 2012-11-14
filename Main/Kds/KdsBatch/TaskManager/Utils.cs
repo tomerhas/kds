@@ -211,7 +211,7 @@ namespace KdsBatch.TaskManager
             int iProcessRequest = 0;
             try
             {
-                iProcessRequest = oBatch.InsertProcessLog(13, 10, RecordStatus.Wait, "start RunCalculationPremyot", 0);
+                iProcessRequest = oBatch.InsertProcessLog(13, 8, RecordStatus.Wait, "start RunCalculationPremyot", 0);
                
                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro, "RunCalculationPremyot", -12);
                 wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
