@@ -13,18 +13,19 @@ namespace KdsBatch.History
     public class Builder
     {
         private string _fileName;
-        private char[] _delimeter;
+        private char _delimeter;
         public List<string[]> Items;
 
         public Builder() { }
 
-        public Builder(string filename,char[] del)
+        public Builder(string filename,char del)
         {
             _fileName = filename;
             _delimeter = del;
+            Items = new List<string[]>();
         }
 
-        private void Builder()
+        public void Build()
        {
 
            StreamReader reader;

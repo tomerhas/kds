@@ -33,7 +33,7 @@ namespace KdsBatch
           sStart.Append(_drPirteyOved["shem_mish"].ToString().PadLeft(10).Substring(0, 10));
           sStart.Append(_drPirteyOved["shem_prat"].ToString().PadLeft(7).Substring(0, 7));
           sStart.Append("000000");
-          sStart.Append(GetBlank(6));
+          sStart.Append(GetBlank(6)); 
           _sHeader = sStart.ToString();
 
       }
@@ -201,17 +201,26 @@ namespace KdsBatch
           int iLastDigit;
           bKayamEfreshBErua = false;
           string sErech = "";
+          bool flag =false;
           try
           {
               StringBuilder sErua413 = new StringBuilder();
 
               sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
+              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224" && sSaifHilan != "321")
+              {
+                  sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+                  sErua413.Append(_dMonth.Year.ToString());
+                  flag = true;
+              }
+              else sErua413.Append(GetBlank(6));
+             
               sErech = GetBlank(17);
               sErech += FormatNumber(fErech, iLen, iNumDigit);
               sErech += GetBlank(12);
 
               SetFooter();
-              if (bKayamEfreshBErua || _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+              if (bKayamEfreshBErua && !(flag))
               {
                   iLastDigit = int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
                   _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);

@@ -922,8 +922,12 @@ public partial class Modules_Test :Page
 
     protected void btnRefreshMakatim_Click(object sender, EventArgs e)
     {
-        KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+        string path = ConfigurationSettings.AppSettings["PathFileReports"];
+        path += "BZAY_201206011T_20121104090100.TXT";
+        KdsBatch.History.TaskDay oTask = new KdsBatch.History.TaskDay(path,';');
+        oTask.Run();
+        ///KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+        ///clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
         //clTkinutMakatim objMakat = new clTkinutMakatim();
        // objMakat.(DateTime.Parse(clnFromDate.Text));
 

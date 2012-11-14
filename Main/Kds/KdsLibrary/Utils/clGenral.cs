@@ -75,7 +75,11 @@ namespace KdsLibrary
         public const string cProDeleteBakashotYeziratRikuzim = "pkg_batch.DeleteBakashotYeziratRikuzim";
         public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv";
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
-        
+
+        public const string cProInsYameyAvodaHistory = "Pkg_Batch.Pro_Ins_Yamey_Avoda_History";
+        public const string cProInsSidurimOvdimHistory = "Pkg_Batch.Pro_Ins_Sidurim_Ovdim_History";
+        public const string cProInsPeilutOvdimHistory = "Pkg_Batch.Pro_Ins_Peilut_Ovdim_History";
+       
 #endregion 
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";

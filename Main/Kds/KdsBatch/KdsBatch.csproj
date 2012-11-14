@@ -135,7 +135,11 @@
     <Compile Include="Errors\MainErrors.cs" />
     <Compile Include="Errors\PeilutErrors.cs" />
     <Compile Include="Errors\SidurErrors.cs" />
+    <Compile Include="History\BaseTask.cs" />
     <Compile Include="History\Builder.cs" />
+    <Compile Include="History\TaskDay.cs" />
+    <Compile Include="History\TaskPeilut.cs" />
+    <Compile Include="History\TaskSidur.cs" />
     <Compile Include="HrWorkersChanges\clMain.cs" />
     <Compile Include="HrWorkersChanges\clManager.cs" />
     <Compile Include="HrWorkersChanges\ClPeriodOfID.cs" />

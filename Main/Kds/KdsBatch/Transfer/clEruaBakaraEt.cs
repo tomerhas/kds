@@ -68,7 +68,7 @@ namespace KdsBatch
               sBakaraEt.Append("000.00;");
               sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.PremyaRegila.GetHashCode(), "erech_rechiv_a"), 11, 2) + ";");
               sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a"), 7, 2) + ";");
-              sBakaraEt.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachPitzul.GetHashCode(), "erech_rechiv_a"), 3, 1) + ";");
+              sBakaraEt.Append(FormatNumberWithPoint(GetErechRechiv(clGeneral.enRechivim.SachPitzul.GetHashCode(), "erech_rechiv_a"), 3, 1) + ";");
               fErech = GetErechRechiv(clGeneral.enRechivim.ZmanLailaEgged.GetHashCode(), "erech_rechiv_a");
               fErech += GetErechRechiv(clGeneral.enRechivim.ZmanLailaChok.GetHashCode(), "erech_rechiv_a");
               sBakaraEt.Append(FormatNumberWithPoint((fErech/60), 5, 1) + ";");
