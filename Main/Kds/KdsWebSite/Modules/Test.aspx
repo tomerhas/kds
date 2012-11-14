@@ -148,6 +148,7 @@
                         <asp:Label id="lblTimeNoVisut" runat="server" ></asp:Label> ללא ויסות<br />
                          <asp:Label id="lblTimeWithVisut" runat="server"></asp:Label> כולל ויסות
                  </td> 
+                 
             </tr> 
             </table> 
             <table>   
@@ -163,11 +164,15 @@
                 </td>
                  <td>
                  <asp:Button ID="Button6" runat="server" onclick="Button6_Click" 
-                        Text="חישוב פרימיות" />
+                        Text="חישוב פרמיות" />
+
                  <asp:Button ID="ButtonShinuyim" runat="server" onclick="ButtonShinuyim_Click" 
                         Text="שגיאות" />
                  </td>    
-                 
+                  <td>
+                 <asp:Button ID="btnPremyot" runat="server"
+                        Text=" חדש - פרמיות חישוב" onclick="btnPremyot_Click"  />
+                 </td> 
                    <td>
                  <asp:Button ID="btnMakat" runat="server" onclick="btnMakat_Click" 
                         Text="תקינות  מקטים" />

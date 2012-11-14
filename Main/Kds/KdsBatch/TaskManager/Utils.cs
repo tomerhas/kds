@@ -201,5 +201,45 @@ namespace KdsBatch.TaskManager
                 clGeneral.LogError(ex);
             }
         }
+
+        public void RunCalculationPremyot()
+        {
+            bool bSuccess = false;
+            clBatch oBatch = new clBatch();
+            premyot.wsPremyot wsPremyot = new premyot.wsPremyot();
+            long lRequestNum = 0;
+            int iProcessRequest = 0;
+            try
+            {
+                iProcessRequest = oBatch.InsertProcessLog(13, 10, RecordStatus.Wait, "start RunCalculationPremyot", 0);
+               
+                lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro, "RunCalculationPremyot", -12);
+                wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
+                wsPremyot.Timeout = 1000000000; 
+                bSuccess = wsPremyot.CalcPremyotNihulTnua();
+
+                if (bSuccess)
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
+                else
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
+
+                oBatch.UpdateProcessLog(iProcessRequest, RecordStatus.Finish, "end RunCalculationPremyot",0);
+         
+            }
+            catch (Exception ex)
+            {
+                if (lRequestNum > 0)
+                {
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, ex.Message);
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
+                else clGeneral.LogError(ex);
+                throw (ex);
+            }
+            finally
+            {
+                wsPremyot.Dispose();
+            }
+        }
     }
 }

@@ -196,6 +196,11 @@
     <Compile Include="Transfer\clErua589.cs" />
     <Compile Include="Transfer\clEruaBakaraEt.cs" />
     <Compile Include="Transfer\clEruaDataEt.cs" />
+    <Compile Include="Web References\premyot\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExternalDlls\Interop.Excel.dll" />
@@ -203,6 +208,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ReportMail.xsl" />
+    <None Include="Web References\premyot\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\premyot\wsPremyot.disco" />
     <None Include="Service References\KdsServiceProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -211,7 +221,9 @@
     <None Include="Service References\KdsServiceProxy\configuration91.svcinfo" />
     <None Include="Service References\KdsServiceProxy\BatchService.wsdl" />
     <None Include="Service References\KdsServiceProxy\KdsLocalService.disco" />
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -225,6 +237,7 @@
     <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Web References\premyot\wsPremyot.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -281,7 +294,19 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\KdsServiceProxy\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WebReferenceUrl Include="http://premyottst/wsPremyot.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\premyot\</RelPath>
+      <UpdateFromURL>http://premyottst/wsPremyot.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>KdsBatch_premyot_wsPremyot</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
