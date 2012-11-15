@@ -502,7 +502,7 @@
   </Report>
 
   <Report  RdlName="ProfitOfLinesDetailed" Roles="kds_administrators" FilterByLine="3" PageHeader="דוחות ריווחית קווים מפורט"  ProductionType="Heavy">
-    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2005" Required="true"  >
+    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime"  Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
@@ -515,7 +515,7 @@
     </Filter>
   </Report>
   <Report  RdlName="ProfitOfLinesGroup" Roles="kds_administrators" FilterByLine="3" PageHeader="דוחות ריווחית קווים מסוכם" ProductionType="Heavy" >
-    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" DefaultValue="10/12/2012" Required="true"  >
+    <Filter    ParameterName="P_STARTDATE" Caption="מתאריך" BoxeType="Calendar" DataType="System.DateTime" Required="true"  >
       <FilterValidator ValidatorName="ValidChodeshMe" ErrorMessageValidator="שדה מתאריך חייב להיות יותר קטן משדה עד תאריך" ValidationFunction="ValidateTvachChodashim"/>
       <FilterValidator ValidatorName="ValidIshurimMe" ErrorMessageValidator="לא ניתן להוציא דו''ח לתאריך שנבחר" ValidationFunction="IsAlowedDate"/>
     </Filter>
