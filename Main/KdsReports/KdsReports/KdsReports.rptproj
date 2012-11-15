@@ -187,6 +187,10 @@
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>ProfitOfLinesDetailed.rdl</Name>
+      <FullPath>ProfitOfLinesDetailed.rdl</FullPath>
+    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -195,7 +199,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdsappl01/reportserver</TargetServerURL>
+        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>

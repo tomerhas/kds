@@ -6028,7 +6028,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                               <Value>=iif(Fields!R49.Value&gt;0,"פצ",iif(Fields!R50.Value&gt;0,"פכ",""))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7111,7 +7110,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                               <Value>=Sum(Fields!R49.Value)+(Fields!R50.Value*2)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -7547,7 +7545,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -9527,7 +9524,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                               <Value>=Sum(Fields!R49.Value)+(Fields!R50.Value*2)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>0;(0);''</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -9554,6 +9550,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
