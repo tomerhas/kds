@@ -544,7 +544,9 @@ namespace KdsLibrary.Utils.Reports
         Query4,
         DayDataEggt,
         RikuzAvodaChodshi2,
-        SpecificAverage
+        SpecificAverage,
+        ProfitOfLinesDetailed,
+        ProfitOfLinesGroup 
     }
     public enum Orientation
     {
