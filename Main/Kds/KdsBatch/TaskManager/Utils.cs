@@ -7,6 +7,7 @@ using KdsLibrary.BL;
 using System.Configuration;
 using System.Data;
 using KdsLibrary.TaskManager;
+using System.IO;
 
 namespace KdsBatch.TaskManager
 {
@@ -202,6 +203,54 @@ namespace KdsBatch.TaskManager
             }
         }
 
+        public void InsetRecordsToHistory()
+        {
+            List<string[]> FilesName;
+            string[] patterns = new string[3];
+            string path;
+            try
+            {
+                FilesName = new List<string[]>();
+                patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
+                path = ConfigurationSettings.AppSettings["PathFileReports"];
+                if (!Directory.Exists(path))
+                {
+                    foreach (string pattern in patterns)
+                    {
+                       FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
+                    }
+
+                    foreach (string[] files in FilesName)
+                    {
+                        foreach (string file in files)
+                        {
+                            switch (file.Substring(0, 4))
+                            {
+                                case "BZAY":
+                                    KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(path + file, ';');
+                                             oTaskY.Run();
+                                             break;
+                                case "BZAS":
+                                             KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(path + file, ';');
+                                             oTaskS.Run();
+                                             break;
+                                case "BZAP":
+                                             KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(path + file, ';');
+                                             oTaskP.Run();
+                                             break;
+                            }
+
+                           // File.re
+                        }
+                    }
+                }
+                 
+            }
+            catch (Exception ex)
+            {
+                clGeneral.LogError(ex);
+            }
+        }
         public void RunCalculationPremyot()
         {
             bool bSuccess = false;

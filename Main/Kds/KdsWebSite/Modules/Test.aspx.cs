@@ -25,6 +25,9 @@ using KdsBatch.Errors;
 using System.IO;
 using System.Threading.Tasks;
 using KdsLibrary.Utils.Reports;
+using System.Collections.Generic;
+
+
 public partial class Modules_Test :Page
 {
   
@@ -919,21 +922,74 @@ public partial class Modules_Test :Page
         oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
     }
 
-
     protected void btnRefreshMakatim_Click(object sender, EventArgs e)
     {
-        string path = ConfigurationSettings.AppSettings["PathFileReports"];
-        path += "BZAY_201206011T_20121104090100.TXT";
-        KdsBatch.History.TaskDay oTask = new KdsBatch.History.TaskDay(path,';');
-        oTask.Run();
-        ///KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        ///clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
-        //clTkinutMakatim objMakat = new clTkinutMakatim();
-        // objMakat.(DateTime.Parse(clnFromDate.Text));
+        List<string[]> FilesName;
+        string[] patterns = new string[3];
+        string path, FileNameOld;
+        string[] files;
+        try
+        {
+            FilesName = new List<string[]>();
+            patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
+            path = ConfigurationSettings.AppSettings["PathFileReports"] +"MF\\";
+            if (Directory.Exists(path))
+            {
+                foreach (string pattern in patterns)
+                {
+                    FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
+                }
 
-        //wsBatch oBatch = new wsBatch();
-        //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+                for(int i=0;i<FilesName.Count;i++)
+                {
+                    files = FilesName[i];
+                    foreach (string file in files)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(file, ';');
+                                oTaskY.Run();
+                                break;
+                            case 1:
+                                KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(file, ';');
+                                oTaskS.Run();
+                                break;
+                            case 2:
+                                KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(file, ';');
+                                oTaskP.Run();
+                                break;
+                        }
+
+
+                        FileNameOld = file.Replace(".TXT", ".old");
+                        File.Copy(file, FileNameOld);
+                        File.Delete(file);
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            clGeneral.LogError(ex);
+        }
     }
+
+    //protected void btnRefreshMakatim_Click(object sender, EventArgs e)
+    //{
+    //    string path = ConfigurationSettings.AppSettings["PathFileReports"];
+    //    path += "BZAY_201206011T_20121104090100.TXT";
+    //    KdsBatch.History.TaskDay oTask = new KdsBatch.History.TaskDay(path,';');
+    //    oTask.Run();
+    //    ///KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
+    //    ///clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+    //    //clTkinutMakatim objMakat = new clTkinutMakatim();
+    //    // objMakat.(DateTime.Parse(clnFromDate.Text));
+
+    //    //wsBatch oBatch = new wsBatch();
+    //    //oBatch.RunTkinutMakatim(DateTime.Parse(clnFromDate.Text));
+    //}
 
     protected void btnPremyot_Click(object sender, EventArgs e)
     {

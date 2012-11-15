@@ -44,6 +44,17 @@ namespace KdsBatch.History
             }
         }
 
+        protected DateTime GetDateTime(string sDate)
+        {
+            string sTaarich;
+            sTaarich = sDate.Substring(6, 2) + "/" + sDate.Substring(4, 2) + "/" + sDate.Substring(0, 4);
+            if (sDate.Length > 8)
+            {
+                sTaarich += " " + sDate.Substring(8, 2) + ":" + sDate.Substring(10, 2) + ":00";
+            }
+            return DateTime.Parse(sTaarich);
+        }
+
         private void InsertToDB()
         {
             clDal objDal = new clDal();
