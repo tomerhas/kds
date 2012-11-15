@@ -1798,8 +1798,8 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>Ds</DataSetName>
-        <Top>1.58432cm</Top>
-        <Left>0.36724cm</Left>
+        <Top>0.86465cm</Top>
+        <Left>0.43074cm</Left>
         <Height>2.31125cm</Height>
         <Width>29.21542cm</Width>
         <Style>
@@ -1816,8 +1816,8 @@
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
+    <LeftMargin>0cm</LeftMargin>
+    <RightMargin>0cm</RightMargin>
     <TopMargin>2cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
