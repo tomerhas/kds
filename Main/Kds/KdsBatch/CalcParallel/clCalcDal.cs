@@ -446,11 +446,13 @@ namespace KdsBatch
             }
         }
 
-        public int PrepareDataLeChishuv(DateTime dFrom, DateTime dAd, string sMaamad, bool bRitzaGorefet, int NumProcesse)
+        public int PrepareDataLeChishuv(long lRequestNum,DateTime dFrom, DateTime dAd, string sMaamad, bool bRitzaGorefet, int NumProcesse)
         {
             clDal oDal = new clDal();
             try
             {
+                oDal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lRequestNum, ParameterDir.pdInput);
+               
                 oDal.AddParameter("p_tar_me", ParameterType.ntOracleDate, dFrom, ParameterDir.pdInput);
                 oDal.AddParameter("p_tar_ad", ParameterType.ntOracleDate, dAd, ParameterDir.pdInput);
 

@@ -23,7 +23,8 @@ namespace KdsBatch.History
 
         protected override void FillItemsToCollection(List<string[]> Items)
         {
-            OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd;  
+            OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd;
+            int mispar_ishi = 0;
             try
             {
                 foreach (string[]  Item in Items)
@@ -31,28 +32,33 @@ namespace KdsBatch.History
                     oObjYameyAvodaUpd = new OBJ_YAMEY_AVODA_OVDIM();
 
                     oObjYameyAvodaUpd.MISPAR_ISHI = int.Parse(Item[0]);
-                    oObjYameyAvodaUpd.TAARICH = GetDateTime(Item[1].Trim());
-                  //  oObjYameyAvodaUpd. = DateTime.Parse(Item[1]);
-                   // oObjYameyAvodaUpd.TAARICH = DateTime.Parse(Item[1]);
-                    if (Item[4].Trim() != "")
-                        oObjYameyAvodaUpd.TACHOGRAF = Item[4];
-                    if (Item[5].Trim() != "")
-                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = int.Parse(Item[5]);
-                    if (Item[6].Trim() != "")
-                        oObjYameyAvodaUpd.HALBASHA = decimal.Parse(Item[6]);
-                    if (Item[7].Trim() != "")
-                        oObjYameyAvodaUpd.LINA = decimal.Parse(Item[7]);
-                    if (Item[8].Trim() != "")
-                        oObjYameyAvodaUpd.HASHLAMA_LEYOM = decimal.Parse(Item[8]);
-                    if (Item[9].Trim() != "")
-                        oObjYameyAvodaUpd.HAMARAT_SHABAT = int.Parse(Item[9]);
+                    mispar_ishi = int.Parse(oObjYameyAvodaUpd.MISPAR_ISHI.ToString());
+                    if (mispar_ishi != 999999999)
+                    {
+                        oObjYameyAvodaUpd.TAARICH = GetDateTime(Item[1].Trim());
+                        //  oObjYameyAvodaUpd. = DateTime.Parse(Item[1]);
+                        // oObjYameyAvodaUpd.TAARICH = DateTime.Parse(Item[1]);
+                        if (Item[4].Trim() != "")
+                            oObjYameyAvodaUpd.TACHOGRAF = Item[4];
+                        if (Item[5].Trim() != "")
+                            oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = int.Parse(Item[5]);
+                        if (Item[6].Trim() != "")
+                            oObjYameyAvodaUpd.HALBASHA = decimal.Parse(Item[6]);
+                        if (Item[7].Trim() != "")
+                            oObjYameyAvodaUpd.LINA = decimal.Parse(Item[7]);
+                        if (Item[8].Trim() != "")
+                            oObjYameyAvodaUpd.HASHLAMA_LEYOM = decimal.Parse(Item[8]);
+                        if (Item[9].Trim() != "")
+                            oObjYameyAvodaUpd.HAMARAT_SHABAT = int.Parse(Item[9]);
 
-                    _Collection.Add(oObjYameyAvodaUpd);
+                        _Collection.Add(oObjYameyAvodaUpd);
+                    }
                 }
                 CollObject = _Collection;
             }
             catch (Exception ex)
             {
+                throw new Exception("FillItemsToCollection Error: " + ex.Message + " mispar_ishi=" + mispar_ishi);
             }
         }
         

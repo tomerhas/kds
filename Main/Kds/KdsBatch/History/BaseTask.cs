@@ -39,20 +39,28 @@ namespace KdsBatch.History
                 FillItemsToCollection(oBuild.Items);
                 InsertToDB();
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
+                throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)) + " file: " + _pathFile.Substring(_pathFile.LastIndexOf('\\'), _pathFile.Length));
             }
         }
 
         protected DateTime GetDateTime(string sDate)
         {
             string sTaarich;
-            sTaarich = sDate.Substring(6, 2) + "/" + sDate.Substring(4, 2) + "/" + sDate.Substring(0, 4);
-            if (sDate.Length > 8)
+            try
             {
-                sTaarich += " " + sDate.Substring(8, 2) + ":" + sDate.Substring(10, 2) + ":00";
+                sTaarich = sDate.Substring(6, 2) + "/" + sDate.Substring(4, 2) + "/" + sDate.Substring(0, 4);
+                if (sDate.Length > 8)
+                {
+                    sTaarich += " " + sDate.Substring(8, 2) + ":" + sDate.Substring(10, 2) + ":00";
+                }
+                return DateTime.Parse(sTaarich);
             }
-            return DateTime.Parse(sTaarich);
+            catch (Exception ex)
+            {
+                throw new Exception("GetDateTime Error: " + ex.Message + " Taarich: " + sDate);
+            }
         }
 
         private void InsertToDB()
@@ -65,7 +73,7 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-               // throw ex;
+                  throw new Exception("InsertToDB Error: " + ex.Message + " type: " + TypeName);
             }
         }
 

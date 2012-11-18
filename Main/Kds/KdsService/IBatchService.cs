@@ -26,6 +26,9 @@ namespace KdsService
         void CalcBatchPremiyot(long lRequestNum);
 
         [OperationContract]
+        void InsetRecordsToHistory(long lRequestNum);
+
+        [OperationContract]
         void CalcBatch(long lRequestNum, DateTime dAdChodesh, string sMaamad, 
             bool bRitzatTest, bool bRitzaGorefet);
 

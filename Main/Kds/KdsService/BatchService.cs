@@ -176,7 +176,7 @@ namespace KdsService
                 dtParametrim = oUtils.getErechParamByKod("100", DateTime.Now.ToShortDateString());
                 dFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths((int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString()) - 1) * -1);
                 dAdChodesh = dAdChodesh.AddMonths(1).AddDays(-1);
-                result = oCalcDal.PrepareDataLeChishuv(dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
+                result = oCalcDal.PrepareDataLeChishuv(lRequestNum,dFrom, dAdChodesh, sMaamad, bRitzaGorefet, iCntProcesses);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Finish to prepoare the general data");
                 if (result > 0)
                 {
@@ -203,6 +203,82 @@ namespace KdsService
             }
             //LogThreadEnd("CalcBatchParallel", lRequestNum);
         }
+
+        private void RunInsetRecordsToHistory(object param)
+        {
+            List<string[]> FilesName;
+            string[] patterns = new string[3];
+            string path, FileNameOld;
+            string[] files;
+            object[] args = param as object[];
+            long lRequestNum = (long)args[0];
+            int iStatus = 0;
+            try
+            {
+                FilesName = new List<string[]>();
+                patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
+                path = ConfigurationSettings.AppSettings["PathFileMF"];
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
+                if (Directory.Exists(path))
+                {
+                    foreach (string pattern in patterns)
+                    {
+                        FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
+                    }
+
+                    for (int i = 0; i < FilesName.Count; i++)
+                    {
+                        files = FilesName[i];
+                        foreach (string file in files)
+                        {
+                            try
+                            {
+                                switch (i)
+                                {
+                                    case 0:
+                                        KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(file, ';');
+                                        oTaskY.Run();
+                                        break;
+                                    case 1:
+                                        KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(file, ';');
+                                        oTaskS.Run();
+                                        break;
+                                    case 2:
+                                        KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(file, ';');
+                                        oTaskP.Run();
+                                        break;
+                                }
+
+
+                                FileNameOld = file.Replace(".TXT", ".old");
+                                FileNameOld = FileNameOld.Replace(".txt", ".old");
+                                File.Copy(file, FileNameOld);
+                                File.Delete(file);
+                            }
+                            catch (Exception ex)
+                            {
+                                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file);
+                            }
+                        }
+                    }
+                    iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+                }
+                else clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "path not exist");
+
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
+            }
+            catch (Exception ex)
+            {
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clGeneral.LogError("History Error:  " + ex);
+                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
+            }
+            finally
+            {
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+            }
+        } 
+
 
         private void RunCalcBatchPremiyot(object param)
         {
@@ -575,6 +651,12 @@ namespace KdsService
         }
 
 
+        public void InsetRecordsToHistory(long lRequestNum)
+        {
+            Thread runThread = new Thread(new ParameterizedThreadStart(RunInsetRecordsToHistory));
+            LogThreadStart("InsetRecordsToHistory", lRequestNum);
+            runThread.Start(new object[] { lRequestNum });
+        }
         public void CalcBatchPremiyot(long lRequestNum)
         {
             Thread runThread = new Thread(new ParameterizedThreadStart(RunCalcBatchPremiyot));

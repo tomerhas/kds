@@ -44,6 +44,14 @@ public class wsBatch : System.Web.Services.WebService
     }
 
     [WebMethod(EnableSession = true)]
+    public string InsetRecordsToHistory(long lRequestNum)
+    {
+        KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+        client.InsetRecordsToHistory(lRequestNum);
+        client.Close();
+        return "OK";
+    }
+    [WebMethod(EnableSession = true)]
     public string CalcBatchParallel(long lRequestNum, string sAdChodesh, string sMaamad, bool bRitzatTest, bool bRitzaGorefet)
     {
         DateTime dAdChodesh;

@@ -29,6 +29,7 @@
       <siteMapNode url="~/Modules/Premia/PremiaCalculation.aspx" title="פרמיות ניהול תנועה"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Batches/RunCalcParallel.aspx" title="הרצת חישוב מקבילי"  description="" roles="*"/>
       <siteMapNode url="~/Modules/Requests/HarazatTaalichKlita.aspx" title="הפעלת תהליך הקליטה"  description="" roles="*"/>
+      <siteMapNode url="~/Modules/Batches/HasavatNetuneyMFtoOracle.aspx" title="העברת נתונים מה - MF"  description="" roles="*"/>
     </siteMapNode>
     <siteMapNode   title="טבלאות"  description="" roles="*">
       <siteMapNode url="~/SystemManager/DataEntryView.aspx?table=TB_BUGIM" title="דיווח באגים"  description="" roles="*"/>

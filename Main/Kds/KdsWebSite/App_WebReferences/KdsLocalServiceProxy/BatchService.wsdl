@@ -248,6 +248,44 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_InsetRecordsToHistory_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_InsetRecordsToHistory_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSHttpBinding_IBatchService_CalcBatch_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -887,6 +925,12 @@
   <wsdl:message name="IBatchService_CalcBatchPremiyot_OutputMessage">
     <wsdl:part name="parameters" element="tns:CalcBatchPremiyotResponse" />
   </wsdl:message>
+  <wsdl:message name="IBatchService_InsetRecordsToHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsetRecordsToHistory" />
+  </wsdl:message>
+  <wsdl:message name="IBatchService_InsetRecordsToHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsetRecordsToHistoryResponse" />
+  </wsdl:message>
   <wsdl:message name="IBatchService_CalcBatch_InputMessage">
     <wsdl:part name="parameters" element="tns:CalcBatch" />
   </wsdl:message>
@@ -1000,6 +1044,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/CalcBatchPremiyot" message="tns:IBatchService_CalcBatchPremiyot_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/CalcBatchPremiyotResponse" message="tns:IBatchService_CalcBatchPremiyot_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="InsetRecordsToHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/InsetRecordsToHistory" message="tns:IBatchService_InsetRecordsToHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/InsetRecordsToHistoryResponse" message="tns:IBatchService_InsetRecordsToHistory_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CalcBatch">
       <wsdl:input wsaw:Action="http://tempuri.org/IBatchService/CalcBatch" message="tns:IBatchService_CalcBatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBatchService/CalcBatchResponse" message="tns:IBatchService_CalcBatch_OutputMessage" />
@@ -1109,6 +1157,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_CalcBatchPremiyot_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsetRecordsToHistory">
+      <soap12:operation soapAction="http://tempuri.org/IBatchService/InsetRecordsToHistory" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_InsetRecordsToHistory_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IBatchService_InsetRecordsToHistory_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

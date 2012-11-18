@@ -207,48 +207,53 @@ namespace KdsBatch.TaskManager
         {
             List<string[]> FilesName;
             string[] patterns = new string[3];
-            string path;
+            string path, FileNameOld;
+            string[] files;
+            
             try
             {
                 FilesName = new List<string[]>();
                 patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
-                path = ConfigurationSettings.AppSettings["PathFileReports"];
-                if (!Directory.Exists(path))
+                path = ConfigurationSettings.AppSettings["PathFileMF"];
+                if (Directory.Exists(path))
                 {
                     foreach (string pattern in patterns)
                     {
-                       FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
+                        FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
                     }
 
-                    foreach (string[] files in FilesName)
+                    for(int i=0;i<FilesName.Count;i++)
                     {
+                        files = FilesName[i];
                         foreach (string file in files)
                         {
-                            switch (file.Substring(0, 4))
+                            switch (i)
                             {
-                                case "BZAY":
-                                    KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(path + file, ';');
-                                             oTaskY.Run();
-                                             break;
-                                case "BZAS":
-                                             KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(path + file, ';');
-                                             oTaskS.Run();
-                                             break;
-                                case "BZAP":
-                                             KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(path + file, ';');
-                                             oTaskP.Run();
-                                             break;
+                                case 0:
+                                    KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(file, ';');
+                                    oTaskY.Run();
+                                    break;
+                                case 1:
+                                    KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(file, ';');
+                                    oTaskS.Run();
+                                    break;
+                                case 2:
+                                    KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(file, ';');
+                                    oTaskP.Run();
+                                    break;
                             }
 
-                           // File.re
+
+                            FileNameOld = file.Replace(".TXT", ".old");
+                            File.Copy(file, FileNameOld);
+                            File.Delete(file);
                         }
                     }
                 }
-                 
             }
             catch (Exception ex)
             {
-                clGeneral.LogError(ex);
+                clGeneral.LogError("History Error:  " + ex);
             }
         }
         public void RunCalculationPremyot()

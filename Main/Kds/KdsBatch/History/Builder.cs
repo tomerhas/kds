@@ -45,7 +45,7 @@ namespace KdsBatch.History
            }
            catch (Exception ex)
            {
-
+               throw new Exception("Builder Error: " + ex.Message );
            } 
        }
   

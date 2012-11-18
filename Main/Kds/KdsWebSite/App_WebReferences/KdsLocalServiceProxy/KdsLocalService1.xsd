@@ -59,6 +59,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="InsetRecordsToHistory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="lRequestNum" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsetRecordsToHistoryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CalcBatch">
     <xs:complexType>
       <xs:sequence>
