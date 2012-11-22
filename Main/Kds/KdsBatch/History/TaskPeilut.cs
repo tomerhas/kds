@@ -12,8 +12,8 @@ namespace KdsBatch.History
     {
 
         private COLL_OBJ_PEILUT_OVDIM _Collection;
-        public TaskPeilut(string filename, char del)
-            : base(filename,del)
+        public TaskPeilut(long lRequestNum,string filename, char del)
+            : base(lRequestNum,filename, del)
         {
             ProcedureName = clGeneral.cProInsPeilutOvdimHistory;
             TypeName = "COLL_OBJ_PEILUT_OVDIM";
@@ -32,10 +32,10 @@ namespace KdsBatch.History
                 {
                     oObjPeilutOvdim = new OBJ_PEILUT_OVDIM();
 
-                    oObjPeilutOvdim.MISPAR_ISHI = int.Parse(Item[0]);
-                    mispar_ishi = oObjPeilutOvdim.MISPAR_ISHI;
+                    mispar_ishi = int.Parse(Item[0]);
                     if (mispar_ishi != 999999999)
                     {
+                        oObjPeilutOvdim.MISPAR_ISHI = int.Parse(mispar_ishi.ToString().Substring(0, mispar_ishi.ToString().Length - 1));
                         oObjPeilutOvdim.TAARICH = GetDateTime(Item[1].Trim());
                         oObjPeilutOvdim.MISPAR_SIDUR = int.Parse(Item[2]);
                         if (Item[3].Trim() != "")

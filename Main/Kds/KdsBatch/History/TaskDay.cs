@@ -11,8 +11,8 @@ namespace KdsBatch.History
     public class TaskDay : BaseTask
     {
         private COLL_YAMEY_AVODA_OVDIM _Collection;
-        public TaskDay(string filename, char del)
-            : base(filename,del)
+        public TaskDay(long lRequestNum,string filename, char del)
+            : base(lRequestNum,filename,del)
         {
             ProcedureName = clGeneral.cProInsYameyAvodaHistory;
             TypeName = "COLL_YAMEY_AVODA_OVDIM";
@@ -31,10 +31,10 @@ namespace KdsBatch.History
                 {
                     oObjYameyAvodaUpd = new OBJ_YAMEY_AVODA_OVDIM();
 
-                    oObjYameyAvodaUpd.MISPAR_ISHI = int.Parse(Item[0]);
-                    mispar_ishi = int.Parse(oObjYameyAvodaUpd.MISPAR_ISHI.ToString());
+                    mispar_ishi = int.Parse(Item[0]);
                     if (mispar_ishi != 999999999)
                     {
+                        oObjYameyAvodaUpd.MISPAR_ISHI = int.Parse(mispar_ishi.ToString().Substring(0, mispar_ishi.ToString().Length - 1));
                         oObjYameyAvodaUpd.TAARICH = GetDateTime(Item[1].Trim());
                         //  oObjYameyAvodaUpd. = DateTime.Parse(Item[1]);
                         // oObjYameyAvodaUpd.TAARICH = DateTime.Parse(Item[1]);

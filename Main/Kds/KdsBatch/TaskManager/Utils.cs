@@ -203,59 +203,7 @@ namespace KdsBatch.TaskManager
             }
         }
 
-        public void InsetRecordsToHistory()
-        {
-            List<string[]> FilesName;
-            string[] patterns = new string[3];
-            string path, FileNameOld;
-            string[] files;
-            
-            try
-            {
-                FilesName = new List<string[]>();
-                patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
-                path = ConfigurationSettings.AppSettings["PathFileMF"];
-                if (Directory.Exists(path))
-                {
-                    foreach (string pattern in patterns)
-                    {
-                        FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
-                    }
-
-                    for(int i=0;i<FilesName.Count;i++)
-                    {
-                        files = FilesName[i];
-                        foreach (string file in files)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(file, ';');
-                                    oTaskY.Run();
-                                    break;
-                                case 1:
-                                    KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(file, ';');
-                                    oTaskS.Run();
-                                    break;
-                                case 2:
-                                    KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(file, ';');
-                                    oTaskP.Run();
-                                    break;
-                            }
-
-
-                            FileNameOld = file.Replace(".TXT", ".old");
-                            File.Copy(file, FileNameOld);
-                            File.Delete(file);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                clGeneral.LogError("History Error:  " + ex);
-            }
-        }
+       
         public void RunCalculationPremyot()
         {
             bool bSuccess = false;
@@ -293,6 +241,54 @@ namespace KdsBatch.TaskManager
             finally
             {
                 wsPremyot.Dispose();
+            }
+        }
+
+
+        public void RunRetroSpectSDRN()
+        {
+            int Num=45;
+            DataTable sdrnDt = new DataTable();
+            clUtils oUtils = new clUtils();
+            DateTime Taarich = DateTime.Now;
+            clTaskManager oTask = new clTaskManager();
+            KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
+            try
+            {
+                Num = oUtils.GetTbParametrim(252, DateTime.Today);
+                Taarich = Taarich.AddDays(-Num);
+
+                while (Taarich <= DateTime.Now.AddDays(-2))
+                {
+                    sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
+                    if (sdrnDt.Rows.Count == 0)
+                    {
+                        oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
+                        oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn rows=0 , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
+                    }
+                    else
+                    {
+                        if (sdrnDt.Rows[0].ToString()=="1" || sdrnDt.Rows[0].ToString()=="2")
+                        {
+                            oTask.RunRetrospectSdrn(Taarich.ToString("yyyyMMdd"));
+                            RefreshKnisot(Taarich);
+                            oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
+                        }
+                        else if (sdrnDt.Rows[0] == null)
+                        {
+                            oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
+                            oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=null , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
+                        }    
+                    }
+                    Taarich=Taarich.AddDays(1);
+                }
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            finally
+            {
             }
         }
     }

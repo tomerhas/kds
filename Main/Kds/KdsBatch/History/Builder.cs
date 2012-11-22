@@ -33,7 +33,7 @@ namespace KdsBatch.History
            string[] textRowArr;
            try
            {
-               reader = new StreamReader(_fileName);//, Encoding.Default);
+               reader = new StreamReader(_fileName,Encoding.Default);//, Encoding.Default);
 
                while (reader.Peek() > 0)
                {

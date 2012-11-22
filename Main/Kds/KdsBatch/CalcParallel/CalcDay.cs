@@ -2141,13 +2141,22 @@ namespace KdsBatch
 
         private void CalcRechiv37()
         {
-            float fSumDakotRechiv, fDakotNehigaShabat, fDakotNihulShabat;
+            float fSumDakotRechiv, fDakotNehigaShabat, fDakotNihulShabat, fMichsaYomit, fTempX;
             try
             {
                 if (!(objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30 && objOved.SugYom == clGeneral.enSugYom.Bchirot.GetHashCode()))
                 {
                     oSidur.CalcRechiv37();
-                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Taarich); 
+                    fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotTafkidShabat.GetHashCode(), objOved.Taarich);
+                    fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich); //oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
+
+                    if (fMichsaYomit > 0 && fSumDakotRechiv>0)
+                    {
+                        fTempX = oSidur.GetSumMinutsBeforeShabat();
+                        if (fTempX < fMichsaYomit)
+                            fSumDakotRechiv -= ( fMichsaYomit - fTempX);
+                    }
+                   
                     if (fSumDakotRechiv > 0)
                     {
                         Dictionary<int, float> ListOfSum = oCalcBL.GetSumsOfRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], objOved.Taarich);

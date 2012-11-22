@@ -11,8 +11,8 @@ namespace KdsBatch.History
     public class TaskSidur : BaseTask
     {
         private COLL_SIDURIM_OVDIM _Collection;
-        public TaskSidur(string filename, char del)
-            : base(filename,del)
+        public TaskSidur(long lRequestNum,string filename, char del)
+            : base(lRequestNum,filename,del)
         {
             ProcedureName = clGeneral.cProInsSidurimOvdimHistory;
             TypeName = "COLL_SIDURIM_OVDIM";
@@ -31,10 +31,12 @@ namespace KdsBatch.History
                 {
                     oObjSidurimOvdim = new OBJ_SIDURIM_OVDIM();
 
-                    oObjSidurimOvdim.MISPAR_ISHI = int.Parse(Item[0]);
-                    mispar_ishi = oObjSidurimOvdim.MISPAR_ISHI;
+
+                    mispar_ishi = int.Parse(Item[0]);
+
                     if (mispar_ishi != 999999999)
                     {
+                        oObjSidurimOvdim.MISPAR_ISHI = int.Parse(mispar_ishi.ToString().Substring(0, mispar_ishi.ToString().Length - 1));
                         oObjSidurimOvdim.TAARICH = GetDateTime(Item[1].Trim());
                         oObjSidurimOvdim.MISPAR_SIDUR = int.Parse(Item[2]);
                         if (Item[3].Trim() != "")
@@ -50,7 +52,7 @@ namespace KdsBatch.History
                         if (Item[8].Trim() != "")
                             oObjSidurimOvdim.YOM_VISA = int.Parse(Item[8]);
                         if (Item[9].Trim() != "")
-                            oObjSidurimOvdim.KOD_SIBA_LO_LETASHLUM = int.Parse(Item[9]);
+                            oObjSidurimOvdim.LO_LETASHLUM = int.Parse(Item[9]);
                         if (Item[10].Trim() != "")
                             oObjSidurimOvdim.OUT_MICHSA = int.Parse(Item[10]);
                         if (Item[11].Trim() != "")
@@ -64,7 +66,7 @@ namespace KdsBatch.History
                         if (Item[15].Trim() != "")
                             oObjSidurimOvdim.MISPAR_SHIUREY_NEHIGA = int.Parse(Item[15]);
                         if (Item[16].Trim() != "")
-                            oObjSidurimOvdim.VISA = int.Parse(Item[16]);
+                            oObjSidurimOvdim.SUG_HAZMANAT_VISA = int.Parse(Item[16]);
                         if (Item[17].Trim() != "")
                             oObjSidurimOvdim.TAFKID_VISA = int.Parse(Item[17]);
                         if (Item[18].Trim() != "")

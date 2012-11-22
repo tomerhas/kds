@@ -208,7 +208,7 @@ namespace KdsService
         {
             List<string[]> FilesName;
             string[] patterns = new string[3];
-            string path, FileNameOld;
+            string path, FileNameOld, pathOld;
             string[] files;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
@@ -218,14 +218,18 @@ namespace KdsService
                 FilesName = new List<string[]>();
                 patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
+                pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
                 if (Directory.Exists(path))
                 {
+                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Directory.Exists =" + path);
                     foreach (string pattern in patterns)
                     {
                         FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
+                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "pattern=" + pattern + " Files=" + Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly).Length);
                     }
-
+                  //  clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "FilesName.Count =" + FilesName.Count);
+                 
                     for (int i = 0; i < FilesName.Count; i++)
                     {
                         files = FilesName[i];
@@ -236,15 +240,15 @@ namespace KdsService
                                 switch (i)
                                 {
                                     case 0:
-                                        KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(file, ';');
+                                        KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(lRequestNum,file, ';');
                                         oTaskY.Run();
                                         break;
                                     case 1:
-                                        KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(file, ';');
+                                        KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(lRequestNum,file, ';');
                                         oTaskS.Run();
                                         break;
                                     case 2:
-                                        KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(file, ';');
+                                        KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(lRequestNum,file, ';');
                                         oTaskP.Run();
                                         break;
                                 }
@@ -252,8 +256,9 @@ namespace KdsService
 
                                 FileNameOld = file.Replace(".TXT", ".old");
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
-                                File.Copy(file, FileNameOld);
-                                File.Delete(file);
+                                FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
+                                File.Move(file, FileNameOld);
+                                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, file + " saved");
                             }
                             catch (Exception ex)
                             {

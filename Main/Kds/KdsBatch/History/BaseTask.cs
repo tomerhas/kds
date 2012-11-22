@@ -13,6 +13,7 @@ namespace KdsBatch.History
     {
         private string _pathFile;
         private char _del;
+        private long _lRequestNum;
 
         protected string ProcedureName;
         protected string TypeName;
@@ -22,9 +23,10 @@ namespace KdsBatch.History
         private Builder oBuild;
 
         public BaseTask() { }
-        public BaseTask(string path,char del) {
+        public BaseTask(long lRequestNum,string path,char del) {
             _pathFile = path;
             _del = del;
+            _lRequestNum = lRequestNum;
         }
 
         protected abstract void FillItemsToCollection(List<string[]> Items);
@@ -41,7 +43,8 @@ namespace KdsBatch.History
             }
            catch (Exception ex)
             {
-                throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)) + " file: " + _pathFile.Substring(_pathFile.LastIndexOf('\\'), _pathFile.Length));
+                throw new Exception("Run History Error: " + ex.Message );
+              //  throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)));
             }
         }
 
@@ -68,6 +71,7 @@ namespace KdsBatch.History
             clDal objDal = new clDal();
             try
             {
+                objDal.AddParameter("bakasha_id", ParameterType.ntOracleInt64, _lRequestNum, ParameterDir.pdInput);
                 objDal.AddParameter(ParameterName, ParameterType.ntOracleArray, CollObject, ParameterDir.pdInput, TypeName);
                 objDal.ExecuteSP(ProcedureName);
             }

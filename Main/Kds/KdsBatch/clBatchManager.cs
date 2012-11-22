@@ -2601,8 +2601,8 @@ namespace KdsBatch
                 DataTable dtSidur = ovdim.GetSidur("last", iMispar_Ishi, dCardDate.AddDays(-1));
                 if(dtSidur != null && dtSidur.Rows.Count > 0)
                 {
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
-                    DateTime.TryParse(dtSidur.Rows[0]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
+                    DateTime.TryParse(dtSidur.Rows[dtSidur.Rows.Count - 1]["shat_hatchala"].ToString(), out shatHatchalaOfPrevDay);
+                    DateTime.TryParse(dtSidur.Rows[dtSidur.Rows.Count - 1]["shat_gmar"].ToString(), out shatGmarOfPrevDay);
                 }
                 if (htEmployeeDetails.Count > 0)
                 {

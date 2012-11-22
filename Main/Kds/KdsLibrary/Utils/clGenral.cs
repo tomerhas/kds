@@ -84,6 +84,9 @@ namespace KdsLibrary
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
         public const string cProInsertKnisot = "PKG_sdrn.pro_insert_knisot";
+        public const string cProGetStatusSdrn = "PKG_sdrn.pro_GetStatusSdrn";
+        public const string cProRunSdrnWithDate = "KDSADMIN.RunSdrnWithDate";
+        public const string cProRunRetrospectSdrn = "PKG_sdrn.pro_runRetrospectSdrn";
         #endregion
         #region pkg_calc constants
         public const string cProCheckOvedPutar = "pkg_calc.pro_get_oved_putar";
