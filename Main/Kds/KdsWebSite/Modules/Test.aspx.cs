@@ -980,8 +980,8 @@ public partial class Modules_Test :Page
     {
        
         KdsBatch.TaskManager.Utils clUtils = new KdsBatch.TaskManager.Utils();
-        clUtils.RunRetroSpectSDRN();
-        ///clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
+        //clUtils.RunRetroSpectSDRN();
+        clUtils.RefreshKnisot(DateTime.Parse(clnFromDate.Text));
         //clTkinutMakatim objMakat = new clTkinutMakatim();
         // objMakat.(DateTime.Parse(clnFromDate.Text));
 

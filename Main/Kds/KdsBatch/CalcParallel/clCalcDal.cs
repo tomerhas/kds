@@ -590,12 +590,12 @@ namespace KdsBatch
             dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
         }
 
-        public void UpdatePremiaBakashaID(long lBakashaId)
+        public void UpdatePremiaBakashaID(long lBakashaId,int p_num_process)
         {
 
             clDal dal = new clDal();
-            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId,
-                ParameterDir.pdInput);
+            dal.AddParameter("p_bakasha_id", ParameterType.ntOracleInt64, lBakashaId, ParameterDir.pdInput);
+            dal.AddParameter("p_num_pack", ParameterType.ntOracleInteger, p_num_process, ParameterDir.pdInput);
             dal.ExecuteSP(clDefinitions.cProUpdateChishuvPremia);
 
         }

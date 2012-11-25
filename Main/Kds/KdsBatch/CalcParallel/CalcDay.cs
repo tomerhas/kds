@@ -1401,7 +1401,7 @@ namespace KdsBatch
 
                         if (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
                         {
-                            if (fTempX >= fMichsatMutam)
+                            if (fNochechtLeTashlum>0 && fTempX >= fMichsatMutam)
                                 fErechRechiv = 1;
                         }
                         if ((objOved.objPirteyOved.iMutamut != 1 && objOved.objPirteyOved.iMutamut != 3 && objOved.objPirteyOved.iMutamut != 5 && objOved.objPirteyOved.iMutamut != 7) || (fTempX < fMichsatMutam))

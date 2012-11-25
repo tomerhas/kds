@@ -129,6 +129,7 @@ namespace KdsCalcul
         {
             MainCalc oMainCalc;
             clBatch obatch = new clBatch();
+            clCalcDal oCalcDal = new clCalcDal();
             int numFailed = 0;
             int numSucceed = 0;
            //  int seq = 0;
@@ -144,7 +145,7 @@ namespace KdsCalcul
                     {
                         try
                         {
-                         //   oMainCalc.CalcOvedPremiya(CurrentOved);
+                            oMainCalc.CalcOved(CurrentOved);
                             CurrentOved.Dispose();
                             CurrentOved = null;
                             numSucceed += 1;
@@ -156,6 +157,8 @@ namespace KdsCalcul
                         }
                     });
                     #endregion
+
+                    oCalcDal.UpdatePremiaBakashaID(lRequestNum, iNumProcess);
                 }
                 clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "PREMIYOT END PROCESS " + iNumProcess);
 

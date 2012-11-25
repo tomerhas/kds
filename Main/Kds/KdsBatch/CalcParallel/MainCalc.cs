@@ -33,7 +33,7 @@ namespace KdsBatch
             _iBakashaId = iBakashaId;
             _numProcess = numProcess;
             _iTypeCalc = clGeneral.TypeCalc.Premiya;
-           // SetListOvdimLechishuvPremia(iBakashaId, numProcess);
+            SetListOvdimLechishuvPremia(iBakashaId, numProcess);
         }
         public MainCalc(long iBakashaId, DateTime dTarMe, DateTime dTarAd, string sMaamad, bool bRitzaGorefet, clGeneral.TypeCalc iTypeCalc, int numProcess)
         {
@@ -617,7 +617,7 @@ namespace KdsBatch
 
                             });
 
-                            oCalcDal.UpdatePremiaBakashaID(_iBakashaId);
+                           // oCalcDal.UpdatePremiaBakashaID(_iBakashaId);
 
                             #endregion
                         }
