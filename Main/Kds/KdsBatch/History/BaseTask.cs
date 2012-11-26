@@ -9,7 +9,7 @@ using KdsLibrary.UDT;
 
 namespace KdsBatch.History
 {
-     public abstract class BaseTask
+    public abstract class BaseTask
     {
         private string _pathFile;
         private char _del;
@@ -23,14 +23,16 @@ namespace KdsBatch.History
         private Builder oBuild;
 
         public BaseTask() { }
-        public BaseTask(long lRequestNum,string path,char del) {
+        public BaseTask(long lRequestNum, string path, char del)
+        {
             _pathFile = path;
             _del = del;
             _lRequestNum = lRequestNum;
         }
 
-        protected abstract void FillItemsToCollection(List<string[]> Items);
-        
+        protected abstract void FillItemsToCollection(string[] Item);
+        protected abstract void SetCollection();
+
 
         public void Run()
         {
@@ -38,13 +40,14 @@ namespace KdsBatch.History
             try
             {
                 oBuild.Build();
-                FillItemsToCollection(oBuild.Items);
+                oBuild.Items.ForEach(item =>FillItemsToCollection(item));
+                SetCollection();
                 InsertToDB();
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("Run History Error: " + ex.Message );
-              //  throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)));
+                throw new Exception("Run History Error: " + ex.Message);
+                //  throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)));
             }
         }
 
@@ -77,7 +80,7 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                  throw new Exception("InsertToDB Error: " + ex.Message + " type: " + TypeName);
+                throw new Exception("InsertToDB Error: " + ex.Message + " type: " + TypeName);
             }
         }
 

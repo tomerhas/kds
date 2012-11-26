@@ -21,14 +21,12 @@ namespace KdsBatch.History
             _Collection = new COLL_SIDURIM_OVDIM();
         }
 
-        protected override void FillItemsToCollection(List<string[]> Items)
+        protected override void FillItemsToCollection(string[] Item)
         {
             OBJ_SIDURIM_OVDIM oObjSidurimOvdim;
             int mispar_ishi=0;
             try
             {
-                foreach (string[] Item in Items)
-                {
                     oObjSidurimOvdim = new OBJ_SIDURIM_OVDIM();
 
 
@@ -73,15 +71,18 @@ namespace KdsBatch.History
                             oObjSidurimOvdim.SUG_SIDUR = int.Parse(Item[18]);
 
                         _Collection.Add(oObjSidurimOvdim);
-                    }
                 }
-                CollObject = _Collection;
             }
             catch (Exception ex)
             {
                 throw new Exception("FillItemsToCollectionS Error: " + ex.Message + " mispar_ishi=" + mispar_ishi);
           
             }
+        }
+
+        protected override void SetCollection()
+        {
+            CollObject = _Collection;
         }
          
     }
