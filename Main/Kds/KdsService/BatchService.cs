@@ -229,7 +229,6 @@ namespace KdsService
                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "pattern=" + pattern + " Files=" + Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly).Length);
                     }
                   //  clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "FilesName.Count =" + FilesName.Count);
-                 
                     for (int i = 0; i < FilesName.Count; i++)
                     {
                         files = FilesName[i];
@@ -237,22 +236,20 @@ namespace KdsService
                         {
                             try
                             {
+                                KdsBatch.History.BaseTask oTask = null;
                                 switch (i)
                                 {
                                     case 0:
-                                        KdsBatch.History.TaskDay oTaskY = new KdsBatch.History.TaskDay(lRequestNum,file, ';');
-                                        oTaskY.Run();
+                                        oTask = new KdsBatch.History.TaskDay(lRequestNum, file, ';');
                                         break;
                                     case 1:
-                                        KdsBatch.History.TaskSidur oTaskS = new KdsBatch.History.TaskSidur(lRequestNum,file, ';');
-                                        oTaskS.Run();
+                                        oTask = new KdsBatch.History.TaskSidur(lRequestNum, file, ';');
                                         break;
                                     case 2:
-                                        KdsBatch.History.TaskPeilut oTaskP = new KdsBatch.History.TaskPeilut(lRequestNum,file, ';');
-                                        oTaskP.Run();
+                                        oTask = new KdsBatch.History.TaskPeilut(lRequestNum, file, ';');
                                         break;
                                 }
-
+                                oTask.Run();
 
                                 FileNameOld = file.Replace(".TXT", ".old");
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");

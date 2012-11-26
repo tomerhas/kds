@@ -10,7 +10,7 @@ using System.Configuration;
 //using KdsLibrary.UDT;
 namespace KdsBatch.History
 {
-    public class Builder
+    public class Builder : IDisposable      
     {
         private string _fileName;
         private char _delimeter;
@@ -18,7 +18,7 @@ namespace KdsBatch.History
 
         public Builder() { }
 
-        public Builder(string filename,char del)
+        public Builder(string filename, char del)
         {
             _fileName = filename;
             _delimeter = del;
@@ -26,28 +26,32 @@ namespace KdsBatch.History
         }
 
         public void Build()
-       {
+        {
 
-           StreamReader reader;
-           string textRow;
-           string[] textRowArr;
-           try
-           {
-               reader = new StreamReader(_fileName,Encoding.Default);//, Encoding.Default);
+            string textRow;
+            string[] textRowArr;
+            try
+            {
+                using (StreamReader reader = new StreamReader(_fileName, Encoding.Default))
+                {
+                    while (reader.Peek() > 0)
+                    {
+                        textRow = reader.ReadLine();
+                        textRowArr = textRow.Split(_delimeter);
+                        Items.Add(textRowArr);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Builder Error: " + ex.Message);
+            }
+        }
 
-               while (reader.Peek() > 0)
-               {
-                   textRow = reader.ReadLine();
-                   textRowArr = textRow.Split(_delimeter);
-                   Items.Add(textRowArr);
-               }
-               reader.Close();
-           }
-           catch (Exception ex)
-           {
-               throw new Exception("Builder Error: " + ex.Message );
-           } 
-       }
-  
+
+        public void Dispose()
+        {
+            Items = null;
+        }
     }
 }

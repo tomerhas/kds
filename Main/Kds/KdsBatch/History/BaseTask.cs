@@ -43,6 +43,7 @@ namespace KdsBatch.History
                 oBuild.Items.ForEach(item =>FillItemsToCollection(item));
                 SetCollection();
                 InsertToDB();
+                oBuild.Dispose();  
             }
             catch (Exception ex)
             {

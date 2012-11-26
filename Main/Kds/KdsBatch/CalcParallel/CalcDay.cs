@@ -4795,25 +4795,16 @@ namespace KdsBatch
                         }
                     }
 
-                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8))
+                    if (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8
+                        || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode())
                     {
-                        //if (!oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
-                        //    flag = false;
-                        //else
-                        if (objOved.objPirteyOved.iZmanMutamut > 0 && oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
+                        
+                        if (objOved.objPirteyOved.iZmanMutamut > 0 ) //&& oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
                         {
                             fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
-                         //   flag = false;
+                        
                         }
-                        //else flag = true;
                     }
-                    else if ((objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && objOved.objPirteyOved.iZmanMutamut > 0)
-                    {
-                        fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
-                    }
-
-                 
-                   
 
                     if (objOved.objMeafyeneyOved.sMeafyen91.Length > 0)
                     {
@@ -7744,7 +7735,7 @@ namespace KdsBatch
         public void CalcChofeshHeadrutToShguyim(clGeneral.enRechivim iKodRechiv)
         {
             DateTime dTarMe, dTarAd;
-            float fMichsatYom = 0,fDakotNochehut=0;
+            float fMichsaYomit = 0, fDakotNochehut = 0;
             float fChofesh = 0,fHeadrut=0;
             try
             {
@@ -7753,12 +7744,12 @@ namespace KdsBatch
                  
                 while (dTarMe <= dTarAd)
                 {
-                    fMichsatYom = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), dTarMe);
+                    fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), dTarMe);
                     fDakotNochehut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), dTarMe);
                     fChofesh = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomChofesh.GetHashCode(), dTarMe);
                     fHeadrut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.YomHeadrut.GetHashCode(), dTarMe);
 
-                    if (fMichsatYom > 0 && fDakotNochehut == 0 && fChofesh == 0 && fHeadrut == 0 && objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') and Lo_letashlum=0 and mispar_sidur is not null").Length == 0)
+                    if (fMichsaYomit > 0 && fDakotNochehut == 0 && fChofesh == 0 && fHeadrut == 0 && objOved.DtYemeyAvoda.Select("taarich=Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') and Lo_letashlum=0 and mispar_sidur is not null").Length == 0)
                     {
                         objOved.Taarich = dTarMe;
                         objOved.objMeafyeneyOved = objOved.MeafyeneyOved.Find(Meafyenim => (Meafyenim._Taarich == dTarMe));
