@@ -4795,15 +4795,21 @@ namespace KdsBatch
                         }
                     }
 
-                    if (objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8
-                        || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode())
+                    if ((objOved.objPirteyOved.iMutamBitachon == 4 || objOved.objPirteyOved.iMutamBitachon == 5 || objOved.objPirteyOved.iMutamBitachon == 6 || objOved.objPirteyOved.iMutamBitachon == 8))
                     {
-                        
-                        if (objOved.objPirteyOved.iZmanMutamut > 0 ) //&& oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
+                        //if (!oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
+                        //    flag = false;
+                        //else
+                        if (objOved.objPirteyOved.iZmanMutamut > 0 && oCalcBL.CheckErevChag(objOved.oGeneralData.dtSugeyYamimMeyuchadim, iSugYom))
                         {
                             fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
-                        
+                         //   flag = false;
                         }
+                        //else flag = true;
+                    }
+                    else if ((objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam1.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam4.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam5.GetHashCode() || objOved.objPirteyOved.iMutamut == clGeneral.enMutaam.enMutaam6.GetHashCode()) && objOved.objPirteyOved.iZmanMutamut > 0)
+                    {
+                        fErechRechiv = Math.Min(fErechRechiv, objOved.objPirteyOved.iZmanMutamut);
                     }
 
                     if (objOved.objMeafyeneyOved.sMeafyen91.Length > 0)
