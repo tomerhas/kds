@@ -138,6 +138,10 @@
       <FullPath>PrintWorkCard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>ProfitOfLinesDetailed.rdl</Name>
+      <FullPath>ProfitOfLinesDetailed.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Query4.rdl</Name>
       <FullPath>Query4.rdl</FullPath>
     </ProjectItem>
@@ -188,8 +192,8 @@
       <FullPath>WorkerHourTest.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>ProfitOfLinesDetailed.rdl</Name>
-      <FullPath>ProfitOfLinesDetailed.rdl</FullPath>
+      <Name>ProfitOfLinesGroup.rdl</Name>
+      <FullPath>ProfitOfLinesGroup.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
