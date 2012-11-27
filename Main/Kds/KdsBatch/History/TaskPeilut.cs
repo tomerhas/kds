@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.UDT;
 using KdsLibrary;
-
+using System.Configuration;
 
 namespace KdsBatch.History
 {
@@ -12,14 +12,17 @@ namespace KdsBatch.History
     {
 
         private COLL_OBJ_PEILUT_OVDIM _Collection;
-        public TaskPeilut(long lRequestNum,string filename, char del)
-            : base(lRequestNum,filename, del)
+        public TaskPeilut(long lRequestNum, char del)
+            : base(lRequestNum, del)
         {
             ProcedureName = clGeneral.cProInsPeilutOvdimHistory;
             TypeName = "COLL_OBJ_PEILUT_OVDIM";
             ParameterName = "p_coll_obj_peilut_ovdim";
             CollType = TypeTask.Peilut;
             _Collection = new COLL_OBJ_PEILUT_OVDIM();
+            Pattern = "BZAP";
+            PathDirectory = ConfigurationSettings.AppSettings["PathFileMF"];
+            PathDirectoryOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
         }
 
         protected override void FillItemsToCollection(string[] Item)

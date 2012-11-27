@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.UDT;
 using KdsLibrary;
-
+using System.Configuration;
 
 namespace KdsBatch.History
 {
     public class TaskDay : BaseTask
     {
         private COLL_YAMEY_AVODA_OVDIM _Collection;
-        public TaskDay(long lRequestNum,string filename, char del)
-            : base(lRequestNum,filename,del)
+        public TaskDay(long lRequestNum, char del)
+            : base(lRequestNum,del)
         {
             ProcedureName = clGeneral.cProInsYameyAvodaHistory;
             TypeName = "COLL_YAMEY_AVODA_OVDIM";
             ParameterName = "p_coll_yamey_avoda_ovdim";
             CollType = TypeTask.Day;
             _Collection = new COLL_YAMEY_AVODA_OVDIM();
+            Pattern = "BZAY";
+            PathDirectory= ConfigurationSettings.AppSettings["PathFileMF"];
+            PathDirectoryOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
         }
 
         protected override void FillItemsToCollection(string[] Item)

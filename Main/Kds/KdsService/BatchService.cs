@@ -18,6 +18,7 @@ using System.Data;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using KdsBatch.History;
 namespace KdsService
 {
     public class BatchService : IBatchService
@@ -206,78 +207,16 @@ namespace KdsService
 
         private void RunInsetRecordsToHistory(object param)
         {
-            List<string[]> FilesName;
-            string[] patterns = new string[3];
-            string path, FileNameOld, pathOld;
-            string[] files;
             object[] args = param as object[];
             long lRequestNum = (long)args[0];
-            int iStatus = 0;
+            ManagerTask oTaskM = new ManagerTask(lRequestNum);
             try
             {
-                FilesName = new List<string[]>();
-                patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
-                path = ConfigurationSettings.AppSettings["PathFileMF"];
-                pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
-                if (Directory.Exists(path))
-                {
-                    clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "Directory.Exists =" + path);
-                    foreach (string pattern in patterns)
-                    {
-                        FilesName.Add(Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly));
-                        clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "pattern=" + pattern + " Files=" + Directory.GetFiles(path, pattern + "*.txt", SearchOption.TopDirectoryOnly).Length);
-                    }
-                  //  clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "FilesName.Count =" + FilesName.Count);
-                    for (int i = 0; i < FilesName.Count; i++)
-                    {
-                        files = FilesName[i];
-                        foreach (string file in files)
-                        {
-                            try
-                            {
-                                KdsBatch.History.BaseTask oTask = null;
-                                switch (i)
-                                {
-                                    case 0:
-                                        oTask = new KdsBatch.History.TaskDay(lRequestNum, file, ';');
-                                        break;
-                                    case 1:
-                                        oTask = new KdsBatch.History.TaskSidur(lRequestNum, file, ';');
-                                        break;
-                                    case 2:
-                                        oTask = new KdsBatch.History.TaskPeilut(lRequestNum, file, ';');
-                                        break;
-                                }
-                                oTask.Run();
-
-                                FileNameOld = file.Replace(".TXT", ".old");
-                                FileNameOld = FileNameOld.Replace(".txt", ".old");
-                                FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
-                                File.Move(file, FileNameOld);
-                                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, file + " saved");
-                            }
-                            catch (Exception ex)
-                            {
-                                clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file);
-                            }
-                        }
-                    }
-                    iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
-                }
-                else clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "path not exist");
-
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, " END RunInsetRecordsToHistory");
+                oTaskM.Run();
             }
             catch (Exception ex)
             {
-                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
-                clGeneral.LogError("History Error:  " + ex);
                 clLogBakashot.InsertErrorToLog(lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message);
-            }
-            finally
-            {
-                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
             }
         } 
 

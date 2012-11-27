@@ -6,27 +6,35 @@ using Oracle.DataAccess.Types;
 using KdsLibrary.DAL;
 using System.Data;
 using KdsLibrary.UDT;
+using System.Configuration;
+using System.Diagnostics;
+using System.IO;
+using KdsLibrary;
 
 namespace KdsBatch.History
 {
     public abstract class BaseTask
     {
-        private string _pathFile;
+        
         private char _del;
         private long _lRequestNum;
+        private string[] _files;
 
         protected string ProcedureName;
         protected string TypeName;
         protected string ParameterName;
+        protected string Pattern;
+        protected string PathDirectory;
+        protected string PathDirectoryOld;
+
         protected IOracleCustomType CollObject;
         protected TypeTask CollType;
         private Builder oBuild;
 
         public BaseTask() { }
-        public BaseTask(long lRequestNum, string path, char del)
+        public BaseTask(long lRequestNum, char del)
         {
-            _pathFile = path;
-            _del = del;
+             _del = del;
             _lRequestNum = lRequestNum;
         }
 
@@ -36,22 +44,58 @@ namespace KdsBatch.History
 
         public void Run()
         {
-            oBuild = new Builder(_pathFile, _del);
             try
             {
-                oBuild.Build();
-                oBuild.Items.ForEach(item =>FillItemsToCollection(item));
-                SetCollection();
-                InsertToDB();
-                oBuild.Dispose();  
+                SetFiles();
+                foreach (string file in _files)
+                {
+                    oBuild = new Builder(file, _del);
+                    
+                    oBuild.Build();
+                    oBuild.Items.ForEach(item => FillItemsToCollection(item));
+                    SetCollection();
+                    InsertToDB(file);     
+                    MoveFileToOld(file);
+
+                    oBuild.Dispose();
+                }
             }
             catch (Exception ex)
             {
                 throw new Exception("Run History Error: " + ex.Message);
-                //  throw new Exception("Run History Error: " + ex.Message.Substring(0, Math.Min(35, ex.Message.Length - 1)));
             }
         }
 
+        private void SetFiles()
+        {
+            try
+            {
+                _files = Directory.GetFiles(PathDirectory, Pattern + "*.txt", SearchOption.TopDirectoryOnly);
+                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "pattern=" + Pattern + " Files=" + _files.Length);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("getFiles Error: " + ex.Message + " Pttern=" + Pattern);
+            }
+        }
+
+         private void MoveFileToOld(string fileName)
+        {
+            string FileNameOld;
+            try
+            {
+                FileNameOld = fileName.Replace(".TXT", ".old");
+                FileNameOld = FileNameOld.Replace(".txt", ".old");
+                FileNameOld = PathDirectoryOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
+                File.Move(fileName, FileNameOld);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("MoveFileToOld Error: " + ex.Message + "file=" +fileName);
+            }
+        }
+
+        
         protected DateTime GetDateTime(string sDate)
         {
             string sTaarich;
@@ -70,12 +114,15 @@ namespace KdsBatch.History
             }
         }
 
-        private void InsertToDB()
+        private void InsertToDB(string fileName)
         {
             clDal objDal = new clDal();
+            string name;
             try
             {
+                name =fileName.Substring(fileName.LastIndexOf("\\") + 1);
                 objDal.AddParameter("bakasha_id", ParameterType.ntOracleInt64, _lRequestNum, ParameterDir.pdInput);
+                objDal.AddParameter("p_file_name", ParameterType.ntOracleVarchar, name, ParameterDir.pdInput);
                 objDal.AddParameter(ParameterName, ParameterType.ntOracleArray, CollObject, ParameterDir.pdInput, TypeName);
                 objDal.ExecuteSP(ProcedureName);
             }

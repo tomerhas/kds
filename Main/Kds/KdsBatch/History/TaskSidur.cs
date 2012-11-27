@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using KdsLibrary.UDT;
 using KdsLibrary;
-
+using System.Configuration;
 
 namespace KdsBatch.History
 {
     public class TaskSidur : BaseTask
     {
         private COLL_SIDURIM_OVDIM _Collection;
-        public TaskSidur(long lRequestNum,string filename, char del)
-            : base(lRequestNum,filename,del)
+        public TaskSidur(long lRequestNum, char del)
+            : base(lRequestNum,del)
         {
             ProcedureName = clGeneral.cProInsSidurimOvdimHistory;
             TypeName = "COLL_SIDURIM_OVDIM";
             ParameterName = "p_coll_sidurim_ovdim";
             CollType = TypeTask.Sidur;
             _Collection = new COLL_SIDURIM_OVDIM();
+            Pattern = "BZAS";
+            PathDirectory = ConfigurationSettings.AppSettings["PathFileMF"];
+            PathDirectoryOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
         }
 
         protected override void FillItemsToCollection(string[] Item)
