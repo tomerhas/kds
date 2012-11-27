@@ -74,6 +74,7 @@ namespace KdsBatch.History
                             oObjSidurimOvdim.SUG_SIDUR = int.Parse(Item[18]);
 
                         _Collection.Add(oObjSidurimOvdim);
+                        clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "_Collection.Count= " + _Collection.Count);
                 }
             }
             catch (Exception ex)

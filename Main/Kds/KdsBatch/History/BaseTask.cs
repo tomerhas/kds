@@ -17,7 +17,7 @@ namespace KdsBatch.History
     {
         
         private char _del;
-        private long _lRequestNum;
+        protected long _lRequestNum;
         private string[] _files;
 
         protected string ProcedureName;
@@ -58,6 +58,7 @@ namespace KdsBatch.History
                     MoveFileToOld(file);
 
                     oBuild.Dispose();
+                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, _files.Length + " saved");
                 }
             }
             catch (Exception ex)

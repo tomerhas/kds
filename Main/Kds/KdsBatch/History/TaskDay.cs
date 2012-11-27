@@ -58,7 +58,7 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                throw new Exception("FillItemsToCollection Error: " + ex.Message + " mispar_ishi=" + mispar_ishi);
+                throw new Exception("FillItemsToCollectionY Error: " + ex.Message + " mispar_ishi=" + mispar_ishi);
             }
         }
 
