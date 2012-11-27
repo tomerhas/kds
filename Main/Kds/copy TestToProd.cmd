@@ -13,6 +13,8 @@ copy \\kdstst\KdsCalculProd\*.config \\kdstst\KdsCalculProd\old\
 copy \\kdstst\KdsCalculTest\*.exe  \\kdstst\KdsCalculProd\
 copy \\kdstst\KdsCalculTest\*.dll  \\kdstst\KdsCalculProd\
 
+del \\kdstst\KdsCalculProd\KdsCalculProd.exe
+
 rename \\kdstst\KdsCalculProd\KdsCalculTest.exe  KdsCalculProd.exe 
 rename \\kdstst\KdsCalculProd\KdsCalculTest.exe.config  KdsCalculProd.exe.config 
 @echo KdsCalcul was installed in kdstst !
