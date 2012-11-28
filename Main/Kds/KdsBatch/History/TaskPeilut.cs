@@ -21,8 +21,8 @@ namespace KdsBatch.History
             CollType = TypeTask.Peilut;
             _Collection = new COLL_OBJ_PEILUT_OVDIM();
             Pattern = "BZAP";
-            PathDirectory = ConfigurationSettings.AppSettings["PathFileMF"];
-            PathDirectoryOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
+            PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+            PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
 
         protected override void FillItemsToCollection(string[] Item)
@@ -68,7 +68,12 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                throw new Exception("FillItemsToCollectionP Error: " + ex.Message + " mispar_ishi=" + mispar_ishi);
+                string ItemList = "Count of Items" + Item.Count() + ":";
+                foreach (var item in Item)
+                {
+                    ItemList += item + ",";
+                }
+                throw new Exception("FillItemsToCollectionP Error: " + ex.Message +"\n" + ex.StackTrace + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
             }
         }
 

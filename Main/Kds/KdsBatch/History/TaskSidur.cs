@@ -20,8 +20,8 @@ namespace KdsBatch.History
             CollType = TypeTask.Sidur;
             _Collection = new COLL_SIDURIM_OVDIM();
             Pattern = "BZAS";
-            PathDirectory = ConfigurationSettings.AppSettings["PathFileMF"];
-            PathDirectoryOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
+            PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+            PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
 
         protected override void FillItemsToCollection(string[] Item)
@@ -84,7 +84,7 @@ namespace KdsBatch.History
                 {
                     ItemList += item + ",";
                 }
-                throw new Exception("FillItemsToCollectionS Error: " + ex.Message + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
+                throw new Exception("FillItemsToCollectionS Error: " + ex.Message +"\n" + ex.StackTrace+ " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
 
             }
         }

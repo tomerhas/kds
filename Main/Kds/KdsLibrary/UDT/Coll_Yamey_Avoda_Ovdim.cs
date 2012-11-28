@@ -20,7 +20,8 @@ namespace KdsLibrary.UDT
     public class COLL_YAMEY_AVODA_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
         
         private bool m_IsNull;
-        
+        private int _Count;
+
         private OBJ_YAMEY_AVODA_OVDIM[] m_OBJ_YAMEY_AVODA_OVDIM;
         
         public COLL_YAMEY_AVODA_OVDIM() {
@@ -35,6 +36,18 @@ namespace KdsLibrary.UDT
             get {
                 return this.m_IsNull;
             }
+        }
+
+        public void RemoveAt(int index)
+        {
+            OBJ_YAMEY_AVODA_OVDIM[] newObj = new OBJ_YAMEY_AVODA_OVDIM[m_OBJ_YAMEY_AVODA_OVDIM.Length - 1];
+            for (int i = 0; i < m_OBJ_YAMEY_AVODA_OVDIM.Length; i++)
+            {
+                if (i < index) newObj[i] = m_OBJ_YAMEY_AVODA_OVDIM[i];
+                if (i > index) newObj[i - 1] = m_OBJ_YAMEY_AVODA_OVDIM[i];
+            }
+            m_OBJ_YAMEY_AVODA_OVDIM = newObj;
+            _Count = m_OBJ_YAMEY_AVODA_OVDIM.Length;
         }
         
         public static COLL_YAMEY_AVODA_OVDIM Null {
@@ -54,6 +67,15 @@ namespace KdsLibrary.UDT
                 this.m_OBJ_YAMEY_AVODA_OVDIM = value;
             }
         }
+
+        public int Count
+        {
+            get
+            {
+                return this._Count;
+            }
+        }
+
         public void Add(OBJ_YAMEY_AVODA_OVDIM Object)
         {
             if (Object.IsNull) return;
@@ -70,6 +92,8 @@ namespace KdsLibrary.UDT
                 m_OBJ_YAMEY_AVODA_OVDIM = (OBJ_YAMEY_AVODA_OVDIM[])clGeneral.ResizeArray(m_OBJ_YAMEY_AVODA_OVDIM, Size + 1);
                 m_OBJ_YAMEY_AVODA_OVDIM[Size] = Object;
             }
+            _Count = m_OBJ_YAMEY_AVODA_OVDIM.Length;
+
         }
         public virtual void FromCustomObject(Oracle.DataAccess.Client.OracleConnection con, System.IntPtr pUdt) {
             OracleUdt.SetValue(con, pUdt, 0, this.m_OBJ_YAMEY_AVODA_OVDIM);
