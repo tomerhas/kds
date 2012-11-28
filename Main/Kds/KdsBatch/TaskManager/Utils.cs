@@ -220,7 +220,10 @@ namespace KdsBatch.TaskManager
                 iProcessRequest = oBatch.InsertProcessLog(13, 8, RecordStatus.Wait, "start RunCalculationPremyot", 0);
                
                 lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro, "RunCalculationPremyot", -12);
+                wsPremyot.UseDefaultCredentials = false;
                 wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
+                
+                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "User:" + ConfigurationSettings.AppSettings["RSUserName"].ToString());
                 wsPremyot.Timeout = 1000000000; 
                 bSuccess = wsPremyot.CalcPremyotNihulTnua();
 
