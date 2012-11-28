@@ -223,15 +223,17 @@ namespace KdsBatch.TaskManager
                 wsPremyot.UseDefaultCredentials = false;
                 wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
                 
-                clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "User:" + ConfigurationSettings.AppSettings["RSUserName"].ToString());
+                //clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "User:" + ConfigurationSettings.AppSettings["RSUserName"].ToString());
                 wsPremyot.Timeout = 1000000000; 
                 bSuccess = wsPremyot.CalcPremyotNihulTnua();
 
                 if (bSuccess)
                     clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Succeeded);
                 else
+                {
                     clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
-
+                    clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
+                }
                 oBatch.UpdateProcessLog(iProcessRequest, RecordStatus.Finish, "end RunCalculationPremyot",0);
          
             }
