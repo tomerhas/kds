@@ -6106,8 +6106,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgMakat", oTxt.Text);
             oTxt.ID = e.Row.ClientID + "MakatNumber";
             oTxt.CssClass = "WCPilutTxt";
-            if (EnabledValidator() && (iMisparKnisa==0))
-            {
+            //if (EnabledValidator() && (iMisparKnisa==0))
+            //{
                 oTxt.Attributes.Add("onchange", "chkMkt(" + e.Row.Cells[_COL_MAKAT].ClientID + "," + e.Row.Cells[_COL_MAKAT].ClientID + ");");
                 oTxt.Attributes.Add("onkeypress", " SetBtnChanges(); ");
                 oTxt.Attributes.Add("onfocus", " SetFocus('" + e.Row.ClientID + "'," + _COL_MAKAT + ");");
@@ -6130,7 +6130,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID, AjaxControlToolkit.ValidatorCalloutPosition.Right);
                 vldExtenderCallOut.BehaviorID = "vMNBeh" + e.Row.ClientID;
                 e.Row.Cells[_COL_MAKAT].Controls.Add(vldExtenderCallOut);
-           }
+          // }
            
             dShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "shat_yetzia").ToString());
             string sPeilutKey = string.Concat(((TextBox)(e.Row.Cells[_COL_SHAT_YETIZA].Controls[0])).ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
@@ -6281,11 +6281,11 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             iMisparKnisa = int.Parse(arrKnisaVal[0]);
             oTxt.Width = Unit.Pixel(40);
             oTxt.CssClass = "WCPilutTxt";
-            if (EnabledValidator() && (iMisparKnisa == 0))
-            {
+            //if (EnabledValidator() && (iMisparKnisa == 0))
+            //{
                 oTxt.Attributes.Add("onfocus", "this.className='WCPilutTxtF';");
                 oTxt.Attributes.Add("onblur", "this.className='WCPilutTxt';");
-            }
+            //}
             dOldShatYetiza = DateTime.Parse(DataBinder.Eval(e.Row.DataItem, "old_shat_yetzia").ToString());        
             iKisuyTor = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor").ToString());
             iKisuyTorMap = String.IsNullOrEmpty(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString()) ? 0 : int.Parse(DataBinder.Eval(e.Row.DataItem, "kisuy_tor_map").ToString());
@@ -6322,8 +6322,8 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
             oTxt.Attributes.Add("OrgEnabled", bEnabled.GetHashCode().ToString());            
             oTxt.ID = e.Row.ClientID + "ShatYetiza";            
             sTargetControlId = oTxt.ID;
-            if (EnabledValidator() && (iMisparKnisa == 0))
-            {
+            //if (EnabledValidator() && (iMisparKnisa == 0))
+            //{
                 oMaskEx = AddTimeMaskedEditExtender(sTargetControlId, e.Row.RowIndex, "99:99", "PeilutShatYetiza",
                                                     AjaxControlToolkit.MaskedEditType.Time, AjaxControlToolkit.MaskedEditShowSymbol.Left);
 
@@ -6343,7 +6343,7 @@ public partial class Modules_UserControl_ucSidurim : System.Web.UI.UserControl//
                 vldExtenderCallOut = AddCallOutValidator(sTargetControlId, sID, e.Row.ClientID,
                                                           AjaxControlToolkit.ValidatorCalloutPosition.Left);
                 e.Row.Cells[_COL_SHAT_YETIZA].Controls.Add(vldExtenderCallOut);
-            }
+           // }
             string sPeilutKey = string.Concat(oTxt.ClientID, "|", e.Row.Cells[_COL_KNISA].ClientID, "|", iSidurIndex, "|", e.Row.ClientID);
                        
             //DataRow[] dr = dtApprovals.Select("mafne_lesade='Shat_yetzia'");
