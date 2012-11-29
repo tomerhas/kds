@@ -145,6 +145,7 @@ namespace KdsBatch.History
                 objDal.AddParameter("p_file_name", ParameterType.ntOracleVarchar, name, ParameterDir.pdInput);
                 objDal.AddParameter(ParameterName, ParameterType.ntOracleArray, CollObject, ParameterDir.pdInput, TypeName);
                 objDal.ExecuteSP(ProcedureName);
+                GC.Collect();
             }
             catch (Exception ex)
             {
