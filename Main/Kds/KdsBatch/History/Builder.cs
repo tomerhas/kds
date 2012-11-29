@@ -52,6 +52,7 @@ namespace KdsBatch.History
         public void Dispose()
         {
             Items = null;
+            GC.Collect();
         }
     }
 }

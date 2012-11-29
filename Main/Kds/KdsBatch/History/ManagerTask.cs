@@ -23,12 +23,15 @@ namespace KdsBatch.History
             {
                 oTask = new KdsBatch.History.TaskDay(_lRequestNum, ';');
                  oTask.Run();
+                 GC.Collect();
                  oTask = null;
                  oTask = new KdsBatch.History.TaskSidur(_lRequestNum, ';');
                  oTask.Run();
+                 GC.Collect();
                  oTask = null;
                  oTask = new KdsBatch.History.TaskPeilut(_lRequestNum, ';');
                  oTask.Run();
+                 GC.Collect();
                  oTask = null;
 
                  iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();

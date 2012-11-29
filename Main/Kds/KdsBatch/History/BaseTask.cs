@@ -68,12 +68,12 @@ namespace KdsBatch.History
                         FillItemsToCollection(oBuild.Items[i], i);
                     }
                   //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
-                    SetCollection();
                     clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
+                    oBuild.Dispose();
+                    SetCollection();
                     InsertToDB(file);     
                     MoveFileToOld(file);
 
-                    oBuild.Dispose();
                     clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, _files.Length + " saved");
                 }
             }
