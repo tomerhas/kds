@@ -20,6 +20,7 @@ namespace KdsBatch.premyot {
     using System.Web.Services.Protocols;
     using System.ComponentModel;
     using System.Xml.Serialization;
+    using System.Net;
     
     
     /// <remarks/>
@@ -28,7 +29,17 @@ namespace KdsBatch.premyot {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="wsPremyotSoap", Namespace="http://tempuri.org/")]
     public partial class wsPremyot : System.Web.Services.Protocols.SoapHttpClientProtocol {
-        
+
+        protected override WebRequest GetWebRequest(Uri uri)
+        {
+            HttpWebRequest webRequest = (HttpWebRequest)base.GetWebRequest(uri);
+
+            webRequest.KeepAlive = false;
+
+            return webRequest;
+        }
+
+
         private System.Threading.SendOrPostCallback CalcPremyotNihulTnuaOperationCompleted;
         
         private System.Threading.SendOrPostCallback CalcPremyotNihulTnuaToMonthOperationCompleted;
