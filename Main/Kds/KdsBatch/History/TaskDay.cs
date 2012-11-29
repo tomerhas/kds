@@ -28,7 +28,7 @@ namespace KdsBatch.History
             _Collection = new COLL_YAMEY_AVODA_OVDIM(RecordsCount-1);
         }
 
-        protected override void FillItemsToCollection(string[] Item)
+        protected override void FillItemsToCollection(string[] Item, int index)
         {
             OBJ_YAMEY_AVODA_OVDIM oObjYameyAvodaUpd;
             int mispar_ishi = 0;
@@ -57,7 +57,7 @@ namespace KdsBatch.History
                     if (Item[9].Trim() != "")
                         oObjYameyAvodaUpd.HAMARAT_SHABAT = int.Parse(Item[9]);
 
-                    _Collection.AddToFixSizeCollection(oObjYameyAvodaUpd);
+                    _Collection.AddToFixSizeCollection(oObjYameyAvodaUpd, index);
                 }
             }
             catch (Exception ex)

@@ -29,7 +29,7 @@ namespace KdsBatch.History
         {
              _Collection = new COLL_OBJ_PEILUT_OVDIM(RecordsCount-1);
         }
-        protected override void FillItemsToCollection(string[] Item)
+        protected override void FillItemsToCollection(string[] Item,int index)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdim;
             int mispar_ishi = 0;
@@ -67,7 +67,7 @@ namespace KdsBatch.History
                     if (Item[13].Trim() != "")
                         oObjPeilutOvdim.TEUR_NESIA = Item[13];
 
-                    _Collection.AddToFixSizeCollection(oObjPeilutOvdim);
+                    _Collection.AddToFixSizeCollection(oObjPeilutOvdim, index);
                     }
             }
             catch (Exception ex)

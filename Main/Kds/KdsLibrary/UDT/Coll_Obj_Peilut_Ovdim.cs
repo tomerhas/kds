@@ -53,9 +53,9 @@ namespace KdsLibrary.UDT
             }
         }
 
-        public void AddToFixSizeCollection(OBJ_PEILUT_OVDIM Object)
+        public void AddToFixSizeCollection(OBJ_PEILUT_OVDIM Object, int index)
         {
-            m_OBJ_PEILUT_OVDIM[m_OBJ_PEILUT_OVDIM.Rank] = Object;
+            m_OBJ_PEILUT_OVDIM[index] = Object;
         }
 
         public virtual bool IsNull {

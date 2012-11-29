@@ -39,7 +39,7 @@ namespace KdsBatch.History
             _lRequestNum = lRequestNum;
         }
 
-        protected abstract void FillItemsToCollection(string[] Item);
+        protected abstract void FillItemsToCollection(string[] Item, int index);
         protected abstract void AllocateCollection();
         protected abstract void SetCollection();
 
@@ -63,7 +63,11 @@ namespace KdsBatch.History
                     
                     oBuild.Build();
                     AllocateCollection();
-                    oBuild.Items.ForEach(item => FillItemsToCollection(item));
+                    for (int i=0;i<oBuild.Items.Count; i++)
+                    {
+                        FillItemsToCollection(oBuild.Items[i], i);
+                    }
+                  //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
                     SetCollection();
                     clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
                     InsertToDB(file);     

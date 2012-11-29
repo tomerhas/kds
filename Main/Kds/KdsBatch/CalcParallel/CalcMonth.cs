@@ -5745,12 +5745,12 @@ namespace KdsBatch
             float fSumDakotRechiv, fTempZ;
             try
             {
-                if ((objOved.objMeafyeneyOved.iMeafyen15 > 0))
-                {
-                    fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen15;
-                }
-                else
-                {
+                ////if ((objOved.objMeafyeneyOved.iMeafyen15 > 0))
+                ////{
+                ////    fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen15;
+                ////}
+                ////else
+                ////{
                     fTempZ = 0;
                     if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
                     {
@@ -5769,7 +5769,7 @@ namespace KdsBatch
                     {
                         fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen13 + fTempZ;
                     }
-                }
+                ////}
                 addRowToTable(clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)

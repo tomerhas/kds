@@ -80,9 +80,9 @@ namespace KdsLibrary.UDT
             }
         }
 
-        public void AddToFixSizeCollection(OBJ_YAMEY_AVODA_OVDIM Object)
+        public void AddToFixSizeCollection(OBJ_YAMEY_AVODA_OVDIM Object, int index)
         {
-            m_OBJ_YAMEY_AVODA_OVDIM[m_OBJ_YAMEY_AVODA_OVDIM.Rank] = Object;
+            m_OBJ_YAMEY_AVODA_OVDIM[index] = Object;
         }
 
         public void Add(OBJ_YAMEY_AVODA_OVDIM Object)

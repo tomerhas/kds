@@ -52,9 +52,9 @@ namespace KdsLibrary.UDT
             }
         }
 
-        public void AddToFixSizeCollection(OBJ_SIDURIM_OVDIM Object)
+        public void AddToFixSizeCollection(OBJ_SIDURIM_OVDIM Object, int index)
         {
-            m_OBJ_SIDURIM_OVDIM[m_OBJ_SIDURIM_OVDIM.Rank] = Object;
+            m_OBJ_SIDURIM_OVDIM[index] = Object;
         }
         public void Add(OBJ_SIDURIM_OVDIM Object)
         {
