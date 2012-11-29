@@ -23,7 +23,11 @@ namespace KdsLibrary.UDT
         private bool m_IsNull;
         private int _Count;
         private OBJ_PEILUT_OVDIM[] m_OBJ_PEILUT_OVDIM;
-        
+
+        public COLL_OBJ_PEILUT_OVDIM(int Size)
+        {
+            m_OBJ_PEILUT_OVDIM = new OBJ_PEILUT_OVDIM[Size];
+        }
         public COLL_OBJ_PEILUT_OVDIM() {
             // TODO : Add code to initialise the object
         }
@@ -47,6 +51,11 @@ namespace KdsLibrary.UDT
             {
                 throw new ArgumentException("Object is not a OBJ_PEILUT_OVDIM");
             }
+        }
+
+        public void AddToFixSizeCollection(OBJ_PEILUT_OVDIM Object)
+        {
+            m_OBJ_PEILUT_OVDIM[m_OBJ_PEILUT_OVDIM.Rank] = Object;
         }
 
         public virtual bool IsNull {

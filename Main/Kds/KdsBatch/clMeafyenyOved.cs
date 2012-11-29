@@ -158,6 +158,13 @@ namespace KdsBatch
                 return Meafyenim[14].FloatValue;
             }
         }
+        public float iMeafyen15
+        {
+            get
+            {
+                return Meafyenim[15].FloatValue;
+            }
+        }
         public int iMeafyen16
         {
             get
@@ -573,6 +580,10 @@ namespace KdsBatch
         public bool Meafyen14Exists
         {
             get { return Meafyenim[14].IsExist; }
+        }
+        public bool Meafyen15Exists
+        {
+            get { return Meafyenim[15].IsExist; }
         }
         public bool Meafyen16Exists
         {

@@ -19,12 +19,16 @@ namespace KdsBatch.History
             TypeName = "COLL_OBJ_PEILUT_OVDIM";
             ParameterName = "p_coll_obj_peilut_ovdim";
             CollType = TypeTask.Peilut;
-            _Collection = new COLL_OBJ_PEILUT_OVDIM();
+          //  _Collection = new COLL_OBJ_PEILUT_OVDIM();
             Pattern = "BZAP";
             PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
             PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
 
+        protected override void AllocateCollection()
+        {
+             _Collection = new COLL_OBJ_PEILUT_OVDIM(RecordsCount-1);
+        }
         protected override void FillItemsToCollection(string[] Item)
         {
             OBJ_PEILUT_OVDIM oObjPeilutOvdim;
@@ -63,7 +67,7 @@ namespace KdsBatch.History
                     if (Item[13].Trim() != "")
                         oObjPeilutOvdim.TEUR_NESIA = Item[13];
 
-                    _Collection.Add(oObjPeilutOvdim);
+                    _Collection.AddToFixSizeCollection(oObjPeilutOvdim);
                     }
             }
             catch (Exception ex)
@@ -81,5 +85,7 @@ namespace KdsBatch.History
         {
             CollObject = _Collection;
         }
+
+       
     }
 }

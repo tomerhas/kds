@@ -18,12 +18,16 @@ namespace KdsBatch.History
             TypeName = "COLL_SIDURIM_OVDIM";
             ParameterName = "p_coll_sidurim_ovdim";
             CollType = TypeTask.Sidur;
-            _Collection = new COLL_SIDURIM_OVDIM();
+           // _Collection = new COLL_SIDURIM_OVDIM();
             Pattern = "BZAS";
             PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
             PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
 
+        protected override void AllocateCollection()
+        {
+            _Collection = new COLL_SIDURIM_OVDIM(RecordsCount-1);
+        }
         protected override void FillItemsToCollection(string[] Item)
         {
             OBJ_SIDURIM_OVDIM oObjSidurimOvdim;
@@ -74,7 +78,7 @@ namespace KdsBatch.History
                         oObjSidurimOvdim.SUG_SIDUR = int.Parse(Item[18]);
 
                     // clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "_Collection.Count= " + _Collection.Count);
-                    _Collection.Add(oObjSidurimOvdim);
+                    _Collection.AddToFixSizeCollection(oObjSidurimOvdim);
                 }
             }
             catch (Exception ex)
@@ -94,5 +98,7 @@ namespace KdsBatch.History
             CollObject = _Collection;
         }
 
+
+  
     }
 }

@@ -5745,25 +5745,31 @@ namespace KdsBatch
             float fSumDakotRechiv, fTempZ;
             try
             {
-                fTempZ = 0;
-                if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                if ((objOved.objMeafyeneyOved.iMeafyen15 > 0))
                 {
-                    fTempZ = 3;
-                }
-                else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
-                {
-                    fTempZ = 6;
-                }
-
-                if (objOved.objMeafyeneyOved.iMeafyen13 == -1)
-                {
-                    throw new Exception("null מאפיין 13 התקבל עם ערך");
+                    fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen15;
                 }
                 else
                 {
-                    fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen13 + fTempZ;
-                }
+                    fTempZ = 0;
+                    if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKshishon.GetHashCode())
+                    {
+                        fTempZ = 3;
+                    }
+                    else if (objOved.objPirteyOved.iGil == clGeneral.enKodGil.enKashish.GetHashCode())
+                    {
+                        fTempZ = 6;
+                    }
 
+                    if (objOved.objMeafyeneyOved.iMeafyen13 == -1)
+                    {
+                        throw new Exception("null מאפיין 13 התקבל עם ערך");
+                    }
+                    else
+                    {
+                        fSumDakotRechiv = objOved.objMeafyeneyOved.iMeafyen13 + fTempZ;
+                    }
+                }
                 addRowToTable(clGeneral.enRechivim.MichsatShaotNosafotNihul.GetHashCode(), fSumDakotRechiv);
             }
             catch (Exception ex)

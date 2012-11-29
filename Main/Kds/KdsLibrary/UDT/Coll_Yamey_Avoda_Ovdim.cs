@@ -23,7 +23,11 @@ namespace KdsLibrary.UDT
         private int _Count;
 
         private OBJ_YAMEY_AVODA_OVDIM[] m_OBJ_YAMEY_AVODA_OVDIM;
-        
+        public COLL_YAMEY_AVODA_OVDIM(int Size)
+        {
+            m_OBJ_YAMEY_AVODA_OVDIM = new OBJ_YAMEY_AVODA_OVDIM[Size];
+        }
+
         public COLL_YAMEY_AVODA_OVDIM() {
             // TODO : Add code to initialise the object
         }
@@ -74,6 +78,11 @@ namespace KdsLibrary.UDT
             {
                 return this._Count;
             }
+        }
+
+        public void AddToFixSizeCollection(OBJ_YAMEY_AVODA_OVDIM Object)
+        {
+            m_OBJ_YAMEY_AVODA_OVDIM[m_OBJ_YAMEY_AVODA_OVDIM.Rank] = Object;
         }
 
         public void Add(OBJ_YAMEY_AVODA_OVDIM Object)

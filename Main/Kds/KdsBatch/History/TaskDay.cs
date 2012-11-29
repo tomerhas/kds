@@ -18,10 +18,14 @@ namespace KdsBatch.History
             TypeName = "COLL_YAMEY_AVODA_OVDIM";
             ParameterName = "p_coll_yamey_avoda_ovdim";
             CollType = TypeTask.Day;
-            _Collection = new COLL_YAMEY_AVODA_OVDIM();
+            //_Collection = new COLL_YAMEY_AVODA_OVDIM();
             Pattern = "BZAY";
             PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
             PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
+        }
+        protected override void AllocateCollection()
+        {
+            _Collection = new COLL_YAMEY_AVODA_OVDIM(RecordsCount-1);
         }
 
         protected override void FillItemsToCollection(string[] Item)
@@ -53,7 +57,7 @@ namespace KdsBatch.History
                     if (Item[9].Trim() != "")
                         oObjYameyAvodaUpd.HAMARAT_SHABAT = int.Parse(Item[9]);
 
-                    _Collection.Add(oObjYameyAvodaUpd);
+                    _Collection.AddToFixSizeCollection(oObjYameyAvodaUpd);
                 }
             }
             catch (Exception ex)

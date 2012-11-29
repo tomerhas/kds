@@ -23,6 +23,10 @@ namespace KdsLibrary.UDT
         private OBJ_SIDURIM_OVDIM[] m_OBJ_SIDURIM_OVDIM;
         private int _Count;
 
+        public COLL_SIDURIM_OVDIM(int Size)
+        {
+            m_OBJ_SIDURIM_OVDIM = new OBJ_SIDURIM_OVDIM[Size];
+        }
         public COLL_SIDURIM_OVDIM() {
             // TODO : Add code to initialise the object
             m_IsNull = false;
@@ -48,6 +52,10 @@ namespace KdsLibrary.UDT
             }
         }
 
+        public void AddToFixSizeCollection(OBJ_SIDURIM_OVDIM Object)
+        {
+            m_OBJ_SIDURIM_OVDIM[m_OBJ_SIDURIM_OVDIM.Rank] = Object;
+        }
         public void Add(OBJ_SIDURIM_OVDIM Object)
         {
             if (Object.IsNull) return;

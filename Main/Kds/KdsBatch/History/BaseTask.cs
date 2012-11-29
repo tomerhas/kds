@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 using Oracle.DataAccess.Types;
 using KdsLibrary.DAL;
 using System.Data;
@@ -39,7 +40,16 @@ namespace KdsBatch.History
         }
 
         protected abstract void FillItemsToCollection(string[] Item);
+        protected abstract void AllocateCollection();
         protected abstract void SetCollection();
+
+        protected int RecordsCount
+        {
+            get
+            {
+               return oBuild.Items.Count();
+            }
+        }
 
 
         public void Run()
@@ -52,8 +62,10 @@ namespace KdsBatch.History
                     oBuild = new Builder(file, _del);
                     
                     oBuild.Build();
+                    AllocateCollection();
                     oBuild.Items.ForEach(item => FillItemsToCollection(item));
                     SetCollection();
+                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
                     InsertToDB(file);     
                     MoveFileToOld(file);
 
@@ -99,15 +111,18 @@ namespace KdsBatch.History
         
         protected DateTime GetDateTime(string sDate)
         {
-            string sTaarich;
+            //string sTaarich;
             try
             {
-                sTaarich = sDate.Substring(6, 2) + "/" + sDate.Substring(4, 2) + "/" + sDate.Substring(0, 4);
-                if (sDate.Length > 8)
-                {
-                    sTaarich += " " + sDate.Substring(8, 2) + ":" + sDate.Substring(10, 2) + ":00";
-                }
-                return DateTime.Parse(sTaarich);
+                string format = (sDate.Length > 8) ? "yyyyMMddHHmm" : "yyyyMMdd";
+                return  DateTime.ParseExact(sDate, format, CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                //sTaarich = sDate.Substring(6, 2) + "/" + sDate.Substring(4, 2) + "/" + sDate.Substring(0, 4);
+                //if (sDate.Length > 8)
+                //{
+                //    sTaarich += " " + sDate.Substring(8, 2) + ":" + sDate.Substring(10, 2) + ":00";
+                //}
+                //return DateTime.Parse(sTaarich);
             }
             catch (Exception ex)
             {
