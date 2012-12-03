@@ -47,7 +47,7 @@ namespace KdsBatch.History
                     if (Item[4].Trim() != "")
                         oObjYameyAvodaUpd.TACHOGRAF = Item[4];
                     if (Item[5].Trim() != "")
-                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = int.Parse(Item[5]);
+                        oObjYameyAvodaUpd.BITUL_ZMAN_NESIOT = decimal.Parse(Item[5]);
                     if (Item[6].Trim() != "")
                         oObjYameyAvodaUpd.HALBASHA = decimal.Parse(Item[6]);
                     if (Item[7].Trim() != "")
@@ -62,12 +62,12 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                string ItemList = "Count of Items" + Item.Count() + ":";
+                string ItemList = "index:" + index + ",Count:" + Item.Count() + ",List:";
                 foreach (var item in Item)
                 {
                     ItemList += item + ",";
                 }
-                throw new Exception("FillItemsToCollectionY Error: " + ex.Message + "\n" + ex.StackTrace + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
+                throw new Exception("FillItemsToCollectionY Error: " + ex.Message + "\n" + ex.StackTrace + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + ItemList);
             }
         }
 

@@ -74,7 +74,7 @@ namespace KdsBatch.History
                     InsertToDB(file);     
                     MoveFileToOld(file);
 
-                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, _files.Length + " saved");
+                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file + " saved");
                 }
             }
             catch (Exception ex)

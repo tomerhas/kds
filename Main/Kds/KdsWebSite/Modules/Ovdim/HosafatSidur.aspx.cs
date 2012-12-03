@@ -174,6 +174,7 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
             BindGridPeiluyot();
             pirteySidur.Style["display"] = "inline";
             btnHosafa.Style["display"] = "inline";
+            divPirteySidur.Style["display"] = "inline";
             txtShatHatchala.Focus();
 
         }
@@ -203,13 +204,14 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         try
         {
             dsSidur = oKavim.GetSidurAndPeiluyotFromTnua(int.Parse(lblMisSidur.Text), DateTime.Parse(TaarichCA.Value),1,out result);
+            
             //     dtMustElemnts = (DataTable)Session["ELEMENTS"];
             if (result == 0)
             {
                 //שעת התחלה ושעת גמר
                 if (dsSidur.Tables[1].Rows.Count > 0)
                 {
-
+                    SetPirteySidurlbls(dsSidur.Tables[0].Rows[0]);
                     shatHatchala = clGeneral.GetDateTimeFromStringHour(dsSidur.Tables[1].Rows[0]["SHAA"].ToString(),DateTime.Parse(TaarichCA.Value)); 
                     shaa = shatHatchala.ToShortTimeString();
                     txtShatHatchala.Text = shaa;
@@ -333,6 +335,16 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         }
     }
 
+    private void SetPirteySidurlbls(DataRow drSidur )
+    {
+        lblKm.Text = drSidur["km"].ToString();
+        lblDakotN.Text = drSidur["Presence"].ToString();
+        lblDakotZ.Text = drSidur["Premium"].ToString();
+        lblElements.Text = drSidur["element_mazan"].ToString();
+        lblKisuyTor.Text = drSidur["kisui_tor"].ToString();
+        lblSugRechev.Text = drSidur["bus_type"].ToString();
+        lblKodMigun.Text = drSidur["migun"].ToString();
+    }
     protected string getKisuyTorString(int kisuyTor, DateTime shatYezia)
     {
         string shaa;

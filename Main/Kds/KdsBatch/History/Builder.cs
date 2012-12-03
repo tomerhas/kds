@@ -28,23 +28,24 @@ namespace KdsBatch.History
         public void Build()
         {
 
-            string textRow;
-            string[] textRowArr;
             try
             {
                 using (StreamReader reader = new StreamReader(_fileName, Encoding.Default))
                 {
+                    string textRow;
+                    string[] textRowArr;
                     while (reader.Peek() > 0)
                     {
                         textRow = reader.ReadLine();
                         textRowArr = textRow.Split(_delimeter);
                         Items.Add(textRowArr);
                     }
+                    GC.Collect();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Builder Error: " + ex.Message);
+                throw new Exception("Builder Error: " + ex.Message + "\n" + ex.StackTrace);
             }
         }
 

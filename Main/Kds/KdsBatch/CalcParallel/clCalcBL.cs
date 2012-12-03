@@ -458,7 +458,10 @@ namespace KdsBatch
         public void ChishuvMichsatYom(Oved oved)
         {
             DateTime d_taarich = oved.Month;
+            clMeafyenyOved objMeafyeneyOved = null;
+            clPirteyOved objPirteyOved = null;
             DataRow[] dr;
+            int iSugYom;
             try
             {
                 dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString());
@@ -466,11 +469,18 @@ namespace KdsBatch
                 {
                     while (oved.fmichsatYom == 0)
                     {
-                        dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + d_taarich.ToShortDateString() + "', 'System.DateTime')");
-                        if (dr.Length > 0 && float.Parse(dr[0]["ERECH_RECHIV"].ToString())>0)
+                        objMeafyeneyOved = oved.MeafyeneyOved.Find(Meafyenim => Meafyenim._Taarich == d_taarich);
+                        objPirteyOved = oved.PirteyOved.Find(Pratim => (Pratim._TaarichMe <= d_taarich && Pratim._TaarichAd >= d_taarich));
+                        iSugYom = GetSugYomLemichsa(oved, d_taarich, objPirteyOved.iKodSectorIsuk, objMeafyeneyOved.iMeafyen56);
+
+                        if (iSugYom == clGeneral.enSugYom.Chol.GetHashCode())
                         {
-                            oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
-                            break;
+                            dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString() + " and taarich=Convert('" + d_taarich.ToShortDateString() + "', 'System.DateTime')");
+                            if (dr.Length > 0 && float.Parse(dr[0]["ERECH_RECHIV"].ToString()) > 0)
+                            {
+                                oved.fmichsatYom = float.Parse(dr[0]["ERECH_RECHIV"].ToString());
+                                break;
+                            }
                         }
                         d_taarich = d_taarich.AddDays(1);
                     }

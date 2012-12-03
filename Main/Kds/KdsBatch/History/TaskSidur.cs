@@ -83,12 +83,12 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                string ItemList = "Count of Items" + Item.Count() + ":";
+                string ItemList = "index:"+ index +",Count:" + Item.Count() + ",List:";
                 foreach (var item in Item)
                 {
                     ItemList += item + ",";
                 }
-                throw new Exception("FillItemsToCollectionS Error: " + ex.Message +"\n" + ex.StackTrace+ " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
+                throw new Exception("FillItemsToCollectionS Error: " + ex.Message +"\n" + ex.StackTrace+ " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + ItemList);
 
             }
         }

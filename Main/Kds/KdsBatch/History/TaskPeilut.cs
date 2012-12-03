@@ -51,15 +51,15 @@ namespace KdsBatch.History
                     if (Item[5].Trim() != "")
                         oObjPeilutOvdim.MISPAR_KNISA = int.Parse(Item[5]);
                     if (Item[6].Trim() != "")
-                        oObjPeilutOvdim.MAKAT_NESIA = int.Parse(Item[6]);
+                        oObjPeilutOvdim.MAKAT_NESIA = long.Parse(Item[6]);
                     if (Item[7].Trim() != "")
-                        oObjPeilutOvdim.OTO_NO = int.Parse(Item[7]);
+                        oObjPeilutOvdim.OTO_NO = long.Parse(Item[7]);
                     if (Item[8].Trim() != "")
                         oObjPeilutOvdim.KISUY_TOR = int.Parse(Item[8]);
                     if (Item[9].Trim() != "")
                         oObjPeilutOvdim.SNIF_TNUA = int.Parse(Item[9]);
                     if (Item[10].Trim() != "")
-                        oObjPeilutOvdim.MISPAR_VISA = int.Parse(Item[10]);
+                        oObjPeilutOvdim.MISPAR_VISA = long.Parse(Item[10]);
                     if (Item[11].Trim() != "")
                         oObjPeilutOvdim.DAKOT_BAFOAL = int.Parse(Item[11]);
                     if (Item[12].Trim() != "")
@@ -72,12 +72,12 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                string ItemList = "Count of Items" + Item.Count() + ":";
+                string ItemList = "index:" + index + ",Count:" + Item.Count() + ",List:";
                 foreach (var item in Item)
                 {
                     ItemList += item + ",";
                 }
-                throw new Exception("FillItemsToCollectionP Error: " + ex.Message +"\n" + ex.StackTrace + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + "Items:" + ItemList);
+                throw new Exception("FillItemsToCollectionP Error: " + ex.Message +"\n" + ex.StackTrace + " mispar_ishi=" + mispar_ishi + ",count:" + _Collection.Count + ItemList);
             }
         }
 

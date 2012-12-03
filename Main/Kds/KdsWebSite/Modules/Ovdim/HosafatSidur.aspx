@@ -1224,7 +1224,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
     <asp:UpdatePanel  ID="UpdatePanel1" runat="server"  UpdateMode="Always">
-        <ContentTemplate>                  
+        <ContentTemplate>       
+                   
              <input type="button" ID="btnShowMessage" runat="server" onclick="btnShowMessage_Click()" style="display: none;" />
                 <cc1:ModalPopupExtender ID="ModalPopupEx" DropShadow="false" X="300" Y="200" PopupControlID="paMessage"
                     TargetControlID="btnShowMessage"  runat="server">
@@ -1255,7 +1256,31 @@
                             </td>
                         </tr>
                     </table>   
-                  </asp:Panel>          
+                  </asp:Panel>   
+       <div id="divPirteySidur" runat="server" style="display:none;text-align:right;">
+           <%-- <span dir="rtl" class="TitleLable" >פרטי הסידור:</span>--%>
+            <table width="970px"  style="text-align:center"  cellpadding="1" cellspacing="0">
+                <tr class="WorkCardRechivimGridHeader" style="font-size:medium" >
+                    <td class="ItemRow">ק''מ</td>
+                    <td class="ItemRow">דקות נוכחות</td>
+                    <td class="ItemRow">דקות זכות</td>
+                    <td class="ItemRow">דקות אלמנטים</td>
+                    <td class="ItemRow">דקות כיסוי תור</td>
+                    <td class="ItemRow">סוג רכב נדרש</td>
+                    <td class="ItemRow">קוד מיגון נדרש</td>
+                </tr>
+                <tr class="GridAltRow">
+                    <td class="ItemRow"><asp:Label ID="lblKm" runat="server"></asp:Label></td>
+                    <td class="ItemRow"><asp:Label ID="lblDakotN" runat="server"></asp:Label></td>
+                    <td class="ItemRow"><asp:Label ID="lblDakotZ" runat="server"></asp:Label></td>
+                    <td class="ItemRow"><asp:Label ID="lblElements" runat="server"></asp:Label></td>
+                    <td class="ItemRow"><asp:Label ID="lblKisuyTor" runat="server"></asp:Label></td>
+                     <td class="ItemRow"><asp:Label ID="lblSugRechev" runat="server"></asp:Label></td>
+                    <td class="ItemRow"> <asp:Label ID="lblKodMigun" runat="server"></asp:Label></td>     
+               </tr>
+            </table>
+            <br />
+           </div> 
              <div visible="true" style="height:480px;width:970px;overflow:hidden;border:1px black" dir="rtl">
                 <div id="pirteySidur" runat="server" style="display:none;width:826px;height:480px;border:1px black">
                     <table style="width:826px; height:480px"  cellspacing="0" >
