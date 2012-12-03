@@ -4,23 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 using KdsLibrary;
-
+using KdsLibrary.BL;
 namespace KdsBatch.History
 {
     public class ManagerTask
     {
-        private long _lRequestNum;
+       private long _lRequestNum;
         public ManagerTask(long lRequestNum)
         {
-            _lRequestNum = lRequestNum;
+         //   _lRequestNum = lRequestNum;
         }
 
         public void Run()
         {
             BaseTask oTask;
             int iStatus = 0;
+           // long _lRequestNum;
+            clBatch objBatch = new clBatch();
             try
             {
+               _lRequestNum = objBatch.RunErrorBatch(clGeneral.enGeneralBatchType.HasavatNetuniToOracle, "נתוני אורקל", clGeneral.enStatusRequest.InProcess, -12);
+           
                 oTask = new KdsBatch.History.TaskDay(_lRequestNum, ';');
                  oTask.Run();
                  GC.Collect();
