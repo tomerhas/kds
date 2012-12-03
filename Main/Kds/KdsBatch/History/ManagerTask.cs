@@ -12,7 +12,11 @@ namespace KdsBatch.History
        private long _lRequestNum;
         public ManagerTask(long lRequestNum)
         {
-         //   _lRequestNum = lRequestNum;
+           _lRequestNum = lRequestNum;
+        }
+        public ManagerTask()
+        {
+            //   _lRequestNum = lRequestNum;
         }
 
         public void Run()
