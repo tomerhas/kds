@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace KdsBatch.History
 {
-    public class TaskDay : BaseTask
+    public class TaskDay : BaseTask 
     {
         private COLL_YAMEY_AVODA_OVDIM _Collection;
         public TaskDay(long lRequestNum, char del)
@@ -74,6 +74,11 @@ namespace KdsBatch.History
         protected override void SetCollection()
         {
             CollObject = _Collection;
+        }
+
+        public override void Dispose()
+        {
+            _Collection.Dispose();
         }
     }
 }

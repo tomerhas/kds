@@ -27,8 +27,7 @@ namespace KdsBatch.History
             clBatch objBatch = new clBatch();
             try
             {
-               _lRequestNum = objBatch.RunErrorBatch(clGeneral.enGeneralBatchType.HasavatNetuniToOracle, "נתוני אורקל", clGeneral.enStatusRequest.InProcess, -12);
-           
+             //  _lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.HasavatNetuniToOracle, "נתוני אורקל", -12);
                 oTask = new KdsBatch.History.TaskDay(_lRequestNum, ';');
                  oTask.Run();
                  GC.Collect();

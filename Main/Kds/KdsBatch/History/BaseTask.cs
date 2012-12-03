@@ -42,6 +42,7 @@ namespace KdsBatch.History
         protected abstract void FillItemsToCollection(string[] Item, int index);
         protected abstract void AllocateCollection();
         protected abstract void SetCollection();
+        protected abstract void Dispose();
 
         protected int RecordsCount
         {
@@ -73,6 +74,7 @@ namespace KdsBatch.History
                     SetCollection();
                     InsertToDB(file);     
                     MoveFileToOld(file);
+                    Dispose();
 
                     clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file + " saved");
                 }

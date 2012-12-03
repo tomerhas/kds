@@ -8,7 +8,7 @@ using System.Configuration;
 
 namespace KdsBatch.History
 {
-    public class TaskPeilut : BaseTask
+    public class TaskPeilut : BaseTask 
     {
 
         private COLL_OBJ_PEILUT_OVDIM _Collection;
@@ -86,6 +86,11 @@ namespace KdsBatch.History
             CollObject = _Collection;
         }
 
-       
+
+
+        public override void Dispose()
+        {
+            _Collection.Dispose();
+        }
     }
 }

@@ -40,7 +40,9 @@ namespace KdsBatch.History
                         textRowArr = textRow.Split(_delimeter);
                         Items.Add(textRowArr);
                     }
-                    GC.Collect();
+                    reader.Close();
+                    reader.Dispose();
+                    GC.Collect();   
                 }
             }
             catch (Exception ex)
