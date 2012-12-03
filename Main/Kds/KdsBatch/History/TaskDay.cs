@@ -76,7 +76,7 @@ namespace KdsBatch.History
             CollObject = _Collection;
         }
 
-        public override void Dispose()
+        protected override void Dispose()
         {
             _Collection.Dispose();
         }

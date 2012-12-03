@@ -101,7 +101,7 @@ namespace KdsBatch.History
 
 
 
-        public override void Dispose()
+        protected override void Dispose()
         {
             _Collection.Dispose();
         }
