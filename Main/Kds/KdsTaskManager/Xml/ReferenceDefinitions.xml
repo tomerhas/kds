@@ -4,5 +4,6 @@
   <Reference Name="KdsBatch.clCalculation" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsBatch.dll" />
   <Reference Name="KdsBatch.HrWorkersChanges.clMain" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsBatch.dll" />
   <Reference Name="KdsBatch.TaskManager.Utils" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsBatch.dll" />
+  <Reference Name="KdsBatch.History.ManagerTask" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsBatch.dll" />
   <Reference Name="KdsLibrary.TaskManager.Utils" FullPath="C:\dev\kds\Main\Kds\KdsTaskManager\bin\Debug\KdsLibrary.dll" />
 </ReferenceDefinitions>
