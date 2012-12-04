@@ -76,9 +76,9 @@ namespace KdsLibrary
         public const string cProRefreshTable = "PKG_BATCH.pro_RefreshMv";
         public const string cProGetMakatimLeTkinut = "PKG_BATCH.pro_Get_Makatim_LeTkinut";
 
-        public const string cProInsYameyAvodaHistory = "Pkg_Batch.Pro_Ins_Yamey_Avoda_History";
-        public const string cProInsSidurimOvdimHistory = "Pkg_Batch.Pro_Ins_Sidurim_Ovdim_History";
-        public const string cProInsPeilutOvdimHistory = "Pkg_Batch.Pro_Ins_Peilut_Ovdim_History";
+        public const string cProInsYameyAvodaHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Yamim";
+        public const string cProInsSidurimOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Sidurim";
+        public const string cProInsPeilutOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Peilut";
         public const string cProInsNetuneyHistory = "KDSADMIN.Ins_netuney_historiya_chodshi";
 #endregion 
         #region pkg_sdrn constants

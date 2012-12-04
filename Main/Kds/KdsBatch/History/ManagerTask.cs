@@ -26,7 +26,7 @@ namespace KdsBatch.History
         {
             List<string[]> FilesName;
             string[] patterns = new string[3];
-            string path, FileNameOld;
+            string path, pathOld,FileNameOld;
             string[] files;
             int iStatus = 0;
             try
@@ -34,6 +34,7 @@ namespace KdsBatch.History
                 FilesName = new List<string[]>();
                 patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
+                pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
                 clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
                 if (Directory.Exists(path))
                 {
@@ -68,8 +69,8 @@ namespace KdsBatch.History
 
                                 FileNameOld = file.Replace(".TXT", ".old");
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
-                                File.Copy(file, FileNameOld);
-                                File.Delete(file);
+                                FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
+                                File.Move(file, FileNameOld);
                             }
                             catch (Exception ex)
                             {
@@ -159,7 +160,20 @@ namespace KdsBatch.History
                            
                             try{
 
-                                InsertToDB(file);
+                                switch (i)
+                                {
+                                    case 0:
+                                        InsertToDB(clGeneral.cProInsYameyAvodaHistory,file);
+                                        break;
+                                    case 1:
+                                        InsertToDB(clGeneral.cProInsSidurimOvdimHistory, file);
+                                        break;
+                                    case 2:
+                                        InsertToDB(clGeneral.cProInsPeilutOvdimHistory, file);
+                                        break;
+                                }
+
+                               
 
                                 FileNameOld = file.Replace(".TXT", ".old");
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
@@ -190,7 +204,7 @@ namespace KdsBatch.History
             }
         }
 
-        private void InsertToDB(string fileName)
+        private void InsertToDB(string procedure,string fileName)
         {
             clDal objDal = new clDal();
             string name;
@@ -199,7 +213,7 @@ namespace KdsBatch.History
                 name = fileName.Substring(fileName.LastIndexOf("\\") + 1);
                 objDal.AddParameter("bakasha_id", ParameterType.ntOracleInt64, _lRequestNum, ParameterDir.pdInput);
                 objDal.AddParameter("p_file_name", ParameterType.ntOracleVarchar, name, ParameterDir.pdInput);
-                objDal.ExecuteSP(clGeneral.cProInsNetuneyHistory);
+                objDal.ExecuteSP(procedure);
                //GC.Collect();
             }
             catch (Exception ex)
