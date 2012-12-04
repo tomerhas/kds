@@ -12,19 +12,31 @@ namespace KdsBatch.History
     {
 
         private COLL_OBJ_PEILUT_OVDIM _Collection;
-        public TaskPeilut(long lRequestNum, char del)
-            : base(lRequestNum, del)
+        ////public TaskPeilut(long lRequestNum, char del)
+        ////    : base(lRequestNum, del)
+        ////{
+        ////    ProcedureName = clGeneral.cProInsPeilutOvdimHistory;
+        ////    TypeName = "COLL_OBJ_PEILUT_OVDIM";
+        ////    ParameterName = "p_coll_obj_peilut_ovdim";
+        ////    CollType = TypeTask.Peilut;
+        ////  //  _Collection = new COLL_OBJ_PEILUT_OVDIM();
+        ////    Pattern = "BZAP";
+        ////    PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+        ////    PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
+        ////}
+
+        public TaskPeilut(long lRequestNum,string filename, char del)
+            : base(lRequestNum,filename, del)
         {
             ProcedureName = clGeneral.cProInsPeilutOvdimHistory;
             TypeName = "COLL_OBJ_PEILUT_OVDIM";
             ParameterName = "p_coll_obj_peilut_ovdim";
             CollType = TypeTask.Peilut;
-          //  _Collection = new COLL_OBJ_PEILUT_OVDIM();
+            //  _Collection = new COLL_OBJ_PEILUT_OVDIM();
             Pattern = "BZAP";
-            PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
-            PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
+            ////PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+            ////PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
-
         protected override void AllocateCollection()
         {
              _Collection = new COLL_OBJ_PEILUT_OVDIM(RecordsCount-1);

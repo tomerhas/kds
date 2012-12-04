@@ -18,7 +18,7 @@ namespace KdsLibrary.UDT
     using System.Collections;
 
     
-    public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable {
+    public class COLL_OBJ_PEILUT_OVDIM : INullable, IOracleCustomType, IXmlSerializable, IComparable,IDisposable {
         
         private bool m_IsNull;
         private int _Count;
@@ -149,6 +149,11 @@ namespace KdsLibrary.UDT
         public static COLL_OBJ_PEILUT_OVDIM Parse(string str) {
             // TODO : Add code needed to parse the string and get the object represented by the string
             return new COLL_OBJ_PEILUT_OVDIM();
+        }
+
+        public void Dispose()
+        {
+            m_OBJ_PEILUT_OVDIM = null;
         }
     }
     

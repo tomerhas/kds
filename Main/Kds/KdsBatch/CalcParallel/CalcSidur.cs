@@ -1438,7 +1438,7 @@ namespace KdsBatch
                     {
                         dShatHatchalaSidur = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_sidur"].ToString());
                         //  dShatHatchalaLetashlum = DateTime.Parse(_drSidurMeyuchad[I]["shat_hatchala_letashlum"].ToString());
-                        if ( dShatHatchalaSidur < objOved.objParameters.dKnisatShabat)
+                        if (objOved.SugYom == clGeneral.enSugYom.Shishi.GetHashCode() && dShatHatchalaSidur < objOved.objParameters.dKnisatShabat)
                             bChishuv = false;
                         if (bChishuv)
                         {

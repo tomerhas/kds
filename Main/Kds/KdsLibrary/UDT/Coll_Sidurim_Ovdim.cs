@@ -17,7 +17,7 @@ namespace KdsLibrary.UDT
     using System.Xml.Schema;
     
     
-    public class COLL_SIDURIM_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
+    public class COLL_SIDURIM_OVDIM : INullable, IOracleCustomType, IXmlSerializable,IDisposable {
         
         private bool m_IsNull;        
         private OBJ_SIDURIM_OVDIM[] m_OBJ_SIDURIM_OVDIM;
@@ -134,6 +134,11 @@ namespace KdsLibrary.UDT
         public static COLL_SIDURIM_OVDIM Parse(string str) {
             // TODO : Add code needed to parse the string and get the object represented by the string
             return new COLL_SIDURIM_OVDIM();
+        }
+
+        public void Dispose()
+        {
+            m_OBJ_SIDURIM_OVDIM = null;
         }
     }
     

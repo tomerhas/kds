@@ -20,6 +20,7 @@ namespace KdsBatch.History
         private char _del;
         protected long _lRequestNum;
         private string[] _files;
+        private string _filename;
 
         protected string ProcedureName;
         protected string TypeName;
@@ -33,12 +34,18 @@ namespace KdsBatch.History
         private Builder oBuild;
 
         public BaseTask() { }
-        public BaseTask(long lRequestNum, char del)
-        {
-             _del = del;
-            _lRequestNum = lRequestNum;
-        }
+        //public BaseTask(long lRequestNum, char del)
+        //{
+        //     _del = del;
+        //    _lRequestNum = lRequestNum;
+        //}
 
+        public BaseTask(long lRequestNum, string file,char del)
+        {
+            _del = del;
+            _lRequestNum = lRequestNum;
+            _filename = file;
+        }
         protected abstract void FillItemsToCollection(string[] Item, int index);
         protected abstract void AllocateCollection();
         protected abstract void SetCollection();
@@ -52,38 +59,67 @@ namespace KdsBatch.History
             }
         }
 
-
         public void Run()
         {
             try
             {
-                SetFiles();
-                foreach (string file in _files)
-                {
-                    oBuild = new Builder(file, _del);
-                    
+
+                oBuild = new Builder(_filename, _del);
+
                     oBuild.Build();
                     AllocateCollection();
-                    for (int i=0;i<oBuild.Items.Count; i++)
+                    for (int i = 0; i < oBuild.Items.Count; i++)
                     {
                         FillItemsToCollection(oBuild.Items[i], i);
                     }
-                  //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
+                    //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
                     clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
                     oBuild.Dispose();
                     SetCollection();
-                    InsertToDB(file);     
-                    MoveFileToOld(file);
+                    InsertToDB(_filename);
+                  //  MoveFileToOld(_filename);
                     Dispose();
 
-                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file + " saved");
-                }
+                    clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, _filename + " saved");
+                
             }
             catch (Exception ex)
             {
                 throw new Exception("Run History Error: " + ex.Message);
             }
         }
+
+        //////public void Run()
+        //////{
+        //////    try
+        //////    {
+        //////        SetFiles();
+        //////        foreach (string file in _files)
+        //////        {
+        //////            oBuild = new Builder(file, _del);
+                    
+        //////            oBuild.Build();
+        //////            AllocateCollection();
+        //////            for (int i=0;i<oBuild.Items.Count; i++)
+        //////            {
+        //////                FillItemsToCollection(oBuild.Items[i], i);
+        //////            }
+        //////          //  oBuild.Items.ForEach(item => FillItemsToCollection(item,0));
+        //////            clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "Items Count= " + oBuild.Items.Count.ToString());
+        //////            oBuild.Dispose();
+        //////            SetCollection();
+        //////            InsertToDB(file);     
+        //////            MoveFileToOld(file);
+        //////            Dispose();
+
+        //////            clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file + " saved");
+        //////        }
+        //////    }
+        //////    catch (Exception ex)
+        //////    {
+        //////        throw new Exception("Run History Error: " + ex.Message);
+        //////    }
+        //////}
 
         private void SetFiles()
         {

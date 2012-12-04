@@ -11,8 +11,8 @@ namespace KdsBatch.History
     public class TaskSidur : BaseTask
     {
         private COLL_SIDURIM_OVDIM _Collection;
-        public TaskSidur(long lRequestNum, char del)
-            : base(lRequestNum, del)
+        public TaskSidur(long lRequestNum,string filename, char del)
+            : base(lRequestNum,filename, del)
         {
             ProcedureName = clGeneral.cProInsSidurimOvdimHistory;
             TypeName = "COLL_SIDURIM_OVDIM";

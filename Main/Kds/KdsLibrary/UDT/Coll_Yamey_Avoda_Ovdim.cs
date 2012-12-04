@@ -17,7 +17,7 @@ namespace KdsLibrary.UDT
     using System.Xml.Schema;
     
     
-    public class COLL_YAMEY_AVODA_OVDIM : INullable, IOracleCustomType, IXmlSerializable {
+    public class COLL_YAMEY_AVODA_OVDIM : INullable, IOracleCustomType, IXmlSerializable ,IDisposable {
         
         private bool m_IsNull;
         private int _Count;
@@ -133,6 +133,11 @@ namespace KdsLibrary.UDT
         public static COLL_YAMEY_AVODA_OVDIM Parse(string str) {
             // TODO : Add code needed to parse the string and get the object represented by the string
             return new COLL_YAMEY_AVODA_OVDIM();
+        }
+
+        public void Dispose()
+        {
+            m_OBJ_YAMEY_AVODA_OVDIM = null; 
         }
     }
     

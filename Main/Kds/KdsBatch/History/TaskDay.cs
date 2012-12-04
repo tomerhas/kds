@@ -11,8 +11,21 @@ namespace KdsBatch.History
     public class TaskDay : BaseTask 
     {
         private COLL_YAMEY_AVODA_OVDIM _Collection;
-        public TaskDay(long lRequestNum, char del)
-            : base(lRequestNum,del)
+        ////public TaskDay(long lRequestNum, char del)
+        ////    : base(lRequestNum,del)
+        ////{
+        ////    ProcedureName = clGeneral.cProInsYameyAvodaHistory;
+        ////    TypeName = "COLL_YAMEY_AVODA_OVDIM";
+        ////    ParameterName = "p_coll_yamey_avoda_ovdim";
+        ////    CollType = TypeTask.Day;
+        ////    //_Collection = new COLL_YAMEY_AVODA_OVDIM();
+        ////    Pattern = "BZAY";
+        ////    PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+        ////    PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
+        ////}
+
+        public TaskDay(long lRequestNum,string file, char del)
+            : base(lRequestNum,file, del)
         {
             ProcedureName = clGeneral.cProInsYameyAvodaHistory;
             TypeName = "COLL_YAMEY_AVODA_OVDIM";
@@ -20,8 +33,8 @@ namespace KdsBatch.History
             CollType = TypeTask.Day;
             //_Collection = new COLL_YAMEY_AVODA_OVDIM();
             Pattern = "BZAY";
-            PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
-            PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
+            //PathDirectory = ConfigurationManager.AppSettings["PathFileMF"];
+            //PathDirectoryOld = ConfigurationManager.AppSettings["PathFileMFOld"];
         }
         protected override void AllocateCollection()
         {

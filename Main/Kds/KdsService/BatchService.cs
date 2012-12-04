@@ -212,7 +212,7 @@ namespace KdsService
             ManagerTask oTaskM = new ManagerTask(lRequestNum);
             try
             {
-                oTaskM.Run();
+                oTaskM.RunHistory();
             }
             catch (Exception ex)
             {
