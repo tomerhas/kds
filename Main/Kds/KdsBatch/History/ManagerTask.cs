@@ -204,7 +204,7 @@ namespace KdsBatch.History
             }
             catch (Exception ex)
             {
-                throw new Exception("InsertToDB Error: " + ex.Message + "\n" + ex.StackTrace + " type: " + TypeName);
+                throw new Exception("InsertToDB Error: " + ex.Message + "\n" + ex.StackTrace );
             }
         }
     }
