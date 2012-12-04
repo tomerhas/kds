@@ -467,6 +467,7 @@ namespace KdsBatch
                 dr = oved._dsChishuv.Tables["CHISHUV_YOM"].Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode().ToString());
                 if (dr.Length > 0)
                 {
+                    d_taarich = oved.dTchilatAvoda <= oved.Month ? oved.Month : oved.dTchilatAvoda;
                     while (oved.fmichsatYom == 0)
                     {
                         objMeafyeneyOved = oved.MeafyeneyOved.Find(Meafyenim => Meafyenim._Taarich == d_taarich);

@@ -71,6 +71,7 @@ namespace KdsBatch.History
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
                                 FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
                                 File.Move(file, FileNameOld);
+                                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1) + " saved");
                             }
                             catch (Exception ex)
                             {
@@ -136,7 +137,7 @@ namespace KdsBatch.History
         {
             List<string[]> FilesName;
             string[] patterns = new string[3];
-            string path, FileNameOld;
+            string path,pathOld, FileNameOld;
             string[] files;
             int iStatus = 0;
             try
@@ -144,6 +145,7 @@ namespace KdsBatch.History
                 FilesName = new List<string[]>();
                 patterns[0] = "BZAY"; patterns[1] = "BZAS"; patterns[2] = "BZAP";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
+                pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
                 clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
                 if (Directory.Exists(path))
                 {
@@ -173,12 +175,12 @@ namespace KdsBatch.History
                                         break;
                                 }
 
-                               
+
 
                                 FileNameOld = file.Replace(".TXT", ".old");
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
-                                File.Copy(file, FileNameOld);
-                                File.Delete(file);
+                                FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
+                                File.Move(file, FileNameOld);
                             }
                             catch (Exception ex)
                             {
