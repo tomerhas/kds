@@ -71,7 +71,7 @@ namespace KdsBatch.History
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
                                 FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
                                 File.Move(file, FileNameOld);
-                                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1) + " saved");
+                             
                             }
                             catch (Exception ex)
                             {
@@ -181,10 +181,11 @@ namespace KdsBatch.History
                                 FileNameOld = FileNameOld.Replace(".txt", ".old");
                                 FileNameOld = pathOld + FileNameOld.Substring(FileNameOld.LastIndexOf("\\") + 1);
                                 File.Move(file, FileNameOld);
+                                clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, file.Substring(file.LastIndexOf("\\") + 1) + " saved");
                             }
                             catch (Exception ex)
                             {
-                                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file);
+                                clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file.Substring(file.LastIndexOf("\\") + 1));
                             }
                         }
                     }
