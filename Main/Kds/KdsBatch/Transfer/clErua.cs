@@ -259,6 +259,21 @@ namespace KdsBatch
             return fErech;
         }
 
+        protected float GetErech(int iKodRechiv, string col)
+        {
+            DataRow[] drRechiv;
+            float fErech = 0;
+
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+
+            if (drRechiv.Length > 0)
+            {
+                fErech = float.Parse(drRechiv[0][col].ToString());
+            }
+
+            return fErech;
+        }
+
         protected float GetErechRechiv(int iKodRechiv,string col)
         {
             DataRow[] drRechiv;

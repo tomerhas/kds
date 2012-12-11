@@ -500,6 +500,8 @@ namespace KdsBatch
                 names += ",Rechivey_Shonot";
                 oDal.AddParameter("p_Cur_Num_Rechivim", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Num_Rechivim";
+                oDal.AddParameter("p_cur_Rechivey_kizuz", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Rechivey_Kizuz";
 
                 oDal.AddParameter("p_mispar_ishi", ParameterType.ntOracleInteger, iMisparIshi, ParameterDir.pdInput);
                 oDal.AddParameter("p_taarich", ParameterType.ntOracleDate, dCalcMonth, ParameterDir.pdInput);

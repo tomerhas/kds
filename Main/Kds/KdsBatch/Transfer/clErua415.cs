@@ -21,7 +21,7 @@ namespace KdsBatch
       {
           List<string> ListErua = new List<string>();
           StringBuilder sErua415;
-          float fErech;
+          float fErech ,fXtemp,fYTemp;
           sErua415 = new StringBuilder();
           string sMeafyen83 = "";
           try
@@ -79,12 +79,20 @@ namespace KdsBatch
 
               //if (_iDirug != 61)
               //{
-             fErech = GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode());
-             fErech -= GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode());
-             if (fErech>0)
-                 sErua415.Append(FormatNumber(fErech/60, 4, 1));
-             else
-                 sErua415.Append(GetBlank(4));
+             fXtemp = GetErech(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "erech_rechiv_a") - GetErech(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), "erech_rechiv_a");
+             fYTemp = GetErech(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "erech_rechiv_b") - GetErech(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), "erech_rechiv_b");
+             if (!bKayamEfreshBErua && fXtemp != fYTemp)
+                 bKayamEfreshBErua = true; 
+             fXtemp = fXtemp > 0 ? fXtemp : 0;
+             fYTemp = fYTemp > 0 ? fYTemp : 0;
+             fErech = fXtemp - fYTemp;
+             sErua415.Append(FormatNumber(fErech / 60, 4, 1));
+           //  fErech = GetErechRechiv(clGeneral.enRechivim.ShaotShabat100.GetHashCode());
+           // fErech -= GetErechRechiv(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode());
+             //if (fErech>0)
+             //    sErua415.Append(FormatNumber(fErech/60, 4, 1));
+             //else
+             //    sErua415.Append(GetBlank(4));
 
             sErua415.Append(GetBlank(4));
 
