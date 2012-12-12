@@ -502,6 +502,8 @@ namespace KdsBatch
                 names += ",Premiot_View";
                 dal.AddParameter("p_Cur_Premiot_Yadaniot", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Premiot_Yadaniot";
+                dal.AddParameter("p_Cur_Premiot_NihulTnua", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
+                names += ",Premiot_NihulTnua";
                 dal.AddParameter("p_Cur_Sug_Yechida", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);
                 names += ",Sug_Yechida";
                 dal.AddParameter("p_Cur_Yemey_Avoda", ParameterType.ntOracleRefCursor, null, ParameterDir.pdOutput);

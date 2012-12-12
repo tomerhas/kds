@@ -26,6 +26,7 @@ namespace KdsBatch
         public DataTable DtPeiluyotOved { set; get; }
         public List<clMeafyenyOved> MeafyeneyOved { get; set; }
         public DataTable dtPremyotYadaniyot { set; get; }
+        public DataTable dtPremyotNihulTnua { set; get; }
         public DataTable dtPremyot { set; get; }
         public DataTable dtMatzavOved { set; get; }
         public string sSugYechida { get; set; }
@@ -83,6 +84,7 @@ namespace KdsBatch
                     oGeneralData = SingleGeneralData.GetInstance();
                
                 InitPremyotYadaniyot();
+                InitPremyotNihulTnua();
                 InitPremyot();
                 InitPirteyOvedList();
                 InitDtYemeyAvoda();
@@ -139,6 +141,46 @@ namespace KdsBatch
                 rows = null;
             }
         }
+
+        
+       private void InitPremyotNihulTnua()
+        {
+
+            DataRow[] rows;
+            dtPremyotNihulTnua = new DataTable();
+            try
+            {
+
+                if (oGeneralData.dtPremyotNihulTnuaAll != null && oGeneralData.dtPremyotNihulTnuaAll.Rows.Count > 0)
+                {
+                    oGeneralData.dtPremyotNihulTnuaAll.Select(null, "mispar_ishi");
+
+                    rows = oGeneralData.dtPremyotNihulTnuaAll.Select("mispar_ishi= " + Mispar_ishi + " and taarich = Convert('" + Month.ToShortDateString() + "' , 'System.DateTime') ");
+                    if (rows.Length > 0)
+                    {
+                        dtPremyotNihulTnua = rows.CopyToDataTable();
+                    }
+                    else
+                    {
+                        dtPremyotNihulTnua = oGeneralData.dtPremyotYadaniyotAll.Clone();
+                    }
+                }
+                else
+                {
+                    dtPremyotNihulTnua = oGeneralData.dtPremyotYadaniyotAll.Clone();
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPremyotYadaniyot: " + ex.Message);
+                throw ex;
+            }
+            finally
+            {
+                rows = null;
+            }
+        }
+
         private void InitPremyot()
         {
 
@@ -534,6 +576,7 @@ namespace KdsBatch
             DtPeiluyotFromTnua = null;
             DtPeiluyotOved = null;
             dtPremyotYadaniyot = null;
+            dtPremyotNihulTnua = null;
             DtYemeyAvodaYomi = null;
             DtPeiluyotYomi = null;
             DtPeiluyotTnuaYomi = null;

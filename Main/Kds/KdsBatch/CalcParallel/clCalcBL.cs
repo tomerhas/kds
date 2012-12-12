@@ -366,6 +366,24 @@ namespace KdsBatch
             }
         }
 
+        public int GetPremiaNihulTnua(DataTable dtPremyot, int iSugPremia)
+        {
+            DataRow[] drPremia;
+            try
+            {
+                drPremia = dtPremyot.Select("Sug_premia=" + iSugPremia);
+                if (drPremia.Length > 0)
+                { return int.Parse(drPremia[0]["Sum_dakot"].ToString()); }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         //public   Boolean CheckOvedPutar(int iMispar_ishi, DateTime dTaarich)
         //{
         //    Boolean bPutar = false;

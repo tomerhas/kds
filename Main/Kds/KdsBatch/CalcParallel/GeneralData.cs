@@ -65,6 +65,7 @@ namespace KdsBatch
         public DataTable dtSidurimMeyuchRechivAll { get; set; }
         public DataTable dtSugeySidurRechivAll { get; set; }
         public DataTable dtPremyotAll { get; set; }
+        public DataTable dtPremyotNihulTnuaAll { get; set; }
         public DataTable dtPremyotYadaniyotAll { get; set; }
         public DataTable dtBusNumbersAll { get; set; }
         public DataTable dtYemeyAvodaAll { get; set; }
@@ -110,7 +111,8 @@ namespace KdsBatch
                 dtParameters = oUtils.GetKdsParametrs();
                 InitListParamObject();
                 
-                dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"]; 
+                dtPremyotAll = dsNetuneyChishuv.Tables["Premiot_View"];
+                dtPremyotNihulTnuaAll = dsNetuneyChishuv.Tables["Premiot_NihulTnua"];
                 dtPremyotYadaniyotAll = dsNetuneyChishuv.Tables["Premiot_Yadaniot"]; 
                 dtMichsaYomitAll = dsNetuneyChishuv.Tables["Michsa_Yomit"];
                 dtMeafyeneySugSidurAll = oUtils.InitDtMeafyeneySugSidur(_TarMe, _TarAd);
