@@ -162,12 +162,12 @@ namespace KdsBatch
                     }
                     else
                     {
-                        dtPremyotNihulTnua = oGeneralData.dtPremyotYadaniyotAll.Clone();
+                        dtPremyotNihulTnua = oGeneralData.dtPremyotNihulTnuaAll.Clone();
                     }
                 }
                 else
                 {
-                    dtPremyotNihulTnua = oGeneralData.dtPremyotYadaniyotAll.Clone();
+                    dtPremyotNihulTnua = oGeneralData.dtPremyotNihulTnuaAll.Clone();
                 }
             }
             catch (Exception ex)
