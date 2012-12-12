@@ -1359,13 +1359,13 @@ namespace KdsBatch
                               
                             //fNochechtLeTashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                             //fTempX = Math.Min(fNochechtLeTashlum - fNochechtKursim, fMichsatMutam);
-                            fErechRechivSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), objOved.Taarich);
+                            fErechRechivSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                             fTempX = Math.Min(fNochechtLeTashlum, fMichsatMutam);
                         }
                         else
                         {
-                            
-                            fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), objOved.Taarich);
+
+                            fTempX = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                               
                             //if (objOved.objMeafyeneyOved.iMeafyen60 == 0)
                             //{
