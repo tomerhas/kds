@@ -77,7 +77,8 @@ namespace KdsBatch
             //פרמיה פקחים - 117
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+               // sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaPakachim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+                sErua417.Append(FormatNumber(GetErechRechivPremiyaFriends(clGeneral.enRechivim.PremiaPakachim.GetHashCode()), 4, 0)); 
             }
             else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
@@ -87,7 +88,8 @@ namespace KdsBatch
             //פרמיה סדרנים - 116
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+               // sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaSadranim.GetHashCode(), "erech_rechiv_a"), 4, 0));
+                sErua417.Append(FormatNumber(GetErechRechivPremiyaFriends(clGeneral.enRechivim.PremiaSadranim.GetHashCode()), 4, 0));
             }
             else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {
@@ -97,7 +99,9 @@ namespace KdsBatch
             //פרמיה רכזים - 118
             if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
             {
-                sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"), 4, 0));      
+               // sErua417.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.PremiaRakazim.GetHashCode(), "erech_rechiv_a"), 4, 0));      
+                sErua417.Append(FormatNumber(GetErechRechivPremiyaFriends(clGeneral.enRechivim.PremiaRakazim.GetHashCode()), 4, 0));
+         
             }
             else if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
             {

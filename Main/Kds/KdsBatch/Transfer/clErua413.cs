@@ -151,7 +151,7 @@ namespace KdsBatch
           float fErech=0;
           try
           {
-              if (iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode() && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+              if ((iKodRechiv == clGeneral.enRechivim.PremiaMachsenaim.GetHashCode() || iKodRechiv == clGeneral.enRechivim.PremiaManasim.GetHashCode()) && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
               {
                  fErech = GetErechRechivPremiyaFriends(iKodRechiv);
               }

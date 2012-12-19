@@ -1134,8 +1134,9 @@ namespace KdsBatch
                             fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
                             addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fSumDakotRechiv);
                         }
+
                         //אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך כלשהו:
-                        if (objOved.objMeafyeneyOved.iMeafyen60 != 0)
+                        if (objOved.objMeafyeneyOved.iMeafyen60 != 0 || objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
                         {
                             if (iMisparSidur.ToString().Substring(0, 2) == "99")
                             {

@@ -79,7 +79,8 @@ namespace KdsLibrary
         public const string cProInsYameyAvodaHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Yamim";
         public const string cProInsSidurimOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Sidurim";
         public const string cProInsPeilutOvdimHistory = "PKG_MF_HISTORY.Ins_netuney_historiya_Peilut";
-        public const string cProInsNetuneyHistory = "KDSADMIN.Ins_netuney_historiya_chodshi";
+        public const string cProInsNetuneyHistoryHodshi1 = "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi_1";
+        public const string cProInsNetuneyHistoryHodshi2 = "PKG_MF_HISTORY.Pro_Ins_historiya_chodshi_2";
 #endregion 
         #region pkg_sdrn constants
         public const string cProGetKnisotToRefresh = "PKG_sdrn.pro_get_Knisot_sdrm";
