@@ -213,18 +213,16 @@ namespace KdsBatch.TaskManager
 			clBatch oBatch = new clBatch();
 			premyot.wsPremyot wsPremyot = new premyot.wsPremyot();
 			long lRequestNum = 0;
-			int iProcessRequest = 0;
 			try
 			{
-				iProcessRequest = oBatch.InsertProcessLog(13, 8, RecordStatus.Wait, "start RunCalculationPremyot", 0);
-			   
+				
 				lRequestNum = clGeneral.OpenBatchRequest(clGeneral.enGeneralBatchType.ExecutePremiaCalculationMacro, "RunCalculationPremyot", -12);
 				wsPremyot.UseDefaultCredentials = false;
 				wsPremyot.Credentials = new System.Net.NetworkCredential(ConfigurationSettings.AppSettings["RSUserName"], ConfigurationSettings.AppSettings["RSPassword"], ConfigurationSettings.AppSettings["RSDomain"]);
 				
 				 //bSuccess = wsPremyot.CalcPremyotNihulTnua();
 			  
-				 wsPremyot.CalcPremyotNihulTnuaCompleted += (sender, args) => CallbackCalculPremyot(sender, args, lRequestNum, iProcessRequest);
+				 wsPremyot.CalcPremyotNihulTnuaCompleted += (sender, args) => CallbackCalculPremyot(sender, args, lRequestNum);
    
 				wsPremyot.CalcPremyotNihulTnuaAsync();
 	
@@ -242,7 +240,7 @@ namespace KdsBatch.TaskManager
 			
 		}
 
-		private void CallbackCalculPremyot(object sender,KdsBatch.premyot.CalcPremyotNihulTnuaCompletedEventArgs e,long lRequestNum, int iProcessRequest)
+		private void CallbackCalculPremyot(object sender,KdsBatch.premyot.CalcPremyotNihulTnuaCompletedEventArgs e,long lRequestNum)
 		{
 			bool bSuccess = false;
 			clBatch oBatch = new clBatch();
@@ -260,7 +258,6 @@ namespace KdsBatch.TaskManager
                         clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "הפעולה נכשלה - בדוק רשומות בקובץ לוג");
                         clGeneral.CloseBatchRequest(lRequestNum, clGeneral.enBatchExecutionStatus.Failed);
                     }
-                    oBatch.UpdateProcessLog(iProcessRequest, RecordStatus.Finish, "end RunCalculationPremyot", 0);
                 }
                 else
                 {
