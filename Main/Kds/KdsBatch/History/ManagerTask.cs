@@ -146,8 +146,8 @@ namespace KdsBatch.History
                 patterns[0] = "BZAY"; 
                 patterns[1] = "BZAS"; 
                 patterns[2] = "BZAP"; 
-                patterns[3] = "HODSHI_1";
-                patterns[4] = "HODSHI_2";
+                patterns[3] = "HODSHI_";
+                patterns[4] = "YOMI_";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
                 pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
                 clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
@@ -178,10 +178,10 @@ namespace KdsBatch.History
                                         InsertToDB(clGeneral.cProInsPeilutOvdimHistory, file);
                                         break;
                                     case 3:
-                                        InsertToDB(clGeneral.cProInsNetuneyHistoryHodshi1, file);
+                                        InsertToDB(clGeneral.cProInsNetuneyHistoryHodshi, file);
                                         break;
                                     case 4:
-                                        InsertToDB(clGeneral.cProInsNetuneyHistoryHodshi2, file);
+                                        InsertToDB(clGeneral.cProInsNetuneyHistoryYomi, file);
                                         break;
                                 }
 
