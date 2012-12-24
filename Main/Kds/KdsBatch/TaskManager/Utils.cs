@@ -242,6 +242,7 @@ namespace KdsBatch.TaskManager
 
 		private void CallbackCalculPremyot(object sender,KdsBatch.premyot.CalcPremyotNihulTnuaCompletedEventArgs e,long lRequestNum)
 		{
+            clLogBakashot.InsertErrorToLog(lRequestNum, "I", 0, "חישוב הפרמיות הסתיים");
 			bool bSuccess = false;
 			clBatch oBatch = new clBatch();
 			premyot.wsPremyot wsPremyot = (premyot.wsPremyot)sender;
