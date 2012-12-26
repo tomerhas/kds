@@ -1,131 +1,3 @@
-CREATE OR REPLACE PACKAGE          ftp AS
--- --------------------------------------------------------------------------
--- Name         : http://www.oracle-base.com/dba/miscellaneous/ftp.pks
--- Author       : DR Timothy S Hall
--- Description  : Basic FTP API. For usage notes see:
---                  http://www.oracle-base.com/articles/misc/ftp-from-plsql.php
--- Requirements : UTL_TCP
--- Ammedments   :
---   When         Who       What
---   ===========  ========  =================================================
---   14-AUG-2003  Tim Hall  Initial Creation
---   10-MAR-2004  Tim Hall  Add convert_crlf procedure.
---                          Make get_passive function visible.
---                          Added get_direct and put_direct procedures.
---   03-OCT-2006  Tim Hall  Add list, rename, delete, mkdir, rmdir procedures.
---   15-Jan-2008  Tim Hall  login: Include timeout parameter (suggested by Dmitry Bogomolov).
---   12-Jun-2008  Tim Hall  get_reply: Moved to pakage specification.
---   22-Apr-2009  Tim Hall  nlst: Added to return list of file names only (suggested by Julian and John Duncan)
--- --------------------------------------------------------------------------
-
-TYPE t_string_table IS TABLE OF VARCHAR2(32767);
-
-FUNCTION login (p_host    IN  VARCHAR2,
-                p_port    IN  VARCHAR2,
-                p_user    IN  VARCHAR2,
-                p_pass    IN  VARCHAR2,
-                p_timeout IN  NUMBER := NULL)
-  RETURN UTL_TCP.connection;
-
-FUNCTION get_passive (p_conn  IN OUT NOCOPY  UTL_TCP.connection)
-  RETURN UTL_TCP.connection;
-
-PROCEDURE logout (p_conn   IN OUT NOCOPY  UTL_TCP.connection,
-                  p_reply  IN             BOOLEAN := TRUE);
-
-PROCEDURE send_command (p_conn     IN OUT NOCOPY  UTL_TCP.connection,
-                        p_command  IN             VARCHAR2,
-                        p_reply    IN             BOOLEAN := TRUE);
-
-PROCEDURE get_reply (p_conn  IN OUT NOCOPY  UTL_TCP.connection);
-
-FUNCTION get_local_ascii_data (p_dir   IN  VARCHAR2,
-                               p_file  IN  VARCHAR2)
-  RETURN CLOB;
-
-FUNCTION get_local_binary_data (p_dir   IN  VARCHAR2,
-                                p_file  IN  VARCHAR2)
-  RETURN BLOB;
-
-FUNCTION get_remote_ascii_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                p_file  IN             VARCHAR2)
-  RETURN CLOB;
-
-FUNCTION get_remote_binary_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                 p_file  IN             VARCHAR2)
-  RETURN BLOB;
-
-PROCEDURE put_local_ascii_data (p_data  IN  CLOB,
-                                p_dir   IN  VARCHAR2,
-                                p_file  IN  VARCHAR2);
-
-PROCEDURE put_local_binary_data (p_data  IN  BLOB,
-                                 p_dir   IN  VARCHAR2,
-                                 p_file  IN  VARCHAR2);
-
-PROCEDURE put_remote_ascii_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                 p_file  IN             VARCHAR2,
-                                 p_data  IN             CLOB);
-
-PROCEDURE put_remote_binary_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                  p_file  IN             VARCHAR2,
-                                  p_data  IN             BLOB);
-
-PROCEDURE get (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-               p_from_file  IN             VARCHAR2,
-               p_to_dir     IN             VARCHAR2,
-               p_to_file    IN             VARCHAR2);
-
-PROCEDURE put (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-               p_from_dir   IN             VARCHAR2,
-               p_from_file  IN             VARCHAR2,
-               p_to_file    IN             VARCHAR2);
-
-PROCEDURE get_direct (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-                      p_from_file  IN             VARCHAR2,
-                      p_to_dir     IN             VARCHAR2,
-                      p_to_file    IN             VARCHAR2);
-
-PROCEDURE put_direct (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-                      p_from_dir   IN             VARCHAR2,
-                      p_from_file  IN             VARCHAR2,
-                      p_to_file    IN             VARCHAR2);
-
-PROCEDURE help (p_conn  IN OUT NOCOPY  UTL_TCP.connection);
-
-PROCEDURE ascii (p_conn  IN OUT NOCOPY  UTL_TCP.connection);
-
-PROCEDURE binary (p_conn  IN OUT NOCOPY  UTL_TCP.connection);
-
-PROCEDURE list (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                p_dir   IN             VARCHAR2,
-                p_list  OUT            t_string_table);
-
-PROCEDURE nlst (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                p_dir   IN             VARCHAR2,
-                p_list  OUT            t_string_table);
-
-PROCEDURE rename (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                  p_from  IN             VARCHAR2,
-                  p_to    IN             VARCHAR2);
-
-PROCEDURE delete (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                  p_file  IN             VARCHAR2);
-
-PROCEDURE mkdir (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                 p_dir   IN             VARCHAR2);
-
-PROCEDURE rmdir (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                 p_dir   IN             VARCHAR2);
-
-PROCEDURE convert_crlf (p_status  IN  BOOLEAN);
-
-PROCEDURE SendFile(p_from_dir varchar2,p_from_file varchar2,p_to_file_name varchar2);
-PROCEDURE GetFile(p_to_dir varchar2,p_from_file varchar2,p_to_file_name varchar2);
-END ftp;
-/
-
-
 CREATE OR REPLACE PACKAGE          Pkg_Batch AS
 TYPE    CurType      IS    REF  CURSOR;
 /******************************************************************************
@@ -760,66 +632,6 @@ END PKG_ERRORS;
 /
 
 
-CREATE OR REPLACE PACKAGE          PKG_FILES AS
-/******************************************************************************
-   NAME:       PKG_FILES
-   PURPOSE:
-
-   REVISIONS:
-   Ver        Date        Author           Description
-   ---------  ----------  ---------------  ------------------------------------
-   1.0        4/29/2012      SaraC       1. Created this package.
-******************************************************************************/
-TYPE    CurType      IS    REF  CURSOR;
-
-procedure create_DayData_Eggt(p_tar_me in date , p_tar_ad in date, P_BAKAHA_ID in number) ;
-   procedure create_egged_taavura(p_tar_me in date , p_tar_ad in date, P_BAKAHA_ID in number); 
-   
-    PROCEDURE  create_file_visot(p_tar_me IN Date,p_tar_ad IN date,P_BAKAHA_ID in number);
-    
-    procedure create_WorkHours(p_BakashaId number ,p_tar_me in date , p_tar_ad in date);
-    procedure create_Calcalit(p_BakashaId number ,p_tar_me in date , p_tar_ad in date);
-    
-   PROCEDURE create_file_egged_taavura(p_tar_me IN Date,p_tar_ad IN date,P_BAKAHA_ID IN NUMBER);
-   
- FUNCTION fn_get_first_namak_sherut(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-                                                            p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                                            p_taarich IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE) return varchar2;
-                                                                
-    PROCEDURE create_file_meshek (p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER,
-                                                P_EZOR IN VARCHAR2 DEFAULT NULL, 
-                                                P_MIKUM_YECHIDA IN VARCHAR2 DEFAULT NULL,
-                                                 P_PREFIX_FILE_NAME IN VARCHAR2);           
-    
-        PROCEDURE create_file_et_namak(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER);
-        
-        PROCEDURE create_file_mushaley_egged(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER );   
-       
-      PROCEDURE create_file_et_sherut(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER ) ;
-                                                                                                                                                                 
-   procedure create_file_rechvey_nochechot(p_from_date in date, p_to_date in date, p_maamad in pivot_pirtey_ovdim.maamad%type,  p_cur OUT CurType);
-END PKG_FILES;
-/
-
-
-CREATE OR REPLACE PACKAGE PKG_HR AS
-/******************************************************************************
-   NAME:       PKG_HR
-   PURPOSE:
-
-   REVISIONS:
-   Ver        Date        Author           Description
-   ---------  ----------  ---------------  ------------------------------------
-   1.0        7/8/2012      SaraC       1. Created this package.
-******************************************************************************/
-
-  PROCEDURE  chk_creation_date_meafyenim(shem_mvew VARCHAR);
-
-END PKG_HR;
-/
-
-
 CREATE OR REPLACE PACKAGE          PKG_MF_HISTORY AS
 /******************************************************************************
    NAME:       PKG_FILES
@@ -836,6 +648,8 @@ PROCEDURE Ins_netuney_historiya_Yamim(p_bakasha_id number, p_file_name nvarchar2
 PROCEDURE Ins_netuney_historiya_Sidurim(p_bakasha_id number, p_file_name nvarchar2);
 PROCEDURE Ins_netuney_historiya_Peilut(p_bakasha_id number, p_file_name nvarchar2);
  PROCEDURE Pro_Ins_historiya_chodshi_1(p_bakasha_id number, p_file_name nvarchar2);
+ PROCEDURE Pro_Ins_historiya_chodshi_2(p_bakasha_id number, p_file_name nvarchar2);
+  PROCEDURE Pro_Ins_historiya_yomi(p_bakasha_id number, p_file_name nvarchar2);
 END PKG_MF_HISTORY;
 /
 
@@ -3641,830 +3455,6 @@ PROCEDURE Pro_Get_Previous_Months_List(p_FromDate IN DATE, NumOfPreviousMonth NU
         PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType);										
 END Pkg_Utils;
 /
-CREATE OR REPLACE PACKAGE BODY          ftp AS
--- --------------------------------------------------------------------------
--- Name         : http://www.oracle-base.com/dba/miscellaneous/ftp.pkb
--- Author       : DR Timothy S Hall
--- Description  : Basic FTP API. For usage notes see:
---                  http://www.oracle-base.com/articles/misc/ftp-from-plsql.php
--- Requirements : http://www.oracle-base.com/dba/miscellaneous/ftp.pks
--- Ammedments   :
---   When         Who       What
---   ===========  ========  =================================================
---   14-AUG-2003  Tim Hall  Initial Creation
---   10-MAR-2004  Tim Hall  Add convert_crlf procedure.
---                          Incorporate CRLF conversion functionality into
---                          put_local_ascii_data and put_remote_ascii_data
---                          functions.
---                          Make get_passive function visible.
---                          Added get_direct and put_direct procedures.
---   23-DEC-2004  Tim Hall  The get_reply procedure was altered to deal with
---                          banners starting with 4 white spaces. This fix is
---                          a small variation on the resolution provided by
---                          Gary Mason who spotted the bug.
---   10-NOV-2005  Tim Hall  Addition of get_reply after doing a transfer to
---                          pickup the 226 Transfer complete message. This
---                          allows gets and puts with a single connection.
---                          Issue spotted by Trevor Woolnough.
---   03-OCT-2006  Tim Hall  Add list, rename, delete, mkdir, rmdir procedures.
---   12-JAN-2007  Tim Hall  A final call to get_reply was added to the get_remote%
---                          procedures to allow multiple transfers per connection.
---   15-Jan-2008  Tim Hall  login: Include timeout parameter (suggested by Dmitry Bogomolov).
---   21-Jan-2008  Tim Hall  put_%: "l_pos < l_clob_len" to "l_pos <= l_clob_len" to prevent
---                          potential loss of one character for single-byte files or files
---                          sized 1 byte bigger than a number divisible by the buffer size
---                          (spotted by Michael Surikov).
---   23-Jan-2008  Tim Hall  send_command: Possible solution for ORA-29260 errors included,
---                          but commented out (suggested by Kevin Phillips).
---   12-Feb-2008  Tim Hall  put_local_binary_data and put_direct: Open file with "wb" for
---                          binary writes (spotted by Dwayne Hoban).
---   03-Mar-2008  Tim Hall  list: get_reply call and close of passive connection added
---                          (suggested by Julian, Bavaria).
---   12-Jun-2008  Tim Hall  A final call to get_reply was added to the put_remote%
---                          procedures, but commented out. If uncommented, it may cause the
---                          operation to hang, but it has been reported (morgul) to allow
---                          multiple transfers per connection.
---                          get_reply: Moved to pakage specification.
---   24-Jun-2008  Tim Hall  get_remote% and put_remote%: Exception handler added to close the passive
---                          connection and reraise the error (suggested by Mark Reichman).
---   22-Apr-2009  Tim Hall  get_remote_ascii_data: Remove unnecessary logout (suggested by John Duncan).
---                          get_reply and list: Handle 400 messages as well as 500 messages (suggested by John Duncan).
---                          logout: Added a call to UTL_TCP.close_connection, so not necessary to close
---                          any connections manually (suggested by Victor Munoz).
---                          get_local_*_data: Check for zero length files to prevent exception (suggested by Daniel)
---                          nlst: Added to return list of file names only (suggested by Julian and John Duncan)
---   05-Apr-2011  Tim Hall  put_remote_ascii_data: Added comment on definition of l_amount. Switch to 10000 if you get
---                          ORA-06502 from this line. May give you unexpected result due to conversion. Better to use binary.
--- --------------------------------------------------------------------------
-
-g_reply         t_string_table := t_string_table();
-g_binary        BOOLEAN := TRUE;
-g_debug         BOOLEAN := TRUE;
-g_convert_crlf  BOOLEAN := TRUE;
-
-PROCEDURE debug (p_text  IN  VARCHAR2);
-
--- --------------------------------------------------------------------------
-FUNCTION login (p_host    IN  VARCHAR2,
-                p_port    IN  VARCHAR2,
-                p_user    IN  VARCHAR2,
-                p_pass    IN  VARCHAR2,
-                p_timeout IN  NUMBER := NULL)
-  RETURN UTL_TCP.connection IS
--- --------------------------------------------------------------------------
-  l_conn  UTL_TCP.connection;
-BEGIN
-  g_reply.delete;
-
-  l_conn := UTL_TCP.open_connection(p_host, p_port, tx_timeout => p_timeout);
-  get_reply (l_conn);
-  send_command(l_conn, 'USER ' || p_user);
-  send_command(l_conn, 'PASS ' || p_pass);
-  RETURN l_conn;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-FUNCTION get_passive (p_conn  IN OUT NOCOPY  UTL_TCP.connection)
-  RETURN UTL_TCP.connection IS
--- --------------------------------------------------------------------------
-  l_conn    UTL_TCP.connection;
-  l_reply   VARCHAR2(32767);
-  l_host    VARCHAR(100);
-  l_port1   NUMBER(10);
-  l_port2   NUMBER(10);
-BEGIN
-  send_command(p_conn, 'PASV');
-  l_reply := g_reply(g_reply.last);
-
-  l_reply := REPLACE(SUBSTR(l_reply, INSTR(l_reply, '(') + 1, (INSTR(l_reply, ')')) - (INSTR(l_reply, '('))-1), ',', '.');
-  l_host  := SUBSTR(l_reply, 1, INSTR(l_reply, '.', 1, 4)-1);
-
-  l_port1 := TO_NUMBER(SUBSTR(l_reply, INSTR(l_reply, '.', 1, 4)+1, (INSTR(l_reply, '.', 1, 5)-1) - (INSTR(l_reply, '.', 1, 4))));
-  l_port2 := TO_NUMBER(SUBSTR(l_reply, INSTR(l_reply, '.', 1, 5)+1));
-
-  l_conn := utl_tcp.open_connection(l_host, 256 * l_port1 + l_port2);
-  return l_conn;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE logout(p_conn   IN OUT NOCOPY  UTL_TCP.connection,
-                 p_reply  IN             BOOLEAN := TRUE) AS
--- --------------------------------------------------------------------------
-BEGIN
-  send_command(p_conn, 'QUIT', p_reply);
-  UTL_TCP.close_connection(p_conn);
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE send_command (p_conn     IN OUT NOCOPY  UTL_TCP.connection,
-                        p_command  IN             VARCHAR2,
-                        p_reply    IN             BOOLEAN := TRUE) IS
--- --------------------------------------------------------------------------
-  l_result  PLS_INTEGER;
-BEGIN
-  l_result := UTL_TCP.write_line(p_conn, p_command);
-  -- If you get ORA-29260 after the PASV call, replace the above line with the following line.
-  -- l_result := UTL_TCP.write_text(p_conn, p_command || utl_tcp.crlf, length(p_command || utl_tcp.crlf));
-
-  IF p_reply THEN
-    get_reply(p_conn);
-  END IF;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE get_reply (p_conn  IN OUT NOCOPY  UTL_TCP.connection) IS
--- --------------------------------------------------------------------------
-  l_reply_code  VARCHAR2(3) := NULL;
-BEGIN
-  LOOP
-    g_reply.extend;
-    g_reply(g_reply.last) := UTL_TCP.get_line(p_conn, TRUE);
-    debug(g_reply(g_reply.last));
-    IF l_reply_code IS NULL THEN
-      l_reply_code := SUBSTR(g_reply(g_reply.last), 1, 3);
-    END IF;
-    IF SUBSTR(l_reply_code, 1, 1) IN ('4', '5') THEN
-      RAISE_APPLICATION_ERROR(-20000, g_reply(g_reply.last));
-    ELSIF (SUBSTR(g_reply(g_reply.last), 1, 3) = l_reply_code AND
-           SUBSTR(g_reply(g_reply.last), 4, 1) = ' ') THEN
-      EXIT;
-    END IF;
-  END LOOP;
-EXCEPTION
-  WHEN UTL_TCP.END_OF_INPUT THEN
-    NULL;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-FUNCTION get_local_ascii_data (p_dir   IN  VARCHAR2,
-                               p_file  IN  VARCHAR2)
-  RETURN CLOB IS
--- --------------------------------------------------------------------------
-  l_bfile   BFILE;
-  l_data    CLOB;
-BEGIN
-  DBMS_LOB.createtemporary (lob_loc => l_data,
-                            cache   => TRUE,
-                            dur     => DBMS_LOB.call);
-
-  l_bfile := BFILENAME(p_dir, p_file);
-  DBMS_LOB.fileopen(l_bfile, DBMS_LOB.file_readonly);
-
-  IF DBMS_LOB.getlength(l_bfile) > 0 THEN
-    DBMS_LOB.loadfromfile(l_data, l_bfile, DBMS_LOB.getlength(l_bfile));
-  END IF;
-
-  DBMS_LOB.fileclose(l_bfile);
-
-  RETURN l_data;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-FUNCTION get_local_binary_data (p_dir   IN  VARCHAR2,
-                                p_file  IN  VARCHAR2)
-  RETURN BLOB IS
--- --------------------------------------------------------------------------
-  l_bfile   BFILE;
-  l_data    BLOB;
-BEGIN
-  DBMS_LOB.createtemporary (lob_loc => l_data,
-                            cache   => TRUE,
-                            dur     => DBMS_LOB.call);
-
-  l_bfile := BFILENAME(p_dir, p_file);
-  DBMS_LOB.fileopen(l_bfile, DBMS_LOB.file_readonly);
-  IF DBMS_LOB.getlength(l_bfile) > 0 THEN
-    DBMS_LOB.loadfromfile(l_data, l_bfile, DBMS_LOB.getlength(l_bfile));
-  END IF;
-  DBMS_LOB.fileclose(l_bfile);
-
-  RETURN l_data;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-FUNCTION get_remote_ascii_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                p_file  IN             VARCHAR2)
-  RETURN CLOB IS
--- --------------------------------------------------------------------------
-  l_conn    UTL_TCP.connection;
-  l_amount  PLS_INTEGER;
-  l_buffer  VARCHAR2(32767);
-  l_data    CLOB;
-BEGIN
-  DBMS_LOB.createtemporary (lob_loc => l_data,
-                            cache   => TRUE,
-                            dur     => DBMS_LOB.call);
-
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'RETR ' || p_file, TRUE);
-  --logout(l_conn, FALSE);
-
-  BEGIN
-    LOOP
-      l_amount := UTL_TCP.read_text (l_conn, l_buffer, 32767);
-      DBMS_LOB.writeappend(l_data, l_amount, l_buffer);
-    END LOOP;
-  EXCEPTION
-    WHEN UTL_TCP.END_OF_INPUT THEN
-      NULL;
-    WHEN OTHERS THEN
-      NULL;
-  END;
-  UTL_TCP.close_connection(l_conn);
-  get_reply(p_conn);
-
-  RETURN l_data;
-
-EXCEPTION
-  WHEN OTHERS THEN
-    UTL_TCP.close_connection(l_conn);
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-FUNCTION get_remote_binary_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                 p_file  IN             VARCHAR2)
-  RETURN BLOB IS
--- --------------------------------------------------------------------------
-  l_conn    UTL_TCP.connection;
-  l_amount  PLS_INTEGER;
-  l_buffer  RAW(32767);
-  l_data    BLOB;
-BEGIN
-  DBMS_LOB.createtemporary (lob_loc => l_data,
-                            cache   => TRUE,
-                            dur     => DBMS_LOB.call);
-
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'RETR ' || p_file, TRUE);
-
-  BEGIN
-    LOOP
-      l_amount := UTL_TCP.read_raw (l_conn, l_buffer, 32767);
-      DBMS_LOB.writeappend(l_data, l_amount, l_buffer);
-    END LOOP;
-  EXCEPTION
-    WHEN UTL_TCP.END_OF_INPUT THEN
-      NULL;
-    WHEN OTHERS THEN
-      NULL;
-  END;
-  UTL_TCP.close_connection(l_conn);
-  get_reply(p_conn);
-
-  RETURN l_data;
-
-EXCEPTION
-  WHEN OTHERS THEN
-    UTL_TCP.close_connection(l_conn);
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put_local_ascii_data (p_data  IN  CLOB,
-                                p_dir   IN  VARCHAR2,
-                                p_file  IN  VARCHAR2) IS
--- --------------------------------------------------------------------------
-  l_out_file  UTL_FILE.file_type;
-  l_buffer    VARCHAR2(32767);
-  l_amount    BINARY_INTEGER := 32767;
-  l_pos       INTEGER := 1;
-  l_clob_len  INTEGER;
-BEGIN
-  l_clob_len := DBMS_LOB.getlength(p_data);
-
-  l_out_file := UTL_FILE.fopen(p_dir, p_file, 'w', 32767);
-
-  WHILE l_pos <= l_clob_len LOOP
-    DBMS_LOB.read (p_data, l_amount, l_pos, l_buffer);
-    IF g_convert_crlf THEN
-      l_buffer := REPLACE(l_buffer, CHR(13), NULL);
-    END IF;
-
-    UTL_FILE.put(l_out_file, l_buffer);
-    UTL_FILE.fflush(l_out_file);
-    l_pos := l_pos + l_amount;
-  END LOOP;
-
-  UTL_FILE.fclose(l_out_file);
-EXCEPTION
-  WHEN OTHERS THEN
-    IF UTL_FILE.is_open(l_out_file) THEN
-      UTL_FILE.fclose(l_out_file);
-    END IF;
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put_local_binary_data (p_data  IN  BLOB,
-                                 p_dir   IN  VARCHAR2,
-                                 p_file  IN  VARCHAR2) IS
--- --------------------------------------------------------------------------
-  l_out_file  UTL_FILE.file_type;
-  l_buffer    RAW(32767);
-  l_amount    BINARY_INTEGER := 32767;
-  l_pos       INTEGER := 1;
-  l_blob_len  INTEGER;
-BEGIN
-  l_blob_len := DBMS_LOB.getlength(p_data);
-
-  l_out_file := UTL_FILE.fopen(p_dir, p_file, 'wb', 32767);
-
-  WHILE l_pos <= l_blob_len LOOP
-    DBMS_LOB.read (p_data, l_amount, l_pos, l_buffer);
-    UTL_FILE.put_raw(l_out_file, l_buffer, TRUE);
-    UTL_FILE.fflush(l_out_file);
-    l_pos := l_pos + l_amount;
-  END LOOP;
-
-  UTL_FILE.fclose(l_out_file);
-EXCEPTION
-  WHEN OTHERS THEN
-    IF UTL_FILE.is_open(l_out_file) THEN
-      UTL_FILE.fclose(l_out_file);
-    END IF;
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put_remote_ascii_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                 p_file  IN             VARCHAR2,
-                                 p_data  IN             CLOB) IS
--- --------------------------------------------------------------------------
-  l_conn      UTL_TCP.connection;
-  l_result    PLS_INTEGER;
-  l_buffer    VARCHAR2(32767);
-  l_amount    BINARY_INTEGER := 32767; -- Switch to 10000 (or use binary) if you get ORA-06502 from this line.
-  l_pos       INTEGER := 1;
-  l_clob_len  INTEGER;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'STOR ' || p_file, TRUE);
-
-  l_clob_len := DBMS_LOB.getlength(p_data);
-
-  WHILE l_pos <= l_clob_len LOOP
-    DBMS_LOB.READ (p_data, l_amount, l_pos, l_buffer);
-    IF g_convert_crlf THEN
-      l_buffer := REPLACE(l_buffer, CHR(13), NULL);
-    END IF;
-    l_result := UTL_TCP.write_text(l_conn, l_buffer, LENGTH(l_buffer));
-    UTL_TCP.flush(l_conn);
-    l_pos := l_pos + l_amount;
-  END LOOP;
-
-  UTL_TCP.close_connection(l_conn);
-  -- The following line allows some people to make multiple calls from one connection.
-  -- It causes the operation to hang for me, hence it is commented out by default.
-  -- get_reply(p_conn);
-
-EXCEPTION
-  WHEN OTHERS THEN
-    UTL_TCP.close_connection(l_conn);
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put_remote_binary_data (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                                  p_file  IN             VARCHAR2,
-                                  p_data  IN             BLOB) IS
--- --------------------------------------------------------------------------
-  l_conn      UTL_TCP.connection;
-  l_result    PLS_INTEGER;
-  l_buffer    RAW(32767);
-  l_amount    BINARY_INTEGER := 32767;
-  l_pos       INTEGER := 1;
-  l_blob_len  INTEGER;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'STOR ' || p_file, TRUE);
-
-  l_blob_len := DBMS_LOB.getlength(p_data);
-
-  WHILE l_pos <= l_blob_len LOOP
-    DBMS_LOB.READ (p_data, l_amount, l_pos, l_buffer);
-    l_result := UTL_TCP.write_raw(l_conn, l_buffer, l_amount);
-    UTL_TCP.flush(l_conn);
-    l_pos := l_pos + l_amount;
-  END LOOP;
-
-  UTL_TCP.close_connection(l_conn);
-  -- The following line allows some people to make multiple calls from one connection.
-  -- It causes the operation to hang for me, hence it is commented out by default.
-  -- get_reply(p_conn);
-
-EXCEPTION
-  WHEN OTHERS THEN
-    UTL_TCP.close_connection(l_conn);
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE get (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-               p_from_file  IN             VARCHAR2,
-               p_to_dir     IN             VARCHAR2,
-               p_to_file    IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-BEGIN
-  IF g_binary THEN
-    put_local_binary_data(p_data  => get_remote_binary_data (p_conn, p_from_file),
-                          p_dir   => p_to_dir,
-                          p_file  => p_to_file);
-  ELSE
-    put_local_ascii_data(p_data  => get_remote_ascii_data (p_conn, p_from_file),
-                         p_dir   => p_to_dir,
-                         p_file  => p_to_file);
-  END IF;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-               p_from_dir   IN             VARCHAR2,
-               p_from_file  IN             VARCHAR2,
-               p_to_file    IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-BEGIN
-  IF g_binary THEN
-    put_remote_binary_data(p_conn => p_conn,
-                           p_file => p_to_file,
-                           p_data => get_local_binary_data(p_from_dir, p_from_file));
-  ELSE
-    put_remote_ascii_data(p_conn => p_conn,
-                          p_file => p_to_file,
-                          p_data => get_local_ascii_data(p_from_dir, p_from_file));
-  END IF;
-  get_reply(p_conn);
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE get_direct (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-                      p_from_file  IN             VARCHAR2,
-                      p_to_dir     IN             VARCHAR2,
-                      p_to_file    IN             VARCHAR2) IS
--- --------------------------------------------------------------------------
-  l_conn        UTL_TCP.connection;
-  l_out_file    UTL_FILE.file_type;
-  l_amount      PLS_INTEGER;
-  l_buffer      VARCHAR2(32767);
-  l_raw_buffer  RAW(32767);
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'RETR ' || p_from_file, TRUE);
-  IF g_binary THEN
-    l_out_file := UTL_FILE.fopen(p_to_dir, p_to_file, 'wb', 32767);
-  ELSE
-    l_out_file := UTL_FILE.fopen(p_to_dir, p_to_file, 'w', 32767);
-  END IF;
-
-  BEGIN
-    LOOP
-      IF g_binary THEN
-        l_amount := UTL_TCP.read_raw (l_conn, l_raw_buffer, 32767);
-        UTL_FILE.put_raw(l_out_file, l_raw_buffer, TRUE);
-      ELSE
-        l_amount := UTL_TCP.read_text (l_conn, l_buffer, 32767);
-        IF g_convert_crlf THEN
-          l_buffer := REPLACE(l_buffer, CHR(13), NULL);
-        END IF;
-        UTL_FILE.put(l_out_file, l_buffer);
-      END IF;
-      UTL_FILE.fflush(l_out_file);
-    END LOOP;
-  EXCEPTION
-    WHEN UTL_TCP.END_OF_INPUT THEN
-      NULL;
-    WHEN OTHERS THEN
-      NULL;
-  END;
-  UTL_FILE.fclose(l_out_file);
-  UTL_TCP.close_connection(l_conn);
-EXCEPTION
-  WHEN OTHERS THEN
-    IF UTL_FILE.is_open(l_out_file) THEN
-      UTL_FILE.fclose(l_out_file);
-    END IF;
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE put_direct (p_conn       IN OUT NOCOPY  UTL_TCP.connection,
-                      p_from_dir   IN             VARCHAR2,
-                      p_from_file  IN             VARCHAR2,
-                      p_to_file    IN             VARCHAR2) IS
--- --------------------------------------------------------------------------
-  l_conn        UTL_TCP.connection;
-  l_bfile       BFILE;
-  l_result      PLS_INTEGER;
-  l_amount      PLS_INTEGER := 32767;
-  l_raw_buffer  RAW(32767);
-  l_len         NUMBER;
-  l_pos         NUMBER := 1;
-  ex_ascii      EXCEPTION;
-BEGIN
-  IF NOT g_binary THEN
-    RAISE ex_ascii;
-  END IF;
-
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'STOR ' || p_to_file, TRUE);
-
-  l_bfile := BFILENAME(p_from_dir, p_from_file);
-
-  DBMS_LOB.fileopen(l_bfile, DBMS_LOB.file_readonly);
-  l_len := DBMS_LOB.getlength(l_bfile);
-
-  WHILE l_pos <= l_len LOOP
-    DBMS_LOB.READ (l_bfile, l_amount, l_pos, l_raw_buffer);
-    debug(l_amount);
-    l_result := UTL_TCP.write_raw(l_conn, l_raw_buffer, l_amount);
-    l_pos := l_pos + l_amount;
-  END LOOP;
-
-  DBMS_LOB.fileclose(l_bfile);
-  UTL_TCP.close_connection(l_conn);
-EXCEPTION
-  WHEN ex_ascii THEN
-    RAISE_APPLICATION_ERROR(-20000, 'PUT_DIRECT not available in ASCII mode.');
-  WHEN OTHERS THEN
-    IF DBMS_LOB.fileisopen(l_bfile) = 1 THEN
-      DBMS_LOB.fileclose(l_bfile);
-    END IF;
-    RAISE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE help (p_conn  IN OUT NOCOPY  UTL_TCP.connection) AS
--- --------------------------------------------------------------------------
-BEGIN
-  send_command(p_conn, 'HELP', TRUE);
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE ascii (p_conn  IN OUT NOCOPY  UTL_TCP.connection) AS
--- --------------------------------------------------------------------------
-BEGIN
-  send_command(p_conn, 'TYPE A', TRUE);
-  g_binary := FALSE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE binary (p_conn  IN OUT NOCOPY  UTL_TCP.connection) AS
--- --------------------------------------------------------------------------
-BEGIN
-  send_command(p_conn, 'TYPE I', TRUE);
-  g_binary := TRUE;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE list (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                p_dir   IN             VARCHAR2,
-                p_list  OUT            t_string_table) AS
--- --------------------------------------------------------------------------
-  l_conn        UTL_TCP.connection;
-  l_list        t_string_table := t_string_table();
-  l_reply_code  VARCHAR2(3) := NULL;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'LIST ' || p_dir, TRUE);
-
-  BEGIN
-    LOOP
-      l_list.extend;
-      l_list(l_list.last) := UTL_TCP.get_line(l_conn, TRUE);
-      debug(l_list(l_list.last));
-      IF l_reply_code IS NULL THEN
-        l_reply_code := SUBSTR(l_list(l_list.last), 1, 3);
-      END IF;
-      IF SUBSTR(l_reply_code, 1, 1) IN ('4', '5') THEN
-        RAISE_APPLICATION_ERROR(-20000, l_list(l_list.last));
-      ELSIF (SUBSTR(g_reply(g_reply.last), 1, 3) = l_reply_code AND
-             SUBSTR(g_reply(g_reply.last), 4, 1) = ' ') THEN
-        EXIT;
-      END IF;
-    END LOOP;
-  EXCEPTION
-    WHEN UTL_TCP.END_OF_INPUT THEN
-      NULL;
-  END;
-
-  l_list.delete(l_list.last);
-  p_list := l_list;
-
-  utl_tcp.close_connection(l_conn);
-  get_reply (p_conn);
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE nlst (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                p_dir   IN             VARCHAR2,
-                 p_list  OUT            t_string_table) AS
--- --------------------------------------------------------------------------
-  l_conn        UTL_TCP.connection;
-  l_list        t_string_table := t_string_table();
-  l_reply_code  VARCHAR2(3) := NULL;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'NLST ' || p_dir, TRUE);
-
-  BEGIN
-    LOOP
-      l_list.extend;
-      l_list(l_list.last) := UTL_TCP.get_line(l_conn, TRUE);
-      debug(l_list(l_list.last));
-      IF l_reply_code IS NULL THEN
-        l_reply_code := SUBSTR(l_list(l_list.last), 1, 3);
-      END IF;
-      IF SUBSTR(l_reply_code, 1, 1) IN ('4', '5') THEN
-        RAISE_APPLICATION_ERROR(-20000, l_list(l_list.last));
-      ELSIF (SUBSTR(g_reply(g_reply.last), 1, 3) = l_reply_code AND
-             SUBSTR(g_reply(g_reply.last), 4, 1) = ' ') THEN
-        EXIT;
-      END IF;
-    END LOOP;
-  EXCEPTION
-    WHEN UTL_TCP.END_OF_INPUT THEN
-      NULL;
-  END;
-
-  l_list.delete(l_list.last);
-  p_list := l_list;
-
-  utl_tcp.close_connection(l_conn);
-  get_reply (p_conn);
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE rename (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                  p_from  IN             VARCHAR2,
-                  p_to    IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-  l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'RNFR ' || p_from, TRUE);
-  send_command(p_conn, 'RNTO ' || p_to, TRUE);
-  logout(l_conn, FALSE);
-END rename;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE delete (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                  p_file  IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-  l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'DELE ' || p_file, TRUE);
-  logout(l_conn, FALSE);
-END delete;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE mkdir (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                 p_dir   IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-  l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'MKD ' || p_dir, TRUE);
-  logout(l_conn, FALSE);
-END mkdir;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE rmdir (p_conn  IN OUT NOCOPY  UTL_TCP.connection,
-                 p_dir   IN             VARCHAR2) AS
--- --------------------------------------------------------------------------
-  l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := get_passive(p_conn);
-  send_command(p_conn, 'RMD ' || p_dir, TRUE);
-  logout(l_conn, FALSE);
-END rmdir;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE convert_crlf (p_status  IN  BOOLEAN) AS
--- --------------------------------------------------------------------------
-BEGIN
-  g_convert_crlf := p_status;
-END;
--- --------------------------------------------------------------------------
-
-
-
--- --------------------------------------------------------------------------
-PROCEDURE debug (p_text  IN  VARCHAR2) IS
--- --------------------------------------------------------------------------
-BEGIN
-  IF g_debug THEN
-    DBMS_OUTPUT.put_line(SUBSTR(p_text, 1, 255));
-  END IF;
-END;
-
-PROCEDURE SendFile(p_from_dir varchar2,p_from_file varchar2,p_to_file_name varchar2)
-   IS
-    l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := ftp.login('kdstst02.egged.intra', '21', lower('runbatch'), lower('runbatch'),60);
- ftp.binary(p_conn => l_conn);
-ftp.put(p_conn      => l_conn,
-          p_from_dir  => p_from_dir,
-          p_from_file => p_from_file,
-          p_to_file   => p_to_file_name);
-  ftp.logout(l_conn);
-END SendFile;
--- --------------------------------------------------------------------------
-PROCEDURE GetFile(p_to_dir varchar2,p_from_file varchar2,p_to_file_name varchar2)
-   IS
-    l_conn  UTL_TCP.connection;
-BEGIN
-  l_conn := ftp.login('kdstst02.egged.intra', '21', lower('runbatch'), lower('runbatch'),60);
- ftp.binary(p_conn => l_conn);
-ftp.get(p_conn      => l_conn,
-           p_from_file => p_from_file,
-          p_to_dir  => p_to_dir,
-          p_to_file   => p_to_file_name);
-  ftp.logout(l_conn);
-END GetFile;
-END ftp;
-/
-
-
 CREATE OR REPLACE PACKAGE BODY          Pkg_Batch AS
 /******************************************************************************
    NAME:       PKG_BATCH
@@ -4926,10 +3916,10 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
                    AND c.taarich BETWEEN p.me_tarich AND p.ad_tarich
                   AND (P.MAAMAD <> 223 or (P.MAAMAD = 223 and trim(p.sug_misra)='î'))
     
-                 AND c.mispar_ishi NOT IN(   select cc.mispar_ishi from cc
-                  /* SELECT x.mispar_ishi --,c.taarich,c.BAKASHA_ID,c.kod_rechiv,c.erech_rechiv
-                        FROM TB_CHISHUV_CHODESH_OVDIM x
-                        WHERE x.Bakasha_ID=p_request_id */ )  )     
+                 AND NOT exists (   select cc.mispar_ishi
+                                                             from cc 
+                                                             where c.mispar_ishi=cc.mispar_ishi
+                                                             and c.taarich= cc.taarich) )     
      ORDER BY mispar_ishi ASC,taarich DESC;          
 
    OPEN p_cur FOR
@@ -12061,1553 +11051,6 @@ END Pkg_Errors;
 /
 
 
-CREATE OR REPLACE PACKAGE BODY          PKG_FILES
-AS
-    FUNCTION fct_MakatDateSql    (  P_STARTDATE IN DATE,P_ENDDATE IN DATE  
- ) RETURN VARCHAR AS
-GeneralQry VARCHAR2(3000);
-ParamQry VARCHAR2(1000);
-BEGIN 
-
-GeneralQry:= 'Select   distinct activity.makat_nesia,ACTIVITY.TAARICH  
-                    FROM TB_PEILUT_OVDIM Activity, TB_SIDURIM_OVDIM so 
-                    WHERE  (so.mispar_ishi          = activity.mispar_ishi)    
-                                    AND (so.mispar_sidur  = activity.mispar_sidur)
-                                    AND (so.shat_hatchala = activity.shat_hatchala_sidur) 
-                                    AND (so.taarich           = activity.taarich)  
-                                    and SO.MISPAR_SIDUR not like ''99%''
-                                    AND so.taarich BETWEEN  ''' || P_STARTDATE  || ''' AND ''' ||  P_ENDDATE  || '''';
-RETURN GeneralQry ; 
-
-EXCEPTION 
-WHEN OTHERS THEN 
-  RAISE;               
-  END  fct_MakatDateSql;   
-
-
-
-
-procedure create_DayData_Eggt(p_tar_me in date , p_tar_ad in date, P_BAKAHA_ID in number)
-is
-      CURSOR p_cur (
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-select 
-        O.MISPAR_ISHI,
-        TO_CHAR(co.taarich ,'yyyymmDD') StartDate ,
-        trim(TO_CHAR(co.R126 ,'99999')) R126,
-        so.SHAT_HATCHALA , 
-        so.SHAT_GMAR, 
-        TRIM(TO_NUMBER(co.R1) -(NVL(co.R108,0)*60))  R1_108,
-        trim(TO_CHAR(co.R18 ,'99999')) R18,
-        trim(TO_CHAR(co.R32 ,'99999')) R32,
-        trim(TO_CHAR(co.R76 ,'9999')) R76 ,
-        trim(TO_CHAR(co.R77 ,'9999')) R77 ,
-        trim(TO_CHAR(co.R78 ,'9999')) R78 ,
-        trim(TO_CHAR(co.R67 ,'99.999')) R67 ,
-        trim(TO_CHAR(co.R219/60 ,'9999')) R219 ,
-        trim(TO_CHAR(co.R66 ,'99.999')) R66 ,
-        trim(TO_CHAR(   (( co.R219 +co.r5)    /60) ,'9999')) R219_5 ,
-        trim(TO_CHAR(co.R60 ,'9.999'))   R60, 
-        trim(TO_CHAR(co.R96 ,'9999')) R96,
-        trim(TO_CHAR(co.R49 ,'9')) R49
-from
-PIVOT_PIRTEY_OVDIM  Po  ,
-(
-        select MISPAR_ISHI , TAARICH,min(SHAT_HATCHALA) SHAT_HATCHALA , max(SHAT_GMAR) SHAT_GMAR 
-        from tb_sidurim_ovdim soInternal
-        where
-                soInternal.Taarich BETWEEN p_tar_me  AND p_tar_ad 
---        soInternal.TAARICH   between to_date('01/07/2012','dd/MM/yyyy') and to_date('30/07/2012','dd/MM/yyyy') 
-        group by soInternal.mispar_ishi,soInternal.TAARICH
- ) so ,
-(SELECT po.mispar_ishi,MAX(po.ME_TARICH) me_taarich
-                       FROM PIVOT_PIRTEY_OVDIM PO
-                       WHERE po.isuk IS NOT NULL
-                             AND (p_tar_me) BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                               OR p_tar_ad  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                               OR   po.ME_TARICH>= p_tar_me  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= p_tar_ad  
-    --                         AND (to_date('01/07/2012','dd/MM/yyyy') BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-      --                        OR  to_date('30/07/2012','dd/MM/yyyy')  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-        --                      OR   po.ME_TARICH>= to_date('01/07/2012','dd/MM/yyyy')  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  to_date('30/07/2012','dd/MM/yyyy') )
-                                 
-                      GROUP BY po.mispar_ishi) RelevantDetails,
-        ovdim o, 
-        ctb_snif_av cs,
-        CTB_ISUK Isuk,
- (
-SELECT   cco.MISPAR_ISHI,cco.TAARICH,
-        sum(cco.R1) R1,          sum(cco.R5) R5,            sum(cco.R18) R18,         sum(cco.R32) R32,        sum(cco.R49) R49,        
-       sum(cco.R60) R60,        sum(cco.R66) R66,        sum(cco.R67) R67,        sum(cco.R76) R76,        sum(cco.R77) R77,        
-       sum(cco.R78) R78,        sum(cco.R96) R96,        sum(cco.R108) R108,        sum(cco.R126) R126,        sum(cco.R219) R219
-        FROM     ( SELECT   CH.MISPAR_ISHI, CH.TAARICH,
-                    CASE kod_rechiv WHEN 1 THEN Erech_Rechiv ELSE NULL END R1,
-                    CASE kod_rechiv WHEN 5 THEN Erech_Rechiv ELSE NULL END R5,
-                    CASE kod_rechiv WHEN 18 THEN Erech_Rechiv ELSE NULL END R18,
-                    CASE kod_rechiv WHEN 32 THEN Erech_Rechiv ELSE NULL END R32,
-                    CASE kod_rechiv WHEN 49 THEN Erech_Rechiv ELSE NULL END R49,
-                    CASE kod_rechiv WHEN 60 THEN Erech_Rechiv ELSE NULL END R60,
-                    CASE kod_rechiv WHEN 66 THEN Erech_Rechiv ELSE NULL END R66,
-                    CASE kod_rechiv WHEN 67 THEN Erech_Rechiv ELSE NULL END R67,
-                    CASE kod_rechiv WHEN 76 THEN Erech_Rechiv ELSE NULL END R76,
-                    CASE kod_rechiv WHEN 77 THEN Erech_Rechiv ELSE NULL END R77,
-                    CASE kod_rechiv WHEN 78 THEN Erech_Rechiv ELSE NULL END R78,
-                    CASE kod_rechiv WHEN 96 THEN Erech_Rechiv ELSE NULL END R96,
-                    CASE kod_rechiv WHEN 108 THEN Erech_Rechiv ELSE NULL END R108,
-                    CASE kod_rechiv WHEN 126 THEN Erech_Rechiv ELSE NULL END R126,
-                    CASE kod_rechiv WHEN 219 THEN Erech_Rechiv ELSE NULL END R219
-                    FROM TB_CHISHUV_YOMI_OVDIM Ch
-                    WHERE
-          --          CH.TAARICH between to_date('01/07/2012','dd/MM/yyyy') and to_date('30/07/2012','dd/MM/yyyy') 
-                    Ch.Taarich BETWEEN p_tar_me  AND p_tar_ad 
-                    --AND Ch.Bakasha_ID = 8184
-                    AND Ch.Bakasha_ID = P_BAKAHA_ID
-                    ) cco
- group by cco.MISPAR_ISHI,cco.TAARICH
-) co
-where 
-        co.TAARICH = so.TAARICH and 
-        Po.mispar_ishi = o.mispar_ishi   and 
-        Po.mispar_ishi = So.mispar_ishi   and 
-        Po.mispar_ishi = RelevantDetails.mispar_ishi and  
-        Po.ME_TARICH = RelevantDetails.me_taarich and 
-        CS.EZOR = PO.EZOR and 
-        CS.KOD_HEVRA = O.KOD_HEVRA and
-        CS.KOD_HEVRA = 4895 AND 
-        CS.KOD_SNIF_AV = PO.SNIF_AV and 
-        PO.MISPAR_ISHI = O.MISPAR_ISHI and 
-        CO.MISPAR_ISHI = PO.MISPAR_ISHI and 
-        ISUK.KOD_HEVRA = CS.KOD_HEVRA and 
-        ISUK.KOD_ISUK = PO.ISUK ;
-
-    v_rec         p_cur%ROWTYPE;
-    output_file   UTL_FILE.FILE_TYPE;
-    v_line        VARCHAR (400);
-    v_km          NUMBER;
-    v_file_name       VARCHAR(30);
-    QryMakatDate VARCHAR2(3500);
-   BEGIN
-      DBMS_OUTPUT.put_line('start');
-     v_file_name:=   'YOMI_' || lpad(P_BAKAHA_ID,6,0) || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file := UTL_FILE.fopen ('KDS_FILES',v_file_name, 'W');
-              DBMS_OUTPUT.put_line('start loop');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-            v_line:=';';
-            
-            
-        v_line := v_line || v_rec.MISPAR_ISHI  || ';' ;
-        v_line := v_line || v_rec.StartDate  || ';' ;
-        v_line := v_line || v_rec.R126  || ';' ;
-        v_line := v_line || to_char(v_rec.shat_hatchala,'hh24mi') || ';';
-        v_line := v_line || to_char(v_rec.SHAT_GMAR,'hh24mi') || ';';
-        v_line := v_line || v_rec.R1_108  || ';' ;
-        v_line := v_line || v_rec.R18  || ';' ;
-        v_line := v_line || v_rec.R32  || ';' ;
-        v_line := v_line || v_rec.R78 || ';' ;  
-        v_line := v_line || v_rec.R76  || ';' ;
-        v_line := v_line || v_rec.R77  || ';' ;
-        v_line := v_line || v_rec.R67  || ';' ;
-        v_line := v_line || v_rec.R219  || ';' ;
-        v_line := v_line || v_rec.R66  || ';' ; 
-        v_line := v_line || v_rec.R219_5  || ';' ;
-        v_line := v_line || v_rec.R60  || ';' ;
-        v_line := v_line || v_rec.R96  || ';' ;
-        v_line := v_line || v_rec.R49  || ';' ;
-
-
-              DBMS_OUTPUT.put_line('v_line:' || v_line);
-            UTL_FILE.put_line (output_file, v_line);
-      END LOOP;
-              DBMS_OUTPUT.put_line('end loop');
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-                    DBMS_OUTPUT.put_line('On error , v_line:' || v_line);
-
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_DayData_Eggt;
-
-
-
-procedure create_egged_taavura(p_tar_me in date , p_tar_ad in date, P_BAKAHA_ID in number)
-is
-      CURSOR p_cur (
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-select  
-        sp.mispar_ishi,  
-        sp.shem_mish,  
-        sp.shem_prat ,
-        s.teur_snif_av,
-        S.KOD_SNIF_AV,
-        to_char (sp.taarich, 'yyyymmdd') taarich,
-        sp.dayofweek,
-        sp.mispar_sidur,
-        decode(substr(sp.mispar_sidur,0,2),'99',csm.teur_sidur_meychad,css.teur_sidur_avoda) sidur_description,
-        decode(PSM.SIDUR_NAMLAK_VISA,null,0,0,0,1) SIDUR_NAMLAK_VISA,
-        sp.shat_hatchala,
-        sp.SHAT_GMAR,
-        sp.sidur_period,
-        sp.sum_km,
-        sp.SHAT_YETZIA, 
-        sp.MAKAT_NESIA,
-        C.DESCRIPTION,  
-        C.SHILUT, 
-        C.MAZAN_TASHLUM,
-        C.MAZAN_TICHNUN, 
-        C.KM,  
-        sp.OTO_NO,  
-        V.LICENSE_NUMBER,
-        V.BRANCH2,
-        sp.SNIF_TNUA,
-        C.snif 
-from ovdim o,
-        tmp_catalog c ,  
-        ctb_snif_av s,
-        pivot_pirtey_ovdim po,  
-        ctb_sug_sidur css,
-        ctb_sidurim_meyuchadim csm   ,
-        VEHICLE_SPECIFICATIONS v,
-        pivot_sidurim_meyuchadim psm,
-        (     
-        select   
-            so.mispar_ishi,so.taarich, so.mispar_sidur,so.shat_hatchala,SO.SHAT_GMAR ,so.sug_sidur,
-            (so.shat_gmar - so.shat_hatchala)*1440 sidur_period,to_char (so.taarich, 'D') dayofweek,
-            ACTIVITY.SHAT_YETZIA, ACTIVITY.MAKAT_NESIA, ACTIVITY.OTO_NO,  ACTIVITY.SNIF_TNUA,
-            sum(km_visa)OVER (partition by  activity.mispar_ishi,activity.MISPAR_SIDUR,activity.taarich,activity.shat_hatchala_sidur) sum_km,
-             O.KOD_HEVRA, o.shem_mish,  o.shem_prat 
-        from ovdim o,  tb_sidurim_ovdim so,  tb_peilut_ovdim activity ,tb_yamey_avoda_ovdim yao
-        where 
-                YAO.STATUS <> 0 and 
-                YAO.MEASHER_O_MISTAYEG is not NULL AND 
-                YAO.MISPAR_ISHI = SO.MISPAR_ISHI and 
-                YAO.TAARICH =SO.TAARICH and  
-                SO.MISPAR_ISHI= O.MISPAR_ISHI and
-                O.KOD_HEVRA = 580     and 
-                SO.TAARICH  BETWEEN p_tar_me AND p_tar_ad and 
-                --SO.TAARICH between to_date('01/01/2012','dd/mm/yyyy') and to_date('01/02/2012','dd/mm/yyyy')  and 
-                SO.MISPAR_ISHI= activity.MISPAR_ISHI (+) and 
-                SO.TAARICH = ACTIVITY.TAARICH (+) and 
-                SO.MISPAR_SIDUR= ACTIVITY.MISPAR_SIDUR(+) and  
-                SO.SHAT_HATCHALA = ACTIVITY.SHAT_HATCHALA_SIDUR(+) and 
-                not (ACTIVITY.MAKAT_NESIA like '700%' and length(ACTIVITY.MAKAT_NESIA)=8 ) and -- not vissout     
-                ACTIVITY.MISPAR_KNISA = 0   
-        ) sp
-where
-        PO.DIRUG <> 85 and 
-        PO.KOD_HEVRA_HASHALA = 4895 and
-        o.mispar_ishi= sp.mispar_ishi and
-        sp.mispar_ishi = po.mispar_ishi and
-        sp.taarich between po.me_tarich and po.ad_tarich   and
-        sp.taarich between PSM.me_tarich(+) and PSM.ad_tarich(+)   and
-        sp.mispar_sidur = PSM.MISPAR_SIDUR(+) and 
-        s.kod_snif_av = po.snif_av and
-        S.KOD_HEVRA = O.KOD_HEVRA and 
-        css.kod_sidur_avoda(+) = sp.sug_sidur and
-        csm.kod_sidur_meyuchad(+) = sp.mispar_sidur and 
-        sp.MAKAT_NESIA  = C.MAKAT8(+)  and 
-        sp.TAARICH = C.ACTIVITY_DATE(+) and
-        nvl(sp.OTO_NO,0) = v.BUS_NUMBER(+) and 
-        sp.mispar_sidur =   PSM.MISPAR_SIDUR (+);  
-
-
-    v_rec         p_cur%ROWTYPE;
-    output_file   UTL_FILE.FILE_TYPE;
-    v_line        VARCHAR (400);
-    v_km          NUMBER;
-    v_file_name       VARCHAR(30);
-    QryMakatDate VARCHAR2(3500);
-   BEGIN
-      DBMS_OUTPUT.put_line('start');
-      QryMakatDate :=  fct_MakatDateSql(p_tar_me ,p_tar_ad );
-      DBMS_OUTPUT.put_line('QryMakatDate:');
-      DBMS_OUTPUT.put_line(QryMakatDate);
-      Pkg_Reports.pro_Prepare_Catalog_Details(QryMakatDate);
-      DBMS_OUTPUT.put_line('after pro_Prepare_Catalog_Details');
-     v_file_name:=   'musi_' || lpad(P_BAKAHA_ID,6,0) || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file := UTL_FILE.fopen ('KDS_FILES',v_file_name, 'W');
-              DBMS_OUTPUT.put_line('start loop');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-            v_line:=';';
-        v_line := v_line || v_rec.mispar_ishi || ';' ;
-        v_line := v_line || v_rec.shem_mish || ';' ;
-        v_line := v_line || v_rec.shem_prat || ';' ;
-        v_line := v_line || v_rec.teur_snif_av || ';' ;
-        v_line := v_line || v_rec.KOD_SNIF_AV || ';' ;
-        v_line := v_line || v_rec.taarich || ';' ;
-        v_line := v_line || v_rec.dayofweek || ';' ;
-        v_line := v_line || v_rec.mispar_sidur || ';' ;
-        v_line := v_line || v_rec.sidur_description || ';' ;
-        v_line := v_line || v_rec.SIDUR_NAMLAK_VISA  || ';' ;
-        v_line := v_line || to_char(v_rec.shat_hatchala,'dd/mm/yyyy hh24:mi:ss') || ';';
-        v_line := v_line || to_char(v_rec.SHAT_GMAR,'dd/mm/yyyy hh24:mi:ss') || ';';
-        v_line := v_line || v_rec.sidur_period || ';' ;
-        v_line := v_line || v_rec.sum_km || ';' ;
-        v_line := v_line || to_char(v_rec.SHAT_YETZIA,'dd/mm/yyyy hh24:mi:ss') || ';';
-        v_line := v_line || v_rec.MAKAT_NESIA || ';' ;
-        v_line := v_line || v_rec.DESCRIPTION || ';' ;
-        v_line := v_line || v_rec.SHILUT || ';' ;
-        v_line := v_line || v_rec.MAZAN_TASHLUM || ';' ;
-        v_line := v_line || v_rec.MAZAN_TICHNUN || ';' ; 
-        v_line := v_line || v_rec.KM || ';' ;
-        v_line := v_line || v_rec.OTO_NO || ';' ;
-        v_line := v_line || v_rec.LICENSE_NUMBER || ';' ;
-        v_line := v_line || v_rec.BRANCH2 || ';' ;
-        v_line := v_line || v_rec.SNIF_TNUA|| ';' ;
-        v_line := v_line || v_rec.snif || ';' ;
-
-              DBMS_OUTPUT.put_line('v_line:' || v_line);
-            UTL_FILE.put_line (output_file, v_line);
-      END LOOP;
-              DBMS_OUTPUT.put_line('end loop');
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-                    DBMS_OUTPUT.put_line('On error , v_line:' || v_line);
-
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_egged_taavura;
-
-
-
-
- 
-procedure create_file_visot(p_tar_me in date , p_tar_ad in date, P_BAKAHA_ID in number)
-is 
-      CURSOR p_cur (
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-      select  
-            h.mispar_visa,
-           TO_CHAR (h.TAARICH, 'yyyymmdd') taarich,
-            h.SHAT_HATCHALA,
-            h.SHAT_YETZIA,
-            (h.SHAT_GMAR - h.SHAT_HATCHALA)*1440 Sidur_Period,
-             (h.next_hour -   h.SHAT_YETZIA)*1440  meshech_visa ,
-            to_number(h.sum_km, '9999.9') sum_km, 
-            h.mispar_ishi --,
-            --h.MISPAR_SIDUR,
-            --h.MAKAT_NESIA ,
-            --h.shat_hatchala_sidur,
-            --h.SHAT_GMAR ,
-            --h.SHAYAH_LEYOM_KODEM,
-            --h.next_hour,
- from ( 
-   SELECT   p.mispar_ishi,
-            P.MISPAR_SIDUR,
-            P.MAKAT_NESIA ,
-            p.taarich,
-            p.shat_hatchala_sidur,
-            p.mispar_visa,
-            S.SHAT_HATCHALA,
-            S.SHAT_GMAR ,
-            P.SHAT_YETZIA,
-            S.SHAT_GMAR - S.SHAT_HATCHALA Sidur_Period,
-            S.SHAYAH_LEYOM_KODEM,
-             sum(km_visa)OVER (partition by  p.mispar_ishi,P.MISPAR_SIDUR,p.taarich,p.shat_hatchala_sidur) sum_km,
-             nvl(LEAD (P.SHAT_YETZIA) OVER(partition by  p.mispar_ishi,P.MISPAR_SIDUR,p.taarich,p.shat_hatchala_sidur order by P.SHAT_YETZIA ) , S.SHAT_GMAR )  next_hour
-                  
-     FROM   tb_sidurim_ovdim s, tb_peilut_ovdim p , pivot_sidurim_meyuchadim psm ,tb_yamey_avoda_ovdim yao
-    WHERE      
-                YAO.STATUS <> 0 and 
-                YAO.MEASHER_O_MISTAYEG is not NULL AND 
-                YAO.MISPAR_ISHI = S.MISPAR_ISHI and 
-                YAO.TAARICH =S.TAARICH and  
-                 S.MISPAR_ISHI = p.MISPAR_ISHI
-            AND S.MISPAR_SIDUR = p.MISPAR_SIDUR
-            AND s.TAARICH = p.taarich
-            AND S.SHAT_HATCHALA = p.shat_hatchala_sidur
-            and S.LO_LETASHLUM <> 1 
-            and PSM.MISPAR_SIDUR = P.MISPAR_SIDUR
-            and PSM.SIDUR_NAMLAK_VISA is not  null
-            AND s.TAARICH  between PSM.ME_TARICH and PSM.AD_TARICH
-            and S.TAARICH BETWEEN p_tar_me AND p_tar_ad
-            --and P.MISPAR_SIDUR = 99110 --for debug 
-            --and  S.MISPAR_ISHI = 87744 -- for debug
-            --and S.TAARICH = to_date('01/08/2010','dd/mm/yyyy') -- for debug
-            order by  P.MISPAR_SIDUR, p.taarich,p.shat_hatchala_sidur, P.MAKAT_NESIA 
- ) h
- where  to_char(h.MAKAT_NESIA) like '50%' ;
-
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (240);
-      v_km          NUMBER;
-      v_file_name       VARCHAR(30);
-   BEGIN
-      DBMS_OUTPUT.put_line('start');
-     v_file_name:=   'egged_visot_' || lpad(P_BAKAHA_ID,6,0)  || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file := UTL_FILE.fopen ('KDS_FILES',v_file_name, 'W');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-              DBMS_OUTPUT.put_line('start loop');
-            v_line:=';';
-            v_line := v_line || v_rec.mispar_visa || ';' ;
-            v_line := v_line || v_rec.taarich        || ';' ;
-            v_line := v_line || to_char(v_rec.SHAT_HATCHALA,'dd/mm/yyyy hh24:mi:ss') || ';';
-            v_line := v_line || to_char(v_rec.SHAT_YETZIA,'dd/mm/yyyy hh24:mi:ss') || ';';
-            v_line := v_line || v_rec.Sidur_Period || ';' ;
-            v_line := v_line || v_rec.meshech_visa  || ';' ;
-            v_line := v_line || v_rec.sum_km  || ';' ;
-            v_line := v_line || v_rec.mispar_ishi  || ';' ;
-              DBMS_OUTPUT.put_line('v_line:' || v_line);
-            UTL_FILE.put_line (output_file, v_line);
-              DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_visot;
-
-
-
-procedure create_WorkHours(p_BakashaId number ,p_tar_me in date , p_tar_ad in date)
-is 
-      CURSOR p_cur (
-         p_BakashaId    TB_CHISHUV_CHODESH_OVDIM.BAKASHA_ID%TYPE,
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-select 
-        O.MISPAR_ISHI,
-        O.MIN_OVED,
-        PO.MAAMAD,
-        PO.GIL,
-        PO.EZOR,
-        PO.SNIF_AV, 
-        CS.TEUR_SNIF_AV,
-        PO.ISUK,
-        ISUK.TEUR_ISUK,
-        TO_CHAR(PO.TCHILAT_AVODA,'yyyymm') StartDate ,
-        trim(TO_CHAR(co.R75 ,'99')) R75,
-        trim(TO_CHAR(co.R12 ,'9999')) R12,
-        trim(TO_CHAR(co.R18/60 ,'999.9')) R18,
-        trim(TO_CHAR(co.R32/60 ,'999.9')) R32,
-        trim(TO_CHAR(co.R105 ,'999.9')) R105,
-        trim(TO_CHAR((co.R192 - co.R250)/60  ,'999.9')) R192_250,
-        trim(TO_CHAR(co.R250/60  ,'999.9')) R250,
-        trim(TO_CHAR((co.R2 + co.R189 + co.R35 +co.R96 - co.R252)/60 ,'999.99')) R252_REG,
-        trim(TO_CHAR((co.R252)/60 ,'999.99')) R252,
-        trim(TO_CHAR((co.R251 - co.R190)/60 ,'999.99')) R251_190,
-        trim(TO_CHAR((co.R251)/60 ,'999.99')) R251,
-        trim(TO_CHAR((co.R2 + co.R189 + co.R35 +co.R96 - (co.R189 + co.R35))/60 ,'999.99')) WEEKTRIP,
-        trim(TO_CHAR(co.R189/60 ,'999.99')) R189,
-        trim(TO_CHAR(co.R35 ,'999.99')) R35,
-        trim(TO_CHAR(co.R36 ,'999.99')) R36,
-        trim(TO_CHAR(co.R37 ,'9999.99')) R37,
-        trim(TO_CHAR(co.R66 + co.R67 ,'999.99')) R66_67,
-        trim(TO_CHAR(co.R202 + co.R30 +co.R26 +co.R203 +co.R28 +co.R29 ,'999.99')) DRIVER_PREMIA,
-        trim(TO_CHAR(co.R116 + co.R117 +co.R118 +co.R205 ,'999.99')) TNUA_PREMIA,
-        trim(TO_CHAR(co.R96/60 ,'999.99')) R96,
-        trim(TO_CHAR(co.R95/60 ,'999.99')) R95,
-        trim(TO_CHAR(co.R93/60 ,'999.99')) R93,
-        trim(TO_CHAR(co.R94/60 ,'999.99')) R94,
-        trim(TO_CHAR(co.R146 + ((co.R131 - co.R53) +co.R32)/60 ,'9999.99')) HOURSPEAR ,
-        trim(TO_CHAR(co.R76/60 ,'9999.99')) R76 ,
-        trim(TO_CHAR(co.R77/60 ,'9999.99')) R77 ,
-        trim(TO_CHAR(co.R78/60 ,'9999.99')) R78 ,
-        trim(TO_CHAR(co.R53/60 ,'9999.99')) R53 ,
-        trim(TO_CHAR(co.R91 ,'9999.99')) R91 ,
-        trim(TO_CHAR(co.R92 ,'9999.99')) R92 ,
-        trim(TO_CHAR(co.R55/60 ,'9999.99')) R55 ,
-        trim(TO_CHAR(co.R22 ,'99')) R22
-from
-PIVOT_PIRTEY_OVDIM  Po  ,
-(SELECT po.mispar_ishi,MAX(po.ME_TARICH) me_taarich
-                       FROM PIVOT_PIRTEY_OVDIM PO
-                       WHERE po.isuk IS NOT NULL
-                             AND (p_tar_me BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                               OR  p_tar_ad  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                                OR   po.ME_TARICH>= p_tar_me  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= p_tar_ad  )
-                      GROUP BY po.mispar_ishi) RelevantDetails,
-        ovdim o, 
-        ctb_snif_av cs,
-        CTB_ISUK Isuk,
- (
-SELECT   cco.MISPAR_ISHI, 
-        sum(cco.R2) R2,           sum(cco.R12) R12,         sum(cco.R18) R18,        sum(cco.R22) R22,        sum(cco.R26) R26,        
-        sum(cco.R27) R27,        sum(cco.R28) R28,        sum(cco.R29) R29,        sum(cco.R30) R30,        sum(cco.R32) R32,        
-        sum(cco.R35) R35,        sum(cco.R36) R36,        sum(cco.R37) R37,        sum(cco.R53) R53,        sum(cco.R55) R55,        
-        sum(cco.R60) R60,        sum(cco.R66) R66,        sum(cco.R67) R67,        sum(cco.R75) R75,        sum(cco.R76) R76,        
-        sum(cco.R77) R77,        sum(cco.R78) R78,        sum(cco.R91) R91,        sum(cco.R92) R92,        sum(cco.R93) R93,        
-        sum(cco.R94) R94,        sum(cco.R95) R95,        sum(cco.R96) R96,        sum(cco.R105) R105,    sum(cco.R112) R112,        
-        sum(cco.R113) R113,    sum(cco.R114) R114,     sum(cco.R115) R115,     sum(cco.R116) R116,    sum(cco.R118) R118,        
-        sum(cco.R117) R117,        sum(cco.R131) R131,        sum(cco.R146) R146 ,sum(cco.R189) R189,        sum(cco.R190) R190,        
-        sum(cco.R192) R192,        sum(cco.R202) R202,        sum(cco.R203) R203,        sum(cco.R204) R204 ,        sum(cco.R205) R205,        
-        sum(cco.R250) R250,        sum(cco.R251) R251,        sum(cco.R252) R252
-        FROM     ( SELECT   CH.MISPAR_ISHI, 
-                    CASE kod_rechiv WHEN 2 THEN Erech_Rechiv ELSE NULL END R2,
-                    CASE kod_rechiv WHEN 12 THEN Erech_Rechiv ELSE NULL END R12,
-                    CASE kod_rechiv WHEN 18 THEN Erech_Rechiv ELSE NULL END R18,
-                    CASE kod_rechiv WHEN 22 THEN Erech_Rechiv ELSE NULL END R22,
-                    CASE kod_rechiv WHEN 26 THEN Erech_Rechiv ELSE NULL END R26,
-                    CASE kod_rechiv WHEN 27 THEN Erech_Rechiv ELSE NULL END R27,
-                    CASE kod_rechiv WHEN 28 THEN Erech_Rechiv ELSE NULL END R28,
-                    CASE kod_rechiv WHEN 29 THEN Erech_Rechiv ELSE NULL END R29,
-                    CASE kod_rechiv WHEN 30 THEN Erech_Rechiv ELSE NULL END R30,
-                    CASE kod_rechiv WHEN 32 THEN Erech_Rechiv ELSE NULL END R32,
-                    CASE kod_rechiv WHEN 35 THEN Erech_Rechiv ELSE NULL END R35,
-                    CASE kod_rechiv WHEN 36 THEN Erech_Rechiv ELSE NULL END R36,
-                    CASE kod_rechiv WHEN 37 THEN Erech_Rechiv ELSE NULL END R37,
-                    CASE kod_rechiv WHEN 53 THEN Erech_Rechiv ELSE NULL END R53,
-                    CASE kod_rechiv WHEN 55 THEN Erech_Rechiv ELSE NULL END R55,
-                    CASE kod_rechiv WHEN 60 THEN Erech_Rechiv ELSE NULL END R60,
-                    CASE kod_rechiv WHEN 66 THEN Erech_Rechiv ELSE NULL END R66,
-                    CASE kod_rechiv WHEN 67 THEN Erech_Rechiv ELSE NULL END R67,
-                    CASE kod_rechiv WHEN 75 THEN Erech_Rechiv ELSE NULL END R75,
-                    CASE kod_rechiv WHEN 76 THEN Erech_Rechiv ELSE NULL END R76,
-                    CASE kod_rechiv WHEN 77 THEN Erech_Rechiv ELSE NULL END R77,
-                    CASE kod_rechiv WHEN 78 THEN Erech_Rechiv ELSE NULL END R78,
-                    CASE kod_rechiv WHEN 91 THEN Erech_Rechiv ELSE NULL END R91,
-                    CASE kod_rechiv WHEN 92 THEN Erech_Rechiv ELSE NULL END R92,
-                    CASE kod_rechiv WHEN 93 THEN Erech_Rechiv ELSE NULL END R93,
-                    CASE kod_rechiv WHEN 94 THEN Erech_Rechiv ELSE NULL END R94,
-                    CASE kod_rechiv WHEN 95 THEN Erech_Rechiv ELSE NULL END R95,
-                    CASE kod_rechiv WHEN 96 THEN Erech_Rechiv ELSE NULL END R96,
-                    CASE kod_rechiv WHEN 105 THEN Erech_Rechiv ELSE NULL END R105,
-                    CASE kod_rechiv WHEN 112 THEN Erech_Rechiv ELSE NULL END R112,
-                    CASE kod_rechiv WHEN 113 THEN Erech_Rechiv ELSE NULL END R113,
-                    CASE kod_rechiv WHEN 114 THEN Erech_Rechiv ELSE NULL END R114,
-                    CASE kod_rechiv WHEN 115 THEN Erech_Rechiv ELSE NULL END R115,
-                    CASE kod_rechiv WHEN 116 THEN Erech_Rechiv ELSE NULL END R116,
-                    CASE kod_rechiv WHEN 118 THEN Erech_Rechiv ELSE NULL END R118,
-                    CASE kod_rechiv WHEN 117 THEN Erech_Rechiv ELSE NULL END R117,
-                    CASE kod_rechiv WHEN 131 THEN Erech_Rechiv ELSE NULL END R131,
-                    CASE kod_rechiv WHEN 146 THEN Erech_Rechiv ELSE NULL END R146,
-                    CASE kod_rechiv WHEN 189 THEN Erech_Rechiv ELSE NULL END R189,
-                    CASE kod_rechiv WHEN 190 THEN Erech_Rechiv ELSE NULL END R190,
-                    CASE kod_rechiv WHEN 192 THEN Erech_Rechiv ELSE NULL END R192,
-                    CASE kod_rechiv WHEN 202 THEN Erech_Rechiv ELSE NULL END R202,
-                    CASE kod_rechiv WHEN 203 THEN Erech_Rechiv ELSE NULL END R203,
-                    CASE kod_rechiv WHEN 204 THEN Erech_Rechiv ELSE NULL END R204,
-                    CASE kod_rechiv WHEN 205 THEN Erech_Rechiv ELSE NULL END R205,
-                    CASE kod_rechiv WHEN 250 THEN Erech_Rechiv ELSE NULL END R250,
-                    CASE kod_rechiv WHEN 251 THEN Erech_Rechiv ELSE NULL END R251,
-                    CASE kod_rechiv WHEN 252 THEN Erech_Rechiv ELSE NULL END R252
-        FROM TB_CHISHUV_CHODESH_OVDIM Ch
-        WHERE
-                    --CH.TAARICH between to_date('01/05/2012','dd/MM/yyyy') and to_date('30/05/2012','dd/MM/yyyy') 
-                    Ch.Taarich BETWEEN p_tar_me  AND p_tar_ad 
-                    --AND Ch.Bakasha_ID = 7643
-                    AND Ch.Bakasha_ID = p_BakashaId
-                    ) cco
- group by cco.MISPAR_ISHI
-) co
-where 
-        Po.mispar_ishi = o.mispar_ishi   and 
-        Po.mispar_ishi = RelevantDetails.mispar_ishi and  
-        Po.ME_TARICH = RelevantDetails.me_taarich and 
-        CS.EZOR = PO.EZOR and 
-        CS.KOD_HEVRA = O.KOD_HEVRA and
-        CS.KOD_SNIF_AV = PO.SNIF_AV and
-        PO.MISPAR_ISHI = O.MISPAR_ISHI and
-        CO.MISPAR_ISHI = PO.MISPAR_ISHI and 
-        ISUK.KOD_HEVRA = CS.KOD_HEVRA and 
-        ISUK.KOD_ISUK = PO.ISUK ;
-
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (1000);
-      v_km          NUMBER;
-      v_file_name       VARCHAR(30);
-   BEGIN
-      DBMS_OUTPUT.put_line('start');
-     v_file_name:=   'oved_' || lpad(p_BakashaId,6,0)  || '_'  || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file := UTL_FILE.fopen ('KDS_FILES',v_file_name, 'W');
-      FOR v_rec IN p_cur (p_BakashaId,p_tar_me, p_tar_ad)
-      LOOP
-      v_line := '';
-              DBMS_OUTPUT.put_line('start loop');
-        v_line := v_line || v_rec.MISPAR_ISHI || ';' ;
-    v_line := v_line || v_rec.MIN_OVED || ';' ;
-        v_line := v_line || v_rec.MAAMAD || ';' ;
-        v_line := v_line || v_rec.GIL || ';' ;
-        v_line := v_line || v_rec.EZOR || ';' ;
-        v_line := v_line || v_rec.SNIF_AV || ';' ;
-        v_line := v_line || v_rec.TEUR_SNIF_AV || ';' ;
-        v_line := v_line || v_rec.ISUK || ';' ;
-        v_line := v_line || v_rec.TEUR_ISUK || ';' ;
-        v_line := v_line || v_rec.StartDate || ';' ;
-        v_line := v_line || v_rec.R75 || ';' ;
-        v_line := v_line || v_rec.R12 || ';' ;
-        v_line := v_line || v_rec.R18 || ';' ;
-        v_line := v_line || v_rec.R32 || ';' ;
-        v_line := v_line || v_rec.R105 || ';' ;
-        v_line := v_line || v_rec.R192_250 || ';' ;
-        v_line := v_line || v_rec.R250 || ';' ;
-        v_line := v_line || v_rec.R252_REG || ';' ;
-        v_line := v_line || v_rec.R252 || ';' ;
-        v_line := v_line || v_rec.R251_190 || ';' ;
-        v_line := v_line || v_rec.R251 || ';' ;
-        v_line := v_line || v_rec.WEEKTRIP || ';' ;
-        v_line := v_line || v_rec.R189 || ';' ;
-        v_line := v_line || v_rec.R35 || ';' ;
-        v_line := v_line || v_rec.R36 || ';' ;
-        v_line := v_line || v_rec.R37 || ';' ;
-        v_line := v_line || v_rec.R66_67|| ';' ;
-        v_line := v_line || v_rec.DRIVER_PREMIA || ';' ;
-        v_line := v_line || v_rec.TNUA_PREMIA || ';' ;
-        v_line := v_line || v_rec.R96 || ';' ;
-        v_line := v_line || v_rec.R95 || ';' ;
-        v_line := v_line || v_rec.R93 || ';' ;
-        v_line := v_line || v_rec.R94|| ';' ;
-        v_line := v_line || v_rec.HOURSPEAR || ';' ;
-        v_line := v_line || v_rec.R76 || ';' ;
-        v_line := v_line || v_rec.R77 || ';' ;
-        v_line := v_line || v_rec.R78 || ';' ;
-        v_line := v_line || v_rec.R53 || ';' ;
-        v_line := v_line || v_rec.R91 || ';' ;
-        v_line := v_line || v_rec.R92 || ';' ;
-        v_line := v_line || v_rec.R55 || ';' ;
-        v_line := v_line || v_rec.R22|| ';' ;
-              DBMS_OUTPUT.put_line('v_line:' || v_line);
-            UTL_FILE.put_line (output_file, v_line);
-              DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-        THEN
-            UTL_FILE.fclose (output_file);
-        END IF;
-
-         RAISE;
-   END create_WorkHours;
-
- 
-
-
-procedure create_Calcalit(p_BakashaId number ,p_tar_me in date , p_tar_ad in date)
-is 
-      CURSOR p_cur (
-         p_BakashaId    TB_CHISHUV_CHODESH_OVDIM.BAKASHA_ID%TYPE,
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-select 
-        O.MISPAR_ISHI,
-        O.SHEM_MISH,
-        O.SHEM_PRAT,
-        PO.MAAMAD,
-        PO.GIL,
-        PO.EZOR,
-        PO.SNIF_AV, 
-        CS.TEUR_SNIF_AV,
-        PO.ISUK,
-        ISUK.TEUR_ISUK,
-        PO.DIRUG,
-        TO_CHAR(p_tar_me,'yyyymm') MonthData ,
-        trim(TO_CHAR(co.R75 ,'99')) R75,
-        trim(TO_CHAR(co.R18/60 ,'999.9')) R18,
-        trim(TO_CHAR(co.R32/60 ,'999.9')) R32,
-        trim(TO_CHAR(co.R105 ,'999.9')) R105,
-        trim(TO_CHAR((co.R192 - co.R250)/60  ,'999.9')) R192_250,
-        trim(TO_CHAR(co.R250/60  ,'999.9')) R250,
-        trim(TO_CHAR((co.R2 + co.R189 + co.R35 +co.R96 - co.R252)/60 ,'999.99')) R252_REG,
-        trim(TO_CHAR((co.R252)/60 ,'999.99')) R252,
-        trim(TO_CHAR((co.R251 - co.R190)/60 ,'999.99')) R251_190,
-        trim(TO_CHAR((co.R251)/60 ,'999.99')) R251,
-        trim(TO_CHAR(co.R202 + co.R30 + co.R203 +co.R28 + co.R29 ,'999.99')) premia,
-        trim(TO_CHAR(co.R116 + co.R118 + co.R117 +co.R205 ,'999.99')) premiaMihul,
-        trim(TO_CHAR(co.R146 + ((co.R131 - co.R53) +co.R32)/60 ,'9999.99')) HOURSPEAR ,
-        trim(TO_CHAR(co.R76/60 ,'9999.99')) R76 ,
-        trim(TO_CHAR(co.R77/60 ,'9999.99')) R77 ,
-        trim(TO_CHAR(co.R78/60 ,'9999.99')) R78 ,
-        trim(TO_CHAR(co.R55/60 ,'9999.99')) R55 ,
-        trim(TO_CHAR(case when( PO.ISUK > 500 and PO.ISUK <600) then co.R49 else null end ,'9999')) R49 ,
-        trim(TO_CHAR(co.R94/60 ,'999.99')) R94,
-        trim(TO_CHAR(co.R96/60 ,'9999')) R96,
-        trim(TO_CHAR(co.R91 ,'9999.99')) R91 ,
-        trim(TO_CHAR(co.R92 ,'9999.99')) R92 
-from
-PIVOT_PIRTEY_OVDIM  Po  ,
-(SELECT po.mispar_ishi,MAX(po.ME_TARICH) me_taarich
-                       FROM PIVOT_PIRTEY_OVDIM PO
-                       WHERE po.isuk IS NOT NULL
-                             AND (to_date('01/09/2010','dd/MM/yyyy')  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                               OR  to_date('30/09/2010','dd/MM/yyyy')  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-                                OR   po.ME_TARICH>= to_date('01/09/2010','dd/MM/yyyy')  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<= to_date('30/09/2010','dd/MM/yyyy')  )
-                      GROUP BY po.mispar_ishi) RelevantDetails,
-        ovdim o, 
-        ctb_snif_av cs,
-        CTB_ISUK Isuk,
- (
-SELECT   cco.MISPAR_ISHI, 
-        sum(cco.R2) R2,           sum(cco.R18) R18,        sum(cco.R26) R26,        sum(cco.R28) R28,        
-        sum(cco.R29) R29,        sum(cco.R30) R30,        sum(cco.R32) R32,       sum(cco.R35) R35,        
-        sum(cco.R49) R49,        sum(cco.R53) R53,        sum(cco.R55) R55,       sum(cco.R75) R75,        
-        sum(cco.R76) R76,        sum(cco.R77) R77,        sum(cco.R78) R78,        sum(cco.R91) R91,        
-        sum(cco.R92) R92,       sum(cco.R94) R94,        sum(cco.R96) R96,        sum(cco.R105) R105,        
-        sum(cco.R116) R116,                     sum(cco.R117) R117,                     sum(cco.R118) R118,
-        sum(cco.R131) R131,        sum(cco.R146) R146 ,sum(cco.R189) R189,        sum(cco.R190) R190,        
-        sum(cco.R192) R192,        sum(cco.R202) R202,        sum(cco.R203) R203,                sum(cco.R205) R205,
-        sum(cco.R250) R250,        sum(cco.R251) R251,        sum(cco.R252) R252
-        FROM     ( SELECT   CH.MISPAR_ISHI, 
-                    CASE kod_rechiv WHEN 2 THEN Erech_Rechiv ELSE NULL END R2,
-                    CASE kod_rechiv WHEN 18 THEN Erech_Rechiv ELSE NULL END R18,
-                    CASE kod_rechiv WHEN 26 THEN Erech_Rechiv ELSE NULL END R26,
-                    CASE kod_rechiv WHEN 28 THEN Erech_Rechiv ELSE NULL END R28,
-                    CASE kod_rechiv WHEN 29 THEN Erech_Rechiv ELSE NULL END R29,
-                    CASE kod_rechiv WHEN 30 THEN Erech_Rechiv ELSE NULL END R30,
-                    CASE kod_rechiv WHEN 32 THEN Erech_Rechiv ELSE NULL END R32,
-                    CASE kod_rechiv WHEN 35 THEN Erech_Rechiv ELSE NULL END R35,
-                    CASE kod_rechiv WHEN 49 THEN Erech_Rechiv ELSE NULL END R49,
-                    CASE kod_rechiv WHEN 53 THEN Erech_Rechiv ELSE NULL END R53,
-                    CASE kod_rechiv WHEN 55 THEN Erech_Rechiv ELSE NULL END R55,
-                    CASE kod_rechiv WHEN 75 THEN Erech_Rechiv ELSE NULL END R75,
-                    CASE kod_rechiv WHEN 76 THEN Erech_Rechiv ELSE NULL END R76,
-                    CASE kod_rechiv WHEN 77 THEN Erech_Rechiv ELSE NULL END R77,
-                    CASE kod_rechiv WHEN 78 THEN Erech_Rechiv ELSE NULL END R78,
-                    CASE kod_rechiv WHEN 91 THEN Erech_Rechiv ELSE NULL END R91,
-                    CASE kod_rechiv WHEN 92 THEN Erech_Rechiv ELSE NULL END R92,
-                    CASE kod_rechiv WHEN 94 THEN Erech_Rechiv ELSE NULL END R94,
-                    CASE kod_rechiv WHEN 96 THEN Erech_Rechiv ELSE NULL END R96,
-                    CASE kod_rechiv WHEN 105 THEN Erech_Rechiv ELSE NULL END R105,
-                    CASE kod_rechiv WHEN 116 THEN Erech_Rechiv ELSE NULL END R116,
-                    CASE kod_rechiv WHEN 118 THEN Erech_Rechiv ELSE NULL END R118,
-                    CASE kod_rechiv WHEN 117 THEN Erech_Rechiv ELSE NULL END R117,
-                    CASE kod_rechiv WHEN 131 THEN Erech_Rechiv ELSE NULL END R131,
-                    CASE kod_rechiv WHEN 146 THEN Erech_Rechiv ELSE NULL END R146,
-                    CASE kod_rechiv WHEN 189 THEN Erech_Rechiv ELSE NULL END R189,
-                    CASE kod_rechiv WHEN 190 THEN Erech_Rechiv ELSE NULL END R190,
-                    CASE kod_rechiv WHEN 192 THEN Erech_Rechiv ELSE NULL END R192,
-                    CASE kod_rechiv WHEN 202 THEN Erech_Rechiv ELSE NULL END R202,
-                    CASE kod_rechiv WHEN 203 THEN Erech_Rechiv ELSE NULL END R203,
-                    CASE kod_rechiv WHEN 204 THEN Erech_Rechiv ELSE NULL END R204,
-                    CASE kod_rechiv WHEN 205 THEN Erech_Rechiv ELSE NULL END R205,
-                    CASE kod_rechiv WHEN 250 THEN Erech_Rechiv ELSE NULL END R250,
-                    CASE kod_rechiv WHEN 251 THEN Erech_Rechiv ELSE NULL END R251,
-                    CASE kod_rechiv WHEN 252 THEN Erech_Rechiv ELSE NULL END R252
-        FROM TB_CHISHUV_CHODESH_OVDIM Ch
-        WHERE
-                    --CH.TAARICH between to_date('01/09/2010','dd/MM/yyyy') and to_date('30/09/2010','dd/MM/yyyy') 
-                    Ch.Taarich BETWEEN p_tar_me  AND p_tar_ad 
-                    --AND Ch.Bakasha_ID = 7128
-                    AND Ch.Bakasha_ID = p_BakashaId
-                    ) cco
- group by cco.MISPAR_ISHI
-) co
-where 
-        Po.mispar_ishi = o.mispar_ishi   and 
-        Po.mispar_ishi = RelevantDetails.mispar_ishi and  
-        Po.ME_TARICH = RelevantDetails.me_taarich and 
-        CS.EZOR = PO.EZOR and 
-        CS.KOD_HEVRA = O.KOD_HEVRA and
-        CS.KOD_SNIF_AV = PO.SNIF_AV and
-        CS.KOD_HEVRA = 4895 and 
-        PO.MISPAR_ISHI = O.MISPAR_ISHI and
-        CO.MISPAR_ISHI = PO.MISPAR_ISHI and 
-        ISUK.KOD_HEVRA = CS.KOD_HEVRA and 
-        ISUK.KOD_ISUK = PO.ISUK ;
- 
-
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (1000);
-      v_km          NUMBER;
-      v_file_name       VARCHAR(30);
-   BEGIN
-      DBMS_OUTPUT.put_line('start');
-     v_file_name:=   'tast_' || lpad(p_BakashaId,6,0)  || '_'  || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file := UTL_FILE.fopen ('KDS_FILES',v_file_name, 'W');
-      FOR v_rec IN p_cur (p_BakashaId,p_tar_me, p_tar_ad)
-      LOOP
-      v_line := '';
-              DBMS_OUTPUT.put_line('start loop');
-              
-        v_line := v_line || v_rec.MISPAR_ISHI || ';' ;
-        v_line := v_line || v_rec.SHEM_MISH || ';' ;
-        v_line := v_line || v_rec.SHEM_PRAT || ';' ;
-        v_line := v_line || v_rec.MAAMAD || ';' ;
-        v_line := v_line || v_rec.GIL || ';' ;
-        v_line := v_line || v_rec.EZOR || ';' ;
-        v_line := v_line || v_rec.SNIF_AV || ';' ;
-        v_line := v_line || v_rec.TEUR_SNIF_AV || ';' ;
-        v_line := v_line || v_rec.ISUK || ';' ;
-        v_line := v_line || v_rec.TEUR_ISUK || ';' ;
-        v_line := v_line || v_rec.DIRUG || ';' ;
-        v_line := v_line || v_rec.MonthData || ';' ;
-        v_line := v_line || v_rec.R75 || ';' ;
-        v_line := v_line || v_rec.R18 || ';' ;
-        v_line := v_line || v_rec.R32 || ';' ;
-        v_line := v_line || v_rec.R105 || ';' ;
-        v_line := v_line || v_rec.R192_250 || ';' ;
-        v_line := v_line || v_rec.R250 || ';' ;
-        v_line := v_line || v_rec.R252_REG || ';' ;
-        v_line := v_line || v_rec.R252|| ';' ;
-        v_line := v_line || v_rec.R251_190 || ';' ;
-        v_line := v_line || v_rec.R251 || ';' ;
-        v_line := v_line || v_rec.premia|| ';' ;
-        v_line := v_line || v_rec.premiaMihul || ';' ;
-        v_line := v_line || v_rec.HOURSPEAR || ';' ;
-        v_line := v_line || v_rec.R76 || ';' ;
-        v_line := v_line || v_rec.R77 || ';' ;
-        v_line := v_line || v_rec.R78 || ';' ;
-        v_line := v_line || v_rec.R55 || ';' ;
-        v_line := v_line || v_rec.R49 || ';' ;
-        v_line := v_line || v_rec.R94 || ';' ;
-        v_line := v_line || v_rec.R96 || ';' ;
-        v_line := v_line || v_rec.R91 || ';' ;
-        v_line := v_line || v_rec.R92 || ';' ;
-
-              
-              
-              
-              DBMS_OUTPUT.put_line('v_line:' || v_line);
-            UTL_FILE.put_line (output_file, v_line);
-              DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-        THEN
-            UTL_FILE.fclose (output_file);
-        END IF;
-
-         RAISE;
-   END create_Calcalit;
-
-
-
- 
- 
-   /******************************************************************************
-      NAME:       PKG_FILES
-      PURPOSE:
-
-      REVISIONS:
-      Ver        Date        Author           Description
-      ---------  ----------  ---------------  ------------------------------------
-      1.0        4/29/2012      SaraC       1. Created this package body.
-   ******************************************************************************/
-
-    PROCEDURE create_file_egged_taavura (p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER)
-   IS
-      CURSOR p_cur (
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE)
-      IS
-        select a.*,    (select sum(c.km) from   tmp_catalog c ,tb_peilut_ovdim p
-                      where p.MAKAT_NESIA  = C.MAKAT8(+)   
-                    and p.TAARICH = C.ACTIVITY_DATE(+) 
-                     AND a.taarich_source = p.taarich
-                      AND a.mispar_sidur= p.mispar_sidur
-                      AND a.shat_hatchala = p.shat_hatchala_sidur) sum_km,
-                                     (select c.snif from   tmp_catalog c ,tb_peilut_ovdim p
-                      where p.MAKAT_NESIA  = C.MAKAT8(+)   
-                    and p.TAARICH = C.ACTIVITY_DATE(+) 
-                     AND a.taarich_source = p.taarich
-                      AND a.mispar_sidur= p.mispar_sidur
-                      AND a.shat_hatchala = p.shat_hatchala_sidur
-                    and p.makat_nesia = first_makat
-                    and rownum=1) snif_metugbar from
-        ( SELECT S.TAARICH taarich_source,
-                s.mispar_ishi,
-                s.mispar_sidur,
-                S.SHAT_HATCHALA,
-                S.SHAT_GMAR,
-                S.SECTOR_VISA,
-                S.HASHLAMA,
-                S.CHARIGA,
-                mp.snif_av,
-                SUBSTR (T.BRANCH2, 2, 2) snif_mashar,
-                t.oto_num,
-                PPO.Mikum_yechida,
-                t.LICENSE_NUMBER,
-                substr(mp.TEUR_SNIF_AV,0,20) TEUR_SNIF_AV,
-                nvl(DECODE (sm.headrut_type_kod,
-                        NULL, (s.shat_gmar - s.shat_hatchala)*60*24,
-                      0),0)
-                   dakot_nochehut,
-                nvl(DECODE (sm.headrut_type_kod,
-                        NULL, 0,
-                        (s.shat_gmar - s.shat_hatchala)*60*24),0)
-                   dakot_nochehut_headrut,
-                DECODE (SUBSTR (s.mispar_sidur, 0, 2),
-                        99, NVL (mp.snif_tnua, t.snif_tnua),
-                        mp.snif_tnua)
-                   snif_tnua,
-                 substr(O.SHEM_MISH,0,8) SHEM_MISH,
-                substr(O.SHEM_PRAT,0,6) SHEM_PRAT,
-                PPO.GIL,
-                PPO.MAAMAD,
-                PPO.EZOR,
-                PPO.ISUK,
-                TO_CHAR (S.TAARICH, 'yyyymmdd') taarich,
-                substr(DECODE (SUBSTR (s.mispar_sidur, 0, 2),
-                        99, (SELECT m.TEUR_SIDUR_MEYCHAD
-                               FROM CTB_SIDURIM_MEYUCHADIM m
-                              WHERE m.KOD_SIDUR_MEYUCHAD = s.mispar_sidur),
-                        (SELECT d.TEUR_SIDUR_AVODA
-                           FROM CTB_SUG_SIDUR d
-                          WHERE d.KOD_SIDUR_AVODA = s.sug_sidur)),0,20)
-                   sidur_name,
-                TO_CHAR (s.taarich, 'D') dayOfWeek,
-                substr(i.teur_isuk,0,20) teur_isuk,
-                m.mispar_visa,
-                      pkg_files.fn_get_first_namak_sherut(s.mispar_ishi, s.mispar_sidur,s.TAARICH, S.SHAT_HATCHALA) first_makat
-           FROM tb_sidurim_ovdim s,
-              tb_yamey_avoda_ovdim y,
-                ( (SELECT * FROM VIW_ET_SNIF_SIDUR_MEYUCHAD)
-                 UNION ALL
-                 (SELECT * FROM VIW_ET_SNIF_SIDUREY_MAPA)) mp,
-                          (SELECT *
-                         FROM PIVOT_PIRTEY_OVDIM PO
-                 WHERE  (p_tar_me BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-              OR   p_tar_ad  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-              OR   po.ME_TARICH>=p_tar_me AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad )) ppo,
-                ovdim o,
-                ctb_isuk i,
-                VIW_SNIF_TNUA_FROM_TNUA t,
-                VIW_MISPAR_VISA_IN_SIDUR_VISA m,
-                VIW_SIDURIM_MEYUCHADIM sm
-          WHERE     y.TAARICH BETWEEN p_tar_me AND p_tar_ad
-                   AND y.mispar_ishi=s.mispar_ishi
-                AND y.taarich=s.taarich
-                AND y.status<>0
-               AND not y.MEASHER_O_MISTAYEG is null
-                AND o.mispar_ishi = s.mispar_ishi
-                 and O.KOD_HEVRA=4895
-                AND s.mispar_ishi = mp.mispar_ishi
-                AND s.taarich = mp.taarich
-                AND s.mispar_sidur = MP.MISPAR_SIDUR
-                AND o.mispar_ishi = ppo.mispar_ishi
-                AND s.TAARICH BETWEEN PPO.ME_TARICH AND ppo.ad_tarich
-                AND S.MISPAR_ISHI = T.MISPAR_ISHI(+)
-                AND S.MISPAR_SIDUR = T.MISPAR_SIDUR(+)
-                AND s.TAARICH = t.taarich(+)
-                AND S.SHAT_HATCHALA = T.SHAT_HATCHALA(+)
-                AND S.MISPAR_ISHI = m.MISPAR_ISHI(+)
-                AND S.MISPAR_SIDUR = m.MISPAR_SIDUR(+)
-                AND s.TAARICH = m.taarich(+)
-                AND S.SHAT_HATCHALA = m.SHAT_HATCHALA_SIDUR(+)
-                AND S.MISPAR_SIDUR = sm.MISPAR_SIDUR(+)
-                AND s.TAARICH BETWEEN sm.me_taarich(+) AND sm.ad_taarich(+)
-                AND i.kod_isuk = PPO.ISUK ) a
-                order by  a.TAARICH;
-
-
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (340);
-    v_file_name       VARCHAR(30);
-     QryMakatDate VARCHAR2(3500);
-   BEGIN
-   QryMakatDate :=   'Select   distinct p.makat_nesia,p.TAARICH  
-                                  FROM TB_PEILUT_OVDIM p
-                                   WHERE  p.taarich BETWEEN  ''' || p_tar_me  || ''' AND ''' ||  p_tar_ad  || '''';
-       Pkg_Reports.pro_Prepare_Catalog_Details(QryMakatDate);
-       
-     v_file_name:=   'S38N' || lpad(P_BAKAHA_ID,6,0)  || TO_CHAR (p_tar_me, 'ddmmyyyy') ||  '.csv';
-      output_file :=
-         UTL_FILE.fopen ('KDS_FILES',
-                      v_file_name,
-                         'W');
-      --DBMS_OUTPUT.put_line('start');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-   --   DBMS_OUTPUT.put_line('start loop');
-         v_line:='';
-         v_line := v_line || v_rec.mispar_ishi || ';';
-         v_line := v_line || v_rec.SHEM_MISH || ';';
-         v_line := v_line || v_rec.SHEM_prat || ';';
-         v_line := v_line || v_rec.MAAMAD || ';';
-         v_line := v_line || v_rec.gil || ';';
-         v_line := v_line || v_rec.ezor || ';';
-         v_line := v_line || v_rec.snif_av || ';';
-         v_line := v_line || v_rec.ISUK || ';';
-         v_line := v_line || v_rec.taarich || ';';
-         v_line := v_line || v_rec.dayOfWeek || ';';
-
-         v_line := v_line || v_rec.mispar_sidur || ';';
-         v_line := v_line || to_char(v_rec.shat_hatchala,'dd/mm/yyyy hh24:mi:ss') || ';';
-         v_line := v_line || to_char(v_rec.shat_gmar,'dd/mm/yyyy hh24:mi:ss') || ';';
-         
-       --  DBMS_OUTPUT.put_line('start dakot');
-       if (v_rec.dakot_nochehut=0) then v_line := v_line ||'0000'; else v_line := v_line || to_char(to_number(v_rec.dakot_nochehut),'0000'); end if;
-          v_line := v_line || ';';
-         if (v_rec.dakot_nochehut_headrut=0) then v_line := v_line ||'0000'; else v_line := v_line || to_char(to_number(v_rec.dakot_nochehut_headrut),'0000'); end if;
-            v_line := v_line || ';';
-         v_line := v_line || v_rec.TEUR_SNIF_AV || ';';
-         v_line := v_line || v_rec.teur_isuk || ';';
-        
-         v_line := v_line || v_rec.sum_km || ';';
-         v_line := v_line || v_rec.chariga || ';';
-         v_line := v_line || v_rec.hashlama || ';';
-         v_line := v_line || v_rec.sidur_name || ';';
-         v_line := v_line || v_rec.taarich_source || ';';
-         v_line := v_line || v_rec.mikum_yechida || ';';
-         v_line := v_line || v_rec.snif_tnua || ';';
-         v_line := v_line || v_rec.oto_num || ';';
-         v_line := v_line || v_rec.LICENSE_NUMBER || ';';
-         v_line := v_line || v_rec.snif_mashar || ';';
-       if  SUBSTR (v_rec.mispar_sidur, 0, 2)='99' then
-           v_line := v_line || v_rec.snif_metugbar || ';';
-         else
-          v_line := v_line || 0 || ';';
-          end if;
-       v_line := v_line || v_rec.mispar_visa || ';';
-         v_line := v_line || v_rec.sector_visa || ';';
-           
-         --   DBMS_OUTPUT.put_line(v_line);
-         UTL_FILE.put_line (output_file, v_line);
-      --    DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_egged_taavura;
-
- FUNCTION fn_get_first_namak_sherut(p_mispar_ishi IN TB_SIDURIM_OVDIM.mispar_ishi%TYPE,
-                                                            p_mispar_sidur IN TB_SIDURIM_OVDIM.mispar_sidur%TYPE,
-                                                            p_taarich IN TB_SIDURIM_OVDIM.taarich%TYPE,
-                                                                p_shat_hatchala IN TB_SIDURIM_OVDIM.shat_hatchala%TYPE) return varchar2 as
-v_makat varchar2(8);
-BEGIN
-select   makat_nesia into v_makat
-          from(
-   select  p.MISPAR_ISHI, p.taarich,
-          p.MISPAR_SIDUR,
-           p.shat_hatchala_sidur,p.makat_nesia,
-          pkg_tnua.fn_get_makat_type(p.makat_nesia) makat_type
-   from tb_peilut_ovdim p
-  where  p.taarich = p_taarich
-          AND p.mispar_ishi=p_mispar_ishi
-          and p.mispar_sidur=p_mispar_sidur
-            AND p.shat_hatchala_sidur = p_shat_hatchala
-   order by SHAT_YETZIA,MISPAR_KNISA )
-   where (makat_type=1 or makat_type=3)
- and  rownum=1;
-   
-   return v_makat;
-   
-     EXCEPTION
-              WHEN NO_DATA_FOUND THEN
-                   return 0;
-                   
-END fn_get_first_namak_sherut; 
-   
- PROCEDURE create_file_meshek(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER,
-                                                P_EZOR IN VARCHAR2 DEFAULT NULL, 
-                                                P_MIKUM_YECHIDA IN VARCHAR2 DEFAULT NULL,
-                                                P_PREFIX_FILE_NAME IN VARCHAR2)
-   IS
-      CURSOR p_cur (
-         p_tar_me    tb_sidurim_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_sidurim_ovdim.TAARICH%TYPE,
-          P_EZOR IN VARCHAR2, 
-          P_MIKUM_YECHIDA IN VARCHAR2)
-      IS
-               select o.mispar_ishi,substr(O.SHEM_MISH,0,8) SHEM_MISH,
-                substr(O.SHEM_PRAT,0,6) SHEM_PRAT,substr(m.teur_mikum_yechida,0,20) teur_mikum_yechida,sm.avodat_meshek,ppo.snif_av,
-                ppo.isuk, substr(i.teur_isuk,0,20) teur_isuk,to_char(s.taarich,'yyyymmdd') taarich,
-        s.mispar_sidur,s.hashlama,s.chariga,to_char(s.shat_gmar,'hh24mi') shat_gmar,to_char(s.shat_hatchala,'hh24mi') shat_hatchala,GET_SUG_YOM(s.taarich) sug_yom,
-        pkg_ovdim.fun_get_meafyen_oved(s.mispar_ishi,3,s.taarich) shat_hatchala_muteret, substr(SA.TEUR_SNIF_AV,0,20) TEUR_SNIF_AV,ppo.MAAMAD,
-        pkg_ovdim.fun_get_meafyen_oved(s.mispar_ishi,4,s.taarich) shat_gmar_muteret,substr(cm.teur_sidur_meychad,0,20) teur_sidur_meychad
-        from
-        tb_yamey_avoda_ovdim  y,
-        tb_sidurim_ovdim  s,
-        Ctb_snif_av sa,
-          (SELECT *
-                         FROM PIVOT_PIRTEY_OVDIM PO
-                 WHERE  (p_tar_me BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-              OR   p_tar_ad  BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
-              OR   po.ME_TARICH>=p_tar_me AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))<=  p_tar_ad ))  ppo,
-        ovdim o,
-        ctb_mikum_yechida  m,
-        pivot_sidurim_meyuchadim  sm    ,
-        ctb_isuk i,ctb_sidurim_meyuchadim cm
-        where y.status<>0
-    --    and not y.measher_o_mistayeg is null
-        and s.mispar_ishi=y.mispar_ishi
-        and s.taarich=y.taarich
-        and s.taarich between p_tar_me and p_tar_ad
-        and s.lo_letashlum=0
-        and o.mispar_ishi=s.mispar_ishi
-         and s.mispar_ishi = ppo.mispar_ishi
-        and s.taarich between ppo.me_tarich and ppo.ad_tarich
-        and ppo.mikum_yechida=m.kod_mikum_yechida
-        and s.mispar_sidur=sm.mispar_sidur
-        and s.taarich between sm.me_tarich and sm.ad_tarich
-        and ppo.isuk=i.kod_isuk
-        and o.kod_hevra=i.kod_hevra
-        and not sm.avodat_meshek is null
-        and cm.kod_sidur_meyuchad=s.mispar_sidur
-          and sa.kod_snif_av = ppo.snif_av
-        and sa.kod_hevra =o.kod_hevra
-        and substr(ppo.isuk,0,1) in (6,7,8)
-        and (p_ezor is null or ppo.EZOR  IN (SELECT x FROM TABLE(CAST(Convert_String_To_Table(p_ezor ,  ',') AS mytabtype))))
-        and (p_mikum_yechida is null or ppo.MIKUM_YECHIDA  IN (SELECT x FROM TABLE(CAST(Convert_String_To_Table(p_mikum_yechida ,  ',') AS mytabtype))))
-        order by o.mispar_ishi,s.taarich;
-
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (240);
-      v_file_name       VARCHAR(30);
-   BEGIN
-     v_file_name:=  P_PREFIX_FILE_NAME || lpad(P_BAKAHA_ID,6,0)  || TO_CHAR (p_tar_me, 'ddmmyy') ||  '.csv';
-      output_file :=
-         UTL_FILE.fopen ('KDS_FILES',
-                      v_file_name,
-                         'W');
-      --DBMS_OUTPUT.put_line('start');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad,p_ezor,p_mikum_yechida)
-      LOOP
-   --   DBMS_OUTPUT.put_line('start loop');
-         v_line:='';
-         v_line := v_line || v_rec.mispar_ishi || ';';
-         v_line := v_line || v_rec.shem_mish || ';';
-             v_line := v_line || v_rec.shem_prat || ';';
-            v_line := v_line || v_rec.maamad || ';';
-         v_line := v_line || v_rec.teur_mikum_yechida || ';';
-          v_line := v_line || v_rec.teur_snif_av || ';';
-         v_line := v_line || v_rec.isuk || ';';
-             v_line := v_line || v_rec.teur_isuk || ';';
-         v_line := v_line || v_rec.taarich || ';';
-         v_line := v_line || v_rec.sug_yom || ';';
-          v_line := v_line || v_rec.mispar_sidur || ';';
-         v_line := v_line || v_rec.teur_sidur_meychad || ';';
-             v_line := v_line || v_rec.shat_hatchala || ';';
-         v_line := v_line || v_rec.shat_gmar || ';';
-            v_line := v_line || v_rec.chariga || ';';
-         v_line := v_line || v_rec.hashlama || ';';
-          v_line := v_line || v_rec.shat_hatchala_muteret || ';';
-         v_line := v_line || v_rec.shat_gmar_muteret || ';';
-         --   DBMS_OUTPUT.put_line(v_line);
-         UTL_FILE.put_line (output_file, v_line);
-      --    DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_meshek;
-
-PROCEDURE create_file_et_namak(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER )
-   IS
-      CURSOR p_cur (
-         p_tar_me    tb_peilut_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_peilut_ovdim.TAARICH%TYPE)
-      IS
-         select * from
-            (select p.mispar_ishi,to_char(p.taarich,'yyyymmdd') taarich,to_char(p.taarich,'D') yom,p.oto_no,p.mispar_sidur,
-            p.taarich taarich_source,p.shat_hatchala_sidur,P.MAKAT_NESIA,
-            pkg_tnua.fn_get_makat_type(P.MAKAT_NESIA) makat_type,to_char(P.SHAT_YETZIA,'hh24mi') SHAT_YETZIA,
-            p.snif_tnua,v.license_number,C.DESCRIPTION,C.KM,C.SNIF,C.MAZAN_TASHLUM
-            from
-            tb_yamey_avoda_ovdim  y,
-            tb_peilut_ovdim p,
-            vehicle_specifications v,
-            Ctb_snif_av sa,
-                tmp_catalog c ,
-             (select *
-               from PIVOT_PIRTEY_OVDIM
-               where me_tarich between  p_tar_me and p_tar_ad) ppo
-            where y.status<>0
-            and not y.measher_o_mistayeg is null
-            and p.mispar_ishi=y.mispar_ishi
-            and p.taarich=y.taarich
-            and p.taarich between p_tar_me and p_tar_ad
-             and p.mispar_ishi = ppo.mispar_ishi
-            and p.taarich between ppo.me_tarich and ppo.ad_tarich
-            and p.oto_no = v.bus_number
-            and sa.kod_snif_av = ppo.snif_av
-            and sa.kod_hevra =4895
-            and  p.MAKAT_NESIA  = C.MAKAT8(+)   
-            and p.TAARICH = C.ACTIVITY_DATE(+) )
-           where makat_type in (3,6)
-            order by  taarich_source;
-     
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (240);
-    QryMakatDate VARCHAR2(3500);
-      v_file_name       VARCHAR(20);
-   BEGIN
-    QryMakatDate :=   'Select   distinct p.makat_nesia,p.TAARICH  
-                                  FROM TB_PEILUT_OVDIM p
-                                   WHERE  p.taarich BETWEEN  ''' || p_tar_me  || ''' AND ''' ||  p_tar_ad  || '''';
-       Pkg_Reports.pro_Prepare_Catalog_Details(QryMakatDate);
-       
-     v_file_name:=  'TNMK' || P_BAKAHA_ID || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file :=
-         UTL_FILE.fopen ('KDS_FILES',
-                      v_file_name,
-                         'W');
-      --DBMS_OUTPUT.put_line('start');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-   --   DBMS_OUTPUT.put_line('start loop');
-         v_line:='';
-          v_line := v_line || v_rec.taarich || ';';
-         v_line := v_line || v_rec.yom || ';';
-          v_line := v_line || v_rec.shat_yetzia || ';';
-          v_line := v_line || v_rec.makat_nesia || ';';
-                                                           
-          v_line := v_line || substr(RPAD(v_rec.description,50,' '),0,32) || ';';
-          v_line := v_line || v_rec.mazan_tashlum || ';';
-          v_line := v_line || v_rec.km || ';';
-          v_line := v_line || v_rec.oto_no || ';';         
-          v_line := v_line || v_rec.LICENSE_NUMBER || ';';   
-          v_line := v_line || v_rec.snif || ';';    
-          v_line := v_line || v_rec.snif_tnua || ';';                                   
-         --   DBMS_OUTPUT.put_line(v_line);
-         UTL_FILE.put_line (output_file, v_line);
-      --    DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_et_namak;
-  
-PROCEDURE create_file_mushaley_egged(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER )
-   IS
-      CURSOR p_cur (
-         p_tar_me    tb_peilut_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_peilut_ovdim.TAARICH%TYPE)
-      IS
-             select snif_mashar,LICENSE_NUMBER,sum(count_travels) count_travels,sum(sum_km_sherut) sum_km_sherut,
-             sum(sum_km_namak) sum_km_namak,sum(sum_km_empty) sum_km_empty
-  from
-  ( select snif_mashar,LICENSE_NUMBER,makat_type,  case makat_type when 1 then count(*) else null end count_travels,
-  case makat_type when 1 then sum(km) else null end sum_km_sherut,
-  case makat_type when 3 then sum(km) when  6 then sum(km)  else null end sum_km_namak,
-  case makat_type when 2   then sum(km) when 5 then sum(km)  else null end sum_km_empty from
-            (select  p.TAARICH ,p.MAKAT_NESIA,pkg_tnua.fn_get_makat_type(P.MAKAT_NESIA) makat_type, substr(v.branch2,2,2) snif_mashar ,ME.HOVA_MISPAR_RECHEV,
-            V.LICENSE_NUMBER,C.KM
-            from
-            tb_yamey_avoda_ovdim  y,
-            tb_peilut_ovdim p,
-           pivot_MEAFYENEY_ELEMENTIM me,
-            vehicle_specifications v,
-              tmp_catalog c 
-          where y.status<>0
-            and not y.measher_o_mistayeg is null
-            and p.mispar_ishi=y.mispar_ishi
-            and p.taarich=y.taarich
-            and p.taarich between  p_tar_me and  p_tar_ad
-            and v.own_firm_code=24
-            and p.oto_no = v.bus_number
-            and ME.KOD_ELEMENT(+)=to_number(substr(P.MAKAT_NESIA,2,2))
-            and P.TAARICH  between me.me_tarich(+) and ME.AD_TARICH(+)
-            and  p.MAKAT_NESIA  = C.MAKAT8(+)   
-            and p.TAARICH = C.ACTIVITY_DATE(+) 
-          )
-            where (makat_type in (1,2,3,6)  or (makat_type=5 and not HOVA_MISPAR_RECHEV is null))
-          group by snif_mashar,LICENSE_NUMBER,makat_type)
-          group by snif_mashar,LICENSE_NUMBER;
-     
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (240);
-        v_file_name       VARCHAR(30);
-   QryMakatDate VARCHAR2(3500);
-   BEGIN
-      QryMakatDate :=   'Select   distinct p.makat_nesia,p.TAARICH  
-                                  FROM TB_PEILUT_OVDIM p
-                                   WHERE  p.taarich BETWEEN  ''' || p_tar_me  || ''' AND ''' ||  p_tar_ad  || '''';
-       Pkg_Reports.pro_Prepare_Catalog_Details(QryMakatDate);
-     
-     v_file_name:=  'BUS' || lpad(P_BAKAHA_ID,6,0)  || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file :=
-         UTL_FILE.fopen ('KDS_FILES',
-                      v_file_name,
-                         'W');
-      --DBMS_OUTPUT.put_line('start');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-   --   DBMS_OUTPUT.put_line('start loop');
-         v_line:='';
-          v_line := v_line || v_rec.snif_mashar || ';';
-         v_line := v_line || v_rec.license_number || ';';
-         v_line := v_line || v_rec.sum_km_sherut || ';';
-         v_line := v_line || v_rec.sum_km_empty || ';';
-         v_line := v_line || v_rec.sum_km_namak || ';';
-          v_line := v_line || v_rec.count_travels || ';';
-                                    
-         --   DBMS_OUTPUT.put_line(v_line);
-         UTL_FILE.put_line (output_file, v_line);
-      --    DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_mushaley_egged;
-   
-   
-PROCEDURE create_file_et_sherut(p_tar_me IN DATE, p_tar_ad IN DATE,P_BAKAHA_ID IN NUMBER )
-   IS
-      CURSOR p_cur (
-         p_tar_me    tb_peilut_ovdim.TAARICH%TYPE,
-         p_tar_ad    tb_peilut_ovdim.TAARICH%TYPE)
-      IS
-        select * from
-            (select p.mispar_ishi,to_char(p.taarich,'yyyymmdd') taarich,
-            p.taarich taarich_source,P.MAKAT_NESIA,
-            pkg_tnua.fn_get_makat_type(P.MAKAT_NESIA) makat_type,to_char(P.SHAT_YETZIA,'hh24mi') SHAT_YETZIA,v.license_number
-            from
-            tb_yamey_avoda_ovdim  y,
-            tb_peilut_ovdim p,
-            vehicle_specifications v,
-            tmp_catalog c 
-            where y.status<>0
-            and not y.measher_o_mistayeg is null
-            and p.mispar_ishi=y.mispar_ishi
-            and p.taarich=y.taarich
-            and p.taarich between p_tar_me and p_tar_ad
-            and p.mispar_knisa=0
-            and p.oto_no = v.bus_number
-          and  p.MAKAT_NESIA  = C.MAKAT8(+)   
-            and p.TAARICH = C.ACTIVITY_DATE(+) )
-           where makat_type=1
-            order by  taarich_source;
-     
-      v_rec         p_cur%ROWTYPE;
-      output_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (240);
-    QryMakatDate VARCHAR2(3500);
-      v_file_name       VARCHAR(20);
-   BEGIN
-    QryMakatDate :=   'Select   distinct p.makat_nesia,p.TAARICH  
-                                  FROM TB_PEILUT_OVDIM p
-                                   WHERE  p.taarich BETWEEN  ''' || p_tar_me  || ''' AND ''' ||  p_tar_ad  || '''';
-       Pkg_Reports.pro_Prepare_Catalog_Details(QryMakatDate);
-       
-     v_file_name:=  'TA' || P_BAKAHA_ID || TO_CHAR (p_tar_me, 'ddmmyyyy') || '.csv';
-      output_file :=
-         UTL_FILE.fopen ('KDS_FILES',
-                      v_file_name,
-                         'W');
-      --DBMS_OUTPUT.put_line('start');
-      FOR v_rec IN p_cur (p_tar_me, p_tar_ad)
-      LOOP
-   --   DBMS_OUTPUT.put_line('start loop');
-         v_line:='';
-           v_line := v_line || v_rec.mispar_ishi || ';';
-          v_line := v_line || v_rec.taarich || ';';
-          v_line := v_line || v_rec.shat_yetzia || ';';
-          v_line := v_line || v_rec.makat_nesia || ';';
-           v_line := v_line || v_rec.LICENSE_NUMBER || ';';   
-                                
-         --   DBMS_OUTPUT.put_line(v_line);
-         UTL_FILE.put_line (output_file, v_line);
-      --    DBMS_OUTPUT.put_line('end loop');
-      END LOOP;
-
-      UTL_FILE.fclose (output_file);
-      commit;
-    ftp.SendFile('KDS_FILES',v_file_name,'filereports/' || v_file_name);
-      
-   EXCEPTION
-      WHEN OTHERS
-      THEN
-         UTL_FILE.put_line (output_file,
-                            'Error: ' || SUBSTR (SQLERRM, 1, 100));
-
-         IF UTL_FILE.is_open (output_file)
-         THEN
-            UTL_FILE.fclose (output_file);
-         END IF;
-
-         RAISE;
-   END create_file_et_sherut;
-   
- procedure create_file_rechvey_nochechot(p_from_date in date, p_to_date in date, p_maamad in pivot_pirtey_ovdim.maamad%type,p_cur OUT CurType) 
- IS
-BEGIN  
-OPEN  p_cur FOR
-select distinct a.mispar_ishi,O.SHEM_PRAT, O.SHEM_MISH, a.maamad,to_char(Dakot_bafoal/60,'9,999.99') shaot_bafoal,to_char(Dakot_letashleum/60,'9,999.99') shaot_letashlum,r100,  r150,r200,yemay_ovoda,hofesh,machala
-from pivot_pirtey_ovdim a, ovdim o,
-        (select  mispar_ishi, bakasha_id,Taarich,
-        max(CASE kod_rechiv  WHEN 18 THEN ERECH_RECHIV else 0 end ) Dakot_bafoal,
-        max(CASE kod_rechiv  WHEN 1 THEN ERECH_RECHIV else 0 end ) Dakot_letashleum,        
-        max(CASE kod_rechiv  WHEN 100 THEN ERECH_RECHIV else 0 end ) r100,
-         max(CASE kod_rechiv  WHEN 76 THEN ERECH_RECHIV else 0 end ) r125,
-        max(CASE kod_rechiv  WHEN 77 THEN ERECH_RECHIV else 0 end ) r150,
-        max(CASE kod_rechiv  WHEN 78 THEN ERECH_RECHIV else 0  end ) r200,
-        max(CASE kod_rechiv  WHEN 109 THEN ERECH_RECHIV else 0  end ) yemay_ovoda,
-        max(CASE kod_rechiv  WHEN 270 THEN ERECH_RECHIV else 0  end ) hofesh,
-        max(CASE kod_rechiv  WHEN 60 THEN ERECH_RECHIV else 0 end ) machala 
-        from
-        (select ch.mispar_ishi, ch.bakasha_id,ch.Taarich,ch.kod_rechiv,ch.ERECH_RECHIV
-         from TB_CHISHUV_CHODESH_OVDIM ch where ch.TAARICH between p_from_date and p_to_date
-         and ch.bakasha_id = (select max(bakasha_id) from TB_CHISHUV_CHODESH_OVDIM c where c.MISPAR_ISHI =  ch.mispar_ishi  and TAARICH between p_from_date and p_to_date))
-        group by mispar_ishi, bakasha_id,Taarich
-        ) Chishuv
-where p_from_date > A.me_TARICH
-and a.mispar_ishi = o.mispar_ishi
-and substr(maamad,2,2) = p_maamad
-and Chishuv.mispar_ishi = A.mispar_ishi
-and Chishuv.taarich between p_from_date and p_to_date;
-END create_file_rechvey_nochechot;
-END PKG_FILES;
-/
-
-
-CREATE OR REPLACE PACKAGE BODY PKG_HR AS
-/******************************************************************************
-   NAME:       PKG_HR
-   PURPOSE:
-
-   REVISIONS:
-   Ver        Date        Author           Description
-   ---------  ----------  ---------------  ------------------------------------
-   1.0        7/8/2012      SaraC       1. Created this package body.
-******************************************************************************/
-
- 
-PROCEDURE  chk_creation_date_meafyenim(shem_mvew VARCHAR)  IS
-CreationDt DATE;
-
-BEGIN
-CreationDt:=SYSDATE+1;
-
-  SELECT MAX( creation_date)
- INTO   CreationDt
-FROM apps.EGD_MKS_MeAFYENim_ovdim@kds_gw
-WHERE     mispar_ishi='77690';
-
-  IF (TRUNC( CreationDt) = TRUNC(SYSDATE-1)) THEN
-     dbms_mview.REFRESH(shem_mvew,'c');
-   ELSE IF (TRUNC( CreationDt) < TRUNC(SYSDATE)) THEN
-       INSERT INTO TB_LOG_TAHALICH
-    VALUES (16,1,1,SYSDATE,'',10,'','creationdate= '||TO_CHAR(CreationDt,'dd/mm/yyyy hh24:mi:ssss'));
-                     RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
-         ELSE IF (TRUNC( CreationDt) = TRUNC(SYSDATE)) THEN
-                  dbms_mview.REFRESH(shem_mvew,'c');
-                ELSE 
-       INSERT INTO TB_LOG_TAHALICH
-    VALUES (16,1,1,SYSDATE,'',10,'','creationdate= '||TO_CHAR(CreationDt,'dd/mm/yyyy hh24:mi:ssss'));
-                              RAISE_APPLICATION_ERROR(-2005, 'log_tahalich', TRUE);
-                END IF;
-         END IF;
-   END IF;
-     
-    EXCEPTION
-            WHEN OTHERS THEN
-                          RAISE; 
-END chk_creation_date_meafyenim;
-
-END PKG_HR;
-/
-
-
 CREATE OR REPLACE PACKAGE BODY          PKG_MF_HISTORY AS
 /******************************************************************************
    NAME:       PKG_HISTORY
@@ -13908,7 +11351,7 @@ END Ins_netuney_historiya_Peilut;
  PROCEDURE Pro_Ins_historiya_chodshi_1(p_bakasha_id number, p_file_name nvarchar2) IS
 
     input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (500);
+      v_line        VARCHAR (1500);
       v_split_string       string_array; 
        p_err varchar(100);
          v_mispar_siduri number;
@@ -13922,13 +11365,13 @@ BEGIN
           LOOP
            UTL_FILE.GET_LINE(input_file,v_line);
       --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
+       v_split_string := split_string(v_line,';');
          -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
              if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-             -- DBMS_OUTPUT.put_line(v_split_string(1));
+               if (to_number( v_split_string(1) )<> 999999999) then
+              DBMS_OUTPUT.put_line(v_split_string(1));
                  p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
-               insert into MF_HIST_CHISHUV_CHODESH_OVDIM(   ISHI_H                  ,
+              insert into MF_HIST_CHISHUV_CHODESH_OVDIM(   ISHI_H                  ,
                                                                                           TKUFA,
                                                                                           NOSAFOT_100_H             ,
                                                                                           KIZUZ_100_H               ,
@@ -14008,96 +11451,7 @@ BEGIN
                                                                                           KIZUZ_VIZA_H              ,
                                                                                           ZMAN_ARUHA_1_H            ,
                                                                                           ZMAN_ARUHA_2_H            ,
-                                                                                          TOTAL_KIZUZIM_H           
-                                                                              
-                                                                        /*      TOSAFOT_KLALIOT_H         ,
-                                                                              
-                                                                              KALKALA_MEYUHEDET_H       ,
-                                                                              PITZUL_H                  ,
-                                                                              PITZUL_KAFUL_H            ,
-                                                                              LINA_H                    ,
-                                                                              LINA_KFULA_H              ,
-                                                                              MAAMATZ_SINAI_H           ,
-                                                                              TOSEFET_GLOBALIT_H        ,
-                                                                              GMUL_HISAHON_MEYUHAD_H    ,
-                                                                              GMUL_HISAHON_H            ,
-                                                                              GMUL_HISAHON_NOSAF_H      ,
-                                                                              KALKALA_H                 ,
-                                                                              ESHEL_1_H                 ,
-                                                                              ESHEL_2_H                 ,
-                                                                              ESHEL_3_H                 ,
-                                                                              ZMAN_LEHISAHON_H          ,
-                                                                              NOSAFOT_LHISAHON_H        ,
-                                                                              PREMIA_H                  ,
-                                                                              PREMIA_SHLILIT_H          ,
-                                                                              PREMIA_BESHABAT_H         ,
-                                                                              PREMIA_BE_NMLK_H          ,
-                                                                              PREMIA_BE_NMLK_SHABAT_H   ,
-                                                                              PREMIA_IN_MIHSA_H         ,
-                                                                              TOSEFET_MESHEK_H          ,
-                                                                              MIHSAT_NAHAGUT_H          ,
-                                                                              MIHSAT_TAFKID_H           ,
-                                                                              MIHSAT_TNUA_H             ,
-                                                                              MIHSAT_SHA_NAHAGUT_H      ,
-                                                                              MIHSAT_SHA_TAFKID_H       ,
-                                                                              MIHSAT_SHA_TNUA_H         ,
-                                                                              KIZUZ_NAHAGUT_H           ,
-                                                                              KIZUZ_TAFKID_H            ,
-                                                                              KIZUZ_TNUA_H              ,
-                                                                              KIZUZ_SHA_NAHAGUT_H       ,
-                                                                              KIZUZ_SHA_TAFKID_H        ,
-                                                                              KIZUZ_SHA_TNUA_H          ,
-                                                                              PREMIA_SADRANIM_H         ,
-                                                                              PREMIA_RAKAZIM_H          ,
-                                                                              PREMIA_PAKAHIM_H          ,
-                                                                              TOSEFET_NAHAGUT20_H       ,
-                                                                              TOSEFET_NAHAGUT30_H       ,
-                                                                              TOSEFET_NAHAGUT45_H       ,
-                                                                              MAHALA_IALED_H            ,
-                                                                              TIPAT_CHALEV_H            ,
-                                                                              ZIKUI_100_H               ,
-                                                                              ZIKUI_100_SHABAT_H        ,
-                                                                              ZIKUI_CHOFESH_H           ,
-                                                                              ZIKUI_CHOFESH_SHABAT_H    ,
-                                                                              KIZUZ_REGILOT_H           ,
-                                                                              NETO_REGILOT_H            ,
-                                                                              PREMIA_GRIROT_H           ,
-                                                                              PREMIA_MESHEK_H           ,
-                                                                              NOSAFOT_MESHALEACH_H      ,
-                                                                              NOSAFOT_PAKACH_H          ,
-                                                                              NOSAFOT_SADRAN_H          ,
-                                                                              KIZUZ_MESHALEACH_H        ,
-                                                                              KIZUZ_PAKACH_H            ,
-                                                                              KIZUZ_SADRAN_H            ,
-                                                                              PREMIA_MANAS_H            ,
-                                                                              PREMIA_TCHNUN_TN_H        ,
-                                                                              PREMIA_RASHEM_H           ,
-                                                                              NOSAFOT_RAKAZ_H           ,
-                                                                              KIZUZ_RAKAZ_H             ,
-                                                                              YAMEI_NAHAGUT_H           ,
-                                                                              MAHALA_HORIM_H            ,
-                                                                              MAHALA_BEN_ZUG_H          ,
-                                                                              HASVA_L_KAV_H             ,
-                                                                              MAHALA_BZ_LEDA_H          ,
-                                                                              DAKOT_SIKUN_H             ,
-                                                                              NOSAFOT_KUPAI_H           ,
-                                                                              KIZUZ_KUPAI_H             ,
-                                                                              ZMAN_SADRAN_MAC_H         ,
-                                                                              ZMAN_RAKAZ_MAC_H          ,
-                                                                              ZMAN_PAKACH_MAC_H         ,
-                                                                              ZMAN_MESHALEACH_MAC_H     ,
-                                                                              ZMAN_KUPAI_MAC_H          ,
-                                                                              PREMIA_MACHSENAI_H        ,
-                                                                              ESHEL_MEVAKRIM_1_H        ,
-                                                                              ESHEL_MEVAKRIM_2_H        ,
-                                                                              ESHEL_MEVAKRIM_3_H        ,
-                                                                              DERUG_SACHAR_H            ,
-                                                                              DARGA_SACHAR_H            ,
-                                                                              MUTAM_BITAHON_H           ,
-                                                                              MUTAMUT_BITAHON_H        ,
-                                                                              SIDUR_8582_PART_H       ,
-                                                                              SIDUR_8582_FULL_H   ,
-                                                                              MISHMERET_MESHEK_H    */  )  
+                                                                                          TOTAL_KIZUZIM_H                               )  
                                  values (  decode(trim( v_split_string(1)),'',null,to_number( v_split_string(1))),
                                               decode(trim( v_split_string(2)),'',null, to_number( v_split_string(2))), 
                                               decode(trim( v_split_string(3)),'',null, to_number( v_split_string(3))),
@@ -14170,8 +11524,7 @@ BEGIN
                                               decode(trim(  v_split_string(70)),'',null, to_number( v_split_string(70))),
                                               decode(trim(  v_split_string(71)),'',null, to_number( v_split_string(71))),
                                               decode(trim(  v_split_string(72)),'',null, to_number( v_split_string(72))),
-                                              decode(trim(   v_split_string(73)),'',null, to_number( v_split_string(73))),
-                                              
+                                              decode(trim(   v_split_string(73)),'',null, to_number( v_split_string(73))),     
                                               decode(trim(  v_split_string(74)),'',null, to_number( v_split_string(74))),
                                               decode(trim(  v_split_string(75)),'',null, to_number( v_split_string(75))),
                                               decode(trim(  v_split_string(76)),'',null, to_number( v_split_string(76))),
@@ -14180,116 +11533,180 @@ BEGIN
                                               decode(trim(  v_split_string(79)),'',null, to_number( v_split_string(79))),
                                               decode(trim(  v_split_string(80)),'',null, to_number( v_split_string(80))),
                                               decode(trim(  v_split_string(81)),'',null, to_number( v_split_string(81))) --,
-                                              
-                                            /*  decode(trim(   v_split_string(82)),'',null, to_number( v_split_string(82))),
-                                              decode(trim(  v_split_string(83)),'',null, to_number( v_split_string(83))),
-                                              decode(trim(  v_split_string(84)),'',null, to_number( v_split_string(84))),
-                                              decode(trim(  v_split_string(85)),'',null, to_number( v_split_string(85))),
-                                              decode(trim(  v_split_string(86)),'',null, to_number( v_split_string(86))),
-                                              decode(trim(  v_split_string(87)),'',null, to_number( v_split_string(87))),
-                                              decode(trim(  v_split_string(88)),'',null, to_number( v_split_string(88))),
-                                               decode(trim(  v_split_string(89)),'',null, to_number( v_split_string(89))),
-                                              decode(trim(  v_split_string(90)),'',null, to_number( v_split_string(90))),
-                                              decode(trim(   v_split_string(91)),'',null, to_number( v_split_string(91))),
-                                              decode(trim(  v_split_string(92)),'',null, to_number( v_split_string(92))),
-                                              decode(trim(  v_split_string(93)),'',null, to_number( v_split_string(93))),
-                                              decode(trim(  v_split_string(94)),'',null, to_number( v_split_string(94))),
-                                              decode(trim(  v_split_string(95)),'',null, to_number( v_split_string(95))),
-                                              decode(trim(  v_split_string(96)),'',null, to_number( v_split_string(96))),
-                                              decode(trim(  v_split_string(97)),'',null, to_number( v_split_string(97))),
-                                               decode(trim(  v_split_string(98)),'',null, to_number( v_split_string(98))),
-                                              decode(trim(  v_split_string(99)),'',null, to_number( v_split_string(99))),
-                                              decode(trim(   v_split_string(100)),'',null, to_number( v_split_string(100))),
-                                              decode(trim(  v_split_string(101)),'',null, to_number( v_split_string(101))),
-                                              decode(trim(  v_split_string(102)),'',null, to_number( v_split_string(102))),
-                                              decode(trim(  v_split_string(103)),'',null, to_number( v_split_string(103))),
-                                              decode(trim(  v_split_string(104)),'',null, to_number( v_split_string(104))),
-                                              decode(trim(  v_split_string(105)),'',null, to_number( v_split_string(105))),
-                                              decode(trim(  v_split_string(106)),'',null, to_number( v_split_string(106))),
-                                              decode(trim(  v_split_string(107)),'',null, to_number( v_split_string(107))),
-                                              decode(trim(  v_split_string(108)),'',null, to_number( v_split_string(108))),
-                                              decode(trim(   v_split_string(109)),'',null, to_number( v_split_string(109))),
-                                              decode(trim(  v_split_string(110)),'',null, to_number( v_split_string(110))),
-                                              decode(trim(  v_split_string(111)),'',null, to_number( v_split_string(111))),
-                                              decode(trim(  v_split_string(112)),'',null, to_number( v_split_string(112))),
-                                              decode(trim(  v_split_string(113)),'',null, to_number( v_split_string(113))),
-                                              decode(trim(  v_split_string(114)),'',null, to_number( v_split_string(114))),
-                                              decode(trim(  v_split_string(115)),'',null, to_number( v_split_string(115))),
-                                               decode(trim(  v_split_string(116)),'',null, to_number( v_split_string(116))),
-                                              decode(trim(  v_split_string(117)),'',null, to_number( v_split_string(117))),
-                                              decode(trim(   v_split_string(118)),'',null, to_number( v_split_string(118))),
-                                              decode(trim(  v_split_string(119)),'',null, to_number( v_split_string(119))),
-                                              decode(trim(  v_split_string(120)),'',null, to_number( v_split_string(120))),
-                                              decode(trim(  v_split_string(121)),'',null, to_number( v_split_string(121))),
-                                              decode(trim(  v_split_string(122)),'',null, to_number( v_split_string(122))),
-                                              decode(trim(  v_split_string(123)),'',null, to_number( v_split_string(123))),
-                                              decode(trim(  v_split_string(124)),'',null, to_number( v_split_string(124))),
-                                              
-                                                decode(trim(  v_split_string(125)),'',null, to_number( v_split_string(125))),
-                                              decode(trim(   v_split_string(126)),'',null, to_number( v_split_string(126))),
-                                              decode(trim(  v_split_string(127)),'',null, to_number( v_split_string(127))),
-                                              decode(trim(  v_split_string(128)),'',null, to_number( v_split_string(128))),
-                                              decode(trim(  v_split_string(129)),'',null, to_number( v_split_string(129))),
-                                              decode(trim(  v_split_string(130)),'',null, to_number( v_split_string(130))),
-                                              decode(trim(  v_split_string(131)),'',null, to_number( v_split_string(131))),
-                                              decode(trim(  v_split_string(132)),'',null, to_number( v_split_string(132))),
-                                               decode(trim(  v_split_string(133)),'',null, to_number( v_split_string(133))),
-                                              decode(trim(  v_split_string(134)),'',null, to_number( v_split_string(134))),
-                                              decode(trim(   v_split_string(135)),'',null, to_number( v_split_string(135))),
-                                              decode(trim(  v_split_string(136)),'',null, to_number( v_split_string(136))),
-                                              decode(trim(  v_split_string(137)),'',null, to_number( v_split_string(137))),
-                                              decode(trim(  v_split_string(138)),'',null, to_number( v_split_string(138))),
-                                              decode(trim(  v_split_string(139)),'',null, to_number( v_split_string(139))),
-                                              decode(trim(  v_split_string(140)),'',null, to_number( v_split_string(140))),
-                                              decode(trim(  v_split_string(141)),'',null, to_number( v_split_string(141))),
-                                               decode(trim(  v_split_string(142)),'',null, to_number( v_split_string(142))),
-                                              decode(trim(  v_split_string(143)),'',null, to_number( v_split_string(143))),
-                                              decode(trim(   v_split_string(144)),'',null, to_number( v_split_string(144))),
-                                              decode(trim(  v_split_string(145)),'',null, to_number( v_split_string(145))),
-                                              decode(trim(  v_split_string(146)),'',null, to_number( v_split_string(146))),
-                                              decode(trim(  v_split_string(147)),'',null, to_number( v_split_string(147))),
-                                              decode(trim(  v_split_string(148)),'',null, to_number( v_split_string(148))),
-                                              decode(trim(  v_split_string(149)),'',null, to_number( v_split_string(149))),
-                                              decode(trim(  v_split_string(150)),'',null, to_number( v_split_string(150))),
-                                               decode(trim(  v_split_string(151)),'',null, to_number( v_split_string(151))),
-                                              decode(trim(  v_split_string(152)),'',null, to_number( v_split_string(152))),
-                                              decode(trim(   v_split_string(153)),'',null, to_number( v_split_string(153))),
-                                              decode(trim(  v_split_string(154)),'',null, to_number( v_split_string(154))),
-                                              decode(trim(  v_split_string(155)),'',null, to_number( v_split_string(155))),
-                                              decode(trim(  v_split_string(156)),'',null, to_number( v_split_string(156))),
-                                              decode(trim(  v_split_string(157)),'',null, to_number( v_split_string(157))),
-                                              decode(trim(  v_split_string(158)),'',null, to_number( v_split_string(158))),
-                                              decode(trim(  v_split_string(159)),'',null, to_number( v_split_string(159))),
-                                               decode(trim(  v_split_string(160)),'',null, to_number( v_split_string(160))),
-                                              decode(trim(  v_split_string(161)),'',null, to_number( v_split_string(161))),
-                                              decode(trim(   v_split_string(162)),'',null, to_number( v_split_string(162))),
-                                              decode(trim(  v_split_string(163)),'',null, to_number( v_split_string(163))),
-                                              decode(trim(  v_split_string(164)),'',null, to_number( v_split_string(164))),
-                                              decode(trim(  v_split_string(165)),'',null, to_number( v_split_string(165))),
-                                              decode(trim(  v_split_string(166)),'',null, to_number( v_split_string(166))),
-                                              decode(trim(  v_split_string(167)),'',null, to_number( v_split_string(167))),
-                                              decode(trim(  v_split_string(168)),'',null, to_number( v_split_string(168))),
-                                               decode(trim(  v_split_string(169)),'',null, to_number( v_split_string(169))),
-                                              decode(trim(  v_split_string(170)),'',null, to_number( v_split_string(170))),
-                                              decode(trim(   v_split_string(171)),'',null, to_number( v_split_string(171))),
-                                              decode(trim(  v_split_string(172)),'',null, to_number( v_split_string(172))),
-                                              decode(trim(  v_split_string(173)),'',null, to_number( v_split_string(173))),
-                                              decode(trim(  v_split_string(174)),'',null, to_number( v_split_string(174))),
-                                              decode(trim(  v_split_string(175)),'',null, to_number( v_split_string(175))),
-                                              decode(trim(  v_split_string(176)),'',null, to_number( v_split_string(176))),
-                                              decode(trim(  v_split_string(177)),'',null, to_number( v_split_string(177))),
-                                               decode(trim(  v_split_string(178)),'',null, to_number( v_split_string(178))),
-                                              decode(trim(  v_split_string(179)),'',null, to_number( v_split_string(179))),
-                                              decode(trim(   v_split_string(180)),'',null, to_number( v_split_string(180))),
-                                              decode(trim(  v_split_string(181)),'',null, to_number( v_split_string(181))),
-                                              decode(trim(  v_split_string(182)),'',null, to_number( v_split_string(182))),
-                                              decode(trim(  v_split_string(183)),'',null, to_number( v_split_string(183))),
-                                              decode(trim(  v_split_string(184)),'',null, to_number( v_split_string(184))),
-                                              decode(trim(  v_split_string(185)),'',null, to_number( v_split_string(185))),
-                                              decode(trim(  v_split_string(186)),'',null, to_number( v_split_string(186))),
-                                               decode(trim(  v_split_string(187)),'',null, to_number( v_split_string(187))),
-                                              decode(trim(  v_split_string(188)),'',null,  v_split_string(188))*/
-                                              );
+                                               );
+                end if;
+           end if; 
+
+     END LOOP;
+     EXCEPTION  
+        WHEN NO_DATA_FOUND THEN  
+              UTL_FILE.fclose (input_file);
+               utl_file.fremove('KDS_FILES',p_file_name);
+
+    END;
+            
+      commit;
+      
+  EXCEPTION  
+        WHEN OTHERS THEN   
+        BEGIN
+            UTL_FILE.fclose (input_file);
+            utl_file.fremove('KDS_FILES',p_file_name);
+         DBMS_OUTPUT.put_line('xxxx');
+             p_err:= SQLERRM;-- || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
+       DBMS_OUTPUT.put_line(p_err);
+             rollback;
+           SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+           INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
+                                             VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
+             commit;
+          RAISE;            
+        END;     
+END Pro_Ins_historiya_chodshi_1;
+
+
+
+ PROCEDURE Pro_Ins_historiya_chodshi_2(p_bakasha_id number, p_file_name nvarchar2) IS
+
+    input_file   UTL_FILE.FILE_TYPE;
+      v_line        VARCHAR (500);
+      v_split_string       string_array; 
+       p_err varchar(100);
+         v_mispar_siduri number;
+       p_mispar_ishi number;  
+       p_count number;
+        
+BEGIN
+
+     ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
+    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
+    BEGIN
+          LOOP
+           UTL_FILE.GET_LINE(input_file,v_line);
+      --    DBMS_OUTPUT.put_line(v_line);
+        v_split_string := split_string(v_line,';');
+         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
+             if v_split_string.count > 0 then
+                 if (to_number( v_split_string(1) )<> 999999999) then
+             -- DBMS_OUTPUT.put_line(v_split_string(1));
+                 p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
+                 
+                 select count(*) into p_count
+                 from MF_HIST_CHISHUV_CHODESH_OVDIM
+                 where ISHI_H= to_number( v_split_string(1))
+                 and TKUFA=to_number( v_split_string(2));
+                 
+                         if (p_count>0) then
+                         
+                                update MF_HIST_CHISHUV_CHODESH_OVDIM
+                                set     KALKALA_MEYUHEDET_H  =   decode(trim( v_split_string(3)),'',null,to_number( v_split_string(3)))   ,
+                                         PITZUL_H      =   decode(trim( v_split_string(4)),'',null,to_number( v_split_string(4)))               ,
+                                         PITZUL_KAFUL_H     =   decode(trim( v_split_string(5)),'',null,to_number( v_split_string(5)))          ,                                        
+                                          LINA_H      =   decode(trim( v_split_string(6)),'',null,to_number( v_split_string(6)))                  ,
+                                          LINA_KFULA_H       =   decode(trim( v_split_string(7)),'',null,to_number( v_split_string(7)))           ,
+                                         TOSEFET_GLOBALIT_H      =   decode(trim( v_split_string(8)),'',null,to_number( v_split_string(8)))           ,
+                                          GMUL_HISAHON_MEYUHAD_H   =   decode(trim( v_split_string(9)),'',null,to_number( v_split_string(9)))          ,
+                                          GMUL_HISAHON_H         =   decode(trim( v_split_string(10)),'',null,to_number( v_split_string(10)))            ,
+                                          GMUL_HISAHON_NOSAF_H     =   decode(trim( v_split_string(11)),'',null,to_number( v_split_string(11)))          ,       
+                                          KALKALA_H            =   decode(trim( v_split_string(12)),'',null,to_number( v_split_string(12)))          ,
+                                          ESHEL_1_H         =   decode(trim( v_split_string(13)),'',null,to_number( v_split_string(13)))             ,
+                                          ESHEL_2_H         =   decode(trim( v_split_string(14)),'',null,to_number( v_split_string(14)))             ,
+                                          ESHEL_3_H        =   decode(trim( v_split_string(15)),'',null,to_number( v_split_string(15)))              ,
+                                          ZMAN_LEHISAHON_H   =   decode(trim( v_split_string(16)),'',null,to_number( v_split_string(16)))           ,
+                                          TOSEFET_MESHEK_H  =   decode(trim( v_split_string(17)),'',null,to_number( v_split_string(17)))            ,
+                                          NOSAFOT_LHISAHON_H     =   decode(trim( v_split_string(18)),'',null,to_number( v_split_string(18)))       ,
+                                          PREMIA_H      =   decode(trim( v_split_string(19)),'',null,to_number( v_split_string(19)))                ,
+                                          PREMIA_SHLILIT_H    =   decode(trim( v_split_string(20)),'',null, v_split_string(20))          ,
+                                          PREMIA_BESHABAT_H   =   decode(trim( v_split_string(21)),'',null,to_number( v_split_string(21)))          ,
+                                          PREMIA_BE_NMLK_H      =   decode(trim( v_split_string(22)),'',null,to_number( v_split_string(22)))        ,
+                                          PREMIA_BE_NMLK_SHABAT_H  =   decode(trim( v_split_string(23)),'',null,to_number( v_split_string(23)))     ,
+                                          PREMIA_IN_MIHSA_H      =   decode(trim( v_split_string(24)),'',null,to_number( v_split_string(24)))       ,
+                                          MIHSAT_NAHAGUT_H    =   decode(trim( v_split_string(25)),'',null,to_number( v_split_string(25)))       ,
+                                          MIHSAT_TAFKID_H      =   decode(trim( v_split_string(26)),'',null,to_number( v_split_string(26)))      ,
+                                          MIHSAT_TNUA_H        =   decode(trim( v_split_string(27)),'',null,to_number( v_split_string(27)))      ,
+                                          MIHSAT_SHA_NAHAGUT_H    =   decode(trim( v_split_string(28)),'',null,to_number( v_split_string(28)))   ,
+                                          MIHSAT_SHA_TAFKID_H    =   decode(trim( v_split_string(29)),'',null,to_number( v_split_string(29)))    ,
+                                          MIHSAT_SHA_TNUA_H     =   decode(trim( v_split_string(30)),'',null,to_number( v_split_string(30)))     ,
+                                          KIZUZ_NAHAGUT_H     =   decode(trim( v_split_string(31)),'',null,to_number( v_split_string(31)))        ,
+                                          KIZUZ_TAFKID_H     =   decode(trim( v_split_string(32)),'',null,to_number( v_split_string(32)))         ,
+                                          KIZUZ_TNUA_H       =   decode(trim( v_split_string(33)),'',null,to_number( v_split_string(33)))         ,
+                                          KIZUZ_SHA_NAHAGUT_H   =   decode(trim( v_split_string(34)),'',null,to_number( v_split_string(34)))      ,
+                                          KIZUZ_SHA_TAFKID_H     =   decode(trim( v_split_string(35)),'',null,to_number( v_split_string(35)))     ,
+                                          KIZUZ_SHA_TNUA_H       =   decode(trim( v_split_string(36)),'',null,to_number( v_split_string(36)))     ,
+                                          PREMIA_SADRANIM_H    =   decode(trim( v_split_string(37)),'',null,to_number( v_split_string(37)))       ,
+                                          PREMIA_RAKAZIM_H      =   decode(trim( v_split_string(38)),'',null,to_number( v_split_string(38)))      ,
+                                          PREMIA_PAKAHIM_H      =   decode(trim( v_split_string(39)),'',null,to_number( v_split_string(39)))      ,
+                                          TOSEFET_NAHAGUT20_H     =   decode(trim( v_split_string(40)),'',null,to_number( v_split_string(40)))        ,
+                                          TOSEFET_NAHAGUT30_H      =   decode(trim( v_split_string(41)),'',null,to_number( v_split_string(41)))       ,
+                                          TOSEFET_NAHAGUT45_H      =   decode(trim( v_split_string(42)),'',null,to_number( v_split_string(42)))       ,
+                                           MAHALA_IALED_H     =   decode(trim( v_split_string(43)),'',null,to_number( v_split_string(43)))            ,
+                                          TIPAT_CHALEV_H    =   decode(trim( v_split_string(44)),'',null,to_number( v_split_string(44)))             ,
+                                          ZIKUI_100_H     =   decode(trim( v_split_string(45)),'',null,to_number( v_split_string(45)))               ,
+                                          ZIKUI_100_SHABAT_H    =   decode(trim( v_split_string(46)),'',null,to_number( v_split_string(46)))         ,
+                                          ZIKUI_CHOFESH_H        =   decode(trim( v_split_string(47)),'',null,to_number( v_split_string(49)))       ,
+                                          ZIKUI_CHOFESH_SHABAT_H  =   decode(trim( v_split_string(48)),'',null,to_number( v_split_string(48)))      ,
+                                          KIZUZ_REGILOT_H       =   decode(trim( v_split_string(49)),'',null,to_number( v_split_string(49)))        ,
+                                          NETO_REGILOT_H       =   decode(trim( v_split_string(50)),'',null,to_number( v_split_string(50)))         ,
+                                          PREMIA_GRIROT_H     =   decode(trim( v_split_string(51)),'',null,to_number( v_split_string(51)))          ,
+                                          PREMIA_MESHEK_H    =   decode(trim( v_split_string(52)),'',null,to_number( v_split_string(52)))           ,
+                                          NOSAFOT_MESHALEACH_H    =   decode(trim( v_split_string(53)),'',null,to_number( v_split_string(53)))      ,
+                                          NOSAFOT_PAKACH_H       =   decode(trim( v_split_string(54)),'',null,to_number( v_split_string(54)))       ,
+                                          NOSAFOT_SADRAN_H       =   decode(trim( v_split_string(55)),'',null,to_number( v_split_string(55)))       ,
+                                          KIZUZ_MESHALEACH_H     =   decode(trim( v_split_string(56)),'',null,to_number( v_split_string(56)))       ,
+                                          KIZUZ_PAKACH_H       =   decode(trim( v_split_string(57)),'',null,to_number( v_split_string(57)))        ,
+                                          KIZUZ_SADRAN_H       =   decode(trim( v_split_string(58)),'',null,to_number( v_split_string(58)))         ,
+                                          PREMIA_MANAS_H       =   decode(trim( v_split_string(59)),'',null,to_number( v_split_string(59)))       ,
+                                          PREMIA_TCHNUN_TN_H       =   decode(trim( v_split_string(60)),'',null,to_number( v_split_string(60)))   ,
+                                          PREMIA_RASHEM_H          =   decode(trim( v_split_string(61)),'',null,to_number( v_split_string(61)))   ,
+                                           NOSAFOT_RAKAZ_H         =   decode(trim( v_split_string(62)),'',null,to_number( v_split_string(62)))       ,
+                                          KIZUZ_RAKAZ_H             =   decode(trim( v_split_string(63)),'',null,to_number( v_split_string(63)))    ,
+                                          YAMEI_NAHAGUT_H        =   decode(trim( v_split_string(64)),'',null,to_number( v_split_string(64)))        ,
+                                           MAHALA_HORIM_H          =   decode(trim( v_split_string(65)),'',null,to_number( v_split_string(65)))     ,
+                                          MAHALA_BEN_ZUG_H        =   decode(trim( v_split_string(66)),'',null,to_number( v_split_string(66)))     ,
+                                          HASVA_L_KAV_H            =   decode(trim( v_split_string(67)),'',null,to_number( v_split_string(67)))    ,
+                                          MAHALA_BZ_LEDA_H      =   decode(trim( v_split_string(68)),'',null,to_number( v_split_string(68)))       ,
+                                          DAKOT_SIKUN_H          =   decode(trim( v_split_string(69)),'',null,to_number( v_split_string(69)))      ,
+                                          NOSAFOT_KUPAI_H      =   decode(trim( v_split_string(70)),'',null,to_number( v_split_string(70)))        ,
+                                          KIZUZ_KUPAI_H           =   decode(trim( v_split_string(71)),'',null,to_number( v_split_string(71)))   ,
+                                          ZMAN_SADRAN_MAC_H      =   decode(trim( v_split_string(72)),'',null,to_number( v_split_string(72)))      ,
+                                          ZMAN_RAKAZ_MAC_H       =   decode(trim( v_split_string(73)),'',null,to_number( v_split_string(73)))      ,
+                                          ZMAN_PAKACH_MAC_H       =   decode(trim( v_split_string(74)),'',null,to_number( v_split_string(74)))     ,
+                                          ZMAN_MESHALEACH_MAC_H   =   decode(trim( v_split_string(75)),'',null,to_number( v_split_string(75)))     ,
+                                          ZMAN_KUPAI_MAC_H    =   decode(trim( v_split_string(76)),'',null,to_number( v_split_string(76)))         ,
+                                          PREMIA_MACHSENAI_H    =   decode(trim( v_split_string(77)),'',null,to_number( v_split_string(77)))      ,
+                                          ESHEL_MEVAKRIM_1_H     =   decode(trim( v_split_string(78)),'',null,to_number( v_split_string(78)))     ,
+                                          ESHEL_MEVAKRIM_2_H     =   decode(trim( v_split_string(79)),'',null,to_number( v_split_string(79)))     ,
+                                          ESHEL_MEVAKRIM_3_H    =   decode(trim( v_split_string(80)),'',null,to_number( v_split_string(80)))      ,
+                                          SIDUR_8582_PART_H   =   decode(trim( v_split_string(81)),'',null,to_number( v_split_string(81)))       ,
+                                          SIDUR_8582_FULL_H   =   decode(trim( v_split_string(82)),'',null,to_number( v_split_string(82)))  ,
+                                          MISHMERET_MESHEK_H  =   decode(trim( v_split_string(83)),'',null,to_number( v_split_string(83)))  ,
+                                          YEMEY_NOCHACHUT_H  =   decode(trim( v_split_string(84)),'',null,to_number( v_split_string(84)))  
+                                 
+                             /*    TOSAFOT_KLALIOT_H      ,
+                                         
+                                          MAAMATZ_SINAI_H           ,
+
+                                          DERUG_SACHAR_H            ,
+                                          DARGA_SACHAR_H            ,
+                                          MUTAM_BITAHON_H           ,
+                                          MUTAMUT_BITAHON_H        ,
+                                           */
+                                where  ISHI_H= to_number( v_split_string(1))
+                                     and TKUFA=to_number( v_split_string(2));
+                         else
+                                BEGIN
+                                     rollback;
+                                    SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+                                    INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
+                                                                        VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),'mispar_ishi not exist in first file ' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1));
+                                     commit;
+                                     insert into MF_HIST_CHISHUV_CHODESH_OVDIM(ISHI_H,tkufa) values(11111111,222222222);
+                                   EXCEPTION  
+                                     WHEN OTHERS THEN  
+                                            Raise;
+                                 END;
+                         end if;
+         
                  end if;
            end if; 
 
@@ -14313,12 +11730,334 @@ BEGIN
              rollback;
             SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
             INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
-                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(2)),p_err);
+                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
              commit;
           RAISE;            
         END;     
-END Pro_Ins_historiya_chodshi_1;
+END Pro_Ins_historiya_chodshi_2;
 
+
+PROCEDURE Pro_Ins_historiya_yomi(p_bakasha_id number, p_file_name nvarchar2) IS
+
+    input_file   UTL_FILE.FILE_TYPE;
+      v_line        VARCHAR (500);
+      v_split_string       string_array; 
+       p_err varchar(100);
+         v_mispar_siduri number;
+       p_mispar_ishi number;  
+        
+BEGIN
+
+     ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
+    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
+    BEGIN
+          LOOP
+           UTL_FILE.GET_LINE(input_file,v_line);
+      --    DBMS_OUTPUT.put_line(v_line);
+        v_split_string := split_string(v_line,';');
+         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
+             if v_split_string.count > 0 then
+                 if (to_number( v_split_string(1) )<> 999999999) then
+             -- DBMS_OUTPUT.put_line(v_split_string(1));
+                 p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
+               insert into MF_HIST_CHISHUV_YOMI_OVDIM(  ISHI_I ,
+                                                                                     -- ISHI_BIKORET_I,
+                                                                                      TAHANAT_SAHAR_I  ,
+                                                                                     SNIF_AV_I  ,
+                                                                                      SHEM_MISH_I   ,
+                                                                                      SHEM_PRAT_I    ,
+                                                                                      YEHIDA_I  ,
+                                                                                      ISUK_1_I     ,
+                                                                                  --    ISUK_2_3_I   ,
+                                                                                      MAAMAD_1_I      ,
+                                                                                  --    MAAMAD_2_I     ,
+                                                                                      EZOR_I      ,
+                                                                                      KOD_GIL_I          ,
+                                                                                      MIKUM_I         ,
+                                                                                      KOD_YAMEI_AVODA_I      ,
+                                                                                      MERKAZ_MEDA_I    ,
+                                                                                       DERUG_SACHAR_I         ,
+                                                                                      DARGA_SACHAR_I           ,
+                                                                                         MUTAM_BITAHON_I          ,
+                                                                                      MIUN_PNIMI_I    ,
+                                                                                     STATUS_MUSHE_I          ,
+                                                                                       TAARICH ,
+                                                                                      YOM_I           ,
+                                                                                      SUG_YOM_1_I        ,
+                                                                                   --   SUG_YOM_2_I     ,
+                                                                                      MEIUHAD_I        ,
+                                                                                      SUG_SIDURIM_I   ,
+                                                                                      MIHSA_I           ,
+                                                                                      HATHALA_I            ,
+                                                                                      GMAR_I                ,
+                                                                                      NOHAHUT_I              ,
+                                                                                      NOHAHUT_BAFOAL_I       ,
+                                                                                      DAKOT_REGILOT_I      ,
+                                                                                      NOHAHUT_BE_YAMIM_I     ,
+                                                                                      TOTAL_TAFKID_I      ,
+                                                                                      TOTAL_TNUA_I         ,
+                                                                                      TOTAL_NAHAGUT_I    ,
+                                                                                      ZMAN_SHABAT_I       ,
+                                                                                      ZMAN_1_1_I         ,
+                                                                                      TOTAL_NOSAFOT_I     ,
+                                                                                      EX_MIHSA_I           ,
+                                                                                      EX_MIHSA_SHABAT_I    ,
+                                                                                      NOSAFOT_NAHAGUT_I     ,
+                                                                                      NOSAFOT_TAFKID_I      ,
+                                                                                      NOSAFOT_TNUA_I        ,
+                                                                                      SHABAT_NAHAGUT_I    ,
+                                                                                      SHABAT_TAFKID_I        ,
+                                                                                      SHABAT_TNUA_I            ,
+                                                                                      NOSAFOT_125_I         ,
+                                                                                      NOSAFOT_150_I          ,
+                                                                                      NOSAFOT_SHABAT_I   ,
+                                                                                      MEIUHADOT_SHABAT_I     ,
+                                                                                      ZMAN_LEHAMARA_I      ,
+                                                                                      EREV_HAG_125_I       ,
+                                                                                      EREV_HAG_225_I         ,
+                                                                                      SHABAT_125_I            ,
+                                                                                      TOTAL_225_I           ,
+                                                                                      SHAOT_25_I         ,
+                                                                                      SHAOT_50_I             ,
+                                                                                      ZMAN_LAILA_1_I         ,
+                                                                                      ZMAN_LAILA_2_I          ,
+                                                                                      DAKOT_HEADRUT_KLALI_I  ,
+                                                                                      YAMEI_HEADRUT_KLALI_I    ,
+                                                                                      DAKOT_HOFESH_I       ,
+                                                                                      HOFESH_I             ,
+                                                                                      DAKOT_HEADRUT_I       ,
+                                                                                      HEADRUT_I           ,
+                                                                                      YOM_REIK_I            ,
+                                                                                      HOFESH_DU_YOMI_I     ,
+                                                                                      DU_YOMI_I              ,
+                                                                                      MILUIM_I               ,
+                                                                                      MILUIM_BODED_I           ,
+                                                                                      MAHALA_I                ,
+                                                                                      MAHALA_BODED_I    ,
+                                                                                      HADRAHA_I       ,
+                                                                                      TEUNA_I             ,
+                                                                                      HEADRUT_MEYUHEDET_I      ,
+                                                                                      EVEL_I                 ,
+                                                                                      ZMAN_NESIA_I      ,
+                                                                                      ZMAN_HALBASHA_I      ,
+                                                                                      ZMAN_HASHLAMA_I        ,
+                                                                                      ZMAN_RETZIFUT_TAF_I     ,
+                                                                                      ZMAN_RETZIFUT_1_1_I    ,
+                                                                                      TOTAL_RETZIFUT_I    ,
+                                                                                      KIZUZ_HATHALA_GMAR_I    ,
+                                                                                      KIZUZ_MUTAM_I      ,
+                                                                                      KIZUZ_VIZA_I            ,
+                                                                                      ZMAN_ARUHA_1_I          ,
+                                                                                      ZMAN_ARUHA_2_I           ,
+                                                                                      TOSAFOT_KLALIOT_I     ,
+                                                                                      TOTAL_KIZUZIM_I         ,
+                                                                                      KALKALA_MEYUHEDET_I    ,
+                                                                                      PITZUL_I              ,
+                                                                                      PITZUL_KAFUL_I         ,
+                                                                                      LINA_I               ,
+                                                                                      LINA_KFULA_I             ,
+                                                                                   --   MAAMATZ_SINAI_I         ,
+                                                                                      TOSEFET_GLOBALIT_I      ,
+                                                                                      GMUL_HISAHON_MEYUHAD_I   ,
+                                                                                      GMUL_HISAHON_I         ,
+                                                                                      KALKALA_I               ,
+                                                                                      ESHEL_1_I            ,
+                                                                                      ESHEL_2_I               ,
+                                                                                      ESHEL_3_I             ,
+                                                                                      ZMAN_LEHISAHON_I         ,
+                                                                                      TOSEFET_MESHEK_I       ,
+                                                                                      NOSAFOT_LHISAHON_I       ,
+                                                                                      PREMIA_I              ,
+                                                                                      PREMIA_SHLILIT_I        ,
+                                                                                      PREMIA_BESHABAT_I       ,
+                                                                                      PREMIA_BE_NMLK_I        ,
+                                                                                      PREMIA_BE_NMLK_SHABAT_I  ,
+                                                                                      PREMIA_IN_MIHSA_I   ,
+                                                                                      TOSEFET_NAHAGUT25_I     ,
+                                                                                      TOSEFET_TAFKID25_I     ,
+                                                                                      MAHALA_IALED_I          ,
+                                                                                      TIPAT_CHALEV_I        ,
+                                                                                      ZIKUI_100_I           ,
+                                                                                      ZIKUI_CHOFESH_I        ,
+                                                                                      MAHALA_HORIM_I         ,
+                                                                                      MAHALA_BEN_ZUG_I        ,
+                                                                                      HASVA_L_KAV_I            ,
+                                                                                      MAHALA_BZ_LEDA_I       ,
+                                                                                      DAKOT_SIKUN_I          ,
+                                                                                      ZMAN_SADRAN_MAC_I        ,
+                                                                                      ZMAN_RAKAZ_MAC_I      ,
+                                                                                      ZMAN_PAKACH_MAC_I      ,
+                                                                                      ZMAN_MESHALEACH_MAC_I  ,
+                                                                                      ZMAN_KUPAI_MAC_I        ,
+                                                                                      ESHEL_MEVAKRIM_1_I       ,
+                                                                                      ESHEL_MEVAKRIM_2_I       ,
+                                                                                      ESHEL_MEVAKRIM_3_I      ,
+                                                                                    SIDUR_8554_I           ,
+                                                                                      MISHMERET_MESHEK_I                         )  
+                                 values (  decode(trim( v_split_string(1)),'',null,to_number( v_split_string(1))),
+                                              decode(trim( v_split_string(2)),'',null, to_number( v_split_string(2))), 
+                                              decode(trim( v_split_string(3)),'',null, to_number( v_split_string(3))),
+                                              decode(trim( v_split_string(4)),'',null, to_number( v_split_string(4))),
+                                              decode(trim( v_split_string(5)),'',null, to_number( v_split_string(5))),
+                                              decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))),
+                                              decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))),
+                                              decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))),
+                                              decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))),
+                                              decode(trim( v_split_string(10)),'',null,to_number(v_split_string(10))),
+                                              decode(trim( v_split_string(11)),'',null,to_number( v_split_string(11))),
+                                              decode(trim( v_split_string(12)),'',null,to_number( v_split_string(12))),
+                                              decode(trim( v_split_string(13)),'',null,to_number(v_split_string(13))),
+                                              decode(trim( v_split_string(14)),'',null,to_number( v_split_string(14))),
+                                              decode(trim( v_split_string(15)),'',null,to_number( v_split_string(15))),
+                                              decode(trim( v_split_string(16)),'',null,to_number( v_split_string(16))),
+                                              decode(trim( v_split_string(17)),'',null,to_number( v_split_string(17))),
+                                              decode(trim( v_split_string(18)),'',null,to_number(  v_split_string(18))),
+                                              decode(trim( v_split_string(19)),'',null, to_number( v_split_string(19))),
+                                              decode(trim( v_split_string(20)),'',null, to_number(  v_split_string(20))),
+                                              decode(trim( v_split_string(21)),'',null,  to_number( v_split_string(21))),
+                                              decode(trim( v_split_string(22)),'',null, to_number( v_split_string(22))),
+                                              decode(trim( v_split_string(23)),'',null, to_number( v_split_string(23))),
+                                              decode(trim( v_split_string(24)),'',null, to_number( v_split_string(24))),
+                                              decode(trim( v_split_string(25)),'',null, to_number( v_split_string(25))),
+                                              decode(trim(  v_split_string(26)),'',null, to_number( v_split_string(26))),
+                                              decode(trim(  v_split_string(27)),'',null, to_number( v_split_string(27))),
+                                              decode(trim(  v_split_string(28)),'',null, to_number( v_split_string(28))),
+                                              decode(trim(   v_split_string(29)),'',null, to_number( v_split_string(29))),
+                                              decode(trim(  v_split_string(30)),'',null, to_number( v_split_string(30))),
+                                              decode(trim(  v_split_string(31)),'',null, to_number( v_split_string(31))),
+                                              decode(trim(  v_split_string(32)),'',null, to_number( v_split_string(32))),
+                                              decode(trim(  v_split_string(33)),'',null, to_number( v_split_string(33))),
+                                              decode(trim(  v_split_string(34)),'',null, to_number( v_split_string(34))),
+                                              decode(trim(  v_split_string(35)),'',null, to_number( v_split_string(35))),
+                                              decode(trim(  v_split_string(36)),'',null, to_number( v_split_string(36))),
+                                              decode(trim(  v_split_string(37)),'',null, to_number( v_split_string(37))),
+                                              decode(trim(   v_split_string(38)),'',null, to_number( v_split_string(38))),
+                                              decode(trim(  v_split_string(39)),'',null, to_number( v_split_string(39))),
+                                              decode(trim(  v_split_string(40)),'',null, to_number( v_split_string(40))),
+                                              decode(trim(  v_split_string(41)),'',null, to_number( v_split_string(41))),
+                                              decode(trim(  v_split_string(42)),'',null, to_number( v_split_string(42))),
+                                              decode(trim(  v_split_string(43)),'',null, to_number( v_split_string(43))),
+                                              decode(trim(  v_split_string(44)),'',null, to_number( v_split_string(44))),
+                                              decode(trim(  v_split_string(45)),'',null, to_number( v_split_string(45))),
+                                              decode(trim(  v_split_string(46)),'',null, to_number( v_split_string(46))),
+                                              decode(trim(   v_split_string(47)),'',null, to_number( v_split_string(47))),
+                                              decode(trim(  v_split_string(48)),'',null, to_number( v_split_string(48))),
+                                              decode(trim(  v_split_string(49)),'',null, to_number( v_split_string(49))),
+                                              decode(trim(  v_split_string(50)),'',null, to_number( v_split_string(50))),
+                                              decode(trim(  v_split_string(51)),'',null, to_number( v_split_string(51))),
+                                              decode(trim(  v_split_string(52)),'',null, to_number( v_split_string(52))),
+                                              decode(trim(  v_split_string(53)),'',null, to_number( v_split_string(53))),
+                                              decode(trim(  v_split_string(54)),'',null, to_number( v_split_string(54))),
+                                              decode(trim(  v_split_string(55)),'',null, to_number( v_split_string(55))),
+                                              decode(trim(   v_split_string(56)),'',null, to_number( v_split_string(56))),
+                                              decode(trim(  v_split_string(57)),'',null, to_number( v_split_string(57))),
+                                              decode(trim(  v_split_string(58)),'',null, to_number( v_split_string(58))),
+                                              decode(trim(  v_split_string(59)),'',null, to_number( v_split_string(59))),
+                                              decode(trim(  v_split_string(60)),'',null, to_number( v_split_string(60))),
+                                              decode(trim(  v_split_string(61)),'',null, to_number( v_split_string(61))),
+                                              decode(trim(  v_split_string(62)),'',null, to_number( v_split_string(62))),            
+                                              decode(trim(  v_split_string(63)),'',null, to_number( v_split_string(63))),
+                                              decode(trim(   v_split_string(64)),'',null, to_number( v_split_string(64))),
+                                              decode(trim(  v_split_string(65)),'',null, to_number( v_split_string(65))),
+                                              decode(trim(  v_split_string(66)),'',null, to_number( v_split_string(66))),
+                                              decode(trim(  v_split_string(67)),'',null, to_number( v_split_string(67))),
+                                              decode(trim(  v_split_string(68)),'',null, to_number( v_split_string(68))),
+                                              decode(trim(  v_split_string(69)),'',null, to_number( v_split_string(69))),
+                                              decode(trim(  v_split_string(70)),'',null, to_number( v_split_string(70))),
+                                              decode(trim(  v_split_string(71)),'',null, to_number( v_split_string(71))),
+                                              decode(trim(  v_split_string(72)),'',null, to_number( v_split_string(72))),
+                                              decode(trim(   v_split_string(73)),'',null, to_number( v_split_string(73))),     
+                                              decode(trim(  v_split_string(74)),'',null, to_number( v_split_string(74))),
+                                              decode(trim(  v_split_string(75)),'',null, to_number( v_split_string(75))),
+                                              decode(trim(  v_split_string(76)),'',null, to_number( v_split_string(76))),
+                                              decode(trim(  v_split_string(77)),'',null, to_number( v_split_string(77))),
+                                              decode(trim(  v_split_string(78)),'',null, to_number( v_split_string(78))),
+                                              decode(trim(  v_split_string(79)),'',null, to_number( v_split_string(79))),
+                                              decode(trim(  v_split_string(80)),'',null, to_number( v_split_string(80))),
+                                              decode(trim(  v_split_string(81)),'',null, to_number( v_split_string(81))) ,
+                                                 decode(trim( v_split_string(82)),'',null, to_number( v_split_string(82))),
+                                              decode(trim( v_split_string(83)),'',null, to_number( v_split_string(83))),
+                                              decode(trim( v_split_string(84)),'',null, to_number( v_split_string(84))),
+                                              decode(trim( v_split_string(85)),'',null, to_number( v_split_string(85))),
+                                              decode(trim(  v_split_string(86)),'',null, to_number( v_split_string(86))),
+                                              decode(trim(  v_split_string(87)),'',null, to_number( v_split_string(87))),
+                                              decode(trim(  v_split_string(88)),'',null, to_number( v_split_string(88))),
+                                              decode(trim(   v_split_string(89)),'',null, to_number( v_split_string(89))),
+                                              decode(trim(  v_split_string(90)),'',null, to_number( v_split_string(90))),
+                                              decode(trim(  v_split_string(91)),'',null, to_number( v_split_string(91))),
+                                              decode(trim(  v_split_string(92)),'',null, to_number( v_split_string(92))),
+                                              decode(trim(  v_split_string(93)),'',null, to_number( v_split_string(93))),
+                                              decode(trim(  v_split_string(94)),'',null, to_number( v_split_string(94))),
+                                              decode(trim(  v_split_string(95)),'',null, to_number( v_split_string(95))),
+                                              decode(trim(  v_split_string(96)),'',null, to_number( v_split_string(96))),
+                                              decode(trim(  v_split_string(97)),'',null, to_number( v_split_string(97))),
+                                              decode(trim(   v_split_string(98)),'',null, to_number( v_split_string(98))),
+                                              decode(trim(  v_split_string(99)),'',null, to_number( v_split_string(99))),
+                                              decode(trim(  v_split_string(100)),'',null, to_number( v_split_string(100))),
+                                              decode(trim(  v_split_string(101)),'',null, to_number( v_split_string(101))),
+                                              decode(trim(  v_split_string(102)),'',null, to_number( v_split_string(102))),
+                                              decode(trim(  v_split_string(103)),'',null, to_number( v_split_string(103))),
+                                              decode(trim(  v_split_string(104)),'',null, to_number( v_split_string(104))),
+                                              decode(trim(  v_split_string(105)),'',null, to_number( v_split_string(105))),
+                                              decode(trim(  v_split_string(106)),'',null, to_number( v_split_string(106))),
+                                              decode(trim(   v_split_string(107)),'',null, to_number( v_split_string(107))),
+                                              decode(trim(  v_split_string(108)),'',null, to_number( v_split_string(108))),
+                                              decode(trim(  v_split_string(109)),'',null, to_number( v_split_string(109))),
+                                              decode(trim(  v_split_string(110)),'',null, to_number( v_split_string(110))),
+                                              decode(trim(  v_split_string(111)),'',null, to_number( v_split_string(111))),
+                                              decode(trim(  v_split_string(112)),'',null, to_number( v_split_string(112))),
+                                              decode(trim(  v_split_string(113)),'',null, to_number( v_split_string(113))),
+                                              decode(trim(  v_split_string(114)),'',null, to_number( v_split_string(114))),
+                                              decode(trim(  v_split_string(115)),'',null, to_number( v_split_string(115))),
+                                              decode(trim(   v_split_string(116)),'',null, to_number( v_split_string(116))),
+                                              decode(trim(  v_split_string(117)),'',null, to_number( v_split_string(117))),
+                                              decode(trim(  v_split_string(118)),'',null, to_number( v_split_string(118))),
+                                              decode(trim(  v_split_string(119)),'',null, to_number( v_split_string(119))),
+                                              decode(trim(  v_split_string(120)),'',null, to_number( v_split_string(120))),
+                                              decode(trim(  v_split_string(121)),'',null, to_number( v_split_string(121))),
+                                              decode(trim(  v_split_string(122)),'',null, to_number( v_split_string(122))),            
+                                              decode(trim(  v_split_string(123)),'',null, to_number( v_split_string(123))),
+                                              decode(trim(   v_split_string(124)),'',null, to_number( v_split_string(124))),
+                                              decode(trim(  v_split_string(125)),'',null, to_number( v_split_string(125))),
+                                              decode(trim(  v_split_string(126)),'',null, to_number( v_split_string(126))),
+                                              decode(trim(  v_split_string(127)),'',null, to_number( v_split_string(127))),
+                                              decode(trim(  v_split_string(128)),'',null, to_number( v_split_string(128))),
+                                              decode(trim(  v_split_string(129)),'',null, to_number( v_split_string(129)))--,
+                                            --  decode(trim(  v_split_string(130)),'',null, to_number( v_split_string(130))),
+                                            --  decode(trim(  v_split_string(131)),'',null, to_number( v_split_string(131))),
+                                           --   decode(trim(  v_split_string(132)),'',null, to_number( v_split_string(132))),
+                                           --   decode(trim(   v_split_string(133)),'',null, to_number( v_split_string(133))),     
+                                            --  decode(trim(  v_split_string(134)),'',null, to_number( v_split_string(134)))
+                                            
+                                               );
+                 end if;
+           end if; 
+
+     END LOOP;
+     EXCEPTION  
+        WHEN NO_DATA_FOUND THEN  
+              UTL_FILE.fclose (input_file);
+                utl_file.fremove('KDS_FILES',p_file_name);
+
+    END;
+            
+      commit;
+      
+  EXCEPTION  
+        WHEN OTHERS THEN   
+        BEGIN
+            UTL_FILE.fclose (input_file);
+            utl_file.fremove('KDS_FILES',p_file_name);
+             p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
+        -- DBMS_OUTPUT.put_line(p_err);
+             rollback;
+            SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+            INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
+                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
+             commit;
+          RAISE;            
+        END;     
+END Pro_Ins_historiya_yomi;
 END PKG_MF_HISTORY;
 /
 
@@ -18488,8 +16227,8 @@ END pro_save_premyot;
             FROM tb_run_param
              WHERE baa_run_status = 'ñ'
             AND TRUNC (SYSDATE - 1) = TRUNC (baa_run_process_date)
-        UNION ALL
-          select  null baa_run_process_date,to_date('01/10/2012','dd/mm/yyyy')   chodesh from dual
+    --    UNION ALL
+       --   select  null baa_run_process_date,to_date('01/10/2012','dd/mm/yyyy')   chodesh from dual
           )
        where  chodesh =p_month_year;
           
@@ -18514,9 +16253,9 @@ END pro_save_premyot;
             SELECT baa_run_process_date,TO_DATE (baa_run_year_month * 100 + 1, 'yyyymmdd') chodesh
             FROM tb_run_param
              WHERE baa_run_status = 'ñ'
-            AND TRUNC (SYSDATE - 1) = TRUNC (baa_run_process_date)
-        UNION ALL
-          select  null baa_run_process_date,to_date('01/10/2012','dd/mm/yyyy')   chodesh from dual;
+            AND TRUNC (SYSDATE - 1) = TRUNC (baa_run_process_date);
+      --  UNION ALL
+      --    select  null baa_run_process_date,to_date('01/10/2012','dd/mm/yyyy')   chodesh from dual;
     
    EXCEPTION
       WHEN OTHERS THEN
