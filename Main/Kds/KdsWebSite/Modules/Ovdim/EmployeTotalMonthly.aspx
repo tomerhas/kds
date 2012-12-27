@@ -36,8 +36,8 @@
             <td dir="rtl">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server"  RenderMode="Inline">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"  
-                                Width="80px"   EnableViewState="true" onfocus="this.select();" onchange="onchange_txtid();"></asp:TextBox>                            
+                            <asp:TextBox ID="txtEmpId" runat="server" AutoComplete="Off" dir="rtl"    
+                                Width="80px"   EnableViewState="true" onfocus="this.select();"  onkeydown="return ChangeKeyCode(event);"  onchange="onchange_txtid();"></asp:TextBox>                            
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                 TargetControlID="txtEmpId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                 EnableCaching="true"  CompletionListCssClass="ACLst"  EnableViewState="true"
@@ -60,7 +60,8 @@
             <td style="width:200px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px" onfocus="this.select();" EnableViewState="true"   onchange="document.getElementById('ctl00_KdsContent_btnPרןמא').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName();"></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  AutoComplete="Off" style="width:200px"   onfocus="this.select();" EnableViewState="true"  CausesValidation="false" onkeydown="return ChangeKeyCode(event);" 
+                            onchange="document.getElementById('ctl00_KdsContent_btnPrint').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').disabled=true;document.getElementById('ctl00_KdsContent_btnShow').className ='ImgButtonSearchDisable'; GetOvedIdByName();"></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
@@ -76,7 +77,7 @@
             <td  class="InternalLabel">חודש:</td>
             <td> <asp:UpdatePanel ID="UpdatePanel3" runat="server" RenderMode="Inline">
                   <ContentTemplate> 
-                     <asp:DropDownList id="ddlMonth" runat="server"  Width="100px" 
+                     <asp:DropDownList id="ddlMonth" runat="server"  Width="100px"  
                           DataTextField="month_year" DataValueField="month_year" 
                           onselectedindexchanged="ddlMonth_SelectedIndexChanged" AutoPostBack="true" CausesValidation="false">
                             </asp:DropDownList>

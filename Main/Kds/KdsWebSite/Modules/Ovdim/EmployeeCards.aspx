@@ -60,7 +60,8 @@
                                 <td style="width:120px;">
                                     <%--<asp:UpdatePanel ID="upId" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate> --%>
-                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"></asp:TextBox>                            
+                                           <asp:TextBox ID="txtId" runat="server" AutoComplete="Off" dir="rtl" onchange="GetOvedNameById();"    MaxLength="5" style="width:100px;" TabIndex="1"  onfocusout=" this.value=this.value; setMonthFocus();"
+                                              onkeydown="return ChangeKeyCode(event);"></asp:TextBox>                            
                                            <cc1:AutoCompleteExtender id="AutoCompleteExtenderID" runat="server" CompletionInterval="0" CompletionSetCount="25" UseContextKey="true"  
                                             TargetControlID="txtId" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUser" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
                                             EnableCaching="true"  CompletionListCssClass="ACLst"
@@ -82,10 +83,11 @@
                                 <td style="width:220px;">
                                    <%-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" RenderMode="Inline"  >
                                         <ContentTemplate>--%> 
-                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();" ></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" AutoComplete="Off" style="width:180px;" TabIndex="2"   onchange="setMonthFocus();GetOvedIdByName();"
+                                             onkeydown="return ChangeKeyCode(event);" ></asp:TextBox>
                                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 
-                                                        EnableCaching="true"  CompletionListCssClass="ACLst" FirstRowSelected="true"
+                                                        EnableCaching="true"  CompletionListCssClass="ACLst" 
                                                         CompletionListHighlightedItemCssClass="ACLstItmSel"
                                                         CompletionListItemCssClass="ACLstItmE"
                                                         OnClientHidden="SimunExtendeNameClose"  OnClientShowing="SimunExtendeOpen"  >                                                                                     
@@ -300,6 +302,7 @@
            }
 
            function GetOvedSnifAndUnitSucceeded(result) {
+               
                if ((result != '') && (result.toString().length > 1)) {
                    //  document.getElementById("ctl00_KdsContent_txtSnifUnit").value = result;
                    document.getElementById("ctl00_KdsContent_txtSnifUnit").innerText = result;
@@ -357,7 +360,9 @@
            }
 
            function continue_click() {
+            //   debugger;
                var iMisparIshi = document.getElementById("ctl00_KdsContent_txtId").value
+              // var name = document.getElementById("ctl00_KdsContent_txtName").value
                wsGeneral.GetOvedSnifAndUnit(Number(iMisparIshi), GetOvedSnifAndUnitSucceeded);
                document.getElementById("ctl00_KdsContent_ddlMonth").focus();
 

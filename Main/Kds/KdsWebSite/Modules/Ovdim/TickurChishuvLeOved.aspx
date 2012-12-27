@@ -52,7 +52,7 @@
             <td style="width:120px">
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server" RenderMode="Inline">
                        <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName();"  AutoComplete="Off" style="width:110px" onfocus="this.select();" EnableViewState="true"  ></asp:TextBox>
+                            <asp:TextBox ID="txtName" runat="server"  onchange="GetOvedIdByName();"  AutoComplete="Off" style="width:110px" onfocus="this.select();"   onkeydown="return ChangeKeyCode(event);"  EnableViewState="true"  ></asp:TextBox>
                           
                             <cc1:AutoCompleteExtender id="AutoCompleteExtenderByName" runat="server" CompletionInterval="0" CompletionSetCount="12" UseContextKey="true"  
                                         TargetControlID="txtName" MinimumPrefixLength="1" ServiceMethod="GetOvdimToUserByName" ServicePath="~/Modules/WebServices/wsGeneral.asmx" 

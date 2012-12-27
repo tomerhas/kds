@@ -264,7 +264,15 @@ function GetDateDDMMYYYY(dDate){
    
    
    /*******************************************************************************************/
+   function ChangeKeyCode(event) {
 
+       if (event.keyCode == 13) {
+           event.keyCode = 9;
+           return event.keyCode
+       }
+      // if (event.keyCode == 13) { event.keyCode = 9;  }
+   }
+   
 
 
    function SimunExtendeOpen(sorce, evarg) {
@@ -280,6 +288,7 @@ function GetDateDDMMYYYY(dDate){
        GetOvedIdByName();
    }
    function GetOvedNameById() {
+    //   debugger;
        if (flag == false) {
            var iKodOved = document.getElementById(oTxtId).value;
            if (iKodOved != "") {

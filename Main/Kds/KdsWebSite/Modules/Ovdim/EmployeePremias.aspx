@@ -118,7 +118,7 @@ Inherits="Modules_Ovdim_EmployeePremias" %>
                     <asp:UpdatePanel ID="upName" runat="server" 
                         RenderMode="Inline" UpdateMode="Conditional">
                         <ContentTemplate> 
-                            <asp:TextBox ID="txtName" runat="server"    onchange="GetOvedIdByName();" onfocus="this.select();"
+                            <asp:TextBox ID="txtName" runat="server"    onchange="GetOvedIdByName();" onfocus="this.select();"  onkeydown="return ChangeKeyCode(event);" 
                                 style="width:200px;" AutoComplete="Off">
                                <%-- onblur="if(this.value != ''){onClientHiddenHandler_getName(this,null);}"--%>
                             </asp:TextBox>
