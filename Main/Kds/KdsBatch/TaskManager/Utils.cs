@@ -33,6 +33,23 @@ namespace KdsBatch.TaskManager
 			}
 		}
 
+        public void RunShguimOfRetroSpectSdrn(DateTime dTaarich)
+        {
+            // clBatch oBatch = new clBatch();
+            clUtils oUtils = new clUtils();
+            long lRequestNum = 0;
+            try
+            {
+                KdsServiceProxy.BatchServiceClient client = new KdsServiceProxy.BatchServiceClient();
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.InputDataAndErrorsFromInputProcess, "RunShguimOfRetroSpectSdrn", -12);
+                client.ShinuyimVeShguimBatch(lRequestNum, dTaarich, clGeneral.enCalcType.ShinuyimVeShguyim, clGeneral.BatchExecutionType.All);
+               
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RunShguimOfSdrn:" + ex.Message);
+            }
+        }
 		public void RunShguimOfPremiyotMusachim()
 		{
 			// clBatch oBatch = new clBatch();
@@ -286,46 +303,56 @@ namespace KdsBatch.TaskManager
 
 		public void RunRetroSpectSDRN()
 		{
-			int Num=45;
+            int Num = 45, iStatus = 0;
 			DataTable sdrnDt = new DataTable();
+            long lRequestNum = 0;
 			clUtils oUtils = new clUtils();
 			DateTime Taarich = DateTime.Now;
 			clTaskManager oTask = new clTaskManager();
 			KdsLibrary.TaskManager.Utils oUtilsTask = new KdsLibrary.TaskManager.Utils();
-			try
-			{
-				Num = oUtils.GetTbParametrim(252, DateTime.Today);
-				Taarich = Taarich.AddDays(-Num);
+            try
+            {
+                lRequestNum = clGeneral.OpenBatchRequest(KdsLibrary.clGeneral.enGeneralBatchType.RetroSpectSDRN, "RunRetroSpectSDRN", -12);
+               // iStatus = clGeneral.enStatusRequest.InProcess.GetHashCode();
+                Num = oUtils.GetTbParametrim(252, DateTime.Today);
+                Taarich = Taarich.AddDays(-Num);
 
-				while (Taarich <= DateTime.Now.AddDays(-2))
-				{
-					sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
-					if (sdrnDt.Rows.Count == 0)
-					{
-						oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
-						oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn rows=0 , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
-					}
-					else
-					{
-						if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
-						{
-							oTask.RunRetrospectSdrn(Taarich.ToString("yyyyMMdd"));
-							RefreshKnisot(Taarich);
-							oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0]["STATUS"].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
-						}
-						else if (sdrnDt.Rows[0]["STATUS"].ToString() == "")
-						{
-							oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
-							oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=null , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
-						}    
-					}
-					Taarich=Taarich.AddDays(1);
-				}
-			}
-			catch (Exception ex)
-			{
-				clGeneral.LogError(ex);
-			} 
+                while (Taarich <= DateTime.Now.AddDays(-2))
+                {
+                    sdrnDt = oTask.GetStausSdrn(Taarich.ToString("yyyyMMdd"));
+                    if (sdrnDt.Rows.Count == 0)
+                    {
+                        oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
+                        oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn rows=0 , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
+                    }
+                    else
+                    {
+                        if (sdrnDt.Rows[0]["STATUS"].ToString() == "1" || sdrnDt.Rows[0]["STATUS"].ToString() == "2")
+                        {
+                            oTask.RunRetrospectSdrn(Taarich.ToString("yyyyMMdd"));
+                            RefreshKnisot(Taarich);
+                            RunShguimOfRetroSpectSdrn(Taarich);
+                            oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=" + sdrnDt.Rows[0]["STATUS"].ToString() + " , 'RunRetrospectSdrn' + 'RefreshKnisot' run to date=" + Taarich.ToShortDateString());
+                        }
+                        else if (sdrnDt.Rows[0]["STATUS"].ToString() == "")
+                        {
+                            oTask.RunSdrnWithDate(Taarich.ToString("yyyyMMdd"));
+                            oUtilsTask.SendNotice(4, 11, "RunRetroSpectSDRN: status sdrn=null , 'RunSdrnWithDate' run to date=" + Taarich.ToShortDateString());
+                        }
+                    }
+                    Taarich = Taarich.AddDays(1);
+                }
+                iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
+            }
+            catch (Exception ex)
+            {
+                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
+                clGeneral.LogError(ex);
+            }
+            finally
+            {
+                clDefinitions.UpdateLogBakasha(lRequestNum, DateTime.Now, iStatus);
+            }
 		}
 	}
 }
