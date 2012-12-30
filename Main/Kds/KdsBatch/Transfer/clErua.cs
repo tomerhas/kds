@@ -343,7 +343,8 @@ namespace KdsBatch
             if (bKayamEfreshBErua || (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _iKodErua != 413 && _iKodErua != 462) )
             {
                 iLastDigit = int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
-                _sFooter = _sFooter.Replace(iLastDigit.ToString(),GetSimanEfresh(iLastDigit));
+                _sFooter = _sFooter.Substring(0,_sFooter.Trim().Length - 2) +  GetSimanEfresh(iLastDigit);
+               // _sFooter = _sFooter.Replace(iLastDigit.ToString(),GetSimanEfresh(iLastDigit));
             }
             _sBody.ForEach(delegate(string Line)
             {
