@@ -305,10 +305,10 @@ namespace KdsBatch
             return fErech;
         }
 
-        public bool CheckBakashatHefreshExists()
+        public bool CheckBakashatHefreshExists(int iKodRechiv)
         {
             DataRow[] drRechiv;
-            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=126 and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + "  and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
             if (drRechiv[0]["bakasha_id_2"] != null)
             {
                 if (drRechiv[0]["bakasha_id_2"].ToString() != "")

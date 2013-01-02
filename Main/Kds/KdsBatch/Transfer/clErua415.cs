@@ -81,7 +81,7 @@ namespace KdsBatch
               //{
              fXtemp = GetErech(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "erech_rechiv_a") - GetErech(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), "erech_rechiv_a");
              fYTemp = GetErech(clGeneral.enRechivim.ShaotShabat100.GetHashCode(), "erech_rechiv_b") - GetErech(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode(), "erech_rechiv_b");
-             if (CheckBakashatHefreshExists())
+             if (CheckBakashatHefreshExists(clGeneral.enRechivim.ShaotShabat100.GetHashCode()) || CheckBakashatHefreshExists(clGeneral.enRechivim.ZmanHamaratShaotShabat.GetHashCode()))
                  if (!bKayamEfreshBErua && fXtemp != fYTemp)
                      bKayamEfreshBErua = true; 
              fXtemp = fXtemp > 0 ? fXtemp : 0;
