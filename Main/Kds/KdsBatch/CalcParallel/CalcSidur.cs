@@ -1136,7 +1136,7 @@ namespace KdsBatch
                         }
 
                         //אם העובד בעל מאפיין ביצוע [שליפת מאפיין ביצוע (קוד מאפיין=60)] עם ערך כלשהו:
-                        if (objOved.objMeafyeneyOved.iMeafyen60 != 0 || objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
+                        if (objOved.objMeafyeneyOved.iMeafyen60 != 0 )
                         {
                             if (iMisparSidur.ToString().Substring(0, 2) == "99")
                             {
@@ -1161,6 +1161,10 @@ namespace KdsBatch
                             }
                         }
 
+                        if (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
+                        {
+                            fSumDakotRechiv = oCalcBL.GetSumErechRechiv(_dtChishuvSidur.Compute("SUM(ERECH_RECHIV)", "KOD_RECHIV=" + clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode().ToString() + " and mispar_sidur=" + iMisparSidur + " AND SHAT_HATCHALA=Convert('" + dShatHatchalaSidur.ToString() + "', 'System.DateTime') and taarich=Convert('" + objOved.Taarich.ToShortDateString() + "', 'System.DateTime')"));
+                        }
                         if (fSumDakotRechiv > 0)
                             addRowToTable(iKodRechiv, dShatHatchalaSidur, iMisparSidur, fSumDakotRechiv);
 
@@ -6409,7 +6413,7 @@ namespace KdsBatch
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
                     }
-                    if (iMisparSidur == 99002)
+                    if (iMisparSidur == 99202)
                     {
                         fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
                         if (_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString().Trim() != "")

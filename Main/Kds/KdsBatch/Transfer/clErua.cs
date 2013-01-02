@@ -305,6 +305,19 @@ namespace KdsBatch
             return fErech;
         }
 
+        public bool CheckBakashatHefreshExists()
+        {
+            DataRow[] drRechiv;
+            drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=126 and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
+            if (drRechiv[0]["bakasha_id_2"] != null)
+            {
+                if (drRechiv[0]["bakasha_id_2"].ToString() != "")
+                    return true;
+                else if (drRechiv[0]["bakasha_id_2"].ToString() == "" && drRechiv[0]["taarich"].ToString() != drRechiv[0]["chodesh_ibud"].ToString())
+                    return true;
+            }
+            return false;
+        }
         private void CheckHefresh(DataRow drRechiv)
         {
             string  bakasha2="";
