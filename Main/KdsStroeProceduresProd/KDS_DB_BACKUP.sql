@@ -1356,7 +1356,12 @@ PROCEDURE pro_rechivey_headrut_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  function getNochechutChodshit(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE) return number;       
-                                        
+   
+ function getErechChelki(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                        p_taarich IN DATE,
+                                        p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                         p_kod_lesikum in number,
+                                        p_kod_tnai in number) return number;                          
 function getMaxRechivYomi(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -1407,7 +1412,11 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
 function getNochechutChodshitTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE) return number;    
-                                        
+function getErechChelkiTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                        p_taarich IN DATE,
+                                        p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                         p_kod_lesikum in number,
+                                        p_kod_tnai in number) return number;                                        
  function getMaxRechivYomiTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -6825,7 +6834,8 @@ PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_t
                                     p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER, p_num_processe IN  NUMBER) IS
               v_me_taarich DATE;
               v_ad_taarich DATE;
-
+v_mispar_siduri number;
+   p_err varchar(100);
   BEGIN
   
     EXECUTE IMMEDIATE 'truncate table TB_MISPAR_ISHI_CHISHUV' ; 
@@ -6933,7 +6943,14 @@ PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_t
   Pkg_Calculation.pro_InsertOvdimLechishuv(p_bakasha_id);
 EXCEPTION
    WHEN OTHERS THEN
+   begin
+      p_err:= SQLERRM;-- || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
+                      SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
+                        INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI,BAKASHA_ID, TAARICH_IDKUN_ACHARON,SUG_HODAA,TEUR_HODAA)
+                        VALUES (v_mispar_siduri,p_bakasha_id,SYSDATE,'E',p_err);
+                      commit;
             RAISE;
+            end;
 
 END  pro_prepare_netunim_lechishuv;
 
@@ -7255,7 +7272,8 @@ PROCEDURE pro_get_yemey_avoda ( p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_
                        NVL ( S.ACHUZ_VIZA_BESIKUN, 0 ) ACHUZ_VIZA_BESIKUN,
                        S.MIKUM_SHAON_KNISA, S.MIKUM_SHAON_YETZIA,
                        V_SIDURIM.ZAKAY_LECHISHUV_RETZIFUT, NVL ( S.SUG_SIDUR, 0 ) SUG_SIDUR,
-                       V_SIDURIM.matala_klalit_lelo_rechev,nvl(V_SIDURIM.zakaut_legmul_chisachon,0) zakaut_legmul_chisachon
+                       V_SIDURIM.matala_klalit_lelo_rechev,nvl(V_SIDURIM.zakaut_legmul_chisachon,0) zakaut_legmul_chisachon,
+                         V_SIDURIM.shaon_nochachut
             FROM   TB_MISPAR_ISHI_CHISHUV OS,       
                    OVDIM O,
                    TB_YAMEY_AVODA_OVDIM Y,      
@@ -7475,37 +7493,38 @@ PROCEDURE pro_get_meafyeney_ovdim(p_brerat_Mechadal  IN NUMBER, p_num_process IN
               order by  s.mispar_ishi,m.kod_meafyen,m.ME_TAARICH ) h
                order by  h.mispar_ishi,h.kod_meafyen,h.ME_TAARICH      )
 ,mPeriod as
-              
-         (    select s.MISPAR_ISHI, s.kod_meafyen, (s.AD_TAARICH+1) ME_TAARICH,
-           case when last_day(s.AD_TAARICH)<=(next_hour_me-1) then  last_day(s.AD_TAARICH) else next_hour_me-1 end  AD_TAARICH,
-         -- (next_hour_me-1) AD_TAARICH, 
-                    '' Erech_Mechdal_partany,
-                     m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
-                       to_char(m.erech) value_erech_ishi,
-                            '1' source_meafyen
-                    from  tbIshi s, brerot_mechdal_meafyenim m
-                    where (s.AD_TAARICH+1)<next_hour_me
-                    and s.kod_meafyen = m.kod_meafyen
-                     and ((trunc(s.AD_TAARICH,'MM') = trunc(next_hour_me,'MM') )or (trunc(add_months(s.AD_TAARICH,1),'MM') = trunc(next_hour_me,'MM')))
-                 --      and (next_hour_me-1)<=  last_day(s.AD_TAARICH)
-              --      and trunc(s.AD_TAARICH,'MM') =  trunc(next_hour_me,'MM')
-                 --   and s.kod_meafyen =42
-                
+               (  
+                   select * 
+                   from( select s.MISPAR_ISHI, s.kod_meafyen, (s.AD_TAARICH+1) ME_TAARICH,
+                                     case when last_day(s.AD_TAARICH)<=(next_hour_me-1) then  last_day(s.AD_TAARICH) else next_hour_me-1 end  AD_TAARICH,
+                     -- (next_hour_me-1) AD_TAARICH, 
+                                    '' Erech_Mechdal_partany,
+                                     m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
+                                     to_char(m.erech) value_erech_ishi,
+                                      '1' source_meafyen
+                            from  tbIshi s, brerot_mechdal_meafyenim m
+                            where (s.AD_TAARICH+1)<next_hour_me
+                                 and s.kod_meafyen = m.kod_meafyen)
+                     where ME_TAARICH<=AD_TAARICH     
+                               ----  and ((trunc(s.AD_TAARICH,'MM') = trunc(next_hour_me,'MM') )or (trunc(add_months(s.AD_TAARICH,1),'MM') = trunc(next_hour_me,'MM')))
+                             --      and (next_hour_me-1)<=  last_day(s.AD_TAARICH)
+                          --      and trunc(s.AD_TAARICH,'MM') =  trunc(next_hour_me,'MM')
+                             --   and s.kod_meafyen =42       
                 union 
-
-                    select s.MISPAR_ISHI, s.kod_meafyen,
-            --         (s.prev_hour_ad+1) ME_TAARICH,
-               case when trunc(s.ME_TAARICH,'MM')>=(prev_hour_ad+1) then   trunc(s.ME_TAARICH,'MM')else s.prev_hour_ad+1 end  ME_TAARICH,
-                      (s.ME_TAARICH -1) AD_TAARICH,
-                    '' Erech_Mechdal_partany,
-                     m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
-                      to_char(m.erech) value_erech_ishi,
-                      '1' source_meafyen
-                    from  tbIshi s, brerot_mechdal_meafyenim m
-                    where (s.prev_hour_ad+1)<s.ME_TAARICH
-                  --   and prev_hour_ad+1 >=  trunc(s.ME_TAARICH,'MM')
-                    and s.kod_meafyen = m.kod_meafyen
-                         and ((trunc(s.ME_TAARICH,'MM') = trunc(prev_hour_ad,'MM') )or (trunc(add_months(s.ME_TAARICH,-1),'MM') = trunc(prev_hour_ad,'MM')))
+                
+                     select *
+                     from( select s.MISPAR_ISHI, s.kod_meafyen, --         (s.prev_hour_ad+1) ME_TAARICH,
+                                      case when trunc(s.ME_TAARICH,'MM')>=(prev_hour_ad+1) then   trunc(s.ME_TAARICH,'MM')else s.prev_hour_ad+1 end  ME_TAARICH,
+                                      (s.ME_TAARICH -1) AD_TAARICH,
+                                       '' Erech_Mechdal_partany,
+                                       m.erech ||  ' (ב.מ. מערכת) '  Erech_ishi,
+                                       to_char(m.erech) value_erech_ishi,
+                                       '1' source_meafyen
+                              from  tbIshi s, brerot_mechdal_meafyenim m
+                              where (s.prev_hour_ad+1)<s.ME_TAARICH
+                                    and s.kod_meafyen = m.kod_meafyen)
+                     where ME_TAARICH<=AD_TAARICH
+                   ----      and ((trunc(s.ME_TAARICH,'MM') = trunc(prev_hour_ad,'MM') )or (trunc(add_months(s.ME_TAARICH,-1),'MM') = trunc(prev_hour_ad,'MM')))
                  --   and trunc(s.ME_TAARICH,'MM') =  trunc(prev_hour_ad,'MM')
              --       and s.mispar_ishi=31029
 
@@ -8142,7 +8161,8 @@ PROCEDURE pro_get_yemey_avoda ( p_status_tipul  IN  TB_YAMEY_AVODA_OVDIM.status_
                        NVL ( S.ACHUZ_VIZA_BESIKUN, 0 ) ACHUZ_VIZA_BESIKUN,
                        S.MIKUM_SHAON_KNISA, S.MIKUM_SHAON_YETZIA,
                        V_SIDURIM.ZAKAY_LECHISHUV_RETZIFUT, NVL ( S.SUG_SIDUR, 0 ) SUG_SIDUR,
-                       V_SIDURIM.matala_klalit_lelo_rechev,nvl(V_SIDURIM.zakaut_legmul_chisachon,0) zakaut_legmul_chisachon
+                       V_SIDURIM.matala_klalit_lelo_rechev,nvl(V_SIDURIM.zakaut_legmul_chisachon,0) zakaut_legmul_chisachon,
+                        V_SIDURIM.shaon_nochachut
             FROM   TB_TMP_OVDIM_LECHISHUV OS,       
                    OVDIM O,
                    TB_YAMEY_AVODA_OVDIM Y,      
@@ -19791,7 +19811,7 @@ PROCEDURE pro_get_rechivim_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  where rechivim.taarich = hearot.taarich(+);
 
 end pro_get_rechivim_lerikuz;
-
+/******************************************/
 PROCEDURE pro_rechivim_chodshiim_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                            p_taarich IN DATE,
                                                                   p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -19862,7 +19882,7 @@ PROCEDURE pro_rechivim_chodshiim_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE
               and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p ;
               
 end pro_rechivim_chodshiim_lerikuz;
-
+/******************************************/
 
 PROCEDURE pro_rechivey_headrut_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                   p_taarich IN DATE,
@@ -19904,7 +19924,7 @@ PROCEDURE pro_rechivey_headrut_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
               and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p ;
               
 end pro_rechivey_headrut_lerikuz;
-
+/******************************************/
 
 PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                    p_taarich IN DATE,
@@ -19937,10 +19957,11 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
           max(case to_number(kod_rechiv) when 117 then  erech_rechiv end ) r117,
           max(case to_number(kod_rechiv) when 118 then  erech_rechiv end ) r118,
        --   max(case to_number(kod_rechiv) when 126 then  erech_rechiv end ) r126,
-       pkg_rikuz_avoda.getMaxRechivYomi(p_mispar_ishi , tar_me, p_bakasha_id,126) r126,
+     --  pkg_rikuz_avoda.getMaxRechivYomi(p_mispar_ishi , tar_me, p_bakasha_id,126) r126,
+         pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,126,1) r126,
           max(case to_number(kod_rechiv) when 204 then  erech_rechiv end ) r204,
           max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
-          pkg_rikuz_avoda.getNochechutChodshit(p_mispar_ishi , tar_me, p_bakasha_id) r1b
+          pkg_rikuz_avoda.getErechChelki(p_mispar_ishi , tar_me, p_bakasha_id,1,75) r1b
    from(     
    select  C.KOD_RECHIV,C.ERECH_RECHIV
    from TB_CHISHUV_CHODESH_OVDIM C
@@ -19950,7 +19971,7 @@ PROCEDURE pro_rechivey_shonot_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
               and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p ;
               
 end pro_rechivey_shonot_lerikuz;
-
+/******************************************/
 function getNochechutChodshit(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE) return number is
@@ -19976,6 +19997,34 @@ begin
     return sum_nochechut;
 end getNochechutChodshit;
 
+/******************************************/
+function getErechChelki(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                        p_taarich IN DATE,
+                                        p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                         p_kod_lesikum in number,
+                                        p_kod_tnai in number) return number is
+ sum_rechiv number;
+begin
+    sum_rechiv:=0;
+    select sum(h.r_sikum)  into sum_rechiv
+    from
+    ( select   taarich,
+          max(case to_number(kod_rechiv) when p_kod_lesikum then  erech_rechiv end ) r_sikum,
+          max(case to_number(kod_rechiv) when p_kod_tnai then  erech_rechiv end ) r_Tnai 
+     from     
+       ( select y.kod_rechiv,y.erech_rechiv,y.taarich
+        from tb_chishuv_yomi_ovdim y
+        where y.mispar_ishi = p_mispar_ishi
+            and y.bakasha_id = p_bakasha_id
+            and y.taarich between p_taarich and last_day(p_taarich) 
+            and y.kod_rechiv in(p_kod_lesikum,p_kod_tnai)) 
+         group by    taarich
+                ) h
+     where   h.r_Tnai>0;    
+    
+    return sum_rechiv;
+end getErechChelki;
+/******************************************/
 function getMaxRechivYomi(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -19997,6 +20046,7 @@ begin
     WHEN OTHERS THEN
               RAISE;         
 end getMaxRechivYomi;
+/******************************************/
 PROCEDURE Pro_get_num_rechivim(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                p_taarich IN DATE,
                                                      p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20038,7 +20088,7 @@ END Pro_get_num_rechivim;
 
 
 
-
+/******************************************/
 
 
 
@@ -20066,7 +20116,7 @@ PROCEDURE pro_rechivey_kizuz_lerikuz(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
    order by   c.KOD_RECHIV;
               
 end pro_rechivey_kizuz_lerikuz;
-
+/******************************************/
 
   PROCEDURE pro_get_rikuz_chodshi_temp(  p_Cur_Rechivim_Yomi OUT CurType ,
                                                                 p_Cur_Rechivim_Chodshi OUT CurType,
@@ -20096,7 +20146,7 @@ end pro_rechivey_kizuz_lerikuz;
               RAISE;   
  END pro_get_rikuz_chodshi_temp;
 
-
+/******************************************/
 
 PROCEDURE pro_get_rechivim_lerikuz_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                                 p_taarich IN DATE,
@@ -20203,7 +20253,7 @@ PROCEDURE pro_get_rechivim_lerikuz_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
  where rechivim.taarich = hearot.taarich(+);
    
 end pro_get_rechivim_lerikuz_tmp;
-
+/******************************************/
 PROCEDURE pro_rechivim_chodshiim_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                               p_taarich IN DATE,
                                                               p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20275,6 +20325,8 @@ PROCEDURE pro_rechivim_chodshiim_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                   
 end pro_rechivim_chodshiim_tmp;
 
+/******************************************/
+
 PROCEDURE pro_rechivey_headrut_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                            p_taarich IN DATE,
                                                                                              p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20316,7 +20368,7 @@ PROCEDURE pro_rechivey_headrut_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
          
 end pro_rechivey_headrut_tmp;
 
-
+/******************************************/
 PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                    p_taarich IN DATE,
                                                               p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20348,10 +20400,10 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
           max(case to_number(kod_rechiv) when 117 then  erech_rechiv end ) r117,
           max(case to_number(kod_rechiv) when 118 then  erech_rechiv end ) r118,
       --    max(case to_number(kod_rechiv) when 126 then  erech_rechiv end ) r126,
-      pkg_rikuz_avoda.getMaxRechivYomiTemp(p_mispar_ishi , tar_me, p_bakasha_id,126) r126,
+      pkg_rikuz_avoda.getErechChelkiTemp(p_mispar_ishi , tar_me, p_bakasha_id,126,1) r126,
           max(case to_number(kod_rechiv) when 204 then  erech_rechiv end ) r204,
           max(case to_number(kod_rechiv) when 205 then  erech_rechiv end ) r205,
-          pkg_rikuz_avoda.getNochechutChodshitTemp(p_mispar_ishi , tar_me, p_bakasha_id) r1b
+          pkg_rikuz_avoda.getErechChelkiTemp(p_mispar_ishi , tar_me, p_bakasha_id,1,75) r1b
    from(     
    select  C.KOD_RECHIV,C.ERECH_RECHIV
    from TB_TMP_CHISHUV_CHODESH_OVDIM C
@@ -20361,7 +20413,7 @@ PROCEDURE pro_rechivey_shonot_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
               and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_rechivim,  ',') AS MYTABTYPE))) ) p ;
               
 end pro_rechivey_shonot_tmp;
-
+/******************************************/
 function getNochechutChodshitTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE) return number is
@@ -20387,6 +20439,34 @@ begin
     return sum_nochechut;
 end getNochechutChodshitTemp;
 
+/******************************************/
+function getErechChelkiTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
+                                        p_taarich IN DATE,
+                                        p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
+                                         p_kod_lesikum in number,
+                                        p_kod_tnai in number) return number is
+ sum_rechiv number;
+begin
+    sum_rechiv:=0;
+    select sum(h.r_sikum)  into sum_rechiv
+    from
+    ( select   taarich,
+          max(case to_number(kod_rechiv) when p_kod_lesikum then  erech_rechiv end ) r_sikum,
+          max(case to_number(kod_rechiv) when p_kod_tnai then  erech_rechiv end ) r_Tnai 
+     from     
+       ( select y.kod_rechiv,y.erech_rechiv,y.taarich
+        from tb_tmp_chishuv_yomi_ovdim y
+        where y.mispar_ishi = p_mispar_ishi
+            and y.bakasha_id = p_bakasha_id
+            and y.taarich between p_taarich and last_day(p_taarich) 
+            and y.kod_rechiv in(p_kod_lesikum,p_kod_tnai)) 
+         group by    taarich
+                ) h
+     where   h.r_Tnai>0;    
+    
+    return sum_rechiv;
+end getErechChelkiTemp;
+/******************************************/
 function getMaxRechivYomiTemp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                         p_taarich IN DATE,
                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20408,6 +20488,7 @@ begin
     WHEN OTHERS THEN
               RAISE;         
 end getMaxRechivYomiTemp;
+/******************************************/
 PROCEDURE Pro_get_num_rechivim_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                             p_taarich IN DATE,
                                                                                              p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20445,7 +20526,7 @@ PROCEDURE Pro_get_num_rechivim_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
               AND c.taarich between tar_me and last_day(tar_me) 
               and  c.Kod_Rechiv in ( SELECT X FROM TABLE(CAST(Convert_String_To_Table( list_RechiveyShonot,  ',') AS MYTABTYPE)))  ) p;
 END Pro_get_num_rechivim_tmp;
-
+/******************************************/
 
 PROCEDURE pro_rechivey_kizuz_lerikuz_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                          p_taarich IN DATE,
@@ -20470,7 +20551,7 @@ PROCEDURE pro_rechivey_kizuz_lerikuz_tmp(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE
    order by   c.KOD_RECHIV;
    
    end pro_rechivey_kizuz_lerikuz_tmp;
-   
+   /******************************************/
 PROCEDURE Pro_get_recivey_premyot(p_mispar_ishi IN OVDIM.mispar_ishi%TYPE,
                                                             p_taarich IN DATE,
                                                         p_bakasha_id IN TB_BAKASHOT.bakasha_id%TYPE,
@@ -20518,7 +20599,7 @@ IS
         
 end Pro_get_recivey_premyot;
 
-
+/******************************************/
 
               
 
