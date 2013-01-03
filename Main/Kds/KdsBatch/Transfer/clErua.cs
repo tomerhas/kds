@@ -309,12 +309,15 @@ namespace KdsBatch
         {
             DataRow[] drRechiv;
             drRechiv = _dtDetailsChishuv.Select("MISPAR_ISHI=" + _iMisparIshi + " AND KOD_RECHIV=" + iKodRechiv + "  and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')");
-            if (drRechiv[0]["bakasha_id_2"] != null)
+            if (drRechiv.Length > 0)
             {
-                if (drRechiv[0]["bakasha_id_2"].ToString() != "")
-                    return true;
-                else if (drRechiv[0]["bakasha_id_2"].ToString() == "" && drRechiv[0]["taarich"].ToString() != drRechiv[0]["chodesh_ibud"].ToString())
-                    return true;
+                if (drRechiv[0]["bakasha_id_2"] != null)
+                {
+                    if (drRechiv[0]["bakasha_id_2"].ToString() != "")
+                        return true;
+                    else if (drRechiv[0]["bakasha_id_2"].ToString() == "" && drRechiv[0]["taarich"].ToString() != drRechiv[0]["chodesh_ibud"].ToString())
+                        return true;
+                }
             }
             return false;
         }
