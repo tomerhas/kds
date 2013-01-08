@@ -597,7 +597,8 @@ namespace KdsBatch
                 //ימי חופש/היעדרות (רכיב 270) 
                 CalcRechiv270();
 
-             
+                //אגד תעבורה פער בין מכסה רגילה למוקטנת(רכיב 278)
+                CalcRechiv278();
 
             }
             catch (Exception ex)
@@ -4858,7 +4859,10 @@ namespace KdsBatch
                         }
 
                         if (iMinuts >= 120)
+                        {
+                            addRowToTable(clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), fErechRechiv);
                             fErechRechiv = 420;
+                        }
                     }
                 }
 
@@ -7520,6 +7524,31 @@ namespace KdsBatch
             }
         }
 
+
+        private void CalcRechiv278()
+        {
+            float fErechRechiv = 0, fMichsaYomit = 0, fDakotNochechut = 0, fMichsaMekorit = 0;
+            try
+            {
+               if (objOved.objPirteyOved.iDirug == 85 && objOved.objPirteyOved.iDarga == 30)
+               {
+                   fMichsaMekorit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), objOved.Taarich);  
+                  fMichsaYomit = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), objOved.Taarich);  
+                  fDakotNochechut = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
+
+                  if (fMichsaYomit < fMichsaMekorit && fDakotNochechut > fMichsaYomit )
+                  {
+                      fErechRechiv = Math.Min(fDakotNochechut, fMichsaMekorit - fMichsaYomit);
+                      addRowToTable(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), fErechRechiv);
+                  }
+              }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.YemeyChofeshHeadrut.GetHashCode(), objOved.Taarich, "CalcDay: " + ex.StackTrace + "\n message: "+ ex.Message);
+                throw (ex);
+            }
+        }
         private void CalcRechiv271()
         {
             float fSumDakotRechiv;

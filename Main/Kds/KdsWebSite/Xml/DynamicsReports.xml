@@ -491,14 +491,18 @@
   </Report>
 
   <Report  RdlName="DayDataEggt" Roles="kds_administrators" FilterByLine="3" PageHeader="נתוני עבודה יומיים אגד תעבורה" >
-    <Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="TextBox" DataType="System.Int32"/>
+    <Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
+      <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Bakashot_details" ValueField="bakasha_id" TextField="teur" />
+    </Filter>
+
+    <!--<Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="TextBox" DataType="System.Int32"/>
     <Filter ParameterName="p_Period" Caption="חודש" BoxeType="DropDown" DataType="System.String">
       <DropDownList QueryType="Function"  LibraryName="KdsLibrary.Utils.Reports.clReportFunctions" Select="GetMonthsList" ValueField="Value" TextField="Month">
         <ParameterOfFunction Type="ByValue" Value="Query4" DataType="System.String" />
         <ParameterOfFunction Type="ByValue" Value="false" DataType="System.Boolean" />
         <ParameterOfFunction Type="ByValue" Value="" DataType="System.String" />
       </DropDownList>
-    </Filter>
+    </Filter>-->
   </Report>
 
   <Report  RdlName="ProfitOfLinesDetailed" Roles="kds_administrators" FilterByLine="3" PageHeader="דוחות ריווחית קווים מפורט"  ProductionType="Heavy">

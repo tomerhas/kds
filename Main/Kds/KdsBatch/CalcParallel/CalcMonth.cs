@@ -1339,6 +1339,12 @@ namespace KdsBatch
                 //זמן לילה סידורי בוקר (רכיב 271)
                 CalcRechiv271();
 
+                //מכסה מקורית לפני הפחתה   - רכיב 279:  
+                CalcRechiv279();
+
+                //אגד תעבורה פער בין מכסה רגילה למוקטנת(רכיב 278)
+                CalcRechiv278();
+
                 //רכיב 931 – הלבשה תחילת יום
                 CalcRechiv931();
 
@@ -3471,6 +3477,36 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ZmanRetzifutBoker.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv279()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ETMichsaMekoritBeforeHafchata.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
+                throw (ex);
+            }
+        }
+
+        private void CalcRechiv278()
+        {
+            float fSumDakotRechiv;
+            try
+            {
+                fSumDakotRechiv = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode());
+                addRowToTable(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), fSumDakotRechiv);
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.SetError(objOved.iBakashaId, objOved.Mispar_ishi, "E", clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), _dTaarichChishuv, "CalcMonth: " + ex.StackTrace + "\n message: " + ex.Message);
                 throw (ex);
             }
         }

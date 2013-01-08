@@ -6413,13 +6413,13 @@ namespace KdsBatch
                         addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
 
                     }
-                    if (iMisparSidur == 99202)
-                    {
-                        fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
-                        if (_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString().Trim() != "")
-                            fErech -= float.Parse(_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
-                        addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
-                    }
+                    //if (iMisparSidur == 99202)
+                    //{
+                    //    fErech = float.Parse((dShatGmarLetashlum - dShatHatchalaLetaslum).TotalMinutes.ToString());
+                    //    if (_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString().Trim() != "")
+                    //        fErech -= float.Parse(_drSidurim[I]["ZMAN_HAFSAKA_BESIDUR"].ToString());
+                    //    addRowToTable(clGeneral.enRechivim.NochehutLepremiaManasim.GetHashCode(), dShatHatchalaSidur, iMisparSidur, fErech);
+                    //}
                 }
             }
             catch (Exception ex)

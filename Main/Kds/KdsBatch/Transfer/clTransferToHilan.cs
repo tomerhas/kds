@@ -27,7 +27,7 @@ namespace KdsBatch
        //private clErua460 oErua460;
        private StreamWriter sFileStrCh, sFileStrS, sFileStrC, sFileStrEt, sFileStrEtBakaraReg, sFileStrEtBakaraHef;
        private StreamWriter _sFileToWrite;
-
+       private DataTable dtEzerYomi;
        private List<PirteyOved> _PirteyOved;
        private enum enFileType
        {
@@ -85,7 +85,7 @@ namespace KdsBatch
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "count:" + dtOvdim.Rows.Count);
                    _PirteyOved = new List<PirteyOved>();
-
+                   dtEzerYomi = new DataTable();
                    for (i = 0; i <= dtOvdim.Rows.Count - 1; i++)
                    {
 
@@ -100,10 +100,11 @@ namespace KdsBatch
 
                        oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
                        oPirteyOved.sChodeshIbud = sChodeshIbud;
+                       oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);//, dtRechivimYomi);
                        _PirteyOved.Add(oPirteyOved);
 
                        objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
@@ -165,6 +166,31 @@ namespace KdsBatch
                clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "Transfer: " + ex.Message);
            }
        }
+
+       private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
+       {
+           clDal oDal = new clDal();
+           DataRow[] rows;
+           try
+           {
+               rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi);
+               if (rows.Length > 0)
+               {
+                   dtEzerYomi = rows.CopyToDataTable();
+               }
+               else
+               {
+                   dtEzerYomi = dtRechivimYomiim.Clone();
+               }
+               return dtEzerYomi;
+           }
+           catch (Exception ex)
+           {
+            //   clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+               throw ex;
+           }
+       }
+
        private void SetSugChishuvUDT(int mispar_ishi,DateTime dTaarich, PirteyOved oPirteyOved, ref OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv)
        {
            try

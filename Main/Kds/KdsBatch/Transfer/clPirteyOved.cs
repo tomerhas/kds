@@ -34,7 +34,7 @@ namespace KdsBatch
 
         private DataRow _drPirteyOved;
         private DataTable _dtRechivim;
-        private DataTable _dtChishuv;
+        public DataTable _dtChishuv;
         private DataTable _dtRechiveyPrem;
         public PirteyOved(  long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
         {
@@ -54,13 +54,13 @@ namespace KdsBatch
          //   InitializeErueyOved();
         }
 
-        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
+        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)//, DataTable dtRechivimYomiim)
         {
             _dtRechivim = dtDetailsChishuv;
             _dtRechiveyPrem = dtPrem;
             try
             {
-                _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
+              //  _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
                 if (iDirug == 85 && iDarga == 30)
                 {
                     if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
@@ -98,7 +98,7 @@ namespace KdsBatch
             }
         }
 
-        private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
+      /*  private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
         {
             DataTable dt = new DataTable();
             clDal oDal = new clDal();
@@ -130,6 +130,6 @@ namespace KdsBatch
                 clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
                 throw ex;
             }
-        }
+        }*/
     }
 }

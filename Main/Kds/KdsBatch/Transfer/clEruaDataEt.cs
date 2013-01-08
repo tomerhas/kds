@@ -56,7 +56,7 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
-                  CreateDataEtToRechiv("100", fErech, 0);
+                  CreateDataEtToRechiv("100", fErech, 0,10,2);
                
               }
 
@@ -64,7 +64,7 @@ namespace KdsBatch
               fErech += GetErechRechiv(clGeneral.enRechivim.Shaot100Letashlum.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
-                   CreateDataEtToRechiv("001", (fErech/60), 0);
+                   CreateDataEtToRechiv("001", (fErech/60), 0,10,2);
                  
               }
               if (_drPirteyOved["isuk"].ToString() != "")
@@ -75,7 +75,7 @@ namespace KdsBatch
                   if (fErech > 0)
                   {
                    //   if (fErech > 500) { fErech = 500; }
-                    CreateDataEtToRechiv( "020", 1, fErech);
+                    CreateDataEtToRechiv( "020", 1, fErech,10,2);
                      
                   }
 
@@ -83,7 +83,7 @@ namespace KdsBatch
                   fErech = GetErechRechiv(clGeneral.enRechivim.SachPitzul.GetHashCode(), "erech_rechiv_a");
                   if (fErech > 0)
                   {
-                      CreateDataEtToRechiv( "063", fErech, 0);
+                      CreateDataEtToRechiv( "063", fErech, 0,10,2);
                      
                   }
               }
@@ -101,7 +101,7 @@ namespace KdsBatch
                           fKamut = GetErechRechiv(clGeneral.enRechivim.YemeyNochehutLeoved.GetHashCode(), "erech_rechiv_a");
                           if (fKamut > 0)
                           {
-                              CreateDataEtToRechiv("004", fKamut, fErech);
+                              CreateDataEtToRechiv("004", fKamut, fErech,10,2);
                           }
                       }
                   }
@@ -110,7 +110,7 @@ namespace KdsBatch
                       fErech = GetErechRechiv(clGeneral.enRechivim.DmeyNesiaLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
                       if (fErech > 0)
                       {
-                          CreateDataEtToRechiv("004", 1, fErech);
+                          CreateDataEtToRechiv("004", 1, fErech,10,2);
                       }
                   }
                   //else { CreateDataEtToRechiv("004", 0, fErech); }
@@ -121,7 +121,7 @@ namespace KdsBatch
 
               if (fErech > 0)
               {
-                   CreateDataEtToRechiv( "078", fErech/60, 0);
+                   CreateDataEtToRechiv( "078", fErech/60, 0,10,2);
                  
               }
 
@@ -129,7 +129,7 @@ namespace KdsBatch
               fErech = GetErechRechiv(clGeneral.enRechivim.EshelLeEggedTaavura.GetHashCode(), "erech_rechiv_a");
               if (fErech > 0)
               {
-                   CreateDataEtToRechiv( "079", fErech, 0);
+                   CreateDataEtToRechiv( "079", fErech, 0,10,2);
                   
               }
 
@@ -137,24 +137,30 @@ namespace KdsBatch
               fErech = GetErechRechiv( clGeneral.enRechivim.Shaot125Letashlum.GetHashCode(),"erech_rechiv_a")/60;
               if (fErech > 0)
               {
-                 CreateDataEtToRechiv( "007", fErech, 0);
+                 CreateDataEtToRechiv( "007", fErech, 0,10,2);
                  
               }
 
               fErech = GetErechRechiv( clGeneral.enRechivim.Shaot150Letashlum.GetHashCode(),"erech_rechiv_a")/60;
               if (fErech > 0)
               {
-                  CreateDataEtToRechiv( "008", fErech, 0);
+                  CreateDataEtToRechiv( "008", fErech, 0,10,2);
                  
               }
 
               fErech = GetErechRechiv(clGeneral.enRechivim.Shaot200Letashlum.GetHashCode(), "erech_rechiv_a")/60;
               if (fErech > 0)
               {
-                 CreateDataEtToRechiv( "048", fErech, 0);
+                 CreateDataEtToRechiv( "048", fErech, 0,10,2);
                  
               }
-          
+
+              fErech = GetErechRechiv(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), "erech_rechiv_a") / 60;
+              if (fErech > 0)
+              {
+                  CreateDataEtToRechiv("125", fErech, 0,5,0);
+
+              }
             if (_ListErua.Count>0)
                 return _ListErua;
             return null;
@@ -166,7 +172,7 @@ namespace KdsBatch
            }
       }
 
-      private void CreateDataEtToRechiv(string sSemelNatun, float fKamut, float fMechir)
+      private void CreateDataEtToRechiv(string sSemelNatun, float fKamut, float fMechir, int iLen, int iNumDigit)
       {
           string sSimanMechir, sSimanKamut;
           StringBuilder sDataEt = new StringBuilder();
@@ -184,9 +190,9 @@ namespace KdsBatch
               else { sSimanMechir = "+"; }
 
               sDataEt.Append(sSemelNatun);
-              sDataEt.Append(FormatNumber(fKamut, 10, 2));
+              sDataEt.Append(FormatNumber(fKamut, iLen, iNumDigit));
               sDataEt.Append(sSimanKamut);
-              sDataEt.Append(FormatNumber(fMechir, 10, 2));
+              sDataEt.Append(FormatNumber(fMechir, iLen, iNumDigit));
               sDataEt.Append(sSimanMechir);
 
               if (!IsEmptyErua(sDataEt.ToString()))
