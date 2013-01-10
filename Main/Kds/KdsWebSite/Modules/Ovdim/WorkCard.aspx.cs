@@ -224,7 +224,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
              //else
              //   bWorkCardEmpty = ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))));
 
-             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!bParam263))
+             if ((iMisparIshi == int.Parse(LoginUser.UserInfo.EmployeeNumber)) && (!bChishuvShachar) && (!bParam252) && (!((bParam263) && (CardIsEmpty(oBatchManager)))))
              {                                   
                  //אם הגענו מעמדת נהג, נאפשר את מאשר מסתייג
                  //רק במידה ולא נעשה שינוי בכרטיס    
@@ -341,7 +341,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
          else
          {
              //|| (IsCarNumberErrorExists())
-             bDisable = (((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT)))
+             bDisable = (((oBatchManager.htFullEmployeeDetails.Count == 0) || CardIsEmpty(oBatchManager))
                         || (IsSidurVisa())
                         || (IsSidurMatalaNotValidExists())
                         || (IsPeilutEilatExist())                        
@@ -765,7 +765,12 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
      protected void Page_Load(object sender, EventArgs e)
      {        
          LoadPage();     
-     }   
+     }
+     protected bool CardIsEmpty(clBatchManager oBatchManager)
+     {
+         //מחזיר אמת אם הכרטיס ריק או שקיים לו סידור אחד שהוא סידור התייצבות
+       return ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT)));
+     }
      protected bool DisabledCard()
      {
        int iDays;    
@@ -775,7 +780,7 @@ public partial class Modules_Ovdim_WorkCard : KdsPage
        //int iDays = ts.Days; //ההפרש בימים בין התאריך של הכרטיס לתאריך של היום
        iDays =clDefinitions.GetDiffDays(oBatchManager.CardDate, DateTime.Now);
        return (((oBatchManager.oOvedYomAvodaDetails.iStatus == clGeneral.enCardStatus.Calculate.GetHashCode()) && (!bRashemet))
-             || ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && (!bRashemet) && ((oBatchManager.htFullEmployeeDetails.Count == 0) || ((oBatchManager.htFullEmployeeDetails.Count == 1) && (((clSidur)oBatchManager.htFullEmployeeDetails[0]).iMisparSidur == SIDUR_HITYAZVUT))))
+             || ((iDays <= oBatchManager.oParam.iDaysToViewWorkCard) && (!bRashemet) && CardIsEmpty(oBatchManager))
              || (WorkCardWasUpdateAndDriver(bWorkCardWasUpdate)));
      }
      protected bool WorkCardWasUpdateAndDriver(bool bWorkCardWasUpdate)
