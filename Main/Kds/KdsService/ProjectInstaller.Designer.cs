@@ -39,8 +39,8 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.DisplayName = "Kds Listener Merav";
-            this.serviceInstaller1.ServiceName = "KdsListenerProd";
+            this.serviceInstaller1.DisplayName = "Kds Listener Test";
+            this.serviceInstaller1.ServiceName = "KdsListenerTest";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
