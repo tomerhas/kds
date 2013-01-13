@@ -530,28 +530,6 @@ END PKG_ERRORS;
 /
 
 
-CREATE OR REPLACE PACKAGE          PKG_MF_HISTORY AS
-/******************************************************************************
-   NAME:       PKG_FILES
-   PURPOSE:
-
-   REVISIONS:
-   Ver        Date        Author           Description
-   ---------  ----------  ---------------  ------------------------------------
-   1.0        4/29/2012      SaraC       1. Created this package.
-******************************************************************************/
-TYPE    CurType      IS    REF  CURSOR;
-
-PROCEDURE Ins_netuney_historiya_Yamim(p_bakasha_id number, p_file_name nvarchar2);
-PROCEDURE Ins_netuney_historiya_Sidurim(p_bakasha_id number, p_file_name nvarchar2);
-PROCEDURE Ins_netuney_historiya_Peilut(p_bakasha_id number, p_file_name nvarchar2);
- PROCEDURE Pro_Ins_historiya_chodshi(p_bakasha_id number, p_file_name nvarchar2);
- PROCEDURE Pro_Ins_historiya_chodshi_2(p_bakasha_id number, p_file_name nvarchar2);
-  PROCEDURE Pro_Ins_historiya_yomi(p_bakasha_id number, p_file_name nvarchar2);
-END PKG_MF_HISTORY;
-/
-
-
 CREATE OR REPLACE PACKAGE          PKG_OVDIM AS
 /******************************************************************************
    NAME:       PKG_UTILS
@@ -1486,11 +1464,11 @@ PROCEDURE Pro_Get_Previous_Months_List(p_FromDate IN DATE, NumOfPreviousMonth NU
 	PROCEDURE pro_get_tavlaot_to_refresh(p_cur OUT CurType);	
 	PROCEDURE pro_get_snif_tnua_by_kod(p_kod_snif IN NUMBER,p_cur OUT CurType);		
     PROCEDURE pro_insert_meadken_acharon(p_mispar_ishi IN NUMBER,p_taarich DATE);	
-        PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType);			
-          FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
+        PROCEDURE pro_get_ovdim_by_bakasha(p_bakasha_id IN NUMBER,p_cur OUT CurType);
+ FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
                                      p_mispar_sidur IN TB_PEILUT_OVDIM.mispar_sidur%TYPE,
                                      p_taarich IN  TB_PEILUT_OVDIM.taarich%TYPE,
-                                     p_shat_hatchala IN  TB_PEILUT_OVDIM.shat_hatchala_sidur%TYPE) RETURN number ;							
+                                     p_shat_hatchala IN  TB_PEILUT_OVDIM.shat_hatchala_sidur%TYPE) RETURN number ;       										
 END Pkg_Utils;
 /
 CREATE OR REPLACE PACKAGE BODY          Pkg_Batch AS
@@ -1957,7 +1935,9 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
                  AND NOT exists (   select cc.mispar_ishi
                                                              from cc 
                                                              where c.mispar_ishi=cc.mispar_ishi
-                                                             and c.taarich= cc.taarich) )     
+                                                             and c.taarich= cc.taarich) )    
+  --   where dirug=85 and darga=30
+  -- where  taarich between to_date('01/11/2012','dd/mm/yyyy')    and  to_date('31/12/2012','dd/mm/yyyy')                                                       
      ORDER BY mispar_ishi ASC,taarich DESC;          
 
    OPEN p_cur FOR
@@ -2041,6 +2021,7 @@ PROCEDURE pro_get_ovdim_to_transfer(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE
                    ON       a.mispar_ishi=b.mispar_ishi
                        AND a.taarich=b.taarich
                        AND  a.kod_rechiv  = b.kod_rechiv) c 
+        --   where  taarich between to_date('01/11/2012','dd/mm/yyyy')    and  to_date('31/12/2012','dd/mm/yyyy')                                
       ORDER BY c.mispar_ishi,c.taarich,c.kod_rechiv;    
 
     OPEN p_cur_prem FOR
@@ -2188,7 +2169,7 @@ EXCEPTION
 
 END   pro_del_chishuv_after_transfer;
 
-----------------
+
 PROCEDURE pro_upd_status_yamey_avoda(p_request_id IN  TB_BAKASHOT.bakasha_id%TYPE) IS
  CURSOR v_cur(v_request_id TB_BAKASHOT.bakasha_id%TYPE) IS
          WITH bakasha_list AS  (
@@ -2217,10 +2198,10 @@ PROCEDURE pro_upd_status_yamey_avoda(p_request_id IN  TB_BAKASHOT.bakasha_id%TYP
                                                      AND s.mispar_sidur<>99200)       
                         );
              
-             
+      
 
 BEGIN
-     FOR   v_cur_rec IN  v_cur(p_request_id)
+FOR   v_cur_rec IN  v_cur(p_request_id)
    LOOP
    UPDATE TB_YAMEY_AVODA_OVDIM
    SET status=2,
@@ -2230,11 +2211,12 @@ BEGIN
   END LOOP;
 
     Pkg_Calculation.pro_upd_ymy_avoda_lo_bechishuv;
+   
 EXCEPTION
      WHEN OTHERS THEN
             RAISE;
 END pro_upd_status_yamey_avoda;
---------------
+
 
 
    PROCEDURE pro_ins_yamey_avoda_ovdim IS
@@ -4183,7 +4165,7 @@ END  pro_get_sug_chishuv;
 PROCEDURE pro_ins_misparishi_sug_chishuv(p_bakasha_id NUMBER,p_coll_chishuv_sug_sidur IN COLL_MISPAR_ISHI_SUG_CHISHUV) IS
 
 BEGIN
-     DELETE FROM TB_MISPAR_ISHI_SUG_CHISHUV WHERE  bakasha_id=p_bakasha_id;
+    DELETE FROM TB_MISPAR_ISHI_SUG_CHISHUV WHERE  bakasha_id=p_bakasha_id;
       IF (p_coll_chishuv_sug_sidur IS NOT NULL) THEN
           FOR i IN 1..p_coll_chishuv_sug_sidur.COUNT LOOP
             INSERT INTO TB_MISPAR_ISHI_SUG_CHISHUV
@@ -4733,13 +4715,13 @@ PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_t
           (SELECT mispar_ishi, chodesh FROM
              ( (SELECT o.mispar_ishi,TO_CHAR(o.taarich,'mm/yyyy') chodesh
                     FROM TB_YAMEY_AVODA_OVDIM o  
-        ,     TB_MISPAR_ISHI_CHISHUV_BAK t
+      --   ,     TB_MISPAR_ISHI_CHISHUV_BAK t
                WHERE o.status=1
          AND  o.taarich BETWEEN v_me_taarich AND v_ad_taarich
                 --and o.MISPAR_ISHI =44965
-     AND T.NUM_PACK=102--
-     AND t.mispar_ishi=o.mispar_ishi--
- AND  o.taarich BETWEEN T.TAARICH AND LAST_DAY( T.TAARICH)  --
+   --    AND T.NUM_PACK=102--
+   --   AND t.mispar_ishi=o.mispar_ishi--
+   --  AND  o.taarich BETWEEN T.TAARICH AND LAST_DAY( T.TAARICH)  --
               ))
            GROUP BY mispar_ishi,chodesh) y,
          (SELECT po.maamad,po.mispar_ishi,PO.DIRUG,PO.DARGA
@@ -4764,7 +4746,7 @@ PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_t
        (SELECT p.mispar_ishi,TO_CHAR(p.taarich,'mm/yyyy') chodesh
          FROM TB_PREMYOT_YADANIYOT p,
                    TB_YAMEY_AVODA_OVDIM o,
-      TB_MISPAR_ISHI_CHISHUV_BAK t,
+    --  TB_MISPAR_ISHI_CHISHUV_BAK t,
                 (SELECT po.maamad,po.mispar_ishi,PO.DIRUG,PO.DARGA
                FROM PIVOT_PIRTEY_OVDIM PO
                  WHERE  (v_me_taarich BETWEEN  po.ME_TARICH  AND   NVL(po.ad_TARICH,TO_DATE('01/01/9999' ,'dd/mm/yyyy'))
@@ -4786,9 +4768,9 @@ PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_t
      AND  o.taarich BETWEEN v_me_taarich AND v_ad_taarich
     AND p.taarich BETWEEN v_me_taarich AND v_ad_taarich
           AND  o.status=2
-     AND T.NUM_PACK=102--
-   AND t.mispar_ishi=o.mispar_ishi--
-    AND  p.taarich BETWEEN T.TAARICH AND LAST_DAY( T.TAARICH)  --
+   --  AND T.NUM_PACK=102--
+   --AND t.mispar_ishi=o.mispar_ishi--
+    --AND  p.taarich BETWEEN T.TAARICH AND LAST_DAY( T.TAARICH)  --
           ) x ));
   ELSE
      INSERT INTO TB_MISPAR_ISHI_CHISHUV(MISPAR_ISHI,taarich)
@@ -4823,6 +4805,50 @@ EXCEPTION
 
 END  pro_prepare_netunim_lechishuv;
 
+/*
+
+PROCEDURE pro_prepare_netunim_lechishuv(p_bakasha_id number,p_tar_me IN DATE,p_tar_ad IN DATE,
+                                    p_maamad IN NUMBER, p_ritza_gorefet IN NUMBER, p_num_processe IN  NUMBER) IS
+              v_me_taarich DATE;
+              v_ad_taarich DATE;
+
+  BEGIN
+  
+    EXECUTE IMMEDIATE 'truncate table TB_MISPAR_ISHI_CHISHUV' ; 
+    EXECUTE IMMEDIATE 'truncate table TB_CATALOG_CHISHUV' ; 
+  --  EXECUTE IMMEDIATE 'truncate table tb_yamim_Lechishuv' ; 
+      v_me_taarich:=p_tar_me;
+      v_ad_taarich:=p_tar_ad;
+      
+--v_me_taarich:=to_date('01/08/2012','dd/mm/yyyy');
+--v_ad_taarich:=to_date('31/10/2012','dd/mm/yyyy');
+      
+    INSERT INTO TB_MISPAR_ISHI_CHISHUV(ROW_NUM,MISPAR_ISHI,TAARICH, NUM_pack)
+      SELECT  ROWNUM,x.MISPAR_ISHI,  x.taarich,0
+      from (
+                  select distinct  mispar_ishi ,taarich
+                from TB_mispar_ishi_chishuv_history
+                where  bakasha_id=6670
+                --and taarich=to_date('01/12/2012','dd/mm/yyyy')
+                minus
+
+                select distinct  mispar_ishi ,taarich
+                from TB_CHISHUV_CHODESH_OVDIM
+                where  bakasha_id=6670
+      ) x;
+   
+  Pkg_Calculation.pro_divide_packets(p_num_processe);
+  
+  Pkg_Calculation.pro_set_kavim_details_chishuv(v_me_taarich,v_ad_taarich);
+  Pkg_Calculation.pro_upd_yemey_avoda_bechishuv(v_me_taarich,v_ad_taarich);
+  Pkg_Calculation.pro_InsertYamimLeTavla(p_bakasha_id,v_me_taarich,v_ad_taarich,p_num_processe );
+  Pkg_Calculation.pro_InsertOvdimLechishuv(p_bakasha_id);
+EXCEPTION
+   WHEN OTHERS THEN
+            RAISE;
+
+END  pro_prepare_netunim_lechishuv;
+*/
 PROCEDURE pro_InsertOvdimLechishuv(p_bakasha_id number) IS
 BEGIN
     INSERT INTO TB_MISPAR_ISHI_CHISHUV_HISTORY
@@ -7865,1209 +7891,6 @@ END pro_Delete_Errors ;
 
 
 END Pkg_Errors;
-/
-
-
-CREATE OR REPLACE PACKAGE BODY          PKG_MF_HISTORY AS
-/******************************************************************************
-   NAME:       PKG_HISTORY
-   PURPOSE:
-
-   REVISIONS:
-   Ver        Date        Author           Description
-   ---------  ----------  ---------------  ------------------------------------
-   1.0        04/12/2012      meravn       1. Created this package body.
-******************************************************************************/
-
-PROCEDURE Ins_netuney_historiya_Yamim(p_bakasha_id number, p_file_name nvarchar2) IS
-
-      input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (500);
-      v_split_string       string_array; 
-       p_err varchar(100);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-        
-BEGIN
-
-    --v_file_name:=  'HODSHI_201206.TXT';
- -- v_file_name:= 'BZAY_201206011T_20121120135200.txt'; -- substr(p_file_name,instr(p_file_name,'\',-1)+1);  --
-   ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-   input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-           -- DBMS_OUTPUT.put_line(v_split_string(1));
-                  p_mispar_ishi:=  to_number(substr(v_split_string(1),1, length(v_split_string(1))-1 )); 
-                  begin
-               INSERT INTO 
-                   HISTORY_YAMEY_AVODA_OVDIM(mispar_ishi,
-                                                                    taarich,--shat_hatchala,shat_siyum,
-                                                                    tachograf,
-                                                                    bitul_zman_nesiot,  --zman_nesia_haloch,  zman_nesia_hazor,
-                                                                    halbasha,
-                                                                    lina,--        status,kod_histaygut_auto,measher_o_mistayeg,status_tipul,
-                                                                    meadken_acharon,
-                                                                    taarich_idkun_acharon, --heara,
-                                                                    hashlama_leyom,--sibat_hashlama_leyom,mispar_ishi_trail,taarich_idkun_trail,  sug_peula,ritzat_ishurim_acharona,shgiot_letezuga_laoved,ritzat_shgiot_acharona,
-                                                                    hamarat_shabat,
-                                                                    heara)
-                                                       VALUES (p_mispar_ishi,
-                                                       to_date(v_split_string(2),'yyyymmdd'),
-                                                                   decode(trim( v_split_string(5)),'',null, to_char( v_split_string(5))),
-                                                                   decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))),
-                                                                  decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))),
-                                                                  decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))),
-                                                                    -3,
-                                                                    sysdate,
-                                                                   decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))),
-                                                                 decode(trim( v_split_string(10)),'',null, to_number( v_split_string(10))),
-                                                                  decode(trim( v_split_string(11)),'',null, to_char( v_split_string(11))));    
-                                                                 
-                          /*  EXCEPTION  
-                            WHEN OTHERS THEN   
-                            BEGIN
-                                  p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-                                          SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                                                INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI,BAKASHA_ID, TAARICH_IDKUN_ACHARON,SUG_HODAA,MISPAR_ISHI,TAARICH,TEUR_HODAA)
-                                                        VALUES (v_mispar_siduri,p_bakasha_id,SYSDATE,'E',to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),p_err);
-                                          commit;           
-                            END;    */                                    
-                    end;
-                 end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-              utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-     EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-              utl_file.fremove('KDS_FILES',p_file_name);
-            rollback;
-              p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-                      SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                        INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI,BAKASHA_ID, TAARICH_IDKUN_ACHARON,SUG_HODAA,MISPAR_ISHI,TAARICH,TEUR_HODAA)
-                        VALUES (v_mispar_siduri,p_bakasha_id,SYSDATE,'E',to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),p_err);
-                      commit;
-            RAISE;            
-        END;     
-END Ins_netuney_historiya_Yamim;
-
-
-PROCEDURE Ins_netuney_historiya_Sidurim(p_bakasha_id number, p_file_name nvarchar2) IS
-
-      input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (500);
-      v_split_string       string_array; 
-       p_err varchar(100);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-        
-BEGIN
-
-
-   ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-              --    DBMS_OUTPUT.put_line(  v_split_string(4));
-              --      DBMS_OUTPUT.put_line(     to_date(v_split_string(4),'yyyymmddHH24mi'));
-              --    DBMS_OUTPUT.put_line(    v_split_string(5));
-            --  DBMS_OUTPUT.put_line(     to_date(v_split_string(5),'yyyymmddHH24mi'));
-                 p_mispar_ishi:=  to_number(substr(v_split_string(1),1, length(v_split_string(1))-1 )); 
-                --DBMS_OUTPUT.put_line(p_mispar_ishi);
-                
-                begin
-               INSERT INTO 
-                   HISTORY_SIDURIM_OVDIM(mispar_ishi,
-                                                   taarich,
-                                                    mispar_sidur,
-                                                   shat_hatchala,
-                                                  shat_gmar ,--shat_hatchala_letashlum,shat_gmar_letashlum,
-                                                   pitzul_hafsaka,
-                                                   chariga,--tosefet_grira,
-                                                   hashlama,
-                                                   yom_visa,
-                                                   lo_letashlum,
-                                                   out_michsa,
-                                                   mikum_shaon_knisa,
-                                                   mikum_shaon_yetzia,--achuz_knas_lepremyat_visa,achuz_viza_besikun,
-                                                   mispar_musach_o_machsan,-- kod_siba_lo_letashlum,kod_siba_ledivuch_yadani_in,kod_siba_ledivuch_yadani_out,
-                                                   meadken_acharon,
-                                                   taarich_idkun_acharon,--heara,
-                                                   shayah_leyom_kodem,
-                                                   mispar_shiurey_nehiga,  --mispar_ishi_trail,taarich_idkun_trail,sug_peula,mezake_halbasha,mezake_nesiot,sector_visa,shat_hitiatzvut,sug_hashlama, menahel_musach_meadken,
-                                                   sug_hazmanat_visa,
-                                                   tafkid_visa,--mivtza_visa,nidreshet_hitiatzvut,ptor_mehitiatzvut,hachtama_beatar_lo_takin,hafhatat_nochechut_visa,bitul_o_hosafa  
-                                                   sug_sidur,
-                                                   heara)
-                                   VALUES  (p_mispar_ishi,
-                                                    to_date(v_split_string(2),'yyyymmdd'),
-                                                     to_number( v_split_string(3)),
-                                                    to_date(v_split_string(4),'yyyymmddHH24mi'),
-                                                   (case when trim( v_split_string(5))='' then null else   to_date(v_split_string(5),'yyyymmddHH24mi') end), 
-                                                   decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))), 
-                                                   decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))), 
-                                                   decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))), 
-                                                   decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))), 
-                                                   decode(trim( v_split_string(10)),'',null, to_number( v_split_string(10))), 
-                                                   decode(trim( v_split_string(11)),'',null, to_number( v_split_string(11))), 
-                                                   decode(trim( v_split_string(12)),'',null, to_number( v_split_string(12))), 
-                                                   decode(trim( v_split_string(13)),'',null, to_number( v_split_string(13))), --achuz_knas_lepremyat_visa,achuz_viza_besikun,
-                                                   decode(trim( v_split_string(14)),'',null, to_number( v_split_string(14))), 
-                                                   -3,
-                                                   sysdate,
-                                                   decode(trim( v_split_string(15)),'',null, to_number( v_split_string(15))),
-                                                   decode(trim( v_split_string(16)),'',null, to_number( v_split_string(16))),  --mispar_ishi_trail,taarich_idkun_trail,sug_peula,mezake_halbasha,mezake_nesiot,sector_visa,shat_hitiatzvut,sug_hashlama, menahel_musach_meadken,
-                                                   decode(trim( v_split_string(17)),'',null, to_number( v_split_string(17))), 
-                                                   decode(trim( v_split_string(18)),'',null, to_number( v_split_string(18))), --mivtza_visa,nidreshet_hitiatzvut,ptor_mehitiatzvut,hachtama_beatar_lo_takin,hafhatat_nochechut_visa,bitul_o_hosafa  
-                                                   decode(trim( v_split_string(19)),'',null,  to_number(v_split_string(19))),
-                                                   decode(trim( v_split_string(20)),'',null,to_char( v_split_string(20))) ); 
-                   /*  EXCEPTION  
-                            WHEN OTHERS THEN   
-                            BEGIN
-                               -- UTL_FILE.fclose (input_file);
-                                  --utl_file.fremove('KDS_FILES',p_file_name);
-                              --  rollback;
-                                  p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-                                          SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                                            INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID, TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,TEUR_HODAA)
-                                             VALUES (v_mispar_siduri, p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),to_number( v_split_string(3)), to_date(v_split_string(4),'yyyymmddHH24mi'),p_err);
-                         commit;           
-                            END;     */   
-                      end;
-                 end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-                utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-     EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-              utl_file.fremove('KDS_FILES',p_file_name);
-               rollback;
-                  p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-                      SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                          INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID, TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,TEUR_HODAA)
-                        VALUES (v_mispar_siduri, p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),to_number( v_split_string(3)), to_date(v_split_string(4),'yyyymmddHH24mi'),p_err);
-                        commit;
-            RAISE;            
-        END;     
-END Ins_netuney_historiya_Sidurim;
-
-
-PROCEDURE Ins_netuney_historiya_Peilut(p_bakasha_id number, p_file_name nvarchar2) IS
-
-      input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (500);
-      v_split_string       string_array; 
-       p_err varchar(100);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-        
-BEGIN
-
-  --   v_file_name:=substr(p_file_name,instr(p_file_name,'\',-1)+1);  -- 'BZAY_201206011T_20121120135200.txt';
-   ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-             -- DBMS_OUTPUT.put_line(v_split_string(1));
-                 p_mispar_ishi:=  to_number(substr(v_split_string(1),1, length(v_split_string(1))-1 )); 
-                 begin
-                  INSERT INTO 
-                   HISTORY_PEILUT_OVDIM(mispar_ishi,
-                                                 taarich,
-                                                 mispar_sidur,
-                                                 shat_hatchala_sidur,
-                                                 shat_yetzia,
-                                                 mispar_knisa,
-                                                 makat_nesia,
-                                                 oto_no,--mispar_siduri_oto,
-                                                 kisuy_tor, 
-                                                 meadken_acharon,
-                                                 taarich_idkun_acharon,                                             
-                                                 snif_tnua, 
-                                                 mispar_visa,
-                                                 dakot_bafoal,
-                                                 km_visa,
-                                                 teur_nesia,
-                                                 heara)
-                                     VALUES  (p_mispar_ishi,
-                                                   to_date(v_split_string(2),'yyyymmdd') ,
-                                                   to_number( v_split_string(3)),
-                                                   to_date(v_split_string(4),'yyyymmddHH24mi'),
-                                                    to_date(v_split_string(5),'yyyymmddHH24mi'),
-                                                   decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))), 
-                                                   decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))), 
-                                                   decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))), 
-                                                   decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))),  
-                                                   -3,
-                                                   sysdate,
-                                                   decode(trim( v_split_string(10)),'',null, to_number( v_split_string(10))),
-                                                   decode(trim( v_split_string(11)),'',null, to_number( v_split_string(11))),  --mispar_ishi_trail,taarich_idkun_trail,sug_peula,mezake_halbasha,mezake_nesiot,sector_visa,shat_hitiatzvut,sug_hashlama, menahel_musach_meadken,
-                                                   decode(trim( v_split_string(12)),'',null, to_number( v_split_string(12))), 
-                                                   decode(trim( v_split_string(13)),'',null, to_number( v_split_string(13))), --mivtza_visa,nidreshet_hitiatzvut,ptor_mehitiatzvut,hachtama_beatar_lo_takin,hafhatat_nochechut_visa,bitul_o_hosafa  
-                                                   decode(trim( v_split_string(14)),'',null, to_char( v_split_string(14))),
-                                                    decode(trim( v_split_string(15)),'',null, to_char( v_split_string(15))) ); 
-
-                    /*  EXCEPTION  
-                            WHEN OTHERS THEN   
-                            BEGIN
-                               -- UTL_FILE.fclose (input_file);
-                                  --utl_file.fremove('KDS_FILES',p_file_name);
-                              --  rollback;
-                                  p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-                                          SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                                         INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,TEUR_HODAA)
-                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),to_number( v_split_string(3)), to_date(v_split_string(4),'yyyymmddHH24mi'),p_err);
-                                       commit;           
-                            END;  */     
-                            end;
-                 end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-                utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-     EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-            utl_file.fremove('KDS_FILES',p_file_name);
-             p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-        -- DBMS_OUTPUT.put_line(p_err);
-            rollback;
-            SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-            INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TAARICH,MISPAR_SIDUR,SHAT_HATCHALA_SIDUR,TEUR_HODAA)
-                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)), to_date(v_split_string(2),'yyyymmdd'),to_number( v_split_string(3)), to_date(v_split_string(4),'yyyymmddHH24mi'),p_err);
-             commit;
-          RAISE;            
-        END;     
-END Ins_netuney_historiya_Peilut;
-/*   FILLER                   ,
-                                                                              ISHI_H                  ,
-                                                                              ISHI_BIKORET_H           ,
-                                                                              YY_MEA_H                ,
-                                                                              YY_H                     ,
-                                                                              MM_H                   ,
-                                                                              FILLER1                  ,
-                                                                              SNIF_AV_H                 ,
-                                                                              SHEM_MISH_H               ,
-                                                                              SHEM_PRAT_H               ,
-                                                                              YEHIDA_H                  ,
-                                                                              ISUK_1_H                  ,
-                                                                              ISUK_2_3_H               ,
-                                                                              MAAMAD_1_H                ,
-                                                                              MAAMAD_2_H                ,
-                                                                              EZOR_H                    ,
-                                                                              KOD_GIL_H                 ,
-                                                                              MIKUM_H                  ,
-                                                                              KOD_YAMEI_AVODA_H         ,
-                                                                              YEMEY_NOCHACHUT_H         ,
-                                                                              MERKAZ_MEDA_H            ,
-                                                                              MIUN_PNIMI_H              ,*/
-
- PROCEDURE Pro_Ins_historiya_chodshi(p_bakasha_id number, p_file_name nvarchar2) IS
-
-    input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (1500);
-      v_split_string       string_array; 
-       p_err varchar(100);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-        
-BEGIN
-
-     ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-       v_split_string := split_string(v_line,';');
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-               if (to_number( v_split_string(1) )<> 999999999) then
-            --  DBMS_OUTPUT.put_line(v_split_string(1));
-                 p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
-              insert into MF_HIST_CHISHUV_CHODESH_OVDIM(   ISHI_H                  ,
-                                                                                          Taarich,
-                                                                                          NOSAFOT_100_H             ,
-                                                                                          KIZUZ_100_H               ,
-                                                                                          NETO_100_H                ,
-                                                                                          MIHSA_HODSHIT_H           ,
-                                                                                          NOHAHUT_H                 ,
-                                                                                          NOHAHUT_BAFOAL_H          ,
-                                                                                          SHAOT_REGILOT_H           ,
-                                                                                          YAMEI_AVODA_H             ,
-                                                                                          YAMEI_HEADRUT_H           ,
-                                                                                          YAMEI_HUFSHA_ZHUT_H       ,
-                                                                                          TOTAL_TAFKID_H            ,
-                                                                                          TOTAL_TNUA_H              ,
-                                                                                          TOTAL_NAHAGUT_H           ,
-                                                                                          ZMAN_SHABAT_H             ,   
-                                                                                          ZMAN_1_1_H                ,
-                                                                                          WORK_DAYS_H               ,
-                                                                                          TOTAL_NOSAFOT_H           ,
-                                                                                          EX_MIHSA_H                ,
-                                                                                          EX_MIHSA_SHABAT_H         ,
-                                                                                          NOSAFOT_NAHAGUT_H         ,
-                                                                                          NOSAFOT_TAFKID_H          ,
-                                                                                          NOSAFOT_TNUA_H            ,
-                                                                                          SHABAT_NAHAGUT_H          ,
-                                                                                          SHABAT_TAFKID_H           ,
-                                                                                          SHABAT_TNUA_H             ,
-                                                                                          NOSAFOT_125_H             ,
-                                                                                          NOSAFOT_150_H             ,
-                                                                                          NOSAFOT_SHABAT_H          ,
-                                                                                          MEIUHADOT_SHABAT_H        ,
-                                                                                          ZMAN_LEHAMARA_H           ,
-                                                                                          EREV_HAG_125_H            ,
-                                                                                          EREV_HAG_225_H            ,
-                                                                                          SHABAT_125_H              ,
-                                                                                          TOTAL_225_H               ,
-                                                                                          SHAOT_25_H                ,
-                                                                                          SHAOT_50_H                ,
-                                                                                          ZMAN_LAILA_1_H            ,
-                                                                                          ZMAN_LAILA_2_H            ,
-                                                                                          KIZUZ_MEAL_MIHSA_H        ,
-                                                                                          KIZUZ_SHABAT_H            ,
-                                                                                          KIZUZ_125_H               ,
-                                                                                          KIZUZ_150_H               ,
-                                                                                          KIZUZ_225_H               ,
-                                                                                          KIZUZ_HAMARA_H            ,
-                                                                                          KIZUZ_MEIUHADOT_H         ,
-                                                                                          NETO_125_H                ,
-                                                                                          NETO_150_H                ,
-                                                                                          NETO_225_H                ,
-                                                                                          NETO_HAMARA_H             ,
-                                                                                          NETO_MEIUHADOT_H          ,
-                                                                                          SHAOT_HEADRUT_KLALI_H     ,
-                                                                                          YAMEI_HEADRUT_KLALI_H     ,
-                                                                                          SHAOT_HOFESH_H            ,
-                                                                                          HOFESH_H                  ,
-                                                                                          SHAOT_HEADRUT_H           ,
-                                                                                          HEADRUT_H                 ,
-                                                                                          YOM_REIK_H                ,
-                                                                                          NOSAFOT_NAHAGUT_SHISHI_H  ,
-                                                                                          SHAOT_NAHAGUT_SHISHI_H    ,
-                                                                                          MILUIM_H                  ,
-                                                                                          MILUIM_BODED_H            ,
-                                                                                          MAHALA_H                  ,
-                                                                                          MAHALA_BODED_H            ,
-                                                                                          HADRAHA_H                 ,
-                                                                                          TEUNA_H                   ,
-                                                                                          HEADRUT_MEYUHEDET_H       ,
-                                                                                          EVEL_H                    ,
-                                                                                          ZMAN_NESIA_H              ,
-                                                                                          ZMAN_HALBASHA_H           ,
-                                                                                          ZMAN_HASHLAMA_H           ,
-                                                                                          ZMAN_RETZIFUT_TAF_H       ,
-                                                                                          ZMAN_RETZIFUT_1_1_H       ,
-                                                                                          TOTAL_RETZIFUT_H          ,
-                                                                                          KIZUZ_HATHALA_GMAR_H      ,
-                                                                                          KIZUZ_MUTAM_H             ,
-                                                                                          KIZUZ_VIZA_H              ,
-                                                                                          ZMAN_ARUHA_1_H            ,
-                                                                                          ZMAN_ARUHA_2_H            ,
-                                                                                          TOTAL_KIZUZIM_H    ,
-                                                                                          KALKALA_MEYUHEDET_H  ,
-                                                                                         PITZUL_H      , 
-                                                                                         PITZUL_KAFUL_H   ,                                   
-                                                                                          LINA_H    ,
-                                                                                          LINA_KFULA_H    ,
-                                                                                         TOSEFET_GLOBALIT_H    ,
-                                                                                          GMUL_HISAHON_MEYUHAD_H   ,
-                                                                                          GMUL_HISAHON_H        ,
-                                                                                          GMUL_HISAHON_NOSAF_H     ,   
-                                                                                          KALKALA_H       ,
-                                                                                          ESHEL_1_H      ,
-                                                                                          ESHEL_2_H      ,
-                                                                                          ESHEL_3_H     ,
-                                                                                          ZMAN_LEHISAHON_H   ,
-                                                                                          TOSEFET_MESHEK_H  ,
-                                                                                          NOSAFOT_LHISAHON_H    ,
-                                                                                          PREMIA_H      ,
-                                                                                          PREMIA_SHLILIT_H    ,
-                                                                                          PREMIA_BESHABAT_H   ,
-                                                                                          PREMIA_BE_NMLK_H    ,
-                                                                                          PREMIA_BE_NMLK_SHABAT_H ,
-                                                                                          PREMIA_IN_MIHSA_H    ,
-                                                                                          MIHSAT_NAHAGUT_H    ,
-                                                                                          MIHSAT_TAFKID_H  ,
-                                                                                          MIHSAT_TNUA_H     ,
-                                                                                          MIHSAT_SHA_NAHAGUT_H   ,
-                                                                                          MIHSAT_SHA_TAFKID_H   ,
-                                                                                          MIHSAT_SHA_TNUA_H    ,
-                                                                                          KIZUZ_NAHAGUT_H   ,
-                                                                                          KIZUZ_TAFKID_H   ,
-                                                                                          KIZUZ_TNUA_H       ,
-                                                                                          KIZUZ_SHA_NAHAGUT_H   ,
-                                                                                          KIZUZ_SHA_TAFKID_H     ,
-                                                                                          KIZUZ_SHA_TNUA_H       ,
-                                                                                          PREMIA_SADRANIM_H  ,
-                                                                                          PREMIA_RAKAZIM_H     ,
-                                                                                          PREMIA_PAKAHIM_H    ,
-                                                                                          TOSEFET_NAHAGUT20_H    ,
-                                                                                          TOSEFET_NAHAGUT30_H      ,
-                                                                                          TOSEFET_NAHAGUT45_H     ,
-                                                                                           MAHALA_IALED_H   ,
-                                                                                          TIPAT_CHALEV_H  ,
-                                                                                          ZIKUI_100_H     ,
-                                                                                          ZIKUI_100_SHABAT_H    ,
-                                                                                          ZIKUI_CHOFESH_H      ,
-                                                                                          ZIKUI_CHOFESH_SHABAT_H,
-                                                                                          KIZUZ_REGILOT_H    ,
-                                                                                          NETO_REGILOT_H   ,
-                                                                                          PREMIA_GRIROT_H     ,
-                                                                                          PREMIA_MESHEK_H   ,
-                                                                                          NOSAFOT_MESHALEACH_H   ,
-                                                                                          NOSAFOT_PAKACH_H     ,
-                                                                                          NOSAFOT_SADRAN_H      ,
-                                                                                          KIZUZ_MESHALEACH_H   ,
-                                                                                          KIZUZ_PAKACH_H      ,
-                                                                                          KIZUZ_SADRAN_H       ,
-                                                                                          PREMIA_MANAS_H    ,
-                                                                                          PREMIA_TCHNUN_TN_H     ,
-                                                                                          PREMIA_RASHEM_H         ,
-                                                                                           NOSAFOT_RAKAZ_H      ,
-                                                                                          KIZUZ_RAKAZ_H             ,
-                                                                                          YAMEI_NAHAGUT_H       ,
-                                                                                           MAHALA_HORIM_H         ,
-                                                                                          MAHALA_BEN_ZUG_H       ,
-                                                                                          HASVA_L_KAV_H        ,
-                                                                                          MAHALA_BZ_LEDA_H     ,
-                                                                                          DAKOT_SIKUN_H     ,
-                                                                                          NOSAFOT_KUPAI_H    ,
-                                                                                          KIZUZ_KUPAI_H          ,
-                                                                                          ZMAN_SADRAN_MAC_H  ,
-                                                                                          ZMAN_RAKAZ_MAC_H       ,
-                                                                                          ZMAN_PAKACH_MAC_H  ,
-                                                                                          ZMAN_MESHALEACH_MAC_H   ,
-                                                                                          ZMAN_KUPAI_MAC_H  ,
-                                                                                          PREMIA_MACHSENAI_H  ,
-                                                                                          ESHEL_MEVAKRIM_1_H   ,
-                                                                                          ESHEL_MEVAKRIM_2_H   ,
-                                                                                          ESHEL_MEVAKRIM_3_H    ,
-                                                                                          SIDUR_8582_PART_H   ,
-                                                                                          SIDUR_8582_FULL_H  ,
-                                                                                          MISHMERET_MESHEK_H  ,
-                                                                                          YEMEY_NOCHACHUT_H   
-                                                            )  
-                                 values (  decode(trim( v_split_string(1)),'',null,to_number( v_split_string(1))),
-                                              decode(trim( v_split_string(2)),'',null, to_number( v_split_string(2))), 
-                                              decode(trim( v_split_string(3)),'',null, to_number( v_split_string(3))),
-                                              decode(trim( v_split_string(4)),'',null, to_number( v_split_string(4))),
-                                              decode(trim( v_split_string(5)),'',null, to_number( v_split_string(5))),
-                                              decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))),
-                                              decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))),
-                                              decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))),
-                                              decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))),
-                                              decode(trim( v_split_string(10)),'',null,to_number(v_split_string(10))),
-                                              decode(trim( v_split_string(11)),'',null,to_number( v_split_string(11))),
-                                              decode(trim( v_split_string(12)),'',null,to_number( v_split_string(12))),
-                                              decode(trim( v_split_string(13)),'',null,to_number(v_split_string(13))),
-                                              decode(trim( v_split_string(14)),'',null,to_number( v_split_string(14))),
-                                              decode(trim( v_split_string(15)),'',null,to_number( v_split_string(15))),
-                                              decode(trim( v_split_string(16)),'',null,to_number( v_split_string(16))),
-                                              decode(trim( v_split_string(17)),'',null,to_number( v_split_string(17))),
-                                              decode(trim( v_split_string(18)),'',null,to_number(  v_split_string(18))),
-                                              decode(trim( v_split_string(19)),'',null, to_number( v_split_string(19))),
-                                              decode(trim( v_split_string(20)),'',null, to_number(  v_split_string(20))),
-                                              decode(trim( v_split_string(21)),'',null,  to_number( v_split_string(21))),
-                                              decode(trim( v_split_string(22)),'',null, to_number( v_split_string(22))),
-                                              decode(trim( v_split_string(23)),'',null, to_number( v_split_string(23))),
-                                              decode(trim( v_split_string(24)),'',null, to_number( v_split_string(24))),
-                                              decode(trim( v_split_string(25)),'',null, to_number( v_split_string(25))),
-                                              decode(trim(  v_split_string(26)),'',null, to_number( v_split_string(26))),
-                                              decode(trim(  v_split_string(27)),'',null, to_number( v_split_string(27))),
-                                              decode(trim(  v_split_string(28)),'',null, to_number( v_split_string(28))),
-                                              decode(trim(   v_split_string(29)),'',null, to_number( v_split_string(29))),
-                                              decode(trim(  v_split_string(30)),'',null, to_number( v_split_string(30))),
-                                              decode(trim(  v_split_string(31)),'',null, to_number( v_split_string(31))),
-                                              decode(trim(  v_split_string(32)),'',null, to_number( v_split_string(32))),
-                                              decode(trim(  v_split_string(33)),'',null, to_number( v_split_string(33))),
-                                              decode(trim(  v_split_string(34)),'',null, to_number( v_split_string(34))),
-                                              decode(trim(  v_split_string(35)),'',null, to_number( v_split_string(35))),
-                                              decode(trim(  v_split_string(36)),'',null, to_number( v_split_string(36))),
-                                              decode(trim(  v_split_string(37)),'',null, to_number( v_split_string(37))),
-                                              decode(trim(   v_split_string(38)),'',null, to_number( v_split_string(38))),
-                                              decode(trim(  v_split_string(39)),'',null, to_number( v_split_string(39))),
-                                              decode(trim(  v_split_string(40)),'',null, to_number( v_split_string(40))),
-                                              decode(trim(  v_split_string(41)),'',null, to_number( v_split_string(41))),
-                                              decode(trim(  v_split_string(42)),'',null, to_number( v_split_string(42))),
-                                              decode(trim(  v_split_string(43)),'',null, to_number( v_split_string(43))),
-                                              decode(trim(  v_split_string(44)),'',null, to_number( v_split_string(44))),
-                                              decode(trim(  v_split_string(45)),'',null, to_number( v_split_string(45))),
-                                              decode(trim(  v_split_string(46)),'',null, to_number( v_split_string(46))),
-                                              decode(trim(   v_split_string(47)),'',null, to_number( v_split_string(47))),
-                                              decode(trim(  v_split_string(48)),'',null, to_number( v_split_string(48))),
-                                              decode(trim(  v_split_string(49)),'',null, to_number( v_split_string(49))),
-                                              decode(trim(  v_split_string(50)),'',null, to_number( v_split_string(50))),
-                                              decode(trim(  v_split_string(51)),'',null, to_number( v_split_string(51))),
-                                              decode(trim(  v_split_string(52)),'',null, to_number( v_split_string(52))),
-                                              decode(trim(  v_split_string(53)),'',null, to_number( v_split_string(53))),
-                                              decode(trim(  v_split_string(54)),'',null, to_number( v_split_string(54))),
-                                              decode(trim(  v_split_string(55)),'',null, to_number( v_split_string(55))),
-                                              decode(trim(   v_split_string(56)),'',null, to_number( v_split_string(56))),
-                                              decode(trim(  v_split_string(57)),'',null, to_number( v_split_string(57))),
-                                              decode(trim(  v_split_string(58)),'',null, to_number( v_split_string(58))),
-                                              decode(trim(  v_split_string(59)),'',null, to_number( v_split_string(59))),
-                                              decode(trim(  v_split_string(60)),'',null, to_number( v_split_string(60))),
-                                              decode(trim(  v_split_string(61)),'',null, to_number( v_split_string(61))),
-                                              decode(trim(  v_split_string(62)),'',null, to_number( v_split_string(62))),            
-                                              decode(trim(  v_split_string(63)),'',null, to_number( v_split_string(63))),
-                                              decode(trim(   v_split_string(64)),'',null, to_number( v_split_string(64))),
-                                              decode(trim(  v_split_string(65)),'',null, to_number( v_split_string(65))),
-                                              decode(trim(  v_split_string(66)),'',null, to_number( v_split_string(66))),
-                                              decode(trim(  v_split_string(67)),'',null, to_number( v_split_string(67))),
-                                              decode(trim(  v_split_string(68)),'',null, to_number( v_split_string(68))),
-                                              decode(trim(  v_split_string(69)),'',null, to_number( v_split_string(69))),
-                                              decode(trim(  v_split_string(70)),'',null, to_number( v_split_string(70))),
-                                              decode(trim(  v_split_string(71)),'',null, to_number( v_split_string(71))),
-                                              decode(trim(  v_split_string(72)),'',null, to_number( v_split_string(72))),
-                                              decode(trim(   v_split_string(73)),'',null, to_number( v_split_string(73))),     
-                                              decode(trim(  v_split_string(74)),'',null, to_number( v_split_string(74))),
-                                              decode(trim(  v_split_string(75)),'',null, to_number( v_split_string(75))),
-                                              decode(trim(  v_split_string(76)),'',null, to_number( v_split_string(76))),
-                                              decode(trim(  v_split_string(77)),'',null, to_number( v_split_string(77))),
-                                              decode(trim(  v_split_string(78)),'',null, to_number( v_split_string(78))),
-                                              decode(trim(  v_split_string(79)),'',null, to_number( v_split_string(79))),
-                                              decode(trim(  v_split_string(80)),'',null, to_number( v_split_string(80))),
-                                              decode(trim(  v_split_string(81)),'',null, to_number( v_split_string(81))),
-                                              decode(trim( v_split_string(82)),'',null,to_number( v_split_string(82)))   ,
-                                              decode(trim( v_split_string(83)),'',null,to_number( v_split_string(83)))               ,
-                                              decode(trim( v_split_string(84)),'',null,to_number( v_split_string(84)))          ,                                        
-                                              decode(trim( v_split_string(85)),'',null,to_number( v_split_string(85)))                  ,
-                                              decode(trim( v_split_string(86)),'',null,to_number( v_split_string(86)))           ,
-                                              decode(trim( v_split_string(87)),'',null,to_number( v_split_string(87)))           ,
-                                              decode(trim( v_split_string(88)),'',null,to_number( v_split_string(88)))          ,
-                                              decode(trim( v_split_string(89)),'',null,to_number( v_split_string(89)))            ,
-                                              decode(trim( v_split_string(90)),'',null,to_number( v_split_string(90)))          ,       
-                                              decode(trim( v_split_string(91)),'',null,to_number( v_split_string(91)))          ,
-                                              decode(trim( v_split_string(92)),'',null,to_number( v_split_string(92)))             ,
-                                              decode(trim( v_split_string(93)),'',null,to_number( v_split_string(93)))             ,
-                                              decode(trim( v_split_string(94)),'',null,to_number( v_split_string(94)))              ,
-                                              decode(trim( v_split_string(95)),'',null,to_number( v_split_string(95)))           ,
-                                              decode(trim( v_split_string(96)),'',null,to_number( v_split_string(96)))            ,
-                                              decode(trim( v_split_string(97)),'',null,to_number( v_split_string(97)))       ,
-                                              decode(trim( v_split_string(98)),'',null,to_number( v_split_string(98)))                ,
-                                              decode(trim( v_split_string(99)),'',null, to_number( v_split_string(99)))        ,
-                                              decode(trim( v_split_string(100)),'',null,to_number( v_split_string(100)))          ,
-                                              decode(trim( v_split_string(101)),'',null,to_number( v_split_string(101)))        ,
-                                              decode(trim( v_split_string(102)),'',null,to_number( v_split_string(102)))     ,
-                                              decode(trim( v_split_string(103)),'',null,to_number( v_split_string(103)))       ,
-                                              decode(trim( v_split_string(104)),'',null,to_number( v_split_string(104)))       ,
-                                              decode(trim( v_split_string(105)),'',null,to_number( v_split_string(105)))      ,
-                                              decode(trim( v_split_string(106)),'',null,to_number( v_split_string(106)))      ,
-                                              decode(trim( v_split_string(107)),'',null,to_number( v_split_string(107)))   ,
-                                              decode(trim( v_split_string(108)),'',null,to_number( v_split_string(108)))    ,
-                                              decode(trim( v_split_string(109)),'',null,to_number( v_split_string(109)))     ,
-                                              decode(trim( v_split_string(110)),'',null,to_number( v_split_string(110)))        ,
-                                              decode(trim( v_split_string(111)),'',null,to_number( v_split_string(111)))         ,
-                                              decode(trim( v_split_string(112)),'',null,to_number( v_split_string(112)))         ,
-                                              decode(trim( v_split_string(113)),'',null,to_number( v_split_string(113)))      ,
-                                              decode(trim( v_split_string(114)),'',null,to_number( v_split_string(114)))     ,
-                                              decode(trim( v_split_string(115)),'',null,to_number( v_split_string(115)))     ,
-                                              decode(trim( v_split_string(116)),'',null,to_number( v_split_string(116)))       ,
-                                              decode(trim( v_split_string(117)),'',null,to_number( v_split_string(117)))      ,
-                                              decode(trim( v_split_string(118)),'',null,to_number( v_split_string(118)))      ,
-                                              decode(trim( v_split_string(119)),'',null,to_number( v_split_string(119)))        ,
-                                              decode(trim( v_split_string(120)),'',null,to_number( v_split_string(120)))       ,
-                                              decode(trim( v_split_string(121)),'',null,to_number( v_split_string(121)))       ,
-                                              decode(trim( v_split_string(122)),'',null,to_number( v_split_string(122)))            ,
-                                              decode(trim( v_split_string(123)),'',null,to_number( v_split_string(123)))             ,
-                                              decode(trim( v_split_string(124)),'',null,to_number( v_split_string(124)))               ,
-                                              decode(trim( v_split_string(125)),'',null,to_number( v_split_string(125)))         ,
-                                              decode(trim( v_split_string(126)),'',null,to_number( v_split_string(126)))       ,
-                                              decode(trim( v_split_string(127)),'',null,to_number( v_split_string(127)))      ,
-                                              decode(trim( v_split_string(128)),'',null,to_number( v_split_string(128)))        ,
-                                              decode(trim( v_split_string(129)),'',null,to_number( v_split_string(129)))         ,
-                                              decode(trim( v_split_string(130)),'',null,to_number( v_split_string(130)))          ,
-                                              decode(trim( v_split_string(131)),'',null,to_number( v_split_string(131)))           ,
-                                              decode(trim( v_split_string(132)),'',null,to_number( v_split_string(132)))      ,
-                                              decode(trim( v_split_string(133)),'',null,to_number( v_split_string(133)))       ,
-                                              decode(trim( v_split_string(134)),'',null,to_number( v_split_string(134)))       ,
-                                              decode(trim( v_split_string(135)),'',null,to_number( v_split_string(135)))       ,
-                                              decode(trim( v_split_string(136)),'',null,to_number( v_split_string(136)))        ,
-                                              decode(trim( v_split_string(137)),'',null,to_number( v_split_string(137)))         ,
-                                              decode(trim( v_split_string(138)),'',null,to_number( v_split_string(138)))       ,
-                                              decode(trim( v_split_string(139)),'',null,to_number( v_split_string(139)))   ,
-                                              decode(trim( v_split_string(140)),'',null,to_number( v_split_string(140)))   ,
-                                              decode(trim( v_split_string(141)),'',null,to_number( v_split_string(141)))       ,
-                                              decode(trim( v_split_string(142)),'',null,to_number( v_split_string(142)))    ,
-                                              decode(trim( v_split_string(143)),'',null,to_number( v_split_string(143)))        ,
-                                              decode(trim( v_split_string(144)),'',null,to_number( v_split_string(144)))     ,
-                                              decode(trim( v_split_string(145)),'',null,to_number( v_split_string(145)))     ,
-                                              decode(trim( v_split_string(146)),'',null,to_number( v_split_string(146)))    ,
-                                              decode(trim( v_split_string(147)),'',null,to_number( v_split_string(147)))       ,
-                                              decode(trim( v_split_string(148)),'',null,to_number( v_split_string(148)))      ,
-                                              decode(trim( v_split_string(149)),'',null,to_number( v_split_string(149)))        ,
-                                              decode(trim( v_split_string(150)),'',null,to_number( v_split_string(150)))   ,
-                                              decode(trim( v_split_string(151)),'',null,to_number( v_split_string(151)))      ,
-                                              decode(trim( v_split_string(152)),'',null,to_number( v_split_string(152)))      ,
-                                              decode(trim( v_split_string(153)),'',null,to_number( v_split_string(153)))     ,
-                                              decode(trim( v_split_string(154)),'',null,to_number( v_split_string(154)))     ,
-                                              decode(trim( v_split_string(155)),'',null,to_number( v_split_string(155)))         ,
-                                              decode(trim( v_split_string(156)),'',null,to_number( v_split_string(156)))      ,
-                                              decode(trim( v_split_string(157)),'',null,to_number( v_split_string(157)))     ,
-                                              decode(trim( v_split_string(158)),'',null,to_number( v_split_string(158)))     ,
-                                              decode(trim( v_split_string(159)),'',null,to_number( v_split_string(159)))      ,
-                                              decode(trim( v_split_string(160)),'',null,to_number( v_split_string(160)))       ,
-                                              decode(trim( v_split_string(161)),'',null,to_number( v_split_string(161)))  ,
-                                              decode(trim( v_split_string(162)),'',null,to_number( v_split_string(162)))  ,
-                                              decode(trim( v_split_string(163)),'',null,to_number( v_split_string(163)))  
-                                               );
-                end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-               utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-  EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-            utl_file.fremove('KDS_FILES',p_file_name);
-         DBMS_OUTPUT.put_line('xxxx');
-             p_err:= SQLERRM;-- || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-       DBMS_OUTPUT.put_line(p_err);
-             rollback;
-           SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-           INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
-                                             VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
-             commit;
-          RAISE;            
-        END;     
-END Pro_Ins_historiya_chodshi;
-
-
-
- PROCEDURE Pro_Ins_historiya_chodshi_2(p_bakasha_id number, p_file_name nvarchar2) IS
-
-    input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (500);
-      v_split_string       string_array; 
-       p_err varchar(100);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-       p_count number;
-        
-BEGIN
-
-     ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-             -- DBMS_OUTPUT.put_line(v_split_string(1));
-                 p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
-                 
-                 select count(*) into p_count
-                 from MF_HIST_CHISHUV_CHODESH_OVDIM
-                 where ISHI_H= to_number( v_split_string(1))
-                 and Taarich=to_number( v_split_string(2));
-                 
-                         if (p_count>0) then
-                         
-                                update MF_HIST_CHISHUV_CHODESH_OVDIM
-                                set     KALKALA_MEYUHEDET_H  =   decode(trim( v_split_string(3)),'',null,to_number( v_split_string(3)))   ,
-                                         PITZUL_H      =   decode(trim( v_split_string(4)),'',null,to_number( v_split_string(4)))               ,
-                                         PITZUL_KAFUL_H     =   decode(trim( v_split_string(5)),'',null,to_number( v_split_string(5)))          ,                                        
-                                          LINA_H      =   decode(trim( v_split_string(6)),'',null,to_number( v_split_string(6)))                  ,
-                                          LINA_KFULA_H       =   decode(trim( v_split_string(7)),'',null,to_number( v_split_string(7)))           ,
-                                         TOSEFET_GLOBALIT_H      =   decode(trim( v_split_string(8)),'',null,to_number( v_split_string(8)))           ,
-                                          GMUL_HISAHON_MEYUHAD_H   =   decode(trim( v_split_string(9)),'',null,to_number( v_split_string(9)))          ,
-                                          GMUL_HISAHON_H         =   decode(trim( v_split_string(10)),'',null,to_number( v_split_string(10)))            ,
-                                          GMUL_HISAHON_NOSAF_H     =   decode(trim( v_split_string(11)),'',null,to_number( v_split_string(11)))          ,       
-                                          KALKALA_H            =   decode(trim( v_split_string(12)),'',null,to_number( v_split_string(12)))          ,
-                                          ESHEL_1_H         =   decode(trim( v_split_string(13)),'',null,to_number( v_split_string(13)))             ,
-                                          ESHEL_2_H         =   decode(trim( v_split_string(14)),'',null,to_number( v_split_string(14)))             ,
-                                          ESHEL_3_H        =   decode(trim( v_split_string(15)),'',null,to_number( v_split_string(15)))              ,
-                                          ZMAN_LEHISAHON_H   =   decode(trim( v_split_string(16)),'',null,to_number( v_split_string(16)))           ,
-                                          TOSEFET_MESHEK_H  =   decode(trim( v_split_string(17)),'',null,to_number( v_split_string(17)))            ,
-                                          NOSAFOT_LHISAHON_H     =   decode(trim( v_split_string(18)),'',null,to_number( v_split_string(18)))       ,
-                                          PREMIA_H      =   decode(trim( v_split_string(19)),'',null,to_number( v_split_string(19)))                ,
-                                          PREMIA_SHLILIT_H    =   decode(trim( v_split_string(20)),'',null, v_split_string(20))          ,
-                                          PREMIA_BESHABAT_H   =   decode(trim( v_split_string(21)),'',null,to_number( v_split_string(21)))          ,
-                                          PREMIA_BE_NMLK_H      =   decode(trim( v_split_string(22)),'',null,to_number( v_split_string(22)))        ,
-                                          PREMIA_BE_NMLK_SHABAT_H  =   decode(trim( v_split_string(23)),'',null,to_number( v_split_string(23)))     ,
-                                          PREMIA_IN_MIHSA_H      =   decode(trim( v_split_string(24)),'',null,to_number( v_split_string(24)))       ,
-                                          MIHSAT_NAHAGUT_H    =   decode(trim( v_split_string(25)),'',null,to_number( v_split_string(25)))       ,
-                                          MIHSAT_TAFKID_H      =   decode(trim( v_split_string(26)),'',null,to_number( v_split_string(26)))      ,
-                                          MIHSAT_TNUA_H        =   decode(trim( v_split_string(27)),'',null,to_number( v_split_string(27)))      ,
-                                          MIHSAT_SHA_NAHAGUT_H    =   decode(trim( v_split_string(28)),'',null,to_number( v_split_string(28)))   ,
-                                          MIHSAT_SHA_TAFKID_H    =   decode(trim( v_split_string(29)),'',null,to_number( v_split_string(29)))    ,
-                                          MIHSAT_SHA_TNUA_H     =   decode(trim( v_split_string(30)),'',null,to_number( v_split_string(30)))     ,
-                                          KIZUZ_NAHAGUT_H     =   decode(trim( v_split_string(31)),'',null,to_number( v_split_string(31)))        ,
-                                          KIZUZ_TAFKID_H     =   decode(trim( v_split_string(32)),'',null,to_number( v_split_string(32)))         ,
-                                          KIZUZ_TNUA_H       =   decode(trim( v_split_string(33)),'',null,to_number( v_split_string(33)))         ,
-                                          KIZUZ_SHA_NAHAGUT_H   =   decode(trim( v_split_string(34)),'',null,to_number( v_split_string(34)))      ,
-                                          KIZUZ_SHA_TAFKID_H     =   decode(trim( v_split_string(35)),'',null,to_number( v_split_string(35)))     ,
-                                          KIZUZ_SHA_TNUA_H       =   decode(trim( v_split_string(36)),'',null,to_number( v_split_string(36)))     ,
-                                          PREMIA_SADRANIM_H    =   decode(trim( v_split_string(37)),'',null,to_number( v_split_string(37)))       ,
-                                          PREMIA_RAKAZIM_H      =   decode(trim( v_split_string(38)),'',null,to_number( v_split_string(38)))      ,
-                                          PREMIA_PAKAHIM_H      =   decode(trim( v_split_string(39)),'',null,to_number( v_split_string(39)))      ,
-                                          TOSEFET_NAHAGUT20_H     =   decode(trim( v_split_string(40)),'',null,to_number( v_split_string(40)))        ,
-                                          TOSEFET_NAHAGUT30_H      =   decode(trim( v_split_string(41)),'',null,to_number( v_split_string(41)))       ,
-                                          TOSEFET_NAHAGUT45_H      =   decode(trim( v_split_string(42)),'',null,to_number( v_split_string(42)))       ,
-                                           MAHALA_IALED_H     =   decode(trim( v_split_string(43)),'',null,to_number( v_split_string(43)))            ,
-                                          TIPAT_CHALEV_H    =   decode(trim( v_split_string(44)),'',null,to_number( v_split_string(44)))             ,
-                                          ZIKUI_100_H     =   decode(trim( v_split_string(45)),'',null,to_number( v_split_string(45)))               ,
-                                          ZIKUI_100_SHABAT_H    =   decode(trim( v_split_string(46)),'',null,to_number( v_split_string(46)))         ,
-                                          ZIKUI_CHOFESH_H        =   decode(trim( v_split_string(47)),'',null,to_number( v_split_string(49)))       ,
-                                          ZIKUI_CHOFESH_SHABAT_H  =   decode(trim( v_split_string(48)),'',null,to_number( v_split_string(48)))      ,
-                                          KIZUZ_REGILOT_H       =   decode(trim( v_split_string(49)),'',null,to_number( v_split_string(49)))        ,
-                                          NETO_REGILOT_H       =   decode(trim( v_split_string(50)),'',null,to_number( v_split_string(50)))         ,
-                                          PREMIA_GRIROT_H     =   decode(trim( v_split_string(51)),'',null,to_number( v_split_string(51)))          ,
-                                          PREMIA_MESHEK_H    =   decode(trim( v_split_string(52)),'',null,to_number( v_split_string(52)))           ,
-                                          NOSAFOT_MESHALEACH_H    =   decode(trim( v_split_string(53)),'',null,to_number( v_split_string(53)))      ,
-                                          NOSAFOT_PAKACH_H       =   decode(trim( v_split_string(54)),'',null,to_number( v_split_string(54)))       ,
-                                          NOSAFOT_SADRAN_H       =   decode(trim( v_split_string(55)),'',null,to_number( v_split_string(55)))       ,
-                                          KIZUZ_MESHALEACH_H     =   decode(trim( v_split_string(56)),'',null,to_number( v_split_string(56)))       ,
-                                          KIZUZ_PAKACH_H       =   decode(trim( v_split_string(57)),'',null,to_number( v_split_string(57)))        ,
-                                          KIZUZ_SADRAN_H       =   decode(trim( v_split_string(58)),'',null,to_number( v_split_string(58)))         ,
-                                          PREMIA_MANAS_H       =   decode(trim( v_split_string(59)),'',null,to_number( v_split_string(59)))       ,
-                                          PREMIA_TCHNUN_TN_H       =   decode(trim( v_split_string(60)),'',null,to_number( v_split_string(60)))   ,
-                                          PREMIA_RASHEM_H          =   decode(trim( v_split_string(61)),'',null,to_number( v_split_string(61)))   ,
-                                           NOSAFOT_RAKAZ_H         =   decode(trim( v_split_string(62)),'',null,to_number( v_split_string(62)))       ,
-                                          KIZUZ_RAKAZ_H             =   decode(trim( v_split_string(63)),'',null,to_number( v_split_string(63)))    ,
-                                          YAMEI_NAHAGUT_H        =   decode(trim( v_split_string(64)),'',null,to_number( v_split_string(64)))        ,
-                                           MAHALA_HORIM_H          =   decode(trim( v_split_string(65)),'',null,to_number( v_split_string(65)))     ,
-                                          MAHALA_BEN_ZUG_H        =   decode(trim( v_split_string(66)),'',null,to_number( v_split_string(66)))     ,
-                                          HASVA_L_KAV_H            =   decode(trim( v_split_string(67)),'',null,to_number( v_split_string(67)))    ,
-                                          MAHALA_BZ_LEDA_H      =   decode(trim( v_split_string(68)),'',null,to_number( v_split_string(68)))       ,
-                                          DAKOT_SIKUN_H          =   decode(trim( v_split_string(69)),'',null,to_number( v_split_string(69)))      ,
-                                          NOSAFOT_KUPAI_H      =   decode(trim( v_split_string(70)),'',null,to_number( v_split_string(70)))        ,
-                                          KIZUZ_KUPAI_H           =   decode(trim( v_split_string(71)),'',null,to_number( v_split_string(71)))   ,
-                                          ZMAN_SADRAN_MAC_H      =   decode(trim( v_split_string(72)),'',null,to_number( v_split_string(72)))      ,
-                                          ZMAN_RAKAZ_MAC_H       =   decode(trim( v_split_string(73)),'',null,to_number( v_split_string(73)))      ,
-                                          ZMAN_PAKACH_MAC_H       =   decode(trim( v_split_string(74)),'',null,to_number( v_split_string(74)))     ,
-                                          ZMAN_MESHALEACH_MAC_H   =   decode(trim( v_split_string(75)),'',null,to_number( v_split_string(75)))     ,
-                                          ZMAN_KUPAI_MAC_H    =   decode(trim( v_split_string(76)),'',null,to_number( v_split_string(76)))         ,
-                                          PREMIA_MACHSENAI_H    =   decode(trim( v_split_string(77)),'',null,to_number( v_split_string(77)))      ,
-                                          ESHEL_MEVAKRIM_1_H     =   decode(trim( v_split_string(78)),'',null,to_number( v_split_string(78)))     ,
-                                          ESHEL_MEVAKRIM_2_H     =   decode(trim( v_split_string(79)),'',null,to_number( v_split_string(79)))     ,
-                                          ESHEL_MEVAKRIM_3_H    =   decode(trim( v_split_string(80)),'',null,to_number( v_split_string(80)))      ,
-                                          SIDUR_8582_PART_H   =   decode(trim( v_split_string(81)),'',null,to_number( v_split_string(81)))       ,
-                                          SIDUR_8582_FULL_H   =   decode(trim( v_split_string(82)),'',null,to_number( v_split_string(82)))  ,
-                                          MISHMERET_MESHEK_H  =   decode(trim( v_split_string(83)),'',null,to_number( v_split_string(83)))  ,
-                                          YEMEY_NOCHACHUT_H  =   decode(trim( v_split_string(84)),'',null,to_number( v_split_string(84)))  
-                                 
-                             /*    TOSAFOT_KLALIOT_H      ,
-                                         
-                                          MAAMATZ_SINAI_H           ,
-
-                                          DERUG_SACHAR_H            ,
-                                          DARGA_SACHAR_H            ,
-                                          MUTAM_BITAHON_H           ,
-                                          MUTAMUT_BITAHON_H        ,
-                                           */
-                                where  ISHI_H= to_number( v_split_string(1))
-                                     and Taarich=to_number( v_split_string(2));
-                         else
-                                BEGIN
-                                     rollback;
-                                    SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-                                    INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
-                                                                        VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),'mispar_ishi not exist in first file ' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1));
-                                     commit;
-                                     insert into MF_HIST_CHISHUV_CHODESH_OVDIM(ISHI_H,taarich) values(11111111,222222222);
-                                   EXCEPTION  
-                                     WHEN OTHERS THEN  
-                                            Raise;
-                                 END;
-                         end if;
-         
-                 end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-                utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-  EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-            utl_file.fremove('KDS_FILES',p_file_name);
-             p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-        -- DBMS_OUTPUT.put_line(p_err);
-             rollback;
-            SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-            INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
-                                                VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
-             commit;
-          RAISE;            
-        END;     
-END Pro_Ins_historiya_chodshi_2;
-
-
-
-
-PROCEDURE Pro_Ins_historiya_yomi(p_bakasha_id number, p_file_name nvarchar2) IS
-
-    input_file   UTL_FILE.FILE_TYPE;
-      v_line        VARCHAR (1500);
-      v_split_string       string_array; 
-       p_err varchar(300);
-         v_mispar_siduri number;
-       p_mispar_ishi number;  
-        
-BEGIN
-
-     ftp.GetFile('KDS_FILES','filereports/MF/' || p_file_name ,p_file_name);
-    input_file := UTL_FILE.fopen ('KDS_FILES',p_file_name,  'R');
-    BEGIN
-          LOOP
-           UTL_FILE.GET_LINE(input_file,v_line);
-      --    DBMS_OUTPUT.put_line(v_line);
-        v_split_string := split_string(v_line,';');
-        
-         -- DBMS_OUTPUT.put_line(split_string(v_line,';'));
-             if v_split_string.count > 0 then
-                 if (to_number( v_split_string(1) )<> 999999999) then
-          --   DBMS_OUTPUT.put_line(v_split_string(1));
-                 p_mispar_ishi:=  to_number(substr(v_split_string(2),1, length(v_split_string(1))-1 )); 
-          
-           insert into MF_HIST_CHISHUV_YOMI_OVDIM(  ISHI_I ,
-                                                                                     -- ISHI_BIKORET_I,
-                                                                                --      TAHANAT_SAHAR_I  ,
-                                                                                --     SNIF_AV_I  ,
-                                                                                --      SHEM_MISH_I   ,
-                                                                                  --    SHEM_PRAT_I    ,
-                                                                                  --    YEHIDA_I  ,
-                                                                                --      ISUK_1_I     ,
-                                                                                  --    ISUK_2_3_I   ,
-                                                                                  --    MAAMAD_1_I      ,
-                                                                                  --    MAAMAD_2_I     ,
-                                                                                --      EZOR_I      ,
-                                                                                --      KOD_GIL_I          ,
-                                                                               --       MIKUM_I         ,
-                                                                              --        KOD_YAMEI_AVODA_I      ,
-                                                                              --        MERKAZ_MEDA_I    ,
-                                                                               --        DERUG_SACHAR_I         ,
-                                                                             --         DARGA_SACHAR_I           ,
-                                                                               --          MUTAM_BITAHON_I          ,
-                                                                              --        MIUN_PNIMI_I    ,
-                                                                               --      STATUS_MUSHE_I          ,
-                                                                                       TAARICH ,
-                                                                             --         YOM_I           ,
-                                                                            --          SUG_YOM_1_I        ,
-                                                                                   --   SUG_YOM_2_I     ,
-                                                                                MEIUHAD_I        ,
-                                                                                SUG_SIDURIM_I   ,
-                                                                                      MIHSA_I           ,
-                                                                                      HATHALA_I            ,
-                                                                                      GMAR_I                ,
-                                                                                      NOHAHUT_I              ,
-                                                                                      NOHAHUT_BAFOAL_I       ,
-                                                                                      DAKOT_REGILOT_I      ,
-                                                                                      NOHAHUT_BE_YAMIM_I     ,
-                                                                                      TOTAL_TAFKID_I      ,
-                                                                                      TOTAL_TNUA_I         ,
-                                                                                      TOTAL_NAHAGUT_I    ,
-                                                                                      ZMAN_SHABAT_I       ,
-                                                                                      ZMAN_1_1_I         ,
-                                                                                      TOTAL_NOSAFOT_I     ,
-                                                                                      EX_MIHSA_I           ,
-                                                                                      EX_MIHSA_SHABAT_I    ,
-                                                                                      NOSAFOT_NAHAGUT_I     ,
-                                                                                      NOSAFOT_TAFKID_I      ,
-                                                                                      NOSAFOT_TNUA_I        ,
-                                                                                      SHABAT_NAHAGUT_I    ,
-                                                                                      SHABAT_TAFKID_I        ,
-                                                                                      SHABAT_TNUA_I            ,
-                                                                                      NOSAFOT_125_I         ,
-                                                                                      NOSAFOT_150_I          ,
-                                                                                      NOSAFOT_SHABAT_I   ,
-                                                                                      MEIUHADOT_SHABAT_I     ,
-                                                                                      ZMAN_LEHAMARA_I      ,
-                                                                                      EREV_HAG_125_I       ,
-                                                                                      EREV_HAG_225_I         ,
-                                                                                      SHABAT_125_I            ,
-                                                                                      TOTAL_225_I           ,
-                                                                                      SHAOT_25_I         ,
-                                                                                      SHAOT_50_I             ,
-                                                                                      ZMAN_LAILA_1_I         ,
-                                                                                      ZMAN_LAILA_2_I          ,
-                                                                                      DAKOT_HEADRUT_KLALI_I  ,
-                                                                                      YAMEI_HEADRUT_KLALI_I    ,
-                                                                                      DAKOT_HOFESH_I       ,
-                                                                                      HOFESH_I             ,
-                                                                                      DAKOT_HEADRUT_I       ,
-                                                                                      HEADRUT_I           ,
-                                                                                      YOM_REIK_I            ,
-                                                                                    HOFESH_DU_YOMI_I     ,
-                                                                                   DU_YOMI_I              ,
-                                                                                      MILUIM_I               ,
-                                                                                      MILUIM_BODED_I           ,
-                                                                                      MAHALA_I                ,
-                                                                                      MAHALA_BODED_I    ,
-                                                                                      HADRAHA_I       ,
-                                                                                      TEUNA_I             ,
-                                                                                      HEADRUT_MEYUHEDET_I      ,
-                                                                                      EVEL_I                 ,
-                                                                                      ZMAN_NESIA_I      ,
-                                                                                      ZMAN_HALBASHA_I      ,
-                                                                                      ZMAN_HASHLAMA_I        ,
-                                                                                      ZMAN_RETZIFUT_TAF_I     ,
-                                                                                      ZMAN_RETZIFUT_1_1_I    ,
-                                                                                      TOTAL_RETZIFUT_I    ,
-                                                                                      KIZUZ_HATHALA_GMAR_I    ,
-                                                                                      KIZUZ_MUTAM_I      ,
-                                                                                      KIZUZ_VIZA_I            ,
-                                                                                      ZMAN_ARUHA_1_I          ,
-                                                                                      ZMAN_ARUHA_2_I           ,
-                                                                                     TOSAFOT_KLALIOT_I     ,
-                                                                                      TOTAL_KIZUZIM_I         ,
-                                                                                      KALKALA_MEYUHEDET_I    ,
-                                                                                      PITZUL_I              ,
-                                                                                      PITZUL_KAFUL_I         ,
-                                                                                      LINA_I               ,
-                                                                                      LINA_KFULA_I             ,
-                                                                                   MAAMATZ_SINAI_I         ,
-                                                                                      TOSEFET_GLOBALIT_I      ,
-                                                                                      GMUL_HISAHON_MEYUHAD_I   ,
-                                                                                      GMUL_HISAHON_I         ,
-                                                                                      KALKALA_I               ,
-                                                                                      ESHEL_1_I            ,
-                                                                                      ESHEL_2_I               ,
-                                                                                      ESHEL_3_I             ,
-                                                                                      ZMAN_LEHISAHON_I         ,
-                                                                                      TOSEFET_MESHEK_I       ,
-                                                                                      NOSAFOT_LHISAHON_I       ,
-                                                                                      PREMIA_I              ,
-                                                                                      PREMIA_SHLILIT_I        ,
-                                                                                      PREMIA_BESHABAT_I       ,
-                                                                                      PREMIA_BE_NMLK_I        ,
-                                                                                      PREMIA_BE_NMLK_SHABAT_I  ,
-                                                                                      PREMIA_IN_MIHSA_I   ,
-                                                                                      TOSEFET_NAHAGUT25_I     ,
-                                                                                      TOSEFET_TAFKID25_I     ,
-                                                                                      MAHALA_IALED_I          ,
-                                                                                      TIPAT_CHALEV_I        ,
-                                                                                      ZIKUI_100_I           ,
-                                                                                      ZIKUI_CHOFESH_I        ,
-                                                                                      MAHALA_HORIM_I         ,
-                                                                                      MAHALA_BEN_ZUG_I        ,
-                                                                                      HASVA_L_KAV_I            ,
-                                                                                      MAHALA_BZ_LEDA_I       ,
-                                                                                      DAKOT_SIKUN_I          ,
-                                                                                      ZMAN_SADRAN_MAC_I        ,
-                                                                                      ZMAN_RAKAZ_MAC_I      ,
-                                                                                      ZMAN_PAKACH_MAC_I      ,
-                                                                                      ZMAN_MESHALEACH_MAC_I  ,
-                                                                                      ZMAN_KUPAI_MAC_I        ,
-                                                                                      ESHEL_MEVAKRIM_1_I       ,
-                                                                                      ESHEL_MEVAKRIM_2_I       ,
-                                                                                      ESHEL_MEVAKRIM_3_I      ,
-                                                                                    SIDUR_8554_I           ,
-                                                                                      MISHMERET_MESHEK_I                         )  
-                                 values (  decode(trim( v_split_string(1)),'',null,to_number( v_split_string(1))),
-                                              decode(trim( v_split_string(2)),'',null, to_number( v_split_string(2))), 
-                                              decode(trim( v_split_string(3)),'',null, to_number( v_split_string(3))),
-                                              decode(trim( v_split_string(4)),'',null, to_number( v_split_string(4))),
-                                              decode(trim( v_split_string(5)),'',null, to_number( v_split_string(5))),
-                                              decode(trim( v_split_string(6)),'',null, to_number( v_split_string(6))),
-                                              decode(trim( v_split_string(7)),'',null, to_number( v_split_string(7))),
-                                              decode(trim( v_split_string(8)),'',null, to_number( v_split_string(8))),
-                                              decode(trim( v_split_string(9)),'',null, to_number( v_split_string(9))),
-                                              decode(trim( v_split_string(10)),'',null,to_number(v_split_string(10))),
-                                              decode(trim( v_split_string(11)),'',null,to_number( v_split_string(11))),
-                                              decode(trim( v_split_string(12)),'',null,to_number( v_split_string(12))),
-                                              decode(trim( v_split_string(13)),'',null,to_number(v_split_string(13))),
-                                              decode(trim( v_split_string(14)),'',null,to_number( v_split_string(14))),
-                                              decode(trim( v_split_string(15)),'',null,to_number( v_split_string(15))),
-                                              decode(trim( v_split_string(16)),'',null,to_number( v_split_string(16))),
-                                              decode(trim( v_split_string(17)),'',null,to_number( v_split_string(17))),
-                                              decode(trim( v_split_string(18)),'',null,to_number(  v_split_string(18))),
-                                              decode(trim( v_split_string(19)),'',null, to_number( v_split_string(19))),
-                                              decode(trim( v_split_string(20)),'',null, to_number(  v_split_string(20))),
-                                              decode(trim( v_split_string(21)),'',null,  to_number( v_split_string(21))),
-                                              decode(trim( v_split_string(22)),'',null, to_number( v_split_string(22))),
-                                              decode(trim( v_split_string(23)),'',null, to_number( v_split_string(23))),
-                                              decode(trim( v_split_string(24)),'',null, to_number( v_split_string(24))),
-                                              decode(trim( v_split_string(25)),'',null, to_number( v_split_string(25))),
-                                              decode(trim(  v_split_string(26)),'',null, to_number( v_split_string(26))),
-                                              decode(trim(  v_split_string(27)),'',null, to_number( v_split_string(27))),
-                                              decode(trim(  v_split_string(28)),'',null, to_number( v_split_string(28))),
-                                              decode(trim(   v_split_string(29)),'',null, to_number( v_split_string(29))),
-                                              decode(trim(  v_split_string(30)),'',null, to_number( v_split_string(30))),
-                                              decode(trim(  v_split_string(31)),'',null, to_number( v_split_string(31))),
-                                              decode(trim(  v_split_string(32)),'',null, to_number( v_split_string(32))),
-                                              decode(trim(  v_split_string(33)),'',null, to_number( v_split_string(33))),
-                                              decode(trim(  v_split_string(34)),'',null, to_number( v_split_string(34))),
-                                              decode(trim(  v_split_string(35)),'',null, to_number( v_split_string(35))),
-                                              decode(trim(  v_split_string(36)),'',null, to_number( v_split_string(36))),
-                                              decode(trim(  v_split_string(37)),'',null, to_number( v_split_string(37))),
-                                              decode(trim(   v_split_string(38)),'',null, to_number( v_split_string(38))),
-                                              decode(trim(  v_split_string(39)),'',null, to_number( v_split_string(39))),
-                                              decode(trim(  v_split_string(40)),'',null, to_number( v_split_string(40))),
-                                              decode(trim(  v_split_string(41)),'',null, to_number( v_split_string(41))),
-                                              decode(trim(  v_split_string(42)),'',null, to_number( v_split_string(42))),
-                                              decode(trim(  v_split_string(43)),'',null, to_number( v_split_string(43))),
-                                              decode(trim(  v_split_string(44)),'',null, to_number( v_split_string(44))),
-                                              decode(trim(  v_split_string(45)),'',null, to_number( v_split_string(45))),
-                                              decode(trim(  v_split_string(46)),'',null, to_number( v_split_string(46))),
-                                              decode(trim(   v_split_string(47)),'',null, to_number( v_split_string(47))),
-                                              decode(trim(  v_split_string(48)),'',null, to_number( v_split_string(48))),
-                                              decode(trim(  v_split_string(49)),'',null, to_number( v_split_string(49))),
-                                              decode(trim(  v_split_string(50)),'',null, to_number( v_split_string(50))),
-                                              decode(trim(  v_split_string(51)),'',null, to_number( v_split_string(51))),
-                                              decode(trim(  v_split_string(52)),'',null, to_number( v_split_string(52))),
-                                              decode(trim(  v_split_string(53)),'',null, to_number( v_split_string(53))),
-                                              decode(trim(  v_split_string(54)),'',null, to_number( v_split_string(54))),
-                                              decode(trim(  v_split_string(55)),'',null, to_number( v_split_string(55))),
-                                              decode(trim(   v_split_string(56)),'',null, to_number( v_split_string(56))),
-                                              decode(trim(  v_split_string(57)),'',null, to_number( v_split_string(57))),
-                                              decode(trim(  v_split_string(58)),'',null, to_number( v_split_string(58))),
-                                              decode(trim(  v_split_string(59)),'',null, to_number( v_split_string(59))),
-                                              decode(trim(  v_split_string(60)),'',null, to_number( v_split_string(60))),
-                                              decode(trim(  v_split_string(61)),'',null, to_number( v_split_string(61))),
-                                              decode(trim(  v_split_string(62)),'',null, to_number( v_split_string(62))),            
-                                              decode(trim(  v_split_string(63)),'',null, to_number( v_split_string(63))),
-                                              decode(trim(   v_split_string(64)),'',null, to_number( v_split_string(64))),
-                                              decode(trim(  v_split_string(65)),'',null, to_number( v_split_string(65))),
-                                              decode(trim(  v_split_string(66)),'',null, to_number( v_split_string(66))),
-                                              decode(trim(  v_split_string(67)),'',null, to_number( v_split_string(67))),
-                                              decode(trim(  v_split_string(68)),'',null, to_number( v_split_string(68))),
-                                              decode(trim(  v_split_string(69)),'',null, to_number( v_split_string(69))),
-                                              decode(trim(  v_split_string(70)),'',null, to_number( v_split_string(70))),
-                                              decode(trim(  v_split_string(71)),'',null, to_number( v_split_string(71))),
-                                              decode(trim(  v_split_string(72)),'',null, to_number( v_split_string(72))),
-                                              decode(trim(   v_split_string(73)),'',null, to_number( v_split_string(73))),     
-                                              decode(trim(  v_split_string(74)),'',null, to_number( v_split_string(74))),
-                                              decode(trim(  v_split_string(75)),'',null, to_number( v_split_string(75))),
-                                              decode(trim(  v_split_string(76)),'',null, to_number( v_split_string(76))),
-                                              decode(trim(  v_split_string(77)),'',null, to_number( v_split_string(77))),
-                                              decode(trim(  v_split_string(78)),'',null, to_number( v_split_string(78))),
-                                              decode(trim(  v_split_string(79)),'',null, to_number( v_split_string(79))),
-                                              decode(trim(  v_split_string(80)),'',null, to_number( v_split_string(80))),
-                                              decode(trim(  v_split_string(81)),'',null, to_number( v_split_string(81))) ,
-                                             decode(trim( v_split_string(82)),'',null, to_number( v_split_string(82))),
-                                                decode(trim( v_split_string(83)),'',null, to_number( v_split_string(83))),
-                                              decode(trim( v_split_string(84)),'',null, to_number( v_split_string(84))),
-                                              decode(trim( v_split_string(85)),'',null, to_number( v_split_string(85))),
-                                              decode(trim(  v_split_string(86)),'',null, to_number( v_split_string(86))),
-                                              decode(trim(  v_split_string(87)),'',null, to_number( v_split_string(87))),
-                                              decode(trim(  v_split_string(88)),'',null, to_number( v_split_string(88))),
-                                              decode(trim(   v_split_string(89)),'',null, to_number( v_split_string(89))),
-                                              decode(trim(  v_split_string(90)),'',null, to_number( v_split_string(90))),
-                                              decode(trim(  v_split_string(91)),'',null, to_number( v_split_string(91))),
-                                              decode(trim(  v_split_string(92)),'',null, to_number( v_split_string(92))),
-                                              decode(trim(  v_split_string(93)),'',null, to_number( v_split_string(93))),
-                                              decode(trim(  v_split_string(94)),'',null, to_number( v_split_string(94))),
-                                              decode(trim(  v_split_string(95)),'',null, to_number( v_split_string(95))),
-                                              decode(trim(  v_split_string(96)),'',null, to_number( v_split_string(96))),
-                                              decode(trim(  v_split_string(97)),'',null, to_number( v_split_string(97))),
-                                              decode(trim(   v_split_string(98)),'',null, to_number( v_split_string(98))),
-                                              decode(trim(  v_split_string(99)),'',null, to_number( v_split_string(99))),
-                                              decode(trim(  v_split_string(100)),'',null, to_number( v_split_string(100))),
-                                              decode(trim(  v_split_string(101)),'',null, to_number( v_split_string(101))),
-                                              decode(trim(  v_split_string(102)),'',null, to_number( v_split_string(102))),
-                                              decode(trim(  v_split_string(103)),'',null, to_number( v_split_string(103))),
-                                              decode(trim(  v_split_string(104)),'',null, to_number( v_split_string(104))),
-                                              decode(trim(  v_split_string(105)),'',null, to_number( v_split_string(105))),
-                                              decode(trim(  v_split_string(106)),'',null, to_number( v_split_string(106))),
-                                              decode(trim(  v_split_string(107)),'',null, to_number( v_split_string(107))),
-                                              decode(trim(  v_split_string(108)),'',null, to_number( v_split_string(108))),
-                                                 decode(trim(  v_split_string(109)),'',null, to_number( v_split_string(109))),
-                                              decode(trim(  v_split_string(110)),'',null, to_number( v_split_string(110))),
-                                              decode(trim(  v_split_string(111)),'',null, to_number( v_split_string(111)))
-                                      );
-                 end if;
-           end if; 
-
-     END LOOP;
-     EXCEPTION  
-        WHEN NO_DATA_FOUND THEN  
-              UTL_FILE.fclose (input_file);
-                utl_file.fremove('KDS_FILES',p_file_name);
-
-    END;
-            
-      commit;
-      
-  EXCEPTION  
-        WHEN OTHERS THEN   
-        BEGIN
-            UTL_FILE.fclose (input_file);
-            utl_file.fremove('KDS_FILES',p_file_name);
-             p_err:= SQLERRM || ' file=' || substr(p_file_name,1,instr(p_file_name,'_',-1)-1) ;
-      --   DBMS_OUTPUT.put_line(p_err);
-             rollback;
-           -- SELECT log_seq.NEXTVAL INTO v_mispar_siduri FROM dual;
-            --INSERT INTO TB_LOG_BAKASHOT(MISPAR_SIDURI, BAKASHA_ID,  TAARICH_IDKUN_ACHARON, SUG_HODAA,MISPAR_ISHI,TEUR_HODAA)
-            --                                    VALUES (v_mispar_siduri,  p_bakasha_id, SYSDATE, 'E' ,to_number( v_split_string(1)),p_err);
-             --commit;
-          RAISE;            
-        END;     
-END Pro_Ins_historiya_yomi;
-
-
-END PKG_MF_HISTORY;
 /
 
 
@@ -12841,7 +11664,9 @@ BEGIN
                  AND   so.mispar_ishi=ya.mispar_ishi
                  AND so.taarich=ya.taarich
                       AND    so.mispar_sidur<>99200
-                  and (SO.LO_LETASHLUM=0 or  SO.LO_LETASHLUM is null)
+                and(      SO.LO_LETASHLUM=0 
+                        or  SO.LO_LETASHLUM is null
+                        or (SO.LO_LETASHLUM=1 and sug_sidur=69))
                    AND  (so.shat_hatchala_letashlum is null or so.shat_gmar_letashlum is null )
               group by ya.mispar_ishi,ya.taarich);
               
@@ -19129,8 +17954,9 @@ END fun_get_barkod_Tachograf;
          WHEN OTHERS THEN
               RAISE;
   END pro_get_ovdim_by_bakasha;        
-  			
-  FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
+  	
+  
+FUNCTION fun_get_kod_tachanat_bizua(p_mispar_ishi IN  TB_PEILUT_OVDIM.mispar_ishi%TYPE,
                                      p_mispar_sidur IN TB_PEILUT_OVDIM.mispar_sidur%TYPE,
                                      p_taarich IN  TB_PEILUT_OVDIM.taarich%TYPE,
                                      p_shat_hatchala IN  TB_PEILUT_OVDIM.shat_hatchala_sidur%TYPE) RETURN number AS
@@ -19155,12 +17981,11 @@ END fun_get_barkod_Tachograf;
                      end;
                else    v_snif_tnua:=null;  
              end if;
-      end if;       
-      
-      return      v_snif_tnua;
+      end if;            
          EXCEPTION
          WHEN OTHERS THEN
               RAISE;
-  END fun_get_kod_tachanat_bizua;  				
+  END fun_get_kod_tachanat_bizua;  
+ 
 END Pkg_Utils;
 /
