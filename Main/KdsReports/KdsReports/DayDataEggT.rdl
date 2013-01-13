@@ -1,173 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="Ds">
-      <DataSourceReference>KdsCon</DataSourceReference>
-      <rd:DataSourceID>a9c62023-9547-477b-a7e2-76b79be57d14</rd:DataSourceID>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DayDataEggT">
-      <Fields>
-        <Field Name="MISPAR_ISHI">
-          <DataField>MISPAR_ISHI</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="STARTDATE">
-          <DataField>STARTDATE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R126">
-          <DataField>R126</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_HATCHALA">
-          <DataField>SHAT_HATCHALA</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SHAT_GMAR">
-          <DataField>SHAT_GMAR</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="R1_108">
-          <DataField>R1_108</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R18">
-          <DataField>R18</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R32">
-          <DataField>R32</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R76">
-          <DataField>R76</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R77">
-          <DataField>R77</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R78">
-          <DataField>R78</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R67">
-          <DataField>R67</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R219">
-          <DataField>R219</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R66">
-          <DataField>R66</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R219_5">
-          <DataField>R219_5</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R60">
-          <DataField>R60</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R96">
-          <DataField>R96</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R49">
-          <DataField>R49</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="R131">
-          <DataField>R131</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>Ds</DataSourceName>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>PKG_REPORTS.GET_GETDAYDATAEGGT</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="P_BAKASHAID">
-            <Value>=Parameters!p_BakashaId.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="P_PERIOD">
-            <Value>=Parameters!p_Period.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.57453in</Width>
+              <Width>1.45931cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66828in</Width>
+              <Width>1.69743cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.49467in</Width>
+              <Width>1.25646cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.54328in</Width>
+              <Width>1.37993cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.46342in</Width>
+              <Width>1.17709cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.47384in</Width>
+              <Width>1.20355cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.453in</Width>
+              <Width>1.15062cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.43217in</Width>
+              <Width>1.09771cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.48425in</Width>
+              <Width>1.22999cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.41134in</Width>
+              <Width>1.0448cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.41134in</Width>
+              <Width>1.0448cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.41134in</Width>
+              <Width>1.0448cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.3905in</Width>
+              <Width>0.99187cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.4634in</Width>
+              <Width>1.17704cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.42177in</Width>
+              <Width>1.0713cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.47384in</Width>
+              <Width>1.20355cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.53634in</Width>
+              <Width>1.3623cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.3905in</Width>
+              <Width>0.99187cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.48425in</Width>
+              <Width>1.22999cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.56712in</Height>
+              <Height>1.44048cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -849,7 +747,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.23622in</Height>
+              <Height>0.6cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -880,6 +778,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1480,8 +1379,8 @@
         <DataSetName>DayDataEggT</DataSetName>
         <Top>1.92299cm</Top>
         <Left>0.25612cm</Left>
-        <Height>2.0405cm</Height>
-        <Width>22.81444cm</Width>
+        <Height>2.04048cm</Height>
+        <Width>22.81443cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1493,7 +1392,7 @@
         <ReportName>GeneralHeader</ReportName>
         <Parameters>
           <Parameter Name="P_Title">
-            <Value>="נתוני עבודה יומיים אגד תעבורה לתקופת " + Parameters!p_Period.Value</Value>
+            <Value>="נתוני עבודה יומיים אגד תעבורה "</Value>
           </Parameter>
         </Parameters>
         <Top>0.10266cm</Top>
@@ -1514,35 +1413,6 @@
     <Height>1.66459in</Height>
     <Style />
   </Body>
-  <ReportParameters>
-    <ReportParameter Name="p_BakashaId">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>8054</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>p_BakashaId</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="p_Period">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>07/2012</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Period</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="P_DT">
-      <DataType>DateTime</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>=Globals!ExecutionTime</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>p_dt</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <Width>9.0829in</Width>
   <Page>
     <PageHeight>21cm</PageHeight>
@@ -1554,6 +1424,127 @@
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
-  <rd:ReportID>8b7943ae-10f2-4140-babc-cc7c2b091e32</rd:ReportID>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="Ds">
+      <DataSourceReference>KdsCon</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>a9c62023-9547-477b-a7e2-76b79be57d14</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DayDataEggT">
+      <Query>
+        <DataSourceName>Ds</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="P_BAKASHAID">
+            <Value>=Parameters!p_BakashaId.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>PKG_REPORTS.GET_GETDAYDATAEGGT</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="MISPAR_ISHI">
+          <DataField>MISPAR_ISHI</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="STARTDATE">
+          <DataField>STARTDATE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R126">
+          <DataField>R126</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_HATCHALA">
+          <DataField>SHAT_HATCHALA</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="SHAT_GMAR">
+          <DataField>SHAT_GMAR</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="R1_108">
+          <DataField>R1_108</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R18">
+          <DataField>R18</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R32">
+          <DataField>R32</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R76">
+          <DataField>R76</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R77">
+          <DataField>R77</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R78">
+          <DataField>R78</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R67">
+          <DataField>R67</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R219">
+          <DataField>R219</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R66">
+          <DataField>R66</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R219_5">
+          <DataField>R219_5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R60">
+          <DataField>R60</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R96">
+          <DataField>R96</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R49">
+          <DataField>R49</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="R131">
+          <DataField>R131</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="p_BakashaId">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>8054</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>p_BakashaId</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="P_DT">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Globals!ExecutionTime</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>p_dt</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>8b7943ae-10f2-4140-babc-cc7c2b091e32</rd:ReportID>
 </Report>

@@ -142,6 +142,10 @@
       <FullPath>ProfitOfLinesDetailed.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>ProfitOfLinesGroup.rdl</Name>
+      <FullPath>ProfitOfLinesGroup.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Query4.rdl</Name>
       <FullPath>Query4.rdl</FullPath>
     </ProjectItem>
@@ -190,10 +194,6 @@
     <ProjectItem>
       <Name>WorkerHourTest.rdl</Name>
       <FullPath>WorkerHourTest.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>ProfitOfLinesGroup.rdl</Name>
-      <FullPath>ProfitOfLinesGroup.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
