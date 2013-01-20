@@ -1035,8 +1035,16 @@ namespace KdsBatch
             }
             catch (Exception ex)
             {
+                clMail omail;
+                string[] RecipientsList = (ConfigurationManager.AppSettings["MailErrorWorkCard"].ToString()).Split(';');
+                RecipientsList.ToList().ForEach(recipient =>
+                {
+                    omail = new clMail(recipient, "תקלה בשמירת עדכוני רשמת למספר אישי: " + oCollIdkunRashemet.Value[0].MISPAR_ISHI + "  תאריך:" + oCollIdkunRashemet.Value[0].TAARICH.ToShortDateString(), ex.Message);
+                    omail.SendMail();
+                });
+
                 throw ex;
-            }
+            } 
         }
 
         public static void UpdateAprrovalErrors(COLL_SHGIOT_MEUSHAROT oCollShgiotMeusharot)
