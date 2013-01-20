@@ -360,11 +360,13 @@ namespace KdsBatch
                             else
                             {
                                 drSidurimToChange[I]["Lo_letashlum"] = 1;
+                                drSidurimToChange[I]["KOD_SIBA_LO_LETASHLUM"] = 19;
                             }
                         }
                         else
                         {
                             drSidurimToChange[I]["Lo_letashlum"] = 1;
+                            drSidurimToChange[I]["KOD_SIBA_LO_LETASHLUM"] = 19;
                         }
                     }
                 }

@@ -1361,7 +1361,8 @@ namespace KdsBatch
                             //fNochechtLeTashlum = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_YOM"], clGeneral.enRechivim.DakotNochehutLetashlum.GetHashCode(), objOved.Taarich);
                             //fTempX = Math.Min(fNochechtLeTashlum - fNochechtKursim, fMichsatMutam);
                             fErechRechivSidur = oCalcBL.GetSumErechRechiv(objOved._dsChishuv.Tables["CHISHUV_SIDUR"], clGeneral.enRechivim.KamutGmulChisachon.GetHashCode(), objOved.Taarich);
-                            fTempX = Math.Min(fErechRechivSidur, fMichsatMutam);
+                            //fTempX = Math.Min(fErechRechivSidur, fMichsatMutam);
+                            fTempX = fErechRechivSidur;
                         }
                         else
                         {
@@ -1402,8 +1403,10 @@ namespace KdsBatch
 
                         if (objOved.objPirteyOved.iMutamut == 1 || objOved.objPirteyOved.iMutamut == 3 || objOved.objPirteyOved.iMutamut == 5 || objOved.objPirteyOved.iMutamut == 7)
                         {
-                            if (fNochechtLeTashlum>0 && fTempX >= fMichsatMutam)
+                            if (fTempX >= 240)
                                 fErechRechiv = 1;
+                            //if (fNochechtLeTashlum>0 && fTempX >= fMichsatMutam)
+                            //    fErechRechiv = 1;
                         }
                         if ((objOved.objPirteyOved.iMutamut != 1 && objOved.objPirteyOved.iMutamut != 3 && objOved.objPirteyOved.iMutamut != 5 && objOved.objPirteyOved.iMutamut != 7) || (fTempX < fMichsatMutam))
                         {

@@ -490,7 +490,7 @@
     </Filter>
   </Report>
 
-  <Report  RdlName="DayDataEggt" Roles="kds_administrators" FilterByLine="3" PageHeader="נתוני עבודה יומיים אגד תעבורה" >
+  <Report  RdlName="DayDataEggt" Roles="kds_administrators" FilterByLine="3" PageHeader="נתוני עבודה יומיים אגד תעבורה" ProductionType="Heavy">
     <Filter ParameterName="p_BakashaId" Caption="מספר בקשה" BoxeType="DropDown" DataType="System.Int32" RunAtServer="true" >
       <DropDownList QueryType="StoredProcedure"  Select="PKG_REPORTS.pro_get_Bakashot_details" ValueField="bakasha_id" TextField="teur" />
     </Filter>
