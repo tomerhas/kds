@@ -56,13 +56,13 @@ namespace KdsBatch
              SetFooter();
         }
 
-        private void SetParams()
-        {
-            DataTable dtParametrim;
-            clUtils oUtils = new clUtils();
-            dtParametrim = oUtils.getErechParamByKod("256", DateTime.Now.ToShortDateString());
-              = int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString());
-        }
+        //private void SetParams()
+        //{
+        //    DataTable dtParametrim;
+        //    clUtils oUtils = new clUtils();
+        //    dtParametrim = oUtils.getErechParamByKod("256", DateTime.Now.ToShortDateString());
+        //      = int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString());
+        //}
         protected virtual void SetHeader()
         {
             StringBuilder sHeader = new StringBuilder();
