@@ -41,6 +41,8 @@ public partial class Modules_Test2 : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        KdsBatch.TaskManager.Utils oUtils = new KdsBatch.TaskManager.Utils();
+        oUtils.RunShguimLechishuv();
     //    int num;
     //    KdsLibrary.BL.clBatch x = new KdsLibrary.BL.clBatch();
     //    num = x.GetNumChangesHrToShguim();

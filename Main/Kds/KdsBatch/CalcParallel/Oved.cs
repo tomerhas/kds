@@ -39,6 +39,7 @@ namespace KdsBatch
         private DataTable _DtPeilut;
         public DateTime dTchilatAvoda;
         public string sMatazavOved;
+        public int iKodHeadrut=0;
         public DateTime dSiyumAvoda;
         private float _fHashlamaAlCheshbonNosafot;
         public clParameters objParameters { get; set; }
@@ -482,6 +483,8 @@ namespace KdsBatch
                     if (rows.Length > 0)
                     {
                         sKodMatzav = rows[0]["kod_matzav"].ToString();
+                        if (rows[0]["kod_headrut"].ToString() != "")
+                            iKodHeadrut = int.Parse(rows[0]["kod_headrut"].ToString());
                     }
                 }
 

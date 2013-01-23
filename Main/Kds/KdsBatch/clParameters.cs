@@ -200,6 +200,7 @@ namespace KdsBatch
         public DateTime dShatHatchalaNahagutNihulTnua; //244-התחלה מותרת-טווח עליון-נהגות וניהול תנועה
         public float fHighPremya; //245- פרמיה גבוהה
         public int iValidDays;//252 -(מספר ימים בתוקף (45
+        public DateTime dChodeshTakanonSoziali;//253 - חודש הפעלת שינוי תקנון סוציאלי 
         public DateTime dStartAruchatTzaharayim246;//246 - תחילת ארוחת צהריים
         public DateTime dEndAruchatTzaharayim247;//247 - סיום ארוחת צהריים
         public int iVisutMustRechevWC; //261 - ויסות דורש רכב בכרטיס עבוד
@@ -970,6 +971,11 @@ namespace KdsBatch
                 //246 - תחילת ארוחת צהריים
                 sTmp = GetOneParam(246, dCardDate);
                 dStartAruchatTzaharayim246 = GetParamHour(sTmp, dCardDate);
+
+
+                //253 - חודש הפעלת שינוי תקנון סוציאלי
+                sTmp = GetOneParam(253, dCardDate);
+                dChodeshTakanonSoziali = GetParamHour(sTmp, dCardDate);
 
 
                 //247 - תחילת ארוחת צהריים

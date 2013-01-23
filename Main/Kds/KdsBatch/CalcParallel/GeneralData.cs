@@ -50,7 +50,7 @@ namespace KdsBatch
 
     public class GeneralData 
     {
-        private DateTime _TarMe,_TarAd;
+        public DateTime _TarMe, _TarAd;
         public DataSet dsNetuneyChishuv;
 
         public DataTable dtYamimMeyuchadim { get; set; }

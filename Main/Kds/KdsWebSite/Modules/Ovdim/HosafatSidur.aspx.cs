@@ -342,8 +342,8 @@ public partial class Modules_Ovdim_HosafatSidur : KdsPage
         lblDakotZ.Text = drSidur["Premium"].ToString();
         lblElements.Text = drSidur["element_mazan"].ToString();
         lblKisuyTor.Text = drSidur["kisui_tor"].ToString();
-        lblSugRechev.Text = drSidur["bus_type"].ToString();
-        lblKodMigun.Text = drSidur["migun"].ToString();
+        lblSugRechev.Text = drSidur["bus_type_name"].ToString();
+        lblKodMigun.Text = drSidur["migun_name"].ToString();
     }
     protected string getKisuyTorString(int kisuyTor, DateTime shatYezia)
     {

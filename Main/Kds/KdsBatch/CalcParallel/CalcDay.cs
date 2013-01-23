@@ -3079,8 +3079,16 @@ namespace KdsBatch
                             {
                                 fErechRechiv = fErechRechiv * float.Parse("0.6");
                             }
-                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
 
+                            if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                            {
+                                if (fErechRechiv == 1 && objOved.iKodHeadrut == 1)
+                                {
+                                    fErechRechiv = 0;
+                                    addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), 1);
+                                }
+                            }
+                            fErechRechiv = float.Parse(Math.Round(fErechRechiv,2).ToString());
                             addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), fErechRechiv, fKizuzMeheadrut);
                         }
                     }
@@ -3198,6 +3206,16 @@ namespace KdsBatch
                                && objOved.objMeafyeneyOved.iMeafyen85 == 1 && !oCalcBL.CheckOvedPutar(objOved) && fMichsaYomit > 0 && fErechRechiv > 0)
                         {
                             fErechRechiv = fErechRechiv * float.Parse("0.6");
+                        }
+
+
+                        if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+                        {
+                            if (fErechRechiv == 1 && objOved.iKodHeadrut == 0 && objOved.Taarich< objOved.oGeneralData._TarAd)
+                            {
+                                fErechRechiv = 0;
+                                addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), 1);
+                            }
                         }
                         fErechRechiv = float.Parse(Math.Round(fErechRechiv, 2).ToString()); 
                         addRowToTable(clGeneral.enRechivim.YomChofesh.GetHashCode(), fErechRechiv, fKizuzMeheadrut);

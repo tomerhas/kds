@@ -5,6 +5,7 @@ using System.Text;
 using KdsLibrary;
 using System.Data;
 using System.Configuration;
+using KdsLibrary.BL;
 
 namespace KdsBatch
 {
@@ -21,6 +22,7 @@ namespace KdsBatch
         protected int _iGil;
         protected string _sHeader;
         protected string _sFooter;
+     //   protected DateTime _dTakanonSoziali;
         protected List<string> _sBody;
         protected DataTable _dtDetailsChishuv;
         protected DataRow _drPirteyOved;
@@ -49,10 +51,18 @@ namespace KdsBatch
              else _iGil = -1;
              _sLine = new List<string>();
 
+          //   SetParams();
              SetHeader();
              SetFooter();
         }
 
+        private void SetParams()
+        {
+            DataTable dtParametrim;
+            clUtils oUtils = new clUtils();
+            dtParametrim = oUtils.getErechParamByKod("256", DateTime.Now.ToShortDateString());
+              = int.Parse(dtParametrim.Rows[0]["ERECH_PARAM"].ToString());
+        }
         protected virtual void SetHeader()
         {
             StringBuilder sHeader = new StringBuilder();
