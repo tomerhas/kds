@@ -1267,7 +1267,7 @@
                     <td class="ItemRow">דקות אלמנטים</td>
                     <td class="ItemRow">דקות כיסוי תור</td>
                     <td class="ItemRow">סוג רכב נדרש</td>
-                    <td class="ItemRow">קוד מיגון נדרש</td>
+                    <td class="ItemRow">תאור מיגון נדרש</td>
                 </tr>
                 <tr class="GridAltRow">
                     <td class="ItemRow"><asp:Label ID="lblKm" runat="server"></asp:Label></td>

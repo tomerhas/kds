@@ -20,6 +20,7 @@ namespace KdsBatch
         public DateTime _dDay { get; set; }
 
         public List<clPirteyOved> PirteyOved { get; set; }
+        public List<clMatzavOvdim> MatzavOved { get; set; }
         public DataTable DtSugeyYechida { set; get; }
         public DataTable DtYemeyAvoda { set; get; }
         public DataTable DtPeiluyotFromTnua { set; get; }
@@ -44,6 +45,7 @@ namespace KdsBatch
         private float _fHashlamaAlCheshbonNosafot;
         public clParameters objParameters { get; set; }
         public clPirteyOved objPirteyOved { get; set; }
+        public clMatzavOvdim objMatzavOved { get; set; }
         public clMeafyenyOved objMeafyeneyOved { get; set; }
 
         public DateTime Taarich { get; set; }
@@ -88,6 +90,7 @@ namespace KdsBatch
                 InitPremyotNihulTnua();
                 InitPremyot();
                 InitPirteyOvedList();
+                InitMatzavOvdimList();
                 InitDtYemeyAvoda();
                 InitDtPeiluyotFromTnua();
                 InitDtPeiluyotLeOved();
@@ -249,6 +252,33 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitPirteyOvedList: " + ex.Message);
+                throw ex;
+            }
+        }
+
+
+        private void InitMatzavOvdimList()
+        {
+            clMatzavOvdim itemMatzavOved;
+            DataRow[] rows;
+            try
+            {
+                MatzavOved = new List<clMatzavOvdim>();
+                oGeneralData.dtMatzavOvdim.Select(null, "mispar_ishi");
+
+                rows = oGeneralData.dtMatzavOvdim.Select("mispar_ishi= " + Mispar_ishi, "TAARICH_ME asc"); // + " and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime') >= ME_TARICH and Convert('" + dTarMe.ToShortDateString() + "', 'System.DateTime')<= AD_TARICH");
+                   
+                for(int i=0;i<rows.Length ;i++)
+                {
+                    itemMatzavOved = new clMatzavOvdim(rows[i]);
+                    MatzavOved.Add(itemMatzavOved);
+                    itemMatzavOved = null;
+                }
+                itemMatzavOved = null;
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(iBakashaId, Mispar_ishi, "E", 0, Month, "InitMatzavOvdimList: " + ex.Message);
                 throw ex;
             }
         }

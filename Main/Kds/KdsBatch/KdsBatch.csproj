@@ -111,6 +111,7 @@
     <Compile Include="Calculation\clCalcSidur.cs" />
     <Compile Include="clBatchFactory.cs" />
     <Compile Include="clBatchManager.cs" />
+    <Compile Include="clMatzavOvdim.cs" />
     <Compile Include="clPirteyOved.cs" />
     <Compile Include="clTkinutMakatim.cs" />
     <Compile Include="Entities\CardError.cs" />
