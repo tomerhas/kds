@@ -232,10 +232,10 @@
     <None Include="Service References\KdsServiceProxy\KdsLocalService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\KdsServiceProxy\KdsLocalService1.xsd">
+    <None Include="Service References\KdsServiceProxy\KdsLocalService1.1xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\KdsServiceProxy\KdsLocalService2.xsd">
+    <None Include="Service References\KdsServiceProxy\KdsLocalService2.1xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web References\premyot\wsPremyot.wsdl" />
