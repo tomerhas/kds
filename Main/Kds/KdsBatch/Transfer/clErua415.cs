@@ -118,8 +118,8 @@ namespace KdsBatch
             fErech += GetErechRechiv(clGeneral.enRechivim.SachLinaKfula.GetHashCode());
             sErua415.Append(FormatNumber(fErech, 4, 1));
 
-            if (_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() ||
-                  _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+            if ((_iMaamad == clGeneral.enKodMaamad.SachirKavua.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.SachirZmani.GetHashCode())
+                || (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth >= dTakanonSoziali))
             {
                 sErua415.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()), 4, 2));
             }

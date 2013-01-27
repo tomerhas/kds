@@ -65,7 +65,7 @@ namespace KdsBatch
             clUtils oUtils = new clUtils();
             if (HttpRuntime.Cache.Get(sCacheKey) == null)
             {
-                dtParametrim = oUtils.getErechParamByKod("256", DateTime.Now.ToShortDateString());
+                dtParametrim = oUtils.getErechParamByKod("265", DateTime.Now.ToShortDateString());
                 value =dtParametrim.Rows[0]["ERECH_PARAM"].ToString();
                 HttpRuntime.Cache.Insert(sCacheKey, DateTime.Parse(value), null, DateTime.MaxValue, TimeSpan.FromMinutes(1440));
             }

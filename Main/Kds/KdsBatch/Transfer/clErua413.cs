@@ -131,6 +131,9 @@ namespace KdsBatch
                   CreateData413("322", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("322", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("389", clGeneral.enRechivim.PremyaMenahel.GetHashCode(),"erech_rechiv", 7, 2);
+                  
+                  if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth < dTakanonSoziali)
+                     CreateData413Seif435("435", "erech_rechiv", 7, 2);
 
               }
 
@@ -183,7 +186,7 @@ namespace KdsBatch
           float fErech=0;
           try
           {
-              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
+              if (_iMaamad != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode() )
                   fErech = GetErechRechivPremiya(iKodRechiv, _dtPrem);
              
                 CreateData(sSaifHilan,  fErech,  iLen, iNumDigit);
@@ -226,6 +229,47 @@ namespace KdsBatch
                   _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
                   // _sFooter += GetSimanEfresh(iLastDigit);
               }
+              if (!IsEmptyErua(sErech.ToString()))
+              {
+                  sErua413.Append(sErech);
+                  _ListErua.Add(_sHeader + sErua413.ToString() + _sFooter);
+              }
+          }
+          catch (Exception ex)
+          {
+              WriteError("CreateData413: " + ex.Message);
+              // throw ex;
+          }
+      }
+
+      private void CreateData413Seif435(string sSaifHilan, string col, int iLen, int iNumDigit)
+      {
+          bKayamEfreshBErua = false;
+          string sErech = "";
+          float fErech = 0;
+          try
+          {
+              StringBuilder sErua413 = new StringBuilder();
+
+              sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
+          
+              sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+              sErua413.Append(_dMonth.Year.ToString());
+              sErech = GetBlank(11);
+            
+              fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode());
+              fErech += GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode());
+
+              sErech += FormatNumber(fErech, iLen, iNumDigit);
+              sErech += GetBlank(12);
+
+              SetFooter();
+            
               if (!IsEmptyErua(sErech.ToString()))
               {
                   sErua413.Append(sErech);
