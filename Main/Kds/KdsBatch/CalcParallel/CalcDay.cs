@@ -3211,7 +3211,7 @@ namespace KdsBatch
 
                         if (objOved.Taarich >= objOved.objParameters.dChodeshTakanonSoziali && objOved.objPirteyOved.iKodMaamdMishni != clGeneral.enKodMaamad.ChozeMeyuchad.GetHashCode())
                         {
-                            if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 && objOved.Taarich< objOved.oGeneralData._TarAd)
+                            if (fErechRechiv == 1 && objOved.objMatzavOved.iKod_Headrut == 0 && objOved.Taarich<= objOved.oGeneralData._TarAd.AddMonths(-1))
                             {
                                 fErechRechiv = 0;
                                 addRowToTable(clGeneral.enRechivim.YomHeadrut.GetHashCode(), 1);
