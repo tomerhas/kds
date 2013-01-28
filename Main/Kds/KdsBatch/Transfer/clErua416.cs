@@ -97,6 +97,7 @@ namespace KdsBatch
            //{
                sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
            }
+           else sErua416.Append(GetBlank(4));
 
            //if (_iMaamad != clGeneral.enKodMaamad.Shtachim.GetHashCode())
            //{
@@ -149,10 +150,10 @@ namespace KdsBatch
                {
                    sErua416.Append(GetBlank(4));
                }
-               ////if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _dMonth >= dTakanonSoziali)
-               ////    sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()), 4, 2));
-               ////else
-                sErua416.Append(GetBlank(4));
+               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode() && _dMonth >= dTakanonSoziali)
+                   sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomHeadrut.GetHashCode()), 4, 2));
+               else
+                   sErua416.Append(GetBlank(4));
               // sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
                sErua416.Append(GetBlank(4));
                //sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMiluimChelki.GetHashCode()), 4, 2));

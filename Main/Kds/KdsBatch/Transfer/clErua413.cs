@@ -131,9 +131,9 @@ namespace KdsBatch
                   CreateData413("322", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("322", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),"erech_rechiv", 7, 2);
                   CreateData413("389", clGeneral.enRechivim.PremyaMenahel.GetHashCode(),"erech_rechiv", 7, 2);
-                  
+
                   if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth < dTakanonSoziali)
-                     CreateData413Seif435("435", "erech_rechiv", 7, 2);
+                      CreateData413Seif435("435", "erech_rechiv", 7, 2);
 
               }
 
@@ -253,9 +253,9 @@ namespace KdsBatch
 
               sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
           
-              sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
-              sErua413.Append(_dMonth.Year.ToString());
-              sErech = GetBlank(11);
+              //sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+              //sErua413.Append(_dMonth.Year.ToString());
+              sErech = GetBlank(17);
             
               fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
               fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
