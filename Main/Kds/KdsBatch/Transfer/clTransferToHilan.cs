@@ -8,6 +8,7 @@ using KdsLibrary.DAL;
 using System.IO;
 using System.Configuration;
 using KdsLibrary.UDT;
+using System.Web;
 namespace KdsBatch
 {
    public class clTransferToHilan
@@ -141,7 +142,7 @@ namespace KdsBatch
                    if (bDelete == "true")
                        DeleteChishuvAfterTransfer(lRequestNumToTransfer);
                    //UpdateOvdimImShinuyHr(lBakashaId,lRequestNumToTransfer);
-
+                   HttpRuntime.Cache.Remove(ConfigurationSettings.AppSettings["TakanonSizialiCachName"]);
                    iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                }
                catch (Exception ex)

@@ -59,7 +59,7 @@ namespace KdsBatch
 
         private DateTime GetTakanonSoziali()
         {
-            string sCacheKey = "takanon";
+            string sCacheKey = ConfigurationSettings.AppSettings["TakanonSizialiCachName"]; 
             string value;
             DataTable dtParametrim;
             clUtils oUtils = new clUtils();
