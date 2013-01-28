@@ -34,7 +34,7 @@ namespace KdsBatch
 
         private DataRow _drPirteyOved;
         private DataTable _dtRechivim;
-        public DataTable _dtChishuv;
+        //public DataTable _dtChishuv;
         private DataTable _dtRechiveyPrem;
         public PirteyOved(  long BakashaId,long lRequestNumToTransfer, DataRow drPirteyOved)
         {
@@ -54,13 +54,14 @@ namespace KdsBatch
          //   InitializeErueyOved();
         }
 
-        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
+          //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
+        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
         {
             _dtRechivim = dtDetailsChishuv;
             _dtRechiveyPrem = dtPrem;
             try
             {
-                _dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
+                //_dtChishuv = GetChishuvYomiToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim);
                 if (iDirug == 85 && iDarga == 30)
                 {
                     if (sChodeshIbud == DateTime.Parse(_drPirteyOved["taarich"].ToString()).ToString("MM/yyyy"))
@@ -70,7 +71,9 @@ namespace KdsBatch
                 }
                 else
                 {
-                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                    //oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
+                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim);
+
                  //   if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
                  //       oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
                     oErua413 = new clErua413(iBakashaId, _drPirteyOved, _dtRechivim, _dtRechiveyPrem);

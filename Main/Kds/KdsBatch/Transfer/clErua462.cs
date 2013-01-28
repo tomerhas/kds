@@ -9,11 +9,13 @@ namespace KdsBatch
 {
   public  class clErua462:clErua
     {
-      private DataTable dtChishuvYomi;
-      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
-          : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
+      //private DataTable dtChishuvYomi;
+      //public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
+      //    : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
+      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+          : base(lBakashaId, drPirteyOved, dtDetailsChishuv, 462)
       {
-          dtChishuvYomi = dtChishuv;
+          //dtChishuvYomi = dtChishuv;
            _sBody = SetBody();
           if (_sBody!=null)
             PrepareLines();
@@ -23,14 +25,16 @@ namespace KdsBatch
       { 
           List<string> ListErua=new List<string>();
           StringBuilder sErua462 = new StringBuilder();
-          DataRow[] drYamim;
+          //DataRow[] drYamim;
           string sErech;
           try
           {
 
             //  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("count(TAARICH)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')"));
-              drYamim = dtChishuvYomi.Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
-              sErua462.Append(FormatNumber(drYamim.Length, 4, 2));
+
+              //drYamim = dtChishuvYomi.Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
+              //sErua462.Append(FormatNumber(drYamim.Length, 4, 2));
+              sErua462.Append(FormatNumber(0, 4, 2));
 
               sErech = FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), "erech_rechiv_a") / 60), 4, 1);
               sErech = ChangeLastSign(sErech);
