@@ -86,7 +86,7 @@ namespace KdsBatch
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "count:" + dtOvdim.Rows.Count);
                    _PirteyOved = new List<PirteyOved>();
-                   dtEzerYomi = new DataTable();
+                  // dtEzerYomi = new DataTable();
                    for (i = 0; i <= dtOvdim.Rows.Count - 1; i++)
                    {
 
@@ -98,14 +98,16 @@ namespace KdsBatch
 
                        if (i == 0)
                            sChodeshIbud = dtOvdim.Rows[i]["chodesh_ibud"].ToString();
-
+                       if(i % 100 ==0)
+                           clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "after " + i + " ovdim" );
+                  
                        oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
                        oPirteyOved.sChodeshIbud = sChodeshIbud;
-                       oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
+                     //  oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);//, dtRechivimYomi);
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
                        _PirteyOved.Add(oPirteyOved);
 
                        objMisparIshiSugChishuv = new OBJ_MISPAR_ISHI_SUG_CHISHUV();
