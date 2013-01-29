@@ -99,6 +99,8 @@ namespace KdsBatch
                   CreateData413("331", clGeneral.enRechivim.PremiyatReshetBitachon.GetHashCode(),"erech_rechiv",  7,2);
                   CreateData413("331", clGeneral.enRechivim.PremiyatPeirukVeshiputz.GetHashCode(),"erech_rechiv",  7, 2);
                   CreateData413("365", clGeneral.enRechivim.PremyaMenahel.GetHashCode(),"erech_rechiv", 7, 2);
+                  if (_dMonth < dTakanonSoziali)
+                      CreateData413Seif435("435", "erech_rechiv", 7, 2);
 
               }
               else
@@ -256,15 +258,19 @@ namespace KdsBatch
               //sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
               //sErua413.Append(_dMonth.Year.ToString());
               sErech = GetBlank(17);
-            
-              fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode());
-              fErech += GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode());
 
+              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+                  fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
+              else
+              {
+                  fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaBoded.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalaYeled.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode());
+              }
               sErech += FormatNumber(fErech, iLen, iNumDigit);
               sErech += GetBlank(12);
 

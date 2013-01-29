@@ -36,7 +36,7 @@ namespace KdsBatch
 
               //drYamim = dtChishuvYomi.Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
               sErua462.Append(FormatNumber(_iCntYamim, 4, 2));
-              sErua462.Append(FormatNumber(0, 4, 2));
+              //sErua462.Append(FormatNumber(0, 4, 2));
 
               sErech = FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), "erech_rechiv_a") / 60), 4, 1);
               sErech = ChangeLastSign(sErech);
