@@ -19,6 +19,7 @@ namespace KdsBatch
         public long iBakashaIdRizatChishuv { get; set; }
         public DateTime dChodeshChishuv { get; set; }
         public string sChodeshIbud { get; set; }
+      
 
         public clEruaDataEt oDataEt { get; set; }
         public clEruaBakaraEt oBakaraEt { get; set; }
@@ -33,6 +34,7 @@ namespace KdsBatch
         public clErua460 oErua460 { get; set; }
 
         private DataRow _drPirteyOved;
+        private int _iCntYamim;
         private DataTable _dtRechivim;
         //public DataTable _dtChishuv;
         private DataTable _dtRechiveyPrem;
@@ -48,14 +50,14 @@ namespace KdsBatch
             iMakorNetunim = int.Parse(drPirteyOved["makor"].ToString());
 
             _drPirteyOved = drPirteyOved;
-           
+            
             iBakashaIdRizatChishuv = lRequestNumToTransfer;
           //  iGil =int.Parse(drPirteyOved["gil"].ToString());
          //   InitializeErueyOved();
         }
 
-          //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
-        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
+        public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem, DataTable dtRechivimYomiim)
+        //public void InitializeErueyOved(DataTable dtDetailsChishuv, DataTable dtPrem)
         {
             _dtRechivim = dtDetailsChishuv;
             _dtRechiveyPrem = dtPrem;
@@ -71,8 +73,9 @@ namespace KdsBatch
                 }
                 else
                 {
-                    //oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
-                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim);
+                    _iCntYamim = GetCntYamimToOved(int.Parse(_drPirteyOved["mispar_ishi"].ToString()), dtRechivimYomiim, DateTime.Parse(_drPirteyOved["taarich"].ToString()));
+                    oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim, _iCntYamim);
+                    //oErua462 = new clErua462(iBakashaId, _drPirteyOved, _dtRechivim);
 
                  //   if (iMakorNetunim != 2) //לא הגיע מרכיבי פרמיה בלבד
                  //       oErua589 = new clErua589(iBakashaId, _drPirteyOved, _dtRechivim, _dtChishuv);
@@ -98,6 +101,23 @@ namespace KdsBatch
             catch (Exception ex)
             {
                 throw(ex);
+            }
+        }
+
+        private int GetCntYamimToOved(int iMisparIshi, DataTable dtRechivimYomiim, DateTime dChodesh)
+        {
+            int num = 0;
+
+            try
+            {
+                if (dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi + " and chodesh=Convert('" + dChodesh.ToShortDateString() + "', 'System.DateTime')").Length > 0)
+                    num = int.Parse(dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi + " and chodesh=Convert('" + dChodesh.ToShortDateString() + "', 'System.DateTime')")[0]["yamim"].ToString());
+                return num;
+            }
+            catch (Exception ex)
+            {
+                //   clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+                throw ex;
             }
         }
         private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)

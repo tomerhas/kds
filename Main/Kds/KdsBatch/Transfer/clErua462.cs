@@ -9,13 +9,15 @@ namespace KdsBatch
 {
   public  class clErua462:clErua
     {
+      private int _iCntYamim;
       //private DataTable dtChishuvYomi;
       //public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv,DataTable dtChishuv)
       //    : base(lBakashaId, drPirteyOved, dtDetailsChishuv,462)
-      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv)
+      public clErua462(long lBakashaId, DataRow drPirteyOved, DataTable dtDetailsChishuv, int iCntYamim)
           : base(lBakashaId, drPirteyOved, dtDetailsChishuv, 462)
       {
           //dtChishuvYomi = dtChishuv;
+          _iCntYamim = iCntYamim;
            _sBody = SetBody();
           if (_sBody!=null)
             PrepareLines();
@@ -33,7 +35,7 @@ namespace KdsBatch
             //  fErech = clCalcData.GetSumErechRechiv(dtChishuvYomi.Compute("count(TAARICH)", "KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime')"));
 
               //drYamim = dtChishuvYomi.Select("KOD_RECHIV=" + clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode() + " and taarich>=Convert('" + _dMonth.ToShortDateString() + "', 'System.DateTime') and taarich<=Convert('" + _dMonth.AddMonths(1).AddDays(-1).ToShortDateString() + "', 'System.DateTime')");
-              //sErua462.Append(FormatNumber(drYamim.Length, 4, 2));
+              sErua462.Append(FormatNumber(_iCntYamim, 4, 2));
               sErua462.Append(FormatNumber(0, 4, 2));
 
               sErech = FormatNumber((GetErechRechiv(clGeneral.enRechivim.MichsaYomitMechushevet.GetHashCode(), "erech_rechiv_a") / 60), 4, 1);

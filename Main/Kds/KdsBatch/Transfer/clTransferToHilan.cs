@@ -78,7 +78,7 @@ namespace KdsBatch
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, before GetOvdimToTransfer");
                    dsNetunim = GetOvdimToTransfer(lRequestNumToTransfer);
 
-                   //dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
+                   dtRechivimYomi = GetRechivimYomiim(lRequestNumToTransfer);
 
                    clLogBakashot.InsertErrorToLog(lBakashaId, "I", 0, "Transfer, after GetOvdimToTransfer");
                   
@@ -105,12 +105,13 @@ namespace KdsBatch
                   
                        oPirteyOved = new PirteyOved(lBakashaId, lRequestNumToTransfer, dtOvdim.Rows[i]);
                        oPirteyOved.sChodeshIbud = sChodeshIbud;
-                     //  oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
+                       //oPirteyOved.iCntYamim = GetCntYamimToOved(iMisparIshi, dtRechivimYomi, dChodesh);
+                       //oPirteyOved._dtChishuv = GetChishuvYomiToOved(iMisparIshi, dtRechivimYomi);
                        //עובדי קייטנה 
                        //לא מבצעים להם העברה לשכר
 
-                       //oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
-                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
+                       oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem, dtRechivimYomi);
+                      // oPirteyOved.InitializeErueyOved(dtRechivim, dtPrem);
 
                        _PirteyOved.Add(oPirteyOved);
 
@@ -173,30 +174,31 @@ namespace KdsBatch
                clLogBakashot.InsertErrorToLog(lBakashaId, "E", 0, "Transfer: " + ex.Message);
            }
        }
+     
 
-       private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
-       {
-           clDal oDal = new clDal();
-           DataRow[] rows;
-           try
-           {
-               rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi);
-               if (rows.Length > 0)
-               {
-                   dtEzerYomi = rows.CopyToDataTable();
-               }
-               else
-               {
-                   dtEzerYomi = dtRechivimYomiim.Clone();
-               }
-               return dtEzerYomi;
-           }
-           catch (Exception ex)
-           {
-            //   clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
-               throw ex;
-           }
-       }
+       ////private DataTable GetChishuvYomiToOved(int iMisparIshi, DataTable dtRechivimYomiim)
+       ////{
+       ////    clDal oDal = new clDal();
+       ////    DataRow[] rows;
+       ////    try
+       ////    {
+       ////        rows = dtRechivimYomiim.Select("mispar_ishi= " + iMisparIshi);
+       ////        if (rows.Length > 0)
+       ////        {
+       ////            dtEzerYomi = rows.CopyToDataTable();
+       ////        }
+       ////        else
+       ////        {
+       ////            dtEzerYomi = dtRechivimYomiim.Clone();
+       ////        }
+       ////        return dtEzerYomi;
+       ////    }
+       ////    catch (Exception ex)
+       ////    {
+       ////     //   clLogBakashot.SetError(iBakashaId, iMisparIshi, "E", 0, null, "GetChishuvYomiToOved: " + ex.Message);
+       ////        throw ex;
+       ////    }
+       ////}
 
        private void SetSugChishuvUDT(int mispar_ishi,DateTime dTaarich, PirteyOved oPirteyOved, ref OBJ_MISPAR_ISHI_SUG_CHISHUV objMisparIshiSugChishuv)
        {
