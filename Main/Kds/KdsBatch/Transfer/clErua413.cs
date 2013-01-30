@@ -136,6 +136,9 @@ namespace KdsBatch
 
                   if (_iMaamad == clGeneral.enKodMaamad.Sachir12.GetHashCode() && _dMonth < dTakanonSoziali)
                       CreateData413Seif435("435", "erech_rechiv", 7, 2);
+                  if ((_iMaamad == clGeneral.enKodMaamad.OvedBechoze.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Shtachim.GetHashCode() || _iMaamad == clGeneral.enKodMaamad.Aray.GetHashCode() ) && _dMonth < dTakanonSoziali)
+                      CreateData413("438", clGeneral.enRechivim.YomChofesh.GetHashCode(), "erech_rechiv", 7, 2);
+
 
               }
 
@@ -225,7 +228,7 @@ namespace KdsBatch
               sErech += GetBlank(12);
 
               SetFooter();
-              if (bKayamEfreshBErua && !(flag))
+              if (bKayamEfreshBErua && !(flag) && sSaifHilan != "438")
               {
                   iLastDigit = int.Parse(_sFooter.Substring(1, 1)); //int.Parse(_sFooter.Substring(_sFooter.Trim().Length - 1, 1));
                   _sFooter = _sFooter.Substring(0, 1) + GetSimanEfresh(iLastDigit) + _sFooter.Substring(2, _sFooter.Length - 2);
@@ -254,10 +257,14 @@ namespace KdsBatch
               StringBuilder sErua413 = new StringBuilder();
 
               sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
-          
-              //sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
-              //sErua413.Append(_dMonth.Year.ToString());
-              sErech = GetBlank(17);
+
+              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode()) // && sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224" && sSaifHilan != "303" && sSaifHilan != "321")
+              {
+                  sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+                  sErua413.Append(_dMonth.Year.ToString());
+                  sErech = GetBlank(11);
+              }
+              else sErech = GetBlank(17);
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
                   fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());

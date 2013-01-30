@@ -30,7 +30,7 @@ namespace KdsBatch
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatBenZug.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachalatHorim.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomShmiratHerayon.GetHashCode()), 4, 2));
-                  sErua418.Append(GetBlank(13));
+                  sErua418.Append(GetBlank(12));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelBokerMevkrim.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelTzaharayimMevakrim.GetHashCode()), 4, 2));
                   sErua418.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.SachEshelErevMevkrim.GetHashCode()), 5, 2));

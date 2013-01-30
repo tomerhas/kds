@@ -7559,7 +7559,7 @@ namespace KdsBatch
 
                   if (fMichsaYomit < fMichsaMekorit && fDakotNochechut > fMichsaYomit )
                   {
-                      fErechRechiv = Math.Min(fDakotNochechut, fMichsaMekorit - fMichsaYomit);
+                      fErechRechiv = Math.Min(fDakotNochechut, fMichsaMekorit)  - fMichsaYomit;
                       addRowToTable(clGeneral.enRechivim.ETPaarBetweenMichsaRegilaAndMuktenet.GetHashCode(), fErechRechiv);
                   }
               }
