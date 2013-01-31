@@ -15,6 +15,8 @@ namespace KdsBatch
         public int iGil = 0;
         public int iMutamut = 0;
         public int iZmanMutamut = 0;
+        public int iSibotMutamut = 0;
+        public int iIshurKeren = 0;
         public int iKodMaamdRashi; 
         public int iKodMaamdMishni;
         public int iKodSectorIsuk;
@@ -99,8 +101,8 @@ namespace KdsBatch
                 iSnifAv = System.Convert.IsDBNull(drPratim["snif_av"]) ? 0 : int.Parse(drPratim["snif_av"].ToString());
                 bIsInShlila = System.Convert.IsDBNull(drPratim["SHLILAT_RISHAYON"]) ? false : true;
                 iMikumYechida = System.Convert.IsDBNull(drPratim["MIKUM_YECHIDA"]) ? 0 : int.Parse(drPratim["MIKUM_YECHIDA"].ToString());
-
-               
+                iSibotMutamut = System.Convert.IsDBNull(drPratim["sibot_mutaamut"]) ? 0 : int.Parse(drPratim["sibot_mutaamut"].ToString());
+                iIshurKeren = System.Convert.IsDBNull(drPratim["Ishur_keren"]) ? 0 : int.Parse(drPratim["Ishur_keren"].ToString());
                 _TaarichMe = DateTime.Parse(drPratim["ME_TARICH"].ToString());
                 _TaarichAd = DateTime.Parse(drPratim["AD_TARICH"].ToString());
 
