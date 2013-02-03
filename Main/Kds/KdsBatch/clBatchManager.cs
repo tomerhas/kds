@@ -231,7 +231,8 @@ namespace KdsBatch
             errIsukNahagImSidurTafkidNoMefyen=191,
             errMatzavOvedNotValidFirstDay =192,
             errDivuachSidurLoMatimLeisuk420 = 193,
-            errDivuachSidurLoMatimLeisuk422 = 194
+            errDivuachSidurLoMatimLeisuk422 = 194,
+            errFirstDayShlilatRishayon195 = 195
         }
 
         private enum errNesiaMeshtana
@@ -1221,7 +1222,7 @@ namespace KdsBatch
 
                     if (CheckErrorActive(164)) IsSidurSummerValid164(ref  oSidur, ref dtErrors);
                     if (CheckErrorActive(161)) IsSidurNAhagutValid161(drSugSidur, ref oSidur, ref dtErrors);
-
+                    if (CheckErrorActive(195)) IsFirstDayShlilatRishayon195(drSugSidur, ref oSidur, ref dtErrors);
                     //IsSidurGriraValid177(drSugSidur, ref oSidur, ref dtErrors);
                    
                     if (!(bFirstSidur))//לא נבצע את הבדיקה לסידור הראשון
@@ -5613,6 +5614,35 @@ namespace KdsBatch
             return isValid;
         }
 
+        private bool IsFirstDayShlilatRishayon195(DataRow[] drSugSidur,ref clSidur oSidur, ref DataTable dtErrors)
+        {
+            //בדיקה ברמת סידור
+            bool bError = false;
+            bool isValid = true;
+
+            try
+            {
+                //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
+                if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
+                    bError = IsOvedBShlila();
+
+                if (bError)
+                {
+                    drNew = dtErrors.NewRow();
+                    InsertErrorRow(oSidur, ref drNew, "העובד ביום ראשון של שלילת רישיון", enErrors.errFirstDayShlilatRishayon195.GetHashCode());
+                    dtErrors.Rows.Add(drNew);
+                    isValid = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                clLogBakashot.InsertErrorToLog(_btchRequest.HasValue ? _btchRequest.Value : 0, "E", null, enErrors.errFirstDayShlilatRishayon195.GetHashCode(), oSidur.iMisparIshi, oSidur.dSidurDate, oSidur.iMisparSidur, oSidur.dFullShatHatchala, null, null, "IsSidurNAhagutValid161: " + ex.Message, null);
+                isValid = false;
+                _bSuccsess = false;
+            }
+
+            return isValid;
+        }
         private bool IsSidurGriraValid177(DataRow[] drSugSidur, ref clSidur oSidur, ref DataTable dtErrors)
         {
             //בדיקה ברמת סידור
@@ -5674,7 +5704,8 @@ namespace KdsBatch
             if (!bError)
             {
                 //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
-                bError = IsOvedBShlila();
+                if (_dCardDate !=  oOvedYomAvodaDetails.dTaarichMe)
+                    bError = IsOvedBShlila();
             }
 
             if (!bError)

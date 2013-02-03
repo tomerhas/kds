@@ -195,16 +195,12 @@ namespace KdsBatch.History
                             }
                             catch (Exception ex)
                             {
-                                iStatus = clGeneral.enStatusRequest.Failure.GetHashCode();
                                 clGeneral.LogError("History Error:  " + ex);
                                 clLogBakashot.InsertErrorToLog(_lRequestNum, "E", 0, "RunInsetRecordsToHistory: " + ex.Message + " file=" + file.Substring(file.LastIndexOf("\\") + 1));
                             }
-                            finally
-                            {
-                                clDefinitions.UpdateLogBakasha(_lRequestNum, DateTime.Now, iStatus);
-                            }
                         }
                     }
+                 
                     iStatus = clGeneral.enStatusRequest.ToBeEnded.GetHashCode();
                 }
                 else clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, "path not exist");

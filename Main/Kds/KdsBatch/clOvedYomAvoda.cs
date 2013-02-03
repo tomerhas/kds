@@ -50,6 +50,8 @@ namespace KdsBatch
         public string sShlilatRishayon;
         public int iSnifTnua;
         public int iBechishuvSachar;
+        public DateTime dTaarichMe;
+        public DateTime dTaarichAd;
 
         private DataTable dtOvedCardDetails;
         private bool _bOvedDetailsExists = false;
@@ -130,7 +132,8 @@ namespace KdsBatch
                 iKodSectorIsuk = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["KOD_SECTOR_ISUK"].ToString());
                 iSnifTnua = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["Snif_Tnua"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["Snif_Tnua"].ToString());
                 iBechishuvSachar = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"]) ? 0 : int.Parse(dtOvedCardDetails.Rows[0]["BECHISHUV_SACHAR"].ToString());
-
+                dTaarichMe = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["me_tarich"]) ? DateTime.MinValue : DateTime.Parse(dtOvedCardDetails.Rows[0]["me_tarich"].ToString());
+                dTaarichAd = System.Convert.IsDBNull(dtOvedCardDetails.Rows[0]["ad_tarich"]) ? DateTime.MinValue : DateTime.Parse(dtOvedCardDetails.Rows[0]["ad_tarich"].ToString());
             }
             catch (Exception ex)
             {
