@@ -672,7 +672,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1548,21 +1547,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="KAMUT">
+                    <Textbox Name="SUMOFMAKAT">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!KAMUT.Value</Value>
+                              <Value>=Fields!SUMOFMAKAT.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>KAMUT</rd:DefaultName>
+                      <rd:DefaultName>SUMOFMAKAT</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -1577,6 +1576,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -2584,6 +2584,10 @@
           <DataField>EMP_BEF_EMP</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="SUMOFMAKAT">
+          <DataField>SUMOFMAKAT</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
         <Field Name="KISUY_TOR">
           <DataField>KISUY_TOR</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2610,10 +2614,6 @@
         </Field>
         <Field Name="EMP_AFT_EMP">
           <DataField>EMP_AFT_EMP</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="KAMUT">
-          <DataField>KAMUT</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="EMP_AFT_OTHER">
