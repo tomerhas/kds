@@ -2682,7 +2682,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(Round(Fields!R126.Value/60,1)&gt;0,Round(Fields!R126.Value/60,1),"")</Value>
+                              <Value>=iif(Round(Sum(Fields!R126.Value, "DsRechivim")/60,1)&gt;0,Round(Sum(Fields!R126.Value, "DsRechivim")/60,1),"")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -3181,7 +3181,7 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=iif(Fields!R126.Value &lt;&gt; Nothing and (First(Fields!MEAFYEN56.Value, "dsPirteyOved")=52 or First(Fields!MEAFYEN56.Value, "dsPirteyOved")=62 ) , False, True)</Hidden>
+                <Hidden>=iif(Round(Sum(Fields!R126.Value, "DsRechivim")/60,1)&gt;0  , False, True)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -8296,7 +8296,6 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
                         <PaddingBottom>0.5pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -10781,6 +10780,9 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
             </TablixMember>
             <TablixMember>
               <Group Name="Details1" />
+              <Visibility>
+                <Hidden>=iif( Fields!ERECH_RECHIV.Value&gt;=0.1 and Sum(Fields!R108.Value, "dsRechivimChodshiym")&gt;0, False, True)</Hidden>
+              </Visibility>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
@@ -10800,7 +10802,7 @@ iif(Sum(Fields!KOD_GIL.Value, "dsPirteyOved")="2",iif(Round(Fields!R53.Value/480
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>5.76293in</Height>
+    <Height>5.68335in</Height>
     <Style />
   </Body>
   <Width>11.29843in</Width>
