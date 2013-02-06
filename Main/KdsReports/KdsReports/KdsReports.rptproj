@@ -203,7 +203,7 @@
       <Options>
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008</TargetServerVersion>
-        <TargetServerURL>http://kdstst02/reportserver</TargetServerURL>
+        <TargetServerURL>http://kdsappl02/reportserver</TargetServerURL>
         <TargetFolder>KdsReports</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
       </Options>
