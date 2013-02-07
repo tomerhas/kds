@@ -209,10 +209,10 @@
             <Value>=Fields!TEUR_RECHIV.Value</Value>
           </SortExpression>
         </SortExpressions>
-        <Height>2.24774cm</Height>
+        <Height>2.24775cm</Height>
         <Width>2.45996cm</Width>
         <Visibility>
-          <Hidden>=iif(CountRows("DsRechivim") =0 , False,True)</Hidden>
+          <Hidden>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,true,false)</Hidden>
         </Visibility>
         <Style>
           <Border>
@@ -228,7 +228,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(CountRows("DsRechivim") =0 , "","לא נמצאו נתונים")</Value>
+                <Value>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,"לא נמצאו נתונים","")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -241,6 +241,9 @@
         <Height>0.6cm</Height>
         <Width>3.16887cm</Width>
         <ZIndex>1</ZIndex>
+        <Visibility>
+          <Hidden>=iif(CInt(Code.IsExistIn(Fields!KOD_RECHIV.Value,Parameters!p_SpecificRechivs.Value))=0,false,true)</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>None</Style>
@@ -252,10 +255,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>0.88494in</Height>
+    <Height>0.94744in</Height>
     <Style />
   </Body>
-  <Width>1.35592in</Width>
+  <Width>1.608in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>19cm</PageWidth>
@@ -269,7 +272,7 @@
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DsCon">
-      <DataSourceReference>KdsCon</DataSourceReference>
+      <DataSourceReference>KdsProd</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>a4db09e9-a331-46db-b57a-d8091ab6c86d</rd:DataSourceID>
     </DataSource>
@@ -317,7 +320,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>08/01/2010 00:00:00</Value>
+          <Value>01/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P START DATE</Prompt>
@@ -326,7 +329,7 @@
       <DataType>DateTime</DataType>
       <DefaultValue>
         <Values>
-          <Value>07/01/2012 00:00:00</Value>
+          <Value>02/01/2013 00:00:00</Value>
         </Values>
       </DefaultValue>
       <Prompt>P END DATE</Prompt>
@@ -335,7 +338,7 @@
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
-          <Value>=65621</Value>
+          <Value>=77787</Value>
         </Values>
       </DefaultValue>
       <Prompt>P MISPAR ISHI</Prompt>
@@ -355,7 +358,7 @@
 end function
 
     Function IsExistIn(ByVal p1 As Integer, ByVal s1 As String) As Integer
-        Dim s As String() = s1.Split(",")
+      Dim s As String() = s1.Split(",")
         For Each item As String In s
             If item = p1.ToString() Then
                 Return 1
