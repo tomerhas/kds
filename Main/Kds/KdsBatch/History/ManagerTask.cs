@@ -136,7 +136,7 @@ namespace KdsBatch.History
         public void RunHistory()
         {
             List<string[]> FilesName;
-            string[] patterns = new string[5];
+            string[] patterns = new string[6];
             string path,pathOld, FileNameOld;
             string[] files;
             int iStatus = 0;
@@ -148,6 +148,7 @@ namespace KdsBatch.History
                 patterns[2] = "BZAP"; 
                 patterns[3] = "HODSHI_";
                 patterns[4] = "YOMI_";
+                patterns[5] = "KATALOG_";
                 path = ConfigurationSettings.AppSettings["PathFileMF"];
                 pathOld = ConfigurationSettings.AppSettings["PathFileMFOld"];
                 clLogBakashot.InsertErrorToLog(_lRequestNum, "I", 0, " START RunInsetRecordsToHistory");
@@ -182,6 +183,9 @@ namespace KdsBatch.History
                                         break;
                                     case 4:
                                         InsertToDB(clGeneral.cProInsNetuneyHistoryYomi, file);
+                                        break;
+                                    case 5:
+                                        InsertToDB(clGeneral.cProInsNetuneyHistoryCatalog, file);
                                         break;
                                 }
 

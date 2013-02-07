@@ -5623,13 +5623,37 @@ namespace KdsBatch
             try
             {
                 //ד. עובד הוא בשלילה (יודעים שעובד הוא בשלילה לפי ערך 1 בקוד בנתון 21 (שלילת   רשיון) בטבלת פרטי עובדים) 
-                if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
-                    bError = IsOvedBShlila();
+                if (oSidur.bSidurMyuhad)
+                {
+                    if (oSidur.sSugAvoda != clGeneral.enSugAvoda.ActualGrira.GetHashCode().ToString())
+                    {
+                        if (oSidur.sSectorAvoda == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        {
+                            if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
+                                bError = IsOvedBShlila();
+                        }
+                    }
+                }
+                else
+                {//סידור רגיל
+                    if (drSugSidur.Length > 0)
+                    {
+                        if (drSugSidur[0]["sug_Avoda"].ToString() != clGeneral.enSugAvoda.Grira.GetHashCode().ToString() && drSugSidur[0]["sector_avoda"].ToString() == clGeneral.enSectorAvoda.Nahagut.GetHashCode().ToString())
+                        {
+                            if (_dCardDate == oOvedYomAvodaDetails.dTaarichMe)
+                                bError = IsOvedBShlila();
+                        }
+                    }
+                }
+                
 
                 if (bError)
                 {
                     drNew = dtErrors.NewRow();
-                    InsertErrorRow(oSidur, ref drNew, "העובד ביום ראשון של שלילת רישיון", enErrors.errFirstDayShlilatRishayon195.GetHashCode());
+                    drNew["check_num"] = enErrors.errFirstDayShlilatRishayon195.GetHashCode();
+                    drNew["mispar_ishi"] = oSidur.iMisparIshi;
+                    drNew["taarich"] =oSidur.dSidurDate.ToShortDateString();
+                    //drNew["error_desc"] = "סידור עם נסיעת אילת ארוכה וסידור ויזה באותו יום";
                     dtErrors.Rows.Add(drNew);
                     isValid = false;
                 }

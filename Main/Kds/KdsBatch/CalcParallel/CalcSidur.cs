@@ -8310,7 +8310,7 @@ namespace KdsBatch
             }
             else
             {
-                dShatHatchlaErevShabat = DateTime.Parse(objOved.Taarich.AddDays(1).ToShortDateString() + objOved.objParameters.GetOneParam(32, dShatHatchlaErevShabat));
+                dShatHatchlaErevShabat = objOved.objParameters.dShatMaavarYom; // DateTime.Parse(objOved.Taarich.AddDays(1).ToShortDateString() + objOved.objParameters.GetOneParam(32, dShatHatchlaErevShabat));
                 fErechShishi = float.Parse((dShatGmarSidur - dShatHatchlaErevShabat).TotalMinutes.ToString());
                 fErechChol = float.Parse((dShatHatchlaErevShabat - dShatHatchalaSidur).TotalMinutes.ToString());
             }
