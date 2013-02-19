@@ -982,7 +982,8 @@ public const string cProGetSugeyYamimMeyuchadim = "pkg_utils.pro_get_sugey_yamim
             RishumArtzi = 63321,
             RishumBameshek = 98608,
             MachsanKartisimDarom = 80457,
-            MachsanKartisimJerusalem = 80556
+            MachsanKartisimJerusalem = 80556,
+            RishumZafonHaifa = 81109
         }
 
         public enum enIsukOved

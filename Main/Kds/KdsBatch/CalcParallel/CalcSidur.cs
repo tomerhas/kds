@@ -7626,7 +7626,7 @@ namespace KdsBatch
                 sSidurimMeyuchadim = GetSidurimMeyuchRechiv(iKodRechiv);
                 if (sSidurimMeyuchadim.Length > 0)
                 {
-                    drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0");
+                    drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and mispar_sidur is not null");
                     iCountSidurim = drSidurim.Length;
 
                     drSidurim = objOved.DtYemeyAvodaYomi.Select("Lo_letashlum=0 and SUBSTRING(convert(mispar_sidur,'System.String'),1,2)=99 and MISPAR_SIDUR IN(" + sSidurimMeyuchadim + ")");
