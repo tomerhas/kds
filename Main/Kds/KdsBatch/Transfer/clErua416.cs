@@ -147,8 +147,8 @@ namespace KdsBatch
                 else
                     sErua416.Append(GetBlank(4));
                 // sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode()),4,2));
-
-                if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+                 //12
+                if (_dMonth >= dTakanonSoziali && _iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
                     sErua416.Append(FormatNumber(GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode()), 4, 2));
                 else
                     sErua416.Append(GetBlank(4));

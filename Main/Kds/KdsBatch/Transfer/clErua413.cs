@@ -258,16 +258,20 @@ namespace KdsBatch
 
               sErua413.Append(sSaifHilan.PadLeft(4, char.Parse("0")));
 
-              if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode()) // && sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224" && sSaifHilan != "303" && sSaifHilan != "321")
-              {
-                  sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
-                  sErua413.Append(_dMonth.Year.ToString());
-                  sErech = GetBlank(11);
-              }
-              else sErech = GetBlank(17);
+              //if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode()) // && sSaifHilan != "221" && sSaifHilan != "222" && sSaifHilan != "223" && sSaifHilan != "224" && sSaifHilan != "303" && sSaifHilan != "321")
+              //{
+              //    sErua413.Append(_dMonth.Month.ToString().PadLeft(2, char.Parse("0")));
+              //    sErua413.Append(_dMonth.Year.ToString());
+              //    sErech = GetBlank(11);
+              //}
+              //else 
+              sErech = GetBlank(17);
 
               if (_iMaamadRashi == clGeneral.enMaamad.Friends.GetHashCode())
+              {
                   fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
+                  fErech += GetErechRechiv(clGeneral.enRechivim.YomMachla.GetHashCode());
+              }
               else
               {
                   fErech = GetErechRechiv(clGeneral.enRechivim.YomChofesh.GetHashCode());
